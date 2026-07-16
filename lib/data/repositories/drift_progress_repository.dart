@@ -49,11 +49,19 @@ class DriftProgressRepository implements ProgressRepository {
     final completed = await _db.progressDao.getCompletedLessons();
     final badgeIds = await _db.progressDao.getEarnedBadgeIds();
 
+    // Sum per-unit scores and normalize by lesson count
     final unitScores = <int, double>{};
+    final unitLessonCounts = <int, int>{};
     for (final lesson in completed) {
       unitScores[lesson.unitId] =
           (unitScores[lesson.unitId] ?? 0) + lesson.bestScore;
+      unitLessonCounts[lesson.unitId] =
+          (unitLessonCounts[lesson.unitId] ?? 0) + 1;
     }
+    final normalized = unitScores.map((unitId, totalScore) {
+      final count = unitLessonCounts[unitId] ?? 1;
+      return MapEntry(unitId, totalScore / count);
+    });
 
     // Get streak from KV store
     final streakStr = await _db.progressDao.getProgressValue('streak');
@@ -63,7 +71,7 @@ class DriftProgressRepository implements ProgressRepository {
         await _db.progressDao.getProgressValue('exams_passed');
 
     return ProgressSnapshot(
-      unitScores: unitScores,
+      unitScores: normalized,
       longestStreak: int.tryParse(streakStr ?? '0') ?? 0,
       examsPassed: examsPassedStr != null
           ? (jsonDecode(examsPassedStr) as List<dynamic>).cast<String>().toSet()

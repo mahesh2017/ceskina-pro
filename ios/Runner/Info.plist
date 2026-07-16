@@ -66,5 +66,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Mic permission for pronunciation recording (Phase 2) -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs microphone access for pronunciation practice and speech recognition.</string>
+	<!-- Speech recognition permission (Phase 2) -->
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This app uses speech recognition to evaluate your Czech pronunciation.</string>
 </dict>
 </plist>

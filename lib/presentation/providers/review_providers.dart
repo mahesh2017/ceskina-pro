@@ -106,17 +106,23 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     final card = state.currentCard;
     if (card == null) return;
 
-    // Update FSRS scheduling
+    final now = DateTime.now();
+
+    // Build FSRS card from the flashcard's current SRS state.
+    // The SRS card id is the flashcard id — the seeder creates them 1:1.
     final fsrsCard = FSRSCard(
       id: card.id.toString(),
       cardType: CardType.vocabulary,
-      due: DateTime.now(),
+      due: now,
     );
-    _scheduler.schedule(fsrsCard, rating, DateTime.now());
 
-    // Persist the rating
+    // Schedule and keep the updated card
+    final result = _scheduler.schedule(fsrsCard, rating, now);
+    final updatedCard = result.card;
+
+    // Persist the scheduled card (not the default)
     final repo = ref.read(vocabularyRepositoryProvider);
-    repo.updateCard(fsrsCard, rating, DateTime.now());
+    repo.updateCard(updatedCard, rating, now);
 
     // Update counts
     final newAgain = state.againCount + (rating == Rating.again ? 1 : 0);

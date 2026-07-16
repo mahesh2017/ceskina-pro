@@ -13,6 +13,7 @@ class CurriculumScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final unitsAsync = ref.watch(allUnitsProvider);
+    final unlockedIdsAsync = ref.watch(unlockedUnitIdsProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Curriculum')),
@@ -41,6 +42,12 @@ class CurriculumScreen extends ConsumerWidget {
           final a2Units =
               units.where((u) => u.phase == Phase.a2).toList();
 
+          // Get unlocked unit IDs — defaults to just the first unit if still loading
+          final unlockedIds = unlockedIdsAsync.maybeWhen(
+            data: (ids) => ids,
+            orElse: () => {a1Units.isNotEmpty ? a1Units.first.id : -1},
+          );
+
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -50,11 +57,8 @@ class CurriculumScreen extends ConsumerWidget {
                 subtitle: 'Beginner — ${a1Units.length} units',
               ),
               const SizedBox(height: 8),
-              ...a1Units.asMap().entries.map((entry) {
-                final idx = entry.key;
-                final unit = entry.value;
-                // First unit always unlocked, rest sequential
-                final isUnlocked = idx == 0;
+              ...a1Units.map((unit) {
+                final isUnlocked = unlockedIds.contains(unit.id);
                 return _UnitCard(
                   unit: unit,
                   isUnlocked: isUnlocked,
@@ -70,12 +74,11 @@ class CurriculumScreen extends ConsumerWidget {
                 subtitle: 'Elementary — ${a2Units.length} units',
               ),
               const SizedBox(height: 8),
-              ...a2Units.asMap().entries.map((entry) {
-                final unit = entry.value;
-                // A2 units locked until A1 complete (simplified: all locked for now)
+              ...a2Units.map((unit) {
+                final isUnlocked = unlockedIds.contains(unit.id);
                 return _UnitCard(
                   unit: unit,
-                  isUnlocked: false,
+                  isUnlocked: isUnlocked,
                   ref: ref,
                 );
               }),

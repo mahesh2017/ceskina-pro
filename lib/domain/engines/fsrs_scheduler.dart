@@ -22,13 +22,14 @@ class FSRSScheduler {
     // Simplified SM-2 implementation
     // TODO: Replace with dart-fsrs when package is available on pub.dev
     var newReps = card.reps + 1;
-    var newEase = _initialEaseFactor;
+    // Use the card's existing difficulty (ease factor) instead of always resetting to 2.5
+    var newEase = card.difficulty > 0 ? card.difficulty : _initialEaseFactor;
     var interval = 1;
 
     if (rating == Rating.again) {
       newReps = 0;
       interval = 1;
-      newEase = _maxEase(_minEaseFactor, card.difficulty - 0.2);
+      newEase = (newEase - 0.2).clamp(_minEaseFactor, 3.0);
     } else if (card.reps == 0) {
       interval = switch (rating) {
         Rating.hard => 1,
@@ -50,7 +51,8 @@ class FSRSScheduler {
         Rating.good => 0.0,
         Rating.easy => 0.15,
       };
-      newEase = (_initialEaseFactor + easeAdjustment).clamp(_minEaseFactor, 3.0);
+      // Accumulate ease from the card's stored value, not from the constant
+      newEase = (newEase + easeAdjustment).clamp(_minEaseFactor, 3.0);
       interval = (card.stability * newEase).round();
       interval = interval.clamp(1, 365);
     }
@@ -80,6 +82,4 @@ class FSRSScheduler {
   List<FSRSCard> getDueCards(List<FSRSCard> allCards, DateTime asOf) {
     return allCards.where((c) => c.due.isBefore(asOf) || c.due.isAtSameMomentAs(asOf)).toList();
   }
-
-  static double _maxEase(double a, double b) => a > b ? a : b;
 }

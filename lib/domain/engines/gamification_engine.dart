@@ -9,9 +9,6 @@ class HeartResult {
   const HeartResult({required this.hearts, required this.isGameOver, required this.canRefill});
 }
 
-/// Streak update result.
-enum StreakUpdate { incremented, reset, unchanged }
-
 /// Gamification engine — manages XP, hearts, streaks, and badges.
 /// Pure state machine, no I/O.
 class GamificationEngine {
@@ -44,27 +41,6 @@ class GamificationEngine {
       isGameOver: newHearts <= 0,
       canRefill: newHearts <= 0,
     );
-  }
-
-  /// Update streak: called once per day on first activity.
-  StreakUpdate updateStreak(GamificationState current, DateTime now) {
-    final today = DateTime(now.year, now.month, now.day);
-    final lastActive = DateTime(
-      current.lastHeartRefill.year,
-      current.lastHeartRefill.month,
-      current.lastHeartRefill.day,
-    );
-
-    if (today == lastActive && current.currentStreak > 0) {
-      return StreakUpdate.unchanged;
-    }
-
-    final daysSinceLast = today.difference(lastActive).inDays;
-    if (daysSinceLast == 1) {
-      return StreakUpdate.incremented;
-    } else {
-      return StreakUpdate.reset;
-    }
   }
 
   /// Check which badges should be unlocked based on progress.

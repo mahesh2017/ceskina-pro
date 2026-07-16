@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Mic permission for pronunciation recording (Phase 2) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <!-- Internet permission for LLM/TTS/STT cloud APIs (Phase 2) -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="ceskina_pro"
         android:name="${applicationName}"

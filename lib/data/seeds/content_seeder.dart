@@ -173,23 +173,38 @@ class ContentSeeder {
 
         if (words.isEmpty) continue;
 
-        await _db.vocabularyDao.insertFlashcards(
-          words.map((w) => db.FlashcardsCompanion.insert(
-                id: Value((w as Map<String, dynamic>)['id'] as int),
-                wordCz: w['word_cz'] as String,
-                wordEn: w['word_en'] as String,
-                ipa: Value(w['ipa'] as String?),
-                gender: Value(w['gender'] as String?),
-                caseInfo: Value(w['case_info'] as String?),
-                audioHash: Value(w['audio_hash'] as String?),
-                imagePath: Value(w['image_path'] as String?),
-                exampleCz: Value(w['example_cz'] as String?),
-                exampleEn: Value(w['example_en'] as String?),
-                unitId: Value(w['unit_id'] as int?),
-              )).toList(),
-        );
+        final flashcardCompanions = words.map((w) => db.FlashcardsCompanion.insert(
+              id: Value((w as Map<String, dynamic>)['id'] as int),
+              wordCz: w['word_cz'] as String,
+              wordEn: w['word_en'] as String,
+              ipa: Value(w['ipa'] as String?),
+              gender: Value(w['gender'] as String?),
+              caseInfo: Value(w['case_info'] as String?),
+              audioHash: Value(w['audio_hash'] as String?),
+              imagePath: Value(w['image_path'] as String?),
+              exampleCz: Value(w['example_cz'] as String?),
+              exampleEn: Value(w['example_en'] as String?),
+              unitId: Value(w['unit_id'] as int?),
+            )).toList();
 
-        _log.info('Loaded ${words.length} $level vocabulary words.');
+        await _db.vocabularyDao.insertFlashcards(flashcardCompanions);
+
+        // Also create SRS cards for each flashcard so they appear in review
+        final srsCompanions = words.map((w) => db.SrsCardsCompanion.insert(
+              cardType: 'vocabulary',
+              flashcardId: Value((w as Map<String, dynamic>)['id'] as int),
+              stability: const Value(0.0),
+              difficulty: const Value(0.0),
+              due: Value(DateTime.now()),
+              reps: const Value(0),
+              state: const Value('newCard'),
+            )).toList();
+
+        for (final companion in srsCompanions) {
+          await _db.vocabularyDao.upsertSrsCard(companion);
+        }
+
+        _log.info('Loaded ${words.length} $level vocabulary words + SRS cards.');
       } catch (e) {
         _log.fine('No $level vocabulary file found, skipping.');
       }

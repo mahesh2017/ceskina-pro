@@ -180,7 +180,9 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
                           );
                           // Delay to let user see the result
                           Future.delayed(const Duration(milliseconds: 1500),
-                              () => widget.onAnswered(result));
+                              () {
+                            if (mounted) widget.onAnswered(result);
+                          });
                         },
                 ),
               ),
@@ -234,7 +236,9 @@ class _TranslationViewState extends State<_TranslationView> {
     );
 
     Future.delayed(const Duration(milliseconds: 1500),
-        () => widget.onAnswered(result));
+        () {
+      if (mounted) widget.onAnswered(result);
+    });
   }
 
   @override
@@ -372,7 +376,9 @@ class _FillBlankViewState extends State<_FillBlankView> {
     );
 
     Future.delayed(const Duration(milliseconds: 1500),
-        () => widget.onAnswered(result));
+        () {
+      if (mounted) widget.onAnswered(result);
+    });
   }
 
   @override
@@ -502,9 +508,10 @@ class _WordOrderViewState extends State<_WordOrderView> {
         ? allWords.sublist(0, sepIdx)
         : allWords.where((w) => w != '—').toList();
 
-    final userOrder = selected.map((w) => czechWords.indexOf(w)).toList();
-    final correct = userOrder.length == correctOrder.length &&
-        listEquals(userOrder, correctOrder);
+    // Compare by position, not by indexOf (which breaks on duplicate words).
+    // The user's selected list should match the correct_order indices.
+    final correct = selected.length == correctOrder.length &&
+        _checkOrder(selected, czechWords, correctOrder);
 
     setState(() {
       answered = true;
@@ -519,7 +526,33 @@ class _WordOrderViewState extends State<_WordOrderView> {
     );
 
     Future.delayed(const Duration(milliseconds: 1500),
-        () => widget.onAnswered(result));
+        () {
+      if (mounted) widget.onAnswered(result);
+    });
+  }
+
+  /// Build the correct sentence from the exercise data for display.
+  String _buildCorrectSentence(Map<String, dynamic> data) {
+    final allWords = (data['words'] as List<dynamic>).cast<String>();
+    final sepIdx = allWords.indexOf('—');
+    final czechWords = sepIdx >= 0
+        ? allWords.sublist(0, sepIdx)
+        : allWords.where((w) => w != '—').toList();
+    final correctOrder = (data['correct_order'] as List<dynamic>).cast<int>();
+    return correctOrder.map((i) => czechWords[i]).join(' ');
+  }
+
+  /// Check that the selected words match the correct order indices.
+  /// Handles duplicate words correctly by comparing the word at each
+  /// correct_order index to the user's selection at that position.
+  bool _checkOrder(
+      List<String> selected, List<String> czechWords, List<int> correctOrder) {
+    if (selected.length != correctOrder.length) return false;
+    for (var i = 0; i < correctOrder.length; i++) {
+      final expectedWord = czechWords[correctOrder[i]];
+      if (selected[i] != expectedWord) return false;
+    }
+    return true;
   }
 
   bool listEquals<T>(List<T> a, List<T> b) {
@@ -607,7 +640,7 @@ class _WordOrderViewState extends State<_WordOrderView> {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
-                  'Correct: ${widget.exercise.data['correct_answer'] ?? selected.join(' ')}',
+                  'Correct: ${widget.exercise.data['correct_answer'] ?? _buildCorrectSentence(widget.exercise.data)}',
                   style: const TextStyle(
                       color: Colors.green, fontWeight: FontWeight.bold),
                 ),
@@ -685,7 +718,9 @@ class _DictationViewState extends State<_DictationView> {
     );
 
     Future.delayed(const Duration(milliseconds: 1500),
-        () => widget.onAnswered(result));
+        () {
+      if (mounted) widget.onAnswered(result);
+    });
   }
 
   @override
@@ -982,14 +1017,83 @@ class _DialogueView extends StatefulWidget {
 }
 
 class _DialogueViewState extends State<_DialogueView> {
-  final _controller = TextEditingController();
+  final Map<int, TextEditingController> _controllers = {};
   bool answered = false;
   bool? isCorrect;
 
   @override
   void dispose() {
-    _controller.dispose();
+    for (final c in _controllers.values) {
+      c.dispose();
+    }
     super.dispose();
+  }
+
+  /// Get or create a controller for a given blank index.
+  TextEditingController _controllerFor(int blankIdx) {
+    return _controllers.putIfAbsent(blankIdx, () => TextEditingController());
+  }
+
+  /// Build dialogue line widgets, assigning a unique controller per blank.
+  List<Widget> _buildDialogueLines(
+      List<Map<String, dynamic>> lines, BuildContext context) {
+    int blankCounter = 0;
+    return lines.map((line) {
+      final isUser = line['speaker'] == 'you';
+      final text = line['text'] as String;
+      final containsBlank = text.contains('___');
+
+      if (containsBlank) {
+        final blankIdx = blankCounter++;
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _controllerFor(blankIdx),
+                  enabled: !answered,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    isDense: true,
+                    labelText: 'Your answer',
+                  ),
+                  onSubmitted: answered ? null : (_) => _checkAnswer(),
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: Align(
+          alignment: isUser
+              ? Alignment.centerRight
+              : Alignment.centerLeft,
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: isUser
+                  ? Theme.of(context).colorScheme.primaryContainer
+                  : Theme.of(context).colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  line['speaker'] as String,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                Text(text),
+              ],
+            ),
+          ),
+        ),
+      );
+    }).toList();
   }
 
   void _checkAnswer() {
@@ -1001,7 +1105,13 @@ class _DialogueViewState extends State<_DialogueView> {
       return s;
     }).toList();
 
-    final userAnswer = _controller.text.trim().toLowerCase();
+    // Collect answers from all controllers in order
+    final blankIndices = _controllers.keys.toList()..sort();
+    final userAnswer = blankIndices
+        .map((idx) => _controllers[idx]!.text.trim())
+        .join('|')
+        .toLowerCase();
+
     // Check if user answer matches any accepted answer (or partial for multi-blank)
     final correct = accepted.any((a) {
       if (a.contains('|')) {
@@ -1029,7 +1139,9 @@ class _DialogueViewState extends State<_DialogueView> {
     );
 
     Future.delayed(const Duration(milliseconds: 1500),
-        () => widget.onAnswered(result));
+        () {
+      if (mounted) widget.onAnswered(result);
+    });
   }
 
   @override
@@ -1053,68 +1165,9 @@ class _DialogueViewState extends State<_DialogueView> {
           const SizedBox(height: 16),
 
           // Dialogue lines
-          ...lines.map((line) {
-            final isUser = line['speaker'] == 'you';
-            final text = line['text'] as String;
-            final containsBlank = text.contains('___');
-
-            if (containsBlank) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _controller,
-                        enabled: !answered,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          isDense: true,
-                          labelText: 'Your answer',
-                        ),
-                        onSubmitted: answered ? null : (_) => _checkAnswer(),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: Align(
-                alignment: isUser
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: isUser
-                        ? Theme.of(context).colorScheme.primaryContainer
-                        : Theme.of(context).colorScheme.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        line['speaker'] as String,
-                        style: Theme.of(context).textTheme.labelSmall,
-                      ),
-                      Text(text),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
+          ..._buildDialogueLines(lines, context),
 
           const SizedBox(height: 16),
-          if (!answered && _controller.text.isNotEmpty)
-            FilledButton(
-              onPressed: _checkAnswer,
-              child: const Text('Check'),
-            ),
           if (!answered)
             FilledButton(
               onPressed: _checkAnswer,
@@ -1204,7 +1257,9 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
     );
 
     Future.delayed(const Duration(milliseconds: 2000),
-        () => widget.onAnswered(result));
+        () {
+      if (mounted) widget.onAnswered(result);
+    });
   }
 
   @override

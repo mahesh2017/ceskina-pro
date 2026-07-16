@@ -9,7 +9,7 @@ class GamificationState {
   final int dailyGoalXp;
   final int gems;
   final Set<String> earnedBadges;
-  final DateTime lastHeartRefill;
+  final DateTime? lastHeartRefill;
   final bool streakFreezeAvailable;
 
   const GamificationState({
@@ -22,7 +22,7 @@ class GamificationState {
     this.dailyGoalXp = 50,
     this.gems = 0,
     this.earnedBadges = const {},
-    this.lastHeartRefill = const _NullDateTime(),
+    this.lastHeartRefill,
     this.streakFreezeAvailable = true,
   });
 
@@ -56,12 +56,6 @@ class GamificationState {
 
   bool get isGameOver => hearts <= 0;
   bool get dailyGoalMet => dailyXp >= dailyGoalXp;
-}
-
-class _NullDateTime implements DateTime {
-  const _NullDateTime();
-  @override
-  dynamic noSuchMethod(Invocation invocation) => null;
 }
 
 /// Badge definition.
@@ -171,6 +165,17 @@ class BadgeCriteria {
     if (examPassed != null) {
       if (!progress.examsPassed.contains(examPassed)) return false;
     }
+    // Custom key badges require a matching progress value
+    if (customKey != null) {
+      final value = progress.customValues[customKey];
+      if (value == null) return false;
+      if (minValue != null && value < minValue!) return false;
+    }
+    // If only customKey/minValue is set and no other criteria matched, it's not met
+    // unless the custom value is present
+    if (customKey == null && unitId == null && minStreak == null && examPassed == null) {
+      return false; // No criteria = not met (safety)
+    }
     return true;
   }
 }
@@ -183,6 +188,7 @@ class ProgressSnapshot {
   final Set<String> earnedBadges;
   final double a1CompletionRate;
   final double a2CompletionRate;
+  final Map<String, double> customValues;
 
   const ProgressSnapshot({
     this.unitScores = const {},
@@ -191,6 +197,7 @@ class ProgressSnapshot {
     this.earnedBadges = const {},
     this.a1CompletionRate = 0.0,
     this.a2CompletionRate = 0.0,
+    this.customValues = const {},
   });
 }
 

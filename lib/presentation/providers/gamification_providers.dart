@@ -86,43 +86,42 @@ class GamificationNotifier extends Notifier<GamificationState> {
       dailyGoalXp: dailyGoalXp,
       gems: gems,
       earnedBadges: earnedBadges,
-      lastHeartRefill: lastHeartRefill ?? DateTime.now(),
+      lastHeartRefill: lastHeartRefill, // null is fine — no refill yet
       streakFreezeAvailable: streakFreeze,
     );
   }
 
-  /// Check streak on app open — compare last open date with today.
+  /// Check streak on app open — compare last activity date with today.
+  /// Only breaks stale streaks; does NOT write today's date.
+  /// The actual streak increment happens in _maybeIncrementStreak on first XP earn.
   Future<void> _checkStreakOnOpen() async {
     if (_prefs == null) return;
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final lastOpenStr = _prefs!.getString(_kLastOpenDate);
+    final lastActivityStr = _prefs!.getString(_kLastOpenDate);
 
-    if (lastOpenStr == null) {
-      // First ever open — streak starts at 0, save today as last open
-      await _prefs!.setString(_kLastOpenDate, today.toIso8601String());
+    if (lastActivityStr == null) {
+      // First ever open — no streak to check, no date to write yet.
+      // Streak will start at 1 on first XP earn.
       return;
     }
 
-    final lastOpen = DateTime.tryParse(lastOpenStr);
-    if (lastOpen == null) {
-      await _prefs!.setString(_kLastOpenDate, today.toIso8601String());
-      return;
-    }
+    final lastActivity = DateTime.tryParse(lastActivityStr);
+    if (lastActivity == null) return;
 
-    final lastOpenDay = DateTime(lastOpen.year, lastOpen.month, lastOpen.day);
-    final diffDays = today.difference(lastOpenDay).inDays;
+    final lastActivityDay =
+        DateTime(lastActivity.year, lastActivity.month, lastActivity.day);
+    final diffDays = today.difference(lastActivityDay).inDays;
 
     if (diffDays == 0) {
-      // Same day — no streak change
+      // Same day — no streak change needed
       return;
     }
 
     if (diffDays == 1) {
-      // Consecutive day — streak continues (increment will happen on XP earn)
-      // Just update the last open date
-      await _prefs!.setString(_kLastOpenDate, today.toIso8601String());
+      // Consecutive day — streak continues; increment will happen on XP earn.
+      // Do NOT write today's date here — _maybeIncrementStreak will do that.
       return;
     }
 
@@ -131,22 +130,23 @@ class GamificationNotifier extends Notifier<GamificationState> {
       // Streak freeze saves a 1-day gap
       state = state.copyWith(streakFreezeAvailable: false);
       await _prefs!.setBool(_kStreakFreezeAvailable, false);
-      await _prefs!.setString(_kLastOpenDate, today.toIso8601String());
+      // Don't write today's date — let _maybeIncrementStreak handle it on XP earn
       return;
     }
 
-    // Streak broken
+    // Streak broken — reset to 0
     state = state.copyWith(currentStreak: 0);
     await _prefs!.setInt(_kCurrentStreak, 0);
-    await _prefs!.setString(_kLastOpenDate, today.toIso8601String());
+    // Don't write today's date — let _maybeIncrementStreak handle it
   }
 
   /// Check if hearts should regenerate based on time elapsed.
   void _checkHeartRegen() {
     if (state.hearts >= state.maxHearts) return;
+    if (state.lastHeartRefill == null) return; // no refill timestamp yet
 
     final now = DateTime.now();
-    final lastRefill = state.lastHeartRefill;
+    final lastRefill = state.lastHeartRefill!;
     const regenInterval = Duration(minutes: 30);
 
     final elapsed = now.difference(lastRefill);
@@ -181,10 +181,12 @@ class GamificationNotifier extends Notifier<GamificationState> {
       _kEarnedBadges,
       jsonEncode(state.earnedBadges.toList()),
     );
-    await _prefs!.setString(
-      _kLastHeartRefill,
-      state.lastHeartRefill.toIso8601String(),
-    );
+    if (state.lastHeartRefill != null) {
+      await _prefs!.setString(
+        _kLastHeartRefill,
+        state.lastHeartRefill!.toIso8601String(),
+      );
+    }
   }
 
   // ── Public API ──
