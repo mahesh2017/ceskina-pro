@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/review_providers.dart';
+import '../../providers/tts_providers.dart';
 import '../../../domain/entities/flashcard.dart';
 import '../../../domain/entities/fsrs_card.dart';
 
@@ -167,7 +168,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
 }
 
 /// The flashcard view — front (Czech word) and back (English + IPA + example).
-class _FlashcardView extends StatelessWidget {
+class _FlashcardView extends ConsumerWidget {
   final Flashcard card;
   final bool isFlipped;
   final VoidCallback onFlip;
@@ -179,7 +180,7 @@ class _FlashcardView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: isFlipped ? null : onFlip,
       child: Padding(
@@ -193,15 +194,15 @@ class _FlashcardView extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(32),
             child: isFlipped
-                ? _buildBack(context)
-                : _buildFront(context),
+                ? _buildBack(context, ref)
+                : _buildFront(context, ref),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildFront(BuildContext context) {
+  Widget _buildFront(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -259,11 +260,11 @@ class _FlashcardView extends StatelessWidget {
           ],
         ),
 
-        // Audio button (placeholder)
+        // Audio button — speaks the Czech word via TTS
         const SizedBox(height: 16),
         IconButton(
           onPressed: () {
-            // TODO: Play audio via TTS
+            ref.read(czechTtsProvider).speak(card.wordCz);
           },
           icon: const Icon(Icons.volume_up, size: 32),
           color: Theme.of(context).colorScheme.primary,
@@ -272,7 +273,7 @@ class _FlashcardView extends StatelessWidget {
     );
   }
 
-  Widget _buildBack(BuildContext context) {
+  Widget _buildBack(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -336,6 +337,17 @@ class _FlashcardView extends StatelessWidget {
               ],
             ),
           ),
+          // TTS button for example sentence
+          if (card.exampleCz != null) ...[
+            const SizedBox(height: 8),
+            IconButton(
+              onPressed: () {
+                ref.read(czechTtsProvider).speak(card.exampleCz!);
+              },
+              icon: const Icon(Icons.volume_up, size: 20),
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ],
         ],
       ],
     );
@@ -429,7 +441,7 @@ class _RatingButton extends StatelessWidget {
     return FilledButton.tonal(
       onPressed: onTap,
       style: FilledButton.styleFrom(
-        backgroundColor: color.withOpacity(0.1),
+        backgroundColor: color.withValues(alpha: 0.1),
         foregroundColor: color,
         padding: const EdgeInsets.symmetric(vertical: 12),
         shape: RoundedRectangleBorder(

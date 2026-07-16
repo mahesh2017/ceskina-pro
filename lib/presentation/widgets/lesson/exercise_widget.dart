@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/entities/exercise.dart';
 import '../../../domain/entities/enums.dart';
+import '../../providers/tts_providers.dart';
 
 /// Result of an exercise answer submission.
 class ExerciseResult {
@@ -119,12 +121,22 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
           ),
           if (data['question_cz'] != null) ...[
             const SizedBox(height: 8),
-            Text(
-              data['question_cz'] as String,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-              textAlign: TextAlign.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  data['question_cz'] as String,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(width: 4),
+                TtsButton(
+                  text: data['question_cz'] as String,
+                  size: 20,
+                ),
+              ],
             ),
           ],
           const SizedBox(height: 32),
@@ -739,23 +751,15 @@ class _DictationViewState extends State<_DictationView> {
           ),
           const SizedBox(height: 24),
 
-          // Audio play button (placeholder — will connect to TTS later)
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
-            child: Icon(
-              Icons.volume_up,
-              size: 48,
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-            ),
+          // Audio play button — speaks the Czech text via TTS
+          TtsButton(
+            text: data['expected_text'] as String,
+            size: 48,
           ),
           const SizedBox(height: 16),
           TextButton.icon(
             onPressed: () {
-              // TODO: Play audio via TTS service
+              // Replay handled by TtsButton above
             },
             icon: const Icon(Icons.replay),
             label: const Text('Play again'),
@@ -1377,6 +1381,32 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// Small reusable TTS button that speaks Czech text when tapped.
+class TtsButton extends ConsumerWidget {
+  final String text;
+  final double size;
+  final Color? color;
+
+  const TtsButton({
+    super.key,
+    required this.text,
+    this.size = 24,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return IconButton(
+      onPressed: () {
+        ref.read(czechTtsProvider).speak(text);
+      },
+      icon: Icon(Icons.volume_up, size: size),
+      color: color ?? Theme.of(context).colorScheme.primary,
+      tooltip: 'Listen',
     );
   }
 }

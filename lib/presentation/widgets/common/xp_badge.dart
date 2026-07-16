@@ -29,9 +29,9 @@ class XpBadge extends ConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: _leagueColor(league).withOpacity(0.15),
+            color: _leagueColor(league).withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: _leagueColor(league).withOpacity(0.3)),
+            border: Border.all(color: _leagueColor(league).withValues(alpha: 0.3)),
           ),
           child: Text(
             league.label,
