@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/providers/database_providers.dart';
+import 'presentation/providers/settings_providers.dart';
 import 'presentation/screens/onboarding/loading_screen.dart';
 
 /// App entry point.
@@ -21,20 +22,20 @@ class CeskinaProApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final initFuture = ref.watch(appInitializationProvider);
+    final themeMode = ref.watch(themeModeProvider);
 
-    return MaterialApp.router(
-      title: 'Čeština Pro',
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme(),
-      darkTheme: darkTheme(),
-      routerConfig: appRouter,
-      builder: (context, child) {
-        return initFuture.when(
-          loading: () => const LoadingScreen(),
-          error: (err, stack) => LoadingScreen(error: err.toString()),
-          data: (_) => child!,
-        );
-      },
+    // Check onboarding on data load
+    return initFuture.when(
+      loading: () => const LoadingScreen(),
+      error: (err, stack) => LoadingScreen(error: err.toString()),
+      data: (_) => MaterialApp.router(
+        title: 'Čeština Pro',
+        debugShowCheckedModeBanner: false,
+        theme: lightTheme(),
+        darkTheme: darkTheme(),
+        themeMode: themeMode,
+        routerConfig: appRouter,
+      ),
     );
   }
 }

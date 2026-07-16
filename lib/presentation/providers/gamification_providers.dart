@@ -219,6 +219,12 @@ class GamificationNotifier extends Notifier<GamificationState> {
     _persist();
   }
 
+  /// Set the daily XP goal.
+  void setDailyGoal(int xp) {
+    state = state.copyWith(dailyGoalXp: xp);
+    _persist();
+  }
+
   /// Called when a review session is completed.
   void onReviewSessionCompleted(int reviewCount) {
     final xp = _engine.calculateXp(

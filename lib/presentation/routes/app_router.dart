@@ -8,6 +8,7 @@ import '../screens/pronunciation/pronunciation_screen.dart';
 import '../screens/exam/mock_exam_screen.dart';
 import '../screens/stats/stats_screen.dart';
 import '../screens/settings/settings_screen.dart';
+import '../screens/onboarding/onboarding_screen.dart';
 import 'app_scaffold.dart';
 import '../../domain/entities/enums.dart';
 
@@ -61,6 +62,10 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: '/settings',
           builder: (context, state) => const SettingsScreen(),
+        ),
+        GoRoute(
+          path: '/onboarding',
+          builder: (context, state) => const OnboardingScreen(),
         ),
       ],
     ),
