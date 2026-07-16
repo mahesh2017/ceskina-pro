@@ -1,0 +1,101 @@
+import '../entities/gamification_state.dart';
+
+/// Result of heart processing on a wrong answer.
+class HeartResult {
+  final int hearts;
+  final bool isGameOver;
+  final bool canRefill;
+
+  const HeartResult({required this.hearts, required this.isGameOver, required this.canRefill});
+}
+
+/// Streak update result.
+enum StreakUpdate { incremented, reset, unchanged }
+
+/// Gamification engine — manages XP, hearts, streaks, and badges.
+/// Pure state machine, no I/O.
+class GamificationEngine {
+  /// Calculate XP earned for an action.
+  int calculateXp({
+    required XpActionType actionType,
+    double accuracy = 0.0,
+    int reviewCount = 0,
+    int streakDays = 0,
+    int baseXp = 0,
+  }) {
+    return switch (actionType) {
+      XpActionType.lessonCompleted when accuracy >= 1.0 => 20,
+      XpActionType.lessonCompleted when accuracy >= 0.8 => 15,
+      XpActionType.lessonCompleted => 10,
+      XpActionType.reviewSessionCompleted => reviewCount * 2,
+      XpActionType.streakMilestone => streakDays * 5,
+      XpActionType.badgeEarned => baseXp,
+      XpActionType.mockExamCompleted => 50,
+      XpActionType.pronunciationDrill when accuracy >= 0.8 => 10,
+      XpActionType.pronunciationDrill => 5,
+    };
+  }
+
+  /// Process a wrong answer: deduct hearts, check for game over.
+  HeartResult processWrongAnswer(GamificationState state) {
+    final newHearts = state.hearts - 1;
+    return HeartResult(
+      hearts: newHearts,
+      isGameOver: newHearts <= 0,
+      canRefill: newHearts <= 0,
+    );
+  }
+
+  /// Update streak: called once per day on first activity.
+  StreakUpdate updateStreak(GamificationState current, DateTime now) {
+    final today = DateTime(now.year, now.month, now.day);
+    final lastActive = DateTime(
+      current.lastHeartRefill.year,
+      current.lastHeartRefill.month,
+      current.lastHeartRefill.day,
+    );
+
+    if (today == lastActive && current.currentStreak > 0) {
+      return StreakUpdate.unchanged;
+    }
+
+    final daysSinceLast = today.difference(lastActive).inDays;
+    if (daysSinceLast == 1) {
+      return StreakUpdate.incremented;
+    } else {
+      return StreakUpdate.reset;
+    }
+  }
+
+  /// Check which badges should be unlocked based on progress.
+  List<Badge> checkBadges(ProgressSnapshot progress) {
+    final unlocked = <Badge>[];
+    for (final badge in Badge.all) {
+      if (!progress.earnedBadges.contains(badge.id) && badge.criteria.isMet(progress)) {
+        unlocked.add(badge);
+      }
+    }
+    return unlocked;
+  }
+
+  /// Determine league from weekly XP.
+  League getLeague(int weeklyXp) {
+    League? result;
+    for (final league in League.values) {
+      if (weeklyXp >= league.xpThreshold) {
+        result = league;
+      }
+    }
+    return result ?? League.bronze;
+  }
+}
+
+/// Types of actions that earn XP.
+enum XpActionType {
+  lessonCompleted,
+  reviewSessionCompleted,
+  streakMilestone,
+  badgeEarned,
+  mockExamCompleted,
+  pronunciationDrill,
+}

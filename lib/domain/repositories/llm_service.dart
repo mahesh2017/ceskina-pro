@@ -1,0 +1,85 @@
+import '../entities/chat_message.dart';
+
+/// Abstract interface for LLM API calls.
+abstract class LlmService {
+  Future<LlmResponse> complete(LlmRequest request);
+  Stream<LlmChunk> streamComplete(LlmRequest request);
+  Future<bool> isAvailable();
+}
+
+/// LLM request.
+class LlmRequest {
+  final String model;
+  final List<LlmMessage> messages;
+  final double temperature;
+  final Map<String, dynamic>? responseFormat;
+
+  const LlmRequest({
+    required this.model,
+    required this.messages,
+    this.temperature = 0.7,
+    this.responseFormat,
+  });
+}
+
+/// LLM message.
+class LlmMessage {
+  final LlmRole role;
+  final String content;
+
+  const LlmMessage(this.role, this.content);
+}
+
+enum LlmRole { system, user, assistant }
+
+/// LLM response.
+class LlmResponse {
+  final String content;
+  final int inputTokens;
+  final int outputTokens;
+  final String? model;
+
+  const LlmResponse({
+    required this.content,
+    this.inputTokens = 0,
+    this.outputTokens = 0,
+    this.model,
+  });
+}
+
+/// Streaming LLM chunk.
+class LlmChunk {
+  final String delta;
+  final bool isFinal;
+
+  const LlmChunk({required this.delta, this.isFinal = false});
+}
+
+/// Parsed tutor response from LLM.
+class TutorResponse {
+  final String tutorReplyCz;
+  final String tutorReplyEn;
+  final List<Correction> corrections;
+  final List<NewVocabulary> newVocabulary;
+
+  const TutorResponse({
+    required this.tutorReplyCz,
+    required this.tutorReplyEn,
+    required this.corrections,
+    required this.newVocabulary,
+  });
+
+  factory TutorResponse.fromJson(Map<String, dynamic> json) {
+    return TutorResponse(
+      tutorReplyCz: json['tutor_reply_cz'] as String,
+      tutorReplyEn: json['tutor_reply_en'] as String,
+      corrections: (json['corrections'] as List<dynamic>)
+          .map((e) => Correction.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      newVocabulary: (json['new_vocabulary'] as List<dynamic>?)
+          ?.map((e) => NewVocabulary.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+          [],
+    );
+  }
+}

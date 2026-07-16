@@ -1,0 +1,13 @@
+{
+  "units": [
+    {
+      "id": 11,
+      "title": "Noun Declension Paradigms",
+      "description": "žena, město, hrad, pán, muž — five core declension patterns",
+      "phase": "a2",
+      "order_index": 11,
+      "grammar_tags": ["declension", "paradigms"],
+      "is_exam_prep": false
+    }
+  ]
+}

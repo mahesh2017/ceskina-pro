@@ -1,0 +1,182 @@
+{
+  "rules": [
+    {
+      "id": "GR-000",
+      "rule_name": "First-syllable stress",
+      "pattern": "Czech stress always falls on the first syllable of a word",
+      "explanation": "In Czech, the stress always falls on the first syllable of every word. This is a fixed rule — unlike English, there are no exceptions. Examples: PRA-ha, KA-va, MLA-tim. Long vowels are pronounced longer but do NOT receive extra stress.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Praha", "en": "Prague", "note": "Stress on PRA"},
+        {"cz": "káva", "en": "coffee", "note": "Stress on KA"},
+        {"cz": "děkuji", "en": "thank you", "note": "Stress on DĚ"}
+      ],
+      "unit_id": 1
+    },
+    {
+      "id": "GR-001",
+      "rule_name": "The letter ř",
+      "pattern": "ř is a unique Czech sound — a rolled r with ž/š quality",
+      "explanation": "The letter ř (r with háček) has no equivalent in other languages. It is a raised alveolar non-sonorant trill. To approximate: try saying 'r' and 'zh' simultaneously. It appears in common words like řeka (river), tři (three), Dvořák. Practice slowly — it takes time to master.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "řeka", "en": "river"},
+        {"cz": "tři", "en": "three"},
+        {"cz": "Dvořák", "en": "Dvořák (composer name)"},
+        {"cz": "řada", "en": "row / line"}
+      ],
+      "unit_id": 1
+    },
+    {
+      "id": "GR-002",
+      "rule_name": "The letter ě and consonant softening",
+      "pattern": "ě softens the preceding consonant: dě→ďe, tě→ťe, ně→ně, bě→bje, pě→pje, vě→vje, mě→mě",
+      "explanation": "When ě follows certain consonants, it softens them. The most common softening: dě sounds like 'dye', tě like 'tye', ně like 'nye'. For bě, pě, vě: insert a 'j' sound (bje, pje, vje). mě is special — it sounds like 'mňe'. This is critical for correct pronunciation and comprehension.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "děti", "en": "children", "note": "dě → ďe"},
+        {"cz": "těší", "en": "pleases", "note": "tě → ťe"},
+        {"cz": "město", "en": "city", "note": "mě → mňe"},
+        {"cz": "běžet", "en": "to run", "note": "bě → bje"}
+      ],
+      "unit_id": 1
+    },
+    {
+      "id": "GR-003",
+      "rule_name": "Long vs short vowels",
+      "pattern": "á/é/í/ó/ú/ů are long versions of a/e/i/o/u — length changes meaning",
+      "explanation": "Czech distinguishes between short and long vowels. Long vowels are marked with čárka (acute accent: á, é, í, ó, ú) or kroužek (ring: ů). A long vowel is pronounced approximately twice as long as a short one. Importantly, vowel length can change meaning: pivo (beer) vs pívo (a type of beer), sul (he salted) vs sůl (salt). Always pay attention to vowel length.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "dům", "en": "house", "note": "ů is long u"},
+        {"cz": "káva", "en": "coffee", "note": "á is long a"},
+        {"cz": "pít", "en": "to drink", "note": "í is long i"},
+        {"cz": "dom", "en": "(invalid without length)", "note": "Compare: dům vs dom"}
+      ],
+      "unit_id": 1
+    },
+    {
+      "id": "GR-004",
+      "rule_name": "Háček (ˇ) diacritic",
+      "pattern": "č, š, ž, ř, ď, ť, ň — háček modifies consonant pronunciation",
+      "explanation": "The háček (ˇ) mark changes the sound of consonants: č = ch (as in 'church'), š = sh (as in 'ship'), ž = zh (as in 'measure'), ř = unique Czech sound, ď = softened d, ť = softened t, ň = softened n (like Spanish ñ). These are distinct letters in the Czech alphabet, not modifications.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "čaj", "en": "tea"},
+        {"cz": "škola", "en": "school"},
+        {"cz": "žena", "en": "woman"},
+        {"cz": "ňakovitý", "en": "nasal"}
+      ],
+      "unit_id": 1
+    },
+    {
+      "id": "GR-010",
+      "rule_name": "Formal vs informal greeting",
+      "pattern": "Use 'dobrý den' + 'Vy' for formal; 'ahoj' + 'ty' for informal",
+      "explanation": "Czech has a T-V distinction. Use formal greetings (dobrý den, dobré ráno, dobrý večer) with strangers, elderly people, and in professional settings. Always use 'Vy' (formal you) with these. Use 'ahoj' or 'čau' with friends, family, and people your own age. Use 'ty' (informal you) with these. Using informal with someone who expects formal is considered rude.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Dobrý den, jak se máte?", "en": "Good day, how are you? (formal)"},
+        {"cz": "Ahoj, jak se máš?", "en": "Hi, how are you? (informal)"},
+        {"cz": "Na shledanou, pane Nováku.", "en": "Goodbye, Mr. Novák. (formal)"},
+        {"cz": "Čau, tak zatím!", "en": "Bye, see you later! (informal)"}
+      ],
+      "unit_id": 2
+    },
+    {
+      "id": "GR-011",
+      "rule_name": "Self-introduction phrases",
+      "pattern": "Jmenuju se + name; Jsem z + city; Těší mě",
+      "explanation": "To introduce yourself in Czech: 'Jmenuju se [name]' (My name is). 'Jsem z [city]' (I'm from). 'Těší mě' (Nice to meet you, literally 'it pleases me'). The formal version of 'my name is' is 'Jmenuji se' (with -i instead of -u), but 'Jmenuju se' is acceptable in most contexts.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Jmenuju se Mahesh.", "en": "My name is Mahesh."},
+        {"cz": "Jsem z Prahy.", "en": "I'm from Prague."},
+        {"cz": "Těší mě.", "en": "Nice to meet you."}
+      ],
+      "unit_id": 2
+    },
+    {
+      "id": "GR-012",
+      "rule_name": "Politeness words",
+      "pattern": "prosím (please/you're welcome), děkuji (thank you), promiňte (excuse me)",
+      "explanation": "Three essential politeness words: 'prosím' means both 'please' and 'you're welcome'. 'děkuji' (or colloquially 'děkuju') means 'thank you'. 'promiňte' (formal) or 'promiň' (informal) means 'excuse me'. These are used constantly in Czech daily life.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Kávu, prosím.", "en": "A coffee, please."},
+        {"cz": "Děkuji.", "en": "Thank you."},
+        {"cz": "Prosím.", "en": "You're welcome."},
+        {"cz": "Promiňte, kde je nádraží?", "en": "Excuse me, where is the station?"}
+      ],
+      "unit_id": 2
+    },
+    {
+      "id": "GR-020",
+      "rule_name": "Three noun genders",
+      "pattern": "Masculine (animate + inanimate), Feminine, Neuter — identified by ending",
+      "explanation": "Every Czech noun has a gender, which determines endings for adjectives, pronouns, and verb agreement. You can usually guess the gender from the ending: consonant ending = masculine (hrad, muž, pes), -a ending = feminine (žena, kniha, káva), -o ending = neuter (město, pivo, auto). There are exceptions, but this rule covers ~90% of nouns.",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "hrad", "en": "castle", "gender": "masculine inanimate (consonant ending)"},
+        {"cz": "muž", "en": "man", "gender": "masculine animate (consonant ending)"},
+        {"cz": "žena", "en": "woman", "gender": "feminine (-a ending)"},
+        {"cz": "město", "en": "city", "gender": "neuter (-o ending)"}
+      ],
+      "unit_id": 3
+    },
+    {
+      "id": "GR-021",
+      "rule_name": "Masculine animate vs inanimate",
+      "pattern": "Masculine is split: animate (people, animals) vs inanimate (objects, concepts)",
+      "explanation": "Czech distinguishes between masculine animate (living: muž, pes, student, učitel) and masculine inanimate (non-living: hrad, dům, stůl, most). This distinction matters for the accusative case (animate adds -a, inanimate stays the same) and for past tense plural endings. At A1, focus on recognizing which is which.",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "muž (animate)", "en": "man", "note": "Accusative: muže"},
+        {"cz": "pes (animate)", "en": "dog", "note": "Accusative: psa"},
+        {"cz": "hrad (inanimate)", "en": "castle", "note": "Accusative: hrad (unchanged)"},
+        {"cz": "stůl (inanimate)", "en": "table", "note": "Accusative: stůl (unchanged)"}
+      ],
+      "unit_id": 3
+    },
+    {
+      "id": "GR-022",
+      "rule_name": "Nominative case — subject of sentence",
+      "pattern": "Nominative is the dictionary form, used for the subject of sentences",
+      "explanation": "The nominative case (1. pád) is the base form of a noun — the form you find in dictionaries. It is used when the noun is the subject of the sentence (the one doing the action). Questions answered by nominative: kdo? (who?) and co? (what?). Example: 'Žena pije kávu' — 'žena' is in nominative (she is the subject).",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "Žena pije kávu.", "en": "The woman drinks coffee.", "note": "žena = nominative subject"},
+        {"cz": "Muž je učitel.", "en": "The man is a teacher.", "note": "muž = nominative subject"},
+        {"cz": "Kdo to je?", "en": "Who is that?", "note": "kdo = nominative question"}
+      ],
+      "unit_id": 3
+    },
+    {
+      "id": "GR-023",
+      "rule_name": "To je... (This is...) identification pattern",
+      "pattern": "To je + noun — for identifying and introducing things",
+      "explanation": "'To je' (This is / That is) is the most common A1 pattern for identifying objects and people. 'To' is a demonstrative pronoun that doesn't change for gender. Use 'To je' + noun in nominative. For plural: 'To jsou' (These are). Negation: 'To není' (That is not).",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "To je kniha.", "en": "That is a book."},
+        {"cz": "To je muž.", "en": "That is a man."},
+        {"cz": "To je město.", "en": "That is a city."},
+        {"cz": "To jsou studenti.", "en": "Those are students."}
+      ],
+      "unit_id": 3
+    },
+    {
+      "id": "GR-024",
+      "rule_name": "Profession nouns — gendered pairs",
+      "pattern": "Many professions have male and female forms: -tel → -telka, -ř → -řka",
+      "explanation": "Czech profession nouns have gendered forms. Common patterns: učitel/učitelka (teacher), student/studentka (student), lékař/lékařka (doctor). The female form typically adds -ka to the male form. Use the form matching the person's gender.",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "On je učitel. Ona je učitelka.", "en": "He is a teacher. She is a teacher."},
+        {"cz": "On je student. Ona je studentka.", "en": "He is a student. She is a student."},
+        {"cz": "On je lékař. Ona je lékařka.", "en": "He is a doctor. She is a doctor."}
+      ],
+      "unit_id": 3
+    }
+  ]
+}

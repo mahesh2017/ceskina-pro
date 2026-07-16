@@ -1,0 +1,187 @@
+{
+  "id": 101,
+  "unit_id": 1,
+  "order_in_unit": 0,
+  "title": "Czech Alphabet & Sounds",
+  "description": "Learn the Czech alphabet, diacritics, and first-syllable stress rule",
+  "duration_min": 10,
+  "lesson_type": "introduction",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 1001,
+      "lesson_id": 101,
+      "type": "multiple_choice",
+      "prompt": "Which Czech letter has no equivalent in other languages and is a rolled 'r' with a ž quality?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které české písmeno nemá ekvivalent v jiných jazycích?",
+        "question_en": "Which Czech letter has no equivalent in other languages?",
+        "options": ["š", "ř", "ě", "č"],
+        "correct_index": 1,
+        "explanation": "ř is a unique Czech sound — a raised alveolar non-sonorant trill. It appears in řeka (river), tři (three), Dvořák."
+      },
+      "answer_key": "1",
+      "grammar_rule_id": "GR-001",
+      "xp_reward": 10
+    },
+    {
+      "id": 1002,
+      "lesson_id": 101,
+      "type": "multiple_choice",
+      "prompt": "In Czech, where does the word stress always fall?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Kde je v češtině přízvuk?",
+        "question_en": "Where does the stress fall in Czech?",
+        "options": ["Last syllable", "Second syllable", "First syllable", "Penultimate syllable"],
+        "correct_index": 2,
+        "explanation": "Czech stress ALWAYS falls on the first syllable. PRA-ha, KA-va, DĚ-kuji. No exceptions."
+      },
+      "answer_key": "2",
+      "grammar_rule_id": "GR-000",
+      "xp_reward": 10
+    },
+    {
+      "id": 1003,
+      "lesson_id": 101,
+      "type": "multiple_choice",
+      "prompt": "What does the háček (ˇ) mark do to a consonant?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Co dělá háček?",
+        "question_en": "What does the háček (ˇ) do?",
+        "options": [
+          "Makes the vowel long",
+          "Changes the consonant sound (softens it)",
+          "Indicates a pause",
+          "Marks word stress"
+        ],
+        "correct_index": 1,
+        "explanation": "Háček (ˇ) modifies consonants: č=ch, š=sh, ž=zh, ř=unique sound, ď=softened d, ť=softened t, ň=softened n."
+      },
+      "answer_key": "1",
+      "grammar_rule_id": "GR-004",
+      "xp_reward": 10
+    },
+    {
+      "id": 1004,
+      "lesson_id": 101,
+      "type": "multiple_choice",
+      "prompt": "Which word has a long vowel?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které slovo má dlouhou samohlásku?",
+        "question_en": "Which word has a long vowel?",
+        "options": ["kava", "káva", "pivo", "maso"],
+        "correct_index": 1,
+        "explanation": "káva has á (long a). The čárka (acute accent) marks vowel length. Long vowels are pronounced ~2x longer than short ones."
+      },
+      "answer_key": "1",
+      "grammar_rule_id": "GR-003",
+      "xp_reward": 10
+    },
+    {
+      "id": 1005,
+      "lesson_id": 101,
+      "type": "dictation",
+      "prompt": "Listen and type what you hear",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_1005",
+        "expected_text": "Dobrý den",
+        "language": "cs-CZ",
+        "note": "First-syllable stress: DOB-rý den. The ý is a long vowel."
+      },
+      "answer_key": "Dobrý den",
+      "xp_reward": 10
+    },
+    {
+      "id": 1006,
+      "lesson_id": 101,
+      "type": "dictation",
+      "prompt": "Listen and type what you hear",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_1006",
+        "expected_text": "řeka",
+        "language": "cs-CZ",
+        "note": "Contains the ř sound. Practice the rolled r with ž quality."
+      },
+      "answer_key": "řeka",
+      "grammar_rule_id": "GR-001",
+      "xp_reward": 10
+    },
+    {
+      "id": 1007,
+      "lesson_id": 101,
+      "type": "translation",
+      "prompt": "Translate to Czech",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "river",
+        "accepted_answers": ["řeka"],
+        "grammar_note": "Note the ř sound — unique to Czech. IPA: [ˈr̝ɛka]"
+      },
+      "answer_key": "řeka",
+      "grammar_rule_id": "GR-001",
+      "xp_reward": 10
+    },
+    {
+      "id": 1008,
+      "lesson_id": 101,
+      "type": "pronunciation",
+      "prompt": "Say this sentence aloud",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Řeka teče přes most.",
+        "target_audio_hash": "placeholder_1008",
+        "focus_sounds": ["ř"],
+        "min_score": 0.65,
+        "translation_en": "The river flows over the bridge."
+      },
+      "answer_key": "Řeka teče přes most.",
+      "grammar_rule_id": "GR-001",
+      "xp_reward": 15
+    },
+    {
+      "id": 1009,
+      "lesson_id": 101,
+      "type": "fill_blank",
+      "prompt": "Fill in the missing letter",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "M_sto means 'city' in Czech. The missing letter has a háček.",
+        "blank_count": 1,
+        "accepted_answers": ["ě"],
+        "explanation": "město — the ě after m softens it. mě sounds like 'mňe'. First-syllable stress: MĚ-sto."
+      },
+      "answer_key": "ě",
+      "grammar_rule_id": "GR-002",
+      "xp_reward": 10
+    },
+    {
+      "id": 1010,
+      "lesson_id": 101,
+      "type": "multiple_choice",
+      "prompt": "How is 'děti' (children) pronounced?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jak se vyslovuje 'děti'?",
+        "question_en": "How is 'děti' pronounced?",
+        "options": [
+          "de-ti (hard d)",
+          "dye-ti (softened d)",
+          "de-tee (long e)",
+          "dge-ti (like English 'judge')"
+        ],
+        "correct_index": 1,
+        "explanation": "ě softens the preceding consonant. dě → 'dye'. So děti sounds like 'dye-ti'."
+      },
+      "answer_key": "1",
+      "grammar_rule_id": "GR-002",
+      "xp_reward": 10
+    }
+  ]
+}

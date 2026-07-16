@@ -1,0 +1,22 @@
+{
+  "units": [
+    {
+      "id": 1,
+      "title": "Sounds & Pronunciation",
+      "description": "Czech alphabet, háček, čárka, first-syllable stress, problem sounds: ř, ě",
+      "phase": "a1",
+      "order_index": 1,
+      "grammar_tags": ["phonetics", "pronunciation"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 2,
+      "title": "Greetings & Introductions",
+      "description": "Dobrý den, na shledanou, děkuji, prosím. Jmenuju se..., Jsem z...",
+      "phase": "a1",
+      "order_index": 2,
+      "grammar_tags": ["greetings", "introductions"],
+      "is_exam_prep": false
+    }
+  ]
+}

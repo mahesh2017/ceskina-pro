@@ -1,0 +1,190 @@
+{
+  "id": 202,
+  "unit_id": 2,
+  "order_in_unit": 1,
+  "title": "Introducing Yourself",
+  "description": "Learn to say your name, where you're from, and 'nice to meet you'",
+  "duration_min": 12,
+  "lesson_type": "practice",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 2101,
+      "lesson_id": 202,
+      "type": "translation",
+      "prompt": "Translate to Czech",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "My name is Mahesh.",
+        "accepted_answers": ["Jmenuju se Mahesh.", "Jmenuji se Mahesh."],
+        "grammar_note": "Jmenuju se (colloquial) or Jmenuji se (formal). Both are correct for A1."
+      },
+      "answer_key": "Jmenuju se Mahesh.",
+      "grammar_rule_id": "GR-011",
+      "xp_reward": 10
+    },
+    {
+      "id": 2102,
+      "lesson_id": 202,
+      "type": "translation",
+      "prompt": "Translate to Czech",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I am from Prague.",
+        "accepted_answers": ["Jsem z Prahy.", "Jsem z Praha."],
+        "grammar_note": "Jsem z + genitive of city. Prahy is genitive of Praha (covered in A2). At A1, memorize the phrase."
+      },
+      "answer_key": "Jsem z Prahy.",
+      "grammar_rule_id": "GR-011",
+      "xp_reward": 10
+    },
+    {
+      "id": 2103,
+      "lesson_id": 202,
+      "type": "translation",
+      "prompt": "Translate to Czech",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "Nice to meet you.",
+        "accepted_answers": ["Těší mě.", "Těší mě."],
+        "grammar_note": "Těší mě = literally 'it pleases me'. Very common phrase after introducing yourself."
+      },
+      "answer_key": "Těší mě.",
+      "grammar_rule_id": "GR-011",
+      "xp_reward": 10
+    },
+    {
+      "id": 2104,
+      "lesson_id": 202,
+      "type": "word_order",
+      "prompt": "Arrange: 'Jmenuju se Anna. Jsem z Prahy. Těší mě.'",
+      "data": {
+        "type": "word_order",
+        "words": ["Jmenuju", "se", "Anna.", "Jsem", "z", "Prahy.", "Těší", "mě."],
+        "correct_order": [0, 1, 2, 3, 4, 5, 6, 7],
+        "explanation": "Standard self-introduction order: Name → Origin → Pleasure. This is the A1 introduction pattern."
+      },
+      "answer_key": "0,1,2,3,4,5,6,7",
+      "grammar_rule_id": "GR-011",
+      "xp_reward": 15
+    },
+    {
+      "id": 2105,
+      "lesson_id": 202,
+      "type": "fill_blank",
+      "prompt": "Complete: 'My name is Tom and I'm from Brno'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "_____ se Tom. Jsem _____ Brna.",
+        "blank_count": 2,
+        "accepted_answers": ["Jmenuju|z"],
+        "explanation": "Jmenuju se Tom (My name is Tom). Jsem z Brna (I'm from Brno). Note: 'z' + genitive — Brna is genitive of Brno."
+      },
+      "answer_key": "Jmenuju|z",
+      "grammar_rule_id": "GR-011",
+      "xp_reward": 15
+    },
+    {
+      "id": 2106,
+      "lesson_id": 202,
+      "type": "multiple_choice",
+      "prompt": "How do you formally address a man named Novák?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jak oslovíte pána Nováka?",
+        "question_en": "How do you address Mr. Novák?",
+        "options": ["pane Novák", "pane Nováku", "pan Novák", "Novák"],
+        "correct_index": 1,
+        "explanation": "Formal address: pane + vocative of surname. Nováku is vocative of Novák. The vocative ending for masculine animate is -u."
+      },
+      "answer_key": "1",
+      "xp_reward": 10
+    },
+    {
+      "id": 2107,
+      "lesson_id": 202,
+      "type": "multiple_choice",
+      "prompt": "What does 'paní' mean?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Co znamená 'paní'?",
+        "question_en": "What does 'paní' mean?",
+        "options": ["Sir", "Mrs. / Madam", "Mr.", "Miss"],
+        "correct_index": 1,
+        "explanation": "Paní = Mrs. / Madam. Used to address married women formally: 'Dobrý den, paní Nováková.'"
+      },
+      "answer_key": "1",
+      "xp_reward": 10
+    },
+    {
+      "id": 2108,
+      "lesson_id": 202,
+      "type": "translation",
+      "prompt": "Translate to English",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "Jmenuju se Mahesh. Jsem z Indie. Těší mě.",
+        "accepted_answers": ["My name is Mahesh. I am from India. Nice to meet you."],
+        "grammar_note": "Full self-introduction. 'Indie' genitive = 'Indie' (same form for this one)."
+      },
+      "answer_key": "My name is Mahesh. I am from India. Nice to meet you.",
+      "xp_reward": 15
+    },
+    {
+      "id": 2109,
+      "lesson_id": 202,
+      "type": "dictation",
+      "prompt": "Listen and type the introduction",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_2109",
+        "expected_text": "Jmenuju se Anna. Těší mě.",
+        "language": "cs-CZ",
+        "note": "Note the ě in Těší — softened t. First-syllable stress: JME-nu-ju, TĚ-ší."
+      },
+      "answer_key": "Jmenuju se Anna. Těší mě.",
+      "xp_reward": 10
+    },
+    {
+      "id": 2110,
+      "lesson_id": 202,
+      "type": "pronunciation",
+      "prompt": "Say this self-introduction aloud",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Jmenuju se Mahesh. Jsem z Indie. Těší mě.",
+        "target_audio_hash": "placeholder_2110",
+        "focus_sounds": ["ě"],
+        "min_score": 0.55,
+        "translation_en": "My name is Mahesh. I'm from India. Nice to meet you."
+      },
+      "answer_key": "Jmenuju se Mahesh. Jsem z Indie. Těší mě.",
+      "grammar_rule_id": "GR-011",
+      "xp_reward": 20
+    },
+    {
+      "id": 2111,
+      "lesson_id": 202,
+      "type": "dialogue",
+      "prompt": "Complete the dialogue with the correct response",
+      "data": {
+        "type": "dialogue",
+        "scenario": "Meeting someone new at a party",
+        "lines": [
+          {"speaker": "stranger", "text": "Ahoj, já jsem Petra. Jak se jmenuješ ty?"},
+          {"speaker": "you", "text": "_____ (My name is Mahesh.)"},
+          {"speaker": "stranger", "text": "Těší mě, Mahesh!"}
+        ],
+        "accepted_answers": ["Jmenuju se Mahesh.", "Já se jmenuju Mahesh.", "Jmenuji se Mahesh."],
+        "explanation": "Informal context (ahoj, jmenuješ), so use Jmenuju se (colloquial)."
+      },
+      "answer_key": "Jmenuju se Mahesh.",
+      "grammar_rule_id": "GR-011",
+      "xp_reward": 15
+    }
+  ]
+}
