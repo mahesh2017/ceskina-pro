@@ -4,11 +4,9 @@ import 'package:go_router/go_router.dart';
 import '../../providers/curriculum_providers.dart';
 import '../../providers/gamification_providers.dart';
 import '../../providers/review_providers.dart';
-import '../../providers/database_providers.dart';
 import '../../widgets/common/streak_indicator.dart';
 import '../../widgets/common/hearts_display.dart';
 import '../../widgets/common/xp_badge.dart';
-import '../../../domain/entities/lesson.dart';
 
 /// Home dashboard — streak, XP, daily goal ring, continue learning.
 class HomeScreen extends ConsumerWidget {
@@ -17,8 +15,6 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gamification = ref.watch(gamificationProvider);
-    final unitsAsync = ref.watch(allUnitsProvider);
-    final unlockedIdsAsync = ref.watch(unlockedUnitIdsProvider);
     final dueCountAsync = ref.watch(dueCardCountProvider);
 
     return Scaffold(
@@ -46,11 +42,7 @@ class HomeScreen extends ConsumerWidget {
           const SizedBox(height: 16),
 
           // Continue learning — finds next uncompleted lesson
-          _ContinueLearningCard(
-            unitsAsync: unitsAsync,
-            unlockedIdsAsync: unlockedIdsAsync,
-            ref: ref,
-          ),
+          const _ContinueLearningCard(),
           const SizedBox(height: 16),
 
           // Quick actions
@@ -232,117 +224,17 @@ class _StatChip extends StatelessWidget {
   }
 }
 
-/// Continue learning card — finds the next uncompleted lesson from unlocked units.
-class _ContinueLearningCard extends ConsumerStatefulWidget {
-  final AsyncValue<List<dynamic>> unitsAsync;
-  final AsyncValue<Set<int>> unlockedIdsAsync;
-  final WidgetRef ref;
-
-  const _ContinueLearningCard({
-    required this.unitsAsync,
-    required this.unlockedIdsAsync,
-    required this.ref,
-  });
+/// Continue learning card — shows the next uncompleted lesson from
+/// unlocked units, and refreshes automatically when progress changes.
+class _ContinueLearningCard extends ConsumerWidget {
+  const _ContinueLearningCard();
 
   @override
-  ConsumerState<_ContinueLearningCard> createState() =>
-      _ContinueLearningCardState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final nextLessonAsync = ref.watch(nextLessonProvider);
 
-class _ContinueLearningCardState
-    extends ConsumerState<_ContinueLearningCard> {
-  Lesson? _nextLesson;
-  String? _nextLessonUnitTitle;
-  bool _loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _findNextLesson();
-  }
-
-  Future<void> _findNextLesson() async {
-    final units = widget.unitsAsync.maybeWhen(
-      data: (u) => u,
-      orElse: () => null,
-    );
-    if (units == null || units.isEmpty) {
-      if (mounted) setState(() => _loading = false);
-      return;
-    }
-
-    final unlockedIds = widget.unlockedIdsAsync.maybeWhen(
-      data: (ids) => ids,
-      orElse: () => {units.first.id},
-    );
-
-    final progressRepo = ref.read(progressRepositoryProvider);
-    final snapshot = await progressRepo.getSnapshot();
-    final completedUnitIds = snapshot.unitScores.entries
-        .where((e) => e.value >= 0.6)
-        .map((e) => e.key)
-        .toSet();
-
-    // Find the first unlocked unit that isn't completed yet
-    for (final unit in units) {
-      if (!unlockedIds.contains(unit.id)) continue;
-      if (completedUnitIds.contains(unit.id)) continue;
-
-      // Found an unlocked, incomplete unit — get its lessons
-      final lessons =
-          await ref.read(unitLessonsProvider(unit.id).future);
-      if (lessons.isNotEmpty) {
-        if (mounted) {
-          setState(() {
-            _nextLesson = lessons.first;
-            _nextLessonUnitTitle = unit.title;
-            _loading = false;
-          });
-        }
-        return;
-      }
-    }
-
-    // All unlocked units completed — find first lesson from next locked unit
-    for (final unit in units) {
-      if (unlockedIds.contains(unit.id)) continue;
-      final lessons =
-          await ref.read(unitLessonsProvider(unit.id).future);
-      if (lessons.isNotEmpty) {
-        if (mounted) {
-          setState(() {
-            _nextLesson = lessons.first;
-            _nextLessonUnitTitle = unit.title;
-            _loading = false;
-          });
-        }
-        return;
-      }
-    }
-
-    // Fallback: first lesson of first unit
-    for (final unit in units) {
-      final lessons =
-          await ref.read(unitLessonsProvider(unit.id).future);
-      if (lessons.isNotEmpty) {
-        if (mounted) {
-          setState(() {
-            _nextLesson = lessons.first;
-            _nextLessonUnitTitle = unit.title;
-            _loading = false;
-          });
-        }
-        return;
-      }
-    }
-
-    if (mounted) setState(() => _loading = false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_loading) {
-      return const Card(
+    return nextLessonAsync.when(
+      loading: () => const Card(
         child: ListTile(
           leading: SizedBox(
             width: 24,
@@ -351,24 +243,33 @@ class _ContinueLearningCardState
           ),
           title: Text('Loading...'),
         ),
-      );
-    }
-
-    final lesson = _nextLesson;
-    return Card(
-      child: ListTile(
-        leading: const Icon(Icons.play_circle, size: 48,
-            color: Colors.blue),
-        title: const Text('Continue Learning'),
-        subtitle: Text(
-          lesson != null
-              ? '${_nextLessonUnitTitle ?? ''} → ${lesson.title}'
-              : 'Start your Czech journey!',
+      ),
+      error: (_, __) => Card(
+        child: ListTile(
+          leading: const Icon(Icons.school, size: 48, color: Colors.blue),
+          title: const Text('Browse Curriculum'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.go('/curriculum'),
         ),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: lesson != null
-            ? () => context.go('/lesson/${lesson.id}')
-            : () => context.go('/curriculum'),
+      ),
+      data: (next) => Card(
+        child: ListTile(
+          leading: Icon(
+            next != null ? Icons.play_circle : Icons.check_circle,
+            size: 48,
+            color: next != null ? Colors.blue : Colors.green,
+          ),
+          title: Text(next != null ? 'Continue Learning' : 'All caught up!'),
+          subtitle: Text(
+            next != null
+                ? '${next.unitTitle} → ${next.lesson.title}'
+                : 'Every unlocked lesson is complete. Well done!',
+          ),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: next != null
+              ? () => context.go('/lesson/${next.lesson.id}')
+              : () => context.go('/curriculum'),
+        ),
       ),
     );
   }

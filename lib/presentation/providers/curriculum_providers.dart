@@ -49,40 +49,69 @@ final unitLessonCountProvider =
 });
 
 /// Provider for completed lesson IDs.
+/// Invalidate this after a lesson completes — dependents
+/// ([unlockedUnitIdsProvider], [nextLessonProvider]) refresh automatically.
 final completedLessonIdsProvider = FutureProvider<Set<int>>((ref) async {
-  // TODO: Query completed lesson IDs directly from the progress DAO
-  // For now, returns empty — unit unlocking uses unitScores from getSnapshot
-  return <int>{};
+  final progressRepo = ref.read(progressRepositoryProvider);
+  return progressRepo.getCompletedLessonIds();
 });
 
 /// Provider for unlocked unit IDs based on progress.
 /// A unit is unlocked if:
 /// - It's the first unit (always unlocked)
-/// - The previous unit has all its lessons completed
+/// - The previous unit is unlocked and ALL of its lessons are completed
 final unlockedUnitIdsProvider = FutureProvider<Set<int>>((ref) async {
-  final repo = ref.read(curriculumRepositoryProvider);
-  final progressRepo = ref.read(progressRepositoryProvider);
+  final allUnits = await ref.watch(allUnitsProvider.future);
+  final completedLessonIds =
+      await ref.watch(completedLessonIdsProvider.future);
 
-  final a1Units = await repo.getUnits(Phase.a1);
-  final a2Units = await repo.getUnits(Phase.a2);
-  final allUnits = [...a1Units, ...a2Units];
-
-  final snapshot = await progressRepo.getSnapshot();
   final unlocked = <int>{};
-
   for (var i = 0; i < allUnits.length; i++) {
     if (i == 0) {
       unlocked.add(allUnits[i].id);
       continue;
     }
 
-    // Check if previous unit is completed (score >= 0.6)
     final prevUnit = allUnits[i - 1];
-    final prevScore = snapshot.unitScores[prevUnit.id] ?? 0.0;
-    if (prevScore >= 0.6) {
+    // Once the chain breaks, everything after stays locked.
+    if (!unlocked.contains(prevUnit.id)) break;
+
+    final prevLessons =
+        await ref.watch(unitLessonsProvider(prevUnit.id).future);
+    final prevComplete = prevLessons.isNotEmpty &&
+        prevLessons.every((l) => completedLessonIds.contains(l.id));
+    if (prevComplete) {
       unlocked.add(allUnits[i].id);
     }
   }
 
   return unlocked;
+});
+
+/// The next lesson the learner should continue with, plus its unit title.
+class NextLessonInfo {
+  final Lesson lesson;
+  final String unitTitle;
+
+  const NextLessonInfo({required this.lesson, required this.unitTitle});
+}
+
+/// Provider for the next uncompleted lesson in the first unlocked unit
+/// that still has work left. Null when everything unlocked is completed.
+final nextLessonProvider = FutureProvider<NextLessonInfo?>((ref) async {
+  final allUnits = await ref.watch(allUnitsProvider.future);
+  final unlockedIds = await ref.watch(unlockedUnitIdsProvider.future);
+  final completedLessonIds =
+      await ref.watch(completedLessonIdsProvider.future);
+
+  for (final unit in allUnits) {
+    if (!unlockedIds.contains(unit.id)) continue;
+    final lessons = await ref.watch(unitLessonsProvider(unit.id).future);
+    for (final lesson in lessons) {
+      if (!completedLessonIds.contains(lesson.id)) {
+        return NextLessonInfo(lesson: lesson, unitTitle: unit.title);
+      }
+    }
+  }
+  return null;
 });

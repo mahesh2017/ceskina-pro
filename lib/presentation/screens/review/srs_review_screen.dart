@@ -110,7 +110,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
             // Flashcard
             Expanded(
               child: _FlashcardView(
-                card: card,
+                card: card.flashcard,
                 isFlipped: session.isFlipped,
                 onFlip: () {
                   ref.read(reviewSessionProvider.notifier).flipCard();

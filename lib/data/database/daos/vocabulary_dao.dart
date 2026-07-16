@@ -49,6 +49,12 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
   Future<void> upsertSrsCard(SrsCardsCompanion card) =>
       into(srsCards).insertOnConflictUpdate(card);
 
+  Future<int> srsCardCount() async {
+    final result = await customSelect('SELECT COUNT(*) AS c FROM srs_cards')
+        .getSingle();
+    return result.read<int>('c');
+  }
+
   Future<void> updateSrsCard(SrsCardsCompanion card) =>
       (update(srsCards)..where((s) => s.id.equals(card.id.value)))
           .write(card);

@@ -346,14 +346,24 @@ class _FillBlankView extends StatefulWidget {
 }
 
 class _FillBlankViewState extends State<_FillBlankView> {
-  final _controller = TextEditingController();
+  // Blanks are written as runs of 3+ underscores (content varies: ___ or _____).
+  static final _blankPattern = RegExp(r'_{3,}');
+
+  final Map<int, TextEditingController> _controllers = {};
   bool answered = false;
   bool? isCorrect;
 
   @override
   void dispose() {
-    _controller.dispose();
+    for (final c in _controllers.values) {
+      c.dispose();
+    }
     super.dispose();
+  }
+
+  /// One controller per blank, stable across rebuilds.
+  TextEditingController _controllerFor(int blankIdx) {
+    return _controllers.putIfAbsent(blankIdx, () => TextEditingController());
   }
 
   void _checkAnswer() {
@@ -361,8 +371,15 @@ class _FillBlankViewState extends State<_FillBlankView> {
     final accepted = (data['accepted_answers'] as List<dynamic>)
         .map((e) => (e as String).trim().toLowerCase())
         .toList();
-    final userAnswer = _controller.text.trim().toLowerCase();
-    // Support multi-blank with | separator
+
+    // Collect per-blank answers in order; multi-blank joins with |
+    // to match the accepted_answers format.
+    final blankIndices = _controllers.keys.toList()..sort();
+    final userAnswer = blankIndices
+        .map((idx) => _controllers[idx]!.text.trim())
+        .join('|')
+        .toLowerCase();
+
     final correct = accepted.any((a) {
       if (a.contains('|')) {
         final parts = a.split('|').map((p) => p.trim().toLowerCase()).toList();
@@ -384,7 +401,7 @@ class _FillBlankViewState extends State<_FillBlankView> {
     final result = ExerciseResult(
       isCorrect: correct,
       explanation: data['explanation'] as String?,
-      correctAnswer: (data['accepted_answers'] as List<dynamic>).first as String,
+      correctAnswer: _displayAnswer(data),
     );
 
     Future.delayed(const Duration(milliseconds: 1500),
@@ -393,13 +410,19 @@ class _FillBlankViewState extends State<_FillBlankView> {
     });
   }
 
+  /// First accepted answer, with | separators made readable.
+  String _displayAnswer(Map<String, dynamic> data) {
+    final first = (data['accepted_answers'] as List<dynamic>).first as String;
+    return first.replaceAll('|', ', ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = widget.exercise.data;
     final sentence = data['sentence'] as String;
 
-    // Split sentence at ___ to show blanks visually
-    final parts = sentence.split('___');
+    // Split sentence at underscore runs to show blanks visually
+    final parts = sentence.split(_blankPattern);
 
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -413,7 +436,7 @@ class _FillBlankViewState extends State<_FillBlankView> {
           ),
           const SizedBox(height: 24),
 
-          // Sentence with inline input
+          // Sentence with one inline input per blank
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
@@ -425,7 +448,7 @@ class _FillBlankViewState extends State<_FillBlankView> {
                     child: SizedBox(
                       width: 100,
                       child: TextField(
-                        controller: _controller,
+                        controller: _controllerFor(i),
                         enabled: !answered,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -459,7 +482,7 @@ class _FillBlankViewState extends State<_FillBlankView> {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
-                  'Correct: ${(data['accepted_answers'] as List<dynamic>).first}',
+                  'Correct: ${_displayAnswer(data)}',
                   style: const TextStyle(
                       color: Colors.green, fontWeight: FontWeight.bold),
                 ),
@@ -684,17 +707,17 @@ class _WordChip extends StatelessWidget {
 }
 
 // Dictation — listen and type
-class _DictationView extends StatefulWidget {
+class _DictationView extends ConsumerStatefulWidget {
   final Exercise exercise;
   final OnExerciseAnswered onAnswered;
 
   const _DictationView({required this.exercise, required this.onAnswered});
 
   @override
-  State<_DictationView> createState() => _DictationViewState();
+  ConsumerState<_DictationView> createState() => _DictationViewState();
 }
 
-class _DictationViewState extends State<_DictationView> {
+class _DictationViewState extends ConsumerState<_DictationView> {
   final _controller = TextEditingController();
   bool answered = false;
   bool? isCorrect;
@@ -759,7 +782,7 @@ class _DictationViewState extends State<_DictationView> {
           const SizedBox(height: 16),
           TextButton.icon(
             onPressed: () {
-              // Replay handled by TtsButton above
+              ref.read(czechTtsProvider).speak(data['expected_text'] as String);
             },
             icon: const Icon(Icons.replay),
             label: const Text('Play again'),

@@ -45,6 +45,12 @@ class DriftProgressRepository implements ProgressRepository {
   }
 
   @override
+  Future<Set<int>> getCompletedLessonIds() async {
+    final completed = await _db.progressDao.getCompletedLessons();
+    return completed.map((l) => l.lessonId).toSet();
+  }
+
+  @override
   Future<ProgressSnapshot> getSnapshot() async {
     final completed = await _db.progressDao.getCompletedLessons();
     final badgeIds = await _db.progressDao.getEarnedBadgeIds();

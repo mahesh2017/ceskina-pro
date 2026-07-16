@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/flashcard.dart';
 import '../../domain/entities/fsrs_card.dart';
 import '../../domain/engines/fsrs_scheduler.dart';
+import '../../domain/repositories/vocabulary_repository.dart';
 import 'database_providers.dart';
 import 'gamification_providers.dart';
 
 /// State of an SRS review session.
 class ReviewSessionState {
-  final List<Flashcard> dueCards;
+  final List<ReviewCard> dueCards;
   final int currentIndex;
   final bool isFlipped;
   final int reviewedCount;
@@ -34,7 +34,7 @@ class ReviewSessionState {
   });
 
   ReviewSessionState copyWith({
-    List<Flashcard>? dueCards,
+    List<ReviewCard>? dueCards,
     int? currentIndex,
     bool? isFlipped,
     int? reviewedCount,
@@ -61,7 +61,7 @@ class ReviewSessionState {
     );
   }
 
-  Flashcard? get currentCard =>
+  ReviewCard? get currentCard =>
       currentIndex < dueCards.length ? dueCards[currentIndex] : null;
 
   int get totalCards => dueCards.length;
@@ -108,21 +108,15 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
 
     final now = DateTime.now();
 
-    // Build FSRS card from the flashcard's current SRS state.
-    // The SRS card id is the flashcard id — the seeder creates them 1:1.
-    final fsrsCard = FSRSCard(
-      id: card.id.toString(),
-      cardType: CardType.vocabulary,
-      due: now,
-    );
+    // Schedule from the card's stored SRS state so intervals and ease
+    // accumulate across reviews, then persist the scheduled result.
+    final result = _scheduler.schedule(card.fsrs, rating, now);
 
-    // Schedule and keep the updated card
-    final result = _scheduler.schedule(fsrsCard, rating, now);
-    final updatedCard = result.card;
-
-    // Persist the scheduled card (not the default)
     final repo = ref.read(vocabularyRepositoryProvider);
-    repo.updateCard(updatedCard, rating, now);
+    repo.updateCard(result.card, rating, now).whenComplete(() {
+      // Refresh the home-screen due count once the new due date is stored.
+      ref.invalidate(dueCardCountProvider);
+    });
 
     // Update counts
     final newAgain = state.againCount + (rating == Rating.again ? 1 : 0);

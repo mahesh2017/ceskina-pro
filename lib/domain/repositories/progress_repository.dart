@@ -4,6 +4,7 @@ import '../entities/gamification_state.dart';
 abstract class ProgressRepository {
   Stream<ProgressSnapshot> watchProgress();
   Future<void> recordCompletion(int unitId, int lessonId, double score);
+  Future<Set<int>> getCompletedLessonIds();
   Future<ProgressSnapshot> getSnapshot();
   Future<void> recordExamPassed(String level);
   Future<void> updateStreak(int currentStreak, int longestStreak);

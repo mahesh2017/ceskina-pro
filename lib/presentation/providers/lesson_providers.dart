@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/exercise.dart';
 import '../../domain/entities/lesson.dart';
+import 'curriculum_providers.dart';
 import 'database_providers.dart';
 import 'gamification_providers.dart';
 
@@ -172,7 +173,11 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
         lesson.unitId,
         lesson.id,
         state.accuracy,
-      ).catchError((e) {
+      ).then((_) {
+        // Refresh completion-derived state (unit unlocks, next lesson)
+        // now that the new completion is stored.
+        ref.invalidate(completedLessonIdsProvider);
+      }).catchError((e) {
         // Log but don't block — lesson is still "complete" in UI
         // In production, add proper logging here
       });

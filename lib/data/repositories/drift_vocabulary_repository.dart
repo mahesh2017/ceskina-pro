@@ -11,25 +11,28 @@ class DriftVocabularyRepository implements VocabularyRepository {
   DriftVocabularyRepository(this._db);
 
   @override
-  Future<List<entity.Flashcard>> getDueCards({DateTime? asOf}) async {
+  Future<List<ReviewCard>> getDueCards({DateTime? asOf}) async {
     final now = asOf ?? DateTime.now();
     final dueSrsCards = await _db.vocabularyDao.getDueCards(now);
     if (dueSrsCards.isEmpty) return [];
 
-    final flashcardIds = dueSrsCards
+    final vocabSrsCards = dueSrsCards
         .where((s) => s.cardType == 'vocabulary' && s.flashcardId != null)
-        .map((s) => s.flashcardId!)
         .toList();
 
-    if (flashcardIds.isEmpty) return [];
+    if (vocabSrsCards.isEmpty) return [];
 
     final allFlashcards = await _db.vocabularyDao.getAllFlashcards();
     final flashcardMap = {for (var f in allFlashcards) f.id: f};
 
-    return flashcardIds
-        .where((id) => flashcardMap.containsKey(id))
-        .map((id) => _toEntityFlashcard(flashcardMap[id]!))
-        .toList();
+    return [
+      for (final srs in vocabSrsCards)
+        if (flashcardMap.containsKey(srs.flashcardId))
+          ReviewCard(
+            flashcard: _toEntityFlashcard(flashcardMap[srs.flashcardId]!),
+            fsrs: _toFsrsCard(srs),
+          ),
+    ];
   }
 
   @override
@@ -64,6 +67,20 @@ class DriftVocabularyRepository implements VocabularyRepository {
   Future<int> getDueCount({DateTime? asOf}) async {
     final now = asOf ?? DateTime.now();
     return _db.vocabularyDao.getDueCount(now);
+  }
+
+  FSRSCard _toFsrsCard(db.SrsCard row) {
+    return FSRSCard(
+      id: row.id.toString(),
+      cardType:
+          row.cardType == 'grammar' ? CardType.grammar : CardType.vocabulary,
+      stability: row.stability,
+      difficulty: row.difficulty,
+      due: row.due,
+      reps: row.reps,
+      state: CardState.values.asNameMap()[row.state] ?? CardState.newCard,
+      lastReview: row.lastReviewed,
+    );
   }
 
   entity.Flashcard _toEntityFlashcard(db.Flashcard row) {

@@ -18,6 +18,9 @@ class ContentSeeder {
   Future<void> seedIfNeeded() async {
     final isSeeded = await _db.curriculumDao.isSeeded();
     if (isSeeded) {
+      // Installs seeded before SRS seeding existed have flashcards but no
+      // SRS cards — backfill them so the review queue isn't empty.
+      await _backfillSrsCards();
       _log.info('Database already seeded, skipping.');
       return;
     }
@@ -209,6 +212,30 @@ class ContentSeeder {
         _log.fine('No $level vocabulary file found, skipping.');
       }
     }
+  }
+
+  /// Create missing SRS cards for flashcards that were seeded before
+  /// SRS card seeding existed (upgrade path for older installs).
+  Future<void> _backfillSrsCards() async {
+    final srsCount = await _db.vocabularyDao.srsCardCount();
+    if (srsCount > 0) return;
+
+    final flashcards = await _db.vocabularyDao.getAllFlashcards();
+    if (flashcards.isEmpty) return;
+
+    for (final flashcard in flashcards) {
+      await _db.vocabularyDao.upsertSrsCard(db.SrsCardsCompanion.insert(
+        cardType: 'vocabulary',
+        flashcardId: Value(flashcard.id),
+        stability: const Value(0.0),
+        difficulty: const Value(0.0),
+        due: Value(DateTime.now()),
+        reps: const Value(0),
+        state: const Value('newCard'),
+      ));
+    }
+
+    _log.info('Backfilled SRS cards for ${flashcards.length} flashcards.');
   }
 
   /// Load a text asset, returning empty string if not found.
