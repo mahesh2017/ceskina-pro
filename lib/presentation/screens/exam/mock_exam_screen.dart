@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/entities/enums.dart';
@@ -6,6 +7,7 @@ import '../../../domain/entities/exam_result.dart';
 import '../../../domain/repositories/exam_repository.dart';
 import '../../providers/database_providers.dart';
 import '../../providers/gamification_providers.dart';
+import '../../providers/writing_providers.dart';
 
 /// Mock exam screen — timed sections matching CCE format.
 class MockExamScreen extends ConsumerStatefulWidget {
@@ -355,6 +357,9 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   }
 
   Widget _buildWritingQuestion(Map<String, dynamic> question) {
+    final writingState = ref.watch(writingEvalProvider);
+    final learnerText = _answers[_currentQuestion] as String? ?? '';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -373,6 +378,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
             maxLines: null,
             expands: true,
             textAlignVertical: TextAlignVertical.top,
+            enabled: !writingState.isEvaluating,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Napište svou odpověď v češtině...',
@@ -380,6 +386,73 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
             onChanged: _answer,
           ),
         ),
+        // AI evaluation feedback
+        if (writingState.isEvaluating) ...[
+          const SizedBox(height: 12),
+          const Row(
+            children: [
+              SizedBox(
+                width: 16,
+                height: 16,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              SizedBox(width: 12),
+              Text('AI evaluating your writing...'),
+            ],
+          ),
+        ],
+        if (writingState.evaluation != null) ...[
+          const SizedBox(height: 12),
+          Card(
+            color: Colors.blue.shade50,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'AI Feedback — Score: ${writingState.evaluation!.overall}/100',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  _MiniScoreRow(label: 'Grammar', score: writingState.evaluation!.grammar),
+                  _MiniScoreRow(label: 'Vocabulary', score: writingState.evaluation!.vocabulary),
+                  _MiniScoreRow(label: 'Coherence', score: writingState.evaluation!.coherence),
+                  const SizedBox(height: 8),
+                  Text(
+                    writingState.evaluation!.feedback,
+                    style: const TextStyle(fontSize: 13),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+        if (writingState.error != null) ...[
+          const SizedBox(height: 12),
+          Text(
+            writingState.error!,
+            style: TextStyle(color: Theme.of(context).colorScheme.error),
+          ),
+        ],
+        if (!writingState.isEvaluating && writingState.evaluation == null && learnerText.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () async {
+              final eval = await ref.read(writingEvalProvider.notifier).evaluate(
+                    level: widget.level == ExamLevel.a1
+                        ? CEFRLevel.a1
+                        : CEFRLevel.a2,
+                    taskDescription: question['prompt'] as String,
+                    learnerText: learnerText,
+                  );
+              // Store AI score as the answer
+              _answer(eval.overall);
+            },
+            icon: const Icon(Icons.rate_review),
+            label: const Text('Evaluate with AI'),
+          ),
+        ],
       ],
     );
   }
@@ -526,6 +599,43 @@ class _ScoreRow extends StatelessWidget {
               color: color,
               fontSize: isBold ? 18 : 16,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MiniScoreRow extends StatelessWidget {
+  final String label;
+  final int score;
+
+  const _MiniScoreRow({required this.label, required this.score});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Row(
+        children: [
+          SizedBox(width: 80, child: Text(label, style: const TextStyle(fontSize: 12))),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              child: LinearProgressIndicator(
+                value: score / 100,
+                minHeight: 6,
+                backgroundColor: Colors.grey.shade200,
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  score >= 80 ? Colors.green : score >= 60 ? Colors.orange : Colors.red,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          SizedBox(
+            width: 28,
+            child: Text('$score', style: const TextStyle(fontSize: 11)),
           ),
         ],
       ),
