@@ -237,6 +237,23 @@ class GamificationNotifier extends Notifier<GamificationState> {
     _persist();
   }
 
+  /// Called when a pronunciation drill is completed.
+  void onPronunciationDrill({required double accuracy}) {
+    final xp = _engine.calculateXp(
+      actionType: XpActionType.pronunciationDrill,
+      accuracy: accuracy,
+    );
+
+    _maybeIncrementStreak();
+
+    state = state.copyWith(
+      totalXp: state.totalXp + xp,
+      dailyXp: state.dailyXp + xp,
+    );
+
+    _persist();
+  }
+
   /// Manually refill one heart.
   void refillHeart() {
     if (state.hearts < state.maxHearts) {

@@ -1,27 +1,390 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../providers/pronunciation_providers.dart';
+import '../../providers/tts_providers.dart';
+import '../../widgets/common/record_button.dart';
+import '../../../domain/entities/pronunciation_result.dart';
 
 /// Pronunciation lab — record-and-compare with visual feedback.
-class PronunciationScreen extends StatelessWidget {
+class PronunciationScreen extends ConsumerStatefulWidget {
   final String exerciseId;
+  final String? expectedText;
 
-  const PronunciationScreen({super.key, required this.exerciseId});
+  const PronunciationScreen({
+    super.key,
+    required this.exerciseId,
+    this.expectedText,
+  });
+
+  @override
+  ConsumerState<PronunciationScreen> createState() =>
+      _PronunciationScreenState();
+}
+
+class _PronunciationScreenState
+    extends ConsumerState<PronunciationScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Set default practice text if none provided
+    final text = widget.expectedText ?? 'Ahoj, jak se máš?';
+    Future.microtask(() {
+      ref.read(pronunciationProvider.notifier).setExpectedText(text);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final pronState = ref.watch(pronunciationProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Pronunciation Lab')),
-      body: const Center(
+      body: Padding(
+        padding: const EdgeInsets.all(24),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.mic, size: 64),
-            SizedBox(height: 16),
-            Text('Pronunciation Practice'),
-            Text('Record and get feedback on ř, ě, vowel length',
-                style: TextStyle(color: Colors.grey)),
+            // Expected text display
+            Card(
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Text(
+                      'Say this:',
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: Colors.grey,
+                          ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      pronState.expectedText,
+                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    // TTS button to hear correct pronunciation
+                    IconButton(
+                      onPressed: () {
+                        ref.read(czechTtsProvider).speak(pronState.expectedText);
+                      },
+                      icon: const Icon(Icons.volume_up, size: 28),
+                      color: Theme.of(context).colorScheme.primary,
+                      tooltip: 'Listen to correct pronunciation',
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Spacer(),
+
+            // Recording state / score display
+            if (pronState.isRecording)
+              _RecordingIndicator()
+            else if (pronState.isProcessing)
+              const Column(
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Analyzing your pronunciation...'),
+                ],
+              )
+            else if (pronState.result != null)
+              _ScoreDisplay(result: pronState.result!, ref: ref)
+            else if (pronState.error != null)
+              _ErrorDisplay(error: pronState.error!)
+            else
+              const Text(
+                'Tap the microphone and say the phrase',
+                style: TextStyle(color: Colors.grey),
+              ),
+
+            const Spacer(),
+
+            // Record button
+            RecordButton(
+              isRecording: pronState.isRecording,
+              onPressed: () {
+                if (pronState.isRecording) {
+                  ref.read(pronunciationProvider.notifier).stopRecording();
+                } else {
+                  ref.read(pronunciationProvider.notifier).startRecording();
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+
+            // Try again button
+            if (pronState.result != null)
+              TextButton.icon(
+                onPressed: () {
+                  ref.read(pronunciationProvider.notifier).reset();
+                },
+                icon: const Icon(Icons.refresh),
+                label: const Text('Try Again'),
+              ),
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Animated recording indicator.
+class _RecordingIndicator extends StatefulWidget {
+  @override
+  State<_RecordingIndicator> createState() => _RecordingIndicatorState();
+}
+
+class _RecordingIndicatorState extends State<_RecordingIndicator>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ScaleTransition(
+          scale: Tween(begin: 1.0, end: 1.3).animate(
+            CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+          ),
+          child: Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.red.shade400,
+            ),
+            child: const Icon(Icons.mic, color: Colors.white, size: 36),
+          ),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          'Listening...',
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Score display with visual feedback.
+class _ScoreDisplay extends StatelessWidget {
+  final PronunciationResult result;
+  final WidgetRef ref;
+
+  const _ScoreDisplay({required this.result, required this.ref});
+
+  @override
+  Widget build(BuildContext context) {
+    final scorePercent = (result.overallScore * 100).round();
+    final color = _scoreColor(result.overallScore);
+    final label = _scoreLabel(result.overallScore);
+
+    return Column(
+      children: [
+        // Circular score
+        SizedBox(
+          width: 120,
+          height: 120,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CircularProgressIndicator(
+                value: result.overallScore,
+                strokeWidth: 8,
+                backgroundColor: color.withValues(alpha: 0.15),
+                valueColor: AlwaysStoppedAnimation<Color>(color),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '$scorePercent%',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: color,
+                    ),
+                  ),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: color,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // Word-by-word breakdown
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          alignment: WrapAlignment.center,
+          children: result.wordScores.map((ws) {
+            final wordColor = _scoreColor(ws.score);
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: wordColor.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: wordColor.withValues(alpha: 0.3),
+                ),
+              ),
+              child: Text(
+                ws.word,
+                style: TextStyle(
+                  color: wordColor,
+                  fontWeight: ws.isCorrect ? FontWeight.bold : FontWeight.normal,
+                  decoration: ws.isCorrect ? TextDecoration.none : TextDecoration.none,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+
+        // Problem sounds feedback
+        if (result.problemSounds.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          Card(
+            color: Colors.orange.shade50,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.warning_amber, color: Colors.orange.shade700, size: 20),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Sounds to practice:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange.shade700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ...result.problemSounds.map((p) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.orange.shade100,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              p.phoneme == 'long_vowel'
+                                  ? 'á/é/í/ó/ú'
+                                  : p.phoneme,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'in "${p.word}"',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey.shade700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
+        ],
+
+        // Overall feedback
+        const SizedBox(height: 12),
+        Text(
+          result.feedback,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 13,
+            color: Colors.grey.shade700,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Color _scoreColor(double score) {
+    if (score >= 0.8) return Colors.green;
+    if (score >= 0.65) return Colors.orange;
+    return Colors.red;
+  }
+
+  String _scoreLabel(double score) {
+    if (score >= 0.8) return 'Skvělé!';
+    if (score >= 0.65) return 'Dobré';
+    return 'Zkuste znovu';
+  }
+}
+
+/// Error display.
+class _ErrorDisplay extends StatelessWidget {
+  final String error;
+  const _ErrorDisplay({required this.error});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(Icons.error_outline, size: 48, color: Colors.red.shade300),
+        const SizedBox(height: 16),
+        Text(
+          error,
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.red.shade700),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Make sure microphone permissions are granted.',
+          style: TextStyle(fontSize: 12, color: Colors.grey),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }
