@@ -128,6 +128,7 @@ class DriftVocabularyRepository implements VocabularyRepository {
       exampleCz: row.exampleCz,
       exampleEn: row.exampleEn,
       unitId: row.unitId,
+      lessonId: row.lessonId,
     );
   }
 }

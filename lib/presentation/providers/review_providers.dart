@@ -17,11 +17,21 @@ const kMaxSessionCards = 30;
 const _kNewCardsToday = 'srs_new_cards_today';
 const _kNewCardsDate = 'srs_new_cards_date';
 
-/// The set of unit ids the learner has reached, used to gate new-card
-/// introduction. Falls back to empty (no new cards) if it can't be resolved.
+/// The set of unit ids the learner has reached, used as the fallback gate
+/// for words not mapped to a specific lesson.
 Future<Set<int>> _unlockedUnits(Ref ref) async {
   try {
     return await ref.read(unlockedUnitIdsProvider.future);
+  } catch (_) {
+    return const {};
+  }
+}
+
+/// The set of lesson ids the learner has completed, used as the primary gate
+/// for words that declare which lesson teaches them.
+Future<Set<int>> _completedLessons(Ref ref) async {
+  try {
+    return await ref.read(completedLessonIdsProvider.future);
   } catch (_) {
     return const {};
   }
@@ -50,21 +60,36 @@ class SessionPlan {
   const SessionPlan(this.cards, this.newCount);
 }
 
+/// Whether a brand-new card may be introduced yet. A word tied to a specific
+/// lesson waits until that lesson is completed; words with only a unit fall
+/// back to unit-unlock gating; words with neither are always eligible.
+bool _introducible(
+  ReviewCard c,
+  Set<int> completedLessons,
+  Set<int> unlockedUnits,
+) {
+  final lessonId = c.flashcard.lessonId;
+  if (lessonId != null) return completedLessons.contains(lessonId);
+  final unitId = c.flashcard.unitId;
+  if (unitId != null) return unlockedUnits.contains(unitId);
+  return true;
+}
+
 /// Pure composition of a review session: due reviews first (most at risk of
-/// being forgotten), then new cards gated by unlocked units, the daily new
-/// budget, and the overall session cap.
+/// being forgotten), then new cards gated by curriculum progress, the daily
+/// new budget, and the overall session cap.
 SessionPlan planReviewSession({
   required List<ReviewCard> allDue,
   required Set<int> unlockedUnits,
   required int introducedToday,
+  Set<int> completedLessons = const {},
 }) {
   final newCards = <ReviewCard>[];
   final reviewCards = <ReviewCard>[];
   for (final c in allDue) {
     final isNew = c.fsrs.state == CardState.newCard || c.fsrs.reps == 0;
     if (isNew) {
-      final uid = c.flashcard.unitId;
-      if (uid == null || unlockedUnits.contains(uid)) newCards.add(c);
+      if (_introducible(c, completedLessons, unlockedUnits)) newCards.add(c);
     } else {
       reviewCards.add(c);
     }
@@ -170,6 +195,7 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     final repo = ref.read(vocabularyRepositoryProvider);
     final allDue = await repo.getDueCards();
     final unlockedUnits = await _unlockedUnits(ref);
+    final completedLessons = await _completedLessons(ref);
 
     final prefs = await SharedPreferences.getInstance();
     final introducedToday = _introducedToday(prefs);
@@ -177,6 +203,7 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     final plan = planReviewSession(
       allDue: allDue,
       unlockedUnits: unlockedUnits,
+      completedLessons: completedLessons,
       introducedToday: introducedToday,
     );
 
@@ -281,10 +308,12 @@ final dueCardCountProvider = FutureProvider<int>((ref) async {
   final repo = ref.read(vocabularyRepositoryProvider);
   final allDue = await repo.getDueCards();
   final unlockedUnits = await _unlockedUnits(ref);
+  final completedLessons = await _completedLessons(ref);
   final prefs = await SharedPreferences.getInstance();
   final plan = planReviewSession(
     allDue: allDue,
     unlockedUnits: unlockedUnits,
+    completedLessons: completedLessons,
     introducedToday: _introducedToday(prefs),
   );
   return plan.cards.length;

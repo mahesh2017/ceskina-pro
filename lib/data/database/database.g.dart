@@ -1648,6 +1648,20 @@ class $FlashcardsTable extends Flashcards
       'REFERENCES units (id)',
     ),
   );
+  static const VerificationMeta _lessonIdMeta = const VerificationMeta(
+    'lessonId',
+  );
+  @override
+  late final GeneratedColumn<int> lessonId = GeneratedColumn<int>(
+    'lesson_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES lessons (id)',
+    ),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1661,6 +1675,7 @@ class $FlashcardsTable extends Flashcards
     exampleCz,
     exampleEn,
     unitId,
+    lessonId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1741,6 +1756,12 @@ class $FlashcardsTable extends Flashcards
         unitId.isAcceptableOrUnknown(data['unit_id']!, _unitIdMeta),
       );
     }
+    if (data.containsKey('lesson_id')) {
+      context.handle(
+        _lessonIdMeta,
+        lessonId.isAcceptableOrUnknown(data['lesson_id']!, _lessonIdMeta),
+      );
+    }
     return context;
   }
 
@@ -1794,6 +1815,10 @@ class $FlashcardsTable extends Flashcards
         DriftSqlType.int,
         data['${effectivePrefix}unit_id'],
       ),
+      lessonId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}lesson_id'],
+      ),
     );
   }
 
@@ -1815,6 +1840,11 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
   final String? exampleCz;
   final String? exampleEn;
   final int? unitId;
+
+  /// The lesson that introduces this word. When set, the word is only
+  /// scheduled for review once that lesson is completed (finer-grained than
+  /// [unitId] gating). Null falls back to unit-level gating.
+  final int? lessonId;
   const Flashcard({
     required this.id,
     required this.wordCz,
@@ -1827,6 +1857,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     this.exampleCz,
     this.exampleEn,
     this.unitId,
+    this.lessonId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1858,6 +1889,9 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     if (!nullToAbsent || unitId != null) {
       map['unit_id'] = Variable<int>(unitId);
     }
+    if (!nullToAbsent || lessonId != null) {
+      map['lesson_id'] = Variable<int>(lessonId);
+    }
     return map;
   }
 
@@ -1888,6 +1922,9 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       unitId: unitId == null && nullToAbsent
           ? const Value.absent()
           : Value(unitId),
+      lessonId: lessonId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lessonId),
     );
   }
 
@@ -1908,6 +1945,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       exampleCz: serializer.fromJson<String?>(json['exampleCz']),
       exampleEn: serializer.fromJson<String?>(json['exampleEn']),
       unitId: serializer.fromJson<int?>(json['unitId']),
+      lessonId: serializer.fromJson<int?>(json['lessonId']),
     );
   }
   @override
@@ -1925,6 +1963,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       'exampleCz': serializer.toJson<String?>(exampleCz),
       'exampleEn': serializer.toJson<String?>(exampleEn),
       'unitId': serializer.toJson<int?>(unitId),
+      'lessonId': serializer.toJson<int?>(lessonId),
     };
   }
 
@@ -1940,6 +1979,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     Value<String?> exampleCz = const Value.absent(),
     Value<String?> exampleEn = const Value.absent(),
     Value<int?> unitId = const Value.absent(),
+    Value<int?> lessonId = const Value.absent(),
   }) => Flashcard(
     id: id ?? this.id,
     wordCz: wordCz ?? this.wordCz,
@@ -1952,6 +1992,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     exampleCz: exampleCz.present ? exampleCz.value : this.exampleCz,
     exampleEn: exampleEn.present ? exampleEn.value : this.exampleEn,
     unitId: unitId.present ? unitId.value : this.unitId,
+    lessonId: lessonId.present ? lessonId.value : this.lessonId,
   );
   Flashcard copyWithCompanion(FlashcardsCompanion data) {
     return Flashcard(
@@ -1966,6 +2007,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       exampleCz: data.exampleCz.present ? data.exampleCz.value : this.exampleCz,
       exampleEn: data.exampleEn.present ? data.exampleEn.value : this.exampleEn,
       unitId: data.unitId.present ? data.unitId.value : this.unitId,
+      lessonId: data.lessonId.present ? data.lessonId.value : this.lessonId,
     );
   }
 
@@ -1982,7 +2024,8 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
           ..write('imagePath: $imagePath, ')
           ..write('exampleCz: $exampleCz, ')
           ..write('exampleEn: $exampleEn, ')
-          ..write('unitId: $unitId')
+          ..write('unitId: $unitId, ')
+          ..write('lessonId: $lessonId')
           ..write(')'))
         .toString();
   }
@@ -2000,6 +2043,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     exampleCz,
     exampleEn,
     unitId,
+    lessonId,
   );
   @override
   bool operator ==(Object other) =>
@@ -2015,7 +2059,8 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
           other.imagePath == this.imagePath &&
           other.exampleCz == this.exampleCz &&
           other.exampleEn == this.exampleEn &&
-          other.unitId == this.unitId);
+          other.unitId == this.unitId &&
+          other.lessonId == this.lessonId);
 }
 
 class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
@@ -2030,6 +2075,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
   final Value<String?> exampleCz;
   final Value<String?> exampleEn;
   final Value<int?> unitId;
+  final Value<int?> lessonId;
   const FlashcardsCompanion({
     this.id = const Value.absent(),
     this.wordCz = const Value.absent(),
@@ -2042,6 +2088,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     this.exampleCz = const Value.absent(),
     this.exampleEn = const Value.absent(),
     this.unitId = const Value.absent(),
+    this.lessonId = const Value.absent(),
   });
   FlashcardsCompanion.insert({
     this.id = const Value.absent(),
@@ -2055,6 +2102,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     this.exampleCz = const Value.absent(),
     this.exampleEn = const Value.absent(),
     this.unitId = const Value.absent(),
+    this.lessonId = const Value.absent(),
   }) : wordCz = Value(wordCz),
        wordEn = Value(wordEn);
   static Insertable<Flashcard> custom({
@@ -2069,6 +2117,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     Expression<String>? exampleCz,
     Expression<String>? exampleEn,
     Expression<int>? unitId,
+    Expression<int>? lessonId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2082,6 +2131,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
       if (exampleCz != null) 'example_cz': exampleCz,
       if (exampleEn != null) 'example_en': exampleEn,
       if (unitId != null) 'unit_id': unitId,
+      if (lessonId != null) 'lesson_id': lessonId,
     });
   }
 
@@ -2097,6 +2147,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     Value<String?>? exampleCz,
     Value<String?>? exampleEn,
     Value<int?>? unitId,
+    Value<int?>? lessonId,
   }) {
     return FlashcardsCompanion(
       id: id ?? this.id,
@@ -2110,6 +2161,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
       exampleCz: exampleCz ?? this.exampleCz,
       exampleEn: exampleEn ?? this.exampleEn,
       unitId: unitId ?? this.unitId,
+      lessonId: lessonId ?? this.lessonId,
     );
   }
 
@@ -2149,6 +2201,9 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     if (unitId.present) {
       map['unit_id'] = Variable<int>(unitId.value);
     }
+    if (lessonId.present) {
+      map['lesson_id'] = Variable<int>(lessonId.value);
+    }
     return map;
   }
 
@@ -2165,7 +2220,8 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
           ..write('imagePath: $imagePath, ')
           ..write('exampleCz: $exampleCz, ')
           ..write('exampleEn: $exampleEn, ')
-          ..write('unitId: $unitId')
+          ..write('unitId: $unitId, ')
+          ..write('lessonId: $lessonId')
           ..write(')'))
         .toString();
   }
@@ -6288,6 +6344,24 @@ final class $$LessonsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$FlashcardsTable, List<Flashcard>>
+  _flashcardsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.flashcards,
+    aliasName: $_aliasNameGenerator(db.lessons.id, db.flashcards.lessonId),
+  );
+
+  $$FlashcardsTableProcessedTableManager get flashcardsRefs {
+    final manager = $$FlashcardsTableTableManager(
+      $_db,
+      $_db.flashcards,
+    ).filter((f) => f.lessonId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_flashcardsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$LessonsTableFilterComposer
@@ -6373,6 +6447,31 @@ class $$LessonsTableFilterComposer
           }) => $$ExercisesTableFilterComposer(
             $db: $db,
             $table: $db.exercises,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> flashcardsRefs(
+    Expression<bool> Function($$FlashcardsTableFilterComposer f) f,
+  ) {
+    final $$FlashcardsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.flashcards,
+      getReferencedColumn: (t) => t.lessonId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FlashcardsTableFilterComposer(
+            $db: $db,
+            $table: $db.flashcards,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -6536,6 +6635,31 @@ class $$LessonsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> flashcardsRefs<T extends Object>(
+    Expression<T> Function($$FlashcardsTableAnnotationComposer a) f,
+  ) {
+    final $$FlashcardsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.flashcards,
+      getReferencedColumn: (t) => t.lessonId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FlashcardsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.flashcards,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$LessonsTableTableManager
@@ -6551,7 +6675,11 @@ class $$LessonsTableTableManager
           $$LessonsTableUpdateCompanionBuilder,
           (Lesson, $$LessonsTableReferences),
           Lesson,
-          PrefetchHooks Function({bool unitId, bool exercisesRefs})
+          PrefetchHooks Function({
+            bool unitId,
+            bool exercisesRefs,
+            bool flashcardsRefs,
+          })
         > {
   $$LessonsTableTableManager(_$AppDatabase db, $LessonsTable table)
     : super(
@@ -6612,59 +6740,98 @@ class $$LessonsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({unitId = false, exercisesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (exercisesRefs) db.exercises],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (unitId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.unitId,
-                                referencedTable: $$LessonsTableReferences
-                                    ._unitIdTable(db),
-                                referencedColumn: $$LessonsTableReferences
-                                    ._unitIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({
+                unitId = false,
+                exercisesRefs = false,
+                flashcardsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (exercisesRefs) db.exercises,
+                    if (flashcardsRefs) db.flashcards,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (unitId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.unitId,
+                                    referencedTable: $$LessonsTableReferences
+                                        ._unitIdTable(db),
+                                    referencedColumn: $$LessonsTableReferences
+                                        ._unitIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (exercisesRefs)
+                        await $_getPrefetchedData<
+                          Lesson,
+                          $LessonsTable,
+                          Exercise
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LessonsTableReferences
+                              ._exercisesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LessonsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).exercisesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.lessonId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (flashcardsRefs)
+                        await $_getPrefetchedData<
+                          Lesson,
+                          $LessonsTable,
+                          Flashcard
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LessonsTableReferences
+                              ._flashcardsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LessonsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).flashcardsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.lessonId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (exercisesRefs)
-                    await $_getPrefetchedData<Lesson, $LessonsTable, Exercise>(
-                      currentTable: table,
-                      referencedTable: $$LessonsTableReferences
-                          ._exercisesRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$LessonsTableReferences(db, table, p0).exercisesRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.lessonId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -6681,7 +6848,11 @@ typedef $$LessonsTableProcessedTableManager =
       $$LessonsTableUpdateCompanionBuilder,
       (Lesson, $$LessonsTableReferences),
       Lesson,
-      PrefetchHooks Function({bool unitId, bool exercisesRefs})
+      PrefetchHooks Function({
+        bool unitId,
+        bool exercisesRefs,
+        bool flashcardsRefs,
+      })
     >;
 typedef $$ExercisesTableCreateCompanionBuilder =
     ExercisesCompanion Function({
@@ -7066,6 +7237,7 @@ typedef $$FlashcardsTableCreateCompanionBuilder =
       Value<String?> exampleCz,
       Value<String?> exampleEn,
       Value<int?> unitId,
+      Value<int?> lessonId,
     });
 typedef $$FlashcardsTableUpdateCompanionBuilder =
     FlashcardsCompanion Function({
@@ -7080,6 +7252,7 @@ typedef $$FlashcardsTableUpdateCompanionBuilder =
       Value<String?> exampleCz,
       Value<String?> exampleEn,
       Value<int?> unitId,
+      Value<int?> lessonId,
     });
 
 final class $$FlashcardsTableReferences
@@ -7098,6 +7271,23 @@ final class $$FlashcardsTableReferences
       $_db.units,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_unitIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $LessonsTable _lessonIdTable(_$AppDatabase db) => db.lessons
+      .createAlias($_aliasNameGenerator(db.flashcards.lessonId, db.lessons.id));
+
+  $$LessonsTableProcessedTableManager? get lessonId {
+    final $_column = $_itemColumn<int>('lesson_id');
+    if ($_column == null) return null;
+    final manager = $$LessonsTableTableManager(
+      $_db,
+      $_db.lessons,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_lessonIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -7197,6 +7387,29 @@ class $$FlashcardsTableFilterComposer
           }) => $$UnitsTableFilterComposer(
             $db: $db,
             $table: $db.units,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$LessonsTableFilterComposer get lessonId {
+    final $$LessonsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.lessonId,
+      referencedTable: $db.lessons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LessonsTableFilterComposer(
+            $db: $db,
+            $table: $db.lessons,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7313,6 +7526,29 @@ class $$FlashcardsTableOrderingComposer
     );
     return composer;
   }
+
+  $$LessonsTableOrderingComposer get lessonId {
+    final $$LessonsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.lessonId,
+      referencedTable: $db.lessons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LessonsTableOrderingComposer(
+            $db: $db,
+            $table: $db.lessons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$FlashcardsTableAnnotationComposer
@@ -7377,6 +7613,29 @@ class $$FlashcardsTableAnnotationComposer
     return composer;
   }
 
+  $$LessonsTableAnnotationComposer get lessonId {
+    final $$LessonsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.lessonId,
+      referencedTable: $db.lessons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LessonsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.lessons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
   Expression<T> srsCardsRefs<T extends Object>(
     Expression<T> Function($$SrsCardsTableAnnotationComposer a) f,
   ) {
@@ -7416,7 +7675,11 @@ class $$FlashcardsTableTableManager
           $$FlashcardsTableUpdateCompanionBuilder,
           (Flashcard, $$FlashcardsTableReferences),
           Flashcard,
-          PrefetchHooks Function({bool unitId, bool srsCardsRefs})
+          PrefetchHooks Function({
+            bool unitId,
+            bool lessonId,
+            bool srsCardsRefs,
+          })
         > {
   $$FlashcardsTableTableManager(_$AppDatabase db, $FlashcardsTable table)
     : super(
@@ -7442,6 +7705,7 @@ class $$FlashcardsTableTableManager
                 Value<String?> exampleCz = const Value.absent(),
                 Value<String?> exampleEn = const Value.absent(),
                 Value<int?> unitId = const Value.absent(),
+                Value<int?> lessonId = const Value.absent(),
               }) => FlashcardsCompanion(
                 id: id,
                 wordCz: wordCz,
@@ -7454,6 +7718,7 @@ class $$FlashcardsTableTableManager
                 exampleCz: exampleCz,
                 exampleEn: exampleEn,
                 unitId: unitId,
+                lessonId: lessonId,
               ),
           createCompanionCallback:
               ({
@@ -7468,6 +7733,7 @@ class $$FlashcardsTableTableManager
                 Value<String?> exampleCz = const Value.absent(),
                 Value<String?> exampleEn = const Value.absent(),
                 Value<int?> unitId = const Value.absent(),
+                Value<int?> lessonId = const Value.absent(),
               }) => FlashcardsCompanion.insert(
                 id: id,
                 wordCz: wordCz,
@@ -7480,6 +7746,7 @@ class $$FlashcardsTableTableManager
                 exampleCz: exampleCz,
                 exampleEn: exampleEn,
                 unitId: unitId,
+                lessonId: lessonId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -7489,69 +7756,85 @@ class $$FlashcardsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({unitId = false, srsCardsRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (srsCardsRefs) db.srsCards],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (unitId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.unitId,
-                                referencedTable: $$FlashcardsTableReferences
-                                    ._unitIdTable(db),
-                                referencedColumn: $$FlashcardsTableReferences
-                                    ._unitIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({unitId = false, lessonId = false, srsCardsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [if (srsCardsRefs) db.srsCards],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (unitId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.unitId,
+                                    referencedTable: $$FlashcardsTableReferences
+                                        ._unitIdTable(db),
+                                    referencedColumn:
+                                        $$FlashcardsTableReferences
+                                            ._unitIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (lessonId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.lessonId,
+                                    referencedTable: $$FlashcardsTableReferences
+                                        ._lessonIdTable(db),
+                                    referencedColumn:
+                                        $$FlashcardsTableReferences
+                                            ._lessonIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (srsCardsRefs)
+                        await $_getPrefetchedData<
+                          Flashcard,
+                          $FlashcardsTable,
+                          SrsCard
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FlashcardsTableReferences
+                              ._srsCardsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FlashcardsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).srsCardsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.flashcardId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (srsCardsRefs)
-                    await $_getPrefetchedData<
-                      Flashcard,
-                      $FlashcardsTable,
-                      SrsCard
-                    >(
-                      currentTable: table,
-                      referencedTable: $$FlashcardsTableReferences
-                          ._srsCardsRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$FlashcardsTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).srsCardsRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.flashcardId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -7568,7 +7851,7 @@ typedef $$FlashcardsTableProcessedTableManager =
       $$FlashcardsTableUpdateCompanionBuilder,
       (Flashcard, $$FlashcardsTableReferences),
       Flashcard,
-      PrefetchHooks Function({bool unitId, bool srsCardsRefs})
+      PrefetchHooks Function({bool unitId, bool lessonId, bool srsCardsRefs})
     >;
 typedef $$SrsCardsTableCreateCompanionBuilder =
     SrsCardsCompanion Function({

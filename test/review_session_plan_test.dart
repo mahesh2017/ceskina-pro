@@ -7,9 +7,14 @@ import 'package:ceskina_pro/presentation/providers/review_providers.dart';
 void main() {
   final now = DateTime(2026, 7, 18);
 
-  ReviewCard newCard(int id, {int? unitId}) => ReviewCard(
+  ReviewCard newCard(int id, {int? unitId, int? lessonId}) => ReviewCard(
         flashcard: Flashcard(
-            id: id, wordCz: 'cz$id', wordEn: 'en$id', unitId: unitId,),
+          id: id,
+          wordCz: 'cz$id',
+          wordEn: 'en$id',
+          unitId: unitId,
+          lessonId: lessonId,
+        ),
         fsrs: FSRSCard(id: '$id', cardType: CardType.vocabulary, due: now),
       );
 
@@ -43,6 +48,26 @@ void main() {
         introducedToday: 0,
       );
       expect(plan.newCount, 1);
+    });
+
+    test('lesson-gated word waits until its lesson is completed', () {
+      final cards = [newCard(1, unitId: 1, lessonId: 101)];
+      // Unit unlocked but lesson not yet completed → not introducible.
+      final locked = planReviewSession(
+        allDue: cards,
+        unlockedUnits: {1},
+        introducedToday: 0,
+      );
+      expect(locked.newCount, 0);
+
+      // Lesson completed → introducible.
+      final unlocked = planReviewSession(
+        allDue: cards,
+        unlockedUnits: {1},
+        completedLessons: {101},
+        introducedToday: 0,
+      );
+      expect(unlocked.newCount, 1);
     });
 
     test('daily new-card budget is respected', () {

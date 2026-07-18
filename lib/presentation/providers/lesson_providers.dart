@@ -5,6 +5,7 @@ import '../../domain/entities/lesson.dart';
 import 'curriculum_providers.dart';
 import 'database_providers.dart';
 import 'gamification_providers.dart';
+import 'review_providers.dart';
 
 final _log = Logger('LessonSession');
 
@@ -254,6 +255,8 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
         // now that the new completion is stored, then re-check badges
         // against the updated snapshot.
         ref.invalidate(completedLessonIdsProvider);
+        // Completing a lesson can unlock its words for review.
+        ref.invalidate(dueCardCountProvider);
         return ref
             .read(gamificationProvider.notifier)
             .onLessonCompleted(accuracy: accuracy);

@@ -53,12 +53,20 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) async {
           await m.createAll();
+        },
+        onUpgrade: (m, from, to) async {
+          // v2: per-lesson gating — flashcards learn which lesson taught
+          // them. The seeder backfills values from the content pack on the
+          // next launch, so the column just needs to exist.
+          if (from < 2) {
+            await m.addColumn(flashcards, flashcards.lessonId);
+          }
         },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');

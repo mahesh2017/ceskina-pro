@@ -19,11 +19,23 @@ class ContentSeeder {
   /// FK-fail and roll back the whole content sync.
   final Set<int> _validUnitIds = {};
 
+  /// Lesson ids present in the bundled lesson files — used to validate the
+  /// per-word `lesson_id` gating reference the same way unit ids are checked.
+  final Set<int> _validLessonIds = {};
+
   int? _validatedUnitId(Object? raw, String what) {
     if (raw == null) return null;
     final id = (raw as num).toInt();
     if (_validUnitIds.contains(id)) return id;
     _log.warning('$what references missing unit $id — keeping it unlinked.');
+    return null;
+  }
+
+  int? _validatedLessonId(Object? raw, String what) {
+    if (raw == null) return null;
+    final id = (raw as num).toInt();
+    if (_validLessonIds.contains(id)) return id;
+    _log.warning('$what references missing lesson $id — keeping it unlinked.');
     return null;
   }
 
@@ -141,6 +153,7 @@ class ContentSeeder {
         final lessonData = jsonDecode(json) as Map<String, dynamic>;
 
         // Insert lesson
+        _validLessonIds.add(lessonData['id'] as int);
         await _db.curriculumDao.insertLessons([
           db.LessonsCompanion.insert(
             id: Value(lessonData['id'] as int),
@@ -240,6 +253,8 @@ class ContentSeeder {
               exampleEn: Value(w['example_en'] as String?),
               unitId: Value(_validatedUnitId(
                   w['unit_id'], "Flashcard ${w['id']} '${w['word_cz']}'",),),
+              lessonId: Value(_validatedLessonId(
+                  w['lesson_id'], "Flashcard ${w['id']} '${w['word_cz']}'",),),
             ),).toList();
 
         await _db.vocabularyDao.insertFlashcards(flashcardCompanions);
