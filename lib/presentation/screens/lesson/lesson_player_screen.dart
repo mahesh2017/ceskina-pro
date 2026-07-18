@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../domain/entities/flashcard.dart';
 import '../../providers/lesson_providers.dart';
 import '../../providers/gamification_providers.dart';
 import '../../widgets/lesson/exercise_widget.dart';
@@ -68,6 +69,17 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
         onRetry: () {
           ref.read(lessonSessionProvider.notifier).retry();
         },
+      );
+    }
+
+    // Teach phase — present the lesson's new words before testing them.
+    if (session.isTeaching) {
+      return _TeachPhaseScreen(
+        session: session,
+        onStart: () {
+          ref.read(lessonSessionProvider.notifier).startExercises();
+        },
+        onExit: () => context.pop(),
       );
     }
 
@@ -265,6 +277,141 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
             child: const Text('Leave'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Teach phase — the lesson's new vocabulary with audio, browsed before
+/// the exercises start.
+class _TeachPhaseScreen extends ConsumerWidget {
+  final LessonSessionState session;
+  final VoidCallback onStart;
+  final VoidCallback onExit;
+
+  const _TeachPhaseScreen({
+    required this.session,
+    required this.onStart,
+    required this.onExit,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cards = session.teachCards;
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: onExit,
+        ),
+        title: Text(session.lesson?.title ?? 'New words'),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+              child: Row(
+                children: [
+                  const Icon(Icons.school, size: 20, color: Colors.blue),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      '${cards.length} new words in this lesson — tap 🔊 to hear them',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                itemCount: cards.length,
+                itemBuilder: (context, i) => _TeachWordCard(card: cards[i]),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: FilledButton.icon(
+                onPressed: onStart,
+                icon: const Icon(Icons.play_arrow),
+                label: const Text('Start Practice'),
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size.fromHeight(48),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TeachWordCard extends ConsumerWidget {
+  final Flashcard card;
+
+  const _TeachWordCard({required this.card});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          card.wordCz,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      if (card.gender != null) ...[
+                        const SizedBox(width: 8),
+                        Text(
+                          card.gender!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall
+                              ?.copyWith(color: Colors.grey),
+                        ),
+                      ],
+                    ],
+                  ),
+                  Text(
+                    card.wordEn,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                  if (card.exampleCz != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      card.exampleCz!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(fontStyle: FontStyle.italic),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            TtsButton(text: card.wordCz),
+          ],
+        ),
       ),
     );
   }

@@ -112,7 +112,8 @@ Rules:
   ],
   "new_vocabulary": [
     {"cz": "...", "en": "...", "ipa": "..."}
-  ]
+  ],
+  "suggested_replies": ["two or three short Czech replies the learner could send next, at their level"]
 }
 ''';
   }

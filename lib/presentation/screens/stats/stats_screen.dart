@@ -4,6 +4,7 @@ import '../../providers/gamification_providers.dart';
 import '../../providers/curriculum_providers.dart';
 import '../../providers/database_providers.dart';
 import '../../../domain/engines/curriculum_tracker.dart';
+import '../../../domain/entities/exam_result.dart';
 import '../../../domain/entities/gamification_state.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/entities/unit.dart';
@@ -81,11 +82,86 @@ class StatsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
 
+              // Exam history
+              const _ExamHistoryCard(),
+              const SizedBox(height: 16),
+
               // Badges
               _BadgesCard(earnedBadges: gamification.earnedBadges),
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+/// Past mock-exam attempts across both levels, newest first.
+final _examHistoryProvider =
+    FutureProvider.autoDispose<List<ExamResult>>((ref) async {
+  final repo = ref.read(examRepositoryProvider);
+  final a1 = await repo.getResults(ExamLevel.a1);
+  final a2 = await repo.getResults(ExamLevel.a2);
+  return [...a1, ...a2]..sort((a, b) => b.takenAt.compareTo(a.takenAt));
+});
+
+class _ExamHistoryCard extends ConsumerWidget {
+  const _ExamHistoryCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final historyAsync = ref.watch(_examHistoryProvider);
+    final results = historyAsync.value ?? const <ExamResult>[];
+    if (results.isEmpty) return const SizedBox.shrink();
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Exam History',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            ...results.take(10).map((r) {
+              final date =
+                  '${r.takenAt.year}-${r.takenAt.month.toString().padLeft(2, '0')}-${r.takenAt.day.toString().padLeft(2, '0')}';
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  children: [
+                    Icon(
+                      r.passed ? Icons.check_circle : Icons.cancel,
+                      color: r.passed ? Colors.green : Colors.red,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'CCE-${r.level.name.toUpperCase()}',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      date,
+                      style: TextStyle(
+                          fontSize: 12, color: Colors.grey.shade600,),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${r.totalScore}%',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: r.passed ? Colors.green : Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ],
+        ),
       ),
     );
   }

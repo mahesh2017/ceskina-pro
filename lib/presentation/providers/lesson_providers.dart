@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import '../../domain/entities/exercise.dart';
+import '../../domain/entities/flashcard.dart';
 import '../../domain/entities/lesson.dart';
 import 'curriculum_providers.dart';
 import 'database_providers.dart';
@@ -37,6 +38,13 @@ class LessonSessionState {
   /// so the UI can tell when the learner is in the review-mistakes phase.
   final int originalCount;
 
+  /// New vocabulary this lesson introduces, shown in the teach phase
+  /// before exercises begin.
+  final List<Flashcard> teachCards;
+
+  /// True while the learner is browsing the new words, before practicing.
+  final bool isTeaching;
+
   const LessonSessionState({
     this.lesson,
     this.exercises = const [],
@@ -55,6 +63,8 @@ class LessonSessionState {
     this.mistakeQueue = const [],
     this.mistakesAppended = false,
     this.originalCount = 0,
+    this.teachCards = const [],
+    this.isTeaching = false,
   });
 
   LessonSessionState copyWith({
@@ -75,6 +85,8 @@ class LessonSessionState {
     List<Exercise>? mistakeQueue,
     bool? mistakesAppended,
     int? originalCount,
+    List<Flashcard>? teachCards,
+    bool? isTeaching,
   }) {
     return LessonSessionState(
       lesson: lesson ?? this.lesson,
@@ -94,6 +106,8 @@ class LessonSessionState {
       mistakeQueue: mistakeQueue ?? this.mistakeQueue,
       mistakesAppended: mistakesAppended ?? this.mistakesAppended,
       originalCount: originalCount ?? this.originalCount,
+      teachCards: teachCards ?? this.teachCards,
+      isTeaching: isTeaching ?? this.isTeaching,
     );
   }
 
@@ -135,13 +149,32 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
     final repo = ref.read(curriculumRepositoryProvider);
     final lesson = await repo.getLesson(lessonId);
     final exercises = await repo.getExercises(lessonId);
+
+    // Teach before testing: load the vocabulary this lesson introduces so
+    // the player can present it before the first exercise.
+    List<Flashcard> teachCards = const [];
+    try {
+      teachCards = await ref
+          .read(vocabularyRepositoryProvider)
+          .getCardsForLesson(lessonId);
+    } catch (_) {
+      // No vocab mapping — go straight to exercises.
+    }
+
     state = LessonSessionState(
       lesson: lesson,
       exercises: exercises,
       hearts: hearts,
       isGameOver: heartsEnabled && hearts <= 0,
       originalCount: exercises.length,
+      teachCards: teachCards,
+      isTeaching: teachCards.isNotEmpty,
     );
+  }
+
+  /// Leave the teach phase and start the exercises.
+  void startExercises() {
+    state = state.copyWith(isTeaching: false);
   }
 
   /// Called when the current exercise is answered.

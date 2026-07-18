@@ -62,11 +62,16 @@ class TutorResponse {
   final List<Correction> corrections;
   final List<NewVocabulary> newVocabulary;
 
+  /// Short Czech replies the learner could send next (A1-level scaffolding
+  /// for learners who freeze). Optional — older responses omit it.
+  final List<String> suggestedReplies;
+
   const TutorResponse({
     required this.tutorReplyCz,
     required this.tutorReplyEn,
     required this.corrections,
     required this.newVocabulary,
+    this.suggestedReplies = const [],
   });
 
   factory TutorResponse.fromJson(Map<String, dynamic> json) {
@@ -85,6 +90,10 @@ class TutorResponse {
       newVocabulary: (json['new_vocabulary'] as List<dynamic>?)
               ?.whereType<Map<String, dynamic>>()
               .map(NewVocabulary.fromJson)
+              .toList() ??
+          [],
+      suggestedReplies: (json['suggested_replies'] as List<dynamic>?)
+              ?.whereType<String>()
               .toList() ??
           [],
     );

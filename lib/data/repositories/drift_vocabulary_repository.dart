@@ -66,6 +66,12 @@ class DriftVocabularyRepository implements VocabularyRepository {
   }
 
   @override
+  Future<List<entity.Flashcard>> getCardsForLesson(int lessonId) async {
+    final rows = await _db.vocabularyDao.getFlashcardsByLesson(lessonId);
+    return rows.map(_toEntityFlashcard).toList();
+  }
+
+  @override
   Future<int> getDueCount({DateTime? asOf}) async {
     final now = asOf ?? DateTime.now();
     return _db.vocabularyDao.getDueCount(now);

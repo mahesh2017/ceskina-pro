@@ -19,6 +19,11 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
     return (select(flashcards)..where((f) => f.unitId.equals(unitId))).get();
   }
 
+  Future<List<Flashcard>> getFlashcardsByLesson(int lessonId) {
+    return (select(flashcards)..where((f) => f.lessonId.equals(lessonId)))
+        .get();
+  }
+
   Future<List<Flashcard>> getFlashcardsByIds(List<int> ids) {
     if (ids.isEmpty) return Future.value([]);
     return (select(flashcards)..where((f) => f.id.isIn(ids))).get();

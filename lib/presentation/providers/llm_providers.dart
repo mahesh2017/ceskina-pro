@@ -83,6 +83,10 @@ class MockLlmService implements LlmService {
           {'cz': 'ahoj', 'en': 'hello/hi', 'ipa': 'aɦoj'},
           {'cz': 'dobře', 'en': 'well/good', 'ipa': 'dobr̝ɛ'},
         ],
+        'suggested_replies': [
+          'Mám se dobře, děkuji.',
+          'Dnes se učím česky.',
+        ],
       });
     }
 

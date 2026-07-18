@@ -17,6 +17,9 @@ abstract class VocabularyRepository {
   Future<void> updateCard(FSRSCard card, Rating rating, DateTime reviewedAt);
   Future<List<Flashcard>> searchCards(String query);
   Future<List<Flashcard>> getCardsForUnit(int unitId);
+
+  /// Vocabulary introduced by a specific lesson (for the teach phase).
+  Future<List<Flashcard>> getCardsForLesson(int lessonId);
   Future<int> getDueCount({DateTime? asOf});
 
   /// Add a learner-created flashcard (e.g. vocabulary surfaced by the AI

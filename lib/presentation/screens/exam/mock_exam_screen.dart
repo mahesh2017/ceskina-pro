@@ -844,6 +844,11 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 ),
               ),
               const SizedBox(height: 24),
+
+              // Answer review — what was right and wrong, per question.
+              _buildAnswerReview(),
+              const SizedBox(height: 24),
+
               FilledButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: const Text('Done'),
@@ -852,6 +857,112 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  /// Per-question review of the choice sections (reading + listening),
+  /// shown after the exam so mistakes become learning material.
+  Widget _buildAnswerReview() {
+    final entries = <Widget>[];
+
+    for (var s = 0; s < _exam!.sections.length; s++) {
+      final section = _exam!.sections[s];
+      if (section.type != ExamSectionType.reading &&
+          section.type != ExamSectionType.listening) {
+        continue;
+      }
+
+      entries.add(Padding(
+        padding: const EdgeInsets.only(top: 12, bottom: 4),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            section.type == ExamSectionType.reading
+                ? 'Reading'
+                : 'Listening',
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),);
+
+      for (var q = 0; q < section.questions.length; q++) {
+        final question = section.questions[q];
+        final options =
+            (question['options'] as List<dynamic>?)?.cast<String>();
+        final correctIdx = question['correct_answer'];
+        if (options == null || correctIdx is! int) continue;
+
+        final userIdx = _answers[s]?[q];
+        final isCorrect = userIdx == correctIdx;
+        final audioText = question['audio_text'] as String?;
+
+        entries.add(Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      isCorrect ? Icons.check_circle : Icons.cancel,
+                      color: isCorrect ? Colors.green : Colors.red,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        question['prompt'] as String? ?? '',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+                if (audioText != null) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    'Audio said: "$audioText"',
+                    style: const TextStyle(
+                        fontSize: 12, fontStyle: FontStyle.italic,),
+                  ),
+                ],
+                const SizedBox(height: 6),
+                if (!isCorrect)
+                  Text(
+                    userIdx is int && userIdx < options.length
+                        ? 'Your answer: ${options[userIdx]}'
+                        : 'Not answered',
+                    style: const TextStyle(color: Colors.red, fontSize: 13),
+                  ),
+                Text(
+                  'Correct: ${options[correctIdx]}',
+                  style: const TextStyle(color: Colors.green, fontSize: 13),
+                ),
+              ],
+            ),
+          ),
+        ),);
+      }
+    }
+
+    if (entries.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Answer Review',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+        ...entries,
+      ],
     );
   }
 }

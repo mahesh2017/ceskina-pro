@@ -109,5 +109,25 @@ void main() {
       );
       expect(plan.cards.length, kMaxSessionCards);
     });
+
+    test('new cards are always shown Czech-first (recognition)', () {
+      final plan = planReviewSession(
+        allDue: [newCard(1, unitId: 1)],
+        unlockedUnits: {1},
+        introducedToday: 0,
+      );
+      expect(plan.cards.single.direction, CardDirection.czToEn);
+    });
+
+    test('mature cards mix in production and audio directions', () {
+      final reviews = List.generate(9, (i) => reviewCard(i, unitId: 1));
+      final plan = planReviewSession(
+        allDue: reviews,
+        unlockedUnits: {1},
+        introducedToday: 0,
+      );
+      final directions = plan.cards.map((c) => c.direction).toSet();
+      expect(directions, containsAll(CardDirection.values));
+    });
   });
 }

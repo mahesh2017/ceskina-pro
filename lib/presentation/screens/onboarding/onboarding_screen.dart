@@ -164,7 +164,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         ),
         const SizedBox(height: 8),
         const Text(
-          'This helps us start you at the right place.',
+          'This sets your AI tutor\'s difficulty. Lessons always start '
+          'from Unit 1 so nothing is skipped.',
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.grey),
         ),

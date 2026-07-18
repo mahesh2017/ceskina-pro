@@ -20,6 +20,10 @@ class ChatState {
   final bool isLoading;
   final String? error;
 
+  /// Short Czech replies suggested for the learner's next turn. Cleared
+  /// when the learner sends a message.
+  final List<String> suggestedReplies;
+
   const ChatState({
     this.conversationId,
     this.scenario = 'Casual conversation',
@@ -28,6 +32,7 @@ class ChatState {
     this.messages = const [],
     this.isLoading = false,
     this.error,
+    this.suggestedReplies = const [],
   });
 
   ChatState copyWith({
@@ -38,6 +43,7 @@ class ChatState {
     List<ChatMessage>? messages,
     bool? isLoading,
     String? error,
+    List<String>? suggestedReplies,
   }) {
     return ChatState(
       conversationId: conversationId ?? this.conversationId,
@@ -47,6 +53,7 @@ class ChatState {
       messages: messages ?? this.messages,
       isLoading: isLoading ?? this.isLoading,
       error: error,
+      suggestedReplies: suggestedReplies ?? this.suggestedReplies,
     );
   }
 }
@@ -147,6 +154,7 @@ class ChatNotifier extends Notifier<ChatState> {
       messages: [...state.messages, userMsg],
       isLoading: true,
       error: null,
+      suggestedReplies: const [],
     );
 
     // Persist user message
@@ -181,6 +189,7 @@ class ChatNotifier extends Notifier<ChatState> {
       state = state.copyWith(
         messages: [...state.messages, tutorMsg],
         isLoading: false,
+        suggestedReplies: tutorResponse.suggestedReplies,
       );
 
       // Persist tutor message
@@ -238,6 +247,7 @@ class ChatNotifier extends Notifier<ChatState> {
 
       state = state.copyWith(
         messages: [greeting],
+        suggestedReplies: tutorResponse.suggestedReplies,
       );
 
       final convRepo = ref.read(conversationRepositoryProvider);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/entities/chat_message.dart';
 import '../../providers/chat_providers.dart';
+import '../../providers/stt_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../providers/database_providers.dart';
 import '../../providers/review_providers.dart';
@@ -17,12 +18,40 @@ class ChatScreen extends ConsumerStatefulWidget {
 class _ChatScreenState extends ConsumerState<ChatScreen> {
   final _inputController = TextEditingController();
   final _scrollController = ScrollController();
+  bool _isListening = false;
 
   @override
   void dispose() {
     _inputController.dispose();
     _scrollController.dispose();
     super.dispose();
+  }
+
+  /// Capture Czech speech and put the transcription into the input field
+  /// for the learner to review (and fix) before sending.
+  Future<void> _startVoiceInput() async {
+    if (_isListening) return;
+    setState(() => _isListening = true);
+    try {
+      final stt = ref.read(sttServiceProvider) as NativeSttService;
+      final transcription =
+          await stt.listenFor(timeout: const Duration(seconds: 10));
+      if (!mounted) return;
+      if (transcription.isNotEmpty) {
+        _inputController.text = transcription;
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Speech recognition failed. Check microphone permissions.',),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isListening = false);
+    }
   }
 
   void _scrollToBottom() {
@@ -108,11 +137,36 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       ),
                     ),
                   ),
+                // Suggested replies — tap to prefill, learner reviews
+                // before sending.
+                if (chat.suggestedReplies.isNotEmpty && !chat.isLoading)
+                  SizedBox(
+                    height: 44,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      itemCount: chat.suggestedReplies.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                      itemBuilder: (context, i) {
+                        final suggestion = chat.suggestedReplies[i];
+                        return ActionChip(
+                          avatar: const Icon(Icons.lightbulb_outline,
+                              size: 16,),
+                          label: Text(suggestion),
+                          onPressed: () {
+                            _inputController.text = suggestion;
+                          },
+                        );
+                      },
+                    ),
+                  ),
                 // Input bar
                 _InputBar(
                   controller: _inputController,
                   onSend: _sendMessage,
                   isLoading: chat.isLoading,
+                  isListening: _isListening,
+                  onMic: _startVoiceInput,
                 ),
               ],
             ),
@@ -432,16 +486,20 @@ class _Dot extends StatelessWidget {
   }
 }
 
-/// Input bar with text field and send button.
+/// Input bar with text field, voice input, and send button.
 class _InputBar extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
   final bool isLoading;
+  final bool isListening;
+  final VoidCallback onMic;
 
   const _InputBar({
     required this.controller,
     required this.onSend,
     required this.isLoading,
+    required this.isListening,
+    required this.onMic,
   });
 
   @override
@@ -456,7 +514,9 @@ class _InputBar extends StatelessWidget {
                 controller: controller,
                 enabled: !isLoading,
                 decoration: InputDecoration(
-                  hintText: 'Type in Czech...',
+                  hintText: isListening
+                      ? 'Listening... speak Czech'
+                      : 'Type in Czech...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
@@ -469,6 +529,16 @@ class _InputBar extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
+            IconButton(
+              onPressed: isLoading || isListening ? null : onMic,
+              icon: Icon(
+                isListening ? Icons.mic : Icons.mic_none,
+                color: isListening
+                    ? Colors.red
+                    : Theme.of(context).colorScheme.primary,
+              ),
+              tooltip: 'Speak your reply',
+            ),
             IconButton.filled(
               onPressed: isLoading ? null : onSend,
               icon: isLoading

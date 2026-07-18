@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../domain/entities/flashcard.dart';
 import '../../domain/entities/fsrs_card.dart';
 import '../../domain/engines/fsrs_scheduler.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
@@ -52,10 +53,47 @@ Future<void> _recordIntroduced(SharedPreferences prefs, int count) async {
   await prefs.setInt(_kNewCardsToday, count);
 }
 
+/// Which side of the card is shown first.
+enum CardDirection {
+  /// Czech word shown, recall the English meaning (recognition).
+  czToEn,
+
+  /// English shown, recall the Czech word (production — what the CCE
+  /// exam actually demands).
+  enToCz,
+
+  /// Audio only — listen and recall the meaning.
+  audio,
+}
+
+/// A card scheduled into a session together with its presentation
+/// direction for this session.
+class SessionCard {
+  final ReviewCard review;
+  final CardDirection direction;
+
+  const SessionCard(this.review, this.direction);
+
+  Flashcard get flashcard => review.flashcard;
+  FSRSCard get fsrs => review.fsrs;
+}
+
+/// Direction for a card this session: new cards are always recognition;
+/// once a card has a few successful reps, mix in production and listening
+/// fronts deterministically so the variety is stable within a session.
+CardDirection directionFor(ReviewCard c) {
+  if (c.fsrs.reps < 2) return CardDirection.czToEn;
+  return switch ((c.flashcard.id + c.fsrs.reps) % 3) {
+    0 => CardDirection.enToCz,
+    1 => CardDirection.audio,
+    _ => CardDirection.czToEn,
+  };
+}
+
 /// The cards selected for one review session and how many of them are brand
 /// new. Keeps the home due-count badge and the review screen in agreement.
 class SessionPlan {
-  final List<ReviewCard> cards;
+  final List<SessionCard> cards;
   final int newCount;
   const SessionPlan(this.cards, this.newCount);
 }
@@ -105,12 +143,15 @@ SessionPlan planReviewSession({
       newCards.take(remainingSlots.clamp(0, newBudget)).toList();
   session.addAll(newToShow);
 
-  return SessionPlan(session, newToShow.length);
+  return SessionPlan(
+    [for (final c in session) SessionCard(c, directionFor(c))],
+    newToShow.length,
+  );
 }
 
 /// State of an SRS review session.
 class ReviewSessionState {
-  final List<ReviewCard> dueCards;
+  final List<SessionCard> dueCards;
   final int currentIndex;
   final bool isFlipped;
   final int reviewedCount;
@@ -141,7 +182,7 @@ class ReviewSessionState {
   });
 
   ReviewSessionState copyWith({
-    List<ReviewCard>? dueCards,
+    List<SessionCard>? dueCards,
     int? currentIndex,
     bool? isFlipped,
     int? reviewedCount,
@@ -170,7 +211,7 @@ class ReviewSessionState {
     );
   }
 
-  ReviewCard? get currentCard =>
+  SessionCard? get currentCard =>
       currentIndex < dueCards.length ? dueCards[currentIndex] : null;
 
   int get totalCards => dueCards.length;

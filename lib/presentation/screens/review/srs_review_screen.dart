@@ -113,6 +113,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
             Expanded(
               child: _FlashcardView(
                 card: card.flashcard,
+                direction: card.direction,
                 isFlipped: session.isFlipped,
                 onFlip: () {
                   ref.read(reviewSessionProvider.notifier).flipCard();
@@ -193,14 +194,18 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
   }
 }
 
-/// The flashcard view — front (Czech word) and back (English + IPA + example).
+/// The flashcard view. The front depends on the card's direction —
+/// recognition (CZ), production (EN), or audio-only — and the back always
+/// shows the full word with translation, IPA, and example.
 class _FlashcardView extends ConsumerWidget {
   final Flashcard card;
+  final CardDirection direction;
   final bool isFlipped;
   final VoidCallback onFlip;
 
   const _FlashcardView({
     required this.card,
+    required this.direction,
     required this.isFlipped,
     required this.onFlip,
   });
@@ -232,7 +237,12 @@ class _FlashcardView extends ConsumerWidget {
                 key: ValueKey(isFlipped),
                 child: isFlipped
                     ? _buildBack(context, ref)
-                    : _buildFront(context, ref),
+                    : switch (direction) {
+                        CardDirection.czToEn => _buildFront(context, ref),
+                        CardDirection.enToCz =>
+                          _buildFrontProduction(context),
+                        CardDirection.audio => _buildFrontAudio(context, ref),
+                      },
               ),
             ),
           ),
@@ -307,6 +317,104 @@ class _FlashcardView extends ConsumerWidget {
           },
           icon: const Icon(Icons.volume_up, size: 32),
           color: Theme.of(context).colorScheme.primary,
+        ),
+      ],
+    );
+  }
+
+  /// Production front — English shown, learner recalls the Czech word.
+  Widget _buildFrontProduction(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.deepPurple.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            'EN → CZ',
+            style: TextStyle(color: Colors.deepPurple, fontSize: 12),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          card.wordEn,
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 24),
+        Text(
+          'How do you say it in Czech?',
+          style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+        ),
+        const SizedBox(height: 40),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.touch_app, color: Colors.grey.shade400, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Tap to reveal',
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  /// Audio front — learner listens and recalls the meaning.
+  Widget _buildFrontAudio(BuildContext context, WidgetRef ref) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.teal.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            'LISTENING',
+            style: TextStyle(color: Colors.teal, fontSize: 12),
+          ),
+        ),
+        const SizedBox(height: 32),
+        IconButton.filled(
+          onPressed: () {
+            ref.read(czechTtsProvider).speak(card.wordCz);
+          },
+          icon: const Icon(Icons.volume_up, size: 48),
+          padding: const EdgeInsets.all(24),
+        ),
+        const SizedBox(height: 8),
+        TextButton.icon(
+          onPressed: () {
+            ref.read(czechTtsProvider).speakSlow(card.wordCz);
+          },
+          icon: const Icon(Icons.slow_motion_video, size: 18),
+          label: const Text('Slower'),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          'Listen — what does it mean?',
+          style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+        ),
+        const SizedBox(height: 32),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.touch_app, color: Colors.grey.shade400, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Tap to reveal',
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+            ),
+          ],
         ),
       ],
     );
