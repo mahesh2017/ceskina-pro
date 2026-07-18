@@ -6,6 +6,7 @@ import '../../providers/database_providers.dart';
 import '../../../domain/engines/curriculum_tracker.dart';
 import '../../../domain/entities/gamification_state.dart';
 import '../../../domain/entities/enums.dart';
+import '../../../domain/entities/unit.dart';
 
 /// Stats / progress screen — CEFR level, mastery breakdown, badges, streak.
 class StatsScreen extends ConsumerWidget {
@@ -14,24 +15,45 @@ class StatsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gamification = ref.watch(gamificationProvider);
-    final snapshotAsync = ref.watch(_progressSnapshotProvider);
+    final dataAsync = ref.watch(_statsDataProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Your Progress')),
-      body: snapshotAsync.when(
+      body: dataAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, _) => Center(child: Text('Failed to load: $err')),
-        data: (snapshot) {
+        data: (data) {
+          final snapshot = data.snapshot;
           final tracker = CurriculumProgressTracker();
-          final cefrLevel = tracker.estimateLevel(snapshot);
-          final a1Completion = tracker.calculateA1Completion(
+
+          final a1UnitIds =
+              data.units.where((u) => u.phase == Phase.a1).map((u) => u.id).toSet();
+          final a2UnitIds =
+              data.units.where((u) => u.phase == Phase.a2).map((u) => u.id).toSet();
+
+          final a1Completion = tracker.phaseCompletion(
             unitScores: snapshot.unitScores,
-            totalA1Units: _countUnits(snapshot.unitScores, Phase.a1),
+            phaseUnitIds: a1UnitIds,
           );
-          final a2Completion = tracker.calculateA2Completion(
+          final a2Completion = tracker.phaseCompletion(
             unitScores: snapshot.unitScores,
-            totalA2Units: _countUnits(snapshot.unitScores, Phase.a2),
+            phaseUnitIds: a2UnitIds,
           );
+          final cefrLevel = tracker.estimateLevel(
+            a1Completion: a1Completion,
+            a2Completion: a2Completion,
+            examsPassed: snapshot.examsPassed,
+          );
+
+          // Show mastery rows only for units the learner has started.
+          final startedA1 = a1UnitIds
+              .where(snapshot.unitScores.containsKey)
+              .toList()
+            ..sort();
+          final startedA2 = a2UnitIds
+              .where(snapshot.unitScores.containsKey)
+              .toList()
+            ..sort();
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -54,8 +76,8 @@ class StatsScreen extends ConsumerWidget {
               // Unit mastery breakdown
               _UnitMasteryCard(
                 unitScores: snapshot.unitScores,
-                a1Units: _filterUnitsByPhase(snapshot.unitScores, Phase.a1),
-                a2Units: _filterUnitsByPhase(snapshot.unitScores, Phase.a2),
+                a1Units: startedA1,
+                a2Units: startedA2,
               ),
               const SizedBox(height: 16),
 
@@ -67,28 +89,21 @@ class StatsScreen extends ConsumerWidget {
       ),
     );
   }
-
-  int _countUnits(Map<int, double> unitScores, Phase phase) {
-    // Count units that belong to this phase based on unit IDs
-    // A1 units: 1-10, A2 units: 11-21 (simplified mapping)
-    if (phase == Phase.a1) {
-      return unitScores.keys.where((id) => id <= 10).length;
-    }
-    return unitScores.keys.where((id) => id > 10).length;
-  }
-
-  List<int> _filterUnitsByPhase(Map<int, double> unitScores, Phase phase) {
-    if (phase == Phase.a1) {
-      return unitScores.keys.where((id) => id <= 10).toList()..sort();
-    }
-    return unitScores.keys.where((id) => id > 10).toList()..sort();
-  }
 }
 
-/// Provider for the progress snapshot.
-final _progressSnapshotProvider = FutureProvider<ProgressSnapshot>((ref) async {
+class _StatsData {
+  final ProgressSnapshot snapshot;
+  final List<Unit> units;
+  const _StatsData({required this.snapshot, required this.units});
+}
+
+/// Progress snapshot + unit catalogue for the stats screen.
+/// autoDispose so re-opening the screen always shows fresh progress.
+final _statsDataProvider = FutureProvider.autoDispose<_StatsData>((ref) async {
   final repo = ref.read(progressRepositoryProvider);
-  return repo.getSnapshot();
+  final snapshot = await repo.getSnapshot();
+  final units = await ref.watch(allUnitsProvider.future);
+  return _StatsData(snapshot: snapshot, units: units);
 });
 
 /// CEFR level card with circular indicator.
@@ -386,12 +401,12 @@ class _UnitMasteryCard extends StatelessWidget {
                 fontSize: 12,
                 color: Colors.blue.shade700,
                 fontWeight: FontWeight.bold,
-              )),
+              ),),
               const SizedBox(height: 6),
               ...a1Units.map((id) => _UnitScoreRow(
                     unitId: id,
                     score: unitScores[id] ?? 0,
-                  )),
+                  ),),
             ],
             if (a2Units.isNotEmpty) ...[
               const SizedBox(height: 8),
@@ -399,12 +414,12 @@ class _UnitMasteryCard extends StatelessWidget {
                 fontSize: 12,
                 color: Colors.green.shade700,
                 fontWeight: FontWeight.bold,
-              )),
+              ),),
               const SizedBox(height: 6),
               ...a2Units.map((id) => _UnitScoreRow(
                     unitId: id,
                     score: unitScores[id] ?? 0,
-                  )),
+                  ),),
             ],
           ],
         ),
@@ -521,9 +536,11 @@ class _BadgeTile extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: isEarned
                     ? Colors.amber.withValues(alpha: 0.15)
-                    : Colors.grey.shade200,
+                    : Theme.of(context).colorScheme.surfaceContainerHighest,
                 border: Border.all(
-                  color: isEarned ? Colors.amber : Colors.grey.shade300,
+                  color: isEarned
+                      ? Colors.amber
+                      : Theme.of(context).colorScheme.outlineVariant,
                   width: 2,
                 ),
               ),

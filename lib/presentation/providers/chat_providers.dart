@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/repositories/deepseek_llm_service.dart';
 import '../../domain/entities/chat_message.dart';
 import '../../domain/entities/enums.dart';
-import '../../domain/repositories/llm_service.dart';
 import 'database_providers.dart';
 import 'llm_providers.dart';
+import 'settings_providers.dart';
 
 /// State of the AI conversation.
 class ChatState {
@@ -16,7 +17,7 @@ class ChatState {
 
   const ChatState({
     this.conversationId,
-    this.scenario = 'Causal conversation',
+    this.scenario = 'Casual conversation',
     this.level = CEFRLevel.a1,
     this.messages = const [],
     this.isLoading = false,
@@ -93,22 +94,28 @@ class ChatNotifier extends Notifier<ChatState> {
   @override
   ChatState build() => const ChatState();
 
-  /// Start a new conversation with the given scenario and level.
+  /// Start a new conversation with the given scenario.
+  /// Defaults to the learner's level from onboarding/settings.
   Future<void> startConversation({
     required ChatScenario scenario,
-    CEFRLevel level = CEFRLevel.a1,
+    CEFRLevel? level,
   }) async {
+    // Pre-A1 learners still converse at A1 — it's the simplest tutor level.
+    final settingsLevel = ref.read(settingsProvider).startingLevel;
+    final effectiveLevel = level ??
+        (settingsLevel == CEFRLevel.a2 ? CEFRLevel.a2 : CEFRLevel.a1);
+
     final convRepo = ref.read(conversationRepositoryProvider);
 
     final convId = await convRepo.createConversation(
       scenario.title,
-      level.label,
+      effectiveLevel.label,
     );
 
     state = ChatState(
       conversationId: convId,
       scenario: scenario.prompt,
-      level: level,
+      level: effectiveLevel,
       messages: [],
     );
 
@@ -120,6 +127,11 @@ class ChatNotifier extends Notifier<ChatState> {
   Future<void> sendMessage(String text) async {
     if (state.conversationId == null) return;
     if (state.isLoading) return;
+
+    // Capture the history BEFORE appending the new user message —
+    // the orchestrator adds `text` itself, so including it in the
+    // history would send it to the model twice.
+    final history = state.messages;
 
     final userMsg = ChatMessage.user(text, conversationId: state.conversationId);
     state = state.copyWith(
@@ -139,7 +151,7 @@ class ChatNotifier extends Notifier<ChatState> {
         level: state.level,
         scenario: state.scenario,
         userMessage: text,
-        history: state.messages,
+        history: history,
       );
 
       // Call LLM
@@ -164,10 +176,17 @@ class ChatNotifier extends Notifier<ChatState> {
 
       // Persist tutor message
       await convRepo.saveMessage(tutorMsg);
+    } on DeepSeekException catch (e) {
+      state = state.copyWith(isLoading: false, error: e.message);
+    } on FormatException {
+      state = state.copyWith(
+        isLoading: false,
+        error: 'The tutor sent an unreadable reply. Please try again.',
+      );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: 'Failed to get response: $e',
+        error: 'Something went wrong getting the tutor\'s reply.',
       );
     }
   }

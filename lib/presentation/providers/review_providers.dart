@@ -1,9 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/entities/fsrs_card.dart';
 import '../../domain/engines/fsrs_scheduler.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import 'database_providers.dart';
 import 'gamification_providers.dart';
+
+/// Max brand-new cards introduced per calendar day. Prevents the whole
+/// deck (200+ words) from becoming "due" at once on first launch.
+const kDailyNewCardLimit = 15;
+
+/// Max cards shown in a single review session (new + due-for-review).
+const kMaxSessionCards = 30;
+
+const _kNewCardsToday = 'srs_new_cards_today';
+const _kNewCardsDate = 'srs_new_cards_date';
 
 /// State of an SRS review session.
 class ReviewSessionState {
@@ -84,16 +95,64 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
   @override
   ReviewSessionState build() => const ReviewSessionState();
 
-  /// Load due cards from the database.
+  /// Load due cards from the database, capping brand-new cards per day and
+  /// total session size so a fresh learner isn't flooded with the whole deck.
   Future<void> loadDueCards() async {
     state = const ReviewSessionState(isLoading: true);
     final repo = ref.read(vocabularyRepositoryProvider);
-    final dueCards = await repo.getDueCards();
+    final allDue = await repo.getDueCards();
+
+    // Partition into brand-new cards (never reviewed) and cards coming
+    // back for scheduled review.
+    final newCards = <ReviewCard>[];
+    final reviewCards = <ReviewCard>[];
+    for (final c in allDue) {
+      if (c.fsrs.state == CardState.newCard || c.fsrs.reps == 0) {
+        newCards.add(c);
+      } else {
+        reviewCards.add(c);
+      }
+    }
+
+    // How many new cards are we still allowed to introduce today?
+    final prefs = await SharedPreferences.getInstance();
+    final introducedToday = _introducedToday(prefs);
+    final newBudget =
+        (kDailyNewCardLimit - introducedToday).clamp(0, kDailyNewCardLimit);
+
+    // Due reviews always come first (they're the ones at risk of being
+    // forgotten); fill the rest of the session with new cards.
+    final session = <ReviewCard>[];
+    session.addAll(reviewCards.take(kMaxSessionCards));
+    final remainingSlots = (kMaxSessionCards - session.length).clamp(0, kMaxSessionCards);
+    final newToShow = newCards.take(remainingSlots.clamp(0, newBudget)).toList();
+    session.addAll(newToShow);
+
+    // Record how many new cards we introduced so tomorrow starts fresh.
+    if (newToShow.isNotEmpty) {
+      await _recordIntroduced(prefs, introducedToday + newToShow.length);
+    }
+
     state = ReviewSessionState(
-      dueCards: dueCards,
+      dueCards: session,
       isLoading: false,
-      isComplete: dueCards.isEmpty,
+      isComplete: session.isEmpty,
     );
+  }
+
+  /// New cards already introduced today (resets at midnight).
+  int _introducedToday(SharedPreferences prefs) {
+    final now = DateTime.now();
+    final today = '${now.year}-${now.month}-${now.day}';
+    if (prefs.getString(_kNewCardsDate) != today) return 0;
+    return prefs.getInt(_kNewCardsToday) ?? 0;
+  }
+
+  Future<void> _recordIntroduced(SharedPreferences prefs, int count) async {
+    final now = DateTime.now();
+    final today = '${now.year}-${now.month}-${now.day}';
+    await prefs.setString(_kNewCardsDate, today);
+    await prefs.setInt(_kNewCardsToday, count);
   }
 
   /// Flip the current card to reveal the answer.
@@ -125,10 +184,17 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     final newEasy = state.easyCount + (rating == Rating.easy ? 1 : 0);
     final newXp = state.totalXp + _xpForRating(rating);
 
+    // Relapse: a card rated "Again" comes back later in the SAME session
+    // (Anki-style learning queue) so the learner actually re-encounters it
+    // before the session ends, not a day later.
+    final newDue =
+        rating == Rating.again ? [...state.dueCards, card] : state.dueCards;
+
     final nextIndex = state.currentIndex + 1;
-    final isComplete = nextIndex >= state.dueCards.length;
+    final isComplete = nextIndex >= newDue.length;
 
     state = state.copyWith(
+      dueCards: newDue,
       currentIndex: nextIndex,
       isFlipped: false,
       reviewedCount: state.reviewedCount + 1,
@@ -140,10 +206,13 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
       isComplete: isComplete,
     );
 
-    // Award XP via gamification
+    // Award XP via gamification: a block of 5 as the session progresses,
+    // plus whatever remainder is left when the session completes.
+    final gamification = ref.read(gamificationProvider.notifier);
     if (state.reviewedCount % 5 == 0) {
-      final gamification = ref.read(gamificationProvider.notifier);
       gamification.onReviewSessionCompleted(5);
+    } else if (isComplete) {
+      gamification.onReviewSessionCompleted(state.reviewedCount % 5);
     }
   }
 

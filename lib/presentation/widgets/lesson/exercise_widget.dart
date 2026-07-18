@@ -1,11 +1,91 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/utils/text_normalizer.dart';
+import '../../../core/utils/score_colors.dart';
 import '../../../domain/entities/exercise.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/engines/pronunciation_scorer.dart';
 import '../../providers/stt_providers.dart';
 import '../../providers/tts_providers.dart';
+
+/// Normalize a typed answer for comparison: lowercase, strip punctuation,
+/// collapse whitespace. Diacritics are kept — they're meaningful in Czech.
+String _normalizeAnswer(String s) => TextNormalizer.normalize(s);
+
+/// Translucent feedback tints that work on light and dark surfaces.
+final Color _correctTint = Colors.green.withValues(alpha: 0.12);
+final Color _wrongTint = Colors.red.withValues(alpha: 0.12);
+
+/// How closely a typed answer matched: exact, accents-only difference,
+/// or wrong.
+enum AnswerMatch { exact, nearMiss, none }
+
+/// Compare a user's typed answer against the accepted answers, allowing a
+/// diacritics-only "near miss".
+AnswerMatch matchAnswer(List<String> accepted, String user) {
+  final u = _normalizeAnswer(user);
+  if (u.isEmpty) return AnswerMatch.none;
+  if (accepted.any((a) => _normalizeAnswer(a) == u)) {
+    return AnswerMatch.exact;
+  }
+  if (accepted.any((a) => TextNormalizer.matchesIgnoringDiacritics(a, user))) {
+    return AnswerMatch.nearMiss;
+  }
+  return AnswerMatch.none;
+}
+
+/// A horizontal bar of Czech diacritic letters that inserts into the
+/// currently-targeted text field at the cursor. Essential when typing on a
+/// non-Czech keyboard, where several exercises are otherwise unanswerable.
+class CzechCharBar extends StatelessWidget {
+  final TextEditingController controller;
+  final bool enabled;
+
+  const CzechCharBar({
+    super.key,
+    required this.controller,
+    this.enabled = true,
+  });
+
+  void _insert(String ch) {
+    final sel = controller.selection;
+    final text = controller.text;
+    if (sel.isValid && sel.start >= 0) {
+      final newText = text.replaceRange(sel.start, sel.end, ch);
+      controller.value = TextEditingValue(
+        text: newText,
+        selection: TextSelection.collapsed(offset: sel.start + ch.length),
+      );
+    } else {
+      controller.text = text + ch;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: TextNormalizer.czechDiacriticChars.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 4),
+        itemBuilder: (context, i) {
+          final ch = TextNormalizer.czechDiacriticChars[i];
+          return OutlinedButton(
+            onPressed: enabled ? () => _insert(ch) : null,
+            style: OutlinedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: const Size(36, 36),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Text(ch, style: const TextStyle(fontSize: 16)),
+          );
+        },
+      ),
+    );
+  }
+}
 
 /// Result of an exercise answer submission.
 class ExerciseResult {
@@ -108,7 +188,7 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
   Widget build(BuildContext context) {
     final data = widget.exercise.data;
     final options = (data['options'] as List<dynamic>).cast<String>();
-    final correctIdx = data['correct_index'] as int;
+    final correctIdx = (data['correct_index'] as num).toInt();
     final questionEn = data['question_en'] as String? ?? widget.exercise.prompt;
 
     return Padding(
@@ -153,11 +233,11 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
             IconData? icon;
 
             if (answered && isCorrect) {
-              cardColor = Colors.green.shade50;
+              cardColor = _correctTint;
               borderColor = Colors.green;
               icon = Icons.check_circle;
             } else if (answered && isSelected && !isCorrect) {
-              cardColor = Colors.red.shade50;
+              cardColor = _wrongTint;
               borderColor = Colors.red;
               icon = Icons.cancel;
             }
@@ -175,7 +255,7 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
                 child: ListTile(
                   leading: icon != null
                       ? Icon(icon,
-                          color: isCorrect ? Colors.green : Colors.red)
+                          color: isCorrect ? Colors.green : Colors.red,)
                       : Text(
                           String.fromCharCode(65 + i),
                           style: Theme.of(context).textTheme.titleMedium,
@@ -233,21 +313,27 @@ class _TranslationViewState extends State<_TranslationView> {
 
   void _checkAnswer() {
     final data = widget.exercise.data;
-    final accepted = (data['accepted_answers'] as List<dynamic>)
-        .map((e) => (e as String).trim().toLowerCase())
-        .toList();
-    final userAnswer = _controller.text.trim().toLowerCase();
-    final correct = accepted.any((a) => a == userAnswer);
+    final accepted =
+        (data['accepted_answers'] as List<dynamic>).cast<String>();
+    final match = matchAnswer(accepted, _controller.text);
+    // A diacritics-only miss still counts (no heart loss) but nudges the
+    // learner about accents.
+    final correct = match != AnswerMatch.none;
 
     setState(() {
       answered = true;
       isCorrect = correct;
     });
 
+    final grammarNote = data['grammar_note'] as String?;
+    final explanation = match == AnswerMatch.nearMiss
+        ? 'Almost! Watch your accent marks — the correct spelling is "${accepted.first}".'
+        : grammarNote;
+
     final result = ExerciseResult(
       isCorrect: correct,
-      explanation: data['grammar_note'] as String?,
-      correctAnswer: (data['accepted_answers'] as List<dynamic>).first as String,
+      explanation: explanation,
+      correctAnswer: accepted.first,
     );
 
     Future.delayed(const Duration(milliseconds: 1500),
@@ -308,6 +394,12 @@ class _TranslationViewState extends State<_TranslationView> {
             ),
             onSubmitted: answered ? null : (_) => _checkAnswer(),
           ),
+
+          // Czech character helper — only when typing Czech.
+          if (direction == 'en_to_cz' && !answered) ...[
+            const SizedBox(height: 8),
+            CzechCharBar(controller: _controller, enabled: !answered),
+          ],
           const SizedBox(height: 16),
 
           // Submit button
@@ -321,7 +413,7 @@ class _TranslationViewState extends State<_TranslationView> {
           if (answered == true && isCorrect == false) ...[
             const SizedBox(height: 16),
             Card(
-              color: Colors.green.shade50,
+              color: _correctTint,
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
@@ -371,29 +463,23 @@ class _FillBlankViewState extends State<_FillBlankView> {
 
   void _checkAnswer() {
     final data = widget.exercise.data;
-    final accepted = (data['accepted_answers'] as List<dynamic>)
-        .map((e) => (e as String).trim().toLowerCase())
-        .toList();
+    final accepted =
+        (data['accepted_answers'] as List<dynamic>).cast<String>();
 
     // Collect per-blank answers in order; multi-blank joins with |
     // to match the accepted_answers format.
     final blankIndices = _controllers.keys.toList()..sort();
-    final userAnswer = blankIndices
-        .map((idx) => _controllers[idx]!.text.trim())
-        .join('|')
-        .toLowerCase();
+    final userParts = blankIndices
+        .map((idx) => _normalizeAnswer(_controllers[idx]!.text))
+        .toList();
 
     final correct = accepted.any((a) {
-      if (a.contains('|')) {
-        final parts = a.split('|').map((p) => p.trim().toLowerCase()).toList();
-        final userParts = userAnswer.split('|').map((p) => p.trim().toLowerCase()).toList();
-        if (parts.length != userParts.length) return false;
-        for (var i = 0; i < parts.length; i++) {
-          if (parts[i] != userParts[i]) return false;
-        }
-        return true;
+      final parts = a.split('|').map(_normalizeAnswer).toList();
+      if (parts.length != userParts.length) return false;
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i] != userParts[i]) return false;
       }
-      return a == userAnswer;
+      return true;
     });
 
     setState(() {
@@ -457,7 +543,7 @@ class _FillBlankViewState extends State<_FillBlankView> {
                           border: OutlineInputBorder(),
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 8),
+                              horizontal: 8, vertical: 8,),
                         ),
                         style: TextStyle(
                           color: isCorrect == false ? Colors.red : null,
@@ -481,13 +567,13 @@ class _FillBlankViewState extends State<_FillBlankView> {
           if (answered == true && isCorrect == false) ...[
             const SizedBox(height: 16),
             Card(
-              color: Colors.green.shade50,
+              color: _correctTint,
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
                   'Correct: ${_displayAnswer(data)}',
                   style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
+                      color: Colors.green, fontWeight: FontWeight.bold,),
                 ),
               ),
             ),
@@ -526,15 +612,9 @@ class _WordOrderViewState extends State<_WordOrderView> {
     if (sepIdx >= 0) {
       available = allWords.sublist(0, sepIdx);
     } else {
-      available = allWords.where((w) => !_isEnglish(w)).toList();
+      available = List.of(allWords);
     }
     available = List.from(available)..shuffle();
-  }
-
-  bool _isEnglish(String w) {
-    // Simple heuristic: English words don't contain Czech diacritics
-    // and the translation part starts after —
-    return false;
   }
 
   void _checkAnswer() {
@@ -584,19 +664,11 @@ class _WordOrderViewState extends State<_WordOrderView> {
   /// Handles duplicate words correctly by comparing the word at each
   /// correct_order index to the user's selection at that position.
   bool _checkOrder(
-      List<String> selected, List<String> czechWords, List<int> correctOrder) {
+      List<String> selected, List<String> czechWords, List<int> correctOrder,) {
     if (selected.length != correctOrder.length) return false;
     for (var i = 0; i < correctOrder.length; i++) {
       final expectedWord = czechWords[correctOrder[i]];
       if (selected[i] != expectedWord) return false;
-    }
-    return true;
-  }
-
-  bool listEquals<T>(List<T> a, List<T> b) {
-    if (a.length != b.length) return false;
-    for (var i = 0; i < a.length; i++) {
-      if (a[i] != b[i]) return false;
     }
     return true;
   }
@@ -639,8 +711,8 @@ class _WordOrderViewState extends State<_WordOrderView> {
                         },
                   color: answered
                       ? (isCorrect == true
-                          ? Colors.green.shade50
-                          : Colors.red.shade50)
+                          ? _correctTint
+                          : _wrongTint)
                       : null,
                 );
               }).toList(),
@@ -665,7 +737,9 @@ class _WordOrderViewState extends State<_WordOrderView> {
               );
             }).toList(),
           ),
-          const Spacer(),
+          // No Spacer here: this widget renders inside a scroll view, where
+          // flex children have unbounded height and would throw.
+          const SizedBox(height: 24),
           if (!answered && selected.isNotEmpty)
             FilledButton(
               onPressed: _checkAnswer,
@@ -674,13 +748,13 @@ class _WordOrderViewState extends State<_WordOrderView> {
           if (answered == true && isCorrect == false) ...[
             const SizedBox(height: 8),
             Card(
-              color: Colors.green.shade50,
+              color: _correctTint,
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
                   'Correct: ${widget.exercise.data['correct_answer'] ?? _buildCorrectSentence(widget.exercise.data)}',
                   style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
+                      color: Colors.green, fontWeight: FontWeight.bold,),
                 ),
               ),
             ),
@@ -724,14 +798,6 @@ class _DictationViewState extends ConsumerState<_DictationView> {
   final _controller = TextEditingController();
   bool answered = false;
   bool? isCorrect;
-  bool _normalizeCompare(String a, String b) {
-    // Compare case-insensitive, ignoring trailing punctuation
-    String norm(String s) => s
-        .trim()
-        .toLowerCase()
-        .replaceAll(RegExp(r'[.!?]+$'), '');
-    return norm(a) == norm(b);
-  }
 
   @override
   void dispose() {
@@ -742,16 +808,21 @@ class _DictationViewState extends ConsumerState<_DictationView> {
   void _checkAnswer() {
     final data = widget.exercise.data;
     final expected = data['expected_text'] as String;
-    final correct = _normalizeCompare(_controller.text, expected);
+    final match = matchAnswer([expected], _controller.text);
+    final correct = match != AnswerMatch.none;
 
     setState(() {
       answered = true;
       isCorrect = correct;
     });
 
+    final explanation = match == AnswerMatch.nearMiss
+        ? 'Almost! Watch your accent marks — you wrote it correctly apart from the diacritics.'
+        : data['note'] as String?;
+
     final result = ExerciseResult(
       isCorrect: correct,
-      explanation: data['note'] as String?,
+      explanation: explanation,
       correctAnswer: expected,
     );
 
@@ -807,6 +878,10 @@ class _DictationViewState extends ConsumerState<_DictationView> {
             ),
             onSubmitted: answered ? null : (_) => _checkAnswer(),
           ),
+          if (!answered) ...[
+            const SizedBox(height: 8),
+            CzechCharBar(controller: _controller, enabled: !answered),
+          ],
           const SizedBox(height: 16),
 
           if (!answered)
@@ -818,13 +893,13 @@ class _DictationViewState extends ConsumerState<_DictationView> {
           if (answered == true && isCorrect == false) ...[
             const SizedBox(height: 16),
             Card(
-              color: Colors.green.shade50,
+              color: _correctTint,
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
                   'Correct: ${data['expected_text']}',
                   style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
+                      color: Colors.green, fontWeight: FontWeight.bold,),
                 ),
               ),
             ),
@@ -916,7 +991,7 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
       explanation: data['note'] as String? ??
           (passed ? 'Good pronunciation!' : 'Try again — focus on the highlighted sounds.'),
       correctAnswer: data['target_text'] as String?,
-    ));
+    ),);
   }
 
   @override
@@ -981,7 +1056,7 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
                         padding: EdgeInsets.zero,
                         labelStyle: const TextStyle(fontSize: 12),
                       ),
-                    )),
+                    ),),
               ],
             ),
           ],
@@ -1036,9 +1111,9 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
               Text(
                 feedback!,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 13,
-                  color: Colors.grey.shade700,
+                  color: Colors.grey,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -1063,11 +1138,7 @@ class _ScoreDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final percentage = (score * 100).round();
-    final color = score >= 0.8
-        ? Colors.green
-        : score >= 0.65
-            ? Colors.orange
-            : Colors.red;
+    final color = ScoreColors.of(score);
 
     return Column(
       children: [
@@ -1087,11 +1158,7 @@ class _ScoreDisplay extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          score >= 0.8
-              ? 'Výborně! Excellent!'
-              : score >= 0.65
-                  ? 'Dobře. Good — keep practicing.'
-                  : 'Zkuste znovu. Try again.',
+          ScoreColors.label(score),
           style: TextStyle(color: color, fontWeight: FontWeight.bold),
         ),
       ],
@@ -1130,7 +1197,7 @@ class _DialogueViewState extends State<_DialogueView> {
 
   /// Build dialogue line widgets, assigning a unique controller per blank.
   List<Widget> _buildDialogueLines(
-      List<Map<String, dynamic>> lines, BuildContext context) {
+      List<Map<String, dynamic>> lines, BuildContext context,) {
     int blankCounter = 0;
     return lines.map((line) {
       final isUser = line['speaker'] == 'you';
@@ -1193,32 +1260,21 @@ class _DialogueViewState extends State<_DialogueView> {
   void _checkAnswer() {
     final data = widget.exercise.data;
     final acceptedRaw = data['accepted_answers'] as List<dynamic>;
-    // Support multi-blank with | separator
-    final accepted = acceptedRaw.map((a) {
-      final s = (a as String).trim().toLowerCase();
-      return s;
-    }).toList();
 
-    // Collect answers from all controllers in order
+    // Collect answers from all controllers in order.
     final blankIndices = _controllers.keys.toList()..sort();
-    final userAnswer = blankIndices
-        .map((idx) => _controllers[idx]!.text.trim())
-        .join('|')
-        .toLowerCase();
+    final userParts = blankIndices
+        .map((idx) => _normalizeAnswer(_controllers[idx]!.text))
+        .toList();
 
-    // Check if user answer matches any accepted answer (or partial for multi-blank)
-    final correct = accepted.any((a) {
-      if (a.contains('|')) {
-        final parts = a.split('|').map((p) => p.trim().toLowerCase()).toList();
-        final userParts =
-            userAnswer.split('|').map((p) => p.trim().toLowerCase()).toList();
-        if (parts.length != userParts.length) return false;
-        for (var i = 0; i < parts.length; i++) {
-          if (parts[i] != userParts[i]) return false;
-        }
-        return true;
+    // Multi-blank accepted answers use | separators.
+    final correct = acceptedRaw.cast<String>().any((a) {
+      final parts = a.split('|').map(_normalizeAnswer).toList();
+      if (parts.length != userParts.length) return false;
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i] != userParts[i]) return false;
       }
-      return a == userAnswer;
+      return true;
     });
 
     setState(() {
@@ -1271,13 +1327,13 @@ class _DialogueViewState extends State<_DialogueView> {
           if (answered == true && isCorrect == false) ...[
             const SizedBox(height: 16),
             Card(
-              color: Colors.green.shade50,
+              color: _correctTint,
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
                   'Correct: ${(data['accepted_answers'] as List<dynamic>).first}',
                   style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
+                      color: Colors.green, fontWeight: FontWeight.bold,),
                 ),
               ),
             ),
@@ -1328,13 +1384,12 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
     final data = widget.exercise.data;
     final answerKey =
         Map<String, String>.from(data['answer_key'] as Map<String, dynamic>);
-    final word = data['word'] as String;
 
     correctCount = 0;
     for (final entry in _controllers.entries) {
       final caseName = entry.key;
-      final userAnswer = entry.value.text.trim().toLowerCase();
-      final correctAnswer = answerKey[caseName]!.toLowerCase();
+      final userAnswer = _normalizeAnswer(entry.value.text);
+      final correctAnswer = _normalizeAnswer(answerKey[caseName] ?? '');
       if (userAnswer == correctAnswer) {
         correctCount++;
       }
@@ -1396,21 +1451,21 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text('Case',
-                        style: Theme.of(context).textTheme.labelLarge),
+                        style: Theme.of(context).textTheme.labelLarge,),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text('Form',
-                        style: Theme.of(context).textTheme.labelLarge),
+                        style: Theme.of(context).textTheme.labelLarge,),
                   ),
                 ],
               ),
               ...cases.map((caseName) {
                 final controller = _controllers[caseName]!;
                 final correct = answerKey?[caseName];
-                final userAnswer = controller.text.trim().toLowerCase();
+                final userAnswer = _normalizeAnswer(controller.text);
                 final isCorrect =
-                    correct != null && userAnswer == correct.toLowerCase();
+                    correct != null && userAnswer == _normalizeAnswer(correct);
 
                 return TableRow(
                   children: [
@@ -1452,8 +1507,8 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
             const SizedBox(height: 16),
             Card(
               color: correctCount == totalBlanks
-                  ? Colors.green.shade50
-                  : Colors.orange.shade50,
+                  ? _correctTint
+                  : Colors.orange.withValues(alpha: 0.12),
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(

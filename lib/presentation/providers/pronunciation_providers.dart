@@ -112,4 +112,4 @@ class PronunciationNotifier extends Notifier<PronunciationState> {
 /// Provider for the pronunciation state.
 final pronunciationProvider =
     NotifierProvider<PronunciationNotifier, PronunciationState>(
-        PronunciationNotifier.new);
+        PronunciationNotifier.new,);

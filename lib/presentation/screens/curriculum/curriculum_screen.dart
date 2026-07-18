@@ -26,7 +26,7 @@ class CurriculumScreen extends ConsumerWidget {
               const Icon(Icons.error_outline, size: 48, color: Colors.red),
               const SizedBox(height: 16),
               Text('Failed to load curriculum: $err',
-                  textAlign: TextAlign.center),
+                  textAlign: TextAlign.center,),
               const SizedBox(height: 16),
               FilledButton(
                 onPressed: () => ref.invalidate(allUnitsProvider),
@@ -72,6 +72,21 @@ class CurriculumScreen extends ConsumerWidget {
               _PhaseHeader(
                 title: 'Phase 2: A2',
                 subtitle: 'Elementary — ${a2Units.length} units',
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Icon(Icons.construction,
+                      size: 14, color: Colors.orange.shade700,),
+                  const SizedBox(width: 6),
+                  Text(
+                    'More A2 lessons are being added',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.orange.shade700,
+                          fontStyle: FontStyle.italic,
+                        ),
+                  ),
+                ],
               ),
               const SizedBox(height: 8),
               ...a2Units.map((unit) {
@@ -129,17 +144,60 @@ class _UnitCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lessonsAsync = ref.watch(unitLessonsProvider(unit.id));
+    final completedIds = ref.watch(completedLessonIdsProvider).maybeWhen(
+          data: (ids) => ids,
+          orElse: () => const <int>{},
+        );
+
+    // Per-unit completion for the progress badge on the header.
+    final lessons = lessonsAsync.value ?? const [];
+    final doneCount = lessons.where((l) => completedIds.contains(l.id)).length;
+    final allDone = lessons.isNotEmpty && doneCount == lessons.length;
 
     return Card(
       child: ExpansionTile(
         leading: Icon(
-          isUnlocked ? Icons.play_circle : Icons.lock,
-          color: isUnlocked
-              ? Theme.of(context).colorScheme.primary
-              : Colors.grey,
+          !isUnlocked
+              ? Icons.lock
+              : allDone
+                  ? Icons.check_circle
+                  : Icons.play_circle,
+          color: !isUnlocked
+              ? Colors.grey
+              : allDone
+                  ? Colors.green
+                  : Theme.of(context).colorScheme.primary,
         ),
         title: Text('Unit ${unit.id}: ${unit.title}'),
-        subtitle: Text(unit.description, maxLines: 2, overflow: TextOverflow.ellipsis),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(unit.description,
+                maxLines: 2, overflow: TextOverflow.ellipsis,),
+            if (isUnlocked && lessons.isNotEmpty) ...[
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(3),
+                      child: LinearProgressIndicator(
+                        value: doneCount / lessons.length,
+                        minHeight: 5,
+                        backgroundColor: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text('$doneCount/${lessons.length}',
+                      style: Theme.of(context).textTheme.labelSmall,),
+                ],
+              ),
+            ],
+          ],
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -168,7 +226,8 @@ class _UnitCard extends ConsumerWidget {
             return lessons.map((lesson) => _LessonTile(
                   lesson: lesson,
                   isUnlocked: isUnlocked,
-                )).toList();
+                  isCompleted: completedIds.contains(lesson.id),
+                ),).toList();
           },
         ),
       ),
@@ -179,8 +238,13 @@ class _UnitCard extends ConsumerWidget {
 class _LessonTile extends StatelessWidget {
   final Lesson lesson;
   final bool isUnlocked;
+  final bool isCompleted;
 
-  const _LessonTile({required this.lesson, required this.isUnlocked});
+  const _LessonTile({
+    required this.lesson,
+    required this.isUnlocked,
+    this.isCompleted = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -193,8 +257,12 @@ class _LessonTile extends StatelessWidget {
 
     return ListTile(
       leading: Icon(
-        lessonTypeIcon,
-        color: isUnlocked ? Theme.of(context).colorScheme.primary : Colors.grey,
+        isCompleted ? Icons.check_circle : lessonTypeIcon,
+        color: isCompleted
+            ? Colors.green
+            : isUnlocked
+                ? Theme.of(context).colorScheme.primary
+                : Colors.grey,
         size: 20,
       ),
       title: Text(
@@ -211,10 +279,12 @@ class _LessonTile extends StatelessWidget {
         style: const TextStyle(fontSize: 12),
       ),
       trailing: isUnlocked
-          ? const Icon(Icons.chevron_right)
+          ? (isCompleted
+              ? const Icon(Icons.replay, size: 18)
+              : const Icon(Icons.chevron_right))
           : const Icon(Icons.lock, size: 16),
       onTap: isUnlocked
-          ? () => context.go('/lesson/${lesson.id}')
+          ? () => context.push('/lesson/${lesson.id}')
           : null,
     );
   }

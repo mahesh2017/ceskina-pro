@@ -31,7 +31,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
         bestScore: Value(score),
         attempts: const Value(1),
         lastAttempted: Value(DateTime.now()),
-      ));
+      ),);
     } else {
       await (update(lessonProgress)
             ..where((l) => l.lessonId.equals(lessonId)))
@@ -40,7 +40,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
         bestScore: Value(score > existing.bestScore ? score : existing.bestScore),
         attempts: Value(existing.attempts + 1),
         lastAttempted: Value(DateTime.now()),
-      ));
+      ),);
     }
   }
 
@@ -71,7 +71,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> earnBadge(String badgeId) =>
       into(earnedBadges).insertOnConflictUpdate(
-            EarnedBadgesCompanion.insert(badgeId: badgeId));
+            EarnedBadgesCompanion.insert(badgeId: badgeId),);
 
   // ── User Progress KV ──
 
@@ -84,5 +84,5 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> setProgressValue(String key, String value) =>
       into(userProgress).insertOnConflictUpdate(
-            UserProgressCompanion.insert(key: key, value: value));
+            UserProgressCompanion.insert(key: key, value: value),);
 }

@@ -5,16 +5,24 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
+import 'settings_providers.dart';
 
 /// TTS provider — manages a singleton FlutterTts instance configured for Czech.
+/// The speech rate follows the user's setting.
 final ttsProvider = Provider<FlutterTts>((ref) {
   final tts = FlutterTts();
   // Configure for Czech language
   tts.setLanguage('cs-CZ');
-  tts.setSpeechRate(0.45); // slightly slower for language learners
   tts.setPitch(1.0);
   tts.setVolume(1.0);
   ref.onDispose(() => tts.stop());
+
+  // Apply the user's speech rate now and whenever the setting changes.
+  ref.listen<double>(
+    settingsProvider.select((s) => s.ttsSpeechRate),
+    (_, rate) => tts.setSpeechRate(rate),
+    fireImmediately: true,
+  );
   return tts;
 });
 
@@ -35,9 +43,14 @@ final audioPlayerProvider = Provider<AudioPlayer>((ref) {
 class CzechTts {
   final FlutterTts _tts;
   final AudioPlayer _player;
+
+  /// Current speech rate — part of the cache key, so audio synthesized at
+  /// one rate is never replayed when the user changes the setting.
+  final double Function() _speechRate;
+
   String? _cacheDir;
 
-  CzechTts(this._tts, this._player);
+  CzechTts(this._tts, this._player, this._speechRate);
 
   /// Get the cache directory for TTS audio files.
   Future<String> _getCacheDir() async {
@@ -49,9 +62,10 @@ class CzechTts {
     return ttsDir;
   }
 
-  /// Generate a cache key from the text.
+  /// Generate a cache key from the text and current speech rate.
   String _cacheKey(String text) {
-    final bytes = utf8.encode(text.trim().toLowerCase());
+    final rate = _speechRate().toStringAsFixed(2);
+    final bytes = utf8.encode('$rate|${text.trim().toLowerCase()}');
     final hash = md5.convert(bytes);
     return hash.toString();
   }
@@ -108,7 +122,7 @@ class CzechTts {
     final languages = await _tts.getLanguages;
     if (languages == null) return false;
     return languages.any((lang) =>
-        lang.toString().toLowerCase().startsWith('cs'));
+        lang.toString().toLowerCase().startsWith('cs'),);
   }
 
   /// Clear the TTS cache directory.
@@ -141,5 +155,9 @@ class CzechTts {
 final czechTtsProvider = Provider<CzechTts>((ref) {
   final tts = ref.read(ttsProvider);
   final player = ref.read(audioPlayerProvider);
-  return CzechTts(tts, player);
+  return CzechTts(
+    tts,
+    player,
+    () => ref.read(settingsProvider).ttsSpeechRate,
+  );
 });

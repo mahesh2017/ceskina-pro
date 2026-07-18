@@ -69,15 +69,17 @@ class NativeSttService implements SttService {
           if (!completer.isCompleted) completer.complete(result);
         }
       },
-      listenFor: timeout,
-      localeId: 'cs_CZ',
-      listenMode: ListenMode.dictation,
+      listenOptions: SpeechListenOptions(
+        listenFor: timeout,
+        localeId: 'cs_CZ',
+        listenMode: ListenMode.dictation,
+      ),
     );
 
     return completer.future.timeout(timeout, onTimeout: () {
       _speech.stop();
       return result;
-    });
+    },);
   }
 
   /// Stop listening.

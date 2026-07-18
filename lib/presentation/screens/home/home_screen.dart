@@ -26,7 +26,13 @@ class HomeScreen extends ConsumerWidget {
           const StreakIndicator(),
           const SizedBox(width: 8),
           const XpBadge(),
-          const SizedBox(width: 16),
+          const SizedBox(width: 4),
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: 'Settings',
+            onPressed: () => context.push('/settings'),
+          ),
+          const SizedBox(width: 4),
         ],
       ),
       body: ListView(
@@ -61,6 +67,14 @@ class HomeScreen extends ConsumerWidget {
                   onTap: () => context.go('/chat'),
                 ),
               ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _QuickActionCard(
+                  icon: Icons.mic,
+                  label: 'Speak',
+                  onTap: () => context.push('/pronunciation/practice'),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -70,9 +84,21 @@ class HomeScreen extends ConsumerWidget {
             child: ListTile(
               leading: const Icon(Icons.assignment, size: 40),
               title: const Text('Mock Exam'),
-              subtitle: const Text('Practice CCE-A1/A2 exam'),
+              subtitle: const Text('Practice the CCE exam under timed conditions'),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.go('/exam/a1'),
+              onTap: () => _showExamLevelPicker(context),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Grammar reference
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.menu_book, size: 40),
+              title: const Text('Grammar Reference'),
+              subtitle: const Text('Browse all grammar rules and examples'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/grammar'),
             ),
           ),
           const SizedBox(height: 16),
@@ -91,6 +117,44 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// Bottom sheet to choose the mock-exam level (A1 or A2).
+void _showExamLevelPicker(BuildContext context) {
+  showModalBottomSheet<void>(
+    context: context,
+    builder: (sheetContext) => SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16),
+            child: Text('Choose exam level',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+          ),
+          ListTile(
+            leading: const CircleAvatar(child: Text('A1')),
+            title: const Text('CCE A1 — Beginner'),
+            subtitle: const Text('Reading, listening, writing, speaking'),
+            onTap: () {
+              Navigator.pop(sheetContext);
+              context.push('/exam/a1');
+            },
+          ),
+          ListTile(
+            leading: const CircleAvatar(child: Text('A2')),
+            title: const Text('CCE A2 — Elementary'),
+            subtitle: const Text('Reading, listening, writing, speaking'),
+            onTap: () {
+              Navigator.pop(sheetContext);
+              context.push('/exam/a2');
+            },
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
+    ),
+  );
 }
 
 /// Daily goal card with a circular progress ring.
@@ -267,7 +331,7 @@ class _ContinueLearningCard extends ConsumerWidget {
           ),
           trailing: const Icon(Icons.chevron_right),
           onTap: next != null
-              ? () => context.go('/lesson/${next.lesson.id}')
+              ? () => context.push('/lesson/${next.lesson.id}')
               : () => context.go('/curriculum'),
         ),
       ),

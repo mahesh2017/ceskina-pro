@@ -99,5 +99,23 @@ void main() {
       expect(due.length, 2);
       expect(due.map((c) => c.id).toList(), containsAll(['1', '2']));
     });
+
+    test('previewIntervalDays matches the interval schedule() would apply',
+        () {
+      final card = newCard().copyWith(reps: 2, stability: 8, difficulty: 2.5);
+      for (final rating in Rating.values) {
+        final preview = scheduler.previewIntervalDays(card, rating, now);
+        final scheduled =
+            scheduler.schedule(card, rating, now).nextReviewDate;
+        expect(preview, scheduled.difference(now).inDays);
+      }
+    });
+
+    test('previewIntervalDays does not mutate the input card', () {
+      final card = newCard().copyWith(reps: 2, stability: 8, difficulty: 2.5);
+      scheduler.previewIntervalDays(card, Rating.easy, now);
+      expect(card.reps, 2);
+      expect(card.stability, 8);
+    });
   });
 }

@@ -66,36 +66,43 @@ void main() {
 
     group('processWrongAnswer', () {
       test('deducts one heart', () {
-        final state = const GamificationState(hearts: 5);
+        const state = GamificationState(hearts: 5);
         final result = engine.processWrongAnswer(state);
         expect(result.hearts, 4);
         expect(result.isGameOver, false);
       });
 
       test('game over when hearts reach 0', () {
-        final state = const GamificationState(hearts: 1);
+        const state = GamificationState(hearts: 1);
         final result = engine.processWrongAnswer(state);
         expect(result.hearts, 0);
         expect(result.isGameOver, true);
         expect(result.canRefill, true);
       });
+
+      test('hearts never go below 0 (regression)', () {
+        const state = GamificationState(hearts: 0);
+        final result = engine.processWrongAnswer(state);
+        expect(result.hearts, 0);
+        expect(result.isGameOver, true);
+      });
     });
 
     group('checkBadges', () {
       test('unlocks streak badge when streak >= threshold', () {
-        final snapshot = const ProgressSnapshot(longestStreak: 7);
+        const snapshot = ProgressSnapshot(longestStreak: 7);
         final unlocked = engine.checkBadges(snapshot);
         expect(unlocked.any((b) => b.id == 'streak_7'), isTrue);
       });
 
       test('does not unlock streak badge when streak < threshold', () {
-        final snapshot = const ProgressSnapshot(longestStreak: 6);
+        const snapshot = ProgressSnapshot(longestStreak: 6);
         final unlocked = engine.checkBadges(snapshot);
         expect(unlocked.any((b) => b.id == 'streak_7'), isFalse);
       });
 
       test('does not unlock already-earned badges', () {
-        final snapshot = const ProgressSnapshot(
+        const snapshot = ProgressSnapshot(
           longestStreak: 7,
           earnedBadges: {'streak_7'},
         );
@@ -104,7 +111,7 @@ void main() {
       });
 
       test('unlocks unit badge when unit score meets threshold', () {
-        final snapshot = const ProgressSnapshot(
+        const snapshot = ProgressSnapshot(
           unitScores: {3: 0.85},
         );
         final unlocked = engine.checkBadges(snapshot);
@@ -112,7 +119,7 @@ void main() {
       });
 
       test('does not unlock unit badge when score below threshold', () {
-        final snapshot = const ProgressSnapshot(
+        const snapshot = ProgressSnapshot(
           unitScores: {3: 0.5},
         );
         final unlocked = engine.checkBadges(snapshot);
@@ -120,7 +127,7 @@ void main() {
       });
 
       test('custom key badge does NOT auto-unlock without custom value', () {
-        final snapshot = const ProgressSnapshot(
+        const snapshot = ProgressSnapshot(
           customValues: {}, // no custom values
         );
         final unlocked = engine.checkBadges(snapshot);
@@ -128,7 +135,7 @@ void main() {
       });
 
       test('custom key badge unlocks when custom value meets threshold', () {
-        final snapshot = const ProgressSnapshot(
+        const snapshot = ProgressSnapshot(
           customValues: {'byt_conjugation': 1.0},
         );
         final unlocked = engine.checkBadges(snapshot);
@@ -136,7 +143,7 @@ void main() {
       });
 
       test('exam badge unlocks when exam passed', () {
-        final snapshot = const ProgressSnapshot(
+        const snapshot = ProgressSnapshot(
           examsPassed: {'a1'},
         );
         final unlocked = engine.checkBadges(snapshot);

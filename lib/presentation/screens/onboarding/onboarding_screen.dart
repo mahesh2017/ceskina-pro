@@ -42,20 +42,23 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Future<void> _finish() async {
+    final settings = ref.read(settingsProvider.notifier);
+
     // Save settings
-    await ref.read(settingsProvider.notifier).setDailyGoalXp(_selectedGoal);
+    await settings.setDailyGoalXp(_selectedGoal);
+    await settings.setStartingLevel(_selectedLevel);
 
     // Set gamification daily goal
-    ref.read(gamificationProvider.notifier).setDailyGoal(_selectedGoal);
+    await ref.read(gamificationProvider.notifier).setDailyGoal(_selectedGoal);
 
     // Save API key if entered
     final apiKey = _apiKeyController.text.trim();
     if (apiKey.isNotEmpty) {
-      await ref.read(settingsProvider.notifier).setApiKey(apiKey);
+      await settings.setApiKey(apiKey);
     }
 
     // Mark onboarding complete
-    await ref.read(settingsProvider.notifier).completeOnboarding();
+    await settings.completeOnboarding();
 
     // Navigate to home
     if (mounted) context.go('/');
@@ -118,22 +121,22 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Widget _buildWelcomeStep() {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(Icons.school, size: 80, color: Colors.blue),
-        const SizedBox(height: 24),
-        const Text(
+        Icon(Icons.school, size: 80, color: Colors.blue),
+        SizedBox(height: 24),
+        Text(
           'Vítejte!',
           style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 8),
-        const Text(
+        SizedBox(height: 8),
+        Text(
           'Welcome to Čeština Pro',
           style: TextStyle(fontSize: 18, color: Colors.grey),
         ),
-        const SizedBox(height: 32),
-        const Text(
+        SizedBox(height: 32),
+        Text(
           'Learn Czech from zero to A2 with:\n\n'
               '📚 Interactive lessons with spaced repetition\n'
               '🎤 Pronunciation practice with speech recognition\n'

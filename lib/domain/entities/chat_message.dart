@@ -74,11 +74,11 @@ class Correction {
 
   factory Correction.fromJson(Map<String, dynamic> json) {
     return Correction(
-      type: CorrectionType.values.byName(json['type'] as String),
-      userSaid: json['user_said'] as String,
-      correct: json['correct'] as String,
-      rule: json['rule'] as String,
-      severity: Severity.values.byName(json['severity'] as String? ?? 'error'),
+      type: CorrectionType.parse(json['type'] as String? ?? ''),
+      userSaid: json['user_said'] as String? ?? '',
+      correct: json['correct'] as String? ?? '',
+      rule: json['rule'] as String? ?? '',
+      severity: Severity.parse(json['severity'] as String?),
     );
   }
 }
@@ -92,9 +92,33 @@ enum CorrectionType {
   spelling,
   vowelLength,
   preposition,
+  other;
+
+  /// Parse both the LLM's snake_case labels (`verb_conjugation`) and
+  /// Dart enum names (`verbConjugation`, as persisted by older builds).
+  static CorrectionType parse(String raw) {
+    final normalized = raw.replaceAll('_', '').toLowerCase();
+    for (final type in CorrectionType.values) {
+      if (type.name.replaceAll('_', '').toLowerCase() == normalized) {
+        return type;
+      }
+    }
+    return CorrectionType.other;
+  }
 }
 
-enum Severity { error, minor, stylistic }
+enum Severity {
+  error,
+  minor,
+  stylistic;
+
+  static Severity parse(String? raw) {
+    for (final s in Severity.values) {
+      if (s.name == raw) return s;
+    }
+    return Severity.error;
+  }
+}
 
 /// New vocabulary introduced by the tutor.
 class NewVocabulary {

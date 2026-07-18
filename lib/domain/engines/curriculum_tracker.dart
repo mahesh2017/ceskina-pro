@@ -1,8 +1,10 @@
-import '../entities/gamification_state.dart';
 import '../entities/enums.dart';
 
 /// Tracks curriculum progress and determines CEFR level.
 class CurriculumProgressTracker {
+  /// A unit counts as "mastered" at this average lesson score.
+  static const masteryThreshold = 0.6;
+
   /// Determine if a lesson is unlocked (previous lesson completed).
   bool isLessonUnlocked({
     required int lessonOrder,
@@ -26,36 +28,31 @@ class CurriculumProgressTracker {
     return completed / totalLessonsInUnit;
   }
 
-  /// Determine CEFR level estimate based on progress.
-  CEFRLevel estimateLevel(ProgressSnapshot snapshot) {
-    if (snapshot.a2CompletionRate > 0.8 &&
-        snapshot.examsPassed.contains('a2')) {
+  /// Completion rate for one phase: the fraction of that phase's units
+  /// (ALL of them, not just attempted ones) mastered at [masteryThreshold].
+  double phaseCompletion({
+    required Map<int, double> unitScores,
+    required Set<int> phaseUnitIds,
+  }) {
+    if (phaseUnitIds.isEmpty) return 0.0;
+    final mastered = phaseUnitIds
+        .where((id) => (unitScores[id] ?? 0.0) >= masteryThreshold)
+        .length;
+    return mastered / phaseUnitIds.length;
+  }
+
+  /// Determine CEFR level estimate from phase completion + passed exams.
+  CEFRLevel estimateLevel({
+    required double a1Completion,
+    required double a2Completion,
+    required Set<String> examsPassed,
+  }) {
+    if (a2Completion > 0.8 && examsPassed.contains('a2')) {
       return CEFRLevel.a2;
     }
-    if (snapshot.a1CompletionRate > 0.8 &&
-        snapshot.examsPassed.contains('a1')) {
+    if (a1Completion > 0.8 && examsPassed.contains('a1')) {
       return CEFRLevel.a1;
     }
     return CEFRLevel.preA1;
-  }
-
-  /// Calculate overall A1 completion rate.
-  double calculateA1Completion({
-    required Map<int, double> unitScores,
-    required int totalA1Units,
-  }) {
-    if (totalA1Units == 0) return 0.0;
-    final completed = unitScores.values.where((s) => s >= 0.6).length;
-    return completed / totalA1Units;
-  }
-
-  /// Calculate overall A2 completion rate.
-  double calculateA2Completion({
-    required Map<int, double> unitScores,
-    required int totalA2Units,
-  }) {
-    if (totalA2Units == 0) return 0.0;
-    final completed = unitScores.values.where((s) => s >= 0.6).length;
-    return completed / totalA2Units;
   }
 }

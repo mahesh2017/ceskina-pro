@@ -177,6 +177,285 @@
         {"cz": "On je lékař. Ona je lékařka.", "en": "He is a doctor. She is a doctor."}
       ],
       "unit_id": 3
+    },
+    {
+      "id": "GR-030",
+      "rule_name": "být (to be) — present tense conjugation",
+      "pattern": "já jsem, ty jsi, on/ona/ono je, my jsme, vy jste, oni/ony jsou",
+      "explanation": "být is the most important Czech verb. Present tense: jsem (I am), jsi (you are), je (he/she/it is), jsme (we are), jste (you pl. are), jsou (they are). The subject pronoun is usually omitted — 'Jsem student' is more natural than 'Já jsem student'.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Jsem z Prahy.", "en": "I am from Prague.", "note": "já omitted"},
+        {"cz": "Jsi student?", "en": "Are you a student?", "note": "ty omitted, question by intonation"},
+        {"cz": "Ona je učitelka.", "en": "She is a teacher."},
+        {"cz": "Jsme tady.", "en": "We are here."}
+      ],
+      "unit_id": 4
+    },
+    {
+      "id": "GR-031",
+      "rule_name": "mít (to have) — present tense conjugation",
+      "pattern": "já mám, ty máš, on/ona má, my máme, vy máte, oni/ony mají",
+      "explanation": "mít is the second essential verb. Present tense: mám (I have), máš (you have), má (he/she has), máme (we have), máte (you pl. have), mají (they have). Used for possession: 'Mám auto' (I have a car). Also used for age: 'Mám dvacet let' (I am twenty years old, lit. 'I have twenty years').",
+      "case_affected": "accusative",
+      "examples": [
+        {"cz": "Mám kávu.", "en": "I have coffee.", "note": "kávu = accusative"},
+        {"cz": "Máš auto?", "en": "Do you have a car?"},
+        {"cz": "Máme dům.", "en": "We have a house."},
+        {"cz": "Mají dva psy.", "en": "They have two dogs.", "note": "psy = accusative plural"}
+      ],
+      "unit_id": 4
+    },
+    {
+      "id": "GR-032",
+      "rule_name": "Negation with být and mít",
+      "pattern": "ne- prefix: nejsem, nejsi, není, nemám, nemáš, nemá",
+      "explanation": "To negate být and mít, add 'ne-' prefix: nejsem (I am not), nejsi (you are not), není (he/she is not), nejsme (we are not), nejste (you pl. are not), nejsou (they are not). For mít: nemám, nemáš, nemá, nemáme, nemáte, nemají. The negative of 'je' is irregular: 'není' (not 'neje').",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Nejsem učitel.", "en": "I am not a teacher."},
+        {"cz": "Nemám auto.", "en": "I don't have a car."},
+        {"cz": "Není tady.", "en": "He/she is not here."},
+        {"cz": "Nemáme čas.", "en": "We don't have time."}
+      ],
+      "unit_id": 4
+    },
+    {
+      "id": "GR-033",
+      "rule_name": "Question formation with být and mít",
+      "pattern": "Yes/no questions by intonation; information questions with question words",
+      "explanation": "Czech yes/no questions are formed by rising intonation — no word order change needed: 'Jsi student?' (Are you a student?). Answers: 'Ano, jsem.' (Yes, I am.) / 'Ne, nejsem.' (No, I'm not.). Information questions use question words: kdo (who), co (what), kde (where), jak (how), odkud (from where). Examples: 'Kde jsi?' (Where are you?), 'Co máš?' (What do you have?), 'Kdo je to?' (Who is that?).",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Jsi z Prahy?", "en": "Are you from Prague?"},
+        {"cz": "Co máš?", "en": "What do you have?"},
+        {"cz": "Kde bydlíš?", "en": "Where do you live?"},
+        {"cz": "Kolik máš let?", "en": "How old are you?", "note": "lit. 'How many years do you have?'"}
+      ],
+      "unit_id": 4
+    },
+    {
+      "id": "GR-040",
+      "rule_name": "Verb conjugation class 1: -át verbs",
+      "pattern": "Infinitive -át → present: -ám, -áš, -á, -áme, -áte, -ají",
+      "explanation": "Verbs ending in -át in the infinitive follow this pattern. Example: dělat (to do/make) → dělám, děláš, dělá, děláme, děláte, dělají. Other common -át verbs: znát (to know), čekat (to wait), psát (to write), hrát (to play). Note: some verbs like psát have consonant changes (píšu/píše instead of psám).",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Dělám kávu.", "en": "I'm making coffee."},
+        {"cz": "Znám Prahu.", "en": "I know Prague."},
+        {"cz": "Čekám na autobus.", "en": "I'm waiting for a bus."},
+        {"cz": "Hraju tenis.", "en": "I play tennis."}
+      ],
+      "unit_id": 5
+    },
+    {
+      "id": "GR-041",
+      "rule_name": "Verb conjugation class 2: -ít/-et verbs",
+      "pattern": "Infinitive -ít → present: -ím, -íš, -í, -íme, -íte, -í",
+      "explanation": "Verbs ending in -ít follow this pattern. Example: mluvit (to speak) → mluvím, mluvíš, mluví, mluvíme, mluvíte, mluví. All forms except 1st person singular end in -í. Common -ít verbs: prosit (to ask/request), bydlet (to live), učit (to teach), kuřit (to smoke). Note: bydlet conjugates as bydlím, bydlíš, bydlí (adds -l- in present stem).",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Mluvím česky.", "en": "I speak Czech."},
+        {"cz": "Prosím o kávu.", "en": "I'd like a coffee.", "note": "lit. 'I ask for coffee'"},
+        {"cz": "Bydlím v Praze.", "en": "I live in Prague."},
+        {"cz": "Učím češtinu.", "en": "I teach Czech."}
+      ],
+      "unit_id": 5
+    },
+    {
+      "id": "GR-042",
+      "rule_name": "Verb conjugation class 3: -et/-ět and irregular verbs",
+      "pattern": "-ět verbs: -ím, -íš, -í; irregular: číst → čtu, čteš, čte, čteme, čtete, čtou",
+      "explanation": "Verbs ending in -ět like rozumět (to understand) → rozumím, rozumíš, rozumí, rozumíme, rozumíte, rozumí. Some verbs are irregular in present tense: číst (to read) → čtu, čteš, čte, čteme, čtete, čtou. jíst (to eat) → jím, jíš, jí, jíme, jíte, jedí. These must be memorized individually.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Rozumím česky.", "en": "I understand Czech."},
+        {"cz": "Čtu knihu.", "en": "I'm reading a book."},
+        {"cz": "Jím chleba.", "en": "I'm eating bread."},
+        {"cz": "Nerozumím.", "en": "I don't understand."}
+      ],
+      "unit_id": 5
+    },
+    {
+      "id": "GR-043",
+      "rule_name": "Verb negation — ne- prefix",
+      "pattern": "Add ne- to the beginning of the verb: nedělám, nemluvím, nečtu",
+      "explanation": "To negate any Czech verb in present tense, simply add 'ne-' before the verb. Examples: nedělám (I don't do), nemluvíš (you don't speak), nerozumí (he doesn't understand), nečteme (we don't read). Exception: být uses nej- (nejsem, nejsi, není). The negation is consistent and applies to all verbs except být.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Nemluvím česky.", "en": "I don't speak Czech."},
+        {"cz": "Nedělám nic.", "en": "I'm not doing anything."},
+        {"cz": "Nečtu knihu.", "en": "I'm not reading a book."},
+        {"cz": "Nerozumím.", "en": "I don't understand."}
+      ],
+      "unit_id": 5
+    },
+    {
+      "id": "GR-050",
+      "rule_name": "Accusative case — feminine -a → -u",
+      "pattern": "Feminine nouns ending in -a change to -u in accusative: káva → kávu",
+      "explanation": "The accusative case (4. pád) marks the direct object of a sentence — the thing receiving the action. For feminine nouns ending in -a, change -a to -u: káva → kávu, žena → ženu, kniha → knihu, voda → vodu, škola → školu. The question words for accusative are: koh/ (who as object?) and co? (what as object?).",
+      "case_affected": "accusative",
+      "examples": [
+        {"cz": "Vidím ženu.", "en": "I see a woman.", "note": "žena → ženu"},
+        {"cz": "Mám kávu.", "en": "I have coffee.", "note": "káva → kávu"},
+        {"cz": "Piju vodu.", "en": "I drink water.", "note": "voda → vodu"},
+        {"cz": "Čtu knihu.", "en": "I read a book.", "note": "kniha → knihu"}
+      ],
+      "unit_id": 6
+    },
+    {
+      "id": "GR-051",
+      "rule_name": "Accusative case — masculine animate",
+      "pattern": "Masculine animate nouns change ending in accusative: pes → psa, muž → muže",
+      "explanation": "Masculine animate nouns (people, animals) change in accusative. Most add -a: pes → psa, student → studenta, učitel → učitele. Some change consonant + add -e: muž → muže, lékař → lékaře. The pattern is: if the noun refers to a living being (masculine), it changes in accusative. This is a key difference from inanimate masculine.",
+      "case_affected": "accusative",
+      "examples": [
+        {"cz": "Vidím muže.", "en": "I see a man.", "note": "muž → muže"},
+        {"cz": "Mám psa.", "en": "I have a dog.", "note": "pes → psa"},
+        {"cz": "Znám studenta.", "en": "I know a student.", "note": "student → studenta"},
+        {"cz": "Vidím lékaře.", "en": "I see a doctor.", "note": "lékař → lékaře"}
+      ],
+      "unit_id": 6
+    },
+    {
+      "id": "GR-052",
+      "rule_name": "Accusative case — masculine inanimate: no change",
+      "pattern": "Masculine inanimate nouns stay the same in accusative: hrad → hrad, dům → dům",
+      "explanation": "Masculine inanimate nouns (objects, concepts) do NOT change in accusative. The accusative form is identical to the nominative. Examples: hrad → hrad, dům → dům, stůl → stůl, most → most. This is the easiest accusative rule — if it's a masculine object, it stays the same.",
+      "case_affected": "accusative",
+      "examples": [
+        {"cz": "Vidím hrad.", "en": "I see a castle.", "note": "hrad = same in nom. and acc."},
+        {"cz": "Mám dům.", "en": "I have a house.", "note": "dům = same"},
+        {"cz": "Vidím stůl.", "en": "I see a table.", "note": "stůl = same"},
+        {"cz": "Čtu.", "en": "I'm reading.", "note": "no object needed"}
+      ],
+      "unit_id": 6
+    },
+    {
+      "id": "GR-053",
+      "rule_name": "Accusative case — neuter: no change",
+      "pattern": "Neuter nouns stay the same in accusative: město → město, pivo → pivo, auto → auto",
+      "explanation": "Neuter nouns (ending in -o, -í) do NOT change in accusative. The accusative form is identical to the nominative. Examples: město → město, pivo → pivo, auto → auto, okno → okno. Combined with masc. inanimate, this means only feminine -a nouns and masculine animate nouns change in accusative.",
+      "case_affected": "accusative",
+      "examples": [
+        {"cz": "Mám auto.", "en": "I have a car.", "note": "auto = same"},
+        {"cz": "Piju pivo.", "en": "I drink beer.", "note": "pivo = same"},
+        {"cz": "Vidím město.", "en": "I see a city.", "note": "město = same"},
+        {"cz": "Mám okno.", "en": "I have a window.", "note": "okno = same"}
+      ],
+      "unit_id": 6
+    },
+    {
+      "id": "GR-060",
+      "rule_name": "Personal pronouns — subject forms",
+      "pattern": "já (I), ty (you), on (he), ona (she), ono (it), my (we), vy (you pl.), oni/ony (they)",
+      "explanation": "Czech personal pronouns: já (I), ty (you sg. informal), on (he), ona (she), ono (it), my (we), vy (you pl./formal), oni (they animate), ony (they inanimate/fem.). 'Oni' is used for masculine animate groups; 'ony' for feminine and neuter groups. Subject pronouns are frequently omitted — the verb ending tells you the person. Use 'vy' for both plural 'you' and formal singular 'you'.",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "Já jsem Mahesh.", "en": "I am Mahesh.", "note": "já usually omitted"},
+        {"cz": "Ty jsi student.", "en": "You are a student."},
+        {"cz": "On je učitel. Ona je učitelka.", "en": "He is a teacher. She is a teacher."},
+        {"cz": "My jsme z Prahy.", "en": "We are from Prague."}
+      ],
+      "unit_id": 7
+    },
+    {
+      "id": "GR-061",
+      "rule_name": "Possessive adjectives",
+      "pattern": "můj (my), tvůj (your), jeho (his), její (her), náš (our), váš (your pl.), jejich (their)",
+      "explanation": "Possessive adjectives in Czech: můj (my), tvůj (your sg.), jeho (his), její (her), naše (our), vaše (your pl.), jejich (their). 'jeho' and 'její' and 'jejich' do NOT change for gender. 'můj' and 'tvůj' have special forms: můj (masc), moje (fem/neut); tvůj (masc), tvoje (fem/neut). 'náš' and 'váš' follow: náš/váš (masc), naše/vaše (fem/neut).",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "To je můj pes.", "en": "That is my dog.", "note": "můj = masc"},
+        {"cz": "To je moje kniha.", "en": "That is my book.", "note": "moje = fem"},
+        {"cz": "To je jeho auto.", "en": "That is his car.", "note": "jeho doesn't change"},
+        {"cz": "To je naše škola.", "en": "That is our school.", "note": "naše = fem"}
+      ],
+      "unit_id": 7
+    },
+    {
+      "id": "GR-062",
+      "rule_name": "Possessive gender agreement",
+      "pattern": "můj/tvůj → moje for feminine and neuter; náš/váš → naše/vaše for feminine and neuter",
+      "explanation": "Possessive adjectives must agree with the gender of the noun they modify. For můj and tvůj: use můj/tvůj with masculine nouns, moje/tvoje with feminine and neuter nouns. For náš and váš: use náš/váš with masculine, naše/vaše with feminine and neuter. His (jeho), her (její), their (jejich) never change. Examples: můj pes (masc), moje kniha (fem), moje auto (neut), náš dům (masc), naše matka (fem), naše město (neut).",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "můj bratr, moje sestra, moje auto", "en": "my brother, my sister, my car"},
+        {"cz": "tvůj pes, tvoje kniha, tvoje pivo", "en": "your dog, your book, your beer"},
+        {"cz": "náš dům, naše škola, naše město", "en": "our house, our school, our city"},
+        {"cz": "jeho otec, její matka, jejich auto", "en": "his father, her mother, their car"}
+      ],
+      "unit_id": 7
+    },
+    {
+      "id": "GR-063",
+      "rule_name": "Pronoun dropping — subject pronouns are optional",
+      "pattern": "Czech is a pro-drop language — verb endings indicate person, so pronouns are optional",
+      "explanation": "In Czech, subject pronouns (já, ty, on, ona, my, vy, oni) can almost always be omitted because the verb ending clearly indicates the person. 'Jsem student' is more natural than 'Já jsem student'. Pronouns are used for emphasis or contrast: 'Já jsem z Prahy, ale on je z Brna' (I am from Prague, but he is from Brno). In questions, the pronoun is almost never used: 'Jsi Čech?' (Are you Czech?).",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Jsem z Prahy.", "en": "I'm from Prague.", "note": "já omitted"},
+        {"cz": "Jsi student?", "en": "Are you a student?", "note": "ty omitted"},
+        {"cz": "Já jsem z Prahy, on je z Brna.", "en": "I'm from Prague, he's from Brno.", "note": "pronouns for contrast"}
+      ],
+      "unit_id": 7
+    },
+    {
+      "id": "GR-070",
+      "rule_name": "Family vocabulary — core members",
+      "pattern": "rodina (family), matka/máma (mother), otec/táta (father), bratr (brother), sestra (sister)",
+      "explanation": "Core family vocabulary: rodina (family, fem.), matka or máma (mother, fem.), otec or táta (father, masc. anim.), bratr (brother, masc. anim.), sestra (sister, fem.), syn (son, masc. anim.), dcera (daughter, fem.), babička (grandmother, fem.), dědeček (grandfather, masc. anim.). Note: máma and táta are informal/colloquial, matka and otec are formal.",
+      "case_affected": null,
+      "examples": [
+        {"cz": "Mám velkou rodinu.", "en": "I have a big family."},
+        {"cz": "Moje matka je lékařka.", "en": "My mother is a doctor."},
+        {"cz": "Můj otec je učitel.", "en": "My father is a teacher."},
+        {"cz": "Mám bratra a sestru.", "en": "I have a brother and a sister.", "note": "sestru = accusative"}
+      ],
+      "unit_id": 8
+    },
+    {
+      "id": "GR-071",
+      "rule_name": "Adjective-noun gender agreement",
+      "pattern": "Adjectives must match noun gender: masc -ý, fem -á, neuter -é",
+      "explanation": "Czech adjectives change their ending to match the gender of the noun they describe. Masculine: -ý (dobrý pes, velký dům). Feminine: -á (dobrá kniha, velká škola). Neuter: -é (dobré pivo, velké město). This applies to all adjectives: nový/nová/nové (new), starý/stará/staré (old), malý/malá/malé (small), hezký/hezká/hezké (pretty). The adjective always comes before the noun.",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "velký pes", "en": "big dog", "note": "masc"},
+        {"cz": "velká kniha", "en": "big book", "note": "fem"},
+        {"cz": "velké město", "en": "big city", "note": "neut"},
+        {"cz": "nové auto, nová škola, nový dům", "en": "new car, new school, new house"}
+      ],
+      "unit_id": 8
+    },
+    {
+      "id": "GR-072",
+      "rule_name": "Adjective endings — three genders",
+      "pattern": "Hard adjective endings: masc -ý, fem -á, neuter -é (in nominative singular)",
+      "explanation": "The basic hard adjective endings in nominative singular are: masculine -ý (dobrý, velký, malý, starý, nový, hezký), feminine -á (dobrá, velká, malá, stará, nová, hezká), neuter -é (dobré, velké, malé, staré, nové, hezké). These are the most common adjective endings. Soft adjectives (ending in -í) don't change: cizí (foreign) stays cizí for all genders.",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "dobrý učitel", "en": "good teacher", "note": "masc anim"},
+        {"cz": "dobrá káva", "en": "good coffee", "note": "fem"},
+        {"cz": "dobré pivo", "en": "good beer", "note": "neut"},
+        {"cz": "starý dům, stará škola, staré auto", "en": "old house, old school, old car"}
+      ],
+      "unit_id": 8
+    },
+    {
+      "id": "GR-073",
+      "rule_name": "Word order: possessive + adjective + noun",
+      "pattern": "Standard order: possessive adjective + descriptive adjective + noun",
+      "explanation": "When combining a possessive with a descriptive adjective, the order is: possessive + adjective + noun. Examples: můj starý dům (my old house), moje nová kniha (my new book), naše velké auto (our big car). The descriptive adjective agrees with the noun gender, not the possessive. 'můj' is masculine, 'moje' is feminine/neuter — this is the possessive form, while the adjective ending is separate.",
+      "case_affected": "nominative",
+      "examples": [
+        {"cz": "můj starý dům", "en": "my old house", "note": "můj (poss) + starý (adj, masc) + dům (noun, masc)"},
+        {"cz": "moje nová kniha", "en": "my new book", "note": "moje (poss) + nová (adj, fem) + kniha (noun, fem)"},
+        {"cz": "naše velké auto", "en": "our big car", "note": "naše (poss) + velké (adj, neut) + auto (noun, neut)"},
+        {"cz": "jeho malý pes", "en": "his small dog", "note": "jeho doesn't change"}
+      ],
+      "unit_id": 8
     }
   ]
 }

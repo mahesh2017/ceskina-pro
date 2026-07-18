@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/entities/chat_message.dart';
 import '../../providers/chat_providers.dart';
 import '../../providers/tts_providers.dart';
+import '../../providers/database_providers.dart';
+import '../../providers/review_providers.dart';
 
 /// AI conversation screen — role-play scenarios with AI Czech tutor.
 class ChatScreen extends ConsumerStatefulWidget {
@@ -47,6 +49,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Widget build(BuildContext context) {
     final chat = ref.watch(chatProvider);
 
+    // Scroll to the bottom whenever a new message arrives (including the
+    // async tutor reply) or the typing indicator toggles.
+    ref.listen(chatProvider, (prev, next) {
+      if (prev == null) return;
+      if (prev.messages.length != next.messages.length ||
+          prev.isLoading != next.isLoading) {
+        _scrollToBottom();
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -66,7 +78,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ],
       ),
       body: chat.conversationId == null
-          ? _ScenarioPicker(ref: ref)
+          ? const _ScenarioPicker()
           : Column(
               children: [
                 // Messages list
@@ -81,7 +93,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       }
                       return _MessageBubble(
                         message: chat.messages[index],
-                        ref: ref,
                       );
                     },
                   ),
@@ -90,7 +101,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 if (chat.error != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 4),
+                        horizontal: 16, vertical: 4,),
                     child: Text(
                       chat.error!,
                       style: TextStyle(
@@ -112,13 +123,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 }
 
 /// Scenario picker — shown when no conversation is active.
-class _ScenarioPicker extends StatelessWidget {
-  final WidgetRef ref;
-
-  const _ScenarioPicker({required this.ref});
+class _ScenarioPicker extends ConsumerWidget {
+  const _ScenarioPicker();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -167,14 +176,30 @@ class _ScenarioPicker extends StatelessWidget {
 }
 
 /// Chat message bubble with corrections and TTS.
-class _MessageBubble extends StatelessWidget {
+class _MessageBubble extends ConsumerWidget {
   final ChatMessage message;
-  final WidgetRef ref;
 
-  const _MessageBubble({required this.message, required this.ref});
+  const _MessageBubble({required this.message});
+
+  /// Add a tutor-suggested word to the SRS deck and confirm via snackbar.
+  Future<void> _addVocabToDeck(
+      BuildContext context, WidgetRef ref, NewVocabulary v,) async {
+    final repo = ref.read(vocabularyRepositoryProvider);
+    final added = await repo.addManualCard(cz: v.cz, en: v.en, ipa: v.ipa);
+    ref.invalidate(dueCardCountProvider);
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(added
+            ? 'Added "${v.cz}" to your review deck'
+            : '"${v.cz}" is already in your deck'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isUser = message.role == MessageRole.user;
 
     return Padding(
@@ -212,7 +237,6 @@ class _MessageBubble extends StatelessWidget {
                     const SizedBox(width: 4),
                     _TtsIconButton(
                       text: message.content,
-                      ref: ref,
                     ),
                   ],
                 ],
@@ -234,7 +258,7 @@ class _MessageBubble extends StatelessWidget {
                 const SizedBox(height: 8),
                 ...message.corrections!.map((c) => _CorrectionCard(
                       correction: c,
-                    )),
+                    ),),
               ],
               // New vocabulary
               if (message.newVocabulary != null &&
@@ -244,10 +268,12 @@ class _MessageBubble extends StatelessWidget {
                   spacing: 6,
                   runSpacing: 4,
                   children: message.newVocabulary!.map((v) {
-                    return Chip(
+                    return ActionChip(
                       label: Text('${v.cz} = ${v.en}'),
-                      avatar: const Icon(Icons.book, size: 16),
+                      avatar: const Icon(Icons.add, size: 16),
+                      tooltip: 'Add to review deck',
                       visualDensity: VisualDensity.compact,
+                      onPressed: () => _addVocabToDeck(context, ref, v),
                     );
                   }).toList(),
                 ),
@@ -261,14 +287,13 @@ class _MessageBubble extends StatelessWidget {
 }
 
 /// Small TTS icon button for message bubbles.
-class _TtsIconButton extends StatelessWidget {
+class _TtsIconButton extends ConsumerWidget {
   final String text;
-  final WidgetRef ref;
 
-  const _TtsIconButton({required this.text, required this.ref});
+  const _TtsIconButton({required this.text});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () {
         ref.read(czechTtsProvider).speak(text);
@@ -344,7 +369,7 @@ class _CorrectionCard extends StatelessWidget {
             correction.rule,
             style: TextStyle(
               fontSize: 11,
-              color: Colors.grey.shade700,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -369,13 +394,13 @@ class _TypingIndicator extends StatelessWidget {
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               _Dot(0),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               _Dot(200),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               _Dot(400),
             ],
           ),

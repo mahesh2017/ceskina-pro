@@ -33,9 +33,9 @@ class GamificationEngine {
     };
   }
 
-  /// Process a wrong answer: deduct hearts, check for game over.
+  /// Process a wrong answer: deduct hearts (never below 0), check for game over.
   HeartResult processWrongAnswer(GamificationState state) {
-    final newHearts = state.hearts - 1;
+    final newHearts = (state.hearts - 1).clamp(0, state.maxHearts);
     return HeartResult(
       hearts: newHearts,
       isGameOver: newHearts <= 0,

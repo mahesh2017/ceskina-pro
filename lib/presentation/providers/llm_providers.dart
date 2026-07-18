@@ -4,10 +4,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../domain/engines/llm_orchestrator.dart';
 import '../../domain/repositories/llm_service.dart';
 import '../../data/repositories/deepseek_llm_service.dart';
-import 'database_providers.dart';
 
 /// Secure storage key for the DeepSeek API key.
-const _kDeepSeekApiKey = 'deepseek_api_key';
+const kDeepSeekApiKeyStorageKey = 'deepseek_api_key';
 
 /// Provider for the secure storage instance.
 final secureStorageProvider = Provider<FlutterSecureStorage>((ref) {
@@ -17,7 +16,7 @@ final secureStorageProvider = Provider<FlutterSecureStorage>((ref) {
 /// Provider for the API key (loaded from secure storage).
 final apiKeyProvider = FutureProvider<String?>((ref) async {
   final storage = ref.read(secureStorageProvider);
-  return storage.read(key: _kDeepSeekApiKey);
+  return storage.read(key: kDeepSeekApiKeyStorageKey);
 });
 
 /// Provider for the LLM service.
@@ -36,43 +35,56 @@ final llmServiceProvider = Provider<LlmService>((ref) {
   );
 });
 
-/// Provider for the LLM orchestrator.
+/// Provider for the LLM orchestrator (stateless prompt builder/parser).
 final llmOrchestratorProvider = Provider<LLMOrchestrator>((ref) {
-  final llm = ref.read(llmServiceProvider);
-  return LLMOrchestrator(llm);
+  return const LLMOrchestrator();
 });
 
-/// Saves the DeepSeek API key to secure storage.
-Future<void> saveApiKey(WidgetRef ref, String key) async {
-  final storage = ref.read(secureStorageProvider);
-  await storage.write(key: _kDeepSeekApiKey, value: key);
-  ref.invalidate(apiKeyProvider);
-}
-
-/// Clears the API key.
-Future<void> clearApiKey(WidgetRef ref) async {
-  final storage = ref.read(secureStorageProvider);
-  await storage.delete(key: _kDeepSeekApiKey);
-  ref.invalidate(apiKeyProvider);
-}
-
 /// Mock LLM service for development/demo when no API key is configured.
-/// Returns canned responses so the chat UI can be tested without an API.
+/// Returns canned responses shaped like the real contracts so every
+/// AI-backed flow (chat, grammar check, writing eval) works offline.
 class MockLlmService implements LlmService {
   @override
   Future<LlmResponse> complete(LlmRequest request) async {
     await Future.delayed(const Duration(milliseconds: 800));
 
-    // Return a canned tutor response
-    final mockJson = jsonEncode({
-      'tutor_reply_cz': 'Ahoj! Jak se máš? Já se mám dobře. Co děláš dnes?',
-      'tutor_reply_en': 'Hi! How are you? I am doing well. What are you doing today?',
-      'corrections': [],
-      'new_vocabulary': [
-        {'cz': 'ahoj', 'en': 'hello/hi', 'ipa': 'aɦoj'},
-        {'cz': 'dobře', 'en': 'well/good', 'ipa': 'dobr̝ɛ'},
-      ],
-    });
+    final systemPrompt =
+        request.messages.isNotEmpty ? request.messages.first.content : '';
+
+    final String mockJson;
+    if (systemPrompt.contains('CCE exam evaluator')) {
+      // Writing evaluation contract
+      mockJson = jsonEncode({
+        'score': {
+          'grammar': 70,
+          'vocabulary': 68,
+          'coherence': 72,
+          'overall': 70,
+        },
+        'feedback':
+            'Mock evaluation (no API key configured). Add a DeepSeek API key '
+                'in Settings for real AI feedback on your writing.',
+        'errors': <Map<String, dynamic>>[],
+      });
+    } else if (systemPrompt.contains('grammar expert')) {
+      // Grammar check contract
+      mockJson = jsonEncode({
+        'corrected_text': '',
+        'errors': <Map<String, dynamic>>[],
+      });
+    } else {
+      // Conversation tutor contract
+      mockJson = jsonEncode({
+        'tutor_reply_cz': 'Ahoj! Jak se máš? Já se mám dobře. Co děláš dnes?',
+        'tutor_reply_en':
+            'Hi! How are you? I am doing well. What are you doing today?',
+        'corrections': <Map<String, dynamic>>[],
+        'new_vocabulary': [
+          {'cz': 'ahoj', 'en': 'hello/hi', 'ipa': 'aɦoj'},
+          {'cz': 'dobře', 'en': 'well/good', 'ipa': 'dobr̝ɛ'},
+        ],
+      });
+    }
 
     return LlmResponse(
       content: mockJson,

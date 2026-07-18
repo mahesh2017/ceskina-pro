@@ -1,0 +1,211 @@
+{
+  "id": 601,
+  "unit_id": 6,
+  "order_in_unit": 0,
+  "title": "Accusative Case — The Object of the Sentence",
+  "description": "Learn how nouns change when they become the direct object — the accusative case",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 6001,
+      "lesson_id": 601,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct accusative form",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vidím ___ (káva).",
+        "question_en": "I see ___ (coffee).",
+        "options": ["káva", "kávu", "kávy", "kávo"],
+        "correct_index": 1,
+        "explanation": "Feminine nouns ending in -a change to -u in the accusative case: káva → kávu."
+      },
+      "answer_key": 1,
+      "grammar_rule_id": "GR-050",
+      "xp_reward": 10
+    },
+    {
+      "id": 6002,
+      "lesson_id": 601,
+      "type": "declension_table",
+      "prompt": "Review the declension pattern for a feminine noun",
+      "data": {
+        "type": "declension_table",
+        "noun": "žena",
+        "nominative": "žena",
+        "accusative": "ženu",
+        "gender": "feminine",
+        "explanation": "Feminine nouns ending in -a change the ending to -u in the accusative singular. Žena (nominative) becomes ženu (accusative) when it is the direct object: Vidím ženu. (I see a woman.)"
+      },
+      "answer_key": "ženu",
+      "grammar_rule_id": "GR-050",
+      "xp_reward": 10
+    },
+    {
+      "id": 6003,
+      "lesson_id": 601,
+      "type": "translation",
+      "prompt": "Translate the sentence using the accusative case",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I have a book.",
+        "accepted_answers": ["Mám knihu.", "Mám knihu"],
+        "grammar_note": "Kniha (feminine, -a) becomes knihu in the accusative. Mám knihu = I have a book."
+      },
+      "answer_key": ["Mám knihu.", "Mám knihu"],
+      "grammar_rule_id": "GR-050",
+      "xp_reward": 15
+    },
+    {
+      "id": 6004,
+      "lesson_id": 601,
+      "type": "fill_blank",
+      "prompt": "Fill in the accusative form of the noun in parentheses",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Piju ___ (voda).",
+        "blank_count": 1,
+        "accepted_answers": ["vodu"],
+        "explanation": "Voda (feminine, -a) → vodu in accusative. Piju vodu = I drink water."
+      },
+      "answer_key": ["vodu"],
+      "grammar_rule_id": "GR-050",
+      "xp_reward": 15
+    },
+    {
+      "id": 6005,
+      "lesson_id": 601,
+      "type": "declension_table",
+      "prompt": "Review the declension pattern for a masculine animate noun",
+      "data": {
+        "type": "declension_table",
+        "noun": "pes",
+        "nominative": "pes",
+        "accusative": "psa",
+        "gender": "masculine_animate",
+        "explanation": "Masculine animate nouns ending in a hard consonant take -a in the accusative singular. Pes (nominative) becomes psa (accusative): Vidím psa. (I see a dog.) Note: the stem vowel -e- drops: pes → ps-a."
+      },
+      "answer_key": "psa",
+      "grammar_rule_id": "GR-051",
+      "xp_reward": 10
+    },
+    {
+      "id": 6006,
+      "lesson_id": 601,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct accusative form of the masculine animate noun",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Znám toho ___ (muž).",
+        "question_en": "I know that ___ (man).",
+        "options": ["muž", "muže", "muža", "mužem"],
+        "correct_index": 1,
+        "explanation": "Muž is a masculine animate noun ending in a soft consonant (ž). It takes -e in the accusative: muž → muže."
+      },
+      "answer_key": 1,
+      "grammar_rule_id": "GR-051",
+      "xp_reward": 10
+    },
+    {
+      "id": 6007,
+      "lesson_id": 601,
+      "type": "declension_table",
+      "prompt": "Review the declension pattern for a masculine inanimate noun",
+      "data": {
+        "type": "declension_table",
+        "noun": "hrad",
+        "nominative": "hrad",
+        "accusative": "hrad",
+        "gender": "masculine_inanimate",
+        "explanation": "Masculine inanimate nouns do NOT change in the accusative singular. Hrad is the same in both nominative and accusative: Vidím hrad. (I see a castle.)"
+      },
+      "answer_key": "hrad",
+      "grammar_rule_id": "GR-052",
+      "xp_reward": 10
+    },
+    {
+      "id": 6008,
+      "lesson_id": 601,
+      "type": "fill_blank",
+      "prompt": "Fill in the accusative form — does the masculine inanimate noun change?",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Vidím ___ (dům).",
+        "blank_count": 1,
+        "accepted_answers": ["dům"],
+        "explanation": "Dům is masculine inanimate. Masculine inanimate nouns do not change in the accusative: dům → dům. Vidím dům = I see a house."
+      },
+      "answer_key": ["dům"],
+      "grammar_rule_id": "GR-052",
+      "xp_reward": 15
+    },
+    {
+      "id": 6009,
+      "lesson_id": 601,
+      "type": "declension_table",
+      "prompt": "Review the declension pattern for a neuter noun",
+      "data": {
+        "type": "declension_table",
+        "noun": "město",
+        "nominative": "město",
+        "accusative": "město",
+        "gender": "neuter",
+        "explanation": "Neuter nouns do NOT change in the accusative singular. Město is the same in both nominative and accusative: Vidím město. (I see a city.)"
+      },
+      "answer_key": "město",
+      "grammar_rule_id": "GR-053",
+      "xp_reward": 10
+    },
+    {
+      "id": 6010,
+      "lesson_id": 601,
+      "type": "translation",
+      "prompt": "Translate — remember neuter nouns don't change in accusative",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I see a beer.",
+        "accepted_answers": ["Vidím pivo.", "Vidím pivo"],
+        "grammar_note": "Pivo is neuter. Neuter nouns are unchanged in the accusative: pivo → pivo. Vidím pivo = I see a beer."
+      },
+      "answer_key": ["Vidím pivo.", "Vidím pivo"],
+      "grammar_rule_id": "GR-053",
+      "xp_reward": 15
+    },
+    {
+      "id": 6011,
+      "lesson_id": 601,
+      "type": "dictation",
+      "prompt": "Listen and write what you hear",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_6011",
+        "expected_text": "Vidím kávu. Mám knihu. Piju vodu.",
+        "language": "cs-CZ",
+        "note": "Three short sentences using the feminine accusative -u ending: kávu, knihu, vodu."
+      },
+      "answer_key": "Vidím kávu. Mám knihu. Piju vodu.",
+      "grammar_rule_id": "GR-050",
+      "xp_reward": 20
+    },
+    {
+      "id": 6012,
+      "lesson_id": 601,
+      "type": "pronunciation",
+      "prompt": "Practice pronouncing the accusative forms",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Vidím ženu. Mám knihu. Piju vodu.",
+        "target_audio_hash": "placeholder_6012",
+        "focus_sounds": ["uː", "ʒ", "v", "ɦ"],
+        "min_score": 0.6,
+        "translation_en": "I see a woman. I have a book. I drink water."
+      },
+      "answer_key": "Vidím ženu. Mám knihu. Piju vodu.",
+      "grammar_rule_id": "GR-050",
+      "xp_reward": 20
+    }
+  ]
+}

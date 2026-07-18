@@ -57,7 +57,7 @@ class PronunciationScorer {
           word: expectedWords[i],
           isCorrect: isMatch,
           score: similarity,
-        ));
+        ),);
       } else {
         results.add(WordScore(word: expectedWords[i], isCorrect: false, score: 0.0));
       }
@@ -82,8 +82,12 @@ class PronunciationScorer {
       (i) => List.generate(s2.length + 1, (j) => 0),
     );
 
-    for (var i = 0; i <= s1.length; i++) matrix[i][0] = i;
-    for (var j = 0; j <= s2.length; j++) matrix[0][j] = j;
+    for (var i = 0; i <= s1.length; i++) {
+      matrix[i][0] = i;
+    }
+    for (var j = 0; j <= s2.length; j++) {
+      matrix[0][j] = j;
+    }
 
     for (var i = 1; i <= s1.length; i++) {
       for (var j = 1; j <= s2.length; j++) {
@@ -112,7 +116,7 @@ class PronunciationScorer {
             phoneme: phoneme,
             word: word.word,
             score: word.score,
-          ));
+          ),);
         }
       }
     }

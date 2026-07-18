@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart' show FlutterError;
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import '../database/database.dart' as db;
@@ -12,27 +13,55 @@ class ContentSeeder {
   final db.AppDatabase _db;
   final _log = Logger('ContentSeeder');
 
+  /// Unit ids present in the bundled unit files — used to validate
+  /// unit references in other content so one dangling reference
+  /// (e.g. vocabulary for a unit that isn't written yet) can't
+  /// FK-fail and roll back the whole content sync.
+  final Set<int> _validUnitIds = {};
+
+  int? _validatedUnitId(Object? raw, String what) {
+    if (raw == null) return null;
+    final id = (raw as num).toInt();
+    if (_validUnitIds.contains(id)) return id;
+    _log.warning('$what references missing unit $id — keeping it unlinked.');
+    return null;
+  }
+
   ContentSeeder(this._db);
 
-  /// Seed all content if not already seeded.
+  /// Sync bundled content into the database on every launch.
+  ///
+  /// All content inserts are upserts, so this is idempotent AND delivers
+  /// units/lessons/vocabulary added in an app update to existing installs.
+  /// Learner state (SRS scheduling, lesson progress, XP) is never touched;
+  /// new flashcards get fresh SRS cards afterwards.
+  ///
+  /// Runs inside a single transaction: a crash or bad asset mid-sync
+  /// rolls everything back, so the next launch retries cleanly.
   Future<void> seedIfNeeded() async {
-    final isSeeded = await _db.curriculumDao.isSeeded();
-    if (isSeeded) {
-      // Installs seeded before SRS seeding existed have flashcards but no
-      // SRS cards — backfill them so the review queue isn't empty.
-      await _backfillSrsCards();
-      _log.info('Database already seeded, skipping.');
-      return;
-    }
+    _log.info('Syncing bundled content into the database...');
 
-    _log.info('Seeding database from assets...');
+    await _db.transaction(() async {
+      await _seedUnits();
+      await _seedGrammarRules();
+      await _seedVocabulary();
+      await _createMissingSrsCards();
+    });
 
-    await _seedUnits();
-    await _seedGrammarRules();
-    await _seedVocabulary();
-
-    _log.info('Database seeding complete.');
+    _log.info('Content sync complete.');
   }
+
+  /// Coerce a JSON value into a nullable String for a text column.
+  ///
+  /// Lesson content authors sometimes express `answer_key` as an int
+  /// (multiple-choice index) or a list (accepted answers) rather than a
+  /// plain string. Preserve those non-destructively by JSON-encoding them
+  /// instead of failing the whole content sync with a cast error.
+  static String? _asNullableString(Object? value) => switch (value) {
+        null => null,
+        final String s => s,
+        final other => jsonEncode(other),
+      };
 
   /// Load and insert all units (A1 + A2).
   Future<void> _seedUnits() async {
@@ -49,9 +78,10 @@ class ContentSeeder {
           orderIndex: u['order_index'] as int,
           grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
           isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
-        ));
+        ),);
 
     await _db.curriculumDao.insertUnits(a1Companions.toList());
+    _validUnitIds.addAll(a1Units.map((u) => u['id'] as int));
 
     // A2 units
     final a2Json = await _loadAsset('assets/curriculum/a2_units.json');
@@ -66,9 +96,10 @@ class ContentSeeder {
           orderIndex: u['order_index'] as int,
           grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
           isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
-        ));
+        ),);
 
     await _db.curriculumDao.insertUnits(a2Companions.toList());
+    _validUnitIds.addAll(a2Units.map((u) => u['id'] as int));
 
     // Load lessons from individual lesson files (if they exist)
     await _seedLessons();
@@ -77,7 +108,7 @@ class ContentSeeder {
   /// Load lessons from JSON files.
   Future<void> _seedLessons() async {
     // Lesson files are named: unit{NN}_lesson{NN}.json
-    // Dynamically try loading common lesson patterns for Units 1-3
+    // Dynamically try loading lesson files for Units 1-8
     final lessonFiles = [
       'assets/curriculum/lessons/unit01_lesson01.json',
       'assets/curriculum/lessons/unit01_lesson02.json',
@@ -85,11 +116,28 @@ class ContentSeeder {
       'assets/curriculum/lessons/unit02_lesson02.json',
       'assets/curriculum/lessons/unit03_lesson01.json',
       'assets/curriculum/lessons/unit03_lesson02.json',
+      'assets/curriculum/lessons/unit04_lesson01.json',
+      'assets/curriculum/lessons/unit04_lesson02.json',
+      'assets/curriculum/lessons/unit05_lesson01.json',
+      'assets/curriculum/lessons/unit05_lesson02.json',
+      'assets/curriculum/lessons/unit06_lesson01.json',
+      'assets/curriculum/lessons/unit06_lesson02.json',
+      'assets/curriculum/lessons/unit07_lesson01.json',
+      'assets/curriculum/lessons/unit07_lesson02.json',
+      'assets/curriculum/lessons/unit08_lesson01.json',
+      'assets/curriculum/lessons/unit08_lesson02.json',
     ];
 
     for (final filePath in lessonFiles) {
+      final String json;
       try {
-        final json = await _loadAsset(filePath);
+        json = await _loadAsset(filePath);
+      } on FlutterError {
+        // Asset not bundled (yet) — fine to skip.
+        _log.fine('Skipped (not found): $filePath');
+        continue;
+      }
+      {
         final lessonData = jsonDecode(json) as Map<String, dynamic>;
 
         // Insert lesson
@@ -117,26 +165,28 @@ class ContentSeeder {
                   type: e['type'] as String,
                   prompt: e['prompt'] as String,
                   data: jsonEncode(e['data']),
-                  answerKey: Value(e['answer_key'] as String?),
+                  answerKey: Value(_asNullableString(e['answer_key'])),
                   grammarRuleId: Value(e['grammar_rule_id'] as String?),
                   xpReward: Value(e['xp_reward'] as int? ?? 10),
-                )).toList(),
+                ),).toList(),
           );
         }
 
         _log.info('Loaded lesson: $filePath');
-      } catch (e) {
-        // Lesson file doesn't exist yet — skip silently
-        _log.fine('Skipped (not found): $filePath');
       }
     }
   }
 
   /// Load and insert grammar rules.
   Future<void> _seedGrammarRules() async {
+    final String json;
     try {
-      final json =
-          await _loadAsset('assets/curriculum/grammar_rules.json');
+      json = await _loadAsset('assets/curriculum/grammar_rules.json');
+    } on FlutterError {
+      _log.fine('No grammar rules file found, skipping.');
+      return;
+    }
+    {
       final rules = jsonDecode(json) as Map<String, dynamic>;
 
       if (rules.isEmpty) {
@@ -155,23 +205,24 @@ class ContentSeeder {
               explanation: r['explanation'] as String,
               caseAffected: Value(r['case_affected'] as String?),
               examples: Value(jsonEncode(r['examples'] ?? [])),
-              unitId: Value(r['unit_id'] as int?),
-            )).toList(),
+              unitId: Value(_validatedUnitId(
+                  r['unit_id'], 'Grammar rule ${r['id']}',),),
+            ),).toList(),
       );
-    } catch (e) {
-      _log.fine('No grammar rules file found, skipping.');
     }
   }
 
-  /// Load and insert vocabulary.
+  /// Load and upsert vocabulary flashcards.
   Future<void> _seedVocabulary() async {
-    final vocabSeeded = await _db.vocabularyDao.isVocabularySeeded();
-    if (vocabSeeded) return;
-
     for (final level in ['a1', 'a2']) {
+      final String json;
       try {
-        final json =
-            await _loadAsset('assets/vocabulary/${level}_vocabulary.json');
+        json = await _loadAsset('assets/vocabulary/${level}_vocabulary.json');
+      } on FlutterError {
+        _log.fine('No $level vocabulary file found, skipping.');
+        continue;
+      }
+      {
         final words = jsonDecode(json) as List<dynamic>;
 
         if (words.isEmpty) continue;
@@ -187,55 +238,37 @@ class ContentSeeder {
               imagePath: Value(w['image_path'] as String?),
               exampleCz: Value(w['example_cz'] as String?),
               exampleEn: Value(w['example_en'] as String?),
-              unitId: Value(w['unit_id'] as int?),
-            )).toList();
+              unitId: Value(_validatedUnitId(
+                  w['unit_id'], "Flashcard ${w['id']} '${w['word_cz']}'",),),
+            ),).toList();
 
         await _db.vocabularyDao.insertFlashcards(flashcardCompanions);
 
-        // Also create SRS cards for each flashcard so they appear in review
-        final srsCompanions = words.map((w) => db.SrsCardsCompanion.insert(
-              cardType: 'vocabulary',
-              flashcardId: Value((w as Map<String, dynamic>)['id'] as int),
-              stability: const Value(0.0),
-              difficulty: const Value(0.0),
-              due: Value(DateTime.now()),
-              reps: const Value(0),
-              state: const Value('newCard'),
-            )).toList();
-
-        for (final companion in srsCompanions) {
-          await _db.vocabularyDao.upsertSrsCard(companion);
-        }
-
-        _log.info('Loaded ${words.length} $level vocabulary words + SRS cards.');
-      } catch (e) {
-        _log.fine('No $level vocabulary file found, skipping.');
+        _log.info('Synced ${words.length} $level vocabulary words.');
       }
     }
   }
 
-  /// Create missing SRS cards for flashcards that were seeded before
-  /// SRS card seeding existed (upgrade path for older installs).
-  Future<void> _backfillSrsCards() async {
-    final srsCount = await _db.vocabularyDao.srsCardCount();
-    if (srsCount > 0) return;
+  /// Create SRS cards for any flashcard that doesn't have one yet —
+  /// covers both first launch and vocabulary added in app updates.
+  /// Existing SRS cards (and their scheduling state) are left untouched.
+  Future<void> _createMissingSrsCards() async {
+    final missingIds = await _db.vocabularyDao.flashcardIdsWithoutSrsCards();
+    if (missingIds.isEmpty) return;
 
-    final flashcards = await _db.vocabularyDao.getAllFlashcards();
-    if (flashcards.isEmpty) return;
-
-    for (final flashcard in flashcards) {
+    for (final flashcardId in missingIds) {
       await _db.vocabularyDao.upsertSrsCard(db.SrsCardsCompanion.insert(
         cardType: 'vocabulary',
-        flashcardId: Value(flashcard.id),
+        flashcardId: Value(flashcardId),
         stability: const Value(0.0),
         difficulty: const Value(0.0),
         due: Value(DateTime.now()),
         reps: const Value(0),
         state: const Value('newCard'),
-      ));
+      ),);
     }
 
-    _log.info('Backfilled SRS cards for ${flashcards.length} flashcards.');
+    _log.info('Created SRS cards for ${missingIds.length} new flashcards.');
   }
 
   /// Load a text asset, returning empty string if not found.

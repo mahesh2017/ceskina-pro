@@ -22,8 +22,10 @@ class DriftVocabularyRepository implements VocabularyRepository {
 
     if (vocabSrsCards.isEmpty) return [];
 
-    final allFlashcards = await _db.vocabularyDao.getAllFlashcards();
-    final flashcardMap = {for (var f in allFlashcards) f.id: f};
+    final flashcards = await _db.vocabularyDao.getFlashcardsByIds(
+      [for (final s in vocabSrsCards) s.flashcardId!],
+    );
+    final flashcardMap = {for (var f in flashcards) f.id: f};
 
     return [
       for (final srs in vocabSrsCards)
@@ -48,7 +50,7 @@ class DriftVocabularyRepository implements VocabularyRepository {
       reps: Value(card.reps),
       state: Value(card.state.name),
       lastReviewed: Value(reviewedAt),
-    ));
+    ),);
   }
 
   @override
@@ -67,6 +69,36 @@ class DriftVocabularyRepository implements VocabularyRepository {
   Future<int> getDueCount({DateTime? asOf}) async {
     final now = asOf ?? DateTime.now();
     return _db.vocabularyDao.getDueCount(now);
+  }
+
+  @override
+  Future<bool> addManualCard({
+    required String cz,
+    required String en,
+    String? ipa,
+  }) async {
+    final existing = await _db.vocabularyDao.findByWordCz(cz);
+    if (existing != null) return false;
+
+    final id = await _db.vocabularyDao.nextFlashcardId();
+    await _db.vocabularyDao.insertFlashcards([
+      db.FlashcardsCompanion.insert(
+        id: Value(id),
+        wordCz: cz,
+        wordEn: en,
+        ipa: Value(ipa),
+      ),
+    ]);
+    await _db.vocabularyDao.upsertSrsCard(db.SrsCardsCompanion.insert(
+      cardType: 'vocabulary',
+      flashcardId: Value(id),
+      stability: const Value(0.0),
+      difficulty: const Value(0.0),
+      due: Value(DateTime.now()),
+      reps: const Value(0),
+      state: const Value('newCard'),
+    ),);
+    return true;
   }
 
   FSRSCard _toFsrsCard(db.SrsCard row) {

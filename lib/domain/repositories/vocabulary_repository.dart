@@ -18,4 +18,13 @@ abstract class VocabularyRepository {
   Future<List<Flashcard>> searchCards(String query);
   Future<List<Flashcard>> getCardsForUnit(int unitId);
   Future<int> getDueCount({DateTime? asOf});
+
+  /// Add a learner-created flashcard (e.g. vocabulary surfaced by the AI
+  /// tutor) and give it a fresh SRS card. Returns false if a card with the
+  /// same Czech word already exists.
+  Future<bool> addManualCard({
+    required String cz,
+    required String en,
+    String? ipa,
+  });
 }

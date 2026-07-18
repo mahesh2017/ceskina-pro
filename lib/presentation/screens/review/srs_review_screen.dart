@@ -5,6 +5,7 @@ import '../../providers/review_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../../domain/entities/flashcard.dart';
 import '../../../domain/entities/fsrs_card.dart';
+import '../../../domain/engines/fsrs_scheduler.dart';
 
 /// SRS review screen — flashcard interface with flip + FSRS rating buttons.
 class SrsReviewScreen extends ConsumerStatefulWidget {
@@ -42,7 +43,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
     if (session.dueCards.isEmpty && !session.isComplete) {
       return _NoDueCardsScreen(onRefresh: () {
         ref.read(reviewSessionProvider.notifier).loadDueCards();
-      });
+      },);
     }
 
     // Session complete
@@ -121,6 +122,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
             // Rating buttons (only after flip)
             if (session.isFlipped)
               _RatingButtons(
+                intervals: _intervalLabels(card.fsrs),
                 onRate: (rating) {
                   ref.read(reviewSessionProvider.notifier).rateCard(rating);
                 },
@@ -142,13 +144,36 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
     );
   }
 
+  /// Honest interval hints computed from the real scheduler for the
+  /// current card. "Again" re-appears within this session, so it shows
+  /// "Soon" rather than a day count.
+  Map<Rating, String> _intervalLabels(FSRSCard card) {
+    final scheduler = FSRSScheduler();
+    final now = DateTime.now();
+    String fmt(Rating r) {
+      if (r == Rating.again) return 'Soon';
+      final days = scheduler.previewIntervalDays(card, r, now);
+      if (days <= 0) return '<1d';
+      if (days < 30) return '${days}d';
+      if (days < 365) return '~${(days / 30).round()}mo';
+      return '~${(days / 365).round()}y';
+    }
+
+    return {
+      Rating.again: fmt(Rating.again),
+      Rating.hard: fmt(Rating.hard),
+      Rating.good: fmt(Rating.good),
+      Rating.easy: fmt(Rating.easy),
+    };
+  }
+
   void _showExitConfirm(BuildContext context) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('End review?'),
         content: const Text(
-            'Your progress will be saved. You can continue later.'),
+            'Your progress will be saved. You can continue later.',),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -193,9 +218,22 @@ class _FlashcardView extends ConsumerWidget {
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(32),
-            child: isFlipped
-                ? _buildBack(context, ref)
-                : _buildFront(context, ref),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              transitionBuilder: (child, anim) => FadeTransition(
+                opacity: anim,
+                child: ScaleTransition(
+                  scale: Tween<double>(begin: 0.96, end: 1.0).animate(anim),
+                  child: child,
+                ),
+              ),
+              child: KeyedSubtree(
+                key: ValueKey(isFlipped),
+                child: isFlipped
+                    ? _buildBack(context, ref)
+                    : _buildFront(context, ref),
+              ),
+            ),
           ),
         ),
       ),
@@ -367,8 +405,9 @@ class _FlashcardView extends ConsumerWidget {
 /// Rating buttons — Again / Hard / Good / Easy (FSRS).
 class _RatingButtons extends StatelessWidget {
   final void Function(Rating) onRate;
+  final Map<Rating, String> intervals;
 
-  const _RatingButtons({required this.onRate});
+  const _RatingButtons({required this.onRate, required this.intervals});
 
   @override
   Widget build(BuildContext context) {
@@ -379,7 +418,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Again',
-              subtitle: '<1m',
+              subtitle: intervals[Rating.again] ?? '',
               color: Colors.red,
               icon: Icons.refresh,
               onTap: () => onRate(Rating.again),
@@ -389,7 +428,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Hard',
-              subtitle: '6m',
+              subtitle: intervals[Rating.hard] ?? '',
               color: Colors.orange,
               icon: Icons.flag,
               onTap: () => onRate(Rating.hard),
@@ -399,7 +438,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Good',
-              subtitle: '1d',
+              subtitle: intervals[Rating.good] ?? '',
               color: Colors.green,
               icon: Icons.check,
               onTap: () => onRate(Rating.good),
@@ -409,7 +448,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Easy',
-              subtitle: '4d',
+              subtitle: intervals[Rating.easy] ?? '',
               color: Colors.blue,
               icon: Icons.star,
               onTap: () => onRate(Rating.easy),
@@ -478,7 +517,7 @@ class _NoDueCardsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.check_circle,
-                  size: 80, color: Colors.green.shade300),
+                  size: 80, color: Colors.green.shade300,),
               const SizedBox(height: 24),
               Text(
                 'All caught up!',

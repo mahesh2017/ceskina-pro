@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/tts_providers.dart';
-import '../../providers/llm_providers.dart';
 
 /// Settings screen — theme, daily goal, TTS rate, API key, cache management.
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -31,7 +30,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       body: ListView(
         children: [
           // ── Appearance ──
-          _SectionHeader(title: 'Appearance'),
+          const _SectionHeader(title: 'Appearance'),
           ListTile(
             leading: const Icon(Icons.palette),
             title: const Text('Theme'),
@@ -62,7 +61,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const Divider(),
 
           // ── Learning ──
-          _SectionHeader(title: 'Learning'),
+          const _SectionHeader(title: 'Learning'),
           ListTile(
             leading: const Icon(Icons.flag),
             title: const Text('Daily Goal'),
@@ -85,7 +84,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const Divider(),
 
           // ── Audio ──
-          _SectionHeader(title: 'Audio'),
+          const _SectionHeader(title: 'Audio'),
           ListTile(
             leading: const Icon(Icons.record_voice_over),
             title: const Text('TTS Speech Rate'),
@@ -127,7 +126,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const Divider(),
 
           // ── AI / API Keys ──
-          _SectionHeader(title: 'AI Configuration'),
+          const _SectionHeader(title: 'AI Configuration'),
           ListTile(
             leading: Icon(
               Icons.key,
@@ -154,7 +153,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const Divider(),
 
           // ── About ──
-          _SectionHeader(title: 'About'),
+          const _SectionHeader(title: 'About'),
           const ListTile(
             leading: Icon(Icons.school),
             title: Text('Čeština Pro'),

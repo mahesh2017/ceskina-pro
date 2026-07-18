@@ -5,11 +5,13 @@ import '../../data/repositories/drift_curriculum_repository.dart';
 import '../../data/repositories/drift_vocabulary_repository.dart';
 import '../../data/repositories/drift_conversation_repository.dart';
 import '../../data/repositories/drift_progress_repository.dart';
+import '../../data/repositories/drift_exam_repository.dart';
 import '../../data/seeds/content_seeder.dart';
 import '../../domain/repositories/curriculum_repository.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import '../../domain/repositories/conversation_repository.dart';
 import '../../domain/repositories/progress_repository.dart';
+import '../../domain/repositories/exam_repository.dart';
 
 /// Database singleton provider.
 final databaseProvider = Provider<db.AppDatabase>((ref) {
@@ -41,6 +43,11 @@ final conversationRepositoryProvider = Provider<ConversationRepository>((ref) {
 /// Progress repository provider.
 final progressRepositoryProvider = Provider<ProgressRepository>((ref) {
   return DriftProgressRepository(ref.read(databaseProvider));
+});
+
+/// Exam repository provider.
+final examRepositoryProvider = Provider<ExamRepository>((ref) {
+  return DriftExamRepository(ref.read(databaseProvider));
 });
 
 /// SharedPreferences provider for lightweight KV storage.

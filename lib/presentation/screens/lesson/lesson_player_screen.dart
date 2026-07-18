@@ -20,7 +20,6 @@ class LessonPlayerScreen extends ConsumerStatefulWidget {
 
 class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
   bool _loaded = false;
-  bool _isAdvancing = false;
 
   @override
   void initState() {
@@ -108,7 +107,7 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                     color: session.hearts > 0
                         ? Colors.red
                         : Colors.grey.shade400,
-                    size: 20),
+                    size: 20,),
                 const SizedBox(width: 2),
                 Text(
                   '${session.hearts}',
@@ -129,9 +128,16 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Question ${session.currentIndex + 1} of ${session.totalExercises}',
+                    session.inMistakeReview
+                        ? 'Reviewing missed questions'
+                        : 'Question ${session.currentIndex + 1} of ${session.totalExercises}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey,
+                          color: session.inMistakeReview
+                              ? Colors.orange.shade700
+                              : Colors.grey,
+                          fontWeight: session.inMistakeReview
+                              ? FontWeight.bold
+                              : null,
                         ),
                   ),
                   if (session.totalXp > 0)
@@ -139,7 +145,7 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.star,
-                            color: Colors.amber.shade600, size: 16),
+                            color: Colors.amber.shade600, size: 16,),
                         const SizedBox(width: 2),
                         Text(
                           '+${session.totalXp} XP',
@@ -163,8 +169,6 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                       child: ExerciseWidget(
                         exercise: exercise,
                         onAnswered: (result) {
-                          if (_isAdvancing) return;
-                          _isAdvancing = true;
                           ref
                               .read(lessonSessionProvider.notifier)
                               .onExerciseAnswered(
@@ -173,7 +177,6 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                                 correctAnswer: result.correctAnswer,
                                 xpEarned: exercise.xpReward,
                               );
-                          _isAdvancing = false;
                         },
                       ),
                     ),
@@ -194,6 +197,7 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
             isCorrect: session.lastWasCorrect,
             explanation: session.lastExplanation,
             correctAnswer: session.lastCorrectAnswer,
+            grammarRuleId: session.lastGrammarRuleId,
           ),
           const SizedBox(height: 32),
           FilledButton.icon(
@@ -218,7 +222,7 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
       builder: (ctx) => AlertDialog(
         title: const Text('Leave lesson?'),
         content: const Text(
-            'Your progress in this lesson will be lost. Are you sure?'),
+            'Your progress in this lesson will be lost. Are you sure?',),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -254,7 +258,7 @@ class _GameOverScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.heart_broken,
-                  size: 80, color: Colors.red.shade300),
+                  size: 80, color: Colors.red.shade300,),
               const SizedBox(height: 24),
               Text(
                 'Out of hearts!',
@@ -262,7 +266,9 @@ class _GameOverScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               const Text(
-                'Don\'t worry — you can try again.',
+                'Hearts refill over time — one every 30 minutes.\n'
+                'Come back soon, or review vocabulary in the meantime.',
+                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 32),
@@ -356,7 +362,8 @@ class _LessonCompleteScreen extends ConsumerWidget {
                       _StatRow(
                         icon: Icons.favorite,
                         label: 'Hearts Remaining',
-                        value: '${session.hearts}/5',
+                        value:
+                            '${session.hearts}/${gamification.maxHearts}',
                         color: Colors.red,
                       ),
                     ],
