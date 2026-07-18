@@ -6,6 +6,7 @@ import 'curriculum_providers.dart';
 import 'database_providers.dart';
 import 'gamification_providers.dart';
 import 'review_providers.dart';
+import 'settings_providers.dart';
 
 final _log = Logger('LessonSession');
 
@@ -129,6 +130,8 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
     await gamification.refreshHearts();
     final hearts = ref.read(gamificationProvider).hearts;
 
+    final heartsEnabled = ref.read(settingsProvider).heartsEnabled;
+
     final repo = ref.read(curriculumRepositoryProvider);
     final lesson = await repo.getLesson(lessonId);
     final exercises = await repo.getExercises(lessonId);
@@ -136,7 +139,7 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
       lesson: lesson,
       exercises: exercises,
       hearts: hearts,
-      isGameOver: hearts <= 0,
+      isGameOver: heartsEnabled && hearts <= 0,
       originalCount: exercises.length,
     );
   }
@@ -152,7 +155,8 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
     if (exercise == null) return;
 
     var newHearts = state.hearts;
-    if (!isCorrect) {
+    final heartsEnabled = ref.read(settingsProvider).heartsEnabled;
+    if (!isCorrect && heartsEnabled) {
       // Deduct from the global hearts pool so the loss persists.
       newHearts =
           await ref.read(gamificationProvider.notifier).onWrongAnswer();
@@ -183,7 +187,8 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
   /// Advance to the next exercise or complete the lesson.
   void nextExercise() {
     // Check game over FIRST — even if this is the last question
-    if (state.hearts <= 0) {
+    final heartsEnabled = ref.read(settingsProvider).heartsEnabled;
+    if (heartsEnabled && state.hearts <= 0) {
       state = state.copyWith(isGameOver: true);
       return;
     }
@@ -234,7 +239,8 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
       lesson: state.lesson,
       exercises: baseExercises,
       hearts: hearts,
-      isGameOver: hearts <= 0,
+      isGameOver:
+          ref.read(settingsProvider).heartsEnabled && hearts <= 0,
       originalCount: baseExercises.length,
     );
   }

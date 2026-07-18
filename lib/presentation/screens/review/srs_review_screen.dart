@@ -6,6 +6,7 @@ import '../../providers/tts_providers.dart';
 import '../../../domain/entities/flashcard.dart';
 import '../../../domain/entities/fsrs_card.dart';
 import '../../../domain/engines/fsrs_scheduler.dart';
+import '../../widgets/common/stat_row.dart';
 
 /// SRS review screen — flashcard interface with flip + FSRS rating buttons.
 class SrsReviewScreen extends ConsumerStatefulWidget {
@@ -572,6 +573,31 @@ class _ReviewCompleteScreen extends StatelessWidget {
                 'Review Complete!',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
+              if (session.heartEarned) ...[
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16, vertical: 8,),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.favorite, color: Colors.red, size: 18),
+                      SizedBox(width: 6),
+                      Text(
+                        '+1 heart earned!',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
               const SizedBox(height: 24),
 
               // Stats card
@@ -580,14 +606,14 @@ class _ReviewCompleteScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      _StatRow(
+                      StatRow(
                         icon: Icons.style,
                         label: 'Cards Reviewed',
                         value: '${session.reviewedCount}',
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.percent,
                         label: 'Accuracy',
                         value: '$accuracy%',
@@ -598,35 +624,35 @@ class _ReviewCompleteScreen extends StatelessWidget {
                                 : Colors.red,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.refresh,
                         label: 'Again',
                         value: '${session.againCount}',
                         color: Colors.red,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.flag,
                         label: 'Hard',
                         value: '${session.hardCount}',
                         color: Colors.orange,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.check,
                         label: 'Good',
                         value: '${session.goodCount}',
                         color: Colors.green,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.star,
                         label: 'Easy',
                         value: '${session.easyCount}',
                         color: Colors.blue,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.star_border,
                         label: 'XP Earned',
                         value: '+${session.totalXp}',
@@ -655,37 +681,3 @@ class _ReviewCompleteScreen extends StatelessWidget {
   }
 }
 
-class _StatRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  const _StatRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(label, style: Theme.of(context).textTheme.bodyLarge),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: color,
-            fontSize: 18,
-          ),
-        ),
-      ],
-    );
-  }
-}

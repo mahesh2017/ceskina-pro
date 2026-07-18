@@ -15,12 +15,17 @@ class AppSettings {
   final bool hasApiKey;
   final CEFRLevel startingLevel;
 
+  /// When false, lessons never deduct hearts ("practice mode") — mistakes
+  /// are where learning happens, so this makes hearts opt-in pressure.
+  final bool heartsEnabled;
+
   const AppSettings({
     this.themeMode = AppThemeMode.system,
     this.dailyGoalXp = 50,
     this.ttsSpeechRate = 0.45,
     this.hasApiKey = false,
     this.startingLevel = CEFRLevel.preA1,
+    this.heartsEnabled = true,
   });
 
   AppSettings copyWith({
@@ -29,6 +34,7 @@ class AppSettings {
     double? ttsSpeechRate,
     bool? hasApiKey,
     CEFRLevel? startingLevel,
+    bool? heartsEnabled,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -36,6 +42,7 @@ class AppSettings {
       ttsSpeechRate: ttsSpeechRate ?? this.ttsSpeechRate,
       hasApiKey: hasApiKey ?? this.hasApiKey,
       startingLevel: startingLevel ?? this.startingLevel,
+      heartsEnabled: heartsEnabled ?? this.heartsEnabled,
     );
   }
 }
@@ -47,6 +54,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
   static const _kTtsRate = 'settings_tts_rate';
   static const _kOnboardingDone = 'settings_onboarding_done';
   static const _kStartingLevel = 'settings_starting_level';
+  static const _kHeartsEnabled = 'settings_hearts_enabled';
 
   @override
   AppSettings build() {
@@ -76,7 +84,15 @@ class SettingsNotifier extends Notifier<AppSettings> {
       hasApiKey: apiKey != null && apiKey.isNotEmpty,
       startingLevel:
           CEFRLevel.values[levelIdx.clamp(0, CEFRLevel.values.length - 1)],
+      heartsEnabled: prefs.getBool(_kHeartsEnabled) ?? true,
     );
+  }
+
+  /// Toggle hearts in lessons (off = practice mode, no heart loss).
+  Future<void> setHeartsEnabled(bool enabled) async {
+    state = state.copyWith(heartsEnabled: enabled);
+    final prefs = await _prefs();
+    await prefs.setBool(_kHeartsEnabled, enabled);
   }
 
   /// Set the theme mode.

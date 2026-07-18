@@ -81,6 +81,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ],
             ),
           ),
+          SwitchListTile(
+            secondary: const Icon(Icons.favorite),
+            title: const Text('Hearts in lessons'),
+            subtitle: const Text(
+                'Turn off to practice freely without losing hearts',),
+            value: settings.heartsEnabled,
+            onChanged: (v) {
+              ref.read(settingsProvider.notifier).setHeartsEnabled(v);
+            },
+          ),
           const Divider(),
 
           // ── Audio ──

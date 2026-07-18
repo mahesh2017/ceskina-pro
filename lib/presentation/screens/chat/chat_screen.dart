@@ -62,9 +62,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          chat.conversationId != null
-              ? chat.scenario.split('.').first
-              : 'AI Tutor',
+          chat.conversationId != null ? chat.scenarioTitle : 'AI Tutor',
         ),
         actions: [
           if (chat.conversationId != null)

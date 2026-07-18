@@ -174,7 +174,15 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     try {
       persisted = await ref.read(examRepositoryProvider).saveResult(result);
     } catch (_) {
-      // Result still shown; only history is lost.
+      // Result still shown; only history is lost — but say so.
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text('Could not save this result to your exam history.'),
+          ),
+        );
+      }
     }
     if (result.passed) {
       try {

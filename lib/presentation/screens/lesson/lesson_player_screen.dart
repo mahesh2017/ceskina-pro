@@ -5,6 +5,7 @@ import '../../providers/lesson_providers.dart';
 import '../../providers/gamification_providers.dart';
 import '../../widgets/lesson/exercise_widget.dart';
 import '../../widgets/common/grammar_tip_card.dart';
+import '../../widgets/common/stat_row.dart';
 
 /// Lesson player — loads exercises from DB, cycles through them one by one.
 /// Shows progress bar, hearts, and feedback after each answer.
@@ -161,57 +162,85 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
               ),
             ),
 
-            // Exercise or feedback
+            // The exercise stays visible while the feedback banner is shown,
+            // so the learner can study their answer at their own pace —
+            // no timed auto-advance.
             Expanded(
-              child: session.showFeedback
-                  ? _buildFeedbackView(context, session)
-                  : SingleChildScrollView(
-                      child: ExerciseWidget(
-                        exercise: exercise,
-                        onAnswered: (result) {
-                          ref
-                              .read(lessonSessionProvider.notifier)
-                              .onExerciseAnswered(
-                                isCorrect: result.isCorrect,
-                                explanation: result.explanation,
-                                correctAnswer: result.correctAnswer,
-                                xpEarned: exercise.xpReward,
-                              );
-                        },
-                      ),
-                    ),
+              child: SingleChildScrollView(
+                child: ExerciseWidget(
+                  // Key by position so widget state (selected answers) resets
+                  // for each exercise, including mistake re-asks of the same
+                  // exercise id.
+                  key: ValueKey(session.currentIndex),
+                  exercise: exercise,
+                  onAnswered: (result) {
+                    ref
+                        .read(lessonSessionProvider.notifier)
+                        .onExerciseAnswered(
+                          isCorrect: result.isCorrect,
+                          explanation: result.explanation,
+                          correctAnswer: result.correctAnswer,
+                          xpEarned: exercise.xpReward,
+                        );
+                  },
+                ),
+              ),
             ),
+
+            // Feedback banner — appears under the answered exercise.
+            if (session.showFeedback) _buildFeedbackBanner(context, session),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildFeedbackView(BuildContext context, LessonSessionState session) {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GrammarTipCard(
-            isCorrect: session.lastWasCorrect,
-            explanation: session.lastExplanation,
-            correctAnswer: session.lastCorrectAnswer,
-            grammarRuleId: session.lastGrammarRuleId,
+  Widget _buildFeedbackBanner(
+      BuildContext context, LessonSessionState session,) {
+    return Material(
+      elevation: 8,
+      color: Theme.of(context).colorScheme.surface,
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Cap the banner height so long explanations scroll instead
+              // of pushing the exercise off screen.
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.sizeOf(context).height * 0.35,
+                ),
+                child: SingleChildScrollView(
+                  child: GrammarTipCard(
+                    isCorrect: session.lastWasCorrect,
+                    explanation: session.lastExplanation,
+                    correctAnswer: session.lastCorrectAnswer,
+                    grammarRuleId: session.lastGrammarRuleId,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                onPressed: () {
+                  ref.read(lessonSessionProvider.notifier).nextExercise();
+                },
+                icon: const Icon(Icons.arrow_forward),
+                label: Text(
+                  session.currentIndex + 1 < session.totalExercises
+                      ? 'Continue'
+                      : (session.mistakeQueue.isNotEmpty &&
+                              !session.mistakesAppended)
+                          ? 'Review Mistakes'
+                          : 'Finish Lesson',
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 32),
-          FilledButton.icon(
-            onPressed: () {
-              ref.read(lessonSessionProvider.notifier).nextExercise();
-            },
-            icon: const Icon(Icons.arrow_forward),
-            label: Text(
-              session.currentIndex + 1 >= session.totalExercises
-                  ? 'Finish Lesson'
-                  : 'Continue',
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -267,12 +296,19 @@ class _GameOverScreen extends StatelessWidget {
               const SizedBox(height: 8),
               const Text(
                 'Hearts refill over time — one every 30 minutes.\n'
-                'Come back soon, or review vocabulary in the meantime.',
+                'Or review vocabulary now: finishing a review session\n'
+                'of 5+ cards earns a heart back.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 32),
               FilledButton.icon(
+                onPressed: () => context.go('/review'),
+                icon: const Icon(Icons.style),
+                label: const Text('Review to Earn a Heart'),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
                 onPressed: onRetry,
                 icon: const Icon(Icons.refresh),
                 label: const Text('Try Again'),
@@ -334,14 +370,14 @@ class _LessonCompleteScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      _StatRow(
+                      StatRow(
                         icon: Icons.check,
                         label: 'Correct',
                         value: '${session.correctCount}/${session.totalExercises}',
                         color: Colors.green,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.percent,
                         label: 'Accuracy',
                         value: '$accuracy%',
@@ -352,14 +388,14 @@ class _LessonCompleteScreen extends ConsumerWidget {
                                 : Colors.red,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.star,
                         label: 'XP Earned',
                         value: '+${session.totalXp}',
                         color: Colors.amber,
                       ),
                       const Divider(),
-                      _StatRow(
+                      StatRow(
                         icon: Icons.favorite,
                         label: 'Hearts Remaining',
                         value:
@@ -390,37 +426,3 @@ class _LessonCompleteScreen extends ConsumerWidget {
   }
 }
 
-class _StatRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  const _StatRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: color, size: 24),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(label, style: Theme.of(context).textTheme.bodyLarge),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: color,
-            fontSize: 18,
-          ),
-        ),
-      ],
-    );
-  }
-}

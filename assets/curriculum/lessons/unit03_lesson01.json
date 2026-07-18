@@ -17,7 +17,12 @@
         "type": "multiple_choice",
         "question_cz": "Jaký rod má slovo 'žena'?",
         "question_en": "What gender is 'žena'?",
-        "options": ["Masculine", "Feminine", "Neuter", "No gender"],
+        "options": [
+          "Masculine",
+          "Feminine",
+          "Neuter",
+          "No gender"
+        ],
         "correct_index": 1,
         "explanation": "žena is feminine. Nouns ending in -a are usually feminine. Other examples: kniha, káva, škola, voda."
       },
@@ -34,7 +39,12 @@
         "type": "multiple_choice",
         "question_cz": "Jaký rod má slovo 'město'?",
         "question_en": "What gender is 'město'?",
-        "options": ["Masculine", "Feminine", "Neuter", "No gender"],
+        "options": [
+          "Masculine",
+          "Feminine",
+          "Neuter",
+          "No gender"
+        ],
         "correct_index": 2,
         "explanation": "město is neuter. Nouns ending in -o are usually neuter. Other examples: pivo, auto, okno."
       },
@@ -51,7 +61,12 @@
         "type": "multiple_choice",
         "question_cz": "Jaký rod má slovo 'hrad'?",
         "question_en": "What gender is 'hrad'?",
-        "options": ["Masculine", "Feminine", "Neuter", "No gender"],
+        "options": [
+          "Masculine",
+          "Feminine",
+          "Neuter",
+          "No gender"
+        ],
         "correct_index": 0,
         "explanation": "hrad is masculine inanimate. Nouns ending in a consonant are usually masculine. Other examples: dům, stůl, most."
       },
@@ -68,7 +83,12 @@
         "type": "multiple_choice",
         "question_cz": "Která koncovka znamená ženský rod?",
         "question_en": "Which ending indicates feminine gender?",
-        "options": ["consonant", "-a", "-o", "-í"],
+        "options": [
+          "consonant",
+          "-a",
+          "-o",
+          "-í"
+        ],
         "correct_index": 1,
         "explanation": "-a ending = feminine (žena, kniha, káva). Consonant = masculine. -o = neuter. This rule covers ~90% of Czech nouns."
       },
@@ -85,7 +105,12 @@
         "type": "multiple_choice",
         "question_cz": "Která koncovka znamená střední rod?",
         "question_en": "Which ending indicates neuter gender?",
-        "options": ["consonant", "-a", "-o", "-ý"],
+        "options": [
+          "consonant",
+          "-a",
+          "-o",
+          "-ý"
+        ],
         "correct_index": 2,
         "explanation": "-o ending = neuter (město, pivo, auto, okno). These take neuter adjectives: velké město, dobré pivo."
       },
@@ -102,7 +127,9 @@
         "type": "translation",
         "direction": "en_to_cz",
         "source": "That is a book.",
-        "accepted_answers": ["To je kniha."],
+        "accepted_answers": [
+          "To je kniha."
+        ],
         "grammar_note": "To je = That is. kniha = book (feminine). 'To' doesn't change for gender."
       },
       "answer_key": "To je kniha.",
@@ -118,7 +145,9 @@
         "type": "translation",
         "direction": "en_to_cz",
         "source": "That is a city.",
-        "accepted_answers": ["To je město."],
+        "accepted_answers": [
+          "To je město."
+        ],
         "grammar_note": "město = city (neuter). To je město. 'To' stays the same for all genders."
       },
       "answer_key": "To je město.",
@@ -134,7 +163,9 @@
         "type": "translation",
         "direction": "en_to_cz",
         "source": "That is a man.",
-        "accepted_answers": ["To je muž."],
+        "accepted_answers": [
+          "To je muž."
+        ],
         "grammar_note": "muž = man (masculine animate). To je muž."
       },
       "answer_key": "To je muž.",
@@ -150,7 +181,9 @@
         "type": "fill_blank",
         "sentence": "To je ___. (woman)",
         "blank_count": 1,
-        "accepted_answers": ["žena"],
+        "accepted_answers": [
+          "žena"
+        ],
         "explanation": "žena = woman (feminine, ends in -a). To je žena."
       },
       "answer_key": "žena",
@@ -163,9 +196,20 @@
       "prompt": "Arrange: 'To je velký hrad.' (That is a big castle.)",
       "data": {
         "type": "word_order",
-        "words": ["To", "je", "velký", "hrad", "—", "That", "is", "a", "big", "castle."],
-        "correct_order": [0, 1, 2, 3],
-        "explanation": "To je + adjective + noun. velký = big (masculine inanimate form). Adjective agrees with noun gender."
+        "words": [
+          "To",
+          "je",
+          "velký",
+          "hrad"
+        ],
+        "correct_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "explanation": "To je + adjective + noun. velký = big (masculine inanimate form). Adjective agrees with noun gender.",
+        "translation_en": "That is a big castle."
       },
       "answer_key": "0,1,2,3",
       "grammar_rule_id": "GR-023",
@@ -180,7 +224,12 @@
         "type": "multiple_choice",
         "question_cz": "Co je 'To je pes'?",
         "question_en": "Which means 'That is a dog'?",
-        "options": ["To je pes.", "To je pivo.", "To je pes?", "To jsou pes."],
+        "options": [
+          "To je pes.",
+          "To je pivo.",
+          "To je pes?",
+          "To jsou pes."
+        ],
         "correct_index": 0,
         "explanation": "To je pes = That is a dog. pes is masculine animate (ends in consonant)."
       },
@@ -196,7 +245,10 @@
         "type": "translation",
         "direction": "cz_to_en",
         "source": "To je káva.",
-        "accepted_answers": ["That is coffee.", "That is a coffee."],
+        "accepted_answers": [
+          "That is coffee.",
+          "That is a coffee."
+        ],
         "grammar_note": "káva = coffee (feminine, -a ending)."
       },
       "answer_key": "That is coffee.",

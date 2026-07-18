@@ -62,30 +62,33 @@ class CzechTts {
     return ttsDir;
   }
 
-  /// Generate a cache key from the text and current speech rate.
-  String _cacheKey(String text) {
-    final rate = _speechRate().toStringAsFixed(2);
-    final bytes = utf8.encode('$rate|${text.trim().toLowerCase()}');
+  /// Generate a cache key from the text and effective speech rate.
+  String _cacheKey(String text, double rate) {
+    final bytes = utf8.encode(
+        '${rate.toStringAsFixed(2)}|${text.trim().toLowerCase()}',);
     final hash = md5.convert(bytes);
     return hash.toString();
   }
 
-  /// Get the cached file path for a given text.
-  Future<String> _cachedFilePath(String text) async {
+  /// Get the cached file path for a given text and rate.
+  Future<String> _cachedFilePath(String text, double rate) async {
     final dir = await _getCacheDir();
-    return '$dir/${_cacheKey(text)}.mp3';
+    return '$dir/${_cacheKey(text, rate)}.mp3';
   }
 
   /// Speak the given Czech text. Uses cache when available.
-  /// Stops any currently playing speech.
-  Future<void> speak(String text) async {
+  /// Stops any currently playing speech. [rate] overrides the user's
+  /// configured speech rate for this utterance only (e.g. slow replay).
+  Future<void> speak(String text, {double? rate}) async {
     final trimmed = text.trim();
     if (trimmed.isEmpty) return;
 
     await stop();
 
+    final effectiveRate = rate ?? _speechRate();
+
     try {
-      final filePath = await _cachedFilePath(trimmed);
+      final filePath = await _cachedFilePath(trimmed, effectiveRate);
       final cachedFile = File(filePath);
 
       if (await cachedFile.exists()) {
@@ -95,20 +98,34 @@ class CzechTts {
         return;
       }
 
-      // Try to synthesize to file and cache
-      final synthesized = await _tts.synthesizeToFile(trimmed, filePath);
-      if (synthesized == 1) {
-        // Synthesis succeeded — play the file
-        await _player.setFilePath(filePath);
-        await _player.play();
-      } else {
-        // Fallback: direct speak (no caching)
-        await _tts.speak(trimmed);
+      // Try to synthesize to file and cache. Rate overrides temporarily
+      // change the engine rate for synthesis, then restore the setting.
+      if (rate != null) await _tts.setSpeechRate(rate);
+      try {
+        final synthesized = await _tts.synthesizeToFile(trimmed, filePath);
+        if (synthesized == 1) {
+          // Synthesis succeeded — play the file
+          await _player.setFilePath(filePath);
+          await _player.play();
+        } else {
+          // Fallback: direct speak (no caching). The rate override may not
+          // be restored until this utterance finishes queuing — acceptable.
+          await _tts.speak(trimmed);
+        }
+      } finally {
+        if (rate != null) await _tts.setSpeechRate(_speechRate());
       }
     } catch (_) {
       // Fallback: direct speak
       await _tts.speak(trimmed);
     }
+  }
+
+  /// Speak at ~60% of the configured rate — the "turtle button" for
+  /// dictation and listening practice.
+  Future<void> speakSlow(String text) {
+    final slow = (_speechRate() * 0.6).clamp(0.1, 1.0);
+    return speak(text, rate: slow);
   }
 
   /// Stop any currently playing speech.

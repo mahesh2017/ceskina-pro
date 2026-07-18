@@ -17,7 +17,9 @@
         "type": "pronunciation",
         "target_text": "řeka",
         "target_audio_hash": "placeholder_1101",
-        "focus_sounds": ["ř"],
+        "focus_sounds": [
+          "ř"
+        ],
         "min_score": 0.5,
         "translation_en": "river",
         "note": "Start by trying to say 'r' and 'zh' at the same time. It takes practice!"
@@ -35,7 +37,9 @@
         "type": "pronunciation",
         "target_text": "tři",
         "target_audio_hash": "placeholder_1102",
-        "focus_sounds": ["ř"],
+        "focus_sounds": [
+          "ř"
+        ],
         "min_score": 0.5,
         "translation_en": "three"
       },
@@ -52,7 +56,9 @@
         "type": "pronunciation",
         "target_text": "děti",
         "target_audio_hash": "placeholder_1103",
-        "focus_sounds": ["ě"],
+        "focus_sounds": [
+          "ě"
+        ],
         "min_score": 0.5,
         "translation_en": "children",
         "note": "dě sounds like 'dye'. The ě softens the d."
@@ -70,7 +76,9 @@
         "type": "pronunciation",
         "target_text": "město",
         "target_audio_hash": "placeholder_1104",
-        "focus_sounds": ["ě"],
+        "focus_sounds": [
+          "ě"
+        ],
         "min_score": 0.5,
         "translation_en": "city",
         "note": "mě sounds like 'mňe'. Special softening for m + ě."
@@ -140,9 +148,20 @@
       "prompt": "Arrange these words into a sentence",
       "data": {
         "type": "word_order",
-        "words": ["Řeka", "teče", "přes", "most", "—", "The", "river", "flows", "over", "the", "bridge"],
-        "correct_order": [0, 1, 2, 3],
-        "explanation": "Standard SVO (Subject-Verb-Object) order in Czech. 'přes' is a preposition meaning 'over/across'."
+        "words": [
+          "Řeka",
+          "teče",
+          "přes",
+          "most"
+        ],
+        "correct_order": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "explanation": "Standard SVO (Subject-Verb-Object) order in Czech. 'přes' is a preposition meaning 'over/across'.",
+        "translation_en": "The river flows over the bridge"
       },
       "answer_key": "0,1,2,3",
       "xp_reward": 10
@@ -156,7 +175,9 @@
         "type": "translation",
         "direction": "en_to_cz",
         "source": "children",
-        "accepted_answers": ["děti"],
+        "accepted_answers": [
+          "děti"
+        ],
         "grammar_note": "Contains ě after d → softened pronunciation (dye-ti)."
       },
       "answer_key": "děti",
@@ -172,7 +193,10 @@
         "type": "pronunciation",
         "target_text": "Tři děti jdou do školy.",
         "target_audio_hash": "placeholder_1110",
-        "focus_sounds": ["ř", "ě"],
+        "focus_sounds": [
+          "ř",
+          "ě"
+        ],
         "min_score": 0.55,
         "translation_en": "Three children go to school."
       },

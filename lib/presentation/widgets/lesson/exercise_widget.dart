@@ -268,16 +268,14 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
                             selectedIdx = i;
                             answered = true;
                           });
-                          final result = ExerciseResult(
+                          // Report immediately — the lesson player shows a
+                          // feedback banner alongside the highlighted options
+                          // and the learner advances at their own pace.
+                          widget.onAnswered(ExerciseResult(
                             isCorrect: i == correctIdx,
                             explanation: data['explanation'] as String?,
                             correctAnswer: options[correctIdx],
-                          );
-                          // Delay to let user see the result
-                          Future.delayed(const Duration(milliseconds: 1500),
-                              () {
-                            if (mounted) widget.onAnswered(result);
-                          });
+                          ),);
                         },
                 ),
               ),
@@ -330,16 +328,11 @@ class _TranslationViewState extends State<_TranslationView> {
         ? 'Almost! Watch your accent marks — the correct spelling is "${accepted.first}".'
         : grammarNote;
 
-    final result = ExerciseResult(
+    widget.onAnswered(ExerciseResult(
       isCorrect: correct,
       explanation: explanation,
       correctAnswer: accepted.first,
-    );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
+    ),);
   }
 
   @override
@@ -409,20 +402,7 @@ class _TranslationViewState extends State<_TranslationView> {
               child: const Text('Check'),
             ),
 
-          // Show correct answer if wrong
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: _correctTint,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${(data['accepted_answers'] as List<dynamic>).first}',
-                  style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
+          // The lesson player's feedback banner shows the correct answer.
         ],
       ),
     );
@@ -487,16 +467,11 @@ class _FillBlankViewState extends State<_FillBlankView> {
       isCorrect = correct;
     });
 
-    final result = ExerciseResult(
+    widget.onAnswered(ExerciseResult(
       isCorrect: correct,
       explanation: data['explanation'] as String?,
       correctAnswer: _displayAnswer(data),
-    );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
+    ),);
   }
 
   /// First accepted answer, with | separators made readable.
@@ -563,21 +538,6 @@ class _FillBlankViewState extends State<_FillBlankView> {
               onPressed: _checkAnswer,
               child: const Text('Check'),
             ),
-
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: _correctTint,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${_displayAnswer(data)}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold,),
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -601,33 +561,27 @@ class _WordOrderViewState extends State<_WordOrderView> {
   bool answered = false;
   bool? isCorrect;
 
+  /// The Czech words to arrange. Content packs older than the format
+  /// cleanup appended English words after a '—' separator; tolerate both.
+  List<String> _czechWords() {
+    final allWords =
+        (widget.exercise.data['words'] as List<dynamic>).cast<String>();
+    final sepIdx = allWords.indexOf('—');
+    return sepIdx >= 0 ? allWords.sublist(0, sepIdx) : allWords;
+  }
+
   @override
   void initState() {
     super.initState();
-    final data = widget.exercise.data;
-    // Filter out English words (after — separator) and non-word items
-    final allWords = (data['words'] as List<dynamic>).cast<String>();
-    // Find the separator index — Czech words come before it
-    final sepIdx = allWords.indexOf('—');
-    if (sepIdx >= 0) {
-      available = allWords.sublist(0, sepIdx);
-    } else {
-      available = List.of(allWords);
-    }
-    available = List.from(available)..shuffle();
+    available = List.of(_czechWords())..shuffle();
   }
 
   void _checkAnswer() {
     final data = widget.exercise.data;
     final correctOrder = (data['correct_order'] as List<dynamic>).cast<int>();
-    final allWords = (data['words'] as List<dynamic>).cast<String>();
-    final sepIdx = allWords.indexOf('—');
-    final czechWords = sepIdx >= 0
-        ? allWords.sublist(0, sepIdx)
-        : allWords.where((w) => w != '—').toList();
+    final czechWords = _czechWords();
 
     // Compare by position, not by indexOf (which breaks on duplicate words).
-    // The user's selected list should match the correct_order indices.
     final correct = selected.length == correctOrder.length &&
         _checkOrder(selected, czechWords, correctOrder);
 
@@ -637,27 +591,11 @@ class _WordOrderViewState extends State<_WordOrderView> {
     });
 
     final correctSentence = correctOrder.map((i) => czechWords[i]).join(' ');
-    final result = ExerciseResult(
+    widget.onAnswered(ExerciseResult(
       isCorrect: correct,
       explanation: data['explanation'] as String?,
       correctAnswer: correctSentence,
-    );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
-  }
-
-  /// Build the correct sentence from the exercise data for display.
-  String _buildCorrectSentence(Map<String, dynamic> data) {
-    final allWords = (data['words'] as List<dynamic>).cast<String>();
-    final sepIdx = allWords.indexOf('—');
-    final czechWords = sepIdx >= 0
-        ? allWords.sublist(0, sepIdx)
-        : allWords.where((w) => w != '—').toList();
-    final correctOrder = (data['correct_order'] as List<dynamic>).cast<int>();
-    return correctOrder.map((i) => czechWords[i]).join(' ');
+    ),);
   }
 
   /// Check that the selected words match the correct order indices.
@@ -675,6 +613,8 @@ class _WordOrderViewState extends State<_WordOrderView> {
 
   @override
   Widget build(BuildContext context) {
+    final translationEn = widget.exercise.data['translation_en'] as String?;
+
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -685,6 +625,17 @@ class _WordOrderViewState extends State<_WordOrderView> {
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
+          if (translationEn != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              '"$translationEn"',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontStyle: FontStyle.italic,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ],
           const SizedBox(height: 24),
 
           // Selected words area
@@ -745,20 +696,6 @@ class _WordOrderViewState extends State<_WordOrderView> {
               onPressed: _checkAnswer,
               child: const Text('Check'),
             ),
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 8),
-            Card(
-              color: _correctTint,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${widget.exercise.data['correct_answer'] ?? _buildCorrectSentence(widget.exercise.data)}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold,),
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -820,16 +757,11 @@ class _DictationViewState extends ConsumerState<_DictationView> {
         ? 'Almost! Watch your accent marks — you wrote it correctly apart from the diacritics.'
         : data['note'] as String?;
 
-    final result = ExerciseResult(
+    widget.onAnswered(ExerciseResult(
       isCorrect: correct,
       explanation: explanation,
       correctAnswer: expected,
-    );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
+    ),);
   }
 
   @override
@@ -854,12 +786,29 @@ class _DictationViewState extends ConsumerState<_DictationView> {
             size: 48,
           ),
           const SizedBox(height: 16),
-          TextButton.icon(
-            onPressed: () {
-              ref.read(czechTtsProvider).speak(data['expected_text'] as String);
-            },
-            icon: const Icon(Icons.replay),
-            label: const Text('Play again'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton.icon(
+                onPressed: () {
+                  ref
+                      .read(czechTtsProvider)
+                      .speak(data['expected_text'] as String);
+                },
+                icon: const Icon(Icons.replay),
+                label: const Text('Play again'),
+              ),
+              const SizedBox(width: 8),
+              TextButton.icon(
+                onPressed: () {
+                  ref.read(czechTtsProvider).speakSlow(
+                        data['expected_text'] as String,
+                      );
+                },
+                icon: const Icon(Icons.slow_motion_video),
+                label: const Text('Slower'),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
 
@@ -889,21 +838,6 @@ class _DictationViewState extends ConsumerState<_DictationView> {
               onPressed: _checkAnswer,
               child: const Text('Check'),
             ),
-
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: _correctTint,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${data['expected_text']}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold,),
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -1282,16 +1216,11 @@ class _DialogueViewState extends State<_DialogueView> {
       isCorrect = correct;
     });
 
-    final result = ExerciseResult(
+    widget.onAnswered(ExerciseResult(
       isCorrect: correct,
       explanation: data['explanation'] as String?,
       correctAnswer: acceptedRaw.first as String,
-    );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
+    ),);
   }
 
   @override
@@ -1323,21 +1252,6 @@ class _DialogueViewState extends State<_DialogueView> {
               onPressed: _checkAnswer,
               child: const Text('Check'),
             ),
-
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: _correctTint,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${(data['accepted_answers'] as List<dynamic>).first}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold,),
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -1399,16 +1313,11 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
       answered = true;
     });
 
-    final result = ExerciseResult(
+    widget.onAnswered(ExerciseResult(
       isCorrect: correctCount == totalBlanks,
       explanation: 'You got $correctCount/$totalBlanks correct.',
       correctAnswer: answerKey.entries.map((e) => '${e.key}: ${e.value}').join(', '),
-    );
-
-    Future.delayed(const Duration(milliseconds: 2000),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
+    ),);
   }
 
   @override
@@ -1502,28 +1411,6 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
               onPressed: _checkAnswers,
               child: const Text('Check All'),
             ),
-
-          if (answered) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: correctCount == totalBlanks
-                  ? _correctTint
-                  : Colors.orange.withValues(alpha: 0.12),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  '$correctCount / $totalBlanks correct',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: correctCount == totalBlanks
-                        ? Colors.green
-                        : Colors.orange,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );

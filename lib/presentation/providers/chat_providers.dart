@@ -9,7 +9,12 @@ import 'settings_providers.dart';
 /// State of the AI conversation.
 class ChatState {
   final String? conversationId;
+
+  /// The scenario prompt sent to the LLM.
   final String scenario;
+
+  /// Human-readable scenario name for the app bar (e.g. "At the Doctor").
+  final String scenarioTitle;
   final CEFRLevel level;
   final List<ChatMessage> messages;
   final bool isLoading;
@@ -18,6 +23,7 @@ class ChatState {
   const ChatState({
     this.conversationId,
     this.scenario = 'Casual conversation',
+    this.scenarioTitle = 'AI Tutor',
     this.level = CEFRLevel.a1,
     this.messages = const [],
     this.isLoading = false,
@@ -27,6 +33,7 @@ class ChatState {
   ChatState copyWith({
     String? conversationId,
     String? scenario,
+    String? scenarioTitle,
     CEFRLevel? level,
     List<ChatMessage>? messages,
     bool? isLoading,
@@ -35,6 +42,7 @@ class ChatState {
     return ChatState(
       conversationId: conversationId ?? this.conversationId,
       scenario: scenario ?? this.scenario,
+      scenarioTitle: scenarioTitle ?? this.scenarioTitle,
       level: level ?? this.level,
       messages: messages ?? this.messages,
       isLoading: isLoading ?? this.isLoading,
@@ -115,6 +123,7 @@ class ChatNotifier extends Notifier<ChatState> {
     state = ChatState(
       conversationId: convId,
       scenario: scenario.prompt,
+      scenarioTitle: scenario.title,
       level: effectiveLevel,
       messages: [],
     );

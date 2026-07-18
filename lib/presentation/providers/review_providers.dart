@@ -122,6 +122,9 @@ class ReviewSessionState {
   final bool isComplete;
   final bool isLoading;
 
+  /// True when finishing this session restored a heart.
+  final bool heartEarned;
+
   const ReviewSessionState({
     this.dueCards = const [],
     this.currentIndex = 0,
@@ -134,6 +137,7 @@ class ReviewSessionState {
     this.totalXp = 0,
     this.isComplete = false,
     this.isLoading = true,
+    this.heartEarned = false,
   });
 
   ReviewSessionState copyWith({
@@ -148,6 +152,7 @@ class ReviewSessionState {
     int? totalXp,
     bool? isComplete,
     bool? isLoading,
+    bool? heartEarned,
   }) {
     return ReviewSessionState(
       dueCards: dueCards ?? this.dueCards,
@@ -161,6 +166,7 @@ class ReviewSessionState {
       totalXp: totalXp ?? this.totalXp,
       isComplete: isComplete ?? this.isComplete,
       isLoading: isLoading ?? this.isLoading,
+      heartEarned: heartEarned ?? this.heartEarned,
     );
   }
 
@@ -277,6 +283,16 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
       gamification.onReviewSessionCompleted(5);
     } else if (isComplete) {
       gamification.onReviewSessionCompleted(state.reviewedCount % 5);
+    }
+
+    // Reviewing is the productive way back from an empty hearts pool:
+    // finishing a real session (5+ cards) restores one heart.
+    if (isComplete && state.reviewedCount >= 5) {
+      final g = ref.read(gamificationProvider);
+      if (g.hearts < g.maxHearts) {
+        gamification.refillHeart();
+        state = state.copyWith(heartEarned: true);
+      }
     }
   }
 
