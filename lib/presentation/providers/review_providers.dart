@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/entities/fsrs_card.dart';
 import '../../domain/engines/fsrs_scheduler.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
+import 'curriculum_providers.dart';
 import 'database_providers.dart';
 import 'gamification_providers.dart';
 
@@ -15,6 +16,72 @@ const kMaxSessionCards = 30;
 
 const _kNewCardsToday = 'srs_new_cards_today';
 const _kNewCardsDate = 'srs_new_cards_date';
+
+/// The set of unit ids the learner has reached, used to gate new-card
+/// introduction. Falls back to empty (no new cards) if it can't be resolved.
+Future<Set<int>> _unlockedUnits(Ref ref) async {
+  try {
+    return await ref.read(unlockedUnitIdsProvider.future);
+  } catch (_) {
+    return const {};
+  }
+}
+
+/// New cards already introduced today (resets at midnight).
+int _introducedToday(SharedPreferences prefs) {
+  final now = DateTime.now();
+  final today = '${now.year}-${now.month}-${now.day}';
+  if (prefs.getString(_kNewCardsDate) != today) return 0;
+  return prefs.getInt(_kNewCardsToday) ?? 0;
+}
+
+Future<void> _recordIntroduced(SharedPreferences prefs, int count) async {
+  final now = DateTime.now();
+  final today = '${now.year}-${now.month}-${now.day}';
+  await prefs.setString(_kNewCardsDate, today);
+  await prefs.setInt(_kNewCardsToday, count);
+}
+
+/// The cards selected for one review session and how many of them are brand
+/// new. Keeps the home due-count badge and the review screen in agreement.
+class SessionPlan {
+  final List<ReviewCard> cards;
+  final int newCount;
+  const SessionPlan(this.cards, this.newCount);
+}
+
+/// Pure composition of a review session: due reviews first (most at risk of
+/// being forgotten), then new cards gated by unlocked units, the daily new
+/// budget, and the overall session cap.
+SessionPlan planReviewSession({
+  required List<ReviewCard> allDue,
+  required Set<int> unlockedUnits,
+  required int introducedToday,
+}) {
+  final newCards = <ReviewCard>[];
+  final reviewCards = <ReviewCard>[];
+  for (final c in allDue) {
+    final isNew = c.fsrs.state == CardState.newCard || c.fsrs.reps == 0;
+    if (isNew) {
+      final uid = c.flashcard.unitId;
+      if (uid == null || unlockedUnits.contains(uid)) newCards.add(c);
+    } else {
+      reviewCards.add(c);
+    }
+  }
+
+  final newBudget =
+      (kDailyNewCardLimit - introducedToday).clamp(0, kDailyNewCardLimit);
+
+  final session = <ReviewCard>[...reviewCards.take(kMaxSessionCards)];
+  final remainingSlots =
+      (kMaxSessionCards - session.length).clamp(0, kMaxSessionCards);
+  final newToShow =
+      newCards.take(remainingSlots.clamp(0, newBudget)).toList();
+  session.addAll(newToShow);
+
+  return SessionPlan(session, newToShow.length);
+}
 
 /// State of an SRS review session.
 class ReviewSessionState {
@@ -95,64 +162,34 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
   @override
   ReviewSessionState build() => const ReviewSessionState();
 
-  /// Load due cards from the database, capping brand-new cards per day and
-  /// total session size so a fresh learner isn't flooded with the whole deck.
+  /// Load due cards from the database, gating new cards by curriculum
+  /// progress and capping brand-new cards per day and total session size so
+  /// a fresh learner isn't flooded with the whole deck.
   Future<void> loadDueCards() async {
     state = const ReviewSessionState(isLoading: true);
     final repo = ref.read(vocabularyRepositoryProvider);
     final allDue = await repo.getDueCards();
+    final unlockedUnits = await _unlockedUnits(ref);
 
-    // Partition into brand-new cards (never reviewed) and cards coming
-    // back for scheduled review.
-    final newCards = <ReviewCard>[];
-    final reviewCards = <ReviewCard>[];
-    for (final c in allDue) {
-      if (c.fsrs.state == CardState.newCard || c.fsrs.reps == 0) {
-        newCards.add(c);
-      } else {
-        reviewCards.add(c);
-      }
-    }
-
-    // How many new cards are we still allowed to introduce today?
     final prefs = await SharedPreferences.getInstance();
     final introducedToday = _introducedToday(prefs);
-    final newBudget =
-        (kDailyNewCardLimit - introducedToday).clamp(0, kDailyNewCardLimit);
 
-    // Due reviews always come first (they're the ones at risk of being
-    // forgotten); fill the rest of the session with new cards.
-    final session = <ReviewCard>[];
-    session.addAll(reviewCards.take(kMaxSessionCards));
-    final remainingSlots = (kMaxSessionCards - session.length).clamp(0, kMaxSessionCards);
-    final newToShow = newCards.take(remainingSlots.clamp(0, newBudget)).toList();
-    session.addAll(newToShow);
+    final plan = planReviewSession(
+      allDue: allDue,
+      unlockedUnits: unlockedUnits,
+      introducedToday: introducedToday,
+    );
 
     // Record how many new cards we introduced so tomorrow starts fresh.
-    if (newToShow.isNotEmpty) {
-      await _recordIntroduced(prefs, introducedToday + newToShow.length);
+    if (plan.newCount > 0) {
+      await _recordIntroduced(prefs, introducedToday + plan.newCount);
     }
 
     state = ReviewSessionState(
-      dueCards: session,
+      dueCards: plan.cards,
       isLoading: false,
-      isComplete: session.isEmpty,
+      isComplete: plan.cards.isEmpty,
     );
-  }
-
-  /// New cards already introduced today (resets at midnight).
-  int _introducedToday(SharedPreferences prefs) {
-    final now = DateTime.now();
-    final today = '${now.year}-${now.month}-${now.day}';
-    if (prefs.getString(_kNewCardsDate) != today) return 0;
-    return prefs.getInt(_kNewCardsToday) ?? 0;
-  }
-
-  Future<void> _recordIntroduced(SharedPreferences prefs, int count) async {
-    final now = DateTime.now();
-    final today = '${now.year}-${now.month}-${now.day}';
-    await prefs.setString(_kNewCardsDate, today);
-    await prefs.setInt(_kNewCardsToday, count);
   }
 
   /// Flip the current card to reveal the answer.
@@ -237,8 +274,18 @@ final reviewSessionProvider =
   ReviewSessionNotifier.new,
 );
 
-/// Provider for the due card count (for the home screen badge).
+/// Provider for the due card count (for the home screen badge). Reflects the
+/// cards the next session would actually show — gated by unlocked units and
+/// the daily/session caps — so the badge and the review screen agree.
 final dueCardCountProvider = FutureProvider<int>((ref) async {
   final repo = ref.read(vocabularyRepositoryProvider);
-  return repo.getDueCount();
+  final allDue = await repo.getDueCards();
+  final unlockedUnits = await _unlockedUnits(ref);
+  final prefs = await SharedPreferences.getInstance();
+  final plan = planReviewSession(
+    allDue: allDue,
+    unlockedUnits: unlockedUnits,
+    introducedToday: _introducedToday(prefs),
+  );
+  return plan.cards.length;
 });
