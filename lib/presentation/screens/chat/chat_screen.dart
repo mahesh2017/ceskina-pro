@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../../domain/entities/chat_message.dart';
 import '../../providers/chat_providers.dart';
+import '../../providers/stt_providers.dart';
 import '../../providers/tts_providers.dart';
+import '../../providers/database_providers.dart';
+import '../../providers/review_providers.dart';
+import '../../widgets/common/soft_ui.dart';
+
+/// Icon + soft-tint colors for each conversation scenario.
+({IconData icon, Color tint, Color fg}) _scenarioStyle(
+    BuildContext context, String title) {
+  final t = context.tokens;
+  return switch (title) {
+    'Casual Chat' => (icon: Icons.local_cafe_outlined, tint: t.amberSoft, fg: t.amber),
+    'At the Restaurant' =>
+      (icon: Icons.restaurant_outlined, tint: t.redSoft, fg: t.red),
+    'Asking Directions' => (icon: Icons.map_outlined, tint: t.priSoft, fg: t.pri),
+    'Shopping' => (icon: Icons.shopping_bag_outlined, tint: t.violetSoft, fg: t.violet),
+    'At the Doctor' =>
+      (icon: Icons.medical_services_outlined, tint: t.redSoft, fg: t.red),
+    'Job Interview' => (icon: Icons.work_outline, tint: t.greenSoft, fg: t.green),
+    _ => (icon: Icons.chat_bubble_outline, tint: t.priSoft, fg: t.pri),
+  };
+}
 
 /// AI conversation screen — role-play scenarios with AI Czech tutor.
 class ChatScreen extends ConsumerStatefulWidget {
@@ -15,12 +37,40 @@ class ChatScreen extends ConsumerStatefulWidget {
 class _ChatScreenState extends ConsumerState<ChatScreen> {
   final _inputController = TextEditingController();
   final _scrollController = ScrollController();
+  bool _isListening = false;
 
   @override
   void dispose() {
     _inputController.dispose();
     _scrollController.dispose();
     super.dispose();
+  }
+
+  /// Capture Czech speech and put the transcription into the input field
+  /// for the learner to review (and fix) before sending.
+  Future<void> _startVoiceInput() async {
+    if (_isListening) return;
+    setState(() => _isListening = true);
+    try {
+      final stt = ref.read(sttServiceProvider) as NativeSttService;
+      final transcription =
+          await stt.listenFor(timeout: const Duration(seconds: 10));
+      if (!mounted) return;
+      if (transcription.isNotEmpty) {
+        _inputController.text = transcription;
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Speech recognition failed. Check microphone permissions.',),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isListening = false);
+    }
   }
 
   void _scrollToBottom() {
@@ -47,26 +97,36 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   Widget build(BuildContext context) {
     final chat = ref.watch(chatProvider);
 
+    // Scroll to the bottom whenever a new message arrives (including the
+    // async tutor reply) or the typing indicator toggles.
+    ref.listen(chatProvider, (prev, next) {
+      if (prev == null) return;
+      if (prev.messages.length != next.messages.length ||
+          prev.isLoading != next.isLoading) {
+        _scrollToBottom();
+      }
+    });
+
+    final t = context.tokens;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          chat.conversationId != null
-              ? chat.scenario.split('.').first
-              : 'AI Tutor',
-        ),
-        actions: [
-          if (chat.conversationId != null)
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                ref.read(chatProvider.notifier).resetConversation();
-              },
-              tooltip: 'End conversation',
+      backgroundColor: t.bg,
+      appBar: chat.conversationId == null
+          ? null
+          : AppBar(
+              backgroundColor: t.card,
+              title: Text(chat.scenarioTitle),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    ref.read(chatProvider.notifier).resetConversation();
+                  },
+                  tooltip: 'End conversation',
+                ),
+              ],
             ),
-        ],
-      ),
       body: chat.conversationId == null
-          ? _ScenarioPicker(ref: ref)
+          ? const SafeArea(bottom: false, child: _ScenarioPicker())
           : Column(
               children: [
                 // Messages list
@@ -81,7 +141,6 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       }
                       return _MessageBubble(
                         message: chat.messages[index],
-                        ref: ref,
                       );
                     },
                   ),
@@ -90,7 +149,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 if (chat.error != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 4),
+                        horizontal: 16, vertical: 4,),
                     child: Text(
                       chat.error!,
                       style: TextStyle(
@@ -99,11 +158,36 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       ),
                     ),
                   ),
+                // Suggested replies — tap to prefill, learner reviews
+                // before sending.
+                if (chat.suggestedReplies.isNotEmpty && !chat.isLoading)
+                  SizedBox(
+                    height: 44,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      itemCount: chat.suggestedReplies.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                      itemBuilder: (context, i) {
+                        final suggestion = chat.suggestedReplies[i];
+                        return ActionChip(
+                          avatar: const Icon(Icons.lightbulb_outline,
+                              size: 16,),
+                          label: Text(suggestion),
+                          onPressed: () {
+                            _inputController.text = suggestion;
+                          },
+                        );
+                      },
+                    ),
+                  ),
                 // Input bar
                 _InputBar(
                   controller: _inputController,
                   onSend: _sendMessage,
                   isLoading: chat.isLoading,
+                  isListening: _isListening,
+                  onMic: _startVoiceInput,
                 ),
               ],
             ),
@@ -112,87 +196,113 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
 }
 
 /// Scenario picker — shown when no conversation is active.
-class _ScenarioPicker extends StatelessWidget {
-  final WidgetRef ref;
-
-  const _ScenarioPicker({required this.ref});
+class _ScenarioPicker extends ConsumerWidget {
+  const _ScenarioPicker();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
       children: [
+        const DisplayText('AI Tutor', size: 26),
+        const SizedBox(height: 4),
         Text(
-          'Choose a conversation scenario',
-          style: Theme.of(context).textTheme.titleLarge,
+          'Practice real-life Czech conversations. The tutor adapts to your level.',
+          style: TextStyle(fontSize: 14, color: t.muted, height: 1.5),
         ),
-        const SizedBox(height: 8),
-        Text(
-          'Practice Czech with an AI tutor in real-life situations.',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey,
+        const SizedBox(height: 18),
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 0.98,
+          children: ChatScenario.all.map((scenario) {
+            final s = _scenarioStyle(context, scenario.title);
+            return SoftCard(
+              padding: const EdgeInsets.all(16),
+              onTap: () => ref
+                  .read(chatProvider.notifier)
+                  .startConversation(scenario: scenario),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconTile(
+                      icon: s.icon,
+                      tint: s.tint,
+                      fg: s.fg,
+                      size: 38,
+                      radius: 13,
+                      iconSize: 16),
+                  const SizedBox(height: 10),
+                  Text(scenario.title,
+                      style: TextStyle(
+                          fontSize: 14.5,
+                          fontWeight: FontWeight.w700,
+                          color: t.ink)),
+                  const SizedBox(height: 3),
+                  Expanded(
+                    child: Text(scenario.description,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 12, color: t.muted, height: 1.4)),
+                  ),
+                ],
               ),
+            );
+          }).toList(),
         ),
-        const SizedBox(height: 24),
-        ...ChatScenario.all.map((scenario) {
-          return Card(
-            child: ListTile(
-              leading: _scenarioIcon(scenario.title),
-              title: Text(scenario.title),
-              subtitle: Text(scenario.description),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                ref.read(chatProvider.notifier).startConversation(
-                      scenario: scenario,
-                    );
-              },
-            ),
-          );
-        }),
       ],
     );
-  }
-
-  Icon _scenarioIcon(String title) {
-    return switch (title) {
-      'Casual Chat' => const Icon(Icons.coffee, color: Colors.brown),
-      'At the Restaurant' => const Icon(Icons.restaurant, color: Colors.orange),
-      'Asking Directions' => const Icon(Icons.map, color: Colors.blue),
-      'Shopping' => const Icon(Icons.shopping_bag, color: Colors.purple),
-      'At the Doctor' => const Icon(Icons.medical_services, color: Colors.red),
-      'Job Interview' => const Icon(Icons.work, color: Colors.teal),
-      _ => const Icon(Icons.chat),
-    };
   }
 }
 
 /// Chat message bubble with corrections and TTS.
-class _MessageBubble extends StatelessWidget {
+class _MessageBubble extends ConsumerWidget {
   final ChatMessage message;
-  final WidgetRef ref;
 
-  const _MessageBubble({required this.message, required this.ref});
+  const _MessageBubble({required this.message});
+
+  /// Add a tutor-suggested word to the SRS deck and confirm via snackbar.
+  Future<void> _addVocabToDeck(
+      BuildContext context, WidgetRef ref, NewVocabulary v,) async {
+    final repo = ref.read(vocabularyRepositoryProvider);
+    final added = await repo.addManualCard(cz: v.cz, en: v.en, ipa: v.ipa);
+    ref.invalidate(dueCardCountProvider);
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(added
+            ? 'Added "${v.cz}" to your review deck'
+            : '"${v.cz}" is already in your deck'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
     final isUser = message.role == MessageRole.user;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 14),
       child: Align(
         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.8,
+            maxWidth: MediaQuery.of(context).size.width * 0.82,
           ),
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: isUser
-                ? Theme.of(context).colorScheme.primaryContainer
-                : Theme.of(context).colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(16).copyWith(
-              bottomLeft: isUser ? const Radius.circular(16) : Radius.zero,
-              bottomRight: isUser ? Radius.zero : const Radius.circular(16),
+            color: isUser ? t.userBubble : t.card,
+            boxShadow: isUser ? null : t.shadow,
+            borderRadius: BorderRadius.circular(20).copyWith(
+              bottomLeft: isUser ? const Radius.circular(20) : const Radius.circular(6),
+              bottomRight: isUser ? const Radius.circular(6) : const Radius.circular(20),
             ),
           ),
           child: Column(
@@ -205,27 +315,36 @@ class _MessageBubble extends StatelessWidget {
                   Expanded(
                     child: Text(
                       message.content,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: TextStyle(
+                        fontSize: 15,
+                        height: 1.5,
+                        color: isUser ? t.userBubbleTxt : t.ink,
+                      ),
                     ),
                   ),
                   if (!isUser) ...[
-                    const SizedBox(width: 4),
+                    const SizedBox(width: 8),
                     _TtsIconButton(
                       text: message.content,
-                      ref: ref,
                     ),
                   ],
                 ],
               ),
               // English translation (tutor only)
               if (!isUser && message.translation != null) ...[
-                const SizedBox(height: 6),
-                Text(
-                  message.translation!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic,
-                      ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.only(top: 8),
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(color: t.line)),
+                  ),
+                  child: Text(
+                    message.translation!,
+                    style: TextStyle(
+                        fontSize: 12.5,
+                        color: t.muted,
+                        fontStyle: FontStyle.italic),
+                  ),
                 ),
               ],
               // Corrections
@@ -234,7 +353,7 @@ class _MessageBubble extends StatelessWidget {
                 const SizedBox(height: 8),
                 ...message.corrections!.map((c) => _CorrectionCard(
                       correction: c,
-                    )),
+                    ),),
               ],
               // New vocabulary
               if (message.newVocabulary != null &&
@@ -244,10 +363,12 @@ class _MessageBubble extends StatelessWidget {
                   spacing: 6,
                   runSpacing: 4,
                   children: message.newVocabulary!.map((v) {
-                    return Chip(
+                    return ActionChip(
                       label: Text('${v.cz} = ${v.en}'),
-                      avatar: const Icon(Icons.book, size: 16),
+                      avatar: const Icon(Icons.add, size: 16),
+                      tooltip: 'Add to review deck',
                       visualDensity: VisualDensity.compact,
+                      onPressed: () => _addVocabToDeck(context, ref, v),
                     );
                   }).toList(),
                 ),
@@ -261,14 +382,13 @@ class _MessageBubble extends StatelessWidget {
 }
 
 /// Small TTS icon button for message bubbles.
-class _TtsIconButton extends StatelessWidget {
+class _TtsIconButton extends ConsumerWidget {
   final String text;
-  final WidgetRef ref;
 
-  const _TtsIconButton({required this.text, required this.ref});
+  const _TtsIconButton({required this.text});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () {
         ref.read(czechTtsProvider).speak(text);
@@ -344,7 +464,7 @@ class _CorrectionCard extends StatelessWidget {
             correction.rule,
             style: TextStyle(
               fontSize: 11,
-              color: Colors.grey.shade700,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -369,13 +489,13 @@ class _TypingIndicator extends StatelessWidget {
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: Row(
+          child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               _Dot(0),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               _Dot(200),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               _Dot(400),
             ],
           ),
@@ -409,52 +529,85 @@ class _Dot extends StatelessWidget {
   }
 }
 
-/// Input bar with text field and send button.
+/// Input bar with text field, voice input, and send button.
 class _InputBar extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
   final bool isLoading;
+  final bool isListening;
+  final VoidCallback onMic;
 
   const _InputBar({
     required this.controller,
     required this.onSend,
     required this.isLoading,
+    required this.isListening,
+    required this.onMic,
   });
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
         child: Row(
           children: [
             Expanded(
-              child: TextField(
-                controller: controller,
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  hintText: 'Type in Czech...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
+              child: Container(
+                height: 50,
+                padding: const EdgeInsets.only(left: 18, right: 6),
+                decoration: BoxDecoration(
+                  color: t.card,
+                  boxShadow: t.shadow,
+                  borderRadius: BorderRadius.circular(999),
                 ),
-                onSubmitted: (_) => onSend(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: controller,
+                        enabled: !isLoading,
+                        style: TextStyle(fontSize: 14.5, color: t.ink),
+                        decoration: InputDecoration(
+                          isCollapsed: true,
+                          hintText: isListening ? 'Listening… speak Czech' : 'Napiš česky…',
+                          hintStyle: TextStyle(color: t.faint, fontSize: 14.5),
+                          border: InputBorder.none,
+                        ),
+                        onSubmitted: (_) => onSend(),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: isLoading || isListening ? null : onMic,
+                      visualDensity: VisualDensity.compact,
+                      icon: Icon(
+                        isListening ? Icons.mic : Icons.mic_none,
+                        size: 20,
+                        color: isListening ? t.red : t.muted,
+                      ),
+                      tooltip: 'Speak your reply',
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(width: 8),
-            IconButton.filled(
-              onPressed: isLoading ? null : onSend,
-              icon: isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.send),
+            const SizedBox(width: 10),
+            InkWell(
+              onTap: isLoading ? null : onSend,
+              borderRadius: BorderRadius.circular(999),
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(color: t.priFill, shape: BoxShape.circle),
+                child: isLoading
+                    ? Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: t.onFill),
+                      )
+                    : Icon(Icons.send, size: 18, color: t.onFill),
+              ),
             ),
           ],
         ),

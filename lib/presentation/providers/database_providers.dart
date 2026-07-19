@@ -5,11 +5,15 @@ import '../../data/repositories/drift_curriculum_repository.dart';
 import '../../data/repositories/drift_vocabulary_repository.dart';
 import '../../data/repositories/drift_conversation_repository.dart';
 import '../../data/repositories/drift_progress_repository.dart';
+import '../../data/repositories/drift_exam_repository.dart';
 import '../../data/seeds/content_seeder.dart';
+import '../../data/content/curriculum_pack_source.dart';
 import '../../domain/repositories/curriculum_repository.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import '../../domain/repositories/conversation_repository.dart';
 import '../../domain/repositories/progress_repository.dart';
+import '../../domain/repositories/exam_repository.dart';
+import 'sync_providers.dart';
 
 /// Database singleton provider.
 final databaseProvider = Provider<db.AppDatabase>((ref) {
@@ -20,7 +24,10 @@ final databaseProvider = Provider<db.AppDatabase>((ref) {
 
 /// Content seeder provider.
 final contentSeederProvider = Provider<ContentSeeder>((ref) {
-  return ContentSeeder(ref.read(databaseProvider));
+  return ContentSeeder(
+    ref.read(databaseProvider),
+    CurriculumPackSource(backend: ref.read(backendServiceProvider)),
+  );
 });
 
 /// Curriculum repository provider.
@@ -43,13 +50,20 @@ final progressRepositoryProvider = Provider<ProgressRepository>((ref) {
   return DriftProgressRepository(ref.read(databaseProvider));
 });
 
+/// Exam repository provider.
+final examRepositoryProvider = Provider<ExamRepository>((ref) {
+  return DriftExamRepository(ref.read(databaseProvider));
+});
+
 /// SharedPreferences provider for lightweight KV storage.
 final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) {
   return SharedPreferences.getInstance();
 });
 
-/// App initialization provider — seeds the database on first launch.
+/// App initialization provider — establishes the Supabase session, downloads
+/// the complete curriculum snapshot, and synchronizes it into Drift.
 final appInitializationProvider = FutureProvider<void>((ref) async {
   final seeder = ref.read(contentSeederProvider);
+  await ref.watch(backendInitProvider.future);
   await seeder.seedIfNeeded();
 });

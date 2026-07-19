@@ -1,0 +1,210 @@
+{
+  "id": 502,
+  "unit_id": 5,
+  "order_in_unit": 1,
+  "title": "Using Verbs in Context",
+  "description": "Practice regular verbs in sentences — daily activities, speaking, understanding",
+  "duration_min": 15,
+  "lesson_type": "practice",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 5101,
+      "lesson_id": 502,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I speak Czech.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I speak Czech.",
+        "accepted_answers": ["Mluvím česky."],
+        "grammar_note": "'Mluvit' (-ít class), 1st person singular: mluvím. 'Česky' is the adverb meaning 'in Czech'."
+      },
+      "answer_key": "Mluvím česky.",
+      "grammar_rule_id": "GR-041",
+      "xp_reward": 10
+    },
+    {
+      "id": 5102,
+      "lesson_id": 502,
+      "type": "word_order",
+      "prompt": "Arrange the words to form the question: 'What are you doing?'",
+      "data": {
+        "type": "word_order",
+        "words": ["?", "děláš", "Co"],
+        "correct_order": [2, 1, 0],
+        "explanation": "'Co děláš?' = 'What are you doing?' Czech questions often have the same word order as statements, just with rising intonation."
+      },
+      "answer_key": "Co děláš?",
+      "grammar_rule_id": "GR-040",
+      "xp_reward": 10
+    },
+    {
+      "id": 5103,
+      "lesson_id": 502,
+      "type": "multiple_choice",
+      "prompt": "Which is the correct question for 'Do you speak Czech?'",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která otázka znamená 'Mluvíš česky?'",
+        "question_en": "Which question means 'Do you speak Czech?'",
+        "options": ["Mluvíš česky.", "Mluvíš česky?", "Děláš česky?", "Česky mluvím?"],
+        "correct_index": 1,
+        "explanation": "'Mluvíš česky?' with a question mark. Czech yes/no questions use the same word order as statements but with rising intonation, indicated by the question mark."
+      },
+      "answer_key": "Mluvíš česky?",
+      "grammar_rule_id": "GR-041",
+      "xp_reward": 10
+    },
+    {
+      "id": 5104,
+      "lesson_id": 502,
+      "type": "fill_blank",
+      "prompt": "Fill in the NEGATIVE form of 'mluvit' (to speak) for 'já'.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Já ____ česky. (negative)",
+        "blank_count": 1,
+        "accepted_answers": ["nemluvím"],
+        "explanation": "Czech negation: add the prefix 'ne-' to the verb. 'Mluvím' → 'nemluvím'. 'Já nemluvím česky.' = 'I don't speak Czech.'"
+      },
+      "answer_key": "nemluvím",
+      "grammar_rule_id": "GR-043",
+      "xp_reward": 10
+    },
+    {
+      "id": 5105,
+      "lesson_id": 502,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I don't understand.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I don't understand.",
+        "accepted_answers": ["Nerozumím.", "Já nerozumím."],
+        "grammar_note": "Negation with 'ne-' prefix: rozumím → nerozumím. The subject pronoun 'já' is optional."
+      },
+      "answer_key": "Nerozumím.",
+      "grammar_rule_id": "GR-043",
+      "xp_reward": 10
+    },
+    {
+      "id": 5106,
+      "lesson_id": 502,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct form: 'Ona ____ knihu.' (číst, 3rd person singular)",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správnou formu: 'Ona ____ knihu.'",
+        "question_en": "Choose the correct form: 'She ____ a book.' (číst)",
+        "options": ["čtu", "čte", "čteš", "čtou"],
+        "correct_index": 1,
+        "explanation": "'Číst' 3rd person singular: čte. 'Ona čte knihu.' = 'She reads a book.'"
+      },
+      "answer_key": "čte",
+      "grammar_rule_id": "GR-042",
+      "xp_reward": 10
+    },
+    {
+      "id": 5107,
+      "lesson_id": 502,
+      "type": "fill_blank",
+      "prompt": "Fill in the correct form of 'mluvit' for 'oni' (they).",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Oni ____ česky.",
+        "blank_count": 1,
+        "accepted_answers": ["mluví"],
+        "explanation": "The -ít class 3rd person plural is the same as 3rd person singular: mluví. 'Oni mluví česky.' = 'They speak Czech.'"
+      },
+      "answer_key": "mluví",
+      "grammar_rule_id": "GR-041",
+      "xp_reward": 10
+    },
+    {
+      "id": 5108,
+      "lesson_id": 502,
+      "type": "dictation",
+      "prompt": "Listen and write what you hear.",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_5108",
+        "expected_text": "Nedělám nic.",
+        "language": "cs-CZ",
+        "note": "Negation of 'dělám' → 'nedělám'. 'Nedělám nic.' = 'I am not doing anything.'"
+      },
+      "answer_key": "Nedělám nic.",
+      "grammar_rule_id": "GR-043",
+      "xp_reward": 10
+    },
+    {
+      "id": 5109,
+      "lesson_id": 502,
+      "type": "pronunciation",
+      "prompt": "Pronounce the following Czech sentence.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Rozumím.",
+        "target_audio_hash": "placeholder_5109",
+        "focus_sounds": ["r", "í"],
+        "min_score": 0.6,
+        "translation_en": "I understand."
+      },
+      "answer_key": "Rozumím.",
+      "grammar_rule_id": "GR-042",
+      "xp_reward": 10
+    },
+    {
+      "id": 5110,
+      "lesson_id": 502,
+      "type": "dialogue",
+      "prompt": "Read the dialogue in the classroom. How would you answer the teacher's question 'Rozumíš?'",
+      "data": {
+        "type": "dialogue",
+        "scenario": "V třídě — In the classroom",
+        "lines": [
+          {"speaker": "person_a", "text": "Co děláš?"},
+          {"speaker": "person_b", "text": "Mluvím česky. A ty?"},
+          {"speaker": "person_a", "text": "Já také mluvím česky. Rozumíš?"},
+          {"speaker": "person_b", "text": "Ano, rozumím dobře."}
+        ],
+        "accepted_answers": ["Ano, rozumím.|Rozumím.|Ano, rozumím dobře."],
+        "explanation": "'Co děláš?' = 'What are you doing?' Respond with what you're doing. 'Rozumíš?' = 'Do you understand?' Respond with 'Ano, rozumím' = 'Yes, I understand.'"
+      },
+      "answer_key": "Ano, rozumím.",
+      "grammar_rule_id": "GR-041",
+      "xp_reward": 15
+    },
+    {
+      "id": 5111,
+      "lesson_id": 502,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'Do you understand?' (singular, informal)",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "Do you understand?",
+        "accepted_answers": ["Rozumíš?", "Ty rozumíš?"],
+        "grammar_note": "'Rozumět' (-et/-ět class), 2nd person singular: rozumíš. Czech yes/no questions keep statement word order with rising intonation."
+      },
+      "answer_key": "Rozumíš?",
+      "grammar_rule_id": "GR-042",
+      "xp_reward": 10
+    },
+    {
+      "id": 5112,
+      "lesson_id": 502,
+      "type": "word_order",
+      "prompt": "Arrange the words to form: 'He reads a book.'",
+      "data": {
+        "type": "word_order",
+        "words": ["knihu", "On", "čte"],
+        "correct_order": [1, 2, 0],
+        "explanation": "'On čte knihu.' = 'He reads a book.' 'Číst' 3rd person singular: čte. 'Kniha' in accusative case: knihu."
+      },
+      "answer_key": "On čte knihu",
+      "grammar_rule_id": "GR-042",
+      "xp_reward": 10
+    }
+  ]
+}

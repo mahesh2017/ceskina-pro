@@ -19,7 +19,7 @@ class ConversationDao extends DatabaseAccessor<AppDatabase>
       id: id,
       scenario: scenario,
       cefrLevel: cefrLevel,
-    ));
+    ),);
     return id;
   }
 

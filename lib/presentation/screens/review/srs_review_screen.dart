@@ -5,6 +5,9 @@ import '../../providers/review_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../../domain/entities/flashcard.dart';
 import '../../../domain/entities/fsrs_card.dart';
+import '../../../domain/engines/fsrs_scheduler.dart';
+import '../../../core/theme/app_tokens.dart';
+import '../../widgets/common/soft_ui.dart';
 
 /// SRS review screen — flashcard interface with flip + FSRS rating buttons.
 class SrsReviewScreen extends ConsumerStatefulWidget {
@@ -42,7 +45,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
     if (session.dueCards.isEmpty && !session.isComplete) {
       return _NoDueCardsScreen(onRefresh: () {
         ref.read(reviewSessionProvider.notifier).loadDueCards();
-      });
+      },);
     }
 
     // Session complete
@@ -111,6 +114,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
             Expanded(
               child: _FlashcardView(
                 card: card.flashcard,
+                direction: card.direction,
                 isFlipped: session.isFlipped,
                 onFlip: () {
                   ref.read(reviewSessionProvider.notifier).flipCard();
@@ -121,6 +125,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
             // Rating buttons (only after flip)
             if (session.isFlipped)
               _RatingButtons(
+                intervals: _intervalLabels(card.fsrs),
                 onRate: (rating) {
                   ref.read(reviewSessionProvider.notifier).rateCard(rating);
                 },
@@ -142,13 +147,36 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
     );
   }
 
+  /// Honest interval hints computed from the real scheduler for the
+  /// current card. "Again" re-appears within this session, so it shows
+  /// "Soon" rather than a day count.
+  Map<Rating, String> _intervalLabels(FSRSCard card) {
+    final scheduler = FSRSScheduler();
+    final now = DateTime.now();
+    String fmt(Rating r) {
+      if (r == Rating.again) return 'Soon';
+      final days = scheduler.previewIntervalDays(card, r, now);
+      if (days <= 0) return '<1d';
+      if (days < 30) return '${days}d';
+      if (days < 365) return '~${(days / 30).round()}mo';
+      return '~${(days / 365).round()}y';
+    }
+
+    return {
+      Rating.again: fmt(Rating.again),
+      Rating.hard: fmt(Rating.hard),
+      Rating.good: fmt(Rating.good),
+      Rating.easy: fmt(Rating.easy),
+    };
+  }
+
   void _showExitConfirm(BuildContext context) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('End review?'),
         content: const Text(
-            'Your progress will be saved. You can continue later.'),
+            'Your progress will be saved. You can continue later.',),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -167,14 +195,18 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
   }
 }
 
-/// The flashcard view — front (Czech word) and back (English + IPA + example).
+/// The flashcard view. The front depends on the card's direction —
+/// recognition (CZ), production (EN), or audio-only — and the back always
+/// shows the full word with translation, IPA, and example.
 class _FlashcardView extends ConsumerWidget {
   final Flashcard card;
+  final CardDirection direction;
   final bool isFlipped;
   final VoidCallback onFlip;
 
   const _FlashcardView({
     required this.card,
+    required this.direction,
     required this.isFlipped,
     required this.onFlip,
   });
@@ -193,9 +225,27 @@ class _FlashcardView extends ConsumerWidget {
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(32),
-            child: isFlipped
-                ? _buildBack(context, ref)
-                : _buildFront(context, ref),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              transitionBuilder: (child, anim) => FadeTransition(
+                opacity: anim,
+                child: ScaleTransition(
+                  scale: Tween<double>(begin: 0.96, end: 1.0).animate(anim),
+                  child: child,
+                ),
+              ),
+              child: KeyedSubtree(
+                key: ValueKey(isFlipped),
+                child: isFlipped
+                    ? _buildBack(context, ref)
+                    : switch (direction) {
+                        CardDirection.czToEn => _buildFront(context, ref),
+                        CardDirection.enToCz =>
+                          _buildFrontProduction(context),
+                        CardDirection.audio => _buildFrontAudio(context, ref),
+                      },
+              ),
+            ),
           ),
         ),
       ),
@@ -268,6 +318,104 @@ class _FlashcardView extends ConsumerWidget {
           },
           icon: const Icon(Icons.volume_up, size: 32),
           color: Theme.of(context).colorScheme.primary,
+        ),
+      ],
+    );
+  }
+
+  /// Production front — English shown, learner recalls the Czech word.
+  Widget _buildFrontProduction(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.deepPurple.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            'EN → CZ',
+            style: TextStyle(color: Colors.deepPurple, fontSize: 12),
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          card.wordEn,
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: 24),
+        Text(
+          'How do you say it in Czech?',
+          style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+        ),
+        const SizedBox(height: 40),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.touch_app, color: Colors.grey.shade400, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Tap to reveal',
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  /// Audio front — learner listens and recalls the meaning.
+  Widget _buildFrontAudio(BuildContext context, WidgetRef ref) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.teal.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            'LISTENING',
+            style: TextStyle(color: Colors.teal, fontSize: 12),
+          ),
+        ),
+        const SizedBox(height: 32),
+        IconButton.filled(
+          onPressed: () {
+            ref.read(czechTtsProvider).speak(card.wordCz);
+          },
+          icon: const Icon(Icons.volume_up, size: 48),
+          padding: const EdgeInsets.all(24),
+        ),
+        const SizedBox(height: 8),
+        TextButton.icon(
+          onPressed: () {
+            ref.read(czechTtsProvider).speakSlow(card.wordCz);
+          },
+          icon: const Icon(Icons.slow_motion_video, size: 18),
+          label: const Text('Slower'),
+        ),
+        const SizedBox(height: 16),
+        Text(
+          'Listen — what does it mean?',
+          style: TextStyle(color: Colors.grey.shade500, fontSize: 14),
+        ),
+        const SizedBox(height: 32),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.touch_app, color: Colors.grey.shade400, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Tap to reveal',
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+            ),
+          ],
         ),
       ],
     );
@@ -367,8 +515,9 @@ class _FlashcardView extends ConsumerWidget {
 /// Rating buttons — Again / Hard / Good / Easy (FSRS).
 class _RatingButtons extends StatelessWidget {
   final void Function(Rating) onRate;
+  final Map<Rating, String> intervals;
 
-  const _RatingButtons({required this.onRate});
+  const _RatingButtons({required this.onRate, required this.intervals});
 
   @override
   Widget build(BuildContext context) {
@@ -379,7 +528,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Again',
-              subtitle: '<1m',
+              subtitle: intervals[Rating.again] ?? '',
               color: Colors.red,
               icon: Icons.refresh,
               onTap: () => onRate(Rating.again),
@@ -389,7 +538,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Hard',
-              subtitle: '6m',
+              subtitle: intervals[Rating.hard] ?? '',
               color: Colors.orange,
               icon: Icons.flag,
               onTap: () => onRate(Rating.hard),
@@ -399,7 +548,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Good',
-              subtitle: '1d',
+              subtitle: intervals[Rating.good] ?? '',
               color: Colors.green,
               icon: Icons.check,
               onTap: () => onRate(Rating.good),
@@ -409,7 +558,7 @@ class _RatingButtons extends StatelessWidget {
           Expanded(
             child: _RatingButton(
               label: 'Easy',
-              subtitle: '4d',
+              subtitle: intervals[Rating.easy] ?? '',
               color: Colors.blue,
               icon: Icons.star,
               onTap: () => onRate(Rating.easy),
@@ -478,7 +627,7 @@ class _NoDueCardsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.check_circle,
-                  size: 80, color: Colors.green.shade300),
+                  size: 80, color: Colors.green.shade300,),
               const SizedBox(height: 24),
               Text(
                 'All caught up!',
@@ -518,135 +667,238 @@ class _ReviewCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     final accuracy = (session.accuracy * 100).round();
+    final total = session.reviewedCount == 0 ? 1 : session.reviewedCount;
+    final accuracyColor = accuracy >= 80
+        ? t.green
+        : accuracy >= 60
+            ? t.amber
+            : t.red;
 
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.emoji_events, size: 80, color: Colors.amber),
-              const SizedBox(height: 24),
-              Text(
-                'Review Complete!',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 24),
-
-              // Stats card
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
+      backgroundColor: t.bg,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(24, 36, 24, 12),
+                children: [
+                  Center(
+                    child: Container(
+                      width: 88,
+                      height: 88,
+                      decoration:
+                          BoxDecoration(color: t.amberSoft, shape: BoxShape.circle),
+                      child: Icon(Icons.emoji_events_outlined,
+                          size: 40, color: t.amber),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  const Center(child: DisplayText('Review complete', size: 27)),
+                  const SizedBox(height: 6),
+                  Center(
+                    child: Text(
+                      'Nice work — ${session.reviewedCount} '
+                      '${session.reviewedCount == 1 ? 'card' : 'cards'} reviewed',
+                      style: TextStyle(fontSize: 14, color: t.muted),
+                    ),
+                  ),
+                  if (session.heartEarned) ...[
+                    const SizedBox(height: 12),
+                    Center(
+                      child: PillChip(
+                        label: '+1 heart earned',
+                        bg: t.redSoft,
+                        fg: t.red,
+                        icon: Icons.favorite,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 24),
+                  Row(
                     children: [
-                      _StatRow(
-                        icon: Icons.style,
-                        label: 'Cards Reviewed',
-                        value: '${session.reviewedCount}',
-                        color: Theme.of(context).colorScheme.primary,
+                      Expanded(
+                        child: _StatTile(
+                            value: '${session.reviewedCount}', label: 'Cards'),
                       ),
-                      const Divider(),
-                      _StatRow(
-                        icon: Icons.percent,
-                        label: 'Accuracy',
-                        value: '$accuracy%',
-                        color: accuracy >= 80
-                            ? Colors.green
-                            : accuracy >= 60
-                                ? Colors.orange
-                                : Colors.red,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: _StatTile(
+                            value: '$accuracy%',
+                            label: 'Accuracy',
+                            color: accuracyColor),
                       ),
-                      const Divider(),
-                      _StatRow(
-                        icon: Icons.refresh,
-                        label: 'Again',
-                        value: '${session.againCount}',
-                        color: Colors.red,
-                      ),
-                      const Divider(),
-                      _StatRow(
-                        icon: Icons.flag,
-                        label: 'Hard',
-                        value: '${session.hardCount}',
-                        color: Colors.orange,
-                      ),
-                      const Divider(),
-                      _StatRow(
-                        icon: Icons.check,
-                        label: 'Good',
-                        value: '${session.goodCount}',
-                        color: Colors.green,
-                      ),
-                      const Divider(),
-                      _StatRow(
-                        icon: Icons.star,
-                        label: 'Easy',
-                        value: '${session.easyCount}',
-                        color: Colors.blue,
-                      ),
-                      const Divider(),
-                      _StatRow(
-                        icon: Icons.star_border,
-                        label: 'XP Earned',
-                        value: '+${session.totalXp}',
-                        color: Colors.amber,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: _StatTile(
+                            value: '+${session.totalXp}',
+                            label: 'XP',
+                            color: t.amber),
                       ),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 14),
+                  SoftCard(
+                    padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SectionLabel('How it went'),
+                        const SizedBox(height: 14),
+                        _RatingRow(
+                            color: t.red,
+                            label: 'Again',
+                            count: session.againCount,
+                            total: total),
+                        const SizedBox(height: 12),
+                        _RatingRow(
+                            color: t.amber,
+                            label: 'Hard',
+                            count: session.hardCount,
+                            total: total),
+                        const SizedBox(height: 12),
+                        _RatingRow(
+                            color: t.green,
+                            label: 'Good',
+                            count: session.goodCount,
+                            total: total),
+                        const SizedBox(height: 12),
+                        _RatingRow(
+                            color: t.pri,
+                            label: 'Easy',
+                            count: session.easyCount,
+                            total: total),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                    decoration: BoxDecoration(
+                      color: t.priSoft,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.schedule, size: 16, color: t.pri),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            'These cards are rescheduled with spaced repetition — '
+                            'we\'ll surface them again right on time.',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: t.priInk),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 24),
-              FilledButton.icon(
-                onPressed: onExit,
-                icon: const Icon(Icons.home),
-                label: const Text('Back to Home'),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+              child: Column(
+                children: [
+                  PrimaryButton(
+                      label: 'Back to home', icon: Icons.home_outlined,
+                      onPressed: onExit),
+                  const SizedBox(height: 4),
+                  TextButton(
+                    onPressed: onRestart,
+                    child: Text('Review again',
+                        style: TextStyle(
+                            color: t.pri, fontWeight: FontWeight.w700, fontSize: 15)),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
-              TextButton(
-                onPressed: onRestart,
-                child: const Text('Review Again'),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-class _StatRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
+/// A single big-number stat tile used on the review summary.
+class _StatTile extends StatelessWidget {
+  const _StatTile({required this.value, required this.label, this.color});
   final String value;
-  final Color color;
-
-  const _StatRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-    required this.color,
-  });
+  final String label;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
+    return SoftCard(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+      child: Column(
+        children: [
+          Text(value,
+              style: TextStyle(
+                fontFamily: AppFonts.display,
+                fontSize: 26,
+                fontWeight: FontWeight.w700,
+                color: color ?? t.ink,
+              )),
+          const SizedBox(height: 2),
+          Text(label,
+              style: TextStyle(
+                  fontSize: 12, fontWeight: FontWeight.w600, color: t.muted)),
+        ],
+      ),
+    );
+  }
+}
+
+/// One row of the "How it went" breakdown: dot, label, bar, count.
+class _RatingRow extends StatelessWidget {
+  const _RatingRow({
+    required this.color,
+    required this.label,
+    required this.count,
+    required this.total,
+  });
+
+  final Color color;
+  final String label;
+  final int count;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
     return Row(
       children: [
-        Icon(icon, color: color, size: 24),
+        Container(
+          width: 9,
+          height: 9,
+          decoration:
+              BoxDecoration(color: color, borderRadius: BorderRadius.circular(3)),
+        ),
         const SizedBox(width: 12),
         Expanded(
-          child: Text(label, style: Theme.of(context).textTheme.bodyLarge),
+          flex: 2,
+          child: Text(label, style: TextStyle(fontSize: 14, color: t.ink)),
         ),
-        Text(
-          value,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: color,
-            fontSize: 18,
-          ),
+        Expanded(
+          flex: 4,
+          child: SoftProgressBar(value: total == 0 ? 0 : count / total, color: color),
+        ),
+        SizedBox(
+          width: 26,
+          child: Text('$count',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.w700, color: t.ink)),
         ),
       ],
     );
   }
 }
+

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../domain/engines/gamification_engine.dart';
 import '../../../domain/entities/gamification_state.dart';
 import '../../providers/gamification_providers.dart';
 
@@ -7,11 +8,13 @@ import '../../providers/gamification_providers.dart';
 class XpBadge extends ConsumerWidget {
   const XpBadge({super.key});
 
+  static final _engine = GamificationEngine();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final gamification = ref.watch(gamificationProvider);
     final totalXp = gamification.totalXp;
-    final league = _getLeague(totalXp);
+    final league = _engine.getLeague(totalXp);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -46,17 +49,9 @@ class XpBadge extends ConsumerWidget {
     );
   }
 
-  League _getLeague(int xp) {
-    if (xp >= League.diamond.xpThreshold) return League.diamond;
-    if (xp >= League.platinum.xpThreshold) return League.platinum;
-    if (xp >= League.gold.xpThreshold) return League.gold;
-    if (xp >= League.silver.xpThreshold) return League.silver;
-    return League.bronze;
-  }
-
   Color _leagueColor(League league) {
     return switch (league) {
-      League.bronze => const Color(0xCD7F32),
+      League.bronze => const Color(0xFFCD7F32),
       League.silver => Colors.grey,
       League.gold => Colors.amber.shade700,
       League.platinum => Colors.cyan,

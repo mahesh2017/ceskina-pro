@@ -4,7 +4,7 @@
     <!-- Internet permission for LLM/TTS/STT cloud APIs (Phase 2) -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="ceskina_pro"
+        android:label="Čeština Pro"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -44,6 +44,11 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- Required on Android 11+ (API 30) for speech_to_text to discover
+             the on-device speech recognition service. -->
+        <intent>
+            <action android:name="android.speech.RecognitionService"/>
         </intent>
     </queries>
 </manifest>

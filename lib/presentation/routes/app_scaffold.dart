@@ -37,7 +37,17 @@ class AdaptiveScaffold extends StatelessWidget {
               ],
             ),
             const VerticalDivider(thickness: 1, width: 1),
-            Expanded(child: child),
+            // Cap content width on wide screens so cards don't stretch
+            // edge-to-edge on desktop.
+            Expanded(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 840),
+                  child: child,
+                ),
+              ),
+            ),
           ],
         ),
       );
@@ -61,9 +71,12 @@ class AdaptiveScaffold extends StatelessWidget {
   }
 
   int _selectedIndex(BuildContext context) {
-    final location = GoRouterState.of(context).uri.toString();
+    final location = GoRouterState.of(context).uri.path;
     for (var i = 0; i < _destinations.length; i++) {
-      if (location.startsWith(_destinations[i].path)) return i;
+      final path = _destinations[i].path;
+      // '/' prefixes every location, so home only matches exactly.
+      final matches = path == '/' ? location == '/' : location.startsWith(path);
+      if (matches) return i;
     }
     return 0;
   }

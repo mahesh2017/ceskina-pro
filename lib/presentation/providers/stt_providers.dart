@@ -16,6 +16,7 @@ final sttServiceProvider = Provider<SttService>((ref) {
 class NativeSttService implements SttService {
   final SpeechToText _speech = SpeechToText();
   bool _initialized = false;
+  String? _czechLocaleId;
 
   Future<void> _ensureInitialized() async {
     if (_initialized) return;
@@ -27,6 +28,20 @@ class NativeSttService implements SttService {
         // Listening state changes
       },
     );
+    if (_initialized) {
+      // Resolve the device's Czech locale id once. The exact id varies by
+      // platform (cs_CZ, cs-CZ, cs); pick whatever the OS actually offers so
+      // listen() doesn't silently no-op on an unknown locale.
+      try {
+        final locales = await _speech.locales();
+        final cs = locales
+            .where((l) => l.localeId.toLowerCase().startsWith('cs'))
+            .toList();
+        _czechLocaleId = cs.isNotEmpty ? cs.first.localeId : null;
+      } catch (_) {
+        _czechLocaleId = null;
+      }
+    }
   }
 
   @override
@@ -64,20 +79,29 @@ class NativeSttService implements SttService {
 
     await _speech.listen(
       onResult: (recognition) {
-        if (recognition.finalResult) {
+        // Keep the latest transcription — partial OR final. Czech recognition
+        // (and short utterances) often never emit a final result, so relying
+        // only on finalResult loses everything the user said.
+        if (recognition.recognizedWords.isNotEmpty) {
           result = recognition.recognizedWords;
-          if (!completer.isCompleted) completer.complete(result);
+        }
+        if (recognition.finalResult && !completer.isCompleted) {
+          completer.complete(result);
         }
       },
-      listenFor: timeout,
-      localeId: 'cs_CZ',
-      listenMode: ListenMode.dictation,
+      listenOptions: SpeechListenOptions(
+        listenFor: timeout,
+        // Use the resolved Czech locale when available; otherwise fall back to
+        // the device default rather than a possibly-unknown 'cs_CZ'.
+        localeId: _czechLocaleId,
+        listenMode: ListenMode.dictation,
+      ),
     );
 
     return completer.future.timeout(timeout, onTimeout: () {
       _speech.stop();
       return result;
-    });
+    },);
   }
 
   /// Stop listening.

@@ -1,11 +1,91 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/utils/text_normalizer.dart';
+import '../../../core/utils/score_colors.dart';
 import '../../../domain/entities/exercise.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/engines/pronunciation_scorer.dart';
 import '../../providers/stt_providers.dart';
 import '../../providers/tts_providers.dart';
+
+/// Normalize a typed answer for comparison: lowercase, strip punctuation,
+/// collapse whitespace. Diacritics are kept — they're meaningful in Czech.
+String _normalizeAnswer(String s) => TextNormalizer.normalize(s);
+
+/// Translucent feedback tints that work on light and dark surfaces.
+final Color _correctTint = Colors.green.withValues(alpha: 0.12);
+final Color _wrongTint = Colors.red.withValues(alpha: 0.12);
+
+/// How closely a typed answer matched: exact, accents-only difference,
+/// or wrong.
+enum AnswerMatch { exact, nearMiss, none }
+
+/// Compare a user's typed answer against the accepted answers, allowing a
+/// diacritics-only "near miss".
+AnswerMatch matchAnswer(List<String> accepted, String user) {
+  final u = _normalizeAnswer(user);
+  if (u.isEmpty) return AnswerMatch.none;
+  if (accepted.any((a) => _normalizeAnswer(a) == u)) {
+    return AnswerMatch.exact;
+  }
+  if (accepted.any((a) => TextNormalizer.matchesIgnoringDiacritics(a, user))) {
+    return AnswerMatch.nearMiss;
+  }
+  return AnswerMatch.none;
+}
+
+/// A horizontal bar of Czech diacritic letters that inserts into the
+/// currently-targeted text field at the cursor. Essential when typing on a
+/// non-Czech keyboard, where several exercises are otherwise unanswerable.
+class CzechCharBar extends StatelessWidget {
+  final TextEditingController controller;
+  final bool enabled;
+
+  const CzechCharBar({
+    super.key,
+    required this.controller,
+    this.enabled = true,
+  });
+
+  void _insert(String ch) {
+    final sel = controller.selection;
+    final text = controller.text;
+    if (sel.isValid && sel.start >= 0) {
+      final newText = text.replaceRange(sel.start, sel.end, ch);
+      controller.value = TextEditingValue(
+        text: newText,
+        selection: TextSelection.collapsed(offset: sel.start + ch.length),
+      );
+    } else {
+      controller.text = text + ch;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: TextNormalizer.czechDiacriticChars.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 4),
+        itemBuilder: (context, i) {
+          final ch = TextNormalizer.czechDiacriticChars[i];
+          return OutlinedButton(
+            onPressed: enabled ? () => _insert(ch) : null,
+            style: OutlinedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: const Size(36, 36),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Text(ch, style: const TextStyle(fontSize: 16)),
+          );
+        },
+      ),
+    );
+  }
+}
 
 /// Result of an exercise answer submission.
 class ExerciseResult {
@@ -39,49 +119,49 @@ class ExerciseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return switch (exercise.type) {
       ExerciseType.multipleChoice => _MultipleChoiceView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.translation => _TranslationView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.fillBlank => _FillBlankView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.wordOrder => _WordOrderView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.dictation => _DictationView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.pronunciation => _PronunciationView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.dialogue => _DialogueView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.declensionTable => _DeclensionTableView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.aspectRecognition => _MultipleChoiceView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.prepositionCase => _MultipleChoiceView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
       ExerciseType.listening => _DictationView(
-          exercise: exercise,
-          onAnswered: onAnswered,
-        ),
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
     };
   }
 }
@@ -108,7 +188,7 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
   Widget build(BuildContext context) {
     final data = widget.exercise.data;
     final options = (data['options'] as List<dynamic>).cast<String>();
-    final correctIdx = data['correct_index'] as int;
+    final correctIdx = (data['correct_index'] as num).toInt();
     final questionEn = data['question_en'] as String? ?? widget.exercise.prompt;
 
     return Padding(
@@ -127,18 +207,17 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  data['question_cz'] as String,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                  textAlign: TextAlign.center,
+                Flexible(
+                  child: Text(
+                    data['question_cz'] as String,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 const SizedBox(width: 4),
-                TtsButton(
-                  text: data['question_cz'] as String,
-                  size: 20,
-                ),
+                TtsButton(text: data['question_cz'] as String, size: 20),
               ],
             ),
           ],
@@ -153,11 +232,11 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
             IconData? icon;
 
             if (answered && isCorrect) {
-              cardColor = Colors.green.shade50;
+              cardColor = _correctTint;
               borderColor = Colors.green;
               icon = Icons.check_circle;
             } else if (answered && isSelected && !isCorrect) {
-              cardColor = Colors.red.shade50;
+              cardColor = _wrongTint;
               borderColor = Colors.red;
               icon = Icons.cancel;
             }
@@ -168,37 +247,42 @@ class _MultipleChoiceViewState extends State<_MultipleChoiceView> {
                 color: cardColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  side: borderColor != null
-                      ? BorderSide(color: borderColor, width: 2)
-                      : BorderSide.none,
+                  side:
+                      borderColor != null
+                          ? BorderSide(color: borderColor, width: 2)
+                          : BorderSide.none,
                 ),
                 child: ListTile(
-                  leading: icon != null
-                      ? Icon(icon,
-                          color: isCorrect ? Colors.green : Colors.red)
-                      : Text(
-                          String.fromCharCode(65 + i),
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                  leading:
+                      icon != null
+                          ? Icon(
+                            icon,
+                            color: isCorrect ? Colors.green : Colors.red,
+                          )
+                          : Text(
+                            String.fromCharCode(65 + i),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                   title: Text(options[i]),
-                  onTap: answered
-                      ? null
-                      : () {
-                          setState(() {
-                            selectedIdx = i;
-                            answered = true;
-                          });
-                          final result = ExerciseResult(
-                            isCorrect: i == correctIdx,
-                            explanation: data['explanation'] as String?,
-                            correctAnswer: options[correctIdx],
-                          );
-                          // Delay to let user see the result
-                          Future.delayed(const Duration(milliseconds: 1500),
-                              () {
-                            if (mounted) widget.onAnswered(result);
-                          });
-                        },
+                  onTap:
+                      answered
+                          ? null
+                          : () {
+                            setState(() {
+                              selectedIdx = i;
+                              answered = true;
+                            });
+                            // Report immediately — the lesson player shows a
+                            // feedback banner alongside the highlighted options
+                            // and the learner advances at their own pace.
+                            widget.onAnswered(
+                              ExerciseResult(
+                                isCorrect: i == correctIdx,
+                                explanation: data['explanation'] as String?,
+                                correctAnswer: options[correctIdx],
+                              ),
+                            );
+                          },
                 ),
               ),
             );
@@ -233,27 +317,30 @@ class _TranslationViewState extends State<_TranslationView> {
 
   void _checkAnswer() {
     final data = widget.exercise.data;
-    final accepted = (data['accepted_answers'] as List<dynamic>)
-        .map((e) => (e as String).trim().toLowerCase())
-        .toList();
-    final userAnswer = _controller.text.trim().toLowerCase();
-    final correct = accepted.any((a) => a == userAnswer);
+    final accepted = (data['accepted_answers'] as List<dynamic>).cast<String>();
+    final match = matchAnswer(accepted, _controller.text);
+    // A diacritics-only miss still counts (no heart loss) but nudges the
+    // learner about accents.
+    final correct = match != AnswerMatch.none;
 
     setState(() {
       answered = true;
       isCorrect = correct;
     });
 
-    final result = ExerciseResult(
-      isCorrect: correct,
-      explanation: data['grammar_note'] as String?,
-      correctAnswer: (data['accepted_answers'] as List<dynamic>).first as String,
-    );
+    final grammarNote = data['grammar_note'] as String?;
+    final explanation =
+        match == AnswerMatch.nearMiss
+            ? 'Almost! Watch your accent marks — the correct spelling is "${accepted.first}".'
+            : grammarNote;
 
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
+    widget.onAnswered(
+      ExerciseResult(
+        isCorrect: correct,
+        explanation: explanation,
+        correctAnswer: accepted.first,
+      ),
+    );
   }
 
   @override
@@ -299,38 +386,30 @@ class _TranslationViewState extends State<_TranslationView> {
             enabled: !answered,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              labelText: direction == 'en_to_cz' ? 'Type in Czech' : 'Type in English',
-              suffixIcon: isCorrect == true
-                  ? const Icon(Icons.check_circle, color: Colors.green)
-                  : isCorrect == false
+              labelText:
+                  direction == 'en_to_cz' ? 'Type in Czech' : 'Type in English',
+              suffixIcon:
+                  isCorrect == true
+                      ? const Icon(Icons.check_circle, color: Colors.green)
+                      : isCorrect == false
                       ? const Icon(Icons.cancel, color: Colors.red)
                       : null,
             ),
             onSubmitted: answered ? null : (_) => _checkAnswer(),
           ),
+
+          // Czech character helper — only when typing Czech.
+          if (direction == 'en_to_cz' && !answered) ...[
+            const SizedBox(height: 8),
+            CzechCharBar(controller: _controller, enabled: !answered),
+          ],
           const SizedBox(height: 16),
 
           // Submit button
           if (!answered)
-            FilledButton(
-              onPressed: _checkAnswer,
-              child: const Text('Check'),
-            ),
+            FilledButton(onPressed: _checkAnswer, child: const Text('Check')),
 
-          // Show correct answer if wrong
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: Colors.green.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${(data['accepted_answers'] as List<dynamic>).first}',
-                  style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
+          // The lesson player's feedback banner shows the correct answer.
         ],
       ),
     );
@@ -349,8 +428,11 @@ class _FillBlankView extends StatefulWidget {
 }
 
 class _FillBlankViewState extends State<_FillBlankView> {
-  // Blanks are written as runs of 3+ underscores (content varies: ___ or _____).
-  static final _blankPattern = RegExp(r'_{3,}');
+  // Blanks are written as runs of underscores. Length varies across the
+  // content (a single "_" for one missing letter, "___"/"_____" for words),
+  // so match one-or-more. Underscores only ever appear as blanks in the
+  // sentence text, so this won't over-match.
+  static final _blankPattern = RegExp(r'_+');
 
   final Map<int, TextEditingController> _controllers = {};
   bool answered = false;
@@ -371,29 +453,23 @@ class _FillBlankViewState extends State<_FillBlankView> {
 
   void _checkAnswer() {
     final data = widget.exercise.data;
-    final accepted = (data['accepted_answers'] as List<dynamic>)
-        .map((e) => (e as String).trim().toLowerCase())
-        .toList();
+    final accepted = (data['accepted_answers'] as List<dynamic>).cast<String>();
 
     // Collect per-blank answers in order; multi-blank joins with |
     // to match the accepted_answers format.
     final blankIndices = _controllers.keys.toList()..sort();
-    final userAnswer = blankIndices
-        .map((idx) => _controllers[idx]!.text.trim())
-        .join('|')
-        .toLowerCase();
+    final userParts =
+        blankIndices
+            .map((idx) => _normalizeAnswer(_controllers[idx]!.text))
+            .toList();
 
     final correct = accepted.any((a) {
-      if (a.contains('|')) {
-        final parts = a.split('|').map((p) => p.trim().toLowerCase()).toList();
-        final userParts = userAnswer.split('|').map((p) => p.trim().toLowerCase()).toList();
-        if (parts.length != userParts.length) return false;
-        for (var i = 0; i < parts.length; i++) {
-          if (parts[i] != userParts[i]) return false;
-        }
-        return true;
+      final parts = a.split('|').map(_normalizeAnswer).toList();
+      if (parts.length != userParts.length) return false;
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i] != userParts[i]) return false;
       }
-      return a == userAnswer;
+      return true;
     });
 
     setState(() {
@@ -401,16 +477,13 @@ class _FillBlankViewState extends State<_FillBlankView> {
       isCorrect = correct;
     });
 
-    final result = ExerciseResult(
-      isCorrect: correct,
-      explanation: data['explanation'] as String?,
-      correctAnswer: _displayAnswer(data),
+    widget.onAnswered(
+      ExerciseResult(
+        isCorrect: correct,
+        explanation: data['explanation'] as String?,
+        correctAnswer: _displayAnswer(data),
+      ),
     );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
   }
 
   /// First accepted answer, with | separators made readable.
@@ -457,7 +530,9 @@ class _FillBlankViewState extends State<_FillBlankView> {
                           border: OutlineInputBorder(),
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 8),
+                            horizontal: 8,
+                            vertical: 8,
+                          ),
                         ),
                         style: TextStyle(
                           color: isCorrect == false ? Colors.red : null,
@@ -473,25 +548,7 @@ class _FillBlankViewState extends State<_FillBlankView> {
           const SizedBox(height: 24),
 
           if (!answered)
-            FilledButton(
-              onPressed: _checkAnswer,
-              child: const Text('Check'),
-            ),
-
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: Colors.green.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${_displayAnswer(data)}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
+            FilledButton(onPressed: _checkAnswer, child: const Text('Check')),
         ],
       ),
     );
@@ -515,40 +572,29 @@ class _WordOrderViewState extends State<_WordOrderView> {
   bool answered = false;
   bool? isCorrect;
 
+  /// The Czech words to arrange. Content packs older than the format
+  /// cleanup appended English words after a '—' separator; tolerate both.
+  List<String> _czechWords() {
+    final allWords =
+        (widget.exercise.data['words'] as List<dynamic>).cast<String>();
+    final sepIdx = allWords.indexOf('—');
+    return sepIdx >= 0 ? allWords.sublist(0, sepIdx) : allWords;
+  }
+
   @override
   void initState() {
     super.initState();
-    final data = widget.exercise.data;
-    // Filter out English words (after — separator) and non-word items
-    final allWords = (data['words'] as List<dynamic>).cast<String>();
-    // Find the separator index — Czech words come before it
-    final sepIdx = allWords.indexOf('—');
-    if (sepIdx >= 0) {
-      available = allWords.sublist(0, sepIdx);
-    } else {
-      available = allWords.where((w) => !_isEnglish(w)).toList();
-    }
-    available = List.from(available)..shuffle();
-  }
-
-  bool _isEnglish(String w) {
-    // Simple heuristic: English words don't contain Czech diacritics
-    // and the translation part starts after —
-    return false;
+    available = List.of(_czechWords())..shuffle();
   }
 
   void _checkAnswer() {
     final data = widget.exercise.data;
     final correctOrder = (data['correct_order'] as List<dynamic>).cast<int>();
-    final allWords = (data['words'] as List<dynamic>).cast<String>();
-    final sepIdx = allWords.indexOf('—');
-    final czechWords = sepIdx >= 0
-        ? allWords.sublist(0, sepIdx)
-        : allWords.where((w) => w != '—').toList();
+    final czechWords = _czechWords();
 
     // Compare by position, not by indexOf (which breaks on duplicate words).
-    // The user's selected list should match the correct_order indices.
-    final correct = selected.length == correctOrder.length &&
+    final correct =
+        selected.length == correctOrder.length &&
         _checkOrder(selected, czechWords, correctOrder);
 
     setState(() {
@@ -557,34 +603,23 @@ class _WordOrderViewState extends State<_WordOrderView> {
     });
 
     final correctSentence = correctOrder.map((i) => czechWords[i]).join(' ');
-    final result = ExerciseResult(
-      isCorrect: correct,
-      explanation: data['explanation'] as String?,
-      correctAnswer: correctSentence,
+    widget.onAnswered(
+      ExerciseResult(
+        isCorrect: correct,
+        explanation: data['explanation'] as String?,
+        correctAnswer: correctSentence,
+      ),
     );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
-  }
-
-  /// Build the correct sentence from the exercise data for display.
-  String _buildCorrectSentence(Map<String, dynamic> data) {
-    final allWords = (data['words'] as List<dynamic>).cast<String>();
-    final sepIdx = allWords.indexOf('—');
-    final czechWords = sepIdx >= 0
-        ? allWords.sublist(0, sepIdx)
-        : allWords.where((w) => w != '—').toList();
-    final correctOrder = (data['correct_order'] as List<dynamic>).cast<int>();
-    return correctOrder.map((i) => czechWords[i]).join(' ');
   }
 
   /// Check that the selected words match the correct order indices.
   /// Handles duplicate words correctly by comparing the word at each
   /// correct_order index to the user's selection at that position.
   bool _checkOrder(
-      List<String> selected, List<String> czechWords, List<int> correctOrder) {
+    List<String> selected,
+    List<String> czechWords,
+    List<int> correctOrder,
+  ) {
     if (selected.length != correctOrder.length) return false;
     for (var i = 0; i < correctOrder.length; i++) {
       final expectedWord = czechWords[correctOrder[i]];
@@ -593,16 +628,10 @@ class _WordOrderViewState extends State<_WordOrderView> {
     return true;
   }
 
-  bool listEquals<T>(List<T> a, List<T> b) {
-    if (a.length != b.length) return false;
-    for (var i = 0; i < a.length; i++) {
-      if (a[i] != b[i]) return false;
-    }
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final translationEn = widget.exercise.data['translation_en'] as String?;
+
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -613,6 +642,17 @@ class _WordOrderViewState extends State<_WordOrderView> {
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
+          if (translationEn != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              '"$translationEn"',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontStyle: FontStyle.italic,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
           const SizedBox(height: 24),
 
           // Selected words area
@@ -627,23 +667,24 @@ class _WordOrderViewState extends State<_WordOrderView> {
             child: Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: selected.asMap().entries.map((entry) {
-                return _WordChip(
-                  word: entry.value,
-                  onTap: answered
-                      ? null
-                      : () {
-                          setState(() {
-                            available.add(selected.removeAt(entry.key));
-                          });
-                        },
-                  color: answered
-                      ? (isCorrect == true
-                          ? Colors.green.shade50
-                          : Colors.red.shade50)
-                      : null,
-                );
-              }).toList(),
+              children:
+                  selected.asMap().entries.map((entry) {
+                    return _WordChip(
+                      word: entry.value,
+                      onTap:
+                          answered
+                              ? null
+                              : () {
+                                setState(() {
+                                  available.add(selected.removeAt(entry.key));
+                                });
+                              },
+                      color:
+                          answered
+                              ? (isCorrect == true ? _correctTint : _wrongTint)
+                              : null,
+                    );
+                  }).toList(),
             ),
           ),
           const SizedBox(height: 16),
@@ -652,39 +693,26 @@ class _WordOrderViewState extends State<_WordOrderView> {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: available.asMap().entries.map((entry) {
-              return _WordChip(
-                word: entry.value,
-                onTap: answered
-                    ? null
-                    : () {
-                        setState(() {
-                          selected.add(available.removeAt(entry.key));
-                        });
-                      },
-              );
-            }).toList(),
+            children:
+                available.asMap().entries.map((entry) {
+                  return _WordChip(
+                    word: entry.value,
+                    onTap:
+                        answered
+                            ? null
+                            : () {
+                              setState(() {
+                                selected.add(available.removeAt(entry.key));
+                              });
+                            },
+                  );
+                }).toList(),
           ),
-          const Spacer(),
+          // No Spacer here: this widget renders inside a scroll view, where
+          // flex children have unbounded height and would throw.
+          const SizedBox(height: 24),
           if (!answered && selected.isNotEmpty)
-            FilledButton(
-              onPressed: _checkAnswer,
-              child: const Text('Check'),
-            ),
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 8),
-            Card(
-              color: Colors.green.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${widget.exercise.data['correct_answer'] ?? _buildCorrectSentence(widget.exercise.data)}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
+            FilledButton(onPressed: _checkAnswer, child: const Text('Check')),
         ],
       ),
     );
@@ -703,7 +731,8 @@ class _WordChip extends StatelessWidget {
     return ActionChip(
       label: Text(word),
       onPressed: onTap,
-      backgroundColor: color ?? Theme.of(context).colorScheme.surfaceContainerHighest,
+      backgroundColor:
+          color ?? Theme.of(context).colorScheme.surfaceContainerHighest,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     );
   }
@@ -724,14 +753,6 @@ class _DictationViewState extends ConsumerState<_DictationView> {
   final _controller = TextEditingController();
   bool answered = false;
   bool? isCorrect;
-  bool _normalizeCompare(String a, String b) {
-    // Compare case-insensitive, ignoring trailing punctuation
-    String norm(String s) => s
-        .trim()
-        .toLowerCase()
-        .replaceAll(RegExp(r'[.!?]+$'), '');
-    return norm(a) == norm(b);
-  }
 
   @override
   void dispose() {
@@ -742,23 +763,26 @@ class _DictationViewState extends ConsumerState<_DictationView> {
   void _checkAnswer() {
     final data = widget.exercise.data;
     final expected = data['expected_text'] as String;
-    final correct = _normalizeCompare(_controller.text, expected);
+    final match = matchAnswer([expected], _controller.text);
+    final correct = match != AnswerMatch.none;
 
     setState(() {
       answered = true;
       isCorrect = correct;
     });
 
-    final result = ExerciseResult(
-      isCorrect: correct,
-      explanation: data['note'] as String?,
-      correctAnswer: expected,
-    );
+    final explanation =
+        match == AnswerMatch.nearMiss
+            ? 'Almost! Watch your accent marks — you wrote it correctly apart from the diacritics.'
+            : data['note'] as String?;
 
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
+    widget.onAnswered(
+      ExerciseResult(
+        isCorrect: correct,
+        explanation: explanation,
+        correctAnswer: expected,
+      ),
+    );
   }
 
   @override
@@ -778,17 +802,31 @@ class _DictationViewState extends ConsumerState<_DictationView> {
           const SizedBox(height: 24),
 
           // Audio play button — speaks the Czech text via TTS
-          TtsButton(
-            text: data['expected_text'] as String,
-            size: 48,
-          ),
+          TtsButton(text: data['expected_text'] as String, size: 48),
           const SizedBox(height: 16),
-          TextButton.icon(
-            onPressed: () {
-              ref.read(czechTtsProvider).speak(data['expected_text'] as String);
-            },
-            icon: const Icon(Icons.replay),
-            label: const Text('Play again'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton.icon(
+                onPressed: () {
+                  ref
+                      .read(czechTtsProvider)
+                      .speak(data['expected_text'] as String);
+                },
+                icon: const Icon(Icons.replay),
+                label: const Text('Play again'),
+              ),
+              const SizedBox(width: 8),
+              TextButton.icon(
+                onPressed: () {
+                  ref
+                      .read(czechTtsProvider)
+                      .speakSlow(data['expected_text'] as String);
+                },
+                icon: const Icon(Icons.slow_motion_video),
+                label: const Text('Slower'),
+              ),
+            ],
           ),
           const SizedBox(height: 24),
 
@@ -799,36 +837,23 @@ class _DictationViewState extends ConsumerState<_DictationView> {
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               labelText: 'Type what you heard',
-              suffixIcon: isCorrect == true
-                  ? const Icon(Icons.check_circle, color: Colors.green)
-                  : isCorrect == false
+              suffixIcon:
+                  isCorrect == true
+                      ? const Icon(Icons.check_circle, color: Colors.green)
+                      : isCorrect == false
                       ? const Icon(Icons.cancel, color: Colors.red)
                       : null,
             ),
             onSubmitted: answered ? null : (_) => _checkAnswer(),
           ),
+          if (!answered) ...[
+            const SizedBox(height: 8),
+            CzechCharBar(controller: _controller, enabled: !answered),
+          ],
           const SizedBox(height: 16),
 
           if (!answered)
-            FilledButton(
-              onPressed: _checkAnswer,
-              child: const Text('Check'),
-            ),
-
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: Colors.green.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${data['expected_text']}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
+            FilledButton(onPressed: _checkAnswer, child: const Text('Check')),
         ],
       ),
     );
@@ -911,12 +936,17 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
     final minScore = (data['min_score'] as num?)?.toDouble() ?? 0.65;
     final passed = (score ?? 0) >= minScore;
 
-    widget.onAnswered(ExerciseResult(
-      isCorrect: passed,
-      explanation: data['note'] as String? ??
-          (passed ? 'Good pronunciation!' : 'Try again — focus on the highlighted sounds.'),
-      correctAnswer: data['target_text'] as String?,
-    ));
+    widget.onAnswered(
+      ExerciseResult(
+        isCorrect: passed,
+        explanation:
+            data['note'] as String? ??
+            (passed
+                ? 'Good pronunciation!'
+                : 'Try again — focus on the highlighted sounds.'),
+        correctAnswer: data['target_text'] as String?,
+      ),
+    );
   }
 
   @override
@@ -953,9 +983,9 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
                     const SizedBox(height: 8),
                     Text(
                       translation,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey,
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -974,14 +1004,16 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
               alignment: WrapAlignment.center,
               children: [
                 Text('Focus: ', style: Theme.of(context).textTheme.bodySmall),
-                ...focusSounds.map((s) => Padding(
-                      padding: const EdgeInsets.only(left: 4),
-                      child: Chip(
-                        label: Text(s as String),
-                        padding: EdgeInsets.zero,
-                        labelStyle: const TextStyle(fontSize: 12),
-                      ),
-                    )),
+                ...focusSounds.map(
+                  (s) => Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: Chip(
+                      label: Text(s as String),
+                      padding: EdgeInsets.zero,
+                      labelStyle: const TextStyle(fontSize: 12),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -995,23 +1027,25 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
               height: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isRecording
-                    ? Colors.red.shade400
-                    : Theme.of(context).colorScheme.primary,
+                color:
+                    isRecording
+                        ? Colors.red.shade400
+                        : Theme.of(context).colorScheme.primary,
               ),
-              child: isProcessing
-                  ? const Padding(
-                      padding: EdgeInsets.all(20),
-                      child: CircularProgressIndicator(
-                        strokeWidth: 3,
+              child:
+                  isProcessing
+                      ? const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: Colors.white,
+                        ),
+                      )
+                      : Icon(
+                        isRecording ? Icons.stop : Icons.mic,
                         color: Colors.white,
+                        size: 32,
                       ),
-                    )
-                  : Icon(
-                      isRecording ? Icons.stop : Icons.mic,
-                      color: Colors.white,
-                      size: 32,
-                    ),
             ),
           ),
           const SizedBox(height: 8),
@@ -1019,13 +1053,35 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
             isRecording
                 ? 'Listening... tap to stop'
                 : isProcessing
-                    ? 'Analyzing...'
-                    : hasRecorded
-                        ? 'Recorded! Tap to try again'
-                        : 'Tap to record',
+                ? 'Analyzing...'
+                : hasRecorded
+                ? 'Recorded! Tap to try again'
+                : 'Tap to record',
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
+
+          // Escape hatch: on-device Czech recognition can be unavailable or
+          // unreliable, and pronunciation should never hard-block progress.
+          // Skipping passes the exercise without a heart penalty.
+          if (!isProcessing)
+            TextButton(
+              onPressed:
+                  () => widget.onAnswered(
+                    ExerciseResult(
+                      isCorrect: true,
+                      explanation:
+                          'Skipped — keep practising this one aloud with the '
+                          '🔊 button.',
+                      correctAnswer: targetText,
+                    ),
+                  ),
+              child: Text(
+                hasRecorded && (score ?? 0) == 0
+                    ? 'Mic not working? Skip'
+                    : "Can't record right now? Skip",
+              ),
+            ),
 
           // Score display
           if (hasRecorded && score != null) ...[
@@ -1036,9 +1092,9 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
               Text(
                 feedback!,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 13,
-                  color: Colors.grey.shade700,
+                  color: Colors.grey,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -1063,11 +1119,7 @@ class _ScoreDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final percentage = (score * 100).round();
-    final color = score >= 0.8
-        ? Colors.green
-        : score >= 0.65
-            ? Colors.orange
-            : Colors.red;
+    final color = ScoreColors.of(score);
 
     return Column(
       children: [
@@ -1087,11 +1139,7 @@ class _ScoreDisplay extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          score >= 0.8
-              ? 'Výborně! Excellent!'
-              : score >= 0.65
-                  ? 'Dobře. Good — keep practicing.'
-                  : 'Zkuste znovu. Try again.',
+          ScoreColors.label(score),
           style: TextStyle(color: color, fontWeight: FontWeight.bold),
         ),
       ],
@@ -1130,7 +1178,9 @@ class _DialogueViewState extends State<_DialogueView> {
 
   /// Build dialogue line widgets, assigning a unique controller per blank.
   List<Widget> _buildDialogueLines(
-      List<Map<String, dynamic>> lines, BuildContext context) {
+    List<Map<String, dynamic>> lines,
+    BuildContext context,
+  ) {
     int blankCounter = 0;
     return lines.map((line) {
       final isUser = line['speaker'] == 'you';
@@ -1163,15 +1213,14 @@ class _DialogueViewState extends State<_DialogueView> {
       return Padding(
         padding: const EdgeInsets.only(bottom: 8),
         child: Align(
-          alignment: isUser
-              ? Alignment.centerRight
-              : Alignment.centerLeft,
+          alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: isUser
-                  ? Theme.of(context).colorScheme.primaryContainer
-                  : Theme.of(context).colorScheme.surfaceContainerHighest,
+              color:
+                  isUser
+                      ? Theme.of(context).colorScheme.primaryContainer
+                      : Theme.of(context).colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -1193,32 +1242,22 @@ class _DialogueViewState extends State<_DialogueView> {
   void _checkAnswer() {
     final data = widget.exercise.data;
     final acceptedRaw = data['accepted_answers'] as List<dynamic>;
-    // Support multi-blank with | separator
-    final accepted = acceptedRaw.map((a) {
-      final s = (a as String).trim().toLowerCase();
-      return s;
-    }).toList();
 
-    // Collect answers from all controllers in order
+    // Collect answers from all controllers in order.
     final blankIndices = _controllers.keys.toList()..sort();
-    final userAnswer = blankIndices
-        .map((idx) => _controllers[idx]!.text.trim())
-        .join('|')
-        .toLowerCase();
+    final userParts =
+        blankIndices
+            .map((idx) => _normalizeAnswer(_controllers[idx]!.text))
+            .toList();
 
-    // Check if user answer matches any accepted answer (or partial for multi-blank)
-    final correct = accepted.any((a) {
-      if (a.contains('|')) {
-        final parts = a.split('|').map((p) => p.trim().toLowerCase()).toList();
-        final userParts =
-            userAnswer.split('|').map((p) => p.trim().toLowerCase()).toList();
-        if (parts.length != userParts.length) return false;
-        for (var i = 0; i < parts.length; i++) {
-          if (parts[i] != userParts[i]) return false;
-        }
-        return true;
+    // Multi-blank accepted answers use | separators.
+    final correct = acceptedRaw.cast<String>().any((a) {
+      final parts = a.split('|').map(_normalizeAnswer).toList();
+      if (parts.length != userParts.length) return false;
+      for (var i = 0; i < parts.length; i++) {
+        if (parts[i] != userParts[i]) return false;
       }
-      return a == userAnswer;
+      return true;
     });
 
     setState(() {
@@ -1226,16 +1265,13 @@ class _DialogueViewState extends State<_DialogueView> {
       isCorrect = correct;
     });
 
-    final result = ExerciseResult(
-      isCorrect: correct,
-      explanation: data['explanation'] as String?,
-      correctAnswer: acceptedRaw.first as String,
+    widget.onAnswered(
+      ExerciseResult(
+        isCorrect: correct,
+        explanation: data['explanation'] as String?,
+        correctAnswer: acceptedRaw.first as String,
+      ),
     );
-
-    Future.delayed(const Duration(milliseconds: 1500),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
   }
 
   @override
@@ -1252,9 +1288,9 @@ class _DialogueViewState extends State<_DialogueView> {
           if (scenario != null)
             Text(
               'Scenario: $scenario',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontStyle: FontStyle.italic,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
             ),
           const SizedBox(height: 16),
 
@@ -1263,25 +1299,7 @@ class _DialogueViewState extends State<_DialogueView> {
 
           const SizedBox(height: 16),
           if (!answered)
-            FilledButton(
-              onPressed: _checkAnswer,
-              child: const Text('Check'),
-            ),
-
-          if (answered == true && isCorrect == false) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: Colors.green.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  'Correct: ${(data['accepted_answers'] as List<dynamic>).first}',
-                  style: const TextStyle(
-                      color: Colors.green, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
+            FilledButton(onPressed: _checkAnswer, child: const Text('Check')),
         ],
       ),
     );
@@ -1293,7 +1311,10 @@ class _DeclensionTableView extends StatefulWidget {
   final Exercise exercise;
   final OnExerciseAnswered onAnswered;
 
-  const _DeclensionTableView({required this.exercise, required this.onAnswered});
+  const _DeclensionTableView({
+    required this.exercise,
+    required this.onAnswered,
+  });
 
   @override
   State<_DeclensionTableView> createState() => _DeclensionTableViewState();
@@ -1326,15 +1347,15 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
 
   void _checkAnswers() {
     final data = widget.exercise.data;
-    final answerKey =
-        Map<String, String>.from(data['answer_key'] as Map<String, dynamic>);
-    final word = data['word'] as String;
+    final answerKey = Map<String, String>.from(
+      data['answer_key'] as Map<String, dynamic>,
+    );
 
     correctCount = 0;
     for (final entry in _controllers.entries) {
       final caseName = entry.key;
-      final userAnswer = entry.value.text.trim().toLowerCase();
-      final correctAnswer = answerKey[caseName]!.toLowerCase();
+      final userAnswer = _normalizeAnswer(entry.value.text);
+      final correctAnswer = _normalizeAnswer(answerKey[caseName] ?? '');
       if (userAnswer == correctAnswer) {
         correctCount++;
       }
@@ -1344,16 +1365,15 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
       answered = true;
     });
 
-    final result = ExerciseResult(
-      isCorrect: correctCount == totalBlanks,
-      explanation: 'You got $correctCount/$totalBlanks correct.',
-      correctAnswer: answerKey.entries.map((e) => '${e.key}: ${e.value}').join(', '),
+    widget.onAnswered(
+      ExerciseResult(
+        isCorrect: correctCount == totalBlanks,
+        explanation: 'You got $correctCount/$totalBlanks correct.',
+        correctAnswer: answerKey.entries
+            .map((e) => '${e.key}: ${e.value}')
+            .join(', '),
+      ),
     );
-
-    Future.delayed(const Duration(milliseconds: 2000),
-        () {
-      if (mounted) widget.onAnswered(result);
-    });
   }
 
   @override
@@ -1362,9 +1382,12 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
     final word = data['word'] as String;
     final gender = data['gender'] as String?;
     final cases = (data['cases'] as List<dynamic>).cast<String>();
-    final answerKey = answered
-        ? Map<String, String>.from(data['answer_key'] as Map<String, dynamic>)
-        : null;
+    final answerKey =
+        answered
+            ? Map<String, String>.from(
+              data['answer_key'] as Map<String, dynamic>,
+            )
+            : null;
 
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -1395,22 +1418,26 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text('Case',
-                        style: Theme.of(context).textTheme.labelLarge),
+                    child: Text(
+                      'Case',
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text('Form',
-                        style: Theme.of(context).textTheme.labelLarge),
+                    child: Text(
+                      'Form',
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
                   ),
                 ],
               ),
               ...cases.map((caseName) {
                 final controller = _controllers[caseName]!;
                 final correct = answerKey?[caseName];
-                final userAnswer = controller.text.trim().toLowerCase();
+                final userAnswer = _normalizeAnswer(controller.text);
                 final isCorrect =
-                    correct != null && userAnswer == correct.toLowerCase();
+                    correct != null && userAnswer == _normalizeAnswer(correct);
 
                 return TableRow(
                   children: [
@@ -1426,12 +1453,14 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
                         decoration: InputDecoration(
                           isDense: true,
                           border: const OutlineInputBorder(),
-                          suffixIcon: answered
-                              ? Icon(
-                                  isCorrect ? Icons.check : Icons.close,
-                                  color: isCorrect ? Colors.green : Colors.red,
-                                )
-                              : null,
+                          suffixIcon:
+                              answered
+                                  ? Icon(
+                                    isCorrect ? Icons.check : Icons.close,
+                                    color:
+                                        isCorrect ? Colors.green : Colors.red,
+                                  )
+                                  : null,
                         ),
                       ),
                     ),
@@ -1447,28 +1476,6 @@ class _DeclensionTableViewState extends State<_DeclensionTableView> {
               onPressed: _checkAnswers,
               child: const Text('Check All'),
             ),
-
-          if (answered) ...[
-            const SizedBox(height: 16),
-            Card(
-              color: correctCount == totalBlanks
-                  ? Colors.green.shade50
-                  : Colors.orange.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  '$correctCount / $totalBlanks correct',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: correctCount == totalBlanks
-                        ? Colors.green
-                        : Colors.orange,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );
@@ -1481,12 +1488,7 @@ class TtsButton extends ConsumerWidget {
   final double size;
   final Color? color;
 
-  const TtsButton({
-    super.key,
-    required this.text,
-    this.size = 24,
-    this.color,
-  });
+  const TtsButton({super.key, required this.text, this.size = 24, this.color});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

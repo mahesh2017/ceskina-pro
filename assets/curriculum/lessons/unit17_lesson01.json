@@ -1,0 +1,213 @@
+{
+  "id": 1701,
+  "unit_id": 17,
+  "order_in_unit": 0,
+  "title": "Dative — Giving & Indirect Objects",
+  "description": "Learn the dative case endings for masculine (-ovi/-u), feminine (-e/-i), and neuter (-u/-i) nouns. Practice using dative with verbs of giving (dávat), buying (kupovat), and sending (posílat), where the recipient gets dative and the thing given gets accusative.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "exercises": [
+    {
+      "id": 17001,
+      "lesson_id": 1701,
+      "type": "multiple_choice",
+      "prompt": "What is the correct dative form of 'bratr' (brother)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je správný tvar slova 'bratr' v dativu?",
+        "question_en": "What is the correct dative form of 'bratr' (brother)?",
+        "options": ["bratru", "bratrovi", "bratra", "bratrem"],
+        "correct_index": 1,
+        "explanation": "Animate masculine nouns take -ovi in dative: bratr → bratrovi. Some common exceptions use -u (muž → muži, člověk → člověku). Inanimate masculines take -u: hrad → hradu."
+      },
+      "answer_key": "bratrovi",
+      "grammar_rule_id": "GR-160",
+      "xp_reward": 10
+    },
+    {
+      "id": 17002,
+      "lesson_id": 1701,
+      "type": "multiple_choice",
+      "prompt": "What is the correct dative form of 'žena' (woman)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je správný tvar slova 'žena' v dativu?",
+        "question_en": "What is the correct dative form of 'žena' (woman)?",
+        "options": ["ženy", "ženě", "ženu", "ženou"],
+        "correct_index": 1,
+        "explanation": "Feminine nouns ending in -a take -e (ě) in dative: žena → ženě. Other feminines ending in a consonant or -e/-ě take -i: kost → kosti, růže → růži."
+      },
+      "answer_key": "ženě",
+      "grammar_rule_id": "GR-160",
+      "xp_reward": 10
+    },
+    {
+      "id": 17003,
+      "lesson_id": 1701,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct dative form: 'město' → ___",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Jedeme k ___ . (město — to the city)",
+        "blank_count": 1,
+        "accepted_answers": ["městu"],
+        "explanation": "Neuter nouns take -u in dative: město → městu. Nouns ending in -e/-ě or -í take -i: moře → moři, náměstí → náměstí."
+      },
+      "answer_key": "městu",
+      "grammar_rule_id": "GR-160",
+      "xp_reward": 15
+    },
+    {
+      "id": 17004,
+      "lesson_id": 1701,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct dative form: (to) Pavel",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Dávám dárek ___ . (Pavel)",
+        "blank_count": 1,
+        "accepted_answers": ["Pavlovi"],
+        "explanation": "Animate masculine names take -ovi in dative: Pavel → Pavlovi. Likewise: Petr → Petrovi, Tomáš → Tomášovi. 'Dávat' = to give, requires dative for the recipient."
+      },
+      "answer_key": "Pavlovi",
+      "grammar_rule_id": "GR-160",
+      "xp_reward": 15
+    },
+    {
+      "id": 17005,
+      "lesson_id": 1701,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I give a book to my sister.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I give a book to my sister.",
+        "accepted_answers": ["Dávám knihu sestře.", "Dávám sestře knihu.", "Dávám knížku sestře.", "Dávám sestře knížku."],
+        "grammar_note": "'Dávat' (to give) takes two objects: dative for the recipient (sestře — to my sister) and accusative for the thing given (knihu — a book). 'Sestra' → dative 'sestře'."
+      },
+      "answer_key": "Dávám knihu sestře.",
+      "grammar_rule_id": "GR-161",
+      "xp_reward": 10
+    },
+    {
+      "id": 17006,
+      "lesson_id": 1701,
+      "type": "multiple_choice",
+      "prompt": "Which sentence is grammatically correct?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která věta je gramaticky správná?",
+        "question_en": "Which sentence is grammatically correct?",
+        "options": [
+          "Kupuju bratr knihu.",
+          "Kupuju bratrovi knihu.",
+          "Kupuju bratra knihu.",
+          "Kupuju bratrem knihu."
+        ],
+        "correct_index": 1,
+        "explanation": "'Kupovat' (to buy for someone) requires dative for the recipient: bratrovi. 'Kupuju bratrovi knihu.' = I'm buying a book for my brother. The accusative 'knihu' is the thing bought."
+      },
+      "answer_key": "Kupuju bratrovi knihu.",
+      "grammar_rule_id": "GR-162",
+      "xp_reward": 10
+    },
+    {
+      "id": 17007,
+      "lesson_id": 1701,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct dative form of 'maminka': I buy flowers for mom.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Kupuju ___ květiny. (maminka)",
+        "blank_count": 1,
+        "accepted_answers": ["mamince"],
+        "explanation": "'Maminka' → dative 'mamince'. Feminine nouns in -ka change k → c before -e (the ě softens): maminka → mamince. 'Kupuju mamince květiny.' = I'm buying flowers for mom."
+      },
+      "answer_key": "mamince",
+      "grammar_rule_id": "GR-162",
+      "xp_reward": 15
+    },
+    {
+      "id": 17008,
+      "lesson_id": 1701,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'She buys a gift for her friend (fem.).'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "She buys a gift for her friend (female).",
+        "accepted_answers": ["Kupuje dárek kamarádce.", "Ona kupuje dárek kamarádce.", "Kupuje kamarádce dárek.", "Ona kupuje kamarádce dárek."],
+        "grammar_note": "'Kamarádka' → dative 'kamarádce'. The k → c change before the e ending. 'Kupovat' + dative (recipient) + accusative (thing bought). 'Dárek' = gift (accusative)."
+      },
+      "answer_key": "Kupuje dárek kamarádce.",
+      "grammar_rule_id": "GR-162",
+      "xp_reward": 10
+    },
+    {
+      "id": 17009,
+      "lesson_id": 1701,
+      "type": "multiple_choice",
+      "prompt": "What is the correct dative form of 'učitel' (teacher, masc.)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je správný tvar slova 'učitel' v dativu?",
+        "question_en": "What is the correct dative form of 'učitel' (teacher)?",
+        "options": ["učitele", "učiteli", "učiteli/učitelovi", "učitelem"],
+        "correct_index": 2,
+        "explanation": "Masculine animate nouns take -ovi or -i in dative: učitel → učiteli / učitelovi. Both are correct. The -ovi form is more common in speech, -i in writing."
+      },
+      "answer_key": "učiteli/učitelovi",
+      "grammar_rule_id": "GR-160",
+      "xp_reward": 10
+    },
+    {
+      "id": 17010,
+      "lesson_id": 1701,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I am sending a letter to my grandmother.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I am sending a letter to my grandmother.",
+        "accepted_answers": ["Posílám dopis babičce.", "Posílám babičce dopis."],
+        "grammar_note": "'Posílat' (to send) follows the same pattern as dávat: dative for recipient (babičce), accusative for the thing sent (dopis). 'Babička' → dative 'babičce'."
+      },
+      "answer_key": "Posílám dopis babičce.",
+      "grammar_rule_id": "GR-163",
+      "xp_reward": 10
+    },
+    {
+      "id": 17011,
+      "lesson_id": 1701,
+      "type": "fill_blank",
+      "prompt": "Complete with the dative of 'dítě': I give candy to the child.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Dávám ___ bonbón. (dítě — to the child)",
+        "blank_count": 1,
+        "accepted_answers": ["dítěti"],
+        "explanation": "'Dítě' is an irregular neuter noun. Its dative form is 'dítěti' (not 'dítu'). Many irregular nouns have special dative forms: člověk → člověku, přítel → příteli."
+      },
+      "answer_key": "dítěti",
+      "grammar_rule_id": "GR-160",
+      "xp_reward": 15
+    },
+    {
+      "id": 17012,
+      "lesson_id": 1701,
+      "type": "pronunciation",
+      "prompt": "Pronounce the dative sentence.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Dávám bratrovi knihu k narozeninám.",
+        "target_audio_hash": "placeholder_17012",
+        "focus_sounds": ["bratrovi", "knihu", "narozeninám"],
+        "min_score": 0.6,
+        "translation_en": "I'm giving my brother a book for his birthday."
+      },
+      "answer_key": "Dávám bratrovi knihu k narozeninám.",
+      "grammar_rule_id": "GR-161",
+      "xp_reward": 15
+    }
+  ]
+}

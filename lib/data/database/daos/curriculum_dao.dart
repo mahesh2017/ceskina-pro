@@ -27,8 +27,10 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<int> insertUnit(UnitsCompanion unit) => into(units).insert(unit);
+
+  /// Upsert so content updates in a new app version reach existing installs.
   Future<void> insertUnits(List<UnitsCompanion> unitList) =>
-      batch((b) => b.insertAll(units, unitList));
+      batch((b) => b.insertAllOnConflictUpdate(units, unitList));
 
   // ── Lessons ──
 
@@ -45,7 +47,7 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<void> insertLessons(List<LessonsCompanion> lessonList) =>
-      batch((b) => b.insertAll(lessons, lessonList));
+      batch((b) => b.insertAllOnConflictUpdate(lessons, lessonList));
 
   // ── Exercises ──
 
@@ -56,7 +58,7 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<void> insertExercises(List<ExercisesCompanion> exerciseList) =>
-      batch((b) => b.insertAll(exercises, exerciseList));
+      batch((b) => b.insertAllOnConflictUpdate(exercises, exerciseList));
 
   // ── Grammar Rules ──
 
@@ -66,8 +68,22 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
         .get();
   }
 
+  Future<List<GrammarRule>> getAllGrammarRules() {
+    return (select(grammarRules)
+          ..orderBy([
+            (g) => OrderingTerm.asc(g.unitId),
+            (g) => OrderingTerm.asc(g.id),
+          ]))
+        .get();
+  }
+
+  Future<GrammarRule?> getGrammarRuleById(String id) {
+    return (select(grammarRules)..where((g) => g.id.equals(id)))
+        .getSingleOrNull();
+  }
+
   Future<void> insertGrammarRules(List<GrammarRulesCompanion> ruleList) =>
-      batch((b) => b.insertAll(grammarRules, ruleList));
+      batch((b) => b.insertAllOnConflictUpdate(grammarRules, ruleList));
 
   // ── Seed check ──
 

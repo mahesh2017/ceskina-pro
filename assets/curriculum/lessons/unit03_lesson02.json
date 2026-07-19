@@ -17,7 +17,12 @@
         "type": "multiple_choice",
         "question_cz": "Který pád se používá pro podmět?",
         "question_en": "Which case is used for the subject?",
-        "options": ["Accusative", "Nominative", "Genitive", "Dative"],
+        "options": [
+          "Accusative",
+          "Nominative",
+          "Genitive",
+          "Dative"
+        ],
         "correct_index": 1,
         "explanation": "Nominative (1. pád) is the subject case. Questions: kdo? (who?) co? (what?). Dictionary form of nouns."
       },
@@ -34,7 +39,12 @@
         "type": "multiple_choice",
         "question_cz": "Ve větě 'Žena pije kávu', které slovo je v 1. pádě?",
         "question_en": "In 'Žena pije kávu', which word is nominative?",
-        "options": ["Žena", "pije", "kávu", "none"],
+        "options": [
+          "Žena",
+          "pije",
+          "kávu",
+          "none"
+        ],
         "correct_index": 0,
         "explanation": "Žena is the subject (the one doing the drinking) → nominative. kávu is accusative (the object being drunk)."
       },
@@ -51,7 +61,12 @@
         "type": "multiple_choice",
         "question_cz": "Jaké jsou otázky pro 1. pád?",
         "question_en": "What are the question words for nominative?",
-        "options": ["kdo? co?", "koho? čeho?", "komu? čemu?", "kým? čím?"],
+        "options": [
+          "kdo? co?",
+          "koho? čeho?",
+          "komu? čemu?",
+          "kým? čím?"
+        ],
         "correct_index": 0,
         "explanation": "Nominative answers kdo? (who?) and co? (what?). These are the questions for the subject."
       },
@@ -68,7 +83,9 @@
         "type": "translation",
         "direction": "en_to_cz",
         "source": "He is a teacher.",
-        "accepted_answers": ["On je učitel."],
+        "accepted_answers": [
+          "On je učitel."
+        ],
         "grammar_note": "On (he) + je (is) + učitel (teacher, masc. animate nominative)."
       },
       "answer_key": "On je učitel.",
@@ -84,7 +101,9 @@
         "type": "translation",
         "direction": "en_to_cz",
         "source": "She is a teacher.",
-        "accepted_answers": ["Ona je učitelka."],
+        "accepted_answers": [
+          "Ona je učitelka."
+        ],
         "grammar_note": "Ona (she) + je (is) + učitelka (female teacher). Czech has gendered profession nouns!"
       },
       "answer_key": "Ona je učitelka.",
@@ -100,7 +119,12 @@
         "type": "multiple_choice",
         "question_cz": "Jaký je ženský tvar slova 'student'?",
         "question_en": "What is the female form of 'student'?",
-        "options": ["studenta", "studentky", "studentka", "studenti"],
+        "options": [
+          "studenta",
+          "studentky",
+          "studentka",
+          "studenti"
+        ],
         "correct_index": 2,
         "explanation": "studentka = female student. Pattern: add -ka to the male form. učitel→učitelka, lékař→lékařka, student→studentka."
       },
@@ -117,7 +141,12 @@
         "type": "multiple_choice",
         "question_cz": "Je 'pes' životné nebo neživotné?",
         "question_en": "Is 'pes' (dog) animate or inanimate?",
-        "options": ["Animate (living)", "Inanimate (non-living)", "Neither", "Both"],
+        "options": [
+          "Animate (living)",
+          "Inanimate (non-living)",
+          "Neither",
+          "Both"
+        ],
         "correct_index": 0,
         "explanation": "pes (dog) is masculine ANIMATE — dogs are living creatures. This matters for accusative: pes → psa (animate changes)."
       },
@@ -134,7 +163,12 @@
         "type": "multiple_choice",
         "question_cz": "Je 'hrad' životné nebo neživotné?",
         "question_en": "Is 'hrad' (castle) animate or inanimate?",
-        "options": ["Animate (living)", "Inanimate (non-living)", "Neither", "Both"],
+        "options": [
+          "Animate (living)",
+          "Inanimate (non-living)",
+          "Neither",
+          "Both"
+        ],
         "correct_index": 1,
         "explanation": "hrad (castle) is masculine INANIMATE — it's an object. In accusative, it stays the same: hrad → hrad."
       },
@@ -149,9 +183,24 @@
       "prompt": "Arrange: 'On je lékař. Ona je lékařka.'",
       "data": {
         "type": "word_order",
-        "words": ["On", "je", "lékař.", "Ona", "je", "lékařka.", "—", "He", "is", "a", "doctor.", "She", "is", "a", "doctor."],
-        "correct_order": [0, 1, 2, 3, 4, 5],
-        "explanation": "Gendered profession forms: lékař (male doctor) vs lékařka (female doctor). Both mean 'doctor'."
+        "words": [
+          "On",
+          "je",
+          "lékař.",
+          "Ona",
+          "je",
+          "lékařka."
+        ],
+        "correct_order": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "explanation": "Gendered profession forms: lékař (male doctor) vs lékařka (female doctor). Both mean 'doctor'.",
+        "translation_en": "He is a doctor. She is a doctor."
       },
       "answer_key": "0,1,2,3,4,5",
       "grammar_rule_id": "GR-024",
@@ -166,7 +215,9 @@
         "type": "fill_blank",
         "sentence": "Můj otec je ___. (teacher, male form)",
         "blank_count": 1,
-        "accepted_answers": ["učitel"],
+        "accepted_answers": [
+          "učitel"
+        ],
         "explanation": "učitel = male teacher. 'Můj otec' (my father) is masculine, so use the masculine form."
       },
       "answer_key": "učitel",
@@ -182,7 +233,9 @@
         "type": "fill_blank",
         "sentence": "Moje matka je ___. (doctor, female form)",
         "blank_count": 1,
-        "accepted_answers": ["lékařka"],
+        "accepted_answers": [
+          "lékařka"
+        ],
         "explanation": "lékařka = female doctor. 'Moje matka' (my mother) is feminine, so use the feminine form with -ka."
       },
       "answer_key": "lékařka",
@@ -198,7 +251,10 @@
         "type": "translation",
         "direction": "cz_to_en",
         "source": "To jsou studenti.",
-        "accepted_answers": ["Those are students.", "These are students."],
+        "accepted_answers": [
+          "Those are students.",
+          "These are students."
+        ],
         "grammar_note": "To jsou = Those are (plural). studenti = students (masculine animate plural nominative)."
       },
       "answer_key": "Those are students.",
@@ -214,7 +270,9 @@
         "type": "pronunciation",
         "target_text": "To je muž. To je žena. To je město.",
         "target_audio_hash": "placeholder_3113",
-        "focus_sounds": ["ě"],
+        "focus_sounds": [
+          "ě"
+        ],
         "min_score": 0.6,
         "translation_en": "That is a man. That is a woman. That is a city."
       },
@@ -231,12 +289,26 @@
         "type": "dialogue",
         "scenario": "Asking what something is",
         "lines": [
-          {"speaker": "person_a", "text": "Co to je?"},
-          {"speaker": "person_b", "text": "___ (That is a book.)"},
-          {"speaker": "person_a", "text": "A co to je?"},
-          {"speaker": "person_b", "text": "___ (That is a car.)"}
+          {
+            "speaker": "person_a",
+            "text": "Co to je?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (That is a book.)"
+          },
+          {
+            "speaker": "person_a",
+            "text": "A co to je?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (That is a car.)"
+          }
         ],
-        "accepted_answers": ["To je kniha.|To je auto."],
+        "accepted_answers": [
+          "To je kniha.|To je auto."
+        ],
         "explanation": "Co to je? = What is that? Response: To je + noun (nominative). kniha (feminine), auto (neuter)."
       },
       "answer_key": "To je kniha.|To je auto.",

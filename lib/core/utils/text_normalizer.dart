@@ -24,4 +24,15 @@ class TextNormalizer {
     });
     return result;
   }
+
+  /// The Czech letters with diacritics, for the on-screen character bar.
+  static const czechDiacriticChars = [
+    'á', 'č', 'ď', 'é', 'ě', 'í', 'ň', 'ó', 'ř', 'š', 'ť', 'ú', 'ů', 'ý', 'ž',
+  ];
+
+  /// True when [a] and [b] are equal once normalized AND stripped of
+  /// diacritics — i.e. the only difference is accent marks. Used to give a
+  /// gentle "check your accents" near-miss instead of a hard wrong.
+  static bool matchesIgnoringDiacritics(String a, String b) =>
+      stripDiacritics(normalize(a)) == stripDiacritics(normalize(b));
 }

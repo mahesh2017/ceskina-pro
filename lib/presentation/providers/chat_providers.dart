@@ -1,43 +1,59 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/repositories/llm_service_exception.dart';
 import '../../domain/entities/chat_message.dart';
 import '../../domain/entities/enums.dart';
-import '../../domain/repositories/llm_service.dart';
 import 'database_providers.dart';
 import 'llm_providers.dart';
+import 'settings_providers.dart';
 
 /// State of the AI conversation.
 class ChatState {
   final String? conversationId;
+
+  /// The scenario prompt sent to the LLM.
   final String scenario;
+
+  /// Human-readable scenario name for the app bar (e.g. "At the Doctor").
+  final String scenarioTitle;
   final CEFRLevel level;
   final List<ChatMessage> messages;
   final bool isLoading;
   final String? error;
 
+  /// Short Czech replies suggested for the learner's next turn. Cleared
+  /// when the learner sends a message.
+  final List<String> suggestedReplies;
+
   const ChatState({
     this.conversationId,
-    this.scenario = 'Causal conversation',
+    this.scenario = 'Casual conversation',
+    this.scenarioTitle = 'AI Tutor',
     this.level = CEFRLevel.a1,
     this.messages = const [],
     this.isLoading = false,
     this.error,
+    this.suggestedReplies = const [],
   });
 
   ChatState copyWith({
     String? conversationId,
     String? scenario,
+    String? scenarioTitle,
     CEFRLevel? level,
     List<ChatMessage>? messages,
     bool? isLoading,
     String? error,
+    List<String>? suggestedReplies,
   }) {
     return ChatState(
       conversationId: conversationId ?? this.conversationId,
       scenario: scenario ?? this.scenario,
+      scenarioTitle: scenarioTitle ?? this.scenarioTitle,
       level: level ?? this.level,
       messages: messages ?? this.messages,
       isLoading: isLoading ?? this.isLoading,
       error: error,
+      suggestedReplies: suggestedReplies ?? this.suggestedReplies,
     );
   }
 }
@@ -63,12 +79,14 @@ class ChatScenario {
     ChatScenario(
       title: 'At the Restaurant',
       description: 'Order food, ask about menu, pay the bill',
-      prompt: 'You are a waiter at a Czech restaurant. The learner is a customer ordering food',
+      prompt:
+          'You are a waiter at a Czech restaurant. The learner is a customer ordering food',
     ),
     ChatScenario(
       title: 'Asking Directions',
       description: 'Ask for and give directions in the city',
-      prompt: 'The learner is a tourist asking for directions to a landmark in Prague',
+      prompt:
+          'The learner is a tourist asking for directions to a landmark in Prague',
     ),
     ChatScenario(
       title: 'Shopping',
@@ -78,12 +96,14 @@ class ChatScenario {
     ChatScenario(
       title: 'At the Doctor',
       description: 'Describe symptoms, make an appointment',
-      prompt: 'You are a Czech doctor. The learner is a patient describing symptoms',
+      prompt:
+          'You are a Czech doctor. The learner is a patient describing symptoms',
     ),
     ChatScenario(
       title: 'Job Interview',
       description: 'Practice a basic job interview in Czech',
-      prompt: 'You are interviewing the learner for a basic job position. Ask simple questions',
+      prompt:
+          'You are interviewing the learner for a basic job position. Ask simple questions',
     ),
   ];
 }
@@ -93,22 +113,29 @@ class ChatNotifier extends Notifier<ChatState> {
   @override
   ChatState build() => const ChatState();
 
-  /// Start a new conversation with the given scenario and level.
+  /// Start a new conversation with the given scenario.
+  /// Defaults to the learner's level from onboarding/settings.
   Future<void> startConversation({
     required ChatScenario scenario,
-    CEFRLevel level = CEFRLevel.a1,
+    CEFRLevel? level,
   }) async {
+    // Pre-A1 learners still converse at A1 — it's the simplest tutor level.
+    final settingsLevel = ref.read(settingsProvider).startingLevel;
+    final effectiveLevel =
+        level ?? (settingsLevel == CEFRLevel.a2 ? CEFRLevel.a2 : CEFRLevel.a1);
+
     final convRepo = ref.read(conversationRepositoryProvider);
 
     final convId = await convRepo.createConversation(
       scenario.title,
-      level.label,
+      effectiveLevel.label,
     );
 
     state = ChatState(
       conversationId: convId,
       scenario: scenario.prompt,
-      level: level,
+      scenarioTitle: scenario.title,
+      level: effectiveLevel,
       messages: [],
     );
 
@@ -121,11 +148,20 @@ class ChatNotifier extends Notifier<ChatState> {
     if (state.conversationId == null) return;
     if (state.isLoading) return;
 
-    final userMsg = ChatMessage.user(text, conversationId: state.conversationId);
+    // Capture the history BEFORE appending the new user message —
+    // the orchestrator adds `text` itself, so including it in the
+    // history would send it to the model twice.
+    final history = state.messages;
+
+    final userMsg = ChatMessage.user(
+      text,
+      conversationId: state.conversationId,
+    );
     state = state.copyWith(
       messages: [...state.messages, userMsg],
       isLoading: true,
       error: null,
+      suggestedReplies: const [],
     );
 
     // Persist user message
@@ -139,7 +175,7 @@ class ChatNotifier extends Notifier<ChatState> {
         level: state.level,
         scenario: state.scenario,
         userMessage: text,
-        history: state.messages,
+        history: history,
       );
 
       // Call LLM
@@ -160,14 +196,22 @@ class ChatNotifier extends Notifier<ChatState> {
       state = state.copyWith(
         messages: [...state.messages, tutorMsg],
         isLoading: false,
+        suggestedReplies: tutorResponse.suggestedReplies,
       );
 
       // Persist tutor message
       await convRepo.saveMessage(tutorMsg);
+    } on LlmServiceException catch (e) {
+      state = state.copyWith(isLoading: false, error: e.message);
+    } on FormatException {
+      state = state.copyWith(
+        isLoading: false,
+        error: 'The tutor sent an unreadable reply. Please try again.',
+      );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        error: 'Failed to get response: $e',
+        error: 'Something went wrong getting the tutor\'s reply.',
       );
     }
   }
@@ -176,10 +220,7 @@ class ChatNotifier extends Notifier<ChatState> {
   Future<void> loadConversation(String conversationId) async {
     final convRepo = ref.read(conversationRepositoryProvider);
     final messages = await convRepo.getHistory(conversationId);
-    state = state.copyWith(
-      conversationId: conversationId,
-      messages: messages,
-    );
+    state = state.copyWith(conversationId: conversationId, messages: messages);
   }
 
   /// Clear the current conversation.
@@ -210,6 +251,7 @@ class ChatNotifier extends Notifier<ChatState> {
 
       state = state.copyWith(
         messages: [greeting],
+        suggestedReplies: tutorResponse.suggestedReplies,
       );
 
       final convRepo = ref.read(conversationRepositoryProvider);
@@ -231,5 +273,6 @@ class ChatNotifier extends Notifier<ChatState> {
 }
 
 /// Provider for the chat state.
-final chatProvider =
-    NotifierProvider<ChatNotifier, ChatState>(ChatNotifier.new);
+final chatProvider = NotifierProvider<ChatNotifier, ChatState>(
+  ChatNotifier.new,
+);

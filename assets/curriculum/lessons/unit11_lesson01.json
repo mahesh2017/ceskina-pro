@@ -1,0 +1,207 @@
+{
+  "id": 1101,
+  "unit_id": 11,
+  "order_in_unit": 0,
+  "title": "Food & Drink Vocabulary",
+  "description": "Learn essential Czech words for food and drink, including common meals, ingredients, and beverages, with correct gender and articles.",
+  "lesson_type": "introduction",
+  "duration_min": 15,
+  "exercises": [
+    {
+      "id": 11001,
+      "lesson_id": 1101,
+      "type": "multiple_choice",
+      "prompt": "What does 'chléb' mean in English?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "chléb",
+        "question_en": "What does 'chléb' mean?",
+        "options": ["bread", "butter", "cheese", "ham"],
+        "correct_index": 0,
+        "explanation": "chléb = bread, a staple food in Czech cuisine."
+      },
+      "answer_key": "0",
+      "grammar_rule_id": "GR-100",
+      "xp_reward": 10
+    },
+    {
+      "id": 11002,
+      "lesson_id": 1101,
+      "type": "multiple_choice",
+      "prompt": "Which is the correct Czech word for 'water'?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které z těchto slov označuje vodu?",
+        "question_en": "Which word means 'water'?",
+        "options": ["víno", "pivo", "voda", "mléko"],
+        "correct_index": 2,
+        "explanation": "voda = water, a feminine noun. víno = wine, pivo = beer, mléko = milk."
+      },
+      "answer_key": "2",
+      "grammar_rule_id": "GR-100",
+      "xp_reward": 10
+    },
+    {
+      "id": 11003,
+      "lesson_id": 1101,
+      "type": "translation",
+      "prompt": "Translate 'bread and butter' to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "bread and butter",
+        "accepted_answers": ["chléb a máslo", "chléb s máslem", "chleba a máslo"],
+        "grammar_note": "chléb = bread (masculine inanimate), máslo = butter (neuter)."
+      },
+      "answer_key": "chléb a máslo",
+      "grammar_rule_id": "GR-100",
+      "xp_reward": 10
+    },
+    {
+      "id": 11004,
+      "lesson_id": 1101,
+      "type": "translation",
+      "prompt": "Translate 'I drink coffee and tea' to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I drink coffee and tea",
+        "accepted_answers": ["Piju kávu a čaj", "Piji kávu a čaj", "Piju kafe a čaj"],
+        "grammar_note": "pít (to drink) → piju/piji. káva (coffee) in accusative → kávu. čaj (tea) is masculine inanimate, accusative = čaj."
+      },
+      "answer_key": "Piju kávu a čaj",
+      "grammar_rule_id": "GR-102",
+      "xp_reward": 10
+    },
+    {
+      "id": 11005,
+      "lesson_id": 1101,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct form of 'jíst' and accusative.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Já ___ (jíst) ___ (chléb) a ___ (sýr).",
+        "blank_count": 3,
+        "accepted_answers": ["jím", "chléb", "sýr"],
+        "explanation": "jíst (to eat) → jím (I eat). chléb (bread) and sýr (cheese) are masculine inanimate, accusative = nominative."
+      },
+      "answer_key": "jím chléb sýr",
+      "grammar_rule_id": "GR-102",
+      "xp_reward": 15
+    },
+    {
+      "id": 11006,
+      "lesson_id": 1101,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct form of 'pít' and accusative.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Ona ___ (pít) ___ (voda) a ___ (džus).",
+        "blank_count": 3,
+        "accepted_answers": ["pije", "vodu", "džus"],
+        "explanation": "pít (to drink) → pije (she drinks). voda (water) feminine accusative → vodu. džus (juice) masculine inanimate, accusative = džus."
+      },
+      "answer_key": "pije vodu džus",
+      "grammar_rule_id": "GR-102",
+      "xp_reward": 15
+    },
+    {
+      "id": 11007,
+      "lesson_id": 1101,
+      "type": "multiple_choice",
+      "prompt": "How do you say 'I am hungry' in Czech?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která možnost znamená, že máte hlad?",
+        "question_en": "How do you say 'I am hungry'?",
+        "options": ["Mám žízeň", "Mám hlad", "Jsem hladový", "Chci jíst"],
+        "correct_index": 1,
+        "explanation": "Mám hlad = I am hungry (literally: I have hunger). Mám žízeň = I am thirsty."
+      },
+      "answer_key": "1",
+      "grammar_rule_id": "GR-101",
+      "xp_reward": 10
+    },
+    {
+      "id": 11008,
+      "lesson_id": 1101,
+      "type": "dictation",
+      "prompt": "Listen and write the Czech food word.",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_11008",
+        "expected_text": "zelenina",
+        "language": "cs-CZ",
+        "note": "This word means 'vegetables' — a feminine noun."
+      },
+      "answer_key": "zelenina",
+      "xp_reward": 20
+    },
+    {
+      "id": 11009,
+      "lesson_id": 1101,
+      "type": "pronunciation",
+      "prompt": "Say this Czech food word aloud.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "smažený sýr",
+        "target_audio_hash": "placeholder_11009",
+        "focus_sounds": ["ř", "ý"],
+        "min_score": 0.6,
+        "translation_en": "fried cheese"
+      },
+      "answer_key": "smažený sýr",
+      "grammar_rule_id": "GR-100",
+      "xp_reward": 15
+    },
+    {
+      "id": 11010,
+      "lesson_id": 1101,
+      "type": "translation",
+      "prompt": "Translate 'I am thirsty, I want water' to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I am thirsty, I want water",
+        "accepted_answers": ["Mám žízeň, chci vodu", "Mám žízeň, chci vodu.", "Mám žízeň a chci vodu"],
+        "grammar_note": "Mám žízeň = I am thirsty. chci + accusative: voda → vodu."
+      },
+      "answer_key": "Mám žízeň, chci vodu",
+      "grammar_rule_id": "GR-101",
+      "xp_reward": 10
+    },
+    {
+      "id": 11011,
+      "lesson_id": 1101,
+      "type": "fill_blank",
+      "prompt": "Complete the sentence with food words in accusative.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "K snídani jím ___ (bread), ___ (butter) a ___ (egg).",
+        "blank_count": 3,
+        "accepted_answers": ["chléb", "máslo", "vejce"],
+        "explanation": "chléb (masc. inan.) and máslo (neuter) same in accusative. vejce (neuter) same in accusative."
+      },
+      "answer_key": "chléb máslo vejce",
+      "grammar_rule_id": "GR-102",
+      "xp_reward": 15
+    },
+    {
+      "id": 11012,
+      "lesson_id": 1101,
+      "type": "multiple_choice",
+      "prompt": "Which of these is NOT a drink?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Co NENÍ nápoj?",
+        "question_en": "Which is NOT a drink?",
+        "options": ["pivo", "mléko", "ryba", "káva"],
+        "correct_index": 2,
+        "explanation": "ryba = fish (food, not a drink). pivo = beer, mléko = milk, káva = coffee."
+      },
+      "answer_key": "2",
+      "grammar_rule_id": "GR-100",
+      "xp_reward": 10
+    }
+  ]
+}

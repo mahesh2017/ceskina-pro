@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/gamification_providers.dart';
+import '../../widgets/common/soft_ui.dart';
 import '../../../domain/entities/enums.dart';
 
-/// Onboarding flow — welcome → level assessment → goal setting → API key (optional).
+/// Onboarding flow — welcome → level assessment → goal setting.
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -17,15 +19,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _step = 0;
   CEFRLevel _selectedLevel = CEFRLevel.preA1;
   int _selectedGoal = 50;
-  final _apiKeyController = TextEditingController();
-
-  static const _totalSteps = 4;
-
-  @override
-  void dispose() {
-    _apiKeyController.dispose();
-    super.dispose();
-  }
+  bool _finishing = false;
+  static const _totalSteps = 3;
 
   void _next() {
     if (_step < _totalSteps - 1) {
@@ -36,66 +31,75 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   void _back() {
-    if (_step > 0) {
-      setState(() => _step--);
-    }
+    if (_step > 0) setState(() => _step--);
   }
 
   Future<void> _finish() async {
-    // Save settings
-    await ref.read(settingsProvider.notifier).setDailyGoalXp(_selectedGoal);
+    if (_finishing) return;
+    setState(() => _finishing = true);
 
-    // Set gamification daily goal
-    ref.read(gamificationProvider.notifier).setDailyGoal(_selectedGoal);
-
-    // Save API key if entered
-    final apiKey = _apiKeyController.text.trim();
-    if (apiKey.isNotEmpty) {
-      await ref.read(settingsProvider.notifier).setApiKey(apiKey);
+    // Persist choices, but never let a storage hiccup trap the user on
+    // onboarding — always mark it complete and navigate home.
+    try {
+      final settings = ref.read(settingsProvider.notifier);
+      await settings.setDailyGoalXp(_selectedGoal);
+      await settings.setStartingLevel(_selectedLevel);
+      await ref.read(gamificationProvider.notifier).setDailyGoal(_selectedGoal);
+      await settings.completeOnboarding();
+    } catch (_) {
+      // Best-effort: still try to flip the onboarding flag.
+      try {
+        await ref.read(settingsProvider.notifier).completeOnboarding();
+      } catch (_) {}
     }
 
-    // Mark onboarding complete
-    await ref.read(settingsProvider.notifier).completeOnboarding();
-
-    // Navigate to home
     if (mounted) context.go('/');
   }
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     return Scaffold(
+      backgroundColor: t.bg,
       body: SafeArea(
         child: Column(
           children: [
             // Progress indicator
-            LinearProgressIndicator(
-              value: (_step + 1) / _totalSteps,
-              minHeight: 4,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+              child: SoftProgressBar(
+                value: (_step + 1) / _totalSteps,
+                height: 6,
+              ),
             ),
-            // Step content
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(32),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(28, 24, 28, 24),
                 child: _buildStep(),
               ),
             ),
-            // Navigation buttons
             Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.fromLTRB(24, 8, 24, 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (_step > 0)
                     TextButton(
-                      onPressed: _back,
-                      child: const Text('Back'),
+                      onPressed: _finishing ? null : _back,
+                      child: Text(
+                        'Back',
+                        style: TextStyle(
+                          color: t.muted,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     )
                   else
                     const SizedBox(width: 60),
-                  FilledButton(
-                    onPressed: _next,
-                    child: Text(
-                      _step < _totalSteps - 1 ? 'Continue' : 'Get Started',
+                  Expanded(
+                    child: PrimaryButton(
+                      label:
+                          _step < _totalSteps - 1 ? 'Continue' : 'Get started',
+                      onPressed: _finishing ? null : _next,
                     ),
                   ),
                 ],
@@ -112,78 +116,129 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       0 => _buildWelcomeStep(),
       1 => _buildLevelStep(),
       2 => _buildGoalStep(),
-      3 => _buildApiKeyStep(),
       _ => const SizedBox(),
     };
   }
 
-  Widget _buildWelcomeStep() {
+  Widget _stepHeader(
+    IconData icon,
+    Color tint,
+    Color fg,
+    String title,
+    String subtitle,
+  ) {
+    final t = context.tokens;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Icon(Icons.school, size: 80, color: Colors.blue),
-        const SizedBox(height: 24),
-        const Text(
-          'Vítejte!',
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        Center(
+          child: Container(
+            width: 84,
+            height: 84,
+            decoration: BoxDecoration(color: tint, shape: BoxShape.circle),
+            child: Icon(icon, size: 38, color: fg),
+          ),
         ),
+        const SizedBox(height: 22),
+        Center(child: DisplayText(title, size: 26)),
         const SizedBox(height: 8),
-        const Text(
-          'Welcome to Čeština Pro',
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-        const SizedBox(height: 32),
-        const Text(
-          'Learn Czech from zero to A2 with:\n\n'
-              '📚 Interactive lessons with spaced repetition\n'
-              '🎤 Pronunciation practice with speech recognition\n'
-              '💬 AI conversation tutor (role-play scenarios)\n'
-              '📝 Mock CCE exams with AI evaluation\n'
-              '🔊 Czech text-to-speech on every word\n',
+        Text(
+          subtitle,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14, height: 1.6),
+          style: TextStyle(fontSize: 14, color: t.muted, height: 1.5),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWelcomeStep() {
+    final t = context.tokens;
+    const features = [
+      ('📚', 'Interactive lessons with spaced repetition'),
+      ('🎤', 'Pronunciation practice with speech recognition'),
+      ('💬', 'AI conversation tutor with role-play scenarios'),
+      ('📝', 'Mock CCE exams with AI evaluation'),
+      ('🔊', 'Czech text-to-speech on every word'),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 12),
+        Center(
+          child: Container(
+            width: 96,
+            height: 96,
+            decoration: BoxDecoration(color: t.priFill, shape: BoxShape.circle),
+            child: Icon(Icons.school, size: 44, color: t.onFill),
+          ),
+        ),
+        const SizedBox(height: 24),
+        const Center(child: DisplayText('Vítejte!', size: 34)),
+        const SizedBox(height: 6),
+        Center(
+          child: Text(
+            'Welcome to Čeština',
+            style: TextStyle(fontSize: 16, color: t.muted),
+          ),
+        ),
+        const SizedBox(height: 28),
+        ...features.map(
+          (f) => Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: SoftCard(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              child: Row(
+                children: [
+                  Text(f.$1, style: const TextStyle(fontSize: 20)),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      f.$2,
+                      style: TextStyle(
+                        fontSize: 13.5,
+                        color: t.ink,
+                        height: 1.35,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ],
     );
   }
 
   Widget _buildLevelStep() {
+    final t = context.tokens;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Icon(Icons.assessment, size: 60, color: Colors.blue),
-        const SizedBox(height: 24),
-        Text(
+        _stepHeader(
+          Icons.assessment_outlined,
+          t.priSoft,
+          t.pri,
           'What\'s your Czech level?',
-          style: Theme.of(context).textTheme.headlineSmall,
-          textAlign: TextAlign.center,
+          'This sets your AI tutor\'s difficulty. Lessons always start from Unit 1 so nothing is skipped.',
         ),
-        const SizedBox(height: 8),
-        const Text(
-          'This helps us start you at the right place.',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.grey),
-        ),
-        const SizedBox(height: 32),
-        _LevelCard(
-          level: CEFRLevel.preA1,
-          title: 'Complete Beginner',
+        const SizedBox(height: 28),
+        _ChoiceCard(
+          title: 'Complete beginner',
           subtitle: 'I don\'t know any Czech yet',
           isSelected: _selectedLevel == CEFRLevel.preA1,
           onTap: () => setState(() => _selectedLevel = CEFRLevel.preA1),
         ),
-        const SizedBox(height: 12),
-        _LevelCard(
-          level: CEFRLevel.a1,
+        const SizedBox(height: 10),
+        _ChoiceCard(
           title: 'Some Czech (A1)',
           subtitle: 'I know basic greetings and simple phrases',
           isSelected: _selectedLevel == CEFRLevel.a1,
           onTap: () => setState(() => _selectedLevel = CEFRLevel.a1),
         ),
-        const SizedBox(height: 12),
-        _LevelCard(
-          level: CEFRLevel.a2,
+        const SizedBox(height: 10),
+        _ChoiceCard(
           title: 'Intermediate (A2)',
           subtitle: 'I can have basic conversations',
           isSelected: _selectedLevel == CEFRLevel.a2,
@@ -194,118 +249,45 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   }
 
   Widget _buildGoalStep() {
+    final t = context.tokens;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Icon(Icons.flag, size: 60, color: Colors.orange),
-        const SizedBox(height: 24),
-        Text(
+        _stepHeader(
+          Icons.flag_outlined,
+          t.amberSoft,
+          t.amber,
           'Set your daily goal',
-          style: Theme.of(context).textTheme.headlineSmall,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        const Text(
           'How much do you want to practice each day?',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.grey),
         ),
-        const SizedBox(height: 32),
-        _GoalCard(
-          xp: 20,
-          label: 'Casual',
-          subtitle: '5 minutes/day',
-          isSelected: _selectedGoal == 20,
-          onTap: () => setState(() => _selectedGoal = 20),
-        ),
-        const SizedBox(height: 12),
-        _GoalCard(
-          xp: 50,
-          label: 'Regular',
-          subtitle: '15 minutes/day',
-          isSelected: _selectedGoal == 50,
-          onTap: () => setState(() => _selectedGoal = 50),
-        ),
-        const SizedBox(height: 12),
-        _GoalCard(
-          xp: 100,
-          label: 'Serious',
-          subtitle: '30 minutes/day',
-          isSelected: _selectedGoal == 100,
-          onTap: () => setState(() => _selectedGoal = 100),
-        ),
-        const SizedBox(height: 12),
-        _GoalCard(
-          xp: 150,
-          label: 'Intense',
-          subtitle: '45+ minutes/day',
-          isSelected: _selectedGoal == 150,
-          onTap: () => setState(() => _selectedGoal = 150),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildApiKeyStep() {
-    final settings = ref.watch(settingsProvider);
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const Icon(Icons.smart_toy, size: 60, color: Colors.purple),
-        const SizedBox(height: 24),
-        Text(
-          'Enable AI Tutor',
-          style: Theme.of(context).textTheme.headlineSmall,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Enter a DeepSeek API key to enable the AI conversation tutor '
-          'and writing evaluation. You can skip this and add it later in Settings.',
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.grey, fontSize: 13),
-        ),
-        const SizedBox(height: 32),
-        TextField(
-          controller: _apiKeyController,
-          obscureText: true,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'DeepSeek API Key (optional)',
-            hintText: 'sk-...',
-            prefixIcon: Icon(Icons.key),
+        const SizedBox(height: 28),
+        for (final g in const [
+          (20, 'Casual', '5 minutes/day'),
+          (50, 'Regular', '15 minutes/day'),
+          (100, 'Serious', '30 minutes/day'),
+          (150, 'Intense', '45+ minutes/day'),
+        ]) ...[
+          _ChoiceCard(
+            title: '${g.$2} — ${g.$1} XP',
+            subtitle: g.$3,
+            isSelected: _selectedGoal == g.$1,
+            onTap: () => setState(() => _selectedGoal = g.$1),
           ),
-        ),
-        const SizedBox(height: 12),
-        const Text(
-          'Get a free key at platform.deepseek.com',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-        const SizedBox(height: 16),
-        if (!settings.hasApiKey)
-          const Text(
-            'Without an API key, the app uses mock responses for the AI tutor.',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12, color: Colors.orange),
-          ),
+          const SizedBox(height: 10),
+        ],
       ],
     );
   }
 }
 
-class _LevelCard extends StatelessWidget {
-  final CEFRLevel level;
+/// A selectable option card used for the level and goal steps.
+class _ChoiceCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _LevelCard({
-    required this.level,
+  const _ChoiceCard({
     required this.title,
     required this.subtitle,
     required this.isSelected,
@@ -314,64 +296,42 @@ class _LevelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: isSelected
-          ? Theme.of(context).colorScheme.primaryContainer
-          : null,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isSelected
-            ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2)
-            : BorderSide.none,
-      ),
-      child: ListTile(
-        leading: Icon(
-          isSelected ? Icons.check_circle : Icons.circle_outlined,
-          color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey,
-        ),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        onTap: onTap,
-      ),
-    );
-  }
-}
-
-class _GoalCard extends StatelessWidget {
-  final int xp;
-  final String label;
-  final String subtitle;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _GoalCard({
-    required this.xp,
-    required this.label,
-    required this.subtitle,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: isSelected
-          ? Theme.of(context).colorScheme.primaryContainer
-          : null,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isSelected
-            ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 2)
-            : BorderSide.none,
-      ),
-      child: ListTile(
-        leading: Icon(
-          isSelected ? Icons.check_circle : Icons.circle_outlined,
-          color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey,
-        ),
-        title: Text('$label — $xp XP', style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        onTap: onTap,
+    final t = context.tokens;
+    return SoftCard(
+      radius: 18,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      color: isSelected ? t.priSoft : t.card,
+      border: isSelected ? Border.all(color: t.pri, width: 1.5) : null,
+      onTap: onTap,
+      child: Row(
+        children: [
+          Icon(
+            isSelected ? Icons.check_circle : Icons.circle_outlined,
+            color: isSelected ? t.pri : t.faint,
+            size: 24,
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    color: isSelected ? t.priInk : t.ink,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  subtitle,
+                  style: TextStyle(fontSize: 12.5, color: t.muted),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

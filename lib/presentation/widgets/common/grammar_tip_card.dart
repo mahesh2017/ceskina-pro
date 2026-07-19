@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 /// Grammar tip card shown after answering — displays explanation on wrong answers,
 /// positive feedback on correct ones.
@@ -7,11 +8,15 @@ class GrammarTipCard extends StatelessWidget {
   final String? explanation;
   final String? correctAnswer;
 
+  /// When set, shows a link into the grammar reference for this rule.
+  final String? grammarRuleId;
+
   const GrammarTipCard({
     super.key,
     required this.isCorrect,
     this.explanation,
     this.correctAnswer,
+    this.grammarRuleId,
   });
 
   @override
@@ -133,6 +138,22 @@ class GrammarTipCard extends StatelessWidget {
                     ? Colors.green.shade700
                     : Colors.orange.shade700,
                 fontSize: 14,
+              ),
+            ),
+          ],
+          if (grammarRuleId != null) ...[
+            const SizedBox(height: 4),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () =>
+                    context.push('/grammar?rule=$grammarRuleId'),
+                icon: const Icon(Icons.menu_book, size: 18),
+                label: const Text('View grammar rule'),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  visualDensity: VisualDensity.compact,
+                ),
               ),
             ),
           ],

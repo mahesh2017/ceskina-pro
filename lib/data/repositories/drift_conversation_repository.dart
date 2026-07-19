@@ -24,7 +24,7 @@ class DriftConversationRepository implements ConversationRepository {
               'correct': c.correct,
               'rule': c.rule,
               'severity': c.severity.name,
-            }).toList())
+            },).toList(),)
         : null;
 
     final vocabJson = message.newVocabulary != null
@@ -32,7 +32,7 @@ class DriftConversationRepository implements ConversationRepository {
               'cz': v.cz,
               'en': v.en,
               'ipa': v.ipa,
-            }).toList())
+            },).toList(),)
         : null;
 
     await _db.conversationDao.insertMessage(db.ChatMessagesCompanion.insert(
@@ -43,7 +43,7 @@ class DriftConversationRepository implements ConversationRepository {
       corrections: Value(correctionsJson),
       newVocabulary: Value(vocabJson),
       audioPath: Value(message.audioPath),
-    ));
+    ),);
   }
 
   @override

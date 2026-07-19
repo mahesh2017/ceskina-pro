@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/pronunciation_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../widgets/common/record_button.dart';
+import '../../../core/utils/score_colors.dart';
 import '../../../domain/entities/pronunciation_result.dart';
 
 /// Pronunciation lab — record-and-compare with visual feedback.
@@ -92,7 +93,7 @@ class _PronunciationScreenState
                 ],
               )
             else if (pronState.result != null)
-              _ScoreDisplay(result: pronState.result!, ref: ref)
+              _ScoreDisplay(result: pronState.result!)
             else if (pronState.error != null)
               _ErrorDisplay(error: pronState.error!)
             else
@@ -191,9 +192,8 @@ class _RecordingIndicatorState extends State<_RecordingIndicator>
 /// Score display with visual feedback.
 class _ScoreDisplay extends StatelessWidget {
   final PronunciationResult result;
-  final WidgetRef ref;
 
-  const _ScoreDisplay({required this.result, required this.ref});
+  const _ScoreDisplay({required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -216,25 +216,34 @@ class _ScoreDisplay extends StatelessWidget {
                 backgroundColor: color.withValues(alpha: 0.15),
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '$scorePercent%',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: color,
-                    ),
+              // Keep the number + label inside the ring regardless of the
+              // device's system font scale: pad in from the stroke, then let
+              // FittedBox shrink the text to fit rather than overflow/overlap.
+              Padding(
+                padding: const EdgeInsets.all(18),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$scorePercent%',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                        ),
+                      ),
+                      Text(
+                        label,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: color,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: color,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
@@ -273,7 +282,7 @@ class _ScoreDisplay extends StatelessWidget {
         if (result.problemSounds.isNotEmpty) ...[
           const SizedBox(height: 16),
           Card(
-            color: Colors.orange.shade50,
+            color: Colors.orange.withValues(alpha: 0.12),
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -349,11 +358,7 @@ class _ScoreDisplay extends StatelessWidget {
     );
   }
 
-  Color _scoreColor(double score) {
-    if (score >= 0.8) return Colors.green;
-    if (score >= 0.65) return Colors.orange;
-    return Colors.red;
-  }
+  Color _scoreColor(double score) => ScoreColors.of(score);
 
   String _scoreLabel(double score) {
     if (score >= 0.8) return 'Skvělé!';

@@ -11,6 +11,7 @@ class Flashcard {
   final String? exampleCz;
   final String? exampleEn;
   final int? unitId;
+  final int? lessonId;
 
   const Flashcard({
     required this.id,
@@ -24,6 +25,7 @@ class Flashcard {
     this.exampleCz,
     this.exampleEn,
     this.unitId,
+    this.lessonId,
   });
 
   factory Flashcard.fromJson(Map<String, dynamic> json) {
@@ -39,6 +41,7 @@ class Flashcard {
       exampleCz: json['example_cz'] as String?,
       exampleEn: json['example_en'] as String?,
       unitId: json['unit_id'] as int?,
+      lessonId: json['lesson_id'] as int?,
     );
   }
 }

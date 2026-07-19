@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/repositories/llm_service_exception.dart';
 import '../../domain/entities/enums.dart';
-import '../../domain/repositories/llm_service.dart';
 import 'llm_providers.dart';
 
 /// Result of an AI writing evaluation.
@@ -30,7 +30,8 @@ class WritingEvaluation {
       coherence: (score['coherence'] as num?)?.toInt() ?? 0,
       overall: (score['overall'] as num?)?.toInt() ?? 0,
       feedback: json['feedback'] as String? ?? '',
-      errors: (json['errors'] as List<dynamic>?)
+      errors:
+          (json['errors'] as List<dynamic>?)
               ?.map((e) => e as Map<String, dynamic>)
               .toList() ??
           [],
@@ -69,7 +70,10 @@ class WritingEvalNotifier extends Notifier<WritingEvalState> {
   WritingEvalState build() => const WritingEvalState();
 
   /// Evaluate a learner's writing using the LLM.
-  Future<WritingEvaluation> evaluate({
+  ///
+  /// Returns null on failure — the error is surfaced via [WritingEvalState]
+  /// so the UI shows what happened instead of a fabricated score.
+  Future<WritingEvaluation?> evaluate({
     required CEFRLevel level,
     required String taskDescription,
     required String learnerText,
@@ -92,23 +96,21 @@ class WritingEvalNotifier extends Notifier<WritingEvalState> {
 
       state = WritingEvalState(evaluation: evaluation);
       return evaluation;
-    } catch (e) {
-      // Fallback: basic word-count based scoring
-      final wordCount = learnerText.split(' ').where((w) => w.isNotEmpty).length;
-      final baseScore = wordCount >= 30 ? 60 : 30;
-
-      final evaluation = WritingEvaluation(
-        grammar: baseScore,
-        vocabulary: baseScore,
-        coherence: baseScore + 5,
-        overall: baseScore + 2,
-        feedback: 'Could not reach AI for detailed feedback. '
-            'Your text has $wordCount words.',
-        errors: [],
+    } on LlmServiceException catch (e) {
+      state = WritingEvalState(error: e.message);
+      return null;
+    } on FormatException {
+      state = const WritingEvalState(
+        error: 'The AI returned an unreadable evaluation. Try again.',
       );
-
-      state = WritingEvalState(evaluation: evaluation);
-      return evaluation;
+      return null;
+    } catch (_) {
+      state = const WritingEvalState(
+        error:
+            'Could not evaluate your writing. '
+            'Check your connection and try again.',
+      );
+      return null;
     }
   }
 
@@ -120,4 +122,5 @@ class WritingEvalNotifier extends Notifier<WritingEvalState> {
 /// Provider for writing evaluation.
 final writingEvalProvider =
     NotifierProvider<WritingEvalNotifier, WritingEvalState>(
-        WritingEvalNotifier.new);
+      WritingEvalNotifier.new,
+    );

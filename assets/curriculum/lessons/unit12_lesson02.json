@@ -1,0 +1,215 @@
+{
+  "id": 1202,
+  "unit_id": 12,
+  "order_in_unit": 1,
+  "title": "Clothes & Shopping",
+  "description": "Build clothes vocabulary, practice chtít/kupovat with accusative case, learn to try things on (Můžu si to vyzkoušet?), complete shop dialogues, and make comparisons (levnější, dražší, větší, menší).",
+  "lesson_type": "practice",
+  "duration_min": 15,
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 12013,
+      "lesson_id": 1202,
+      "type": "multiple_choice",
+      "prompt": "What does 'bunda' mean in English?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "bunda",
+        "question_en": "What does 'bunda' mean?",
+        "options": ["shirt", "jacket", "pants", "shoes"],
+        "correct_index": 1,
+        "explanation": "bunda = jacket (feminine noun). košile = shirt, kalhoty = pants, boty = shoes."
+      },
+      "answer_key": "1",
+      "grammar_rule_id": "GR-110",
+      "xp_reward": 10
+    },
+    {
+      "id": 12014,
+      "lesson_id": 1202,
+      "type": "translation",
+      "prompt": "Translate 'I want to buy a jacket' to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I want to buy a jacket.",
+        "accepted_answers": ["Chci koupit bundu.", "Chci koupit bundu", "Chci si koupit bundu.", "Chci si koupit bundu"],
+        "grammar_note": "chci = I want. koupit = to buy (perfective). bunda → bundu (feminine accusative). Adding 'si' (for myself) makes it more natural in Czech."
+      },
+      "answer_key": "Chci si koupit bundu.",
+      "grammar_rule_id": "GR-111",
+      "xp_reward": 10
+    },
+    {
+      "id": 12015,
+      "lesson_id": 1202,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct accusative forms of the nouns.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Kupuju ___ (ta modrá košile) a ___ (ty černé boty).",
+        "blank_count": 2,
+        "accepted_answers": ["tu modrou košili", "ty černé boty"],
+        "explanation": "kupovat + accusative. ta modrá košile (fem.) → tu modrou košili. ty černé boty (fem. pl., inanimate) stay the same in accusative."
+      },
+      "answer_key": "tu modrou košili ty černé boty",
+      "grammar_rule_id": "GR-111",
+      "xp_reward": 15
+    },
+    {
+      "id": 12016,
+      "lesson_id": 1202,
+      "type": "multiple_choice",
+      "prompt": "What does 'Můžu si to vyzkoušet?' mean in English?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Můžu si to vyzkoušet?",
+        "question_en": "What does 'Můžu si to vyzkoušet?' mean?",
+        "options": ["Can I try it on?", "How much is it?", "Can I pay?", "Do you have this?"],
+        "correct_index": 0,
+        "explanation": "Můžu si to vyzkoušet? = Can I try it on? This is essential when shopping for clothes in Czech shops."
+      },
+      "answer_key": "0",
+      "grammar_rule_id": "GR-112",
+      "xp_reward": 10
+    },
+    {
+      "id": 12017,
+      "lesson_id": 1202,
+      "type": "translation",
+      "prompt": "Translate 'Can I try this on?' to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "Can I try this on?",
+        "accepted_answers": ["Můžu si to vyzkoušet?", "Můžu si to vyzkoušet", "Mohu si to vyzkoušet?"],
+        "grammar_note": "můžu/mohu = I can. si = to myself (dative reflexive). to = it. vyzkoušet = try on (perfective)."
+      },
+      "answer_key": "Můžu si to vyzkoušet?",
+      "grammar_rule_id": "GR-112",
+      "xp_reward": 10
+    },
+    {
+      "id": 12018,
+      "lesson_id": 1202,
+      "type": "fill_blank",
+      "prompt": "Complete the sentence with the correct comparative form.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Tato bunda je ___ (levný) než tamta, ale ta je ___ (hezký).",
+        "blank_count": 2,
+        "accepted_answers": ["levnější", "hezčí"],
+        "explanation": "Comparative forms: levný → levnější (cheaper), hezký → hezčí (nicer/prettier). The pattern for many adjectives: drop -ý and add -ější or -čí."
+      },
+      "answer_key": "levnější hezčí",
+      "grammar_rule_id": "GR-113",
+      "xp_reward": 15
+    },
+    {
+      "id": 12019,
+      "lesson_id": 1202,
+      "type": "multiple_choice",
+      "prompt": "Which word means 'more expensive' in Czech?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které slovo znamená 'more expensive'?",
+        "question_en": "Which word means 'more expensive'?",
+        "options": ["levnější", "dražší", "menší", "větší"],
+        "correct_index": 1,
+        "explanation": "dražší = more expensive (from drahý). levnější = cheaper, menší = smaller, větší = bigger."
+      },
+      "answer_key": "1",
+      "grammar_rule_id": "GR-113",
+      "xp_reward": 10
+    },
+    {
+      "id": 12020,
+      "lesson_id": 1202,
+      "type": "dictation",
+      "prompt": "Listen and write the phrase for trying on clothes.",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_12020",
+        "expected_text": "Můžu si to vyzkoušet?",
+        "language": "cs-CZ",
+        "note": "Essential phrase for any clothes shop — 'Can I try it on?'"
+      },
+      "answer_key": "Můžu si to vyzkoušet?",
+      "xp_reward": 20
+    },
+    {
+      "id": 12021,
+      "lesson_id": 1202,
+      "type": "pronunciation",
+      "prompt": "Say this shopping request aloud.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Chtěl bych si koupit tu modrou košili.",
+        "target_audio_hash": "placeholder_12021",
+        "focus_sounds": ["ch", "těl", "ou"],
+        "min_score": 0.6,
+        "translation_en": "I would like to buy that blue shirt."
+      },
+      "answer_key": "Chtěl bych si koupit tu modrou košili.",
+      "grammar_rule_id": "GR-110",
+      "xp_reward": 15
+    },
+    {
+      "id": 12022,
+      "lesson_id": 1202,
+      "type": "dialogue",
+      "prompt": "Complete the shop dialogue where you try on a jacket.",
+      "data": {
+        "type": "dialogue",
+        "scenario": "You are in a Czech clothing store and want to try on a jacket and then buy it.",
+        "lines": [
+          {"speaker": "person_a", "text": "Dobrý den, přejete si?"},
+          {"speaker": "person_b", "text": "Ano, líbí se mi ta černá bunda. Můžu si ji vyzkoušet?"},
+          {"speaker": "person_a", "text": "Samozřejmě, kabinky jsou támhle."},
+          {"speaker": "person_b", "text": "Je perfektní. Vezmu si ji. Kolik stojí?"},
+          {"speaker": "person_a", "text": "Stojí osm set korun."},
+          {"speaker": "person_b", "text": "Dobře, platím kartou."}
+        ],
+        "accepted_answers": ["Ano, líbí se mi ta černá bunda. Můžu si ji vyzkoušet?|Líbí se mi ta černá bunda. Můžu si ji vyzkoušet?", "Je perfektní. Vezmu si ji. Kolik stojí?|Je perfektní, vezmu si ji. Kolik stojí?|Perfektní, vezmu si ji. Kolik stojí?", "Dobře, platím kartou.|Dobře, platím kartou|Platím kartou"],
+        "explanation": "'Přejete si?' = 'What would you like?' — 'Líbí se mi ta černá bunda' = 'I like that black jacket' — 'Můžu si ji vyzkoušet?' = 'Can I try it on?' — 'Kabinky jsou támhle' = 'The fitting rooms are over there' — 'Vezmu si ji' = 'I'll take it' — 'Platím kartou' = 'I'm paying by card.'"
+      },
+      "answer_key": "Ano, líbí se mi ta černá bunda. Můžu si ji vyzkoušet?|Je perfektní. Vezmu si ji. Kolik stojí?|Dobře, platím kartou.",
+      "grammar_rule_id": "GR-112",
+      "xp_reward": 25
+    },
+    {
+      "id": 12023,
+      "lesson_id": 1202,
+      "type": "translation",
+      "prompt": "Translate 'This jacket is cheaper than that one' to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "This jacket is cheaper than that one.",
+        "accepted_answers": ["Tato bunda je levnější než tamta.", "Tato bunda je levnější než tamta", "Ta bunda je levnější než tamta.", "Tahle bunda je levnější než tamta."],
+        "grammar_note": "levnější = cheaper (comparative of levný). než = than. tamta = that one (feminine). ta/tato/tahle = this (feminine)."
+      },
+      "answer_key": "Tato bunda je levnější než tamta.",
+      "grammar_rule_id": "GR-113",
+      "xp_reward": 10
+    },
+    {
+      "id": 12024,
+      "lesson_id": 1202,
+      "type": "multiple_choice",
+      "prompt": "Which pair correctly translates 'bigger' and 'smaller' to Czech?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jak se řekne 'bigger' a 'smaller' česky?",
+        "question_en": "How do you say 'bigger' and 'smaller' in Czech?",
+        "options": ["větší a menší", "velký a malý", "větší a malý", "velký a menší"],
+        "correct_index": 0,
+        "explanation": "Comparative forms: velký → větší (bigger), malý → menší (smaller). These are irregular comparatives and must be memorized."
+      },
+      "answer_key": "0",
+      "grammar_rule_id": "GR-113",
+      "xp_reward": 10
+    }
+  ]
+}

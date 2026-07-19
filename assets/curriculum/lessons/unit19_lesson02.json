@@ -1,0 +1,224 @@
+{
+  "id": 1902,
+  "unit_id": 19,
+  "order_in_unit": 1,
+  "title": "Perfective Aspect Intro",
+  "description": "Discover the difference between imperfective and perfective verb pairs (psát/napsat, číst/přečíst, dělat/udělat, kupovat/koupit). Learn how perfective verbs express completed actions in the past and how their present-tense forms actually express future meaning (napíšu = I will write). Practice using both aspects correctly.",
+  "duration_min": 15,
+  "lesson_type": "practice",
+  "exercises": [
+    {
+      "id": 19013,
+      "lesson_id": 1902,
+      "type": "multiple_choice",
+      "prompt": "Which verb is the perfective pair of 'psát' (to write)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které sloveso je dokonavý (perfektivní) protějšek slovesa 'psát'?",
+        "question_en": "Which verb is the perfective pair of 'psát' (to write)?",
+        "options": ["napsat", "popsat", "přepsat", "zapsat"],
+        "correct_index": 0,
+        "explanation": "'Napsat' is the basic perfective pair of 'psát'. The prefix 'na-' makes it perfective: psát (was writing) → napsat (wrote/has written). Other prefixed forms add meaning: popsat = to describe, přepsat = to rewrite, zapsat = to note down."
+      },
+      "answer_key": "napsat",
+      "grammar_rule_id": "GR-182",
+      "xp_reward": 10
+    },
+    {
+      "id": 19014,
+      "lesson_id": 1902,
+      "type": "fill_blank",
+      "prompt": "Complete with the perfective verb: 'I read the whole book.' (přečíst)",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "___ jsem celou knihu. (přečíst — I read the whole book, completed action)",
+        "blank_count": 1,
+        "accepted_answers": ["Přečetl"],
+        "explanation": "'Přečetl jsem' = I read (and finished). 'Přečíst' is the perfective pair of 'číst'. Perfective expresses a completed action: 'přečetl jsem celou knihu' = I read the whole book (finished it). Imperfective 'četl jsem knihu' = I was reading a book (no completion)."
+      },
+      "answer_key": "Přečetl",
+      "grammar_rule_id": "GR-182",
+      "xp_reward": 15
+    },
+    {
+      "id": 19015,
+      "lesson_id": 1902,
+      "type": "multiple_choice",
+      "prompt": "Which sentence uses the perfective verb correctly?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která věta používá dokonavé sloveso správně?",
+        "question_en": "Which sentence uses the perfective verb correctly?",
+        "options": [
+          "Včera jsem napsal dopis.",
+          "Včera jsem psal dopis celý den.",
+          "Každý den jsem napsal dopis.",
+          "Rád jsem napsal dopisy."
+        ],
+        "correct_index": 0,
+        "explanation": "'Napsal jsem dopis.' = I wrote a letter (completed action, result achieved). Perfective 'napsat' focuses on the result. 'Psal jsem' would mean 'I was writing' (process, no completion info). Perfective is incompatible with 'každý den' (repeated) and 'rád' (liked to) — those need imperfective."
+      },
+      "answer_key": "Včera jsem napsal dopis.",
+      "grammar_rule_id": "GR-182",
+      "xp_reward": 10
+    },
+    {
+      "id": 19016,
+      "lesson_id": 1902,
+      "type": "multiple_choice",
+      "prompt": "What does the perfective present-tense form 'napíšu' mean?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Co znamená dokonavý tvar 'napíšu'?",
+        "question_en": "What does the perfective form 'napíšu' mean?",
+        "options": ["I will write", "I am writing", "I write (regularly)", "I would write"],
+        "correct_index": 0,
+        "explanation": "'Napíšu' = I will write. This is a KEY rule: perfective verbs CANNOT express present tense! Their present-tense forms automatically express FUTURE meaning. So 'napíšu' (looks like present) = I'll write (future). 'Píšu' (imperfective) = I am writing (present)."
+      },
+      "answer_key": "I will write",
+      "grammar_rule_id": "GR-183",
+      "xp_reward": 10
+    },
+    {
+      "id": 19017,
+      "lesson_id": 1902,
+      "type": "fill_blank",
+      "prompt": "Complete with the perfective future form: 'I'll read it tomorrow.' (přečíst)",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Zítra to ___ . (přečíst — I'll read it, complete action)",
+        "blank_count": 1,
+        "accepted_answers": ["přečtu"],
+        "explanation": "'Přečtu' is the perfective present form of 'přečíst' and it expresses future: 'Zítra to přečtu.' = I'll read it tomorrow (and finish it). Pattern: perfective present = future. Compare: 'čtu' (imperfective present) = I am reading, 'přečtu' (perfective present) = I will read."
+      },
+      "answer_key": "přečtu",
+      "grammar_rule_id": "GR-183",
+      "xp_reward": 15
+    },
+    {
+      "id": 19018,
+      "lesson_id": 1902,
+      "type": "multiple_choice",
+      "prompt": "What is the perfective pair of 'dělat' (to do/make)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je dokonavý protějšek slovesa 'dělat'?",
+        "question_en": "What is the perfective pair of 'dělat'?",
+        "options": ["udělat", "dodělat", "předělat", "nadělat"],
+        "correct_index": 0,
+        "explanation": "'Udělat' is the basic perfective pair of 'dělat'. The prefix 'u-' is one of the most common perfectivizers: dělat (was doing) → udělat (did/has done). 'Dodělat' = to finish making, 'předělat' = to redo, 'nadělat' = to make a lot of."
+      },
+      "answer_key": "udělat",
+      "grammar_rule_id": "GR-182",
+      "xp_reward": 10
+    },
+    {
+      "id": 19019,
+      "lesson_id": 1902,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I (male) will do it today.' (Udělat — completed action in future)",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I will do it today. (male speaker, completed action)",
+        "accepted_answers": ["Udělám to dnes.", "Dnes to udělám.", "Já to udělám dnes."],
+        "grammar_note": "'Udělám' is the perfective present form of 'udělat'. Since perfective verbs cannot express present, this form means 'I will do (and finish)'. 'Dělám to dnes' (imperfective) = I'm doing it today (may not finish)."
+      },
+      "answer_key": "Udělám to dnes.",
+      "grammar_rule_id": "GR-183",
+      "xp_reward": 10
+    },
+    {
+      "id": 19020,
+      "lesson_id": 1902,
+      "type": "multiple_choice",
+      "prompt": "Which verb pair shows the imperfective → perfective relationship for 'buy'?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která dvojice ukazuje vztah nedokonavé → dokonavé pro 'buy'?",
+        "question_en": "Which pair shows imperfective → perfective for 'buy'?",
+        "options": ["kupovat / koupit", "koupit / kupovat", "kupovat / nakupovat", "koupit / nakoupit"],
+        "correct_index": 0,
+        "explanation": "'Kupovat' (imperfective) → 'koupit' (perfective). Unlike most pairs that use a prefix, this pair uses a completely different verb stem (suppletion). 'Kupuju' = I'm buying (present), 'Koupím' = I'll buy (future, because perfective present = future)."
+      },
+      "answer_key": "kupovat / koupit",
+      "grammar_rule_id": "GR-182",
+      "xp_reward": 10
+    },
+    {
+      "id": 19021,
+      "lesson_id": 1902,
+      "type": "fill_blank",
+      "prompt": "Choose the correct aspect: 'I was buying bread when... (ongoing action)'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "___ jsem chleba, když jsem potkal kamaráda. (kupovat/koupit — I was buying bread when I met a friend)",
+        "blank_count": 1,
+        "accepted_answers": ["Kupoval"],
+        "explanation": "Use imperfective 'kupoval' here because it describes an ongoing background action. The perfective 'koupil' would mean the buying was completed before meeting the friend. Typical pattern: imperfective (ongoing) + když + perfective (interruption)."
+      },
+      "answer_key": "Kupoval",
+      "grammar_rule_id": "GR-182",
+      "xp_reward": 15
+    },
+    {
+      "id": 19022,
+      "lesson_id": 1902,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'She wrote the letter and sent it.' (both completed actions)",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "She wrote the letter and sent it.",
+        "accepted_answers": ["Napsala dopis a poslala ho.", "Ona napsala dopis a poslala ho."],
+        "grammar_note": "Both actions are completed → both use perfective past: 'napsala' (napsat) and 'poslala' (poslat, perfective of posílat). Sequence of completed actions = perfective chain. 'Napsala dopis a poslala ho.' — each verb signals a finished step."
+      },
+      "answer_key": "Napsala dopis a poslala ho.",
+      "grammar_rule_id": "GR-182",
+      "xp_reward": 10
+    },
+    {
+      "id": 19023,
+      "lesson_id": 1902,
+      "type": "multiple_choice",
+      "prompt": "Which sentence means 'I will buy it tomorrow' (completed purchase)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která věta znamená 'I will buy it tomorrow' (dokončený nákup)?",
+        "question_en": "Which sentence means 'I will buy it tomorrow' (completed purchase)?",
+        "options": [
+          "Koupím to zítra.",
+          "Kupuju to zítra.",
+          "Kupoval jsem to zítra.",
+          "Budu kupovat to zítra."
+        ],
+        "correct_index": 0,
+        "explanation": "'Koupím to zítra.' = I'll buy it tomorrow. 'Koupím' is the perfective present of 'koupit' → it expresses future. 'Kupuju' (imperfective present) cannot mean future. 'Budu kupovat' = I will be buying (imperfective future, ongoing process). Perfective is the natural choice for a one-time completed purchase."
+      },
+      "answer_key": "Koupím to zítra.",
+      "grammar_rule_id": "GR-183",
+      "xp_reward": 10
+    },
+    {
+      "id": 19024,
+      "lesson_id": 1902,
+      "type": "dialogue",
+      "prompt": "Complete the conversation using both aspects correctly.",
+      "data": {
+        "type": "dialogue",
+        "scenario": "Doma — At home",
+        "lines": [
+          {"speaker": "person_a", "text": "Co jsi dělal včera večer?"},
+          {"speaker": "person_b", "text": "Psal jsem úkol. Ale už jsem ho napsal."},
+          {"speaker": "person_a", "text": "A přečetl jsi tu knihu?"},
+          {"speaker": "person_b", "text": "Ještě ne. Přečtu ji zítra."}
+        ],
+        "accepted_answers": ["Psal jsem úkol. Ale už jsem ho napsal.|Psal jsem úkol, ale už jsem ho napsal.|Psal jsem úkol. Už jsem ho napsal."],
+        "explanation": "Person B uses both aspects: 'Psal jsem úkol' (imperfective — was writing, process) then 'už jsem ho napsal' (perfective — finished it). Then 'Přečtu ji zítra' (perfective present = future: I'll read it). Key pattern: process (impf.) → completion (pf.); future intention (pf. present)."
+      },
+      "answer_key": "Psal jsem úkol. Ale už jsem ho napsal.",
+      "grammar_rule_id": "GR-183",
+      "xp_reward": 20
+    }
+  ]
+}

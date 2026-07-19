@@ -70,7 +70,6 @@ class DriftProgressRepository implements ProgressRepository {
     });
 
     // Get streak from KV store
-    final streakStr = await _db.progressDao.getProgressValue('streak');
     final longestStreakStr =
         await _db.progressDao.getProgressValue('longest_streak');
     final examsPassedStr =
@@ -78,7 +77,7 @@ class DriftProgressRepository implements ProgressRepository {
 
     return ProgressSnapshot(
       unitScores: normalized,
-      longestStreak: int.tryParse(streakStr ?? '0') ?? 0,
+      longestStreak: int.tryParse(longestStreakStr ?? '0') ?? 0,
       examsPassed: examsPassedStr != null
           ? (jsonDecode(examsPassedStr) as List<dynamic>).cast<String>().toSet()
           : {},

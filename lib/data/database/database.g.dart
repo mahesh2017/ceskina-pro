@@ -1648,6 +1648,20 @@ class $FlashcardsTable extends Flashcards
       'REFERENCES units (id)',
     ),
   );
+  static const VerificationMeta _lessonIdMeta = const VerificationMeta(
+    'lessonId',
+  );
+  @override
+  late final GeneratedColumn<int> lessonId = GeneratedColumn<int>(
+    'lesson_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES lessons (id)',
+    ),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1661,6 +1675,7 @@ class $FlashcardsTable extends Flashcards
     exampleCz,
     exampleEn,
     unitId,
+    lessonId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1741,6 +1756,12 @@ class $FlashcardsTable extends Flashcards
         unitId.isAcceptableOrUnknown(data['unit_id']!, _unitIdMeta),
       );
     }
+    if (data.containsKey('lesson_id')) {
+      context.handle(
+        _lessonIdMeta,
+        lessonId.isAcceptableOrUnknown(data['lesson_id']!, _lessonIdMeta),
+      );
+    }
     return context;
   }
 
@@ -1794,6 +1815,10 @@ class $FlashcardsTable extends Flashcards
         DriftSqlType.int,
         data['${effectivePrefix}unit_id'],
       ),
+      lessonId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}lesson_id'],
+      ),
     );
   }
 
@@ -1815,6 +1840,11 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
   final String? exampleCz;
   final String? exampleEn;
   final int? unitId;
+
+  /// The lesson that introduces this word. When set, the word is only
+  /// scheduled for review once that lesson is completed (finer-grained than
+  /// [unitId] gating). Null falls back to unit-level gating.
+  final int? lessonId;
   const Flashcard({
     required this.id,
     required this.wordCz,
@@ -1827,6 +1857,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     this.exampleCz,
     this.exampleEn,
     this.unitId,
+    this.lessonId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1858,6 +1889,9 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     if (!nullToAbsent || unitId != null) {
       map['unit_id'] = Variable<int>(unitId);
     }
+    if (!nullToAbsent || lessonId != null) {
+      map['lesson_id'] = Variable<int>(lessonId);
+    }
     return map;
   }
 
@@ -1888,6 +1922,9 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       unitId: unitId == null && nullToAbsent
           ? const Value.absent()
           : Value(unitId),
+      lessonId: lessonId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lessonId),
     );
   }
 
@@ -1908,6 +1945,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       exampleCz: serializer.fromJson<String?>(json['exampleCz']),
       exampleEn: serializer.fromJson<String?>(json['exampleEn']),
       unitId: serializer.fromJson<int?>(json['unitId']),
+      lessonId: serializer.fromJson<int?>(json['lessonId']),
     );
   }
   @override
@@ -1925,6 +1963,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       'exampleCz': serializer.toJson<String?>(exampleCz),
       'exampleEn': serializer.toJson<String?>(exampleEn),
       'unitId': serializer.toJson<int?>(unitId),
+      'lessonId': serializer.toJson<int?>(lessonId),
     };
   }
 
@@ -1940,6 +1979,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     Value<String?> exampleCz = const Value.absent(),
     Value<String?> exampleEn = const Value.absent(),
     Value<int?> unitId = const Value.absent(),
+    Value<int?> lessonId = const Value.absent(),
   }) => Flashcard(
     id: id ?? this.id,
     wordCz: wordCz ?? this.wordCz,
@@ -1952,6 +1992,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     exampleCz: exampleCz.present ? exampleCz.value : this.exampleCz,
     exampleEn: exampleEn.present ? exampleEn.value : this.exampleEn,
     unitId: unitId.present ? unitId.value : this.unitId,
+    lessonId: lessonId.present ? lessonId.value : this.lessonId,
   );
   Flashcard copyWithCompanion(FlashcardsCompanion data) {
     return Flashcard(
@@ -1966,6 +2007,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
       exampleCz: data.exampleCz.present ? data.exampleCz.value : this.exampleCz,
       exampleEn: data.exampleEn.present ? data.exampleEn.value : this.exampleEn,
       unitId: data.unitId.present ? data.unitId.value : this.unitId,
+      lessonId: data.lessonId.present ? data.lessonId.value : this.lessonId,
     );
   }
 
@@ -1982,7 +2024,8 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
           ..write('imagePath: $imagePath, ')
           ..write('exampleCz: $exampleCz, ')
           ..write('exampleEn: $exampleEn, ')
-          ..write('unitId: $unitId')
+          ..write('unitId: $unitId, ')
+          ..write('lessonId: $lessonId')
           ..write(')'))
         .toString();
   }
@@ -2000,6 +2043,7 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
     exampleCz,
     exampleEn,
     unitId,
+    lessonId,
   );
   @override
   bool operator ==(Object other) =>
@@ -2015,7 +2059,8 @@ class Flashcard extends DataClass implements Insertable<Flashcard> {
           other.imagePath == this.imagePath &&
           other.exampleCz == this.exampleCz &&
           other.exampleEn == this.exampleEn &&
-          other.unitId == this.unitId);
+          other.unitId == this.unitId &&
+          other.lessonId == this.lessonId);
 }
 
 class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
@@ -2030,6 +2075,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
   final Value<String?> exampleCz;
   final Value<String?> exampleEn;
   final Value<int?> unitId;
+  final Value<int?> lessonId;
   const FlashcardsCompanion({
     this.id = const Value.absent(),
     this.wordCz = const Value.absent(),
@@ -2042,6 +2088,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     this.exampleCz = const Value.absent(),
     this.exampleEn = const Value.absent(),
     this.unitId = const Value.absent(),
+    this.lessonId = const Value.absent(),
   });
   FlashcardsCompanion.insert({
     this.id = const Value.absent(),
@@ -2055,6 +2102,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     this.exampleCz = const Value.absent(),
     this.exampleEn = const Value.absent(),
     this.unitId = const Value.absent(),
+    this.lessonId = const Value.absent(),
   }) : wordCz = Value(wordCz),
        wordEn = Value(wordEn);
   static Insertable<Flashcard> custom({
@@ -2069,6 +2117,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     Expression<String>? exampleCz,
     Expression<String>? exampleEn,
     Expression<int>? unitId,
+    Expression<int>? lessonId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2082,6 +2131,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
       if (exampleCz != null) 'example_cz': exampleCz,
       if (exampleEn != null) 'example_en': exampleEn,
       if (unitId != null) 'unit_id': unitId,
+      if (lessonId != null) 'lesson_id': lessonId,
     });
   }
 
@@ -2097,6 +2147,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     Value<String?>? exampleCz,
     Value<String?>? exampleEn,
     Value<int?>? unitId,
+    Value<int?>? lessonId,
   }) {
     return FlashcardsCompanion(
       id: id ?? this.id,
@@ -2110,6 +2161,7 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
       exampleCz: exampleCz ?? this.exampleCz,
       exampleEn: exampleEn ?? this.exampleEn,
       unitId: unitId ?? this.unitId,
+      lessonId: lessonId ?? this.lessonId,
     );
   }
 
@@ -2149,6 +2201,9 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
     if (unitId.present) {
       map['unit_id'] = Variable<int>(unitId.value);
     }
+    if (lessonId.present) {
+      map['lesson_id'] = Variable<int>(lessonId.value);
+    }
     return map;
   }
 
@@ -2165,7 +2220,8 @@ class FlashcardsCompanion extends UpdateCompanion<Flashcard> {
           ..write('imagePath: $imagePath, ')
           ..write('exampleCz: $exampleCz, ')
           ..write('exampleEn: $exampleEn, ')
-          ..write('unitId: $unitId')
+          ..write('unitId: $unitId, ')
+          ..write('lessonId: $lessonId')
           ..write(')'))
         .toString();
   }
@@ -5640,6 +5696,722 @@ class LessonProgressCompanion extends UpdateCompanion<LessonProgressData> {
   }
 }
 
+class $SyncQueueTable extends SyncQueue
+    with TableInfo<$SyncQueueTable, SyncQueueData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SyncQueueTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _entityMeta = const VerificationMeta('entity');
+  @override
+  late final GeneratedColumn<String> entity = GeneratedColumn<String>(
+    'entity',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _entityKeyMeta = const VerificationMeta(
+    'entityKey',
+  );
+  @override
+  late final GeneratedColumn<String> entityKey = GeneratedColumn<String>(
+    'entity_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _opMeta = const VerificationMeta('op');
+  @override
+  late final GeneratedColumn<String> op = GeneratedColumn<String>(
+    'op',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('upsert'),
+  );
+  static const VerificationMeta _payloadMeta = const VerificationMeta(
+    'payload',
+  );
+  @override
+  late final GeneratedColumn<String> payload = GeneratedColumn<String>(
+    'payload',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deviceIdMeta = const VerificationMeta(
+    'deviceId',
+  );
+  @override
+  late final GeneratedColumn<String> deviceId = GeneratedColumn<String>(
+    'device_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: Constant(DateTime.now()),
+  );
+  static const VerificationMeta _attemptsMeta = const VerificationMeta(
+    'attempts',
+  );
+  @override
+  late final GeneratedColumn<int> attempts = GeneratedColumn<int>(
+    'attempts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    entity,
+    entityKey,
+    op,
+    payload,
+    deviceId,
+    updatedAt,
+    attempts,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sync_queue';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SyncQueueData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('entity')) {
+      context.handle(
+        _entityMeta,
+        entity.isAcceptableOrUnknown(data['entity']!, _entityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityMeta);
+    }
+    if (data.containsKey('entity_key')) {
+      context.handle(
+        _entityKeyMeta,
+        entityKey.isAcceptableOrUnknown(data['entity_key']!, _entityKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_entityKeyMeta);
+    }
+    if (data.containsKey('op')) {
+      context.handle(_opMeta, op.isAcceptableOrUnknown(data['op']!, _opMeta));
+    }
+    if (data.containsKey('payload')) {
+      context.handle(
+        _payloadMeta,
+        payload.isAcceptableOrUnknown(data['payload']!, _payloadMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadMeta);
+    }
+    if (data.containsKey('device_id')) {
+      context.handle(
+        _deviceIdMeta,
+        deviceId.isAcceptableOrUnknown(data['device_id']!, _deviceIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_deviceIdMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('attempts')) {
+      context.handle(
+        _attemptsMeta,
+        attempts.isAcceptableOrUnknown(data['attempts']!, _attemptsMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SyncQueueData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SyncQueueData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      entity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity'],
+      )!,
+      entityKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}entity_key'],
+      )!,
+      op: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}op'],
+      )!,
+      payload: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload'],
+      )!,
+      deviceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}device_id'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      attempts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}attempts'],
+      )!,
+    );
+  }
+
+  @override
+  $SyncQueueTable createAlias(String alias) {
+    return $SyncQueueTable(attachedDatabase, alias);
+  }
+}
+
+class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
+  final int id;
+
+  /// Logical target table on the backend, e.g. `lesson_progress`, `srs_cards`,
+  /// `earned_badges`, `user_progress`.
+  final String entity;
+
+  /// Globally-stable identity of the affected row *within* [entity], as a
+  /// string. For content-keyed rows this is the natural key (badgeId,
+  /// user_progress key, lessonId, or the srs card's content key) — never a
+  /// local autoincrement id, which collides across devices.
+  final String entityKey;
+
+  /// `upsert` or `delete`.
+  final String op;
+
+  /// Full row snapshot as JSON — what to send to the backend.
+  final String payload;
+
+  /// Origin device; part of the LWW tiebreaker.
+  final String deviceId;
+
+  /// Client mutation time — the LWW clock. Server compares this against the
+  /// stored row and keeps the newer one.
+  final DateTime updatedAt;
+
+  /// Set when a push attempt fails, for backoff/inspection.
+  final int attempts;
+  const SyncQueueData({
+    required this.id,
+    required this.entity,
+    required this.entityKey,
+    required this.op,
+    required this.payload,
+    required this.deviceId,
+    required this.updatedAt,
+    required this.attempts,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['entity'] = Variable<String>(entity);
+    map['entity_key'] = Variable<String>(entityKey);
+    map['op'] = Variable<String>(op);
+    map['payload'] = Variable<String>(payload);
+    map['device_id'] = Variable<String>(deviceId);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['attempts'] = Variable<int>(attempts);
+    return map;
+  }
+
+  SyncQueueCompanion toCompanion(bool nullToAbsent) {
+    return SyncQueueCompanion(
+      id: Value(id),
+      entity: Value(entity),
+      entityKey: Value(entityKey),
+      op: Value(op),
+      payload: Value(payload),
+      deviceId: Value(deviceId),
+      updatedAt: Value(updatedAt),
+      attempts: Value(attempts),
+    );
+  }
+
+  factory SyncQueueData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SyncQueueData(
+      id: serializer.fromJson<int>(json['id']),
+      entity: serializer.fromJson<String>(json['entity']),
+      entityKey: serializer.fromJson<String>(json['entityKey']),
+      op: serializer.fromJson<String>(json['op']),
+      payload: serializer.fromJson<String>(json['payload']),
+      deviceId: serializer.fromJson<String>(json['deviceId']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      attempts: serializer.fromJson<int>(json['attempts']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'entity': serializer.toJson<String>(entity),
+      'entityKey': serializer.toJson<String>(entityKey),
+      'op': serializer.toJson<String>(op),
+      'payload': serializer.toJson<String>(payload),
+      'deviceId': serializer.toJson<String>(deviceId),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'attempts': serializer.toJson<int>(attempts),
+    };
+  }
+
+  SyncQueueData copyWith({
+    int? id,
+    String? entity,
+    String? entityKey,
+    String? op,
+    String? payload,
+    String? deviceId,
+    DateTime? updatedAt,
+    int? attempts,
+  }) => SyncQueueData(
+    id: id ?? this.id,
+    entity: entity ?? this.entity,
+    entityKey: entityKey ?? this.entityKey,
+    op: op ?? this.op,
+    payload: payload ?? this.payload,
+    deviceId: deviceId ?? this.deviceId,
+    updatedAt: updatedAt ?? this.updatedAt,
+    attempts: attempts ?? this.attempts,
+  );
+  SyncQueueData copyWithCompanion(SyncQueueCompanion data) {
+    return SyncQueueData(
+      id: data.id.present ? data.id.value : this.id,
+      entity: data.entity.present ? data.entity.value : this.entity,
+      entityKey: data.entityKey.present ? data.entityKey.value : this.entityKey,
+      op: data.op.present ? data.op.value : this.op,
+      payload: data.payload.present ? data.payload.value : this.payload,
+      deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      attempts: data.attempts.present ? data.attempts.value : this.attempts,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncQueueData(')
+          ..write('id: $id, ')
+          ..write('entity: $entity, ')
+          ..write('entityKey: $entityKey, ')
+          ..write('op: $op, ')
+          ..write('payload: $payload, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('attempts: $attempts')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    entity,
+    entityKey,
+    op,
+    payload,
+    deviceId,
+    updatedAt,
+    attempts,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SyncQueueData &&
+          other.id == this.id &&
+          other.entity == this.entity &&
+          other.entityKey == this.entityKey &&
+          other.op == this.op &&
+          other.payload == this.payload &&
+          other.deviceId == this.deviceId &&
+          other.updatedAt == this.updatedAt &&
+          other.attempts == this.attempts);
+}
+
+class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
+  final Value<int> id;
+  final Value<String> entity;
+  final Value<String> entityKey;
+  final Value<String> op;
+  final Value<String> payload;
+  final Value<String> deviceId;
+  final Value<DateTime> updatedAt;
+  final Value<int> attempts;
+  const SyncQueueCompanion({
+    this.id = const Value.absent(),
+    this.entity = const Value.absent(),
+    this.entityKey = const Value.absent(),
+    this.op = const Value.absent(),
+    this.payload = const Value.absent(),
+    this.deviceId = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.attempts = const Value.absent(),
+  });
+  SyncQueueCompanion.insert({
+    this.id = const Value.absent(),
+    required String entity,
+    required String entityKey,
+    this.op = const Value.absent(),
+    required String payload,
+    required String deviceId,
+    this.updatedAt = const Value.absent(),
+    this.attempts = const Value.absent(),
+  }) : entity = Value(entity),
+       entityKey = Value(entityKey),
+       payload = Value(payload),
+       deviceId = Value(deviceId);
+  static Insertable<SyncQueueData> custom({
+    Expression<int>? id,
+    Expression<String>? entity,
+    Expression<String>? entityKey,
+    Expression<String>? op,
+    Expression<String>? payload,
+    Expression<String>? deviceId,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? attempts,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (entity != null) 'entity': entity,
+      if (entityKey != null) 'entity_key': entityKey,
+      if (op != null) 'op': op,
+      if (payload != null) 'payload': payload,
+      if (deviceId != null) 'device_id': deviceId,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (attempts != null) 'attempts': attempts,
+    });
+  }
+
+  SyncQueueCompanion copyWith({
+    Value<int>? id,
+    Value<String>? entity,
+    Value<String>? entityKey,
+    Value<String>? op,
+    Value<String>? payload,
+    Value<String>? deviceId,
+    Value<DateTime>? updatedAt,
+    Value<int>? attempts,
+  }) {
+    return SyncQueueCompanion(
+      id: id ?? this.id,
+      entity: entity ?? this.entity,
+      entityKey: entityKey ?? this.entityKey,
+      op: op ?? this.op,
+      payload: payload ?? this.payload,
+      deviceId: deviceId ?? this.deviceId,
+      updatedAt: updatedAt ?? this.updatedAt,
+      attempts: attempts ?? this.attempts,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (entity.present) {
+      map['entity'] = Variable<String>(entity.value);
+    }
+    if (entityKey.present) {
+      map['entity_key'] = Variable<String>(entityKey.value);
+    }
+    if (op.present) {
+      map['op'] = Variable<String>(op.value);
+    }
+    if (payload.present) {
+      map['payload'] = Variable<String>(payload.value);
+    }
+    if (deviceId.present) {
+      map['device_id'] = Variable<String>(deviceId.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (attempts.present) {
+      map['attempts'] = Variable<int>(attempts.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncQueueCompanion(')
+          ..write('id: $id, ')
+          ..write('entity: $entity, ')
+          ..write('entityKey: $entityKey, ')
+          ..write('op: $op, ')
+          ..write('payload: $payload, ')
+          ..write('deviceId: $deviceId, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('attempts: $attempts')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SyncStateTable extends SyncState
+    with TableInfo<$SyncStateTable, SyncStateData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SyncStateTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [key, value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sync_state';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SyncStateData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {key};
+  @override
+  SyncStateData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SyncStateData(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
+  }
+
+  @override
+  $SyncStateTable createAlias(String alias) {
+    return $SyncStateTable(attachedDatabase, alias);
+  }
+}
+
+class SyncStateData extends DataClass implements Insertable<SyncStateData> {
+  final String key;
+  final String value;
+  const SyncStateData({required this.key, required this.value});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  SyncStateCompanion toCompanion(bool nullToAbsent) {
+    return SyncStateCompanion(key: Value(key), value: Value(value));
+  }
+
+  factory SyncStateData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SyncStateData(
+      key: serializer.fromJson<String>(json['key']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  SyncStateData copyWith({String? key, String? value}) =>
+      SyncStateData(key: key ?? this.key, value: value ?? this.value);
+  SyncStateData copyWithCompanion(SyncStateCompanion data) {
+    return SyncStateData(
+      key: data.key.present ? data.key.value : this.key,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncStateData(')
+          ..write('key: $key, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(key, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SyncStateData &&
+          other.key == this.key &&
+          other.value == this.value);
+}
+
+class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
+  final Value<String> key;
+  final Value<String> value;
+  final Value<int> rowid;
+  const SyncStateCompanion({
+    this.key = const Value.absent(),
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SyncStateCompanion.insert({
+    required String key,
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       value = Value(value);
+  static Insertable<SyncStateData> custom({
+    Expression<String>? key,
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SyncStateCompanion copyWith({
+    Value<String>? key,
+    Value<String>? value,
+    Value<int>? rowid,
+  }) {
+    return SyncStateCompanion(
+      key: key ?? this.key,
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SyncStateCompanion(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -5655,12 +6427,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $UserProgressTable userProgress = $UserProgressTable(this);
   late final $EarnedBadgesTable earnedBadges = $EarnedBadgesTable(this);
   late final $LessonProgressTable lessonProgress = $LessonProgressTable(this);
+  late final $SyncQueueTable syncQueue = $SyncQueueTable(this);
+  late final $SyncStateTable syncState = $SyncStateTable(this);
   late final CurriculumDao curriculumDao = CurriculumDao(this as AppDatabase);
   late final VocabularyDao vocabularyDao = VocabularyDao(this as AppDatabase);
   late final ConversationDao conversationDao = ConversationDao(
     this as AppDatabase,
   );
   late final ProgressDao progressDao = ProgressDao(this as AppDatabase);
+  late final SyncDao syncDao = SyncDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5678,6 +6453,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     userProgress,
     earnedBadges,
     lessonProgress,
+    syncQueue,
+    syncState,
   ];
 }
 
@@ -6288,6 +7065,24 @@ final class $$LessonsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$FlashcardsTable, List<Flashcard>>
+  _flashcardsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.flashcards,
+    aliasName: $_aliasNameGenerator(db.lessons.id, db.flashcards.lessonId),
+  );
+
+  $$FlashcardsTableProcessedTableManager get flashcardsRefs {
+    final manager = $$FlashcardsTableTableManager(
+      $_db,
+      $_db.flashcards,
+    ).filter((f) => f.lessonId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_flashcardsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$LessonsTableFilterComposer
@@ -6373,6 +7168,31 @@ class $$LessonsTableFilterComposer
           }) => $$ExercisesTableFilterComposer(
             $db: $db,
             $table: $db.exercises,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> flashcardsRefs(
+    Expression<bool> Function($$FlashcardsTableFilterComposer f) f,
+  ) {
+    final $$FlashcardsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.flashcards,
+      getReferencedColumn: (t) => t.lessonId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FlashcardsTableFilterComposer(
+            $db: $db,
+            $table: $db.flashcards,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -6536,6 +7356,31 @@ class $$LessonsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> flashcardsRefs<T extends Object>(
+    Expression<T> Function($$FlashcardsTableAnnotationComposer a) f,
+  ) {
+    final $$FlashcardsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.flashcards,
+      getReferencedColumn: (t) => t.lessonId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FlashcardsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.flashcards,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$LessonsTableTableManager
@@ -6551,7 +7396,11 @@ class $$LessonsTableTableManager
           $$LessonsTableUpdateCompanionBuilder,
           (Lesson, $$LessonsTableReferences),
           Lesson,
-          PrefetchHooks Function({bool unitId, bool exercisesRefs})
+          PrefetchHooks Function({
+            bool unitId,
+            bool exercisesRefs,
+            bool flashcardsRefs,
+          })
         > {
   $$LessonsTableTableManager(_$AppDatabase db, $LessonsTable table)
     : super(
@@ -6612,59 +7461,98 @@ class $$LessonsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({unitId = false, exercisesRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (exercisesRefs) db.exercises],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (unitId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.unitId,
-                                referencedTable: $$LessonsTableReferences
-                                    ._unitIdTable(db),
-                                referencedColumn: $$LessonsTableReferences
-                                    ._unitIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({
+                unitId = false,
+                exercisesRefs = false,
+                flashcardsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (exercisesRefs) db.exercises,
+                    if (flashcardsRefs) db.flashcards,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (unitId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.unitId,
+                                    referencedTable: $$LessonsTableReferences
+                                        ._unitIdTable(db),
+                                    referencedColumn: $$LessonsTableReferences
+                                        ._unitIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (exercisesRefs)
+                        await $_getPrefetchedData<
+                          Lesson,
+                          $LessonsTable,
+                          Exercise
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LessonsTableReferences
+                              ._exercisesRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LessonsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).exercisesRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.lessonId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (flashcardsRefs)
+                        await $_getPrefetchedData<
+                          Lesson,
+                          $LessonsTable,
+                          Flashcard
+                        >(
+                          currentTable: table,
+                          referencedTable: $$LessonsTableReferences
+                              ._flashcardsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$LessonsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).flashcardsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.lessonId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (exercisesRefs)
-                    await $_getPrefetchedData<Lesson, $LessonsTable, Exercise>(
-                      currentTable: table,
-                      referencedTable: $$LessonsTableReferences
-                          ._exercisesRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$LessonsTableReferences(db, table, p0).exercisesRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.lessonId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -6681,7 +7569,11 @@ typedef $$LessonsTableProcessedTableManager =
       $$LessonsTableUpdateCompanionBuilder,
       (Lesson, $$LessonsTableReferences),
       Lesson,
-      PrefetchHooks Function({bool unitId, bool exercisesRefs})
+      PrefetchHooks Function({
+        bool unitId,
+        bool exercisesRefs,
+        bool flashcardsRefs,
+      })
     >;
 typedef $$ExercisesTableCreateCompanionBuilder =
     ExercisesCompanion Function({
@@ -7066,6 +7958,7 @@ typedef $$FlashcardsTableCreateCompanionBuilder =
       Value<String?> exampleCz,
       Value<String?> exampleEn,
       Value<int?> unitId,
+      Value<int?> lessonId,
     });
 typedef $$FlashcardsTableUpdateCompanionBuilder =
     FlashcardsCompanion Function({
@@ -7080,6 +7973,7 @@ typedef $$FlashcardsTableUpdateCompanionBuilder =
       Value<String?> exampleCz,
       Value<String?> exampleEn,
       Value<int?> unitId,
+      Value<int?> lessonId,
     });
 
 final class $$FlashcardsTableReferences
@@ -7098,6 +7992,23 @@ final class $$FlashcardsTableReferences
       $_db.units,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_unitIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $LessonsTable _lessonIdTable(_$AppDatabase db) => db.lessons
+      .createAlias($_aliasNameGenerator(db.flashcards.lessonId, db.lessons.id));
+
+  $$LessonsTableProcessedTableManager? get lessonId {
+    final $_column = $_itemColumn<int>('lesson_id');
+    if ($_column == null) return null;
+    final manager = $$LessonsTableTableManager(
+      $_db,
+      $_db.lessons,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_lessonIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -7197,6 +8108,29 @@ class $$FlashcardsTableFilterComposer
           }) => $$UnitsTableFilterComposer(
             $db: $db,
             $table: $db.units,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$LessonsTableFilterComposer get lessonId {
+    final $$LessonsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.lessonId,
+      referencedTable: $db.lessons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LessonsTableFilterComposer(
+            $db: $db,
+            $table: $db.lessons,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7313,6 +8247,29 @@ class $$FlashcardsTableOrderingComposer
     );
     return composer;
   }
+
+  $$LessonsTableOrderingComposer get lessonId {
+    final $$LessonsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.lessonId,
+      referencedTable: $db.lessons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LessonsTableOrderingComposer(
+            $db: $db,
+            $table: $db.lessons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$FlashcardsTableAnnotationComposer
@@ -7377,6 +8334,29 @@ class $$FlashcardsTableAnnotationComposer
     return composer;
   }
 
+  $$LessonsTableAnnotationComposer get lessonId {
+    final $$LessonsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.lessonId,
+      referencedTable: $db.lessons,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$LessonsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.lessons,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
   Expression<T> srsCardsRefs<T extends Object>(
     Expression<T> Function($$SrsCardsTableAnnotationComposer a) f,
   ) {
@@ -7416,7 +8396,11 @@ class $$FlashcardsTableTableManager
           $$FlashcardsTableUpdateCompanionBuilder,
           (Flashcard, $$FlashcardsTableReferences),
           Flashcard,
-          PrefetchHooks Function({bool unitId, bool srsCardsRefs})
+          PrefetchHooks Function({
+            bool unitId,
+            bool lessonId,
+            bool srsCardsRefs,
+          })
         > {
   $$FlashcardsTableTableManager(_$AppDatabase db, $FlashcardsTable table)
     : super(
@@ -7442,6 +8426,7 @@ class $$FlashcardsTableTableManager
                 Value<String?> exampleCz = const Value.absent(),
                 Value<String?> exampleEn = const Value.absent(),
                 Value<int?> unitId = const Value.absent(),
+                Value<int?> lessonId = const Value.absent(),
               }) => FlashcardsCompanion(
                 id: id,
                 wordCz: wordCz,
@@ -7454,6 +8439,7 @@ class $$FlashcardsTableTableManager
                 exampleCz: exampleCz,
                 exampleEn: exampleEn,
                 unitId: unitId,
+                lessonId: lessonId,
               ),
           createCompanionCallback:
               ({
@@ -7468,6 +8454,7 @@ class $$FlashcardsTableTableManager
                 Value<String?> exampleCz = const Value.absent(),
                 Value<String?> exampleEn = const Value.absent(),
                 Value<int?> unitId = const Value.absent(),
+                Value<int?> lessonId = const Value.absent(),
               }) => FlashcardsCompanion.insert(
                 id: id,
                 wordCz: wordCz,
@@ -7480,6 +8467,7 @@ class $$FlashcardsTableTableManager
                 exampleCz: exampleCz,
                 exampleEn: exampleEn,
                 unitId: unitId,
+                lessonId: lessonId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -7489,69 +8477,85 @@ class $$FlashcardsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({unitId = false, srsCardsRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (srsCardsRefs) db.srsCards],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (unitId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.unitId,
-                                referencedTable: $$FlashcardsTableReferences
-                                    ._unitIdTable(db),
-                                referencedColumn: $$FlashcardsTableReferences
-                                    ._unitIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({unitId = false, lessonId = false, srsCardsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [if (srsCardsRefs) db.srsCards],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (unitId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.unitId,
+                                    referencedTable: $$FlashcardsTableReferences
+                                        ._unitIdTable(db),
+                                    referencedColumn:
+                                        $$FlashcardsTableReferences
+                                            ._unitIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (lessonId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.lessonId,
+                                    referencedTable: $$FlashcardsTableReferences
+                                        ._lessonIdTable(db),
+                                    referencedColumn:
+                                        $$FlashcardsTableReferences
+                                            ._lessonIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (srsCardsRefs)
+                        await $_getPrefetchedData<
+                          Flashcard,
+                          $FlashcardsTable,
+                          SrsCard
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FlashcardsTableReferences
+                              ._srsCardsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FlashcardsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).srsCardsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.flashcardId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (srsCardsRefs)
-                    await $_getPrefetchedData<
-                      Flashcard,
-                      $FlashcardsTable,
-                      SrsCard
-                    >(
-                      currentTable: table,
-                      referencedTable: $$FlashcardsTableReferences
-                          ._srsCardsRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$FlashcardsTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).srsCardsRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.flashcardId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -7568,7 +8572,7 @@ typedef $$FlashcardsTableProcessedTableManager =
       $$FlashcardsTableUpdateCompanionBuilder,
       (Flashcard, $$FlashcardsTableReferences),
       Flashcard,
-      PrefetchHooks Function({bool unitId, bool srsCardsRefs})
+      PrefetchHooks Function({bool unitId, bool lessonId, bool srsCardsRefs})
     >;
 typedef $$SrsCardsTableCreateCompanionBuilder =
     SrsCardsCompanion Function({
@@ -9860,6 +10864,396 @@ typedef $$LessonProgressTableProcessedTableManager =
       LessonProgressData,
       PrefetchHooks Function()
     >;
+typedef $$SyncQueueTableCreateCompanionBuilder =
+    SyncQueueCompanion Function({
+      Value<int> id,
+      required String entity,
+      required String entityKey,
+      Value<String> op,
+      required String payload,
+      required String deviceId,
+      Value<DateTime> updatedAt,
+      Value<int> attempts,
+    });
+typedef $$SyncQueueTableUpdateCompanionBuilder =
+    SyncQueueCompanion Function({
+      Value<int> id,
+      Value<String> entity,
+      Value<String> entityKey,
+      Value<String> op,
+      Value<String> payload,
+      Value<String> deviceId,
+      Value<DateTime> updatedAt,
+      Value<int> attempts,
+    });
+
+class $$SyncQueueTableFilterComposer
+    extends Composer<_$AppDatabase, $SyncQueueTable> {
+  $$SyncQueueTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entity => $composableBuilder(
+    column: $table.entity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get entityKey => $composableBuilder(
+    column: $table.entityKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get op => $composableBuilder(
+    column: $table.op,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SyncQueueTableOrderingComposer
+    extends Composer<_$AppDatabase, $SyncQueueTable> {
+  $$SyncQueueTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entity => $composableBuilder(
+    column: $table.entity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get entityKey => $composableBuilder(
+    column: $table.entityKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get op => $composableBuilder(
+    column: $table.op,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payload => $composableBuilder(
+    column: $table.payload,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get deviceId => $composableBuilder(
+    column: $table.deviceId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get attempts => $composableBuilder(
+    column: $table.attempts,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SyncQueueTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SyncQueueTable> {
+  $$SyncQueueTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get entity =>
+      $composableBuilder(column: $table.entity, builder: (column) => column);
+
+  GeneratedColumn<String> get entityKey =>
+      $composableBuilder(column: $table.entityKey, builder: (column) => column);
+
+  GeneratedColumn<String> get op =>
+      $composableBuilder(column: $table.op, builder: (column) => column);
+
+  GeneratedColumn<String> get payload =>
+      $composableBuilder(column: $table.payload, builder: (column) => column);
+
+  GeneratedColumn<String> get deviceId =>
+      $composableBuilder(column: $table.deviceId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get attempts =>
+      $composableBuilder(column: $table.attempts, builder: (column) => column);
+}
+
+class $$SyncQueueTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SyncQueueTable,
+          SyncQueueData,
+          $$SyncQueueTableFilterComposer,
+          $$SyncQueueTableOrderingComposer,
+          $$SyncQueueTableAnnotationComposer,
+          $$SyncQueueTableCreateCompanionBuilder,
+          $$SyncQueueTableUpdateCompanionBuilder,
+          (
+            SyncQueueData,
+            BaseReferences<_$AppDatabase, $SyncQueueTable, SyncQueueData>,
+          ),
+          SyncQueueData,
+          PrefetchHooks Function()
+        > {
+  $$SyncQueueTableTableManager(_$AppDatabase db, $SyncQueueTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SyncQueueTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SyncQueueTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SyncQueueTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> entity = const Value.absent(),
+                Value<String> entityKey = const Value.absent(),
+                Value<String> op = const Value.absent(),
+                Value<String> payload = const Value.absent(),
+                Value<String> deviceId = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> attempts = const Value.absent(),
+              }) => SyncQueueCompanion(
+                id: id,
+                entity: entity,
+                entityKey: entityKey,
+                op: op,
+                payload: payload,
+                deviceId: deviceId,
+                updatedAt: updatedAt,
+                attempts: attempts,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String entity,
+                required String entityKey,
+                Value<String> op = const Value.absent(),
+                required String payload,
+                required String deviceId,
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> attempts = const Value.absent(),
+              }) => SyncQueueCompanion.insert(
+                id: id,
+                entity: entity,
+                entityKey: entityKey,
+                op: op,
+                payload: payload,
+                deviceId: deviceId,
+                updatedAt: updatedAt,
+                attempts: attempts,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SyncQueueTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SyncQueueTable,
+      SyncQueueData,
+      $$SyncQueueTableFilterComposer,
+      $$SyncQueueTableOrderingComposer,
+      $$SyncQueueTableAnnotationComposer,
+      $$SyncQueueTableCreateCompanionBuilder,
+      $$SyncQueueTableUpdateCompanionBuilder,
+      (
+        SyncQueueData,
+        BaseReferences<_$AppDatabase, $SyncQueueTable, SyncQueueData>,
+      ),
+      SyncQueueData,
+      PrefetchHooks Function()
+    >;
+typedef $$SyncStateTableCreateCompanionBuilder =
+    SyncStateCompanion Function({
+      required String key,
+      required String value,
+      Value<int> rowid,
+    });
+typedef $$SyncStateTableUpdateCompanionBuilder =
+    SyncStateCompanion Function({
+      Value<String> key,
+      Value<String> value,
+      Value<int> rowid,
+    });
+
+class $$SyncStateTableFilterComposer
+    extends Composer<_$AppDatabase, $SyncStateTable> {
+  $$SyncStateTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SyncStateTableOrderingComposer
+    extends Composer<_$AppDatabase, $SyncStateTable> {
+  $$SyncStateTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SyncStateTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SyncStateTable> {
+  $$SyncStateTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+}
+
+class $$SyncStateTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SyncStateTable,
+          SyncStateData,
+          $$SyncStateTableFilterComposer,
+          $$SyncStateTableOrderingComposer,
+          $$SyncStateTableAnnotationComposer,
+          $$SyncStateTableCreateCompanionBuilder,
+          $$SyncStateTableUpdateCompanionBuilder,
+          (
+            SyncStateData,
+            BaseReferences<_$AppDatabase, $SyncStateTable, SyncStateData>,
+          ),
+          SyncStateData,
+          PrefetchHooks Function()
+        > {
+  $$SyncStateTableTableManager(_$AppDatabase db, $SyncStateTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SyncStateTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SyncStateTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SyncStateTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> key = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SyncStateCompanion(key: key, value: value, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String key,
+                required String value,
+                Value<int> rowid = const Value.absent(),
+              }) => SyncStateCompanion.insert(
+                key: key,
+                value: value,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SyncStateTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SyncStateTable,
+      SyncStateData,
+      $$SyncStateTableFilterComposer,
+      $$SyncStateTableOrderingComposer,
+      $$SyncStateTableAnnotationComposer,
+      $$SyncStateTableCreateCompanionBuilder,
+      $$SyncStateTableUpdateCompanionBuilder,
+      (
+        SyncStateData,
+        BaseReferences<_$AppDatabase, $SyncStateTable, SyncStateData>,
+      ),
+      SyncStateData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -9888,4 +11282,8 @@ class $AppDatabaseManager {
       $$EarnedBadgesTableTableManager(_db, _db.earnedBadges);
   $$LessonProgressTableTableManager get lessonProgress =>
       $$LessonProgressTableTableManager(_db, _db.lessonProgress);
+  $$SyncQueueTableTableManager get syncQueue =>
+      $$SyncQueueTableTableManager(_db, _db.syncQueue);
+  $$SyncStateTableTableManager get syncState =>
+      $$SyncStateTableTableManager(_db, _db.syncState);
 }

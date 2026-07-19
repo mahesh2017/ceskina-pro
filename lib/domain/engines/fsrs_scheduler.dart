@@ -78,6 +78,14 @@ class FSRSScheduler {
     return SchedulingResult(card: updatedCard, nextReviewDate: newDue);
   }
 
+  /// Preview the interval (in whole days) a given rating would schedule,
+  /// without mutating the card. Used to show honest interval hints on the
+  /// rating buttons instead of hardcoded values.
+  int previewIntervalDays(FSRSCard card, Rating rating, DateTime now) {
+    final result = schedule(card, rating, now);
+    return result.nextReviewDate.difference(now).inDays;
+  }
+
   /// Get all cards due for review on or before [asOf].
   List<FSRSCard> getDueCards(List<FSRSCard> allCards, DateTime asOf) {
     return allCards.where((c) => c.due.isBefore(asOf) || c.due.isAtSameMomentAs(asOf)).toList();

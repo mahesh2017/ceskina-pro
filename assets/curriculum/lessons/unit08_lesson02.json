@@ -1,0 +1,230 @@
+{
+  "id": 802,
+  "unit_id": 8,
+  "order_in_unit": 1,
+  "title": "Describing People & Things",
+  "description": "Practice using adjectives to describe family members and everyday objects",
+  "duration_min": 15,
+  "lesson_type": "practice",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 8101,
+      "lesson_id": 802,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct adjective form for the masculine animate noun 'otec'",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Doplňte: 'Můj otec je ___.' (good)",
+        "question_en": "Fill in: 'My father is ___.' (good)",
+        "options": ["dobrá", "dobré", "dobrý", "dobrého"],
+        "correct_index": 2,
+        "explanation": "'Otec' is masculine animate. The adjective 'dobrý' (good) keeps the masculine ending '-ý' in the nominative: Můj otec je dobrý."
+      },
+      "answer_key": "dobrý",
+      "grammar_rule_id": "GR-072",
+      "xp_reward": 15
+    },
+    {
+      "id": 8102,
+      "lesson_id": 802,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct adjective form for the feminine noun 'matka'",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Doplňte: 'Moje matka je ___.' (pretty)",
+        "question_en": "Fill in: 'My mother is ___.' (pretty)",
+        "options": ["hezký", "hezká", "hezké", "hezkou"],
+        "correct_index": 1,
+        "explanation": "'Matka' is feminine. The adjective 'hezký' (pretty) takes the feminine ending '-á': Moje matka je hezká."
+      },
+      "answer_key": "hezká",
+      "grammar_rule_id": "GR-072",
+      "xp_reward": 15
+    },
+    {
+      "id": 8103,
+      "lesson_id": 802,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct adjective form for the neuter noun 'auto'",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Doplňte: 'Naše auto je ___.' (new)",
+        "question_en": "Fill in: 'Our car is ___.' (new)",
+        "options": ["nový", "nová", "nové", "nového"],
+        "correct_index": 2,
+        "explanation": "'Auto' is neuter. The adjective 'nový' (new) takes the neuter ending '-é': Naše auto je nové. 'Naše' is the possessive 'our' used for all genders in singular."
+      },
+      "answer_key": "nové",
+      "grammar_rule_id": "GR-072",
+      "xp_reward": 15
+    },
+    {
+      "id": 8104,
+      "lesson_id": 802,
+      "type": "multiple_choice",
+      "prompt": "Identify the correct adjective + noun phrase for a feminine noun",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správnou frázi pro 'small book':",
+        "question_en": "Choose the correct phrase for 'small book':",
+        "options": ["malý kniha", "malá kniha", "malé kniha", "malou knihu"],
+        "correct_index": 1,
+        "explanation": "'Kniha' (book) is feminine. The adjective 'malý' (small) takes the feminine ending '-á': malá kniha."
+      },
+      "answer_key": "malá kniha",
+      "grammar_rule_id": "GR-071",
+      "xp_reward": 15
+    },
+    {
+      "id": 8105,
+      "lesson_id": 802,
+      "type": "multiple_choice",
+      "prompt": "Identify the correct adjective + noun phrase for a neuter noun",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správnou frázi pro 'old city':",
+        "question_en": "Choose the correct phrase for 'old city':",
+        "options": ["starý město", "stará město", "staré město", "starému městu"],
+        "correct_index": 2,
+        "explanation": "'Město' (city) is neuter. The adjective 'starý' (old) takes the neuter ending '-é': staré město."
+      },
+      "answer_key": "staré město",
+      "grammar_rule_id": "GR-071",
+      "xp_reward": 15
+    },
+    {
+      "id": 8106,
+      "lesson_id": 802,
+      "type": "translation",
+      "prompt": "Translate from English to Czech",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "My big family",
+        "accepted_answers": ["Moje velká rodina", "Moje velká rodina.", "Má velká rodina", "Má velká rodina."],
+        "grammar_note": "'Rodina' is feminine, so 'velký' becomes 'velká'. 'Moje' (or colloquially 'má') is the feminine possessive 'my'."
+      },
+      "answer_key": "Moje velká rodina",
+      "grammar_rule_id": "GR-071",
+      "xp_reward": 15
+    },
+    {
+      "id": 8107,
+      "lesson_id": 802,
+      "type": "translation",
+      "prompt": "Translate from English to Czech",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "Her new car",
+        "accepted_answers": ["Její nové auto", "Její nové auto."],
+        "grammar_note": "'Auto' is neuter, so 'nový' becomes 'nové'. 'Její' is the possessive 'her', which does not change by gender."
+      },
+      "answer_key": "Její nové auto",
+      "grammar_rule_id": "GR-071",
+      "xp_reward": 15
+    },
+    {
+      "id": 8108,
+      "lesson_id": 802,
+      "type": "translation",
+      "prompt": "Translate from English to Czech",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "Our old house",
+        "accepted_answers": ["Náš starý dům", "Naše starý dům", "Náš starý dům.", "Naše starý dům."],
+        "grammar_note": "'Dům' (house) is masculine inanimate, so 'starý' keeps the masculine ending '-ý'. 'Náš' is the masculine possessive 'our'; 'naše' is used for feminine/neuter but is also commonly heard with masculine in everyday speech."
+      },
+      "answer_key": "Náš starý dům",
+      "grammar_rule_id": "GR-073",
+      "xp_reward": 15
+    },
+    {
+      "id": 8109,
+      "lesson_id": 802,
+      "type": "fill_blank",
+      "prompt": "Fill in the blank with the correct form of 'big' (velký)",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Máme ___ psa. (big)",
+        "blank_count": 1,
+        "accepted_answers": ["velkého"],
+        "explanation": "'Pes' (dog) is masculine animate. In the accusative case (object of 'mít'), the adjective ending for masculine animate becomes '-ého': velkého psa. This is accusative singular masculine animate."
+      },
+      "answer_key": "velkého",
+      "grammar_rule_id": "GR-071",
+      "xp_reward": 20
+    },
+    {
+      "id": 8110,
+      "lesson_id": 802,
+      "type": "word_order",
+      "prompt": "Arrange the words to form the question and answer",
+      "data": {
+        "type": "word_order",
+        "words": ["Kdo", "je", "to?", "To", "je", "můj", "bratr."],
+        "correct_order": [0, 1, 2, 3, 4, 5, 6],
+        "explanation": "'Kdo je to?' means 'Who is that?' The response 'To je můj bratr.' means 'That is my brother.' 'Můj' is the masculine possessive."
+      },
+      "answer_key": "Kdo je to? To je můj bratr.",
+      "grammar_rule_id": "GR-070",
+      "xp_reward": 15
+    },
+    {
+      "id": 8111,
+      "lesson_id": 802,
+      "type": "dictation",
+      "prompt": "Listen and write what you hear",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_8111",
+        "expected_text": "Můj otec je dobrý. Moje matka je hezká. Naše auto je nové.",
+        "language": "cs-CZ",
+        "note": "Listen for three different adjective endings: '-ý' (masculine, dobrý), '-á' (feminine, hezká), and '-é' (neuter, nové)."
+      },
+      "answer_key": "Můj otec je dobrý. Moje matka je hezká. Naše auto je nové.",
+      "grammar_rule_id": "GR-072",
+      "xp_reward": 20
+    },
+    {
+      "id": 8112,
+      "lesson_id": 802,
+      "type": "pronunciation",
+      "prompt": "Pronounce the following dialogue line",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Jaký je? Je velký.",
+        "target_audio_hash": "placeholder_8112",
+        "focus_sounds": ["jaký", "velký", "ý"],
+        "min_score": 0.6,
+        "translation_en": "What is he like? He is big."
+      },
+      "answer_key": "Jaký je? Je velký.",
+      "grammar_rule_id": "GR-072",
+      "xp_reward": 15
+    },
+    {
+      "id": 8113,
+      "lesson_id": 802,
+      "type": "dialogue",
+      "prompt": "Complete the dialogue by introducing family members",
+      "data": {
+        "type": "dialogue",
+        "scenario": "Meeting a friend who asks about your family. You introduce your brother and describe him.",
+        "lines": [
+          {"speaker": "person_a", "text": "Kdo je to?"},
+          {"speaker": "person_b", "text": "To je můj bratr."},
+          {"speaker": "person_a", "text": "Jaký je?"},
+          {"speaker": "person_b", "text": "Je velký a dobrý."}
+        ],
+        "accepted_answers": ["To je můj bratr|To je můj bratr.", "Je velký a dobrý|Je velký a dobrý.|Je velký|Je dobrý a velký"],
+        "explanation": "'Kdo je to?' = 'Who is that?' — 'To je můj bratr.' = 'That is my brother.' 'Jaký je?' = 'What is he like?' — 'Je velký a dobrý.' = 'He is big and good.' Note the masculine adjective endings '-ý'."
+      },
+      "answer_key": "To je můj bratr|Je velký a dobrý",
+      "grammar_rule_id": "GR-073",
+      "xp_reward": 25
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "id": 2101,
+  "unit_id": 21,
+  "order_in_unit": 0,
+  "title": "Comparative Adjectives",
+  "description": "Learn how to form Czech comparative adjectives with endings -ější/-ší/-í, master irregular comparatives (lepší, horší, větší, menší), and build comparison sentences using než (than). Essential for comparing people, things, and qualities in everyday Czech.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "exercises": [
+    {
+      "id": 21001,
+      "lesson_id": 2101,
+      "type": "multiple_choice",
+      "prompt": "What is the comparative form of 'nový' (new)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je druhý stupeň (komparativ) slova 'nový'?",
+        "question_en": "What is the comparative form of 'nový' (new)?",
+        "options": ["novýší", "novější", "novší", "novýejší"],
+        "correct_index": 1,
+        "explanation": "Adjecitives ending in -ý form the comparative with -ější (or -ší/‑í for common short adjectives). 'nový' → 'novější' (newer). The suffix -ější is the most common comparative ending."
+      },
+      "answer_key": "novější",
+      "grammar_rule_id": "GR-200",
+      "xp_reward": 10
+    },
+    {
+      "id": 21002,
+      "lesson_id": 2101,
+      "type": "multiple_choice",
+      "prompt": "What is the comparative form of 'starý' (old)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je komparativ slova 'starý'?",
+        "question_en": "What is the comparative form of 'starý' (old)?",
+        "options": ["starýší", "starější", "starší", "staroší"],
+        "correct_index": 2,
+        "explanation": "Common short adjectives often take the shorter suffix -ší instead of -ější. 'starý' → 'starší' (older). Other common -ší forms: 'mladý' → 'mladší', 'čistý' → 'čistší', 'hustý' → 'hustší'. The pattern loses the -ý and adds -ší."
+      },
+      "answer_key": "starší",
+      "grammar_rule_id": "GR-200",
+      "xp_reward": 10
+    },
+    {
+      "id": 21003,
+      "lesson_id": 2101,
+      "type": "fill_blank",
+      "prompt": "Form the comparative of 'teplý' (warm): ___",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Dnes je ___ než včera. (teplý — today is warmer than yesterday)",
+        "blank_count": 1,
+        "accepted_answers": ["teplejší"],
+        "explanation": "'teplý' → 'teplejší' (warmer). Most -ý adjectives form the comparative by replacing -ý with -ější: teplý → teplejší, chladný → chladnější, zajímavý → zajímavější."
+      },
+      "answer_key": "teplejší",
+      "grammar_rule_id": "GR-200",
+      "xp_reward": 15
+    },
+    {
+      "id": 21004,
+      "lesson_id": 2101,
+      "type": "multiple_choice",
+      "prompt": "What is the comparative of 'dobrý' (good)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je komparativ slova 'dobrý'?",
+        "question_en": "What is the comparative of 'dobrý' (good)?",
+        "options": ["dobřejší", "dobrýší", "lepší", "dobřejí"],
+        "correct_index": 2,
+        "explanation": "'dobrý' is one of four key irregular comparatives. It becomes 'lepší' (better) — a completely different stem. The four irregulars are: dobrý → lepší, špatný → horší, velký → větší, malý → menší."
+      },
+      "answer_key": "lepší",
+      "grammar_rule_id": "GR-201",
+      "xp_reward": 10
+    },
+    {
+      "id": 21005,
+      "lesson_id": 2101,
+      "type": "multiple_choice",
+      "prompt": "What is the comparative of 'špatný' (bad)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký je komparativ slova 'špatný'?",
+        "question_en": "What is the comparative of 'špatný' (bad)?",
+        "options": ["špatnější", "horší", "špatnýší", "hůřší"],
+        "correct_index": 1,
+        "explanation": "'špatný' → 'horší' (worse). This is irregular — a completely different stem. Compare: Dobrý → lepší (better), špatný → horší (worse), velký → větší (bigger), malý → menší (smaller)."
+      },
+      "answer_key": "horší",
+      "grammar_rule_id": "GR-201",
+      "xp_reward": 10
+    },
+    {
+      "id": 21006,
+      "lesson_id": 2101,
+      "type": "fill_blank",
+      "prompt": "Form the comparative of 'velký' (big): Prague is bigger than Brno.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Praha je ___ než Brno. (velký)",
+        "blank_count": 1,
+        "accepted_answers": ["větší"],
+        "explanation": "'velký' → 'větší' (bigger). This is an irregular comparative — note the stem change from 'velk-' to 'vět-'. 'Praha je větší než Brno.' = Prague is bigger than Brno."
+      },
+      "answer_key": "větší",
+      "grammar_rule_id": "GR-201",
+      "xp_reward": 15
+    },
+    {
+      "id": 21007,
+      "lesson_id": 2101,
+      "type": "fill_blank",
+      "prompt": "Form the comparative of 'malý' (small): My apartment is smaller.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Můj byt je ___ než tvůj. (malý — smaller than yours)",
+        "blank_count": 1,
+        "accepted_answers": ["menší"],
+        "explanation": "'malý' → 'menší' (smaller). Another irregular comparative with a stem change. The four irregulars form the core of everyday comparisons: lepší, horší, větší, menší."
+      },
+      "answer_key": "menší",
+      "grammar_rule_id": "GR-201",
+      "xp_reward": 15
+    },
+    {
+      "id": 21008,
+      "lesson_id": 2101,
+      "type": "multiple_choice",
+      "prompt": "Which word means 'than' in Czech comparisons?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které slovo znamená 'than' v českých srovnáních?",
+        "question_en": "Which word means 'than' in Czech comparisons?",
+        "options": ["a", "ale", "než", "také"],
+        "correct_index": 2,
+        "explanation": "'než' = than. Used after a comparative: 'X je [comparative] než Y.' (X is [comparative] than Y.) Example: 'Petr je vyšší než Jan.' = Petr is taller than Jan. Not to be confused with 'než' as a temporal conjunction (before/until) — context determines the meaning."
+      },
+      "answer_key": "než",
+      "grammar_rule_id": "GR-202",
+      "xp_reward": 10
+    },
+    {
+      "id": 21009,
+      "lesson_id": 2101,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'This house is bigger than that one.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "This house is bigger than that one.",
+        "accepted_answers": ["Tento dům je větší než tamten.", "Ten dům je větší než tamten.", "Tenhle dům je větší než tamten.", "Tento dům je větší než ten."],
+        "grammar_note": "Standard comparison pattern: [subject] + je + [comparative] + než + [compared item]. 'Tento' = this, 'tamten' = that one over there. 'Dům' = house (masc.). 'Větší' is the irregular comparative of 'velký'."
+      },
+      "answer_key": "Tento dům je větší než tamten.",
+      "grammar_rule_id": "GR-202",
+      "xp_reward": 10
+    },
+    {
+      "id": 21010,
+      "lesson_id": 2101,
+      "type": "fill_blank",
+      "prompt": "Complete the comparison: Coffee is better than tea.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Káva je ___ než čaj.",
+        "blank_count": 1,
+        "accepted_answers": ["lepší"],
+        "explanation": "'lepší' = better (irregular comparative of 'dobrý'). 'Káva je lepší než čaj.' = Coffee is better than tea. The structure is always: comparative + 'než' + the item being compared."
+      },
+      "answer_key": "lepší",
+      "grammar_rule_id": "GR-202",
+      "xp_reward": 15
+    },
+    {
+      "id": 21011,
+      "lesson_id": 2101,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'She is younger than her brother.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "She is younger than her brother.",
+        "accepted_answers": ["Ona je mladší než její bratr.", "Je mladší než její bratr.", "Ona je mladší než bratr.", "Je mladší než bratr."],
+        "grammar_note": "'mladý' → 'mladší' (younger) — regular -ší comparative. 'Její bratr' = her brother. The compared item after 'než' takes nominative case (it's the subject of an implied clause)."
+      },
+      "answer_key": "Ona je mladší než její bratr.",
+      "grammar_rule_id": "GR-202",
+      "xp_reward": 10
+    },
+    {
+      "id": 21012,
+      "lesson_id": 2101,
+      "type": "pronunciation",
+      "prompt": "Pronounce the comparison sentence.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Můj bratr je starší než já, ale sestra je mladší.",
+        "target_audio_hash": "placeholder_21012",
+        "focus_sounds": ["starší", "než já", "mladší"],
+        "min_score": 0.6,
+        "translation_en": "My brother is older than me, but my sister is younger."
+      },
+      "answer_key": "Můj bratr je starší než já, ale sestra je mladší.",
+      "grammar_rule_id": "GR-202",
+      "xp_reward": 15
+    }
+  ]
+}

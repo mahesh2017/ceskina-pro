@@ -3,11 +3,11 @@ import '../repositories/llm_service.dart';
 import '../entities/chat_message.dart';
 import '../entities/enums.dart';
 
-/// LLM Orchestrator — builds prompts, sends to LLM, parses structured responses.
+/// LLM Orchestrator — builds prompts and parses structured responses.
+/// Stateless: callers pass the built request to whichever [LlmService]
+/// is currently configured.
 class LLMOrchestrator {
-  final LlmService _llm;
-
-  LLMOrchestrator(this._llm);
+  const LLMOrchestrator();
 
   /// Build a conversation turn request with system prompt and history.
   LlmRequest buildConversationRequest({
@@ -22,7 +22,7 @@ class LLMOrchestrator {
       ...history.map((m) => LlmMessage(
             m.role == MessageRole.user ? LlmRole.user : LlmRole.assistant,
             m.content,
-          )),
+          ),),
       LlmMessage(LlmRole.user, userMessage),
     ];
 
@@ -112,14 +112,15 @@ Rules:
   ],
   "new_vocabulary": [
     {"cz": "...", "en": "...", "ipa": "..."}
-  ]
+  ],
+  "suggested_replies": ["two or three short Czech replies the learner could send next, at their level"]
 }
 ''';
   }
 
   String _selectModel(CEFRLevel level) {
-    // Use cheapest model that handles Czech well
-    // DeepSeek V3 is recommended for cost/quality balance
-    return 'deepseek-v3';
+    // 'deepseek-chat' is the official API model ID for DeepSeek-V3 —
+    // the cheapest model that handles Czech well.
+    return 'deepseek-chat';
   }
 }

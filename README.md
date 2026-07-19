@@ -11,9 +11,11 @@ Built with **Flutter, Clean Architecture, Riverpod, Drift/SQLite**, custom SM-2 
 - **State Management:** Riverpod 3.x (Notifier + FutureProvider)
 - **Navigation:** GoRouter with adaptive scaffold (mobile bottom nav / desktop side rail)
 - **Database:** Drift (SQLite) — 12 tables, 4 DAOs
-- **AI:** DeepSeek API (chat completions with JSON response format)
+- **Course source:** Published Supabase JSONB packs → cached local Drift
+- **AI:** Authenticated Supabase Edge Function → DeepSeek JSON completions
 - **STT:** native `speech_to_text` (on-device, OS-native, `cs_CZ` locale)
-- **TTS:** `flutter_tts` with hash-based file caching via `just_audio`
+- **TTS:** Azure neural voice packs from Supabase Storage, permanently cached
+  for `just_audio`, with native `flutter_tts` fallback
 - **Spaced Repetition:** Custom SM-2 scheduler with ease factor accumulation
 - **Platforms:** iOS, Android, macOS, Windows (~95% shared code)
 
@@ -22,8 +24,8 @@ Built with **Flutter, Clean Architecture, Riverpod, Drift/SQLite**, custom SM-2 
 ### 📚 Interactive Lessons
 - Units 1-3 seeded (100+ vocabulary, 13 grammar rules, 6 lessons, 69 exercises)
 - 8 exercise types: multiple choice, fill-blank, translation, word-order, dictation, declension table, dialogue, pronunciation
-- Hearts system (5 lives, wrong answer = -1 heart)
-- XP rewards + streak tracking
+- Global hearts system (5 lives, wrong answer = -1 heart, 1 heart regenerates every 30 min)
+- XP rewards + streak tracking + daily XP that resets each day
 - Unit unlocking based on progress
 
 ### 🔁 Spaced Repetition Review
@@ -45,14 +47,15 @@ Built with **Flutter, Clean Architecture, Riverpod, Drift/SQLite**, custom SM-2 
 - Grammar corrections with rule explanations
 - New vocabulary chips per message
 - TTS speak button on every tutor message
-- Powered by DeepSeek API (mock fallback when no API key)
+- Powered by a quota-controlled server proxy; no provider key ships in the app
 
 ### 📝 Mock CCE Exams
 - 4 timed sections: Reading, Listening, Writing, Speaking
 - Per-section countdown timer with visual progress bar
+- Listening plays real TTS audio (the sentence is never shown)
+- Speaking is recorded and scored via speech recognition
 - AI writing evaluation (grammar, vocabulary, coherence scores)
-- Reading comprehension with passage + multiple choice
-- Result screen with per-section scores and pass/fail
+- Results persisted to the database; pass at 60% overall
 
 ### 📊 Progress & Stats
 - CEFR level estimate (Pre-A1 / A1 / A2)
@@ -64,8 +67,8 @@ Built with **Flutter, Clean Architecture, Riverpod, Drift/SQLite**, custom SM-2 
 ### 🎨 Polish & Desktop
 - Dark/light/system theme switching
 - Adaptive layout: mobile bottom nav, desktop NavigationRail (≥600px)
-- Onboarding flow (level assessment, goal setting, API key config)
-- Settings screen (theme, daily goal, TTS rate, API key management)
+- Onboarding flow (level assessment and goal setting)
+- Settings screen (theme, daily goal, neural voice, and TTS rate)
 - TTS audio file caching (MD5-hashed, plays cached via `just_audio`)
 
 ## Project Structure
@@ -79,14 +82,14 @@ lib/
 │   └── repositories/  # Interface contracts (TTS, STT, LLM, Exam, Conversation, Progress)
 ├── data/
 │   ├── database/      # Drift schema (12 tables, 4 DAOs), migrations
-│   ├── repositories/  # Drift implementations + DeepSeek API client
+│   ├── repositories/  # Drift implementations + authenticated AI proxy client
 │   └── seeds/         # Content seeder (JSON → DB) with SRS card seeding
 └── presentation/
     ├── providers/     # 15+ Riverpod Notifier providers (gamification, chat, pronunciation,
     │                  #   writing eval, settings, curriculum, review, database, TTS, STT, LLM)
     ├── routes/        # GoRouter config + adaptive scaffold
     ├── screens/       # Home, Curriculum, Lesson, Review, Chat, Pronunciation, Exam,
-    │                  #   Stats, Settings, Onboarding (welcome/level/goal/API key)
+    │                  #   Stats, Settings, Onboarding (welcome/level/goal)
     └── widgets/       # ExerciseWidget (8 types), HeartsDisplay, StreakIndicator, XpBadge,
                        #   RecordButton, TtsButton
 ```
@@ -95,12 +98,19 @@ lib/
 
 | Metric | Value |
 |---|---|
-| Dart files | **93 files** |
-| Lines of code | **~22,100** |
-| `flutter analyze` | **0 errors** (45 info/warnings) |
-| `flutter test` | **48/48 passing** |
-| Git commits | **11** on `main` |
+| Dart files | **96 files** |
+| `flutter analyze --fatal-infos` | **clean (0 issues)** |
+| `flutter test` | **72/72 passing** |
+| CI | GitHub Actions (analyze + test) |
 | Phases 1-4 | **All complete** |
+
+### Remaining before store release
+
+- Generate a real Android upload keystore and fill in `android/key.properties`
+  (see `android/app/build.gradle.kts` for the expected keys).
+- Publish a privacy policy — AI requests pass through the Čeština Pro Supabase
+  Edge Function and are processed by DeepSeek.
+- Replace the sample mock-exam content with a full CCE-format question bank.
 
 ## Development
 
@@ -119,6 +129,9 @@ flutter analyze
 # Run tests
 flutter test
 
+# Release build (Android; requires android/key.properties for store signing)
+flutter build appbundle
+
 # Run on device/emulator
 flutter run
 ```
@@ -130,7 +143,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full 20-section architecture docu
 - Layer architecture & dependency graph
 - 5 domain engines (SM-2, Gamification, Pronunciation, LLM, Curriculum)
 - Drift database schema (12 tables)
-- AI integration (DeepSeek API, native STT, flutter_tts with caching)
+- AI integration (Supabase proxy, DeepSeek, native STT, neural audio packs)
 - LLM JSON contracts for tutor AI with corrections + vocabulary extraction
 - Audio pipeline & platform configs (mic permissions on Android + iOS)
 - 4-phase roadmap (MVP → Production)

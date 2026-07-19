@@ -1,0 +1,218 @@
+{
+  "id": 1801,
+  "unit_id": 18,
+  "order_in_unit": 0,
+  "title": "Locative — Talking About Places & Topics",
+  "description": "Master the locative case (6th case): v/na + locative for places, o + locative for topics, locative endings across genders, and key verbs like mluvit o and přemýšlet o.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "exercises": [
+    {
+      "id": 18001,
+      "lesson_id": 1801,
+      "type": "multiple_choice",
+      "prompt": "What does the preposition 'v' + locative mean?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "v + lokál",
+        "question_en": "What does 'v' + locative mean?",
+        "options": ["in", "on/at", "with", "about"],
+        "correct_index": 0,
+        "explanation": "'v' (or 've' before certain consonants) + locative = 'in'. Example: v pokoji (in the room), v Praze (in Prague). 'na' + locative = 'on/at'."
+      },
+      "answer_key": "in",
+      "grammar_rule_id": "GR-170",
+      "xp_reward": 10
+    },
+    {
+      "id": 18002,
+      "lesson_id": 1801,
+      "type": "multiple_choice",
+      "prompt": "Which preposition means 'about' and takes the locative case?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která předložka znamená 'about' a pojí se s lokálem?",
+        "question_en": "Which preposition means 'about' and takes the locative?",
+        "options": ["v", "na", "o", "s"],
+        "correct_index": 2,
+        "explanation": "'o' + locative = 'about'. Used with verbs like mluvit o (talk about), přemýšlet o (think about), číst o (read about). Also in titles: kniha o Praze (a book about Prague)."
+      },
+      "answer_key": "o",
+      "grammar_rule_id": "GR-172",
+      "xp_reward": 10
+    },
+    {
+      "id": 18003,
+      "lesson_id": 1801,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct preposition: v or na.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Bydlím ___ Praze a pracuji ___ univerzitě.",
+        "blank_count": 2,
+        "accepted_answers": ["v", "na"],
+        "explanation": "'v Praze' = in Prague (cities use 'v' + locative). 'na univerzitě' = at the university ('univerzita' uses 'na' + locative, like many institutions)."
+      },
+      "answer_key": "v, na",
+      "grammar_rule_id": "GR-170",
+      "xp_reward": 15
+    },
+    {
+      "id": 18004,
+      "lesson_id": 1801,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I live in Prague.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I live in Prague.",
+        "accepted_answers": ["Bydlím v Praze.", "Bydlím v Praze"],
+        "grammar_note": "'Bydlím' = I live. 'v Praze' = in Prague — Praha → Praze (locative). Feminine nouns ending in -a change to -e in locative: Praha → Praze."
+      },
+      "answer_key": "Bydlím v Praze.",
+      "grammar_rule_id": "GR-170",
+      "xp_reward": 10
+    },
+    {
+      "id": 18005,
+      "lesson_id": 1801,
+      "type": "multiple_choice",
+      "prompt": "What does 'O čem mluvíš?' mean?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "O čem mluvíš?",
+        "question_en": "What does 'O čem mluvíš?' mean?",
+        "options": [
+          "What are you talking about?",
+          "Where are you talking?",
+          "Who are you talking to?",
+          "Why are you talking?"
+        ],
+        "correct_index": 0,
+        "explanation": "'O čem mluvíš?' = What are you talking about? 'O čem' = about what (locative of 'co'). 'Mluvíš' = you talk/speak (2nd person singular). Question pattern: O kom? (about whom?) / O čem? (about what?)"
+      },
+      "answer_key": "What are you talking about?",
+      "grammar_rule_id": "GR-172",
+      "xp_reward": 10
+    },
+    {
+      "id": 18006,
+      "lesson_id": 1801,
+      "type": "fill_blank",
+      "prompt": "Complete the locative form of these masculine nouns.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "v ___ (hotel) → v hotel___. na ___ (hrad) → na hrad___.",
+        "blank_count": 2,
+        "accepted_answers": ["hotelu", "hradě"],
+        "explanation": "Masculine inanimate locative endings: most end in -u (v hotelu, v obchodě) or -e/-ě (na hradě). The -u ending is common for hard-stem masculine nouns. Some soft-stem nouns take -i."
+      },
+      "answer_key": "hotelu, hradě",
+      "grammar_rule_id": "GR-170",
+      "xp_reward": 15
+    },
+    {
+      "id": 18007,
+      "lesson_id": 1801,
+      "type": "fill_blank",
+      "prompt": "Complete the locative form of these feminine nouns.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "v ___ (škola) → ve škol___. na ___ (ulice) → na ulic___. o ___ (práce) → o prác___. ",
+        "blank_count": 3,
+        "accepted_answers": ["škole", "ulici", "práci"],
+        "explanation": "Feminine locative endings: -a stems → -e (škola → ve škole), -e stems → -i (ulice → na ulici). The 've' form is used before certain consonant clusters for easier pronunciation."
+      },
+      "answer_key": "škole, ulici, práci",
+      "grammar_rule_id": "GR-170",
+      "xp_reward": 15
+    },
+    {
+      "id": 18008,
+      "lesson_id": 1801,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'We are talking about the weather.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "We are talking about the weather.",
+        "accepted_answers": ["Mluvíme o počasí.", "Mluvíme o počasí"],
+        "grammar_note": "'Mluvíme' = we talk/speak. 'o počasí' = about the weather. 'Počasí' is neuter — locative stays the same as nominative (-í ending). Pattern: mluvit o + locative."
+      },
+      "answer_key": "Mluvíme o počasí.",
+      "grammar_rule_id": "GR-172",
+      "xp_reward": 10
+    },
+    {
+      "id": 18009,
+      "lesson_id": 1801,
+      "type": "multiple_choice",
+      "prompt": "Which is the correct locative form of 'restaurace' (restaurant)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Lokál slova 'restaurace'",
+        "question_en": "Locative of 'restaurace'",
+        "options": ["v restauraci", "v restaurace", "v restauraci", "na restaurace"],
+        "correct_index": 0,
+        "explanation": "'V restauraci' = in the restaurant. Feminine nouns ending in -e like 'restaurace' take -i in the locative: restaurace → restauraci. The preposition is 'v' for enclosed spaces."
+      },
+      "answer_key": "v restauraci",
+      "grammar_rule_id": "GR-170",
+      "xp_reward": 10
+    },
+    {
+      "id": 18010,
+      "lesson_id": 1801,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct form of přemýšlet o + locative.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Přemýšlím o ___ (dovolená). Přemýšlíš o ___ (budoucnost)?",
+        "blank_count": 2,
+        "accepted_answers": ["dovolené", "budoucnosti"],
+        "explanation": "'Přemýšlet o' = to think about, always followed by locative. 'Dovolená' → 'o dovolené' (fem -á → -é). 'Budoucnost' → 'o budoucnosti' (fem -ost → -osti). Key verb for abstract topics."
+      },
+      "answer_key": "dovolené, budoucnosti",
+      "grammar_rule_id": "GR-172",
+      "xp_reward": 15
+    },
+    {
+      "id": 18011,
+      "lesson_id": 1801,
+      "type": "dialogue",
+      "prompt": "Complete the dialogue about topics of conversation.",
+      "data": {
+        "type": "dialogue",
+        "scenario": "V kavárně — At a café",
+        "lines": [
+          {"speaker": "person_a", "text": "O čem mluvíte s kamarádem?"},
+          {"speaker": "person_b", "text": "___ (We're talking about work and vacation.)"},
+          {"speaker": "person_a", "text": "A o čem přemýšlíš?"},
+          {"speaker": "person_b", "text": "___ (I'm thinking about the future.)"}
+        ],
+        "accepted_answers": ["Mluvíme o práci a o dovolené|Přemýšlím o budoucnosti", "Mluvíme o práci a dovolené|Přemýšlím o budoucnosti"],
+        "explanation": "'O čem mluvíte?' = What are you talking about? Answer: 'Mluvíme o práci a o dovolené.' = We're talking about work and vacation. 'O čem přemýšlíš?' = What are you thinking about? 'Přemýšlím o budoucnosti.' = I'm thinking about the future. Both verbs take o + locative."
+      },
+      "answer_key": "Mluvíme o práci a o dovolené|Přemýšlím o budoucnosti",
+      "grammar_rule_id": "GR-172",
+      "xp_reward": 25
+    },
+    {
+      "id": 18012,
+      "lesson_id": 1801,
+      "type": "pronunciation",
+      "prompt": "Pronounce the sentence about conversation topics.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Mluvíme o dovolené a přemýšlíme o létě.",
+        "target_audio_hash": "placeholder_18012",
+        "focus_sounds": ["mlu", "do", "lé", "pře"],
+        "min_score": 0.6,
+        "translation_en": "We're talking about vacation and thinking about summer."
+      },
+      "answer_key": "Mluvíme o dovolené a přemýšlíme o létě.",
+      "grammar_rule_id": "GR-172",
+      "xp_reward": 15
+    }
+  ]
+}

@@ -17,6 +17,123 @@
       "order_index": 2,
       "grammar_tags": ["greetings", "introductions"],
       "is_exam_prep": false
+    },
+    {
+      "id": 3,
+      "title": "Gender & Nominative Case",
+      "description": "Masculine, feminine, neuter nouns. To je... identification pattern. Profession pairs.",
+      "phase": "a1",
+      "order_index": 3,
+      "grammar_tags": ["gender", "nominative", "nouns"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 4,
+      "title": "Present Tense — být & mít",
+      "description": "Conjugation of být (to be) and mít (to have). Negation and question forms.",
+      "phase": "a1",
+      "order_index": 4,
+      "grammar_tags": ["verbs", "present_tense", "být", "mít", "negation"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 5,
+      "title": "Present Tense — Regular Verbs",
+      "description": "Three conjugation classes: -át, -ít, -et/-ět. Daily activities, speaking, understanding.",
+      "phase": "a1",
+      "order_index": 5,
+      "grammar_tags": ["verbs", "conjugation", "present_tense"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 6,
+      "title": "Accusative Case",
+      "description": "Direct objects: feminine -a→-u, masculine animate -a/-e, inanimate/neuter unchanged.",
+      "phase": "a1",
+      "order_index": 6,
+      "grammar_tags": ["accusative", "case", "nouns"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 7,
+      "title": "Pronouns & Possessives",
+      "description": "Personal pronouns (já, ty, on...) and possessive adjectives (můj, tvůj, náš...). Gender agreement.",
+      "phase": "a1",
+      "order_index": 7,
+      "grammar_tags": ["pronouns", "possessives", "gender_agreement"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 8,
+      "title": "Family & Basic Descriptions",
+      "description": "Family vocabulary, adjective-noun gender agreement, describing people and things.",
+      "phase": "a1",
+      "order_index": 8,
+      "grammar_tags": ["family", "adjectives", "gender_agreement", "descriptions"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 9,
+      "title": "Numbers, Time & Dates",
+      "description": "Čísla 0-100, Kolik je hodin?, days of the week, months, telling time. Dnes je...",
+      "phase": "a1",
+      "order_index": 9,
+      "grammar_tags": ["numbers", "time", "dates", "calendar"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 10,
+      "title": "Daily Routine & Reflexive Verbs",
+      "description": "Reflexive se/si, morning/evening routines, vstávám, sprchuju se. Telling the daily schedule.",
+      "phase": "a1",
+      "order_index": 10,
+      "grammar_tags": ["reflexive_verbs", "daily_routine", "adverbs_of_time"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 11,
+      "title": "Food, Drink & Restaurants",
+      "description": "Ordering jídlo a pití, Czech cuisine vocab, accusative with jíst/pít. V restauraci.",
+      "phase": "a1",
+      "order_index": 11,
+      "grammar_tags": ["food", "restaurant", "accusative", "quantities"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 12,
+      "title": "Shopping, Prices & Clothes",
+      "description": "Kolik to stojí? Prices, sizes, colors. Clothes shopping, accusative with chtít/kupovat.",
+      "phase": "a1",
+      "order_index": 12,
+      "grammar_tags": ["shopping", "prices", "clothes", "accusative"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 13,
+      "title": "Hobbies & Free Time",
+      "description": "Mít rád, rád + verb. Co rád děláš? Sports, music, reading. Adverbs of frequency.",
+      "phase": "a1",
+      "order_index": 13,
+      "grammar_tags": ["hobbies", "like_dislike", "adverbs", "free_time"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 14,
+      "title": "Directions, Places & Transport",
+      "description": "Kde je...? Directions, places in town, transport. Locative intro: v Praze, na náměstí.",
+      "phase": "a1",
+      "order_index": 14,
+      "grammar_tags": ["directions", "places", "transport", "locative_intro"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 15,
+      "title": "Weather, Seasons & Travel",
+      "description": "Počasí, roční období, travel basics. Bude pršet. Past tense intro: byl jsem v...",
+      "phase": "a1",
+      "order_index": 15,
+      "grammar_tags": ["weather", "seasons", "travel", "past_tense_intro", "future_intro"],
+      "is_exam_prep": false
     }
   ]
 }

@@ -62,23 +62,39 @@ class TutorResponse {
   final List<Correction> corrections;
   final List<NewVocabulary> newVocabulary;
 
+  /// Short Czech replies the learner could send next (A1-level scaffolding
+  /// for learners who freeze). Optional — older responses omit it.
+  final List<String> suggestedReplies;
+
   const TutorResponse({
     required this.tutorReplyCz,
     required this.tutorReplyEn,
     required this.corrections,
     required this.newVocabulary,
+    this.suggestedReplies = const [],
   });
 
   factory TutorResponse.fromJson(Map<String, dynamic> json) {
+    final replyCz = json['tutor_reply_cz'] as String?;
+    if (replyCz == null || replyCz.isEmpty) {
+      throw const FormatException('Tutor response is missing tutor_reply_cz');
+    }
     return TutorResponse(
-      tutorReplyCz: json['tutor_reply_cz'] as String,
-      tutorReplyEn: json['tutor_reply_en'] as String,
-      corrections: (json['corrections'] as List<dynamic>)
-          .map((e) => Correction.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      tutorReplyCz: replyCz,
+      tutorReplyEn: json['tutor_reply_en'] as String? ?? '',
+      corrections: (json['corrections'] as List<dynamic>?)
+              ?.whereType<Map<String, dynamic>>()
+              .map(Correction.fromJson)
+              .toList() ??
+          [],
       newVocabulary: (json['new_vocabulary'] as List<dynamic>?)
-          ?.map((e) => NewVocabulary.fromJson(e as Map<String, dynamic>))
-          .toList() ??
+              ?.whereType<Map<String, dynamic>>()
+              .map(NewVocabulary.fromJson)
+              .toList() ??
+          [],
+      suggestedReplies: (json['suggested_replies'] as List<dynamic>?)
+              ?.whereType<String>()
+              .toList() ??
           [],
     );
   }
