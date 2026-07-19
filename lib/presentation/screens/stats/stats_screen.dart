@@ -1,8 +1,11 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../providers/gamification_providers.dart';
 import '../../providers/curriculum_providers.dart';
 import '../../providers/database_providers.dart';
+import '../../widgets/common/soft_ui.dart';
 import '../../../domain/engines/curriculum_tracker.dart';
 import '../../../domain/entities/exam_result.dart';
 import '../../../domain/entities/gamification_state.dart';
@@ -15,82 +18,69 @@ class StatsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
     final gamification = ref.watch(gamificationProvider);
     final dataAsync = ref.watch(_statsDataProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Your Progress')),
-      body: dataAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(child: Text('Failed to load: $err')),
-        data: (data) {
-          final snapshot = data.snapshot;
-          final tracker = CurriculumProgressTracker();
+      backgroundColor: t.bg,
+      body: SafeArea(
+        bottom: false,
+        child: dataAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, _) => Center(child: Text('Failed to load: $err')),
+          data: (data) {
+            final snapshot = data.snapshot;
+            final tracker = CurriculumProgressTracker();
 
-          final a1UnitIds =
-              data.units.where((u) => u.phase == Phase.a1).map((u) => u.id).toSet();
-          final a2UnitIds =
-              data.units.where((u) => u.phase == Phase.a2).map((u) => u.id).toSet();
+            final a1UnitIds = data.units
+                .where((u) => u.phase == Phase.a1)
+                .map((u) => u.id)
+                .toSet();
+            final a2UnitIds = data.units
+                .where((u) => u.phase == Phase.a2)
+                .map((u) => u.id)
+                .toSet();
 
-          final a1Completion = tracker.phaseCompletion(
-            unitScores: snapshot.unitScores,
-            phaseUnitIds: a1UnitIds,
-          );
-          final a2Completion = tracker.phaseCompletion(
-            unitScores: snapshot.unitScores,
-            phaseUnitIds: a2UnitIds,
-          );
-          final cefrLevel = tracker.estimateLevel(
-            a1Completion: a1Completion,
-            a2Completion: a2Completion,
-            examsPassed: snapshot.examsPassed,
-          );
+            final a1Completion = tracker.phaseCompletion(
+                unitScores: snapshot.unitScores, phaseUnitIds: a1UnitIds);
+            final a2Completion = tracker.phaseCompletion(
+                unitScores: snapshot.unitScores, phaseUnitIds: a2UnitIds);
+            final cefrLevel = tracker.estimateLevel(
+              a1Completion: a1Completion,
+              a2Completion: a2Completion,
+              examsPassed: snapshot.examsPassed,
+            );
 
-          // Show mastery rows only for units the learner has started.
-          final startedA1 = a1UnitIds
-              .where(snapshot.unitScores.containsKey)
-              .toList()
-            ..sort();
-          final startedA2 = a2UnitIds
-              .where(snapshot.unitScores.containsKey)
-              .toList()
-            ..sort();
+            final startedA1 =
+                a1UnitIds.where(snapshot.unitScores.containsKey).toList()..sort();
+            final startedA2 =
+                a2UnitIds.where(snapshot.unitScores.containsKey).toList()..sort();
 
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              // CEFR Level card
-              _CefrLevelCard(level: cefrLevel),
-              const SizedBox(height: 16),
-
-              // Completion progress bars
-              _CompletionCard(
-                a1Completion: a1Completion,
-                a2Completion: a2Completion,
-              ),
-              const SizedBox(height: 16),
-
-              // Streak & XP stats
-              _StatsGrid(gamification: gamification),
-              const SizedBox(height: 16),
-
-              // Unit mastery breakdown
-              _UnitMasteryCard(
-                unitScores: snapshot.unitScores,
-                a1Units: startedA1,
-                a2Units: startedA2,
-              ),
-              const SizedBox(height: 16),
-
-              // Exam history
-              const _ExamHistoryCard(),
-              const SizedBox(height: 16),
-
-              // Badges
-              _BadgesCard(earnedBadges: gamification.earnedBadges),
-            ],
-          );
-        },
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+              children: [
+                const DisplayText('Your progress', size: 26),
+                const SizedBox(height: 16),
+                _CefrLevelCard(level: cefrLevel, a1Completion: a1Completion),
+                const SizedBox(height: 14),
+                _CompletionCard(
+                    a1Completion: a1Completion, a2Completion: a2Completion),
+                const SizedBox(height: 14),
+                _StatsGrid(gamification: gamification),
+                const SizedBox(height: 14),
+                _UnitMasteryCard(
+                    unitScores: snapshot.unitScores,
+                    a1Units: startedA1,
+                    a2Units: startedA2),
+                const SizedBox(height: 14),
+                const _ExamHistoryCard(),
+                const SizedBox(height: 14),
+                _BadgesCard(earnedBadges: gamification.earnedBadges),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -105,68 +95,6 @@ final _examHistoryProvider =
   return [...a1, ...a2]..sort((a, b) => b.takenAt.compareTo(a.takenAt));
 });
 
-class _ExamHistoryCard extends ConsumerWidget {
-  const _ExamHistoryCard();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final historyAsync = ref.watch(_examHistoryProvider);
-    final results = historyAsync.value ?? const <ExamResult>[];
-    if (results.isEmpty) return const SizedBox.shrink();
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Exam History',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            ...results.take(10).map((r) {
-              final date =
-                  '${r.takenAt.year}-${r.takenAt.month.toString().padLeft(2, '0')}-${r.takenAt.day.toString().padLeft(2, '0')}';
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Row(
-                  children: [
-                    Icon(
-                      r.passed ? Icons.check_circle : Icons.cancel,
-                      color: r.passed ? Colors.green : Colors.red,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'CCE-${r.level.name.toUpperCase()}',
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      date,
-                      style: TextStyle(
-                          fontSize: 12, color: Colors.grey.shade600,),
-                    ),
-                    const Spacer(),
-                    Text(
-                      '${r.totalScore}%',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: r.passed ? Colors.green : Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _StatsData {
   final ProgressSnapshot snapshot;
   final List<Unit> units;
@@ -174,7 +102,6 @@ class _StatsData {
 }
 
 /// Progress snapshot + unit catalogue for the stats screen.
-/// autoDispose so re-opening the screen always shows fresh progress.
 final _statsDataProvider = FutureProvider.autoDispose<_StatsData>((ref) async {
   final repo = ref.read(progressRepositoryProvider);
   final snapshot = await repo.getSnapshot();
@@ -182,76 +109,73 @@ final _statsDataProvider = FutureProvider.autoDispose<_StatsData>((ref) async {
   return _StatsData(snapshot: snapshot, units: units);
 });
 
-/// CEFR level card with circular indicator.
+/// CEFR level card with a progress ring.
 class _CefrLevelCard extends StatelessWidget {
   final CEFRLevel level;
+  final double a1Completion;
 
-  const _CefrLevelCard({required this.level});
+  const _CefrLevelCard({required this.level, required this.a1Completion});
 
   @override
   Widget build(BuildContext context) {
-    final color = switch (level) {
-      CEFRLevel.preA1 => Colors.grey,
-      CEFRLevel.a1 => Colors.blue,
-      CEFRLevel.a2 => Colors.green,
-    };
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Row(
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color.withValues(alpha: 0.15),
-                border: Border.all(color: color, width: 3),
-              ),
-              child: Center(
-                child: Text(
-                  level.label,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
+    final t = context.tokens;
+    final pct = (a1Completion * 100).round();
+    return SoftCard(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 76,
+            height: 76,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CustomPaint(
+                  size: const Size(76, 76),
+                  painter: _RingPainter(
+                      progress: a1Completion, color: t.pri, track: t.elev),
                 ),
-              ),
+                Text(level.label,
+                    style: TextStyle(
+                        fontFamily: AppFonts.display,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: t.ink)),
+              ],
             ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Your CEFR Level',
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: Colors.grey,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    _levelDescription(level),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
+          ),
+          const SizedBox(width: 18),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SectionLabel('CEFR level'),
+                const SizedBox(height: 3),
+                Text(_levelTitle(level),
+                    style: TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w700, color: t.ink)),
+                const SizedBox(height: 3),
+                Text('$pct% of the beginner track — ${_levelHint(level)}',
+                    style: TextStyle(fontSize: 13, color: t.muted, height: 1.45)),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  String _levelDescription(CEFRLevel level) {
-    return switch (level) {
-      CEFRLevel.preA1 => 'Just getting started — keep practicing!',
-      CEFRLevel.a1 => 'Beginner — can handle basic everyday expressions.',
-      CEFRLevel.a2 => 'Elementary — can communicate in simple tasks.',
-    };
-  }
+  String _levelTitle(CEFRLevel level) => switch (level) {
+        CEFRLevel.preA1 => 'Working towards A1',
+        CEFRLevel.a1 => 'Reached A1',
+        CEFRLevel.a2 => 'Reached A2',
+      };
+
+  String _levelHint(CEFRLevel level) => switch (level) {
+        CEFRLevel.preA1 => 'keep going!',
+        CEFRLevel.a1 => 'nicely done!',
+        CEFRLevel.a2 => 'excellent!',
+      };
 }
 
 /// A1/A2 completion progress bars.
@@ -259,37 +183,22 @@ class _CompletionCard extends StatelessWidget {
   final double a1Completion;
   final double a2Completion;
 
-  const _CompletionCard({
-    required this.a1Completion,
-    required this.a2Completion,
-  });
+  const _CompletionCard(
+      {required this.a1Completion, required this.a2Completion});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Course Completion',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 16),
-            _ProgressRow(
-              label: 'A1 — Beginner',
-              progress: a1Completion,
-              color: Colors.blue,
-            ),
-            const SizedBox(height: 12),
-            _ProgressRow(
-              label: 'A2 — Elementary',
-              progress: a2Completion,
-              color: Colors.green,
-            ),
-          ],
-        ),
+    return SoftCard(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SectionLabel('Course completion'),
+          const SizedBox(height: 14),
+          _ProgressRow(label: 'A1 — Beginner', progress: a1Completion),
+          const SizedBox(height: 14),
+          _ProgressRow(label: 'A2 — Elementary', progress: a2Completion),
+        ],
       ),
     );
   }
@@ -298,16 +207,12 @@ class _CompletionCard extends StatelessWidget {
 class _ProgressRow extends StatelessWidget {
   final String label;
   final double progress;
-  final Color color;
 
-  const _ProgressRow({
-    required this.label,
-    required this.progress,
-    required this.color,
-  });
+  const _ProgressRow({required this.label, required this.progress});
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     final percent = (progress * 100).round();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,32 +220,24 @@ class _ProgressRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label, style: Theme.of(context).textTheme.bodyMedium),
-            Text(
-              '$percent%',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
+            Text(label,
+                style: TextStyle(
+                    fontSize: 13.5, fontWeight: FontWeight.w600, color: t.ink)),
+            Text('$percent%',
+                style: TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.w700,
+                    color: percent == 0 ? t.muted : t.pri)),
           ],
         ),
-        const SizedBox(height: 6),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: LinearProgressIndicator(
-            value: progress,
-            minHeight: 8,
-            backgroundColor: color.withValues(alpha: 0.15),
-            valueColor: AlwaysStoppedAnimation<Color>(color),
-          ),
-        ),
+        const SizedBox(height: 7),
+        SoftProgressBar(value: progress, height: 7),
       ],
     );
   }
 }
 
-/// Stats grid — streak, XP, hearts, lessons.
+/// Stats grid — streak, XP, longest streak, hearts.
 class _StatsGrid extends StatelessWidget {
   final GamificationState gamification;
 
@@ -352,83 +249,104 @@ class _StatsGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      childAspectRatio: 2.2,
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      childAspectRatio: 2.5,
       children: [
+        _StatTile(emoji: '🔥', value: '${gamification.currentStreak}', label: 'Day streak'),
+        _StatTile(emoji: '⭐', value: '${gamification.totalXp}', label: 'Total XP'),
         _StatTile(
-          icon: Icons.local_fire_department,
-          value: '${gamification.currentStreak}',
-          label: 'Day streak',
-          color: Colors.orange,
-        ),
+            emoji: '🏆',
+            value: '${gamification.longestStreak}',
+            label: 'Longest streak'),
         _StatTile(
-          icon: Icons.star,
-          value: '${gamification.totalXp}',
-          label: 'Total XP',
-          color: Colors.amber,
-        ),
-        _StatTile(
-          icon: Icons.emoji_events,
-          value: '${gamification.longestStreak}',
-          label: 'Longest streak',
-          color: Colors.deepOrange,
-        ),
-        _StatTile(
-          icon: Icons.favorite,
-          value: '${gamification.hearts}/${gamification.maxHearts}',
-          label: 'Hearts',
-          color: Colors.red,
-        ),
+            emoji: '❤️',
+            value: '${gamification.hearts}/${gamification.maxHearts}',
+            label: 'Hearts'),
       ],
     );
   }
 }
 
 class _StatTile extends StatelessWidget {
-  final IconData icon;
+  final String emoji;
   final String value;
   final String label;
-  final Color color;
 
-  const _StatTile({
-    required this.icon,
-    required this.value,
-    required this.label,
-    required this.color,
-  });
+  const _StatTile(
+      {required this.emoji, required this.value, required this.label});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(
-          children: [
-            Icon(icon, size: 32, color: color),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  label,
+    final t = context.tokens;
+    return SoftCard(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+      child: Row(
+        children: [
+          Text(emoji, style: const TextStyle(fontSize: 20)),
+          const SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(value,
                   style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                      fontFamily: AppFonts.display,
+                      fontSize: 21,
+                      height: 1,
+                      fontWeight: FontWeight.w700,
+                      color: t.ink)),
+              const SizedBox(height: 3),
+              Text(label, style: TextStyle(fontSize: 11.5, color: t.muted)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ExamHistoryCard extends ConsumerWidget {
+  const _ExamHistoryCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
+    final results = ref.watch(_examHistoryProvider).value ?? const <ExamResult>[];
+    if (results.isEmpty) return const SizedBox.shrink();
+
+    return SoftCard(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SectionLabel('Exam history'),
+          const SizedBox(height: 10),
+          ...results.take(10).map((r) {
+            final date =
+                '${r.takenAt.year}-${r.takenAt.month.toString().padLeft(2, '0')}-${r.takenAt.day.toString().padLeft(2, '0')}';
+            final color = r.passed ? t.green : t.red;
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                children: [
+                  Icon(r.passed ? Icons.check_circle : Icons.cancel,
+                      color: color, size: 18),
+                  const SizedBox(width: 8),
+                  Text('CCE-${r.level.name.toUpperCase()}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, color: t.ink)),
+                  const SizedBox(width: 8),
+                  Text(date, style: TextStyle(fontSize: 12, color: t.muted)),
+                  const Spacer(),
+                  Text('${r.totalScore}%',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, color: color)),
+                ],
+              ),
+            );
+          }),
+        ],
       ),
     );
   }
@@ -448,57 +366,43 @@ class _UnitMasteryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     if (unitScores.isEmpty) {
-      return Card(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text(
-            'No lessons completed yet. Start learning to see your progress!',
-            style: TextStyle(color: Colors.grey.shade600),
-            textAlign: TextAlign.center,
-          ),
+      return SoftCard(
+        padding: const EdgeInsets.all(20),
+        child: Text(
+          'No lessons completed yet. Start learning to see your progress!',
+          style: TextStyle(color: t.muted),
+          textAlign: TextAlign.center,
         ),
       );
     }
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Unit Mastery',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 12),
-            if (a1Units.isNotEmpty) ...[
-              Text('A1 Units', style: TextStyle(
-                fontSize: 12,
-                color: Colors.blue.shade700,
-                fontWeight: FontWeight.bold,
-              ),),
-              const SizedBox(height: 6),
-              ...a1Units.map((id) => _UnitScoreRow(
-                    unitId: id,
-                    score: unitScores[id] ?? 0,
-                  ),),
-            ],
-            if (a2Units.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text('A2 Units', style: TextStyle(
-                fontSize: 12,
-                color: Colors.green.shade700,
-                fontWeight: FontWeight.bold,
-              ),),
-              const SizedBox(height: 6),
-              ...a2Units.map((id) => _UnitScoreRow(
-                    unitId: id,
-                    score: unitScores[id] ?? 0,
-                  ),),
-            ],
+    return SoftCard(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SectionLabel('Unit mastery'),
+          const SizedBox(height: 12),
+          if (a1Units.isNotEmpty) ...[
+            Text('A1 Units',
+                style: TextStyle(
+                    fontSize: 12, color: t.pri, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 8),
+            ...a1Units.map((id) =>
+                _UnitScoreRow(unitId: id, score: unitScores[id] ?? 0)),
           ],
-        ),
+          if (a2Units.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text('A2 Units',
+                style: TextStyle(
+                    fontSize: 12, color: t.green, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 8),
+            ...a2Units.map((id) =>
+                _UnitScoreRow(unitId: id, score: unitScores[id] ?? 0)),
+          ],
+        ],
       ),
     );
   }
@@ -512,44 +416,31 @@ class _UnitScoreRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     final percent = (score * 100).round();
     final color = score >= 0.8
-        ? Colors.green
+        ? t.green
         : score >= 0.6
-            ? Colors.orange
-            : Colors.red;
+            ? t.amber
+            : t.red;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
           SizedBox(
-            width: 60,
-            child: Text('Unit $unitId'),
+            width: 58,
+            child: Text('Unit $unitId',
+                style: TextStyle(fontSize: 13, color: t.ink)),
           ),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(3),
-              child: LinearProgressIndicator(
-                value: score,
-                minHeight: 6,
-                backgroundColor: color.withValues(alpha: 0.15),
-                valueColor: AlwaysStoppedAnimation<Color>(color),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
+          Expanded(child: SoftProgressBar(value: score, color: color)),
+          const SizedBox(width: 10),
           SizedBox(
             width: 36,
-            child: Text(
-              '$percent%',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-              textAlign: TextAlign.right,
-            ),
+            child: Text('$percent%',
+                style: TextStyle(
+                    fontSize: 12, fontWeight: FontWeight.w700, color: color),
+                textAlign: TextAlign.right),
           ),
         ],
       ),
@@ -565,27 +456,32 @@ class _BadgesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Badges (${earnedBadges.length}/${Badge.all.length})',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: Badge.all.map((badge) {
-                final isEarned = earnedBadges.contains(badge.id);
-                return _BadgeTile(badge: badge, isEarned: isEarned);
-              }).toList(),
-            ),
-          ],
-        ),
+    final t = context.tokens;
+    return SoftCard(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const SectionLabel('Badges'),
+              Text('${earnedBadges.length} of ${Badge.all.length}',
+                  style: TextStyle(
+                      fontSize: 12.5, fontWeight: FontWeight.w700, color: t.pri)),
+            ],
+          ),
+          const SizedBox(height: 14),
+          Wrap(
+            spacing: 14,
+            runSpacing: 14,
+            children: Badge.all.map((badge) {
+              return _BadgeTile(
+                  badge: badge, isEarned: earnedBadges.contains(badge.id));
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
@@ -599,47 +495,74 @@ class _BadgeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     return Tooltip(
       message: '${badge.name}: ${badge.description}',
       child: Opacity(
-        opacity: isEarned ? 1.0 : 0.3,
-        child: Column(
-          children: [
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isEarned
-                    ? Colors.amber.withValues(alpha: 0.15)
-                    : Theme.of(context).colorScheme.surfaceContainerHighest,
-                border: Border.all(
-                  color: isEarned
-                      ? Colors.amber
-                      : Theme.of(context).colorScheme.outlineVariant,
-                  width: 2,
+        opacity: isEarned ? 1.0 : 0.35,
+        child: SizedBox(
+          width: 64,
+          child: Column(
+            children: [
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isEarned ? t.amberSoft : t.chipBg,
                 ),
+                child: Center(
+                    child: Text(badge.icon, style: const TextStyle(fontSize: 22))),
               ),
-              child: Center(
-                child: Text(
-                  badge.icon,
-                  style: const TextStyle(fontSize: 28),
-                ),
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              badge.name,
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: isEarned ? FontWeight.bold : FontWeight.normal,
-                color: isEarned ? Colors.amber.shade800 : Colors.grey,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+              const SizedBox(height: 6),
+              Text(badge.name,
+                  style: TextStyle(
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w600,
+                      color: isEarned ? t.ink : t.muted),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+/// Paints a rounded progress ring (used by the CEFR card).
+class _RingPainter extends CustomPainter {
+  final double progress;
+  final Color color;
+  final Color track;
+
+  _RingPainter({required this.progress, required this.color, required this.track});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = (size.width - 7) / 2;
+    final trackPaint = Paint()
+      ..color = track
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 7;
+    final arcPaint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 7
+      ..strokeCap = StrokeCap.round;
+    canvas.drawCircle(center, radius, trackPaint);
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      -math.pi / 2,
+      2 * math.pi * progress.clamp(0.0, 1.0),
+      false,
+      arcPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _RingPainter old) =>
+      old.progress != progress || old.color != color || old.track != track;
 }

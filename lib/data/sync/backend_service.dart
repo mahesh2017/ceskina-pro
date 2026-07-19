@@ -11,8 +11,9 @@ import '../../core/config/backend_config.dart';
 /// at which point the anonymous account is upgraded in place, preserving
 /// everything already synced.
 ///
-/// When [BackendConfig.isConfigured] is false the whole service is inert: the
-/// app stays fully offline and no network calls are made.
+/// When [BackendConfig.isConfigured] is false the service is inert. Curriculum
+/// initialization then surfaces a configuration error because course content
+/// is intentionally Supabase-only.
 class BackendService {
   BackendService({Logger? log}) : _log = log ?? Logger('BackendService');
 
@@ -25,18 +26,20 @@ class BackendService {
   SupabaseClient? get _clientOrNull =>
       isEnabled ? Supabase.instance.client : null;
 
+  /// Authenticated client for backend-backed repositories.
+  SupabaseClient? get client => _clientOrNull;
+
   /// Current user id (anonymous or linked), or null when signed out/disabled.
   String? get userId => _clientOrNull?.auth.currentUser?.id;
 
   bool get isSignedIn => userId != null;
 
   /// True while the session is anonymous (not yet linked to an identity).
-  bool get isAnonymous =>
-      _clientOrNull?.auth.currentUser?.isAnonymous ?? false;
+  bool get isAnonymous => _clientOrNull?.auth.currentUser?.isAnonymous ?? false;
 
   /// Initialize Supabase and ensure an (anonymous) session exists.
-  /// Safe to call once at startup; a no-op when unconfigured or on failure —
-  /// the app must never fail to launch because the backend is unreachable.
+  /// Safe to retry at startup. Failures are logged and leave the client
+  /// disabled; the curriculum loader then shows the retryable startup screen.
   Future<void> init() async {
     if (!BackendConfig.isConfigured) {
       _log.info('Backend not configured; running offline-only.');

@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/entities/enums.dart';
-import 'llm_providers.dart';
 
 /// Theme mode enum.
 enum AppThemeMode { system, light, dark }
+
+/// The bundled Azure neural voice used for curriculum audio.
+enum TtsVoiceGender { female, male }
 
 /// App-wide settings state.
 class AppSettings {
   final AppThemeMode themeMode;
   final int dailyGoalXp;
   final double ttsSpeechRate;
-  final bool hasApiKey;
+  final TtsVoiceGender ttsVoiceGender;
   final CEFRLevel startingLevel;
 
   /// When false, lessons never deduct hearts ("practice mode") — mistakes
@@ -23,7 +25,7 @@ class AppSettings {
     this.themeMode = AppThemeMode.system,
     this.dailyGoalXp = 50,
     this.ttsSpeechRate = 0.45,
-    this.hasApiKey = false,
+    this.ttsVoiceGender = TtsVoiceGender.female,
     this.startingLevel = CEFRLevel.preA1,
     this.heartsEnabled = true,
   });
@@ -32,7 +34,7 @@ class AppSettings {
     AppThemeMode? themeMode,
     int? dailyGoalXp,
     double? ttsSpeechRate,
-    bool? hasApiKey,
+    TtsVoiceGender? ttsVoiceGender,
     CEFRLevel? startingLevel,
     bool? heartsEnabled,
   }) {
@@ -40,7 +42,7 @@ class AppSettings {
       themeMode: themeMode ?? this.themeMode,
       dailyGoalXp: dailyGoalXp ?? this.dailyGoalXp,
       ttsSpeechRate: ttsSpeechRate ?? this.ttsSpeechRate,
-      hasApiKey: hasApiKey ?? this.hasApiKey,
+      ttsVoiceGender: ttsVoiceGender ?? this.ttsVoiceGender,
       startingLevel: startingLevel ?? this.startingLevel,
       heartsEnabled: heartsEnabled ?? this.heartsEnabled,
     );
@@ -52,6 +54,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
   static const _kThemeMode = 'settings_theme_mode';
   static const _kDailyGoalXp = 'settings_daily_goal_xp';
   static const _kTtsRate = 'settings_tts_rate';
+  static const _kTtsVoiceGender = 'settings_tts_voice_gender';
   static const _kOnboardingDone = 'settings_onboarding_done';
   static const _kStartingLevel = 'settings_starting_level';
   static const _kHeartsEnabled = 'settings_hearts_enabled';
@@ -70,18 +73,22 @@ class SettingsNotifier extends Notifier<AppSettings> {
     final themeIdx = prefs.getInt(_kThemeMode) ?? 0;
     final dailyGoal = prefs.getInt(_kDailyGoalXp) ?? 50;
     final ttsRate = prefs.getDouble(_kTtsRate) ?? 0.45;
+    final voiceIndex = prefs.getInt(_kTtsVoiceGender) ?? 0;
     final levelIdx = prefs.getInt(_kStartingLevel) ?? 0;
 
-    // Check if API key is set
-    final storage = ref.read(secureStorageProvider);
-    final apiKey = await storage.read(key: kDeepSeekApiKeyStorageKey);
-
     state = AppSettings(
-      themeMode: AppThemeMode
-          .values[themeIdx.clamp(0, AppThemeMode.values.length - 1)],
+      themeMode:
+          AppThemeMode.values[themeIdx.clamp(
+            0,
+            AppThemeMode.values.length - 1,
+          )],
       dailyGoalXp: dailyGoal,
       ttsSpeechRate: ttsRate,
-      hasApiKey: apiKey != null && apiKey.isNotEmpty,
+      ttsVoiceGender:
+          TtsVoiceGender.values[voiceIndex.clamp(
+            0,
+            TtsVoiceGender.values.length - 1,
+          )],
       startingLevel:
           CEFRLevel.values[levelIdx.clamp(0, CEFRLevel.values.length - 1)],
       heartsEnabled: prefs.getBool(_kHeartsEnabled) ?? true,
@@ -116,27 +123,18 @@ class SettingsNotifier extends Notifier<AppSettings> {
     await prefs.setDouble(_kTtsRate, rate);
   }
 
+  /// Select the bundled Czech neural voice.
+  Future<void> setTtsVoiceGender(TtsVoiceGender gender) async {
+    state = state.copyWith(ttsVoiceGender: gender);
+    final prefs = await _prefs();
+    await prefs.setInt(_kTtsVoiceGender, gender.index);
+  }
+
   /// Set the learner's self-assessed starting level (from onboarding).
   Future<void> setStartingLevel(CEFRLevel level) async {
     state = state.copyWith(startingLevel: level);
     final prefs = await _prefs();
     await prefs.setInt(_kStartingLevel, level.index);
-  }
-
-  /// Save the DeepSeek API key.
-  Future<void> setApiKey(String key) async {
-    final storage = ref.read(secureStorageProvider);
-    await storage.write(key: kDeepSeekApiKeyStorageKey, value: key);
-    ref.invalidate(apiKeyProvider);
-    state = state.copyWith(hasApiKey: key.isNotEmpty);
-  }
-
-  /// Clear the API key.
-  Future<void> clearApiKey() async {
-    final storage = ref.read(secureStorageProvider);
-    await storage.delete(key: kDeepSeekApiKeyStorageKey);
-    ref.invalidate(apiKeyProvider);
-    state = state.copyWith(hasApiKey: false);
   }
 
   /// Check if onboarding has been completed.
@@ -153,8 +151,9 @@ class SettingsNotifier extends Notifier<AppSettings> {
 }
 
 /// Provider for app settings.
-final settingsProvider =
-    NotifierProvider<SettingsNotifier, AppSettings>(SettingsNotifier.new);
+final settingsProvider = NotifierProvider<SettingsNotifier, AppSettings>(
+  SettingsNotifier.new,
+);
 
 /// Provider that converts AppThemeMode to Flutter's ThemeMode.
 final themeModeProvider = Provider<ThemeMode>((ref) {

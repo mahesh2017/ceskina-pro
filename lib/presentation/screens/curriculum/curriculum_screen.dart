@@ -1,233 +1,113 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../providers/curriculum_providers.dart';
+import '../../widgets/common/soft_ui.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/entities/unit.dart';
 import '../../../domain/entities/lesson.dart';
 
-/// Curriculum path — visual map of all units (A1 + A2) loaded from DB.
+/// Curriculum — units for A1/A2 with progress and inline lessons.
 class CurriculumScreen extends ConsumerWidget {
   const CurriculumScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
     final unitsAsync = ref.watch(allUnitsProvider);
     final unlockedIdsAsync = ref.watch(unlockedUnitIdsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Curriculum')),
-      body: unitsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
-              const SizedBox(height: 16),
-              Text('Failed to load curriculum: $err',
-                  textAlign: TextAlign.center,),
-              const SizedBox(height: 16),
-              FilledButton(
-                onPressed: () => ref.invalidate(allUnitsProvider),
-                child: const Text('Retry'),
-              ),
-            ],
-          ),
-        ),
-        data: (units) {
-          // Split into A1 and A2
-          final a1Units =
-              units.where((u) => u.phase == Phase.a1).toList();
-          final a2Units =
-              units.where((u) => u.phase == Phase.a2).toList();
-
-          // Get unlocked unit IDs — defaults to just the first unit if still loading
-          final unlockedIds = unlockedIdsAsync.maybeWhen(
-            data: (ids) => ids,
-            orElse: () => {a1Units.isNotEmpty ? a1Units.first.id : -1},
-          );
-
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              // A1 section
-              _PhaseHeader(
-                title: 'Phase 1: A1',
-                subtitle: 'Beginner — ${a1Units.length} units',
-              ),
-              const SizedBox(height: 8),
-              ...a1Units.map((unit) {
-                final isUnlocked = unlockedIds.contains(unit.id);
-                return _UnitCard(
-                  unit: unit,
-                  isUnlocked: isUnlocked,
-                  ref: ref,
-                );
-              }),
-
-              const SizedBox(height: 24),
-
-              // A2 section
-              _PhaseHeader(
-                title: 'Phase 2: A2',
-                subtitle: 'Elementary — ${a2Units.length} units',
-              ),
-              const SizedBox(height: 4),
-              Row(
+      backgroundColor: t.bg,
+      body: SafeArea(
+        bottom: false,
+        child: unitsAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, _) => Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.construction,
-                      size: 14, color: Colors.orange.shade700,),
-                  const SizedBox(width: 6),
-                  Text(
-                    'More A2 lessons are being added',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.orange.shade700,
-                          fontStyle: FontStyle.italic,
-                        ),
+                  Icon(Icons.error_outline, size: 48, color: t.red),
+                  const SizedBox(height: 16),
+                  Text('Failed to load curriculum: $err',
+                      textAlign: TextAlign.center),
+                  const SizedBox(height: 16),
+                  FilledButton(
+                    onPressed: () => ref.invalidate(allUnitsProvider),
+                    child: const Text('Retry'),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              ...a2Units.map((unit) {
-                final isUnlocked = unlockedIds.contains(unit.id);
-                return _UnitCard(
-                  unit: unit,
-                  isUnlocked: isUnlocked,
-                  ref: ref,
-                );
-              }),
+            ),
+          ),
+          data: (units) {
+            final a1Units = units.where((u) => u.phase == Phase.a1).toList();
+            final a2Units = units.where((u) => u.phase == Phase.a2).toList();
+            final unlockedIds = unlockedIdsAsync.maybeWhen(
+              data: (ids) => ids,
+              orElse: () => {a1Units.isNotEmpty ? a1Units.first.id : -1},
+            );
+            final unlockedA1 =
+                a1Units.where((u) => unlockedIds.contains(u.id)).length;
 
-              const SizedBox(height: 32),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _PhaseHeader extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const _PhaseHeader({required this.title, required this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(title, style: Theme.of(context).textTheme.headlineSmall),
-        const SizedBox(width: 8),
-        Text(
-          subtitle,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey,
-              ),
-        ),
-      ],
-    );
-  }
-}
-
-class _UnitCard extends ConsumerWidget {
-  final Unit unit;
-  final bool isUnlocked;
-  final WidgetRef ref;
-
-  const _UnitCard({
-    required this.unit,
-    required this.isUnlocked,
-    required this.ref,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final lessonsAsync = ref.watch(unitLessonsProvider(unit.id));
-    final completedIds = ref.watch(completedLessonIdsProvider).maybeWhen(
-          data: (ids) => ids,
-          orElse: () => const <int>{},
-        );
-
-    // Per-unit completion for the progress badge on the header.
-    final lessons = lessonsAsync.value ?? const [];
-    final doneCount = lessons.where((l) => completedIds.contains(l.id)).length;
-    final allDone = lessons.isNotEmpty && doneCount == lessons.length;
-
-    return Card(
-      child: ExpansionTile(
-        leading: Icon(
-          !isUnlocked
-              ? Icons.lock
-              : allDone
-                  ? Icons.check_circle
-                  : Icons.play_circle,
-          color: !isUnlocked
-              ? Colors.grey
-              : allDone
-                  ? Colors.green
-                  : Theme.of(context).colorScheme.primary,
-        ),
-        title: Text('Unit ${unit.id}: ${unit.title}'),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(unit.description,
-                maxLines: 2, overflow: TextOverflow.ellipsis,),
-            if (isUnlocked && lessons.isNotEmpty) ...[
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(3),
-                      child: LinearProgressIndicator(
-                        value: doneCount / lessons.length,
-                        minHeight: 5,
-                        backgroundColor: Theme.of(context)
-                            .colorScheme
-                            .surfaceContainerHighest,
+            return ListView(
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+              children: [
+                const DisplayText('Curriculum', size: 26),
+                const SizedBox(height: 14),
+                const Row(
+                  children: [
+                    _LevelChip(label: 'A1 · Beginner', selected: true),
+                    SizedBox(width: 8),
+                    _LevelChip(label: 'A2 · Elementary', selected: false),
+                  ],
+                ),
+                const SizedBox(height: 14),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SoftProgressBar(
+                        value: a1Units.isEmpty ? 0 : unlockedA1 / a1Units.length,
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text('$doneCount/${lessons.length}',
-                      style: Theme.of(context).textTheme.labelSmall,),
-                ],
-              ),
-            ],
-          ],
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        children: lessonsAsync.when(
-          loading: () => const [
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Center(child: CircularProgressIndicator()),
-            ),
-          ],
-          error: (_, __) => const [
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Text('No lessons available yet'),
-            ),
-          ],
-          data: (lessons) {
-            if (lessons.isEmpty) {
-              return const [
-                Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text('No lessons available yet'),
+                    const SizedBox(width: 10),
+                    Text('$unlockedA1 of ${a1Units.length} units',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: t.muted)),
+                  ],
                 ),
-              ];
-            }
-            return lessons.map((lesson) => _LessonTile(
-                  lesson: lesson,
-                  isUnlocked: isUnlocked,
-                  isCompleted: completedIds.contains(lesson.id),
-                ),).toList();
+                const SizedBox(height: 16),
+                ...a1Units.map((u) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: _UnitCard(unit: u, isUnlocked: unlockedIds.contains(u.id)),
+                    )),
+                if (a2Units.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(Icons.construction, size: 14, color: t.amber),
+                      const SizedBox(width: 6),
+                      Text('More A2 lessons are being added',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontStyle: FontStyle.italic,
+                              color: t.amber)),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  ...a2Units.map((u) => Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child:
+                            _UnitCard(unit: u, isUnlocked: unlockedIds.contains(u.id)),
+                      )),
+                ],
+              ],
+            );
           },
         ),
       ),
@@ -235,57 +115,225 @@ class _UnitCard extends ConsumerWidget {
   }
 }
 
-class _LessonTile extends StatelessWidget {
-  final Lesson lesson;
-  final bool isUnlocked;
-  final bool isCompleted;
+class _LevelChip extends StatelessWidget {
+  const _LevelChip({required this.label, required this.selected});
+  final String label;
+  final bool selected;
 
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: selected ? t.priFill : t.chipBg,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+            color: selected ? t.onFill : t.muted,
+          )),
+    );
+  }
+}
+
+class _UnitCard extends ConsumerWidget {
+  const _UnitCard({required this.unit, required this.isUnlocked});
+  final Unit unit;
+  final bool isUnlocked;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
+    final lessonsAsync = ref.watch(unitLessonsProvider(unit.id));
+    final completedIds = ref.watch(completedLessonIdsProvider).maybeWhen(
+          data: (ids) => ids,
+          orElse: () => const <int>{},
+        );
+    final lessons = lessonsAsync.value ?? const [];
+    final doneCount = lessons.where((l) => completedIds.contains(l.id)).length;
+    final allDone = lessons.isNotEmpty && doneCount == lessons.length;
+    final inProgress = isUnlocked && !allDone;
+
+    final statusColor = !isUnlocked
+        ? t.faint
+        : allDone
+            ? t.green
+            : t.pri;
+    final statusIcon = !isUnlocked
+        ? Icons.lock_outline
+        : allDone
+            ? Icons.check_circle
+            : Icons.play_arrow_rounded;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: t.card,
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: t.shadow,
+        border: inProgress ? Border.all(color: t.pri, width: 1.5) : null,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+          listTileTheme: Theme.of(context).listTileTheme.copyWith(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+              ),
+        ),
+        child: ExpansionTile(
+          initiallyExpanded: inProgress,
+          tilePadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
+          childrenPadding: const EdgeInsets.fromLTRB(18, 0, 18, 12),
+          leading: Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: isUnlocked ? t.priSoft : t.chipBg,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(statusIcon, size: 18, color: statusColor),
+          ),
+          title: Text(
+            'Unit ${unit.id} · ${unit.title}',
+            style: TextStyle(
+              fontSize: 14.5,
+              fontWeight: FontWeight.w700,
+              color: isUnlocked ? t.ink : t.muted,
+            ),
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(unit.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12.5, color: t.muted, height: 1.4)),
+                if (isUnlocked && lessons.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SoftProgressBar(
+                            value: doneCount / lessons.length, height: 5),
+                      ),
+                      const SizedBox(width: 8),
+                      Text('$doneCount/${lessons.length}',
+                          style: TextStyle(
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.w600,
+                              color: t.muted)),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+          children: lessonsAsync.when(
+            loading: () => const [
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+            ],
+            error: (_, __) => [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text('No lessons available yet',
+                    style: TextStyle(color: t.muted)),
+              ),
+            ],
+            data: (ls) {
+              if (ls.isEmpty) {
+                return [
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text('No lessons available yet',
+                        style: TextStyle(color: t.muted)),
+                  ),
+                ];
+              }
+              return ls
+                  .map((lesson) => _LessonTile(
+                        lesson: lesson,
+                        isUnlocked: isUnlocked,
+                        isCompleted: completedIds.contains(lesson.id),
+                      ))
+                  .toList();
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LessonTile extends StatelessWidget {
   const _LessonTile({
     required this.lesson,
     required this.isUnlocked,
     this.isCompleted = false,
   });
 
+  final Lesson lesson;
+  final bool isUnlocked;
+  final bool isCompleted;
+
   @override
   Widget build(BuildContext context) {
-    final lessonTypeIcon = switch (lesson.lessonType) {
-      LessonType.introduction => Icons.info_outline,
-      LessonType.practice => Icons.fitness_center,
-      LessonType.application => Icons.local_florist,
-      LessonType.review => Icons.replay,
+    final t = context.tokens;
+    final (icon, tint, fg) = switch (lesson.lessonType) {
+      LessonType.introduction => (Icons.info_outline, t.priSoft, t.pri),
+      LessonType.practice => (Icons.graphic_eq, t.amberSoft, t.amber),
+      LessonType.application => (Icons.spa_outlined, t.greenSoft, t.green),
+      LessonType.review => (Icons.replay, t.violetSoft, t.violet),
+    };
+    final typeLabel = switch (lesson.lessonType) {
+      LessonType.introduction => 'Lesson',
+      LessonType.practice => 'Practice',
+      LessonType.application => 'Apply',
+      LessonType.review => 'Review',
     };
 
-    return ListTile(
-      leading: Icon(
-        isCompleted ? Icons.check_circle : lessonTypeIcon,
-        color: isCompleted
-            ? Colors.green
-            : isUnlocked
-                ? Theme.of(context).colorScheme.primary
-                : Colors.grey,
-        size: 20,
-      ),
-      title: Text(
-        lesson.title,
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          color: isUnlocked ? null : Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: InkWell(
+        onTap: isUnlocked ? () => context.push('/lesson/${lesson.id}') : null,
+        borderRadius: BorderRadius.circular(12),
+        child: Row(
+          children: [
+            IconTile(
+              icon: isCompleted ? Icons.check : icon,
+              tint: isCompleted ? t.greenSoft : (isUnlocked ? tint : t.chipBg),
+              fg: isCompleted ? t.green : (isUnlocked ? fg : t.faint),
+              size: 32,
+              radius: 11,
+              iconSize: 14,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(lesson.title,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: isUnlocked ? t.ink : t.muted)),
+                  Text('$typeLabel · ${lesson.durationMinutes} min',
+                      style: TextStyle(fontSize: 12, color: t.muted)),
+                ],
+              ),
+            ),
+            Icon(isUnlocked ? Icons.chevron_right : Icons.lock_outline,
+                size: 15, color: t.faint),
+          ],
         ),
       ),
-      subtitle: Text(
-        '${lesson.durationMinutes} min • ${lesson.description}',
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(fontSize: 12),
-      ),
-      trailing: isUnlocked
-          ? (isCompleted
-              ? const Icon(Icons.replay, size: 18)
-              : const Icon(Icons.chevron_right))
-          : const Icon(Icons.lock, size: 16),
-      onTap: isUnlocked
-          ? () => context.push('/lesson/${lesson.id}')
-          : null,
     );
   }
 }

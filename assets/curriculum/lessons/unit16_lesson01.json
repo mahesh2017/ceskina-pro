@@ -1,0 +1,239 @@
+{
+  "id": 1601,
+  "unit_id": 16,
+  "order_in_unit": 0,
+  "title": "Genitive — Possession & Prepositions",
+  "description": "Learn the Czech genitive case (2. pád) for expressing possession (kniha bratra, auto otce) and master prepositions that require the genitive: bez (without), z/ze (from), do (to/into), and od (from). Practice forms like z Prahy, bez cukru, and do školy.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "exercises": [
+    {
+      "id": 16001,
+      "lesson_id": 1601,
+      "type": "multiple_choice",
+      "prompt": "What does 'kniha bratra' mean?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Co znamená 'kniha bratra'?",
+        "question_en": "What does 'kniha bratra' mean?",
+        "options": [
+          "the brother's book",
+          "the brother's car",
+          "a book for the brother",
+          "the brother has a book"
+        ],
+        "correct_index": 0,
+        "explanation": "'Kniha bratra' = the brother's book. In Czech, possession is expressed by putting the owner in the genitive case after the thing owned. Bratr (brother) → bratra (genitive singular). No apostrophe or 'of' — just word order and case ending."
+      },
+      "answer_key": "the brother's book",
+      "grammar_rule_id": "GR-150",
+      "xp_reward": 10
+    },
+    {
+      "id": 16002,
+      "lesson_id": 1601,
+      "type": "fill_blank",
+      "prompt": "Complete the possession phrase: 'father's car'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Auto ___ je nové.",
+        "blank_count": 1,
+        "accepted_answers": ["otce"],
+        "explanation": "'Auto otce' = father's car. Otec (father, masculine animate) → otce (genitive singular). The possessor follows the thing possessed and takes the genitive ending."
+      },
+      "answer_key": "otce",
+      "grammar_rule_id": "GR-150",
+      "xp_reward": 15
+    },
+    {
+      "id": 16003,
+      "lesson_id": 1601,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'the sister's book'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "the sister's book",
+        "accepted_answers": ["kniha sestry", "kniha sestry."],
+        "grammar_note": "Sestra (sister, feminine) → sestry (genitive singular). Possession in Czech: [thing owned] + [owner in genitive]. No word for 'of' or apostrophe-s needed."
+      },
+      "answer_key": "kniha sestry",
+      "grammar_rule_id": "GR-150",
+      "xp_reward": 10
+    },
+    {
+      "id": 16004,
+      "lesson_id": 1601,
+      "type": "multiple_choice",
+      "prompt": "Which preposition requires the genitive case?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Která předložka vyžaduje genitiv (2. pád)?",
+        "question_en": "Which preposition requires the genitive case?",
+        "options": [
+          "bez (without)",
+          "s (with)",
+          "pro (for)",
+          "o (about)"
+        ],
+        "correct_index": 0,
+        "explanation": "'Bez' (without) always takes the genitive case. 'S' takes instrumental, 'pro' takes accusative, 'o' takes locative. The four key genitive prepositions are: bez, z/ze, do, od."
+      },
+      "answer_key": "bez (without)",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 10
+    },
+    {
+      "id": 16005,
+      "lesson_id": 1601,
+      "type": "fill_blank",
+      "prompt": "Fill in the preposition: 'I am from Prague.'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Jsem ___ Prahy.",
+        "blank_count": 1,
+        "accepted_answers": ["z"],
+        "explanation": "'Jsem z Prahy' = I am from Prague. 'Z' (from) requires the genitive: Praha → Prahy (genitive singular feminine). Use 'ze' instead of 'z' before words starting with z-, s-, ž-, š-, or certain consonant clusters."
+      },
+      "answer_key": "z",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 15
+    },
+    {
+      "id": 16006,
+      "lesson_id": 1601,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'coffee without sugar'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "coffee without sugar",
+        "accepted_answers": ["káva bez cukru", "káva bez cukru."],
+        "grammar_note": "'Bez' (without) + genitive: cukr → cukru (genitive singular masculine inanimate). 'Bez cukru' = without sugar. This is a common phrase in cafés and restaurants."
+      },
+      "answer_key": "káva bez cukru",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 10
+    },
+    {
+      "id": 16007,
+      "lesson_id": 1601,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct preposition: 'I'm going ___ school.'",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správnou předložku: 'Jdu ___ školy.'",
+        "question_en": "Choose the correct preposition: 'I'm going ___ school.'",
+        "options": [
+          "do",
+          "k",
+          "na",
+          "v"
+        ],
+        "correct_index": 0,
+        "explanation": "'Jdu do školy' = I'm going to school. 'Do' (to/into) takes the genitive: škola → školy. 'K' takes dative, 'na' takes accusative for direction, 'v' takes locative for location."
+      },
+      "answer_key": "do",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 10
+    },
+    {
+      "id": 16008,
+      "lesson_id": 1601,
+      "type": "fill_blank",
+      "prompt": "Fill in the preposition: 'a gift from my mother'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Dárek ___ matky.",
+        "blank_count": 1,
+        "accepted_answers": ["od"],
+        "explanation": "'Dárek od matky' = a gift from mother. 'Od' (from — indicating origin/source from a person) requires the genitive: matka → matky (genitive singular feminine). Use 'od' when something comes from a person; use 'z' when from a place."
+      },
+      "answer_key": "od",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 15
+    },
+    {
+      "id": 16009,
+      "lesson_id": 1601,
+      "type": "word_order",
+      "prompt": "Arrange the words to form a correct sentence: 'I go to school every day.'",
+      "data": {
+        "type": "word_order",
+        "words": [
+          "Jdu",
+          "do",
+          "školy",
+          "každý",
+          "den",
+          "—",
+          "I",
+          "go",
+          "to",
+          "school",
+          "every",
+          "day"
+        ],
+        "correct_order": [0, 1, 2, 3, 4],
+        "explanation": "'Jdu do školy každý den.' = I go to school every day. Czech word order: verb (Jdu) + prepositional phrase (do školy) + time expression (každý den). 'Do' + genitive: škola → školy."
+      },
+      "answer_key": "Jdu do školy každý den.",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 15
+    },
+    {
+      "id": 16010,
+      "lesson_id": 1601,
+      "type": "dictation",
+      "prompt": "Listen and write what you hear (possession and origin).",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_16010",
+        "expected_text": "To je kniha mého bratra. Je z Prahy.",
+        "language": "cs-CZ",
+        "note": "'To je kniha mého bratra.' = That is my brother's book. 'Je z Prahy.' = He is from Prague. 'Mého' is the genitive of 'můj' (my, masculine animate). Both 'bratra' and 'Prahy' are in the genitive case."
+      },
+      "answer_key": "To je kniha mého bratra. Je z Prahy.",
+      "grammar_rule_id": "GR-150",
+      "xp_reward": 20
+    },
+    {
+      "id": 16011,
+      "lesson_id": 1601,
+      "type": "pronunciation",
+      "prompt": "Pronounce the sentence about where you are from.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Jsem z Prahy, ale teď bydlím v Brně.",
+        "target_audio_hash": "placeholder_16011",
+        "focus_sounds": ["Pra", "hy", "Br", "ně"],
+        "min_score": 0.6,
+        "translation_en": "I am from Prague, but now I live in Brno."
+      },
+      "answer_key": "Jsem z Prahy, ale teď bydlím v Brně.",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 15
+    },
+    {
+      "id": 16012,
+      "lesson_id": 1601,
+      "type": "dialogue",
+      "prompt": "Complete the dialogue about where someone is from and where they're going.",
+      "data": {
+        "type": "dialogue",
+        "scenario": "V kavárně — At a café",
+        "lines": [
+          {"speaker": "person_a", "text": "Ahoj! Odkud jsi?"},
+          {"speaker": "person_b", "text": "___ (I'm from Brno. And you?)"},
+          {"speaker": "person_a", "text": "Jsem z Prahy. Kam jdeš?"},
+          {"speaker": "person_b", "text": "___ (I'm going to school.)"}
+        ],
+        "accepted_answers": ["Jsem z Brna. A ty?|Jdu do školy.", "Jsem z Brna, a ty?|Jdu do školy."],
+        "explanation": "'Odkud jsi?' = Where are you from? (literally 'from where are you?'). 'Z Brna' = from Brno (genitive: Brno → Brna). 'A ty?' = And you? 'Kam jdeš?' = Where are you going? 'Jdu do školy.' = I'm going to school (genitive: škola → školy)."
+      },
+      "answer_key": "Jsem z Brna. A ty?|Jdu do školy.",
+      "grammar_rule_id": "GR-151",
+      "xp_reward": 25
+    }
+  ]
+}

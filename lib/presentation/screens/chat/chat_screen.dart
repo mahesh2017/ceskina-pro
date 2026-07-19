@@ -1,11 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../../domain/entities/chat_message.dart';
 import '../../providers/chat_providers.dart';
 import '../../providers/stt_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../providers/database_providers.dart';
 import '../../providers/review_providers.dart';
+import '../../widgets/common/soft_ui.dart';
+
+/// Icon + soft-tint colors for each conversation scenario.
+({IconData icon, Color tint, Color fg}) _scenarioStyle(
+    BuildContext context, String title) {
+  final t = context.tokens;
+  return switch (title) {
+    'Casual Chat' => (icon: Icons.local_cafe_outlined, tint: t.amberSoft, fg: t.amber),
+    'At the Restaurant' =>
+      (icon: Icons.restaurant_outlined, tint: t.redSoft, fg: t.red),
+    'Asking Directions' => (icon: Icons.map_outlined, tint: t.priSoft, fg: t.pri),
+    'Shopping' => (icon: Icons.shopping_bag_outlined, tint: t.violetSoft, fg: t.violet),
+    'At the Doctor' =>
+      (icon: Icons.medical_services_outlined, tint: t.redSoft, fg: t.red),
+    'Job Interview' => (icon: Icons.work_outline, tint: t.greenSoft, fg: t.green),
+    _ => (icon: Icons.chat_bubble_outline, tint: t.priSoft, fg: t.pri),
+  };
+}
 
 /// AI conversation screen — role-play scenarios with AI Czech tutor.
 class ChatScreen extends ConsumerStatefulWidget {
@@ -88,24 +107,26 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       }
     });
 
+    final t = context.tokens;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          chat.conversationId != null ? chat.scenarioTitle : 'AI Tutor',
-        ),
-        actions: [
-          if (chat.conversationId != null)
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                ref.read(chatProvider.notifier).resetConversation();
-              },
-              tooltip: 'End conversation',
+      backgroundColor: t.bg,
+      appBar: chat.conversationId == null
+          ? null
+          : AppBar(
+              backgroundColor: t.card,
+              title: Text(chat.scenarioTitle),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    ref.read(chatProvider.notifier).resetConversation();
+                  },
+                  tooltip: 'End conversation',
+                ),
+              ],
             ),
-        ],
-      ),
       body: chat.conversationId == null
-          ? const _ScenarioPicker()
+          ? const SafeArea(bottom: false, child: _ScenarioPicker())
           : Column(
               children: [
                 // Messages list
@@ -180,50 +201,62 @@ class _ScenarioPicker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
       children: [
+        const DisplayText('AI Tutor', size: 26),
+        const SizedBox(height: 4),
         Text(
-          'Choose a conversation scenario',
-          style: Theme.of(context).textTheme.titleLarge,
+          'Practice real-life Czech conversations. The tutor adapts to your level.',
+          style: TextStyle(fontSize: 14, color: t.muted, height: 1.5),
         ),
-        const SizedBox(height: 8),
-        Text(
-          'Practice Czech with an AI tutor in real-life situations.',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey,
+        const SizedBox(height: 18),
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: 0.98,
+          children: ChatScenario.all.map((scenario) {
+            final s = _scenarioStyle(context, scenario.title);
+            return SoftCard(
+              padding: const EdgeInsets.all(16),
+              onTap: () => ref
+                  .read(chatProvider.notifier)
+                  .startConversation(scenario: scenario),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconTile(
+                      icon: s.icon,
+                      tint: s.tint,
+                      fg: s.fg,
+                      size: 38,
+                      radius: 13,
+                      iconSize: 16),
+                  const SizedBox(height: 10),
+                  Text(scenario.title,
+                      style: TextStyle(
+                          fontSize: 14.5,
+                          fontWeight: FontWeight.w700,
+                          color: t.ink)),
+                  const SizedBox(height: 3),
+                  Expanded(
+                    child: Text(scenario.description,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 12, color: t.muted, height: 1.4)),
+                  ),
+                ],
               ),
+            );
+          }).toList(),
         ),
-        const SizedBox(height: 24),
-        ...ChatScenario.all.map((scenario) {
-          return Card(
-            child: ListTile(
-              leading: _scenarioIcon(scenario.title),
-              title: Text(scenario.title),
-              subtitle: Text(scenario.description),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                ref.read(chatProvider.notifier).startConversation(
-                      scenario: scenario,
-                    );
-              },
-            ),
-          );
-        }),
       ],
     );
-  }
-
-  Icon _scenarioIcon(String title) {
-    return switch (title) {
-      'Casual Chat' => const Icon(Icons.coffee, color: Colors.brown),
-      'At the Restaurant' => const Icon(Icons.restaurant, color: Colors.orange),
-      'Asking Directions' => const Icon(Icons.map, color: Colors.blue),
-      'Shopping' => const Icon(Icons.shopping_bag, color: Colors.purple),
-      'At the Doctor' => const Icon(Icons.medical_services, color: Colors.red),
-      'Job Interview' => const Icon(Icons.work, color: Colors.teal),
-      _ => const Icon(Icons.chat),
-    };
   }
 }
 
@@ -252,24 +285,24 @@ class _MessageBubble extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
     final isUser = message.role == MessageRole.user;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 14),
       child: Align(
         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.8,
+            maxWidth: MediaQuery.of(context).size.width * 0.82,
           ),
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: isUser
-                ? Theme.of(context).colorScheme.primaryContainer
-                : Theme.of(context).colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(16).copyWith(
-              bottomLeft: isUser ? const Radius.circular(16) : Radius.zero,
-              bottomRight: isUser ? Radius.zero : const Radius.circular(16),
+            color: isUser ? t.userBubble : t.card,
+            boxShadow: isUser ? null : t.shadow,
+            borderRadius: BorderRadius.circular(20).copyWith(
+              bottomLeft: isUser ? const Radius.circular(20) : const Radius.circular(6),
+              bottomRight: isUser ? const Radius.circular(6) : const Radius.circular(20),
             ),
           ),
           child: Column(
@@ -282,11 +315,15 @@ class _MessageBubble extends ConsumerWidget {
                   Expanded(
                     child: Text(
                       message.content,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: TextStyle(
+                        fontSize: 15,
+                        height: 1.5,
+                        color: isUser ? t.userBubbleTxt : t.ink,
+                      ),
                     ),
                   ),
                   if (!isUser) ...[
-                    const SizedBox(width: 4),
+                    const SizedBox(width: 8),
                     _TtsIconButton(
                       text: message.content,
                     ),
@@ -295,13 +332,19 @@ class _MessageBubble extends ConsumerWidget {
               ),
               // English translation (tutor only)
               if (!isUser && message.translation != null) ...[
-                const SizedBox(height: 6),
-                Text(
-                  message.translation!,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
-                        fontStyle: FontStyle.italic,
-                      ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.only(top: 8),
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(color: t.line)),
+                  ),
+                  child: Text(
+                    message.translation!,
+                    style: TextStyle(
+                        fontSize: 12.5,
+                        color: t.muted,
+                        fontStyle: FontStyle.italic),
+                  ),
                 ),
               ],
               // Corrections
@@ -504,50 +547,67 @@ class _InputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
         child: Row(
           children: [
             Expanded(
-              child: TextField(
-                controller: controller,
-                enabled: !isLoading,
-                decoration: InputDecoration(
-                  hintText: isListening
-                      ? 'Listening... speak Czech'
-                      : 'Type in Czech...',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
+              child: Container(
+                height: 50,
+                padding: const EdgeInsets.only(left: 18, right: 6),
+                decoration: BoxDecoration(
+                  color: t.card,
+                  boxShadow: t.shadow,
+                  borderRadius: BorderRadius.circular(999),
                 ),
-                onSubmitted: (_) => onSend(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: controller,
+                        enabled: !isLoading,
+                        style: TextStyle(fontSize: 14.5, color: t.ink),
+                        decoration: InputDecoration(
+                          isCollapsed: true,
+                          hintText: isListening ? 'Listening… speak Czech' : 'Napiš česky…',
+                          hintStyle: TextStyle(color: t.faint, fontSize: 14.5),
+                          border: InputBorder.none,
+                        ),
+                        onSubmitted: (_) => onSend(),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: isLoading || isListening ? null : onMic,
+                      visualDensity: VisualDensity.compact,
+                      icon: Icon(
+                        isListening ? Icons.mic : Icons.mic_none,
+                        size: 20,
+                        color: isListening ? t.red : t.muted,
+                      ),
+                      tooltip: 'Speak your reply',
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(width: 8),
-            IconButton(
-              onPressed: isLoading || isListening ? null : onMic,
-              icon: Icon(
-                isListening ? Icons.mic : Icons.mic_none,
-                color: isListening
-                    ? Colors.red
-                    : Theme.of(context).colorScheme.primary,
+            const SizedBox(width: 10),
+            InkWell(
+              onTap: isLoading ? null : onSend,
+              borderRadius: BorderRadius.circular(999),
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(color: t.priFill, shape: BoxShape.circle),
+                child: isLoading
+                    ? Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2, color: t.onFill),
+                      )
+                    : Icon(Icons.send, size: 18, color: t.onFill),
               ),
-              tooltip: 'Speak your reply',
-            ),
-            IconButton.filled(
-              onPressed: isLoading ? null : onSend,
-              icon: isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : const Icon(Icons.send),
             ),
           ],
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/repositories/deepseek_llm_service.dart';
+import '../../data/repositories/llm_service_exception.dart';
 import '../../domain/entities/chat_message.dart';
 import '../../domain/entities/enums.dart';
 import 'database_providers.dart';
@@ -79,12 +79,14 @@ class ChatScenario {
     ChatScenario(
       title: 'At the Restaurant',
       description: 'Order food, ask about menu, pay the bill',
-      prompt: 'You are a waiter at a Czech restaurant. The learner is a customer ordering food',
+      prompt:
+          'You are a waiter at a Czech restaurant. The learner is a customer ordering food',
     ),
     ChatScenario(
       title: 'Asking Directions',
       description: 'Ask for and give directions in the city',
-      prompt: 'The learner is a tourist asking for directions to a landmark in Prague',
+      prompt:
+          'The learner is a tourist asking for directions to a landmark in Prague',
     ),
     ChatScenario(
       title: 'Shopping',
@@ -94,12 +96,14 @@ class ChatScenario {
     ChatScenario(
       title: 'At the Doctor',
       description: 'Describe symptoms, make an appointment',
-      prompt: 'You are a Czech doctor. The learner is a patient describing symptoms',
+      prompt:
+          'You are a Czech doctor. The learner is a patient describing symptoms',
     ),
     ChatScenario(
       title: 'Job Interview',
       description: 'Practice a basic job interview in Czech',
-      prompt: 'You are interviewing the learner for a basic job position. Ask simple questions',
+      prompt:
+          'You are interviewing the learner for a basic job position. Ask simple questions',
     ),
   ];
 }
@@ -117,8 +121,8 @@ class ChatNotifier extends Notifier<ChatState> {
   }) async {
     // Pre-A1 learners still converse at A1 — it's the simplest tutor level.
     final settingsLevel = ref.read(settingsProvider).startingLevel;
-    final effectiveLevel = level ??
-        (settingsLevel == CEFRLevel.a2 ? CEFRLevel.a2 : CEFRLevel.a1);
+    final effectiveLevel =
+        level ?? (settingsLevel == CEFRLevel.a2 ? CEFRLevel.a2 : CEFRLevel.a1);
 
     final convRepo = ref.read(conversationRepositoryProvider);
 
@@ -149,7 +153,10 @@ class ChatNotifier extends Notifier<ChatState> {
     // history would send it to the model twice.
     final history = state.messages;
 
-    final userMsg = ChatMessage.user(text, conversationId: state.conversationId);
+    final userMsg = ChatMessage.user(
+      text,
+      conversationId: state.conversationId,
+    );
     state = state.copyWith(
       messages: [...state.messages, userMsg],
       isLoading: true,
@@ -194,7 +201,7 @@ class ChatNotifier extends Notifier<ChatState> {
 
       // Persist tutor message
       await convRepo.saveMessage(tutorMsg);
-    } on DeepSeekException catch (e) {
+    } on LlmServiceException catch (e) {
       state = state.copyWith(isLoading: false, error: e.message);
     } on FormatException {
       state = state.copyWith(
@@ -213,10 +220,7 @@ class ChatNotifier extends Notifier<ChatState> {
   Future<void> loadConversation(String conversationId) async {
     final convRepo = ref.read(conversationRepositoryProvider);
     final messages = await convRepo.getHistory(conversationId);
-    state = state.copyWith(
-      conversationId: conversationId,
-      messages: messages,
-    );
+    state = state.copyWith(conversationId: conversationId, messages: messages);
   }
 
   /// Clear the current conversation.
@@ -269,5 +273,6 @@ class ChatNotifier extends Notifier<ChatState> {
 }
 
 /// Provider for the chat state.
-final chatProvider =
-    NotifierProvider<ChatNotifier, ChatState>(ChatNotifier.new);
+final chatProvider = NotifierProvider<ChatNotifier, ChatState>(
+  ChatNotifier.new,
+);

@@ -1,38 +1,20 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/engines/llm_orchestrator.dart';
 import '../../domain/repositories/llm_service.dart';
-import '../../data/repositories/deepseek_llm_service.dart';
-
-/// Secure storage key for the DeepSeek API key.
-const kDeepSeekApiKeyStorageKey = 'deepseek_api_key';
-
-/// Provider for the secure storage instance.
-final secureStorageProvider = Provider<FlutterSecureStorage>((ref) {
-  return const FlutterSecureStorage();
-});
-
-/// Provider for the API key (loaded from secure storage).
-final apiKeyProvider = FutureProvider<String?>((ref) async {
-  final storage = ref.read(secureStorageProvider);
-  return storage.read(key: kDeepSeekApiKeyStorageKey);
-});
+import '../../data/repositories/supabase_llm_service.dart';
+import 'sync_providers.dart';
 
 /// Provider for the LLM service.
-/// Returns a DeepSeekLlmService if an API key is configured,
-/// or a MockLlmService for development/demo purposes.
+/// Uses the authenticated Supabase Edge Function when the backend is enabled,
+/// or a mock service for offline development before project configuration.
 final llmServiceProvider = Provider<LlmService>((ref) {
-  final apiKeyAsync = ref.watch(apiKeyProvider);
-  return apiKeyAsync.maybeWhen(
-    data: (apiKey) {
-      if (apiKey != null && apiKey.isNotEmpty) {
-        return DeepSeekLlmService(apiKey: apiKey);
-      }
-      return MockLlmService();
-    },
-    orElse: () => MockLlmService(),
-  );
+  final backend = ref.watch(backendServiceProvider);
+  if (backend.isEnabled && backend.isSignedIn) {
+    return SupabaseLlmService(client: Supabase.instance.client);
+  }
+  return MockLlmService();
 });
 
 /// Provider for the LLM orchestrator (stateless prompt builder/parser).
@@ -62,8 +44,8 @@ class MockLlmService implements LlmService {
           'overall': 70,
         },
         'feedback':
-            'Mock evaluation (no API key configured). Add a DeepSeek API key '
-                'in Settings for real AI feedback on your writing.',
+            'Mock evaluation (backend not configured). Connect the Čeština Pro '
+            'backend for real AI feedback on your writing.',
         'errors': <Map<String, dynamic>>[],
       });
     } else if (systemPrompt.contains('grammar expert')) {
@@ -83,10 +65,7 @@ class MockLlmService implements LlmService {
           {'cz': 'ahoj', 'en': 'hello/hi', 'ipa': 'aɦoj'},
           {'cz': 'dobře', 'en': 'well/good', 'ipa': 'dobr̝ɛ'},
         ],
-        'suggested_replies': [
-          'Mám se dobře, děkuji.',
-          'Dnes se učím česky.',
-        ],
+        'suggested_replies': ['Mám se dobře, děkuji.', 'Dnes se učím česky.'],
       });
     }
 

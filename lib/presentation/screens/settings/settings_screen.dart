@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/tts_providers.dart';
+import '../../widgets/common/soft_ui.dart';
 
 /// Settings screen — theme, daily goal, TTS rate, API key, cache management.
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -12,169 +14,272 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  final _apiKeyController = TextEditingController();
-  bool _obscureApiKey = true;
-
-  @override
-  void dispose() {
-    _apiKeyController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final t = context.tokens;
     final settings = ref.watch(settingsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
-      body: ListView(
-        children: [
-          // ── Appearance ──
-          const _SectionHeader(title: 'Appearance'),
-          ListTile(
-            leading: const Icon(Icons.palette),
-            title: const Text('Theme'),
-            subtitle: Text(_themeLabel(settings.themeMode)),
-            trailing: DropdownButton<AppThemeMode>(
-              value: settings.themeMode,
-              onChanged: (mode) {
-                if (mode != null) {
-                  ref.read(settingsProvider.notifier).setThemeMode(mode);
-                }
-              },
-              items: const [
-                DropdownMenuItem(
-                  value: AppThemeMode.system,
-                  child: Text('System'),
+      backgroundColor: t.bg,
+      body: SafeArea(
+        bottom: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  icon: Icon(Icons.arrow_back_ios_new, size: 18, color: t.ink),
                 ),
-                DropdownMenuItem(
-                  value: AppThemeMode.light,
-                  child: Text('Light'),
-                ),
-                DropdownMenuItem(
-                  value: AppThemeMode.dark,
-                  child: Text('Dark'),
+                const DisplayText('Settings', size: 24),
+              ],
+            ),
+            const SizedBox(height: 8),
+
+            // ── Appearance ──
+            const _GroupLabel('Appearance'),
+            _Group(
+              children: [
+                _Row(
+                  icon: Icons.dark_mode_outlined,
+                  tint: t.violetSoft,
+                  fg: t.violet,
+                  title: 'Theme',
+                  subtitle: _themeLabel(settings.themeMode),
+                  trailing: _ThemeToggle(
+                    mode: settings.themeMode,
+                    onChanged:
+                        (m) =>
+                            ref.read(settingsProvider.notifier).setThemeMode(m),
+                  ),
                 ),
               ],
             ),
-          ),
-          const Divider(),
 
-          // ── Learning ──
-          const _SectionHeader(title: 'Learning'),
-          ListTile(
-            leading: const Icon(Icons.flag),
-            title: const Text('Daily Goal'),
-            subtitle: Text('${settings.dailyGoalXp} XP per day'),
-            trailing: DropdownButton<int>(
-              value: settings.dailyGoalXp,
-              onChanged: (xp) {
-                if (xp != null) {
-                  ref.read(settingsProvider.notifier).setDailyGoalXp(xp);
-                }
-              },
-              items: const [
-                DropdownMenuItem(value: 20, child: Text('20 XP — Casual')),
-                DropdownMenuItem(value: 50, child: Text('50 XP — Regular')),
-                DropdownMenuItem(value: 100, child: Text('100 XP — Serious')),
-                DropdownMenuItem(value: 150, child: Text('150 XP — Intense')),
+            // ── Learning ──
+            const _GroupLabel('Learning'),
+            _Group(
+              children: [
+                _Row(
+                  icon: Icons.flag_outlined,
+                  tint: t.priSoft,
+                  fg: t.pri,
+                  title: 'Daily goal',
+                  subtitle: '${settings.dailyGoalXp} XP per day',
+                  trailing: DropdownButton<int>(
+                    value: settings.dailyGoalXp,
+                    underline: const SizedBox.shrink(),
+                    style: TextStyle(
+                      color: t.pri,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                    ),
+                    onChanged: (xp) {
+                      if (xp != null) {
+                        ref.read(settingsProvider.notifier).setDailyGoalXp(xp);
+                      }
+                    },
+                    items: const [
+                      DropdownMenuItem(value: 20, child: Text('Casual')),
+                      DropdownMenuItem(value: 50, child: Text('Regular')),
+                      DropdownMenuItem(value: 100, child: Text('Serious')),
+                      DropdownMenuItem(value: 150, child: Text('Intense')),
+                    ],
+                  ),
+                ),
+                _Divider(),
+                _Row(
+                  icon: Icons.favorite_border,
+                  tint: t.redSoft,
+                  fg: t.red,
+                  title: 'Hearts in lessons',
+                  subtitle: 'Off = practice freely',
+                  trailing: Switch(
+                    value: settings.heartsEnabled,
+                    onChanged:
+                        (v) => ref
+                            .read(settingsProvider.notifier)
+                            .setHeartsEnabled(v),
+                  ),
+                ),
               ],
             ),
-          ),
-          SwitchListTile(
-            secondary: const Icon(Icons.favorite),
-            title: const Text('Hearts in lessons'),
-            subtitle: const Text(
-                'Turn off to practice freely without losing hearts',),
-            value: settings.heartsEnabled,
-            onChanged: (v) {
-              ref.read(settingsProvider.notifier).setHeartsEnabled(v);
-            },
-          ),
-          const Divider(),
 
-          // ── Audio ──
-          const _SectionHeader(title: 'Audio'),
-          ListTile(
-            leading: const Icon(Icons.record_voice_over),
-            title: const Text('TTS Speech Rate'),
-            subtitle: Text('${(settings.ttsSpeechRate * 100).round()}% (slower = easier)'),
-            trailing: SizedBox(
-              width: 120,
-              child: Slider(
-                value: settings.ttsSpeechRate,
-                min: 0.2,
-                max: 1.0,
-                divisions: 8,
-                onChanged: (value) {
-                  ref.read(settingsProvider.notifier).setTtsSpeechRate(value);
-                },
-              ),
+            // ── Audio ──
+            const _GroupLabel('Audio'),
+            _Group(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
+                  child: Row(
+                    children: [
+                      IconTile(
+                        icon: Icons.person_outline,
+                        tint: t.priSoft,
+                        fg: t.pri,
+                        size: 36,
+                        radius: 12,
+                        iconSize: 17,
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: SegmentedButton<TtsVoiceGender>(
+                          segments: const [
+                            ButtonSegment(
+                              value: TtsVoiceGender.female,
+                              label: Text('Female'),
+                            ),
+                            ButtonSegment(
+                              value: TtsVoiceGender.male,
+                              label: Text('Male'),
+                            ),
+                          ],
+                          selected: {settings.ttsVoiceGender},
+                          onSelectionChanged:
+                              (selection) => ref
+                                  .read(settingsProvider.notifier)
+                                  .setTtsVoiceGender(selection.single),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                _Divider(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          IconTile(
+                            icon: Icons.record_voice_over_outlined,
+                            tint: t.amberSoft,
+                            fg: t.amber,
+                            size: 36,
+                            radius: 12,
+                            iconSize: 15,
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Speech rate',
+                                  style: TextStyle(
+                                    fontSize: 14.5,
+                                    fontWeight: FontWeight.w600,
+                                    color: t.ink,
+                                  ),
+                                ),
+                                Text(
+                                  '${(settings.ttsSpeechRate * 100).round()}% — slower is easier',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: t.muted,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Slider(
+                        value: settings.ttsSpeechRate,
+                        min: 0.2,
+                        max: 1.0,
+                        divisions: 8,
+                        onChanged:
+                            (value) => ref
+                                .read(settingsProvider.notifier)
+                                .setTtsSpeechRate(value),
+                      ),
+                    ],
+                  ),
+                ),
+                _Divider(),
+                _Row(
+                  icon: Icons.play_arrow_rounded,
+                  tint: t.greenSoft,
+                  fg: t.green,
+                  title: 'Test voice',
+                  subtitle: 'Play a sample Czech phrase',
+                  onTap:
+                      () =>
+                          ref.read(czechTtsProvider).speak('Ahoj, jak se máš?'),
+                ),
+                _Divider(),
+                _Row(
+                  icon: Icons.delete_outline,
+                  tint: t.chipBg,
+                  fg: t.muted,
+                  title: 'Clear audio cache',
+                  subtitle: 'Remove cached audio files',
+                  onTap: () async {
+                    await ref.read(czechTtsProvider).clearCache();
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('TTS cache cleared')),
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.volume_up),
-            title: const Text('Test TTS'),
-            subtitle: const Text('Play a sample Czech phrase'),
-            onTap: () {
-              ref.read(czechTtsProvider).speak('Ahoj, jak se máš?');
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.cleaning_services),
-            title: const Text('Clear TTS Cache'),
-            subtitle: const Text('Remove cached audio files'),
-            onTap: () async {
-              await ref.read(czechTtsProvider).clearCache();
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('TTS cache cleared')),
-                );
-              }
-            },
-          ),
-          const Divider(),
 
-          // ── AI / API Keys ──
-          const _SectionHeader(title: 'AI Configuration'),
-          ListTile(
-            leading: Icon(
-              Icons.key,
-              color: settings.hasApiKey ? Colors.green : Colors.orange,
+            // ── AI configuration ──
+            const _GroupLabel('AI configuration'),
+            _Group(
+              children: [
+                _Row(
+                  icon: Icons.vpn_key_outlined,
+                  tint: t.greenSoft,
+                  fg: t.green,
+                  title: 'AI tutor',
+                  subtitle: 'Protected by the Čeština Pro server',
+                  subtitleColor: t.green,
+                  trailing: const Icon(Icons.lock_outline, size: 18),
+                ),
+              ],
             ),
-            title: const Text('DeepSeek API Key'),
-            subtitle: Text(
-              settings.hasApiKey
-                  ? 'API key configured ✓'
-                  : 'No API key set — using mock responses',
-            ),
-            onTap: () => _showApiKeyDialog(),
-          ),
-          ListTile(
-            leading: const Icon(Icons.info_outline),
-            title: const Text('About DeepSeek'),
-            subtitle: const Text(
-              'Get a free API key at platform.deepseek.com',
-            ),
-            onTap: () {
-              // Could open URL here
-            },
-          ),
-          const Divider(),
 
-          // ── About ──
-          const _SectionHeader(title: 'About'),
-          const ListTile(
-            leading: Icon(Icons.school),
-            title: Text('Čeština Pro'),
-            subtitle: Text('AI-powered Czech learning app\nCEFR A1 → A2'),
-          ),
-          const ListTile(
-            leading: Icon(Icons.code),
-            title: Text('Version'),
-            subtitle: Text('1.0.0 — Phase 4'),
-          ),
-        ],
+            // ── About ──
+            const _GroupLabel('About'),
+            _Group(
+              children: [
+                _Row(
+                  icon: Icons.school_outlined,
+                  tint: t.priSoft,
+                  fg: t.pri,
+                  title: 'Čeština Pro',
+                  subtitle: 'AI-powered Czech learning · CEFR A1 → A2',
+                  trailing: const SizedBox.shrink(),
+                ),
+                _Divider(),
+                _Row(
+                  icon: Icons.code,
+                  tint: t.chipBg,
+                  fg: t.muted,
+                  title: 'Version',
+                  subtitle: '1.0.0',
+                  trailing: const SizedBox.shrink(),
+                ),
+                _Divider(),
+                _Row(
+                  icon: Icons.privacy_tip_outlined,
+                  tint: t.priSoft,
+                  fg: t.pri,
+                  title: 'Privacy Policy',
+                  subtitle: 'How your data is handled',
+                  onTap: () => _showPrivacyPolicy(context),
+                  trailing: Icon(Icons.chevron_right, size: 15, color: t.faint),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -187,95 +292,198 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     };
   }
 
-  void _showApiKeyDialog() {
-    _apiKeyController.clear();
+  void _showPrivacyPolicy(BuildContext context) {
     showDialog(
       context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setState) {
-          return AlertDialog(
-            title: const Text('DeepSeek API Key'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Enter your DeepSeek API key to enable AI conversation and writing evaluation.',
-                  style: TextStyle(fontSize: 13, color: Colors.grey),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _apiKeyController,
-                  obscureText: _obscureApiKey,
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: 'API Key',
-                    hintText: 'sk-...',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureApiKey
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() => _obscureApiKey = !_obscureApiKey);
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Get a free key at platform.deepseek.com',
-                  style: TextStyle(fontSize: 11, color: Colors.grey),
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: const Text('Cancel'),
-              ),
-              if (ref.read(settingsProvider).hasApiKey)
-                TextButton(
-                  onPressed: () async {
-                    await ref.read(settingsProvider.notifier).clearApiKey();
-                    if (ctx.mounted) Navigator.pop(ctx);
-                  },
-                  child: const Text('Remove'),
-                ),
-              FilledButton(
-                onPressed: () async {
-                  final key = _apiKeyController.text.trim();
-                  if (key.isNotEmpty) {
-                    await ref.read(settingsProvider.notifier).setApiKey(key);
-                    if (ctx.mounted) Navigator.pop(ctx);
-                  }
-                },
-                child: const Text('Save'),
-              ),
-            ],
-          );
-        },
+      builder: (ctx) => AlertDialog(
+        title: const Text('Privacy Policy'),
+        content: const SingleChildScrollView(
+          child: Text(
+            'Čeština Pro stores all your learning data locally on your '
+            'device — progress, flashcards, AI conversations, and settings '
+            'are never transmitted to any server.\n\n'
+            'AI features (tutor chat, writing evaluation) are optional and '
+            'connect directly to AI providers using your own API key. '
+            'No third-party analytics, tracking, or advertising SDKs are '
+            'included.\n\n'
+            'Microphone access is used only for on-device pronunciation '
+            'practice. No audio is recorded or stored.\n\n'
+            'Full privacy policy: PRIVACY.md in the app repository.',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('Close'),
+          ),
+        ],
       ),
     );
   }
 }
 
-class _SectionHeader extends StatelessWidget {
+class _GroupLabel extends StatelessWidget {
   final String title;
-
-  const _SectionHeader({required this.title});
+  const _GroupLabel(this.title);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).colorScheme.primary,
+      padding: const EdgeInsets.fromLTRB(4, 20, 4, 10),
+      child: SectionLabel(title),
+    );
+  }
+}
+
+/// A rounded card grouping settings rows.
+class _Group extends StatelessWidget {
+  final List<Widget> children;
+  const _Group({required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    return Container(
+      decoration: BoxDecoration(
+        color: t.card,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: t.shadow,
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(children: children),
+    );
+  }
+}
+
+class _Divider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) =>
+      Divider(height: 1, thickness: 1, color: context.tokens.line);
+}
+
+/// A settings row: tinted icon tile, title, subtitle, optional trailing.
+class _Row extends StatelessWidget {
+  final IconData icon;
+  final Color tint;
+  final Color fg;
+  final String title;
+  final String subtitle;
+  final Color? subtitleColor;
+  final Widget? trailing;
+  final VoidCallback? onTap;
+
+  const _Row({
+    required this.icon,
+    required this.tint,
+    required this.fg,
+    required this.title,
+    required this.subtitle,
+    this.subtitleColor,
+    this.trailing,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
+          children: [
+            IconTile(
+              icon: icon,
+              tint: tint,
+              fg: fg,
+              size: 36,
+              radius: 12,
+              iconSize: 15,
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w600,
+                      color: t.ink,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: subtitleColor ?? t.muted,
+                      fontWeight:
+                          subtitleColor != null
+                              ? FontWeight.w600
+                              : FontWeight.normal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            trailing ??
+                (onTap != null
+                    ? Icon(Icons.chevron_right, size: 15, color: t.faint)
+                    : const SizedBox.shrink()),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+/// Light / Auto / Dark segmented control.
+class _ThemeToggle extends StatelessWidget {
+  final AppThemeMode mode;
+  final ValueChanged<AppThemeMode> onChanged;
+
+  const _ThemeToggle({required this.mode, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    Widget seg(String label, AppThemeMode m) {
+      final selected = mode == m;
+      return GestureDetector(
+        onTap: () => onChanged(m),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+          decoration: BoxDecoration(
+            color: selected ? t.card : Colors.transparent,
+            borderRadius: BorderRadius.circular(999),
+            boxShadow: selected ? t.shadow : null,
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+              color: selected ? t.ink : t.muted,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: t.chipBg,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          seg('Light', AppThemeMode.light),
+          seg('Auto', AppThemeMode.system),
+          seg('Dark', AppThemeMode.dark),
+        ],
       ),
     );
   }

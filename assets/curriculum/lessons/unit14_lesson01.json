@@ -1,0 +1,207 @@
+{
+  "id": 1401,
+  "unit_id": 14,
+  "order_in_unit": 0,
+  "title": "Places in Town & Asking Directions",
+  "description": "Learn town vocabulary, how to ask where something is (Kde je...?), location prepositions, directions, and the basics of the locative case.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "exercises": [
+    {
+      "id": 14001,
+      "lesson_id": 1401,
+      "type": "multiple_choice",
+      "prompt": "What does 'náměstí' mean in English?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "náměstí",
+        "question_en": "What does 'náměstí' mean?",
+        "options": ["square", "street", "bridge", "church"],
+        "correct_index": 0,
+        "explanation": "náměstí = square (neuter noun). A central feature of Czech towns."
+      },
+      "answer_key": "square",
+      "grammar_rule_id": "GR-130",
+      "xp_reward": 10
+    },
+    {
+      "id": 14002,
+      "lesson_id": 1401,
+      "type": "multiple_choice",
+      "prompt": "Which of these is NOT a place in town?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které slovo NENÍ místo ve městě?",
+        "question_en": "Which word is NOT a place in town?",
+        "options": ["nádraží", "kostel", "nůž", "pošta"],
+        "correct_index": 2,
+        "explanation": "nůž = knife, not a place. nádraží = station, kostel = church, pošta = post office."
+      },
+      "answer_key": "nůž",
+      "grammar_rule_id": "GR-130",
+      "xp_reward": 10
+    },
+    {
+      "id": 14003,
+      "lesson_id": 1401,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'Where is the station?'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "Where is the station?",
+        "accepted_answers": ["Kde je nádraží?", "Kde je to nádraží?"],
+        "grammar_note": "Kde = where, je = is, nádraží = station (neuter). 'Kde je...?' is the basic pattern for asking where something is."
+      },
+      "answer_key": "Kde je nádraží?",
+      "grammar_rule_id": "GR-130",
+      "xp_reward": 10
+    },
+    {
+      "id": 14004,
+      "lesson_id": 1401,
+      "type": "fill_blank",
+      "prompt": "Complete the question with the correct preposition (vedle or naproti).",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Kde je obchod? Je ___ kostela. (next to the church)",
+        "blank_count": 1,
+        "accepted_answers": ["vedle"],
+        "explanation": "vedle + genitive = next to. 'Vedle kostela' = next to the church. naproti = opposite."
+      },
+      "answer_key": "vedle",
+      "grammar_rule_id": "GR-131",
+      "xp_reward": 10
+    },
+    {
+      "id": 14005,
+      "lesson_id": 1401,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct location preposition (naproti or blízko).",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Pošta je ___ nádraží. (opposite the station)",
+        "blank_count": 1,
+        "accepted_answers": ["naproti"],
+        "explanation": "naproti + dative = opposite. 'Naproti nádraží' = opposite the station. blízko = near."
+      },
+      "answer_key": "naproti",
+      "grammar_rule_id": "GR-131",
+      "xp_reward": 10
+    },
+    {
+      "id": 14006,
+      "lesson_id": 1401,
+      "type": "multiple_choice",
+      "prompt": "How do you say 'The restaurant is far' in Czech?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jak řeknete 'The restaurant is far' česky?",
+        "question_en": "How do you say 'The restaurant is far' in Czech?",
+        "options": ["Restaurace je daleko.", "Restaurace je blízko.", "Restaurace je vedle.", "Restaurace je tady."],
+        "correct_index": 0,
+        "explanation": "daleko = far. blízko = near, vedle = next to, tady = here."
+      },
+      "answer_key": "Restaurace je daleko.",
+      "grammar_rule_id": "GR-131",
+      "xp_reward": 10
+    },
+    {
+      "id": 14007,
+      "lesson_id": 1401,
+      "type": "translation",
+      "prompt": "Translate to English: 'Jděte rovně a pak doleva.'",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "Jděte rovně a pak doleva.",
+        "accepted_answers": ["Go straight and then left.", "Go straight ahead and then left.", "Go straight and then turn left."],
+        "grammar_note": "rovně = straight, doleva = (to the) left. 'Jděte' is the formal command for 'go' (vy form). doprava = right."
+      },
+      "answer_key": "Go straight and then left.",
+      "grammar_rule_id": "GR-132",
+      "xp_reward": 10
+    },
+    {
+      "id": 14008,
+      "lesson_id": 1401,
+      "type": "word_order",
+      "prompt": "Arrange the words to form: 'Turn right at the square.'",
+      "data": {
+        "type": "word_order",
+        "words": ["náměstí.", "na", "doprava", "Zahněte"],
+        "correct_order": [3, 2, 1, 0],
+        "explanation": "'Zahněte doprava na náměstí.' = 'Turn right at the square.' zahněte = turn (formal command), doprava = right."
+      },
+      "answer_key": "Zahněte doprava na náměstí.",
+      "grammar_rule_id": "GR-132",
+      "xp_reward": 10
+    },
+    {
+      "id": 14009,
+      "lesson_id": 1401,
+      "type": "multiple_choice",
+      "prompt": "Which direction word means 'straight ahead'?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Které slovo znamená 'straight ahead'?",
+        "question_en": "Which word means 'straight ahead'?",
+        "options": ["doleva", "doprava", "rovně", "zpátky"],
+        "correct_index": 2,
+        "explanation": "rovně = straight (ahead). doleva = left, doprava = right, zpátky = back."
+      },
+      "answer_key": "rovně",
+      "grammar_rule_id": "GR-132",
+      "xp_reward": 10
+    },
+    {
+      "id": 14010,
+      "lesson_id": 1401,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'Where is the pharmacy?'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "Where is the pharmacy?",
+        "accepted_answers": ["Kde je lékárna?"],
+        "grammar_note": "Kde je = where is. lékárna = pharmacy (feminine). Pattern: Kde je + [place]?"
+      },
+      "answer_key": "Kde je lékárna?",
+      "grammar_rule_id": "GR-130",
+      "xp_reward": 10
+    },
+    {
+      "id": 14011,
+      "lesson_id": 1401,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct locative form: v ___ (Praha) or na ___ (náměstí).",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Bydlím ___ ___ (in Prague) a pracuji ___ ___ (on the square).",
+        "blank_count": 4,
+        "accepted_answers": ["v", "Praze", "na", "náměstí"],
+        "explanation": "v + locative for cities: v Praze (locative of Praha → Praze). na + locative for open spaces: na náměstí (náměstí is neuter, locative = náměstí)."
+      },
+      "answer_key": "v Praze na náměstí",
+      "grammar_rule_id": "GR-133",
+      "xp_reward": 15
+    },
+    {
+      "id": 14012,
+      "lesson_id": 1401,
+      "type": "pronunciation",
+      "prompt": "Pronounce the following Czech sentence about directions.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Jděte rovně a pak doleva.",
+        "target_audio_hash": "placeholder_14012",
+        "focus_sounds": ["dě", "rov", "lev"],
+        "min_score": 0.6,
+        "translation_en": "Go straight and then left."
+      },
+      "answer_key": "Jděte rovně a pak doleva.",
+      "grammar_rule_id": "GR-132",
+      "xp_reward": 10
+    }
+  ]
+}

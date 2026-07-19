@@ -71,6 +71,69 @@
       "order_index": 8,
       "grammar_tags": ["family", "adjectives", "gender_agreement", "descriptions"],
       "is_exam_prep": false
+    },
+    {
+      "id": 9,
+      "title": "Numbers, Time & Dates",
+      "description": "Čísla 0-100, Kolik je hodin?, days of the week, months, telling time. Dnes je...",
+      "phase": "a1",
+      "order_index": 9,
+      "grammar_tags": ["numbers", "time", "dates", "calendar"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 10,
+      "title": "Daily Routine & Reflexive Verbs",
+      "description": "Reflexive se/si, morning/evening routines, vstávám, sprchuju se. Telling the daily schedule.",
+      "phase": "a1",
+      "order_index": 10,
+      "grammar_tags": ["reflexive_verbs", "daily_routine", "adverbs_of_time"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 11,
+      "title": "Food, Drink & Restaurants",
+      "description": "Ordering jídlo a pití, Czech cuisine vocab, accusative with jíst/pít. V restauraci.",
+      "phase": "a1",
+      "order_index": 11,
+      "grammar_tags": ["food", "restaurant", "accusative", "quantities"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 12,
+      "title": "Shopping, Prices & Clothes",
+      "description": "Kolik to stojí? Prices, sizes, colors. Clothes shopping, accusative with chtít/kupovat.",
+      "phase": "a1",
+      "order_index": 12,
+      "grammar_tags": ["shopping", "prices", "clothes", "accusative"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 13,
+      "title": "Hobbies & Free Time",
+      "description": "Mít rád, rád + verb. Co rád děláš? Sports, music, reading. Adverbs of frequency.",
+      "phase": "a1",
+      "order_index": 13,
+      "grammar_tags": ["hobbies", "like_dislike", "adverbs", "free_time"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 14,
+      "title": "Directions, Places & Transport",
+      "description": "Kde je...? Directions, places in town, transport. Locative intro: v Praze, na náměstí.",
+      "phase": "a1",
+      "order_index": 14,
+      "grammar_tags": ["directions", "places", "transport", "locative_intro"],
+      "is_exam_prep": false
+    },
+    {
+      "id": 15,
+      "title": "Weather, Seasons & Travel",
+      "description": "Počasí, roční období, travel basics. Bude pršet. Past tense intro: byl jsem v...",
+      "phase": "a1",
+      "order_index": 15,
+      "grammar_tags": ["weather", "seasons", "travel", "past_tense_intro", "future_intro"],
+      "is_exam_prep": false
     }
   ]
 }

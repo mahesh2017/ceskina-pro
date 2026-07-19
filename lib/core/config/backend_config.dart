@@ -1,23 +1,27 @@
 /// Backend (Supabase) configuration.
 ///
-/// Fill these with your Supabase project's values (Project Settings → API).
-/// The anon key is safe to ship in the client — row-level security is what
+/// Defaults target the Čeština Pro project and can be overridden at build time.
+/// The publishable key is safe to ship in the client — row-level security is what
 /// protects data, not key secrecy. (Your DeepSeek key is a different story and
 /// must move behind an Edge Function; it is NOT stored here.)
 ///
-/// Prefer passing these at build time so they never live in source control:
+/// For staging or local projects, override them at build time:
 ///   flutter run --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
 ///
-/// When both are empty the app runs fully offline — [isConfigured] is false and
-/// all sync/auth becomes a no-op, so nothing breaks before you set up a project.
+/// Setting either override to an empty value disables the backend so development
+/// builds can still run completely offline.
 class BackendConfig {
   const BackendConfig._();
 
-  static const String supabaseUrl =
-      String.fromEnvironment('SUPABASE_URL', defaultValue: '');
+  static const String supabaseUrl = String.fromEnvironment(
+    'SUPABASE_URL',
+    defaultValue: 'https://pxhjcazremdnsdzpeajo.supabase.co',
+  );
 
-  static const String supabaseAnonKey =
-      String.fromEnvironment('SUPABASE_ANON_KEY', defaultValue: '');
+  static const String supabaseAnonKey = String.fromEnvironment(
+    'SUPABASE_ANON_KEY',
+    defaultValue: 'sb_publishable_ekIEz6xzgQN4uaQAgLwR0Q_ZfZ9e47r',
+  );
 
   /// True once a project URL + anon key are supplied.
   static bool get isConfigured =>

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/repositories/deepseek_llm_service.dart';
+import '../../data/repositories/llm_service_exception.dart';
 import '../../domain/entities/enums.dart';
 import 'llm_providers.dart';
 
@@ -30,7 +30,8 @@ class WritingEvaluation {
       coherence: (score['coherence'] as num?)?.toInt() ?? 0,
       overall: (score['overall'] as num?)?.toInt() ?? 0,
       feedback: json['feedback'] as String? ?? '',
-      errors: (json['errors'] as List<dynamic>?)
+      errors:
+          (json['errors'] as List<dynamic>?)
               ?.map((e) => e as Map<String, dynamic>)
               .toList() ??
           [],
@@ -95,17 +96,20 @@ class WritingEvalNotifier extends Notifier<WritingEvalState> {
 
       state = WritingEvalState(evaluation: evaluation);
       return evaluation;
-    } on DeepSeekException catch (e) {
+    } on LlmServiceException catch (e) {
       state = WritingEvalState(error: e.message);
       return null;
     } on FormatException {
       state = const WritingEvalState(
-          error: 'The AI returned an unreadable evaluation. Try again.',);
+        error: 'The AI returned an unreadable evaluation. Try again.',
+      );
       return null;
     } catch (_) {
       state = const WritingEvalState(
-          error: 'Could not evaluate your writing. '
-              'Check your connection and try again.',);
+        error:
+            'Could not evaluate your writing. '
+            'Check your connection and try again.',
+      );
       return null;
     }
   }
@@ -118,4 +122,5 @@ class WritingEvalNotifier extends Notifier<WritingEvalState> {
 /// Provider for writing evaluation.
 final writingEvalProvider =
     NotifierProvider<WritingEvalNotifier, WritingEvalState>(
-        WritingEvalNotifier.new,);
+      WritingEvalNotifier.new,
+    );

@@ -7,9 +7,21 @@
       "explanation": "In Czech, the stress always falls on the first syllable of every word. This is a fixed rule — unlike English, there are no exceptions. Examples: PRA-ha, KA-va, MLA-tim. Long vowels are pronounced longer but do NOT receive extra stress.",
       "case_affected": null,
       "examples": [
-        {"cz": "Praha", "en": "Prague", "note": "Stress on PRA"},
-        {"cz": "káva", "en": "coffee", "note": "Stress on KA"},
-        {"cz": "děkuji", "en": "thank you", "note": "Stress on DĚ"}
+        {
+          "cz": "Praha",
+          "en": "Prague",
+          "note": "Stress on PRA"
+        },
+        {
+          "cz": "káva",
+          "en": "coffee",
+          "note": "Stress on KA"
+        },
+        {
+          "cz": "děkuji",
+          "en": "thank you",
+          "note": "Stress on DĚ"
+        }
       ],
       "unit_id": 1
     },
@@ -20,10 +32,22 @@
       "explanation": "The letter ř (r with háček) has no equivalent in other languages. It is a raised alveolar non-sonorant trill. To approximate: try saying 'r' and 'zh' simultaneously. It appears in common words like řeka (river), tři (three), Dvořák. Practice slowly — it takes time to master.",
       "case_affected": null,
       "examples": [
-        {"cz": "řeka", "en": "river"},
-        {"cz": "tři", "en": "three"},
-        {"cz": "Dvořák", "en": "Dvořák (composer name)"},
-        {"cz": "řada", "en": "row / line"}
+        {
+          "cz": "řeka",
+          "en": "river"
+        },
+        {
+          "cz": "tři",
+          "en": "three"
+        },
+        {
+          "cz": "Dvořák",
+          "en": "Dvořák (composer name)"
+        },
+        {
+          "cz": "řada",
+          "en": "row / line"
+        }
       ],
       "unit_id": 1
     },
@@ -34,10 +58,26 @@
       "explanation": "When ě follows certain consonants, it softens them. The most common softening: dě sounds like 'dye', tě like 'tye', ně like 'nye'. For bě, pě, vě: insert a 'j' sound (bje, pje, vje). mě is special — it sounds like 'mňe'. This is critical for correct pronunciation and comprehension.",
       "case_affected": null,
       "examples": [
-        {"cz": "děti", "en": "children", "note": "dě → ďe"},
-        {"cz": "těší", "en": "pleases", "note": "tě → ťe"},
-        {"cz": "město", "en": "city", "note": "mě → mňe"},
-        {"cz": "běžet", "en": "to run", "note": "bě → bje"}
+        {
+          "cz": "děti",
+          "en": "children",
+          "note": "dě → ďe"
+        },
+        {
+          "cz": "těší",
+          "en": "pleases",
+          "note": "tě → ťe"
+        },
+        {
+          "cz": "město",
+          "en": "city",
+          "note": "mě → mňe"
+        },
+        {
+          "cz": "běžet",
+          "en": "to run",
+          "note": "bě → bje"
+        }
       ],
       "unit_id": 1
     },
@@ -48,10 +88,26 @@
       "explanation": "Czech distinguishes between short and long vowels. Long vowels are marked with čárka (acute accent: á, é, í, ó, ú) or kroužek (ring: ů). A long vowel is pronounced approximately twice as long as a short one. Importantly, vowel length can change meaning: pivo (beer) vs pívo (a type of beer), sul (he salted) vs sůl (salt). Always pay attention to vowel length.",
       "case_affected": null,
       "examples": [
-        {"cz": "dům", "en": "house", "note": "ů is long u"},
-        {"cz": "káva", "en": "coffee", "note": "á is long a"},
-        {"cz": "pít", "en": "to drink", "note": "í is long i"},
-        {"cz": "dom", "en": "(invalid without length)", "note": "Compare: dům vs dom"}
+        {
+          "cz": "dům",
+          "en": "house",
+          "note": "ů is long u"
+        },
+        {
+          "cz": "káva",
+          "en": "coffee",
+          "note": "á is long a"
+        },
+        {
+          "cz": "pít",
+          "en": "to drink",
+          "note": "í is long i"
+        },
+        {
+          "cz": "dom",
+          "en": "(invalid without length)",
+          "note": "Compare: dům vs dom"
+        }
       ],
       "unit_id": 1
     },
@@ -62,10 +118,22 @@
       "explanation": "The háček (ˇ) mark changes the sound of consonants: č = ch (as in 'church'), š = sh (as in 'ship'), ž = zh (as in 'measure'), ř = unique Czech sound, ď = softened d, ť = softened t, ň = softened n (like Spanish ñ). These are distinct letters in the Czech alphabet, not modifications.",
       "case_affected": null,
       "examples": [
-        {"cz": "čaj", "en": "tea"},
-        {"cz": "škola", "en": "school"},
-        {"cz": "žena", "en": "woman"},
-        {"cz": "ňakovitý", "en": "nasal"}
+        {
+          "cz": "čaj",
+          "en": "tea"
+        },
+        {
+          "cz": "škola",
+          "en": "school"
+        },
+        {
+          "cz": "žena",
+          "en": "woman"
+        },
+        {
+          "cz": "ňakovitý",
+          "en": "nasal"
+        }
       ],
       "unit_id": 1
     },
@@ -76,10 +144,22 @@
       "explanation": "Czech has a T-V distinction. Use formal greetings (dobrý den, dobré ráno, dobrý večer) with strangers, elderly people, and in professional settings. Always use 'Vy' (formal you) with these. Use 'ahoj' or 'čau' with friends, family, and people your own age. Use 'ty' (informal you) with these. Using informal with someone who expects formal is considered rude.",
       "case_affected": null,
       "examples": [
-        {"cz": "Dobrý den, jak se máte?", "en": "Good day, how are you? (formal)"},
-        {"cz": "Ahoj, jak se máš?", "en": "Hi, how are you? (informal)"},
-        {"cz": "Na shledanou, pane Nováku.", "en": "Goodbye, Mr. Novák. (formal)"},
-        {"cz": "Čau, tak zatím!", "en": "Bye, see you later! (informal)"}
+        {
+          "cz": "Dobrý den, jak se máte?",
+          "en": "Good day, how are you? (formal)"
+        },
+        {
+          "cz": "Ahoj, jak se máš?",
+          "en": "Hi, how are you? (informal)"
+        },
+        {
+          "cz": "Na shledanou, pane Nováku.",
+          "en": "Goodbye, Mr. Novák. (formal)"
+        },
+        {
+          "cz": "Čau, tak zatím!",
+          "en": "Bye, see you later! (informal)"
+        }
       ],
       "unit_id": 2
     },
@@ -90,9 +170,18 @@
       "explanation": "To introduce yourself in Czech: 'Jmenuju se [name]' (My name is). 'Jsem z [city]' (I'm from). 'Těší mě' (Nice to meet you, literally 'it pleases me'). The formal version of 'my name is' is 'Jmenuji se' (with -i instead of -u), but 'Jmenuju se' is acceptable in most contexts.",
       "case_affected": null,
       "examples": [
-        {"cz": "Jmenuju se Mahesh.", "en": "My name is Mahesh."},
-        {"cz": "Jsem z Prahy.", "en": "I'm from Prague."},
-        {"cz": "Těší mě.", "en": "Nice to meet you."}
+        {
+          "cz": "Jmenuju se Mahesh.",
+          "en": "My name is Mahesh."
+        },
+        {
+          "cz": "Jsem z Prahy.",
+          "en": "I'm from Prague."
+        },
+        {
+          "cz": "Těší mě.",
+          "en": "Nice to meet you."
+        }
       ],
       "unit_id": 2
     },
@@ -103,10 +192,22 @@
       "explanation": "Three essential politeness words: 'prosím' means both 'please' and 'you're welcome'. 'děkuji' (or colloquially 'děkuju') means 'thank you'. 'promiňte' (formal) or 'promiň' (informal) means 'excuse me'. These are used constantly in Czech daily life.",
       "case_affected": null,
       "examples": [
-        {"cz": "Kávu, prosím.", "en": "A coffee, please."},
-        {"cz": "Děkuji.", "en": "Thank you."},
-        {"cz": "Prosím.", "en": "You're welcome."},
-        {"cz": "Promiňte, kde je nádraží?", "en": "Excuse me, where is the station?"}
+        {
+          "cz": "Kávu, prosím.",
+          "en": "A coffee, please."
+        },
+        {
+          "cz": "Děkuji.",
+          "en": "Thank you."
+        },
+        {
+          "cz": "Prosím.",
+          "en": "You're welcome."
+        },
+        {
+          "cz": "Promiňte, kde je nádraží?",
+          "en": "Excuse me, where is the station?"
+        }
       ],
       "unit_id": 2
     },
@@ -117,10 +218,26 @@
       "explanation": "Every Czech noun has a gender, which determines endings for adjectives, pronouns, and verb agreement. You can usually guess the gender from the ending: consonant ending = masculine (hrad, muž, pes), -a ending = feminine (žena, kniha, káva), -o ending = neuter (město, pivo, auto). There are exceptions, but this rule covers ~90% of nouns.",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "hrad", "en": "castle", "gender": "masculine inanimate (consonant ending)"},
-        {"cz": "muž", "en": "man", "gender": "masculine animate (consonant ending)"},
-        {"cz": "žena", "en": "woman", "gender": "feminine (-a ending)"},
-        {"cz": "město", "en": "city", "gender": "neuter (-o ending)"}
+        {
+          "cz": "hrad",
+          "en": "castle",
+          "gender": "masculine inanimate (consonant ending)"
+        },
+        {
+          "cz": "muž",
+          "en": "man",
+          "gender": "masculine animate (consonant ending)"
+        },
+        {
+          "cz": "žena",
+          "en": "woman",
+          "gender": "feminine (-a ending)"
+        },
+        {
+          "cz": "město",
+          "en": "city",
+          "gender": "neuter (-o ending)"
+        }
       ],
       "unit_id": 3
     },
@@ -131,10 +248,26 @@
       "explanation": "Czech distinguishes between masculine animate (living: muž, pes, student, učitel) and masculine inanimate (non-living: hrad, dům, stůl, most). This distinction matters for the accusative case (animate adds -a, inanimate stays the same) and for past tense plural endings. At A1, focus on recognizing which is which.",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "muž (animate)", "en": "man", "note": "Accusative: muže"},
-        {"cz": "pes (animate)", "en": "dog", "note": "Accusative: psa"},
-        {"cz": "hrad (inanimate)", "en": "castle", "note": "Accusative: hrad (unchanged)"},
-        {"cz": "stůl (inanimate)", "en": "table", "note": "Accusative: stůl (unchanged)"}
+        {
+          "cz": "muž (animate)",
+          "en": "man",
+          "note": "Accusative: muže"
+        },
+        {
+          "cz": "pes (animate)",
+          "en": "dog",
+          "note": "Accusative: psa"
+        },
+        {
+          "cz": "hrad (inanimate)",
+          "en": "castle",
+          "note": "Accusative: hrad (unchanged)"
+        },
+        {
+          "cz": "stůl (inanimate)",
+          "en": "table",
+          "note": "Accusative: stůl (unchanged)"
+        }
       ],
       "unit_id": 3
     },
@@ -145,9 +278,21 @@
       "explanation": "The nominative case (1. pád) is the base form of a noun — the form you find in dictionaries. It is used when the noun is the subject of the sentence (the one doing the action). Questions answered by nominative: kdo? (who?) and co? (what?). Example: 'Žena pije kávu' — 'žena' is in nominative (she is the subject).",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "Žena pije kávu.", "en": "The woman drinks coffee.", "note": "žena = nominative subject"},
-        {"cz": "Muž je učitel.", "en": "The man is a teacher.", "note": "muž = nominative subject"},
-        {"cz": "Kdo to je?", "en": "Who is that?", "note": "kdo = nominative question"}
+        {
+          "cz": "Žena pije kávu.",
+          "en": "The woman drinks coffee.",
+          "note": "žena = nominative subject"
+        },
+        {
+          "cz": "Muž je učitel.",
+          "en": "The man is a teacher.",
+          "note": "muž = nominative subject"
+        },
+        {
+          "cz": "Kdo to je?",
+          "en": "Who is that?",
+          "note": "kdo = nominative question"
+        }
       ],
       "unit_id": 3
     },
@@ -158,10 +303,22 @@
       "explanation": "'To je' (This is / That is) is the most common A1 pattern for identifying objects and people. 'To' is a demonstrative pronoun that doesn't change for gender. Use 'To je' + noun in nominative. For plural: 'To jsou' (These are). Negation: 'To není' (That is not).",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "To je kniha.", "en": "That is a book."},
-        {"cz": "To je muž.", "en": "That is a man."},
-        {"cz": "To je město.", "en": "That is a city."},
-        {"cz": "To jsou studenti.", "en": "Those are students."}
+        {
+          "cz": "To je kniha.",
+          "en": "That is a book."
+        },
+        {
+          "cz": "To je muž.",
+          "en": "That is a man."
+        },
+        {
+          "cz": "To je město.",
+          "en": "That is a city."
+        },
+        {
+          "cz": "To jsou studenti.",
+          "en": "Those are students."
+        }
       ],
       "unit_id": 3
     },
@@ -172,9 +329,18 @@
       "explanation": "Czech profession nouns have gendered forms. Common patterns: učitel/učitelka (teacher), student/studentka (student), lékař/lékařka (doctor). The female form typically adds -ka to the male form. Use the form matching the person's gender.",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "On je učitel. Ona je učitelka.", "en": "He is a teacher. She is a teacher."},
-        {"cz": "On je student. Ona je studentka.", "en": "He is a student. She is a student."},
-        {"cz": "On je lékař. Ona je lékařka.", "en": "He is a doctor. She is a doctor."}
+        {
+          "cz": "On je učitel. Ona je učitelka.",
+          "en": "He is a teacher. She is a teacher."
+        },
+        {
+          "cz": "On je student. Ona je studentka.",
+          "en": "He is a student. She is a student."
+        },
+        {
+          "cz": "On je lékař. Ona je lékařka.",
+          "en": "He is a doctor. She is a doctor."
+        }
       ],
       "unit_id": 3
     },
@@ -185,10 +351,24 @@
       "explanation": "být is the most important Czech verb. Present tense: jsem (I am), jsi (you are), je (he/she/it is), jsme (we are), jste (you pl. are), jsou (they are). The subject pronoun is usually omitted — 'Jsem student' is more natural than 'Já jsem student'.",
       "case_affected": null,
       "examples": [
-        {"cz": "Jsem z Prahy.", "en": "I am from Prague.", "note": "já omitted"},
-        {"cz": "Jsi student?", "en": "Are you a student?", "note": "ty omitted, question by intonation"},
-        {"cz": "Ona je učitelka.", "en": "She is a teacher."},
-        {"cz": "Jsme tady.", "en": "We are here."}
+        {
+          "cz": "Jsem z Prahy.",
+          "en": "I am from Prague.",
+          "note": "já omitted"
+        },
+        {
+          "cz": "Jsi student?",
+          "en": "Are you a student?",
+          "note": "ty omitted, question by intonation"
+        },
+        {
+          "cz": "Ona je učitelka.",
+          "en": "She is a teacher."
+        },
+        {
+          "cz": "Jsme tady.",
+          "en": "We are here."
+        }
       ],
       "unit_id": 4
     },
@@ -199,10 +379,24 @@
       "explanation": "mít is the second essential verb. Present tense: mám (I have), máš (you have), má (he/she has), máme (we have), máte (you pl. have), mají (they have). Used for possession: 'Mám auto' (I have a car). Also used for age: 'Mám dvacet let' (I am twenty years old, lit. 'I have twenty years').",
       "case_affected": "accusative",
       "examples": [
-        {"cz": "Mám kávu.", "en": "I have coffee.", "note": "kávu = accusative"},
-        {"cz": "Máš auto?", "en": "Do you have a car?"},
-        {"cz": "Máme dům.", "en": "We have a house."},
-        {"cz": "Mají dva psy.", "en": "They have two dogs.", "note": "psy = accusative plural"}
+        {
+          "cz": "Mám kávu.",
+          "en": "I have coffee.",
+          "note": "kávu = accusative"
+        },
+        {
+          "cz": "Máš auto?",
+          "en": "Do you have a car?"
+        },
+        {
+          "cz": "Máme dům.",
+          "en": "We have a house."
+        },
+        {
+          "cz": "Mají dva psy.",
+          "en": "They have two dogs.",
+          "note": "psy = accusative plural"
+        }
       ],
       "unit_id": 4
     },
@@ -213,10 +407,22 @@
       "explanation": "To negate být and mít, add 'ne-' prefix: nejsem (I am not), nejsi (you are not), není (he/she is not), nejsme (we are not), nejste (you pl. are not), nejsou (they are not). For mít: nemám, nemáš, nemá, nemáme, nemáte, nemají. The negative of 'je' is irregular: 'není' (not 'neje').",
       "case_affected": null,
       "examples": [
-        {"cz": "Nejsem učitel.", "en": "I am not a teacher."},
-        {"cz": "Nemám auto.", "en": "I don't have a car."},
-        {"cz": "Není tady.", "en": "He/she is not here."},
-        {"cz": "Nemáme čas.", "en": "We don't have time."}
+        {
+          "cz": "Nejsem učitel.",
+          "en": "I am not a teacher."
+        },
+        {
+          "cz": "Nemám auto.",
+          "en": "I don't have a car."
+        },
+        {
+          "cz": "Není tady.",
+          "en": "He/she is not here."
+        },
+        {
+          "cz": "Nemáme čas.",
+          "en": "We don't have time."
+        }
       ],
       "unit_id": 4
     },
@@ -227,10 +433,23 @@
       "explanation": "Czech yes/no questions are formed by rising intonation — no word order change needed: 'Jsi student?' (Are you a student?). Answers: 'Ano, jsem.' (Yes, I am.) / 'Ne, nejsem.' (No, I'm not.). Information questions use question words: kdo (who), co (what), kde (where), jak (how), odkud (from where). Examples: 'Kde jsi?' (Where are you?), 'Co máš?' (What do you have?), 'Kdo je to?' (Who is that?).",
       "case_affected": null,
       "examples": [
-        {"cz": "Jsi z Prahy?", "en": "Are you from Prague?"},
-        {"cz": "Co máš?", "en": "What do you have?"},
-        {"cz": "Kde bydlíš?", "en": "Where do you live?"},
-        {"cz": "Kolik máš let?", "en": "How old are you?", "note": "lit. 'How many years do you have?'"}
+        {
+          "cz": "Jsi z Prahy?",
+          "en": "Are you from Prague?"
+        },
+        {
+          "cz": "Co máš?",
+          "en": "What do you have?"
+        },
+        {
+          "cz": "Kde bydlíš?",
+          "en": "Where do you live?"
+        },
+        {
+          "cz": "Kolik máš let?",
+          "en": "How old are you?",
+          "note": "lit. 'How many years do you have?'"
+        }
       ],
       "unit_id": 4
     },
@@ -241,10 +460,22 @@
       "explanation": "Verbs ending in -át in the infinitive follow this pattern. Example: dělat (to do/make) → dělám, děláš, dělá, děláme, děláte, dělají. Other common -át verbs: znát (to know), čekat (to wait), psát (to write), hrát (to play). Note: some verbs like psát have consonant changes (píšu/píše instead of psám).",
       "case_affected": null,
       "examples": [
-        {"cz": "Dělám kávu.", "en": "I'm making coffee."},
-        {"cz": "Znám Prahu.", "en": "I know Prague."},
-        {"cz": "Čekám na autobus.", "en": "I'm waiting for a bus."},
-        {"cz": "Hraju tenis.", "en": "I play tennis."}
+        {
+          "cz": "Dělám kávu.",
+          "en": "I'm making coffee."
+        },
+        {
+          "cz": "Znám Prahu.",
+          "en": "I know Prague."
+        },
+        {
+          "cz": "Čekám na autobus.",
+          "en": "I'm waiting for a bus."
+        },
+        {
+          "cz": "Hraju tenis.",
+          "en": "I play tennis."
+        }
       ],
       "unit_id": 5
     },
@@ -255,10 +486,23 @@
       "explanation": "Verbs ending in -ít follow this pattern. Example: mluvit (to speak) → mluvím, mluvíš, mluví, mluvíme, mluvíte, mluví. All forms except 1st person singular end in -í. Common -ít verbs: prosit (to ask/request), bydlet (to live), učit (to teach), kuřit (to smoke). Note: bydlet conjugates as bydlím, bydlíš, bydlí (adds -l- in present stem).",
       "case_affected": null,
       "examples": [
-        {"cz": "Mluvím česky.", "en": "I speak Czech."},
-        {"cz": "Prosím o kávu.", "en": "I'd like a coffee.", "note": "lit. 'I ask for coffee'"},
-        {"cz": "Bydlím v Praze.", "en": "I live in Prague."},
-        {"cz": "Učím češtinu.", "en": "I teach Czech."}
+        {
+          "cz": "Mluvím česky.",
+          "en": "I speak Czech."
+        },
+        {
+          "cz": "Prosím o kávu.",
+          "en": "I'd like a coffee.",
+          "note": "lit. 'I ask for coffee'"
+        },
+        {
+          "cz": "Bydlím v Praze.",
+          "en": "I live in Prague."
+        },
+        {
+          "cz": "Učím češtinu.",
+          "en": "I teach Czech."
+        }
       ],
       "unit_id": 5
     },
@@ -269,10 +513,22 @@
       "explanation": "Verbs ending in -ět like rozumět (to understand) → rozumím, rozumíš, rozumí, rozumíme, rozumíte, rozumí. Some verbs are irregular in present tense: číst (to read) → čtu, čteš, čte, čteme, čtete, čtou. jíst (to eat) → jím, jíš, jí, jíme, jíte, jedí. These must be memorized individually.",
       "case_affected": null,
       "examples": [
-        {"cz": "Rozumím česky.", "en": "I understand Czech."},
-        {"cz": "Čtu knihu.", "en": "I'm reading a book."},
-        {"cz": "Jím chleba.", "en": "I'm eating bread."},
-        {"cz": "Nerozumím.", "en": "I don't understand."}
+        {
+          "cz": "Rozumím česky.",
+          "en": "I understand Czech."
+        },
+        {
+          "cz": "Čtu knihu.",
+          "en": "I'm reading a book."
+        },
+        {
+          "cz": "Jím chleba.",
+          "en": "I'm eating bread."
+        },
+        {
+          "cz": "Nerozumím.",
+          "en": "I don't understand."
+        }
       ],
       "unit_id": 5
     },
@@ -283,10 +539,22 @@
       "explanation": "To negate any Czech verb in present tense, simply add 'ne-' before the verb. Examples: nedělám (I don't do), nemluvíš (you don't speak), nerozumí (he doesn't understand), nečteme (we don't read). Exception: být uses nej- (nejsem, nejsi, není). The negation is consistent and applies to all verbs except být.",
       "case_affected": null,
       "examples": [
-        {"cz": "Nemluvím česky.", "en": "I don't speak Czech."},
-        {"cz": "Nedělám nic.", "en": "I'm not doing anything."},
-        {"cz": "Nečtu knihu.", "en": "I'm not reading a book."},
-        {"cz": "Nerozumím.", "en": "I don't understand."}
+        {
+          "cz": "Nemluvím česky.",
+          "en": "I don't speak Czech."
+        },
+        {
+          "cz": "Nedělám nic.",
+          "en": "I'm not doing anything."
+        },
+        {
+          "cz": "Nečtu knihu.",
+          "en": "I'm not reading a book."
+        },
+        {
+          "cz": "Nerozumím.",
+          "en": "I don't understand."
+        }
       ],
       "unit_id": 5
     },
@@ -297,10 +565,26 @@
       "explanation": "The accusative case (4. pád) marks the direct object of a sentence — the thing receiving the action. For feminine nouns ending in -a, change -a to -u: káva → kávu, žena → ženu, kniha → knihu, voda → vodu, škola → školu. The question words for accusative are: koh/ (who as object?) and co? (what as object?).",
       "case_affected": "accusative",
       "examples": [
-        {"cz": "Vidím ženu.", "en": "I see a woman.", "note": "žena → ženu"},
-        {"cz": "Mám kávu.", "en": "I have coffee.", "note": "káva → kávu"},
-        {"cz": "Piju vodu.", "en": "I drink water.", "note": "voda → vodu"},
-        {"cz": "Čtu knihu.", "en": "I read a book.", "note": "kniha → knihu"}
+        {
+          "cz": "Vidím ženu.",
+          "en": "I see a woman.",
+          "note": "žena → ženu"
+        },
+        {
+          "cz": "Mám kávu.",
+          "en": "I have coffee.",
+          "note": "káva → kávu"
+        },
+        {
+          "cz": "Piju vodu.",
+          "en": "I drink water.",
+          "note": "voda → vodu"
+        },
+        {
+          "cz": "Čtu knihu.",
+          "en": "I read a book.",
+          "note": "kniha → knihu"
+        }
       ],
       "unit_id": 6
     },
@@ -311,10 +595,26 @@
       "explanation": "Masculine animate nouns (people, animals) change in accusative. Most add -a: pes → psa, student → studenta, učitel → učitele. Some change consonant + add -e: muž → muže, lékař → lékaře. The pattern is: if the noun refers to a living being (masculine), it changes in accusative. This is a key difference from inanimate masculine.",
       "case_affected": "accusative",
       "examples": [
-        {"cz": "Vidím muže.", "en": "I see a man.", "note": "muž → muže"},
-        {"cz": "Mám psa.", "en": "I have a dog.", "note": "pes → psa"},
-        {"cz": "Znám studenta.", "en": "I know a student.", "note": "student → studenta"},
-        {"cz": "Vidím lékaře.", "en": "I see a doctor.", "note": "lékař → lékaře"}
+        {
+          "cz": "Vidím muže.",
+          "en": "I see a man.",
+          "note": "muž → muže"
+        },
+        {
+          "cz": "Mám psa.",
+          "en": "I have a dog.",
+          "note": "pes → psa"
+        },
+        {
+          "cz": "Znám studenta.",
+          "en": "I know a student.",
+          "note": "student → studenta"
+        },
+        {
+          "cz": "Vidím lékaře.",
+          "en": "I see a doctor.",
+          "note": "lékař → lékaře"
+        }
       ],
       "unit_id": 6
     },
@@ -325,10 +625,26 @@
       "explanation": "Masculine inanimate nouns (objects, concepts) do NOT change in accusative. The accusative form is identical to the nominative. Examples: hrad → hrad, dům → dům, stůl → stůl, most → most. This is the easiest accusative rule — if it's a masculine object, it stays the same.",
       "case_affected": "accusative",
       "examples": [
-        {"cz": "Vidím hrad.", "en": "I see a castle.", "note": "hrad = same in nom. and acc."},
-        {"cz": "Mám dům.", "en": "I have a house.", "note": "dům = same"},
-        {"cz": "Vidím stůl.", "en": "I see a table.", "note": "stůl = same"},
-        {"cz": "Čtu.", "en": "I'm reading.", "note": "no object needed"}
+        {
+          "cz": "Vidím hrad.",
+          "en": "I see a castle.",
+          "note": "hrad = same in nom. and acc."
+        },
+        {
+          "cz": "Mám dům.",
+          "en": "I have a house.",
+          "note": "dům = same"
+        },
+        {
+          "cz": "Vidím stůl.",
+          "en": "I see a table.",
+          "note": "stůl = same"
+        },
+        {
+          "cz": "Čtu.",
+          "en": "I'm reading.",
+          "note": "no object needed"
+        }
       ],
       "unit_id": 6
     },
@@ -339,10 +655,26 @@
       "explanation": "Neuter nouns (ending in -o, -í) do NOT change in accusative. The accusative form is identical to the nominative. Examples: město → město, pivo → pivo, auto → auto, okno → okno. Combined with masc. inanimate, this means only feminine -a nouns and masculine animate nouns change in accusative.",
       "case_affected": "accusative",
       "examples": [
-        {"cz": "Mám auto.", "en": "I have a car.", "note": "auto = same"},
-        {"cz": "Piju pivo.", "en": "I drink beer.", "note": "pivo = same"},
-        {"cz": "Vidím město.", "en": "I see a city.", "note": "město = same"},
-        {"cz": "Mám okno.", "en": "I have a window.", "note": "okno = same"}
+        {
+          "cz": "Mám auto.",
+          "en": "I have a car.",
+          "note": "auto = same"
+        },
+        {
+          "cz": "Piju pivo.",
+          "en": "I drink beer.",
+          "note": "pivo = same"
+        },
+        {
+          "cz": "Vidím město.",
+          "en": "I see a city.",
+          "note": "město = same"
+        },
+        {
+          "cz": "Mám okno.",
+          "en": "I have a window.",
+          "note": "okno = same"
+        }
       ],
       "unit_id": 6
     },
@@ -353,10 +685,23 @@
       "explanation": "Czech personal pronouns: já (I), ty (you sg. informal), on (he), ona (she), ono (it), my (we), vy (you pl./formal), oni (they animate), ony (they inanimate/fem.). 'Oni' is used for masculine animate groups; 'ony' for feminine and neuter groups. Subject pronouns are frequently omitted — the verb ending tells you the person. Use 'vy' for both plural 'you' and formal singular 'you'.",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "Já jsem Mahesh.", "en": "I am Mahesh.", "note": "já usually omitted"},
-        {"cz": "Ty jsi student.", "en": "You are a student."},
-        {"cz": "On je učitel. Ona je učitelka.", "en": "He is a teacher. She is a teacher."},
-        {"cz": "My jsme z Prahy.", "en": "We are from Prague."}
+        {
+          "cz": "Já jsem Mahesh.",
+          "en": "I am Mahesh.",
+          "note": "já usually omitted"
+        },
+        {
+          "cz": "Ty jsi student.",
+          "en": "You are a student."
+        },
+        {
+          "cz": "On je učitel. Ona je učitelka.",
+          "en": "He is a teacher. She is a teacher."
+        },
+        {
+          "cz": "My jsme z Prahy.",
+          "en": "We are from Prague."
+        }
       ],
       "unit_id": 7
     },
@@ -367,10 +712,26 @@
       "explanation": "Possessive adjectives in Czech: můj (my), tvůj (your sg.), jeho (his), její (her), naše (our), vaše (your pl.), jejich (their). 'jeho' and 'její' and 'jejich' do NOT change for gender. 'můj' and 'tvůj' have special forms: můj (masc), moje (fem/neut); tvůj (masc), tvoje (fem/neut). 'náš' and 'váš' follow: náš/váš (masc), naše/vaše (fem/neut).",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "To je můj pes.", "en": "That is my dog.", "note": "můj = masc"},
-        {"cz": "To je moje kniha.", "en": "That is my book.", "note": "moje = fem"},
-        {"cz": "To je jeho auto.", "en": "That is his car.", "note": "jeho doesn't change"},
-        {"cz": "To je naše škola.", "en": "That is our school.", "note": "naše = fem"}
+        {
+          "cz": "To je můj pes.",
+          "en": "That is my dog.",
+          "note": "můj = masc"
+        },
+        {
+          "cz": "To je moje kniha.",
+          "en": "That is my book.",
+          "note": "moje = fem"
+        },
+        {
+          "cz": "To je jeho auto.",
+          "en": "That is his car.",
+          "note": "jeho doesn't change"
+        },
+        {
+          "cz": "To je naše škola.",
+          "en": "That is our school.",
+          "note": "naše = fem"
+        }
       ],
       "unit_id": 7
     },
@@ -381,10 +742,22 @@
       "explanation": "Possessive adjectives must agree with the gender of the noun they modify. For můj and tvůj: use můj/tvůj with masculine nouns, moje/tvoje with feminine and neuter nouns. For náš and váš: use náš/váš with masculine, naše/vaše with feminine and neuter. His (jeho), her (její), their (jejich) never change. Examples: můj pes (masc), moje kniha (fem), moje auto (neut), náš dům (masc), naše matka (fem), naše město (neut).",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "můj bratr, moje sestra, moje auto", "en": "my brother, my sister, my car"},
-        {"cz": "tvůj pes, tvoje kniha, tvoje pivo", "en": "your dog, your book, your beer"},
-        {"cz": "náš dům, naše škola, naše město", "en": "our house, our school, our city"},
-        {"cz": "jeho otec, její matka, jejich auto", "en": "his father, her mother, their car"}
+        {
+          "cz": "můj bratr, moje sestra, moje auto",
+          "en": "my brother, my sister, my car"
+        },
+        {
+          "cz": "tvůj pes, tvoje kniha, tvoje pivo",
+          "en": "your dog, your book, your beer"
+        },
+        {
+          "cz": "náš dům, naše škola, naše město",
+          "en": "our house, our school, our city"
+        },
+        {
+          "cz": "jeho otec, její matka, jejich auto",
+          "en": "his father, her mother, their car"
+        }
       ],
       "unit_id": 7
     },
@@ -395,9 +768,21 @@
       "explanation": "In Czech, subject pronouns (já, ty, on, ona, my, vy, oni) can almost always be omitted because the verb ending clearly indicates the person. 'Jsem student' is more natural than 'Já jsem student'. Pronouns are used for emphasis or contrast: 'Já jsem z Prahy, ale on je z Brna' (I am from Prague, but he is from Brno). In questions, the pronoun is almost never used: 'Jsi Čech?' (Are you Czech?).",
       "case_affected": null,
       "examples": [
-        {"cz": "Jsem z Prahy.", "en": "I'm from Prague.", "note": "já omitted"},
-        {"cz": "Jsi student?", "en": "Are you a student?", "note": "ty omitted"},
-        {"cz": "Já jsem z Prahy, on je z Brna.", "en": "I'm from Prague, he's from Brno.", "note": "pronouns for contrast"}
+        {
+          "cz": "Jsem z Prahy.",
+          "en": "I'm from Prague.",
+          "note": "já omitted"
+        },
+        {
+          "cz": "Jsi student?",
+          "en": "Are you a student?",
+          "note": "ty omitted"
+        },
+        {
+          "cz": "Já jsem z Prahy, on je z Brna.",
+          "en": "I'm from Prague, he's from Brno.",
+          "note": "pronouns for contrast"
+        }
       ],
       "unit_id": 7
     },
@@ -408,10 +793,23 @@
       "explanation": "Core family vocabulary: rodina (family, fem.), matka or máma (mother, fem.), otec or táta (father, masc. anim.), bratr (brother, masc. anim.), sestra (sister, fem.), syn (son, masc. anim.), dcera (daughter, fem.), babička (grandmother, fem.), dědeček (grandfather, masc. anim.). Note: máma and táta are informal/colloquial, matka and otec are formal.",
       "case_affected": null,
       "examples": [
-        {"cz": "Mám velkou rodinu.", "en": "I have a big family."},
-        {"cz": "Moje matka je lékařka.", "en": "My mother is a doctor."},
-        {"cz": "Můj otec je učitel.", "en": "My father is a teacher."},
-        {"cz": "Mám bratra a sestru.", "en": "I have a brother and a sister.", "note": "sestru = accusative"}
+        {
+          "cz": "Mám velkou rodinu.",
+          "en": "I have a big family."
+        },
+        {
+          "cz": "Moje matka je lékařka.",
+          "en": "My mother is a doctor."
+        },
+        {
+          "cz": "Můj otec je učitel.",
+          "en": "My father is a teacher."
+        },
+        {
+          "cz": "Mám bratra a sestru.",
+          "en": "I have a brother and a sister.",
+          "note": "sestru = accusative"
+        }
       ],
       "unit_id": 8
     },
@@ -422,10 +820,25 @@
       "explanation": "Czech adjectives change their ending to match the gender of the noun they describe. Masculine: -ý (dobrý pes, velký dům). Feminine: -á (dobrá kniha, velká škola). Neuter: -é (dobré pivo, velké město). This applies to all adjectives: nový/nová/nové (new), starý/stará/staré (old), malý/malá/malé (small), hezký/hezká/hezké (pretty). The adjective always comes before the noun.",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "velký pes", "en": "big dog", "note": "masc"},
-        {"cz": "velká kniha", "en": "big book", "note": "fem"},
-        {"cz": "velké město", "en": "big city", "note": "neut"},
-        {"cz": "nové auto, nová škola, nový dům", "en": "new car, new school, new house"}
+        {
+          "cz": "velký pes",
+          "en": "big dog",
+          "note": "masc"
+        },
+        {
+          "cz": "velká kniha",
+          "en": "big book",
+          "note": "fem"
+        },
+        {
+          "cz": "velké město",
+          "en": "big city",
+          "note": "neut"
+        },
+        {
+          "cz": "nové auto, nová škola, nový dům",
+          "en": "new car, new school, new house"
+        }
       ],
       "unit_id": 8
     },
@@ -436,10 +849,25 @@
       "explanation": "The basic hard adjective endings in nominative singular are: masculine -ý (dobrý, velký, malý, starý, nový, hezký), feminine -á (dobrá, velká, malá, stará, nová, hezká), neuter -é (dobré, velké, malé, staré, nové, hezké). These are the most common adjective endings. Soft adjectives (ending in -í) don't change: cizí (foreign) stays cizí for all genders.",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "dobrý učitel", "en": "good teacher", "note": "masc anim"},
-        {"cz": "dobrá káva", "en": "good coffee", "note": "fem"},
-        {"cz": "dobré pivo", "en": "good beer", "note": "neut"},
-        {"cz": "starý dům, stará škola, staré auto", "en": "old house, old school, old car"}
+        {
+          "cz": "dobrý učitel",
+          "en": "good teacher",
+          "note": "masc anim"
+        },
+        {
+          "cz": "dobrá káva",
+          "en": "good coffee",
+          "note": "fem"
+        },
+        {
+          "cz": "dobré pivo",
+          "en": "good beer",
+          "note": "neut"
+        },
+        {
+          "cz": "starý dům, stará škola, staré auto",
+          "en": "old house, old school, old car"
+        }
       ],
       "unit_id": 8
     },
@@ -450,12 +878,1338 @@
       "explanation": "When combining a possessive with a descriptive adjective, the order is: possessive + adjective + noun. Examples: můj starý dům (my old house), moje nová kniha (my new book), naše velké auto (our big car). The descriptive adjective agrees with the noun gender, not the possessive. 'můj' is masculine, 'moje' is feminine/neuter — this is the possessive form, while the adjective ending is separate.",
       "case_affected": "nominative",
       "examples": [
-        {"cz": "můj starý dům", "en": "my old house", "note": "můj (poss) + starý (adj, masc) + dům (noun, masc)"},
-        {"cz": "moje nová kniha", "en": "my new book", "note": "moje (poss) + nová (adj, fem) + kniha (noun, fem)"},
-        {"cz": "naše velké auto", "en": "our big car", "note": "naše (poss) + velké (adj, neut) + auto (noun, neut)"},
-        {"cz": "jeho malý pes", "en": "his small dog", "note": "jeho doesn't change"}
+        {
+          "cz": "můj starý dům",
+          "en": "my old house",
+          "note": "můj (poss) + starý (adj, masc) + dům (noun, masc)"
+        },
+        {
+          "cz": "moje nová kniha",
+          "en": "my new book",
+          "note": "moje (poss) + nová (adj, fem) + kniha (noun, fem)"
+        },
+        {
+          "cz": "naše velké auto",
+          "en": "our big car",
+          "note": "naše (poss) + velké (adj, neut) + auto (noun, neut)"
+        },
+        {
+          "cz": "jeho malý pes",
+          "en": "his small dog",
+          "note": "jeho doesn't change"
+        }
       ],
       "unit_id": 8
+    },
+    {
+      "id": "GR-080",
+      "rule_name": "Cardinal numbers 0–20",
+      "pattern": "jedna, dva, tři, čtyři, pět, šest, sedm, osm, devět, deset, jedenáct, dvanáct, třináct, čtrnáct, patnáct, šestnáct, sedmnáct, osmnáct, devatenáct, dvacet",
+      "explanation": "Czech numbers 0–20 are irregular and must be memorized. Key patterns: numbers 1 and 2 have gender forms — jeden (masc), jedna (fem), jedno (neut) and dva (masc), dvě (fem/neut). Numbers 11–19 end in -náct (eleven = jedenáct, twelve = dvanáct). Ten is 'deset', twenty is 'dvacet'. Stress always on first syllable: JED-na, DVA, TŘI.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "jeden, dva, tři",
+          "en": "one, two, three"
+        },
+        {
+          "cz": "čtyři, pět, šest",
+          "en": "four, five, six"
+        },
+        {
+          "cz": "sedm, osm, devět, deset",
+          "en": "seven, eight, nine, ten"
+        },
+        {
+          "cz": "Mám dva bratry.",
+          "en": "I have two brothers.",
+          "note": "dva for masculine"
+        }
+      ],
+      "unit_id": 9
+    },
+    {
+      "id": "GR-081",
+      "rule_name": "Numbers 21–100 and counting objects",
+      "pattern": "dvacet jedna (21), třicet (30), čtyřicet (40), padesát (50), šedesát (60), sedmdesát (70), osmdesát (80), devadesát (90), sto (100)",
+      "explanation": "Numbers 21–99 are formed as 'tens + jednotka': dvacet jedna (21), třicet pět (35), čtyřicet sedm (47). Tens are regular: číslo + -cet/-sát. 100 is 'sto'. When counting objects, use the correct gender form: jeden stůl (1 table, masc), jedna kniha (1 book, fem), jedno auto (1 car, neut). For 2: dva stoly, dvě knihy, dvě auta. For 3–4: tři/čtyři + plural nominative. For 5+: noun in genitive plural (pět stolů).",
+      "case_affected": "nominative",
+      "examples": [
+        {
+          "cz": "dvacet jedna korun",
+          "en": "21 crowns"
+        },
+        {
+          "cz": "padesát studentů",
+          "en": "50 students"
+        },
+        {
+          "cz": "Kolik to stojí? Sto korun.",
+          "en": "How much does it cost? 100 crowns."
+        }
+      ],
+      "unit_id": 9
+    },
+    {
+      "id": "GR-082",
+      "rule_name": "Telling time — Kolik je hodin?",
+      "pattern": "Je jedna hodina. Jsou dvě/tři/čtyři hodiny. Je pět hodin. V jednu hodinu (at 1 o'clock) vs v pět hodin (at 5).",
+      "explanation": "For 1:00: 'Je jedna hodina.' For 2:00–4:00: 'Jsou dvě/tři/čtyři hodiny.' For 5:00+: 'Je pět/šest/... hodin.' Quarter past = 'čtvrt na + next hour': 3:15 = 'čtvrt na čtyři'. Half past = 'půl + next hour': 3:30 = 'půl čtvrté'. Quarter to = 'tři čtvrtě na + next hour': 3:45 = 'tři čtvrtě na čtyři'. 'V kolik hodin?' = at what time? Use 'v' + accusative: v jednu, v pět.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Kolik je hodin? Je jedna.",
+          "en": "What time is it? It's one o'clock."
+        },
+        {
+          "cz": "Jsou dvě hodiny.",
+          "en": "It's two o'clock."
+        },
+        {
+          "cz": "Je půl třetí.",
+          "en": "It's half past two (2:30).",
+          "note": "Literally: half of third"
+        },
+        {
+          "cz": "Schůzka je v pět hodin.",
+          "en": "The meeting is at five o'clock."
+        }
+      ],
+      "unit_id": 9
+    },
+    {
+      "id": "GR-083",
+      "rule_name": "Days of the week, months, and dates",
+      "pattern": "Pondělí, úterý, středa, čtvrtek, pátek, sobota, neděle. Leden, únor, březen... Dnes je pondělí. V pondělí (on Monday).",
+      "explanation": "Days in Czech are NOT capitalized: pondělí, úterý, středa, čtvrtek, pátek, sobota, neděle. 'Dnes je...' = today is... 'V pondělí...' = on Monday (preposition 'v' + locative for days except pondělí/úterý/pátek — v pondělí, v úterý, ve středu, ve čtvrtek, v pátek, v sobotu, v neděli). Months: leden, únor, březen, duben, květen, červen, červenec, srpen, září, říjen, listopad, prosinec. For dates: 'Je pátého ledna' (It's January 5th) — genitive form.",
+      "case_affected": "locative_in_prepositional",
+      "examples": [
+        {
+          "cz": "Dnes je pondělí.",
+          "en": "Today is Monday."
+        },
+        {
+          "cz": "V úterý mám českou hodinu.",
+          "en": "On Tuesday I have Czech class."
+        },
+        {
+          "cz": "Narodil jsem se pátého dubna.",
+          "en": "I was born on April 5th."
+        }
+      ],
+      "unit_id": 9
+    },
+    {
+      "id": "GR-090",
+      "rule_name": "Reflexive verbs — se (accusative reflexive)",
+      "pattern": "mýt se (wash oneself), učit se (learn/study), dívat se (watch/look), smát se (laugh), bát se (be afraid)",
+      "explanation": "Reflexive verbs use 'se' or 'si' as part of the verb. 'Se' is the accusative reflexive particle meaning 'oneself'. The particle changes position based on sentence structure: 'Já se myju' (I wash myself — 2nd position rule), but 'Myju se' (when pronoun dropped). Common se-verbs: mýt se (to wash), učit se (to learn/study), dívat se (to look/watch), smát se (to laugh), bát se (to fear), ptát se (to ask), vstávat (to get up — no se, but some regionally use it). The se particle must appear in the sentence — it's NOT optional like subject pronouns.",
+      "case_affected": "accusative",
+      "examples": [
+        {
+          "cz": "Každý den se učím česky.",
+          "en": "Every day I study Czech."
+        },
+        {
+          "cz": "Ráno se myju studenou vodou.",
+          "en": "In the morning I wash with cold water."
+        },
+        {
+          "cz": "Dívám se na televizi.",
+          "en": "I watch TV."
+        }
+      ],
+      "unit_id": 10
+    },
+    {
+      "id": "GR-091",
+      "rule_name": "Reflexive verbs — si (dative reflexive)",
+      "pattern": "kupovat si (buy for oneself), vařit si (cook for oneself), číst si (read for oneself), přát si (wish)",
+      "explanation": "'Si' is the dative reflexive particle, meaning 'for/to oneself'. It implies the action is done for the subject's own benefit. Compare: 'Kupuju chleba' (I buy bread — general) vs 'Kupuju si chleba' (I buy myself bread — for me). Common si-verbs: kupovat si, vařit si, číst si, přát si (to wish), myslet si (to think/have an opinion), sednout si (to sit down). The same 2nd position rule applies: 'Já si kupuju kávu' or 'Kupuju si kávu'.",
+      "case_affected": "dative",
+      "examples": [
+        {
+          "cz": "Kupuju si novou knihu.",
+          "en": "I'm buying myself a new book."
+        },
+        {
+          "cz": "Večer si čtu knížku.",
+          "en": "I read a book in the evening."
+        },
+        {
+          "cz": "Co si přeješ k narozeninám?",
+          "en": "What do you wish for your birthday?"
+        }
+      ],
+      "unit_id": 10
+    },
+    {
+      "id": "GR-092",
+      "rule_name": "Reflexive verb conjugation — present tense",
+      "pattern": "já se myju, ty se myješ, on/ona/ono se myje, my se myjeme, vy se myjete, oni se myjou",
+      "explanation": "Reflexive verbs conjugate exactly like regular verbs, with the reflexive particle se/si moving to 2nd position (after the first stressed word in the clause). Full paradigm for 'učit se' (to study): já se učím, ty se učíš, on se učí, my se učíme, vy se učíte, oni se učí. For negation: the particle stays in 2nd position AND the verb gets ne-: 'Já se neučím' (I don't study). The reflexive particle and verb stay together except when a clitic cluster forms.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Já se myju, ty se myješ, on se myje.",
+          "en": "I wash, you wash, he washes."
+        },
+        {
+          "cz": "My se učíme česky.",
+          "en": "We are learning Czech."
+        },
+        {
+          "cz": "Oni se dívají na film.",
+          "en": "They are watching a movie."
+        },
+        {
+          "cz": "Proč se neučíš?",
+          "en": "Why aren't you studying?"
+        }
+      ],
+      "unit_id": 10
+    },
+    {
+      "id": "GR-093",
+      "rule_name": "Time adverbs for daily routine",
+      "pattern": "ráno (morning), dopoledne (late morning), v poledne (at noon), odpoledne (afternoon), večer (evening), v noci (at night), každý den (every day), obvykle (usually), často (often), někdy (sometimes), nikdy (never)",
+      "explanation": "Czech time adverbs are essential for describing daily routines. Key ones: ráno (in the morning), dopoledne (in the late morning), v poledne (at noon), odpoledne (in the afternoon), večer (in the evening), v noci (at night). Frequency adverbs: vždycky (always), obvykle/normálně (usually), často (often), někdy (sometimes), málokdy (rarely), nikdy (never). The time adverb usually comes first or second in the sentence: 'Ráno vstávám v sedm hodin' or 'Vstávám ráno v sedm hodin'.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Ráno vstávám v šest hodin.",
+          "en": "I get up at six in the morning."
+        },
+        {
+          "cz": "Večer se dívám na televizi.",
+          "en": "In the evening I watch TV."
+        },
+        {
+          "cz": "Obvykle snídám v sedm.",
+          "en": "I usually have breakfast at seven."
+        },
+        {
+          "cz": "Nikdy nepiju kávu večer.",
+          "en": "I never drink coffee in the evening."
+        }
+      ],
+      "unit_id": 10
+    },
+    {
+      "id": "GR-100",
+      "rule_name": "jíst and pít — eating and drinking verbs",
+      "pattern": "já jím, ty jíš, on jí, my jíme, vy jíte, oni jedí || já piju, ty piješ, on pije, my pijeme, vy pijete, oni pijou",
+      "explanation": "'Jíst' (to eat) is irregular: jím, jíš, jí, jíme, jíte, jedí. 'Pít' (to drink) is semi-regular: piju/piji, piješ, pije, pijeme, pijete, pijou/pijí. Both take accusative objects: Jím chleba (I eat bread). Piju vodu (I drink water). The nouns change to accusative: feminine -a→-u (polévka→polévku), masculine animate adds -a (having eaten the animate subject), masculine inanimate stays same (chleba→chleba), neuter stays same (pivo→pivo). 'Mám hlad' (I'm hungry), 'Mám žízeň' (I'm thirsty).",
+      "case_affected": "accusative",
+      "examples": [
+        {
+          "cz": "Jím chleba se sýrem.",
+          "en": "I eat bread with cheese."
+        },
+        {
+          "cz": "Co jíš? Jím polévku.",
+          "en": "What are you eating? I'm eating soup."
+        },
+        {
+          "cz": "Piju kávu každé ráno.",
+          "en": "I drink coffee every morning."
+        },
+        {
+          "cz": "Mám hlad! Dáš si něco?",
+          "en": "I'm hungry! Will you have something?"
+        }
+      ],
+      "unit_id": 11
+    },
+    {
+      "id": "GR-101",
+      "rule_name": "Food vocabulary — gender and accusative",
+      "pattern": "chléb (masc inan, acc=chleba), polévka (fem, acc=polévku), máslo (neut, acc=máslo), vejce (neut, acc=vejce), sýr (masc inan, acc=sýr)",
+      "explanation": "Czech food nouns follow gender rules for accusative. Feminine nouns change -a→-u: polévka→polévku, zmrzlina→zmrzlinu, šunka→šunku. Masculine inanimate: usually no change in accusative: sýr→sýr, chléb→chleba (irregular). Neuter: no change: pivo→pivo, mléko→mléko, máslo→máslo. When ordering: 'Dám si...' + accusative: 'Dám si polévku a pivo.' Also note: koláč, guláš, knedlík, svíčková are very common Czech dishes to know.",
+      "case_affected": "accusative",
+      "examples": [
+        {
+          "cz": "Dám si guláš a pivo.",
+          "en": "I'll have goulash and a beer."
+        },
+        {
+          "cz": "Máte rádi českou kuchyni?",
+          "en": "Do you like Czech cuisine?"
+        },
+        {
+          "cz": "K snídani mám chleba s máslem.",
+          "en": "For breakfast I have bread with butter."
+        }
+      ],
+      "unit_id": 11
+    },
+    {
+      "id": "GR-102",
+      "rule_name": "Ordering at a restaurant",
+      "pattern": "Dám si... (I'll have...). Chtěl bych... (I would like...). Ještě něco? (Anything else?). Platit! (The bill!). Účet, prosím.",
+      "explanation": "Key restaurant phrases in Czech: When ordering: 'Dám si...' + accusative (I'll have...) — most common. 'Chtěl bych...' (I would like... — more polite, masculine; 'Chtěla bych...' feminine). Waiter asks: 'Co si dáte?' (What will you have?) or 'Ještě něco?' (Anything else?). To ask for the bill: 'Platit!' (Pay!), 'Účet, prosím' (The bill, please), or 'Můžu zaplatit?' (Can I pay?). 'Platit kartou?' = pay by card? 'Hotově' = in cash. 'Dohromady nebo zvlášť?' = together or separately?",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Dám si smažený sýr a hranolky.",
+          "en": "I'll have fried cheese and fries."
+        },
+        {
+          "cz": "Chtěl bych kávu, prosím.",
+          "en": "I would like a coffee, please."
+        },
+        {
+          "cz": "Platit! Můžu kartou?",
+          "en": "The bill! Can I pay by card?"
+        },
+        {
+          "cz": "Ještě něco? — Ne, děkuji, to je všechno.",
+          "en": "Anything else? — No, thank you, that's all."
+        }
+      ],
+      "unit_id": 11
+    },
+    {
+      "id": "GR-103",
+      "rule_name": "Quantities and partitive genitive with food",
+      "pattern": "trochu (a little), hodně (a lot), kilo (kilogram), litr (liter), kousek (piece)",
+      "explanation": "When expressing quantity with food, use the genitive case after quantity words. 'Trochu' + genitive = a little of something: 'trochu mléka' (a little milk), 'trochu soli' (a little salt). 'Hodně' + genitive = a lot: 'hodně práce' (a lot of work), 'hodně jídla' (a lot of food). Measurement units: 'kilo brambor' (a kilo of potatoes), 'litr vína' (a liter of wine). This is an A1 introduction — genitive is covered in full later.",
+      "case_affected": "genitive",
+      "examples": [
+        {
+          "cz": "Dám si trochu polévky.",
+          "en": "I'll have a little soup."
+        },
+        {
+          "cz": "Kupte kilo jablek.",
+          "en": "Buy a kilo of apples."
+        },
+        {
+          "cz": "Máte hodně práce?",
+          "en": "Do you have a lot of work?"
+        }
+      ],
+      "unit_id": 11
+    },
+    {
+      "id": "GR-110",
+      "rule_name": "Kolik to stojí? — asking and stating prices",
+      "pattern": "Kolik to stojí? Stojí to... korun. jedna koruna, dvě/tři/čtyři koruny, pět+ korun",
+      "explanation": "'Kolik to stojí?' = How much does it cost? 'Stojí to...' = It costs... Price follows the number rule: 1 koruna, 2-4 koruny, 5+ korun. Czech crown = 'koruna' (Kč). Prices are stated as: 'Stojí to dvacet pět korun' (25 Kč). For asking about specific items: 'Kolik stojí ten svetr?' (How much does that sweater cost?). 'To je drahé' = it's expensive, 'To je levné' = it's cheap.",
+      "case_affected": "genitive_with_numbers",
+      "examples": [
+        {
+          "cz": "Kolik to stojí? — Stojí to třicet korun.",
+          "en": "How much does it cost? — It costs 30 crowns."
+        },
+        {
+          "cz": "To je moc drahé!",
+          "en": "That's too expensive!"
+        },
+        {
+          "cz": "Máte něco levnějšího?",
+          "en": "Do you have something cheaper?"
+        }
+      ],
+      "unit_id": 12
+    },
+    {
+      "id": "GR-111",
+      "rule_name": "Shopping — chtít and kupovat + accusative",
+      "pattern": "Chci... / Chtěl bych... + accusative. Kupuju... + accusative. Můžu...? (Can I...?)",
+      "explanation": "When shopping, use these key verbs with accusative objects: 'chci' (I want) + accusative, 'chci koupit' (I want to buy), 'kupuju' (I'm buying), 'hledám' (I'm looking for). More polite: 'Chtěl bych...' (I would like). 'Můžu se podívat?' (Can I look?). 'Můžu si to vyzkoušet?' (Can I try it on?). The seller might say: 'Můžu vám pomoct?' (Can I help you?), 'Jakou velikost?' (What size?), 'Ještě něco?' (Anything else?). 'Vezmu si to' = I'll take it.",
+      "case_affected": "accusative",
+      "examples": [
+        {
+          "cz": "Hledám nový svetr.",
+          "en": "I'm looking for a new sweater."
+        },
+        {
+          "cz": "Chtěl bych si to vyzkoušet.",
+          "en": "I would like to try it on."
+        },
+        {
+          "cz": "Můžu vám pomoct? — Jen se dívám.",
+          "en": "Can I help you? — I'm just looking."
+        },
+        {
+          "cz": "Vezmu si to. Kolik to stojí?",
+          "en": "I'll take it. How much does it cost?"
+        }
+      ],
+      "unit_id": 12
+    },
+    {
+      "id": "GR-112",
+      "rule_name": "Clothes vocabulary and colors",
+      "pattern": "svetr (sweater), kalhoty (pants), košile (shirt), bunda (jacket), boty (shoes), šaty (dress). Colors: červený, modrý, zelený, žlutý, černý, bílý.",
+      "explanation": "Clothes vocabulary with gender: masculine: svetr (sweater), kabát (coat). Feminine: košile (shirt), bunda (jacket), sukně (skirt). Neuter: tričko (t-shirt). Plural only: kalhoty (pants), boty (shoes), šaty (dress — also singular 'šaty' for men's suits). Colors are adjectives and must agree with the noun: červený svetr (red sweater), červená košile (red shirt), červené tričko (red t-shirt). 'Jakou barvu?' = What color? Sizes: malý/střední/velký (S/M/L).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Mám modrý svetr a černé kalhoty.",
+          "en": "I have a blue sweater and black pants."
+        },
+        {
+          "cz": "Jakou barvu chcete? — Červenou.",
+          "en": "What color do you want? — Red."
+        },
+        {
+          "cz": "Ty boty jsou moc malé.",
+          "en": "Those shoes are too small."
+        }
+      ],
+      "unit_id": 12
+    },
+    {
+      "id": "GR-113",
+      "rule_name": "Comparisons — větší, menší, lepší, horší",
+      "pattern": "velký→větší, malý→menší, dobrý→lepší, špatný→horší, drahý→dražší, levný→levnější",
+      "explanation": "Czech comparative adjectives for A1 shopping contexts. Common pairs: drahý→dražší (expensive→more expensive), levný→levnější (cheap→cheaper), velký→větší (big→bigger), malý→menší (small→smaller), dobrý→lepší (good→better), špatný→horší (bad→worse). With 'než' (than): 'Tento svetr je levnější než tamten.' = This sweater is cheaper than that one. Superlative adds nej-: nejlevnější (cheapest), nejlepší (best).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Tento svetr je levnější.",
+          "en": "This sweater is cheaper."
+        },
+        {
+          "cz": "Máte větší velikost?",
+          "en": "Do you have a bigger size?"
+        },
+        {
+          "cz": "To je nejdražší restaurace ve městě.",
+          "en": "That's the most expensive restaurant in town."
+        }
+      ],
+      "unit_id": 12
+    },
+    {
+      "id": "GR-120",
+      "rule_name": "mít rád — expressing likes",
+      "pattern": "Mám rád/ráda... + accusative. Nemám rád... . Máš rád...?",
+      "explanation": "'Mít rád' is the most common way to express liking someone or something in Czech. It conjugates like 'mít': mám rád (masc), mám ráda (fem), máš rád/ráda, má rád/ráda, máme rádi, máte rádi, mají rádi. The object must be in accusative: 'Mám rád čokoládu' (I like chocolate — fem acc). 'Nemám rád...' = I don't like. Question: 'Máš rád kávu?' (Do you like coffee?). For activities, use 'rád + verb': 'Rád čtu' (I like to read).",
+      "case_affected": "accusative",
+      "examples": [
+        {
+          "cz": "Mám rád české pivo.",
+          "en": "I like Czech beer. (male speaker)"
+        },
+        {
+          "cz": "Mám ráda hudbu.",
+          "en": "I like music. (female speaker)"
+        },
+        {
+          "cz": "Nemám rád zimu.",
+          "en": "I don't like winter."
+        },
+        {
+          "cz": "Máš ráda sport?",
+          "en": "Do you like sports? (to a female)"
+        }
+      ],
+      "unit_id": 13
+    },
+    {
+      "id": "GR-121",
+      "rule_name": "rád + verb — liking activities",
+      "pattern": "Rád/Ráda + conjugated verb. Rád čtu, rád sportuju, ráda vařím. Radši... (prefer).",
+      "explanation": "To say you like DOING something, use 'rád' (masculine) or 'ráda' (feminine) + the conjugated verb. This is the standard way: 'Rád čtu' (I like to read — male), 'Ráda vařím' (I like to cook — female). 'Radši' = rather/prefer: 'Radši čtu než se dívám na televizi' (I prefer reading to watching TV). For negation: 'Nerad/Nerada + verb' = I don't like doing: 'Nerad běhám' (I don't like running). Question: 'Co rád děláš?' (What do you like to do?).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Rád sportuju a plavu.",
+          "en": "I like to do sports and swim."
+        },
+        {
+          "cz": "Co ráda děláš ve volném čase?",
+          "en": "What do you like to do in your free time?"
+        },
+        {
+          "cz": "Radši poslouchám hudbu.",
+          "en": "I prefer listening to music."
+        },
+        {
+          "cz": "Nerad uklízím.",
+          "en": "I don't like cleaning."
+        }
+      ],
+      "unit_id": 13
+    },
+    {
+      "id": "GR-122",
+      "rule_name": "Hobbies & free time vocabulary",
+      "pattern": "číst (read), sportovat (do sports), plavat (swim), běhat (run), vařit (cook), cestovat (travel), hrát na... (play instrument), dívat se na... (watch)",
+      "explanation": "Common hobby verbs: číst (to read), sportovat (to do sports), plavat (to swim), běhat (to run), jezdit na kole (to ride a bike), lyžovat (to ski), vařit (to cook), cestovat (to travel), malovat (to paint), zpívat (to sing), tančit (to dance). For musical instruments: 'hrát na + accusative' — 'Hraju na kytaru' (I play guitar), 'Hraju na klavír' (I play piano). For watching: 'dívat se na + accusative' — 'Dívám se na film' (I watch a movie). Free time = 'volný čas'. Hobby = 'koníček'.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Ve volném čase rád čtu.",
+          "en": "In my free time I like to read."
+        },
+        {
+          "cz": "Hraju na kytaru a zpívám.",
+          "en": "I play guitar and sing."
+        },
+        {
+          "cz": "Můj koníček je fotografování.",
+          "en": "My hobby is photography."
+        },
+        {
+          "cz": "Jezdíš rád na kole?",
+          "en": "Do you like riding a bike?"
+        }
+      ],
+      "unit_id": 13
+    },
+    {
+      "id": "GR-123",
+      "rule_name": "Adverbs of frequency",
+      "pattern": "vždycky (always), často (often), občas (sometimes), málokdy (rarely), nikdy (never)",
+      "explanation": "Frequency adverbs are essential for discussing hobbies and routines. vždycky/vždy (always), často (often), obvykle (usually), někdy/občas (sometimes), málokdy (rarely), nikdy (never). These typically come in 2nd position in a sentence (after the first stressed element). With 'nikdy', use a NEGATED verb: 'Nikdy nevařím' (I never cook — literally 'never I don't cook'). This double negation is standard Czech. 'Jak často...?' = How often?",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Často chodím do kina.",
+          "en": "I often go to the cinema."
+        },
+        {
+          "cz": "Občas si čtu knížku.",
+          "en": "I sometimes read a book."
+        },
+        {
+          "cz": "Nikdy necvičím ráno.",
+          "en": "I never exercise in the morning."
+        },
+        {
+          "cz": "Jak často sportuješ?",
+          "en": "How often do you do sports?"
+        }
+      ],
+      "unit_id": 13
+    },
+    {
+      "id": "GR-130",
+      "rule_name": "Kde je...? — asking where things are (locative intro)",
+      "pattern": "Kde je...? (Where is...?). Je v... / na... (It's in/at...). Tady, tam, nahoře, dole.",
+      "explanation": "'Kde je...?' is the basic question for locations. Answers use preposition + locative (or sometimes genitive for static locations at A1 level, but we introduce the locative concept). 'V' + locative = in: 'v Praze' (in Prague), 'v obchodě' (in the shop). 'Na' + locative = at/on: 'na nádraží' (at the station), 'na náměstí' (at the square). Key location words: tady (here), tam (there), vedle (next to), naproti (opposite), blízko (near), daleko (far). Directions: rovně (straight), doleva (left), doprava (right).",
+      "case_affected": "locative",
+      "examples": [
+        {
+          "cz": "Kde je nádraží? — Je tam, vlevo.",
+          "en": "Where is the station? — It's there, on the left."
+        },
+        {
+          "cz": "Kde bydlíš? — Bydlím v Praze.",
+          "en": "Where do you live? — I live in Prague."
+        },
+        {
+          "cz": "Jděte rovně a pak doprava.",
+          "en": "Go straight and then right."
+        },
+        {
+          "cz": "Je to blízko nebo daleko?",
+          "en": "Is it near or far?"
+        }
+      ],
+      "unit_id": 14
+    },
+    {
+      "id": "GR-131",
+      "rule_name": "Kam? — motion with accusative vs location with locative",
+      "pattern": "Kam jdeš? (Where are you going?) vs Kde jsi? (Where are you?) — Jdu do školy vs Jsem ve škole.",
+      "explanation": "Czech distinguishes MOTION (where to?) from LOCATION (where?). 'Kam?' = where to? — uses prepositions with the accusative case: 'do' + genitive (do školy, do kina, do práce), 'na' + accusative (na náměstí, na nádraží, na oběd). 'Kde?' = where? — uses prepositions with the locative: 'v/ve' + locative (ve škole, v kině, v práci), 'na' + locative (na náměstí, na nádraží). This is the most important distinction for A1 — Czech learners must master this contrast.",
+      "case_affected": "accusative_vs_locative",
+      "examples": [
+        {
+          "cz": "Jdu do školy. vs Jsem ve škole.",
+          "en": "I'm going to school. vs I'm at school."
+        },
+        {
+          "cz": "Jedu na nádraží. vs Jsem na nádraží.",
+          "en": "I'm going to the station. vs I'm at the station."
+        },
+        {
+          "cz": "Kam jdeš? — Jdu do práce.",
+          "en": "Where are you going? — I'm going to work."
+        }
+      ],
+      "unit_id": 14
+    },
+    {
+      "id": "GR-132",
+      "rule_name": "Transport and movement verbs — jít vs jet",
+      "pattern": "jít (go on foot), jet (go by vehicle), chodit (walk regularly), jezdit (travel regularly)",
+      "explanation": "Czech distinguishes walking from riding/driving. 'Jít' = to go on foot, walk. Conjugation: jdu, jdeš, jde, jdeme, jdete, jdou. 'Jet' = to go by vehicle. Conjugation: jedu, jedeš, jede, jedeme, jedete, jedou. For habitual actions: 'chodit' (walk regularly) and 'jezdit' (travel regularly). Transport: autobusem (by bus), tramvají (by tram), metrem (by metro), autem (by car), na kole (by bike), pěšky (on foot). 'Jak se dostanu...?' = How do I get to...?",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Jdu pěšky do školy.",
+          "en": "I walk to school."
+        },
+        {
+          "cz": "Jedeme autobusem do centra.",
+          "en": "We go by bus to the center."
+        },
+        {
+          "cz": "Jezdím do práce metrem.",
+          "en": "I go to work by metro."
+        },
+        {
+          "cz": "Jak se dostanu na Hrad?",
+          "en": "How do I get to the Castle?"
+        }
+      ],
+      "unit_id": 14
+    },
+    {
+      "id": "GR-133",
+      "rule_name": "Places in town vocabulary",
+      "pattern": "obchod (shop), restaurace, nádraží (station), nemocnice (hospital), škola, pošta (post office), banka, lékárna (pharmacy), kino, divadlo (theater)",
+      "explanation": "Key town locations and their gender: Masculine: obchod (shop), park (park), most (bridge). Feminine: restaurace, nemocnice (hospital), škola, banka, lékárna (pharmacy), pošta (post office), ulice (street). Neuter: nádraží (station), náměstí (square), kino (cinema), divadlo (theater), letiště (airport). When giving directions, use: 'Je to na rohu' (It's on the corner), 'Je to vedle banky' (It's next to the bank — genitive after vedle), 'Je to naproti kinu' (It's opposite the cinema — dative after naproti).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Kde je nejbližší lékárna?",
+          "en": "Where is the nearest pharmacy?"
+        },
+        {
+          "cz": "Restaurace je naproti kinu.",
+          "en": "The restaurant is opposite the cinema."
+        },
+        {
+          "cz": "Pošta je vedle banky.",
+          "en": "The post office is next to the bank."
+        },
+        {
+          "cz": "Jděte rovně, pak první ulice doprava.",
+          "en": "Go straight, then the first street on the right."
+        }
+      ],
+      "unit_id": 14
+    },
+    {
+      "id": "GR-140",
+      "rule_name": "Weather expressions — počasí",
+      "pattern": "Je... (It is...). Prší. Sněží. Svítí slunce. Je zima/teplo/horko/chladno.",
+      "explanation": "Weather expressions in Czech use 'Je' (it is) + adjective/adverb: 'Je hezky' (it's nice), 'Je ošklivo' (it's ugly/bad weather), 'Je zima' (it's cold), 'Je teplo' (it's warm), 'Je horko' (it's hot), 'Je chladno' (it's cool/chilly). Verbs: 'Prší' (it's raining), 'Sněží' (it's snowing), 'Svítí slunce' (the sun is shining), 'Fouká vítr' (the wind is blowing). 'Jaké je počasí?' = What's the weather like? 'Předpověď počasí' = weather forecast. Note: 'zima' can also mean 'winter' — context distinguishes them.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Jaké je dnes počasí? — Je hezky.",
+          "en": "What's the weather like today? — It's nice."
+        },
+        {
+          "cz": "Prší. Vezmi si deštník!",
+          "en": "It's raining. Take an umbrella!"
+        },
+        {
+          "cz": "V zimě je zima a sněží.",
+          "en": "In winter it's cold and it snows."
+        },
+        {
+          "cz": "Zítra bude pršet.",
+          "en": "Tomorrow it will rain."
+        }
+      ],
+      "unit_id": 15
+    },
+    {
+      "id": "GR-141",
+      "rule_name": "Seasons — roční období",
+      "pattern": "jaro (spring), léto (summer), podzim (autumn), zima (winter). Na jaře, v létě, na podzim, v zimě.",
+      "explanation": "The four seasons in Czech: jaro (spring, neuter), léto (summer, neuter), podzim (autumn, masculine), zima (winter, feminine). For 'in' + season: 'na jaře' (in spring), 'v létě' (in summer), 'na podzim' (in autumn), 'v zimě' (in winter). Note: jaro uses 'na' + locative (na jaře), not 'v'. Léto changes to 'v létě' (locative). Months per season: jaro = březen/duben/květen, léto = červen/červenec/srpen, podzim = září/říjen/listopad, zima = prosinec/leden/únor.",
+      "case_affected": "locative",
+      "examples": [
+        {
+          "cz": "Na jaře kvetou květiny.",
+          "en": "In spring, flowers bloom."
+        },
+        {
+          "cz": "V létě jezdíme k moři.",
+          "en": "In summer we go to the sea."
+        },
+        {
+          "cz": "Na podzim padá listí.",
+          "en": "In autumn the leaves fall."
+        },
+        {
+          "cz": "V zimě lyžuju na horách.",
+          "en": "In winter I ski in the mountains."
+        }
+      ],
+      "unit_id": 15
+    },
+    {
+      "id": "GR-142",
+      "rule_name": "Future tense intro — budu + infinitive",
+      "pattern": "budu, budeš, bude, budeme, budete, budou + infinitive",
+      "explanation": "Czech forms the future tense of imperfective verbs with 'být' (to be) in future + infinitive. This is the simplest way for A1 learners to express future: budu dělat (I will do), budeš číst (you will read), budeme cestovat (we will travel). Perfective verbs (not covered at A1) form future differently. The future of 'být' itself: budu, budeš, bude, budeme, budete, budou. Common futures for travel: 'Budu v Praze' (I will be in Prague), 'Pojedu do Brna' (I will go to Brno — 'jet' is perfective-like in future: pojedu, pojedeš...).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Zítra budu v práci.",
+          "en": "Tomorrow I will be at work."
+        },
+        {
+          "cz": "V létě budeme cestovat.",
+          "en": "In summer we will travel."
+        },
+        {
+          "cz": "Co budeš dělat o víkendu?",
+          "en": "What will you do on the weekend?"
+        },
+        {
+          "cz": "Příští týden pojedu do Prahy.",
+          "en": "Next week I will go to Prague."
+        }
+      ],
+      "unit_id": 15
+    },
+    {
+      "id": "GR-143",
+      "rule_name": "Past tense intro — byl, měl, dělal",
+      "pattern": "Byl jsem, byl jsi, byl... Měl jsem... Dělal jsem... The -l participle + být auxiliary.",
+      "explanation": "Czech past tense uses the -l participle + auxiliary 'být' in present tense (jsem, jsi, jsme, jste) — except 3rd person which drops the auxiliary. Pattern: já jsem dělal/dělala (masc/fem), ty jsi dělal/dělala, on dělal (no auxiliary), ona dělala, ono dělalo, my jsme dělali/dělaly, vy jste dělali/dělaly, oni dělali, ony dělaly. For the verb 'být': byl jsem, byla jsem. Key travel past phrases: 'Byl jsem v Praze' (I was in Prague), 'Měl jsem se dobře' (I had a good time). This is just an introduction — full past tense mastery comes in A2.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Byl jsem v Praze minulý týden.",
+          "en": "I was in Prague last week. (male)"
+        },
+        {
+          "cz": "Byla jsem v kině včera.",
+          "en": "I was at the cinema yesterday. (female)"
+        },
+        {
+          "cz": "Měl jsem se dobře na dovolené.",
+          "en": "I had a good time on vacation."
+        },
+        {
+          "cz": "Co jsi dělal o víkendu?",
+          "en": "What did you do on the weekend?"
+        }
+      ],
+      "unit_id": 15
+    },
+    {
+      "id": "GR-150",
+      "rule_name": "Genitive — masculine endings",
+      "pattern": "Masculine animate: -a (bratr→bratra, učitel→učitele). Masculine inanimate: -u/-e (dům→domu, čaj→čaje).",
+      "explanation": "Genitive masculine: animate nouns add -a (bratr→bratra, pán→pána) or -e for soft stems (učitel→učitele, muž→muže). Inanimate typically add -u (dům→domu, most→mostu) but some add -e (čaj→čaje, pokoj→pokoje). The genitive expresses possession (dům bratra = brother's house), origin (z Prahy), and follows certain prepositions (bez, do, od, z/ze).",
+      "case_affected": "genitive",
+      "examples": [
+        {
+          "cz": "To je auto mého bratra.",
+          "en": "That is my brother's car."
+        },
+        {
+          "cz": "Jsem z Prahy.",
+          "en": "I am from Prague."
+        },
+        {
+          "cz": "Bez cukru, prosím.",
+          "en": "Without sugar, please."
+        },
+        {
+          "cz": "Jdu do obchodu.",
+          "en": "I'm going to the shop."
+        }
+      ],
+      "unit_id": 16
+    },
+    {
+      "id": "GR-151",
+      "rule_name": "Genitive — feminine and neuter endings",
+      "pattern": "Feminine: -y/-i (žena→ženy, ulice→ulice). Neuter: -a/-e (město→města, moře→moře).",
+      "explanation": "Feminine genitive: -a stems change to -y (žena→ženy, škola→školy), soft stems stay as -e/-i (ulice→ulice, restaurace→restaurace). Neuter genitive: hard stems change -o to -a (město→města, auto→auta), soft stems change to -e (moře→moře, nádraží→nádraží). These are used identically to masculine genitive for possession, prepositions, and quantities.",
+      "case_affected": "genitive",
+      "examples": [
+        {
+          "cz": "Bydlím u sestry.",
+          "en": "I live at my sister's."
+        },
+        {
+          "cz": "Jdu do školy.",
+          "en": "I'm going to school."
+        },
+        {
+          "cz": "Vracím se z kina.",
+          "en": "I'm returning from the cinema."
+        }
+      ],
+      "unit_id": 16
+    },
+    {
+      "id": "GR-152",
+      "rule_name": "Genitive plural and quantities",
+      "pattern": "With numbers 5+: pět mužů, šest žen, deset měst. Quantity words (hodně, málo, trochu) + genitive.",
+      "explanation": "After numbers 5 and above, use genitive plural: pět studentů (5 students), deset korun (10 crowns). Quantity expressions: hodně + gen (a lot of), málo + gen (little), trochu + gen (a bit), kolik + gen (how many), několik + gen (several), kilo + gen (a kilo of), litr + gen (a liter of). Genitive plural endings: masc -ů (pánů, hradů), fem -ø (žen, škol), neut -ø (měst, aut). This is an A2-level topic — focus on recognizing and using common patterns.",
+      "case_affected": "genitive",
+      "examples": [
+        {
+          "cz": "Mám hodně práce.",
+          "en": "I have a lot of work."
+        },
+        {
+          "cz": "Kupte kilo jablek.",
+          "en": "Buy a kilo of apples."
+        },
+        {
+          "cz": "Pět studentů je ve třídě.",
+          "en": "Five students are in the classroom."
+        }
+      ],
+      "unit_id": 16
+    },
+    {
+      "id": "GR-153",
+      "rule_name": "Negation and genitive",
+      "pattern": "Accusative objects become genitive when negated: Mám čas → Nemám času. Vidím knihu → Nevidím knihy.",
+      "explanation": "In Czech, when a verb that normally takes an accusative object is negated, the object often shifts to the genitive case. This is especially common with 'mít' (to have): Mám peníze → Nemám peněz, Mám čas → Nemám času. With other verbs: Vidím problém → Nevidím problému. This genitive of negation is a distinctive feature of Czech and other Slavic languages. It's more common in formal/written Czech; in spoken Czech, accusative is often retained.",
+      "case_affected": "genitive",
+      "examples": [
+        {
+          "cz": "Nemám peněz.",
+          "en": "I don't have money."
+        },
+        {
+          "cz": "Nerozumím otázky.",
+          "en": "I don't understand the question."
+        },
+        {
+          "cz": "Nevidím žádného problému.",
+          "en": "I don't see any problem."
+        }
+      ],
+      "unit_id": 16
+    },
+    {
+      "id": "GR-160",
+      "rule_name": "Dative — endings and indirect objects",
+      "pattern": "Masc -ovi/-u: bratr→bratrovi, pán→pánovi. Fem -e/-i: žena→ženě, ulice→ulici. Neut -u/-i: město→městu, nádraží→nádraží.",
+      "explanation": "Dative marks the indirect object (to whom? for whom?). Dávám knihu bratrovi (I give a book TO my brother). Masculine animate: typically -ovi (bratrovi, pánovi) or -i for soft stems (muži, učiteli). Masculine inanimate: -u (domu, mostu). Feminine: -e for hard stems (ženě, škole), -i for soft stems (ulici, restauraci). Neuter: -u for hard stems (městu, autu), -i for soft stems (nádraží, moři). Plural dative: -ům for masc/neut, -ám for fem.",
+      "case_affected": "dative",
+      "examples": [
+        {
+          "cz": "Dávám dárek mamince.",
+          "en": "I give a gift to mom."
+        },
+        {
+          "cz": "Pomáhám kamarádovi.",
+          "en": "I help my friend."
+        },
+        {
+          "cz": "Píšu email učiteli.",
+          "en": "I'm writing an email to the teacher."
+        }
+      ],
+      "unit_id": 17
+    },
+    {
+      "id": "GR-161",
+      "rule_name": "Verbs requiring dative",
+      "pattern": "Pomáhat + dat, rozumět + dat, telefonovat + dat, věřit + dat, radit + dat.",
+      "explanation": "Several common Czech verbs require the dative case, even though their English equivalents use direct objects. Key verbs: pomáhat (to help — pomáhám matce), rozumět (to understand — rozumím češtině), telefonovat (to telephone — telefonuju kamarádovi), věřit (to believe — věřím ti), radit (to advise — radím studentovi), volat (to call — volám doktorovi), odpovídat (to answer — odpovídám učiteli). This is a major source of errors for learners because English doesn't mark dative.",
+      "case_affected": "dative",
+      "examples": [
+        {
+          "cz": "Rozumíš češtině?",
+          "en": "Do you understand Czech?"
+        },
+        {
+          "cz": "Telefonuju matce každý den.",
+          "en": "I call my mother every day."
+        },
+        {
+          "cz": "Nevěřím mu.",
+          "en": "I don't believe him."
+        }
+      ],
+      "unit_id": 17
+    },
+    {
+      "id": "GR-162",
+      "rule_name": "Líbit se and chutnat — liking in dative",
+      "pattern": "Líbí se mi... (I like...), Chutná mi... (I like the taste of...). The liked thing is the subject (nominative), the person is dative.",
+      "explanation": "Czech expresses 'liking' differently from English. With 'líbit se': the thing liked is the subject (nominative) and the person who likes it is in dative. 'Líbí se mi Praha' = literally 'Prague pleases itself to me' = I like Prague. Same with 'chutnat': 'Chutná mi pivo' = I like the taste of beer. Note: the thing liked determines the verb form (3rd sg or pl): Líbí se mi ten film (sg), Líbí se mi ty filmy (pl). This is fundamentally different from 'mít rád' (which uses accusative).",
+      "case_affected": "dative",
+      "examples": [
+        {
+          "cz": "Líbí se ti Praha?",
+          "en": "Do you like Prague?"
+        },
+        {
+          "cz": "Chutná mi české pivo.",
+          "en": "I like the taste of Czech beer."
+        },
+        {
+          "cz": "Nelíbí se mu ta košile.",
+          "en": "He doesn't like that shirt."
+        }
+      ],
+      "unit_id": 17
+    },
+    {
+      "id": "GR-163",
+      "rule_name": "Impersonal expressions with dative",
+      "pattern": "Je mi zima/teplo/dobře/špatně. Je mi 20 let. Jde mi to. Záleží mi na tom.",
+      "explanation": "Czech uses dative for many impersonal expressions describing physical or emotional states. Je mi zima (I'm cold — literally 'it is cold to me'), Je mi teplo (I'm warm), Je mi dobře (I feel good), Je mi špatně (I feel sick/bad), Je mi smutno (I feel sad), Je mi líto (I'm sorry). Age is also dative: Je mi 20 let (I'm 20 years old). Jde mi to (I'm good at it / it works for me). Tyto dative expressions are extremely common in everyday Czech.",
+      "case_affected": "dative",
+      "examples": [
+        {
+          "cz": "Je mi zima. Můžu zavřít okno?",
+          "en": "I'm cold. Can I close the window?"
+        },
+        {
+          "cz": "Je mi dvacet pět let.",
+          "en": "I'm 25 years old."
+        },
+        {
+          "cz": "Jak ti je? — Je mi dobře.",
+          "en": "How are you? — I feel good."
+        }
+      ],
+      "unit_id": 17
+    },
+    {
+      "id": "GR-170",
+      "rule_name": "Locative case — v/na + locative",
+      "pattern": "v + loc: v Praze, v pokoji, v kině. na + loc: na náměstí, na nádraží, na univerzitě.",
+      "explanation": "The locative case is used ONLY after prepositions — never alone. Primary prepositions: v/ve (in) and na (on/at). V pokoji (in the room), v Praze (in Prague), na stole (on the table), na univerzitě (at the university). Also used with o (about): Mluvím o práci (I talk about work), Kniha o Praze (a book about Prague). With po (after/along): po obědě (after lunch), po ulici (along the street). With při (during/at): při práci (while working). Locative endings are similar to dative for many nouns.",
+      "case_affected": "locative",
+      "examples": [
+        {
+          "cz": "Bydlím v Praze.",
+          "en": "I live in Prague."
+        },
+        {
+          "cz": "Kniha je na stole.",
+          "en": "The book is on the table."
+        },
+        {
+          "cz": "Mluvíme o počasí.",
+          "en": "We're talking about the weather."
+        }
+      ],
+      "unit_id": 18
+    },
+    {
+      "id": "GR-171",
+      "rule_name": "Instrumental case — means and accompaniment",
+      "pattern": "s kým/čím? (with whom/what?). Means: autem, vlakem, metrem. Professions: pracovat jako... (+ nom or instr). Time: na jaře → na jaře, ale v zimě → zimou.",
+      "explanation": "Instrumental expresses the means or instrument: jedu autem (I go by car), píšu perem (I write with a pen). Accompaniment: s + instrumental: Jdu s kamarádem (I go with a friend). Masculine ending: -em (bratr→bratrem, stroj→strojem). Feminine: -ou (žena→ženou, ulice→ulicí). Neuter: -em (město→městem, moře→mořem). The instrumental is also used with být for temporary states: Byl jsem učitelem (I was a teacher). With zájem o: Mám zájem o studium.",
+      "case_affected": "instrumental",
+      "examples": [
+        {
+          "cz": "Jedu do práce autem.",
+          "en": "I go to work by car."
+        },
+        {
+          "cz": "Jdu s kamarádkou do kina.",
+          "en": "I'm going to the cinema with a friend."
+        },
+        {
+          "cz": "Pracuju jako učitel.",
+          "en": "I work as a teacher."
+        }
+      ],
+      "unit_id": 18
+    },
+    {
+      "id": "GR-172",
+      "rule_name": "Locative — o + locative (about)",
+      "pattern": "o kom/čem? Mluvit o..., přemýšlet o..., kniha o..., film o..., starat se o...",
+      "explanation": "The preposition 'o' + locative means 'about' and is one of the most common uses of the locative case. Key verbs and phrases: mluvit o (talk about), přemýšlet o (think about), číst o (read about), psát o (write about), snít o (dream about), starat se o (take care of — note: o + accusative for most meanings of 'starat se'). Also: kniha o Praze (a book about Prague), film o lásce (a film about love), článek o politice (an article about politics). This is essential for A2 conversational Czech.",
+      "case_affected": "locative",
+      "examples": [
+        {
+          "cz": "O čem mluvíte? — Mluvíme o dovolené.",
+          "en": "What are you talking about? — We're talking about vacation."
+        },
+        {
+          "cz": "Přemýšlím o tom problému.",
+          "en": "I'm thinking about that problem."
+        },
+        {
+          "cz": "Četl jsem knihu o historii Prahy.",
+          "en": "I read a book about the history of Prague."
+        }
+      ],
+      "unit_id": 18
+    },
+    {
+      "id": "GR-173",
+      "rule_name": "Instrumental plural and time expressions",
+      "pattern": "Plural instrumental: -y/-i/-ami (muži, ženami, městy). Time: na jaře, v létě, na podzim, v zimě (loc). But: před rokem (instr).",
+      "explanation": "Instrumental plural: masculine -y/-i (muži, studenty, hrady, stroji), feminine -ami (ženami, školami, ulicemi), neuter -y/-i (městy, auty, moři). This is particularly important for accompaniment: Jdu s přáteli do kina (I go with friends to the cinema). Time expressions: před + instrumental = ago (před rokem = a year ago, před týdnem = a week ago). Mezi + instrumental = between (mezi domy = between houses). Nad + instrumental = above, Pod + instrumental = under.",
+      "case_affected": "instrumental",
+      "examples": [
+        {
+          "cz": "Bydlím s rodiči.",
+          "en": "I live with my parents."
+        },
+        {
+          "cz": "Před rokem jsem byl v Praze.",
+          "en": "A year ago I was in Prague."
+        },
+        {
+          "cz": "Sedím mezi dvěma kamarádkami.",
+          "en": "I'm sitting between two friends."
+        }
+      ],
+      "unit_id": 18
+    },
+    {
+      "id": "GR-180",
+      "rule_name": "Past tense — formation and gender agreement",
+      "pattern": "-l (masc), -la (fem), -lo (neut), -li (masc pl), -ly (fem/neut pl). Auxiliary: jsem/jsi/jsme/jste (3rd person omitted).",
+      "explanation": "Czech past tense = -l participle + být auxiliary (present tense). Já jsem dělal/dělala, ty jsi dělal/dělala, on dělal, ona dělala, ono dělalo, my jsme dělali/dělaly, vy jste dělali/dělaly, oni dělali, ony dělaly, ona dělala. The 3rd person drops the auxiliary (on dělal, NOT on je dělal). Gender matters: masculine uses -l, feminine -la, neuter -lo. Plural: at least one male → -li, otherwise -ly. This is a cornerstone of A2 Czech.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Včera jsem byl v kině.",
+          "en": "Yesterday I was at the cinema. (male)"
+        },
+        {
+          "cz": "Ona studovala v Praze.",
+          "en": "She studied in Prague."
+        },
+        {
+          "cz": "My jsme se dobře bavili.",
+          "en": "We had a good time."
+        }
+      ],
+      "unit_id": 19
+    },
+    {
+      "id": "GR-181",
+      "rule_name": "Motion verbs in past tense",
+      "pattern": "jít→šel/šla/šlo/šli/šly. jet→jel/jela/jelo/jeli/jely. The auxiliary follows the -l participle: šel jsem, šla jsi.",
+      "explanation": "Motion verbs jít and jet have irregular past participles: jít → šel (masc), šla (fem), šlo (neut), šli (masc pl), šly (fem/neut pl). Jet → jel/jela/jelo/jeli/jely. Also: jíst → jedl/jedla (to eat). Číst → četl/četla (to read). Vézt → vezl/vezla (to transport). Moci → mohl/mohla (could). The auxiliary word order can be: 'Šel jsem do kina' or 'Já jsem šel do kina'.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Kam jsi šel včera? — Šel jsem do práce.",
+          "en": "Where did you go yesterday? — I went to work."
+        },
+        {
+          "cz": "Jela jste vlakem? — Ano, jela.",
+          "en": "Did you go by train? (fem) — Yes, I did."
+        },
+        {
+          "cz": "Nejedl jsem maso.",
+          "en": "I didn't eat meat."
+        }
+      ],
+      "unit_id": 19
+    },
+    {
+      "id": "GR-182",
+      "rule_name": "Perfective vs imperfective — aspect introduction",
+      "pattern": "Imperfective: dělat, psát, číst, kupovat (process/ongoing). Perfective: udělat, napsat, přečíst, koupit (completed action).",
+      "explanation": "Czech verbs come in aspect pairs. Imperfective = ongoing, repeated, or process-focused (dělám = I am doing / I do). Perfective = completed, one-time result (udělám = I will do / I get it done). This is the most difficult concept in Czech for English speakers. Common pairs: psát/napsat (write), číst/přečíst (read), dělat/udělat (do/make), kupovat/koupit (buy), jíst/sníst (eat), vařit/uvařit (cook), učit se/naučit se (learn), vidět/uvidět (see). Perfective can NEVER be used in present tense for present meaning — it always expresses future.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Psal jsem dopis celé odpoledne.",
+          "en": "I was writing the letter all afternoon. (imperfective, process)"
+        },
+        {
+          "cz": "Napsal jsem dopis za hodinu.",
+          "en": "I wrote the letter in an hour. (perfective, completed)"
+        },
+        {
+          "cz": "Už jsi přečetl tu knihu?",
+          "en": "Have you read that book yet? (perfective, result)"
+        }
+      ],
+      "unit_id": 19
+    },
+    {
+      "id": "GR-183",
+      "rule_name": "Time expressions for past tense",
+      "pattern": "včera (yesterday), předevčírem (day before yesterday), minulý týden/měsíc/rok (last week/month/year), před rokem (a year ago).",
+      "explanation": "Key time markers for past tense narratives: včera (yesterday), předevčírem (the day before yesterday), minulý týden (last week), minulý měsíc (last month), minulý rok (last year), před + instrumental (ago): před hodinou (an hour ago), před rokem (a year ago). Také: onehdy (the other day), kdysi (once/formerly), dříve (earlier/previously). These time expressions typically appear at the beginning or in 2nd position of sentences and trigger past tense.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Včera jsem potkal starého kamaráda.",
+          "en": "Yesterday I met an old friend."
+        },
+        {
+          "cz": "Minulý týden jsme byli v Brně.",
+          "en": "Last week we were in Brno."
+        },
+        {
+          "cz": "Před rokem jsem začal studovat češtinu.",
+          "en": "A year ago I started studying Czech."
+        }
+      ],
+      "unit_id": 19
+    },
+    {
+      "id": "GR-190",
+      "rule_name": "Future tense — imperfective (budu + infinitive)",
+      "pattern": "budu/budeš/bude/budeme/budete/budou + infinitive. Budu pracovat, budeš číst, budeme cestovat.",
+      "explanation": "Imperfective (ongoing/repeated) future = budu + infinitive. This is used for actions that will be ongoing, repeated, or descriptive in the future: Budu se učit česky (I will be learning Czech), Zítra budu celý den pracovat (Tomorrow I'll work all day). Unlike perfective future (which is simple), this form emphasizes the process or duration. Common time markers: zítra (tomorrow), příští týden (next week), za chvíli (in a moment), brzy (soon). Note: být itself uses budu/budeš... directly (I will be = budu).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Zítra budu pracovat celý den.",
+          "en": "Tomorrow I will work all day."
+        },
+        {
+          "cz": "Budeš se dívat na televizi?",
+          "en": "Will you be watching TV?"
+        },
+        {
+          "cz": "Příští rok budeme cestovat po Evropě.",
+          "en": "Next year we will travel around Europe."
+        }
+      ],
+      "unit_id": 20
+    },
+    {
+      "id": "GR-191",
+      "rule_name": "Perfective future — present form = future meaning",
+      "pattern": "napíšu, přečtu, udělám, koupím — perfective verbs in present conjugation express FUTURE.",
+      "explanation": "This is the key difference from imperfective: perfective verbs conjugated in present form express future meaning, NOT present. Napíšu dopis = I will write a letter (future, not 'I am writing'). Udělám to = I'll do it (future). This is why Czech has no separate future conjugation — perfective verbs use their present form for future. Compare: Píšu dopis (I am writing a letter — imperfective, present) vs Napíšu dopis (I will write a letter — perfective, future). This dual function of present-form perfectives is fundamental to Czech.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Napíšu ti email zítra.",
+          "en": "I'll write you an email tomorrow."
+        },
+        {
+          "cz": "Koupíš mi kávu?",
+          "en": "Will you buy me a coffee?"
+        },
+        {
+          "cz": "Uděláme to společně.",
+          "en": "We'll do it together."
+        }
+      ],
+      "unit_id": 20
+    },
+    {
+      "id": "GR-192",
+      "rule_name": "Conditional — bych, bys, by",
+      "pattern": "Já bych, ty bys, on/ona/ono by, my bychom, vy byste, oni by. + past participle (-l/-la/-lo).",
+      "explanation": "Conditional = bych/bys/by + -l participle. Chtěl bych (I would like), Měl bys (you should), Mohli bychom (we could). The conditional expresses wishes, polite requests, hypothetical situations: Chtěl bych kávu (I'd like a coffee), Měl bys jít k doktorovi (You should go to the doctor), Kdybych měl čas, šel bych do kina (If I had time, I would go to the cinema). For past conditional: byl bych + -l participle: Byl bych přišel (I would have come).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Chtěl bych kávu, prosím.",
+          "en": "I would like a coffee, please. (male)"
+        },
+        {
+          "cz": "Měl bys víc spát.",
+          "en": "You should sleep more."
+        },
+        {
+          "cz": "Kdybych měl peníze, koupil bych si nové auto.",
+          "en": "If I had money, I would buy a new car."
+        }
+      ],
+      "unit_id": 20
+    },
+    {
+      "id": "GR-193",
+      "rule_name": "Kdyby — conditional 'if'",
+      "pattern": "Kdybych, kdybys, kdyby, kdybychom, kdybyste, kdyby + -l participle. Word order: kdybych + past participle.",
+      "explanation": "Kdyby (if) + conditional forms: Kdybych věděl... (If I knew...), Kdybys chtěl... (If you wanted...), Kdyby přišel... (If he came...). The verb in the kdyby-clause is always in past tense: Kdybych měl čas (If I had time — literally 'if I had had time'). The main clause uses bych + past: šel bych (I would go). This is a complex but essential A2 structure for hypothetical situations. The word order: kdybych + past participle + rest of clause.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Kdybych měl čas, šel bych do kina.",
+          "en": "If I had time, I would go to the cinema."
+        },
+        {
+          "cz": "Kdybys chtěl, můžeme jít spolu.",
+          "en": "If you want, we can go together."
+        },
+        {
+          "cz": "Kdyby to věděla, řekla by ti to.",
+          "en": "If she knew it, she would tell you."
+        }
+      ],
+      "unit_id": 20
+    },
+    {
+      "id": "GR-200",
+      "rule_name": "Comparative adjectives — regular formation",
+      "pattern": "-ější/-ejší (mladý→mladší, starý→starší, chytrý→chytřejší), -ší (čistý→čistší, bohatý→bohatší), or -í (tichý→tišší).",
+      "explanation": "Regular comparatives add -(ěj)ší to the adjective stem. Mladý (young) → mladší (younger). Starý (old) → starší (older). Krásný (beautiful) → krásnější. The stem often changes: drahý → dražší (expensive→more expensive), tichý → tišší (quiet→quieter). Use 'než' (than) for comparisons: Praha je větší než Brno (Prague is bigger than Brno). The comparative adjective declines like a soft adjective (mladší muž, mladšího muže, mladší žena...).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Praha je větší než Brno.",
+          "en": "Prague is bigger than Brno."
+        },
+        {
+          "cz": "Můj bratr je mladší než já.",
+          "en": "My brother is younger than me."
+        },
+        {
+          "cz": "Tato restaurace je dražší.",
+          "en": "This restaurant is more expensive."
+        }
+      ],
+      "unit_id": 21
+    },
+    {
+      "id": "GR-201",
+      "rule_name": "Irregular comparative adjectives",
+      "pattern": "dobrý→lepší, špatný→horší, velký→větší, malý→menší, dlouhý→delší, krátký→kratší, vysoký→vyšší, nízký→nižší.",
+      "explanation": "Several common adjectives have irregular comparatives that must be memorized. The most important: dobrý → lepší (good → better), špatný → horší (bad → worse), velký → větší (big → bigger), malý → menší (small → smaller), dlouhý → delší (long → longer), krátký → kratší (short → shorter), vysoký → vyšší (tall → taller), nízký → nižší (low → lower), drahý → dražší (expensive → more expensive), blízký → bližší (near → nearer). These are high-frequency words essential for everyday conversation.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Tohle je lepší varianta.",
+          "en": "This is a better option."
+        },
+        {
+          "cz": "Jeho byt je větší než můj.",
+          "en": "His apartment is bigger than mine."
+        },
+        {
+          "cz": "Cítím se dnes hůř než včera.",
+          "en": "I feel worse today than yesterday."
+        }
+      ],
+      "unit_id": 21
+    },
+    {
+      "id": "GR-202",
+      "rule_name": "Superlative — nej- prefix",
+      "pattern": "nej- + comparative: nejlepší, největší, nejdražší. Declines like a soft adjective.",
+      "explanation": "Superlative = prefix nej- + comparative form. Nejlepší (best), nejhorší (worst), největší (biggest), nejmenší (smallest), nejdražší (most expensive), nejlevnější (cheapest). The superlative can be used attributively (nejlepší restaurace = the best restaurant) or predicatively (Ta restaurace je nejlepší = That restaurant is the best). With 'z' + genitive for 'of all': nejlepší z restaurací (the best of the restaurants), nejchytřejší ze studentů (the cleverest of the students).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "To je nejlepší restaurace ve městě.",
+          "en": "That's the best restaurant in the city."
+        },
+        {
+          "cz": "On je nejchytřejší student ve třídě.",
+          "en": "He's the cleverest student in the class."
+        },
+        {
+          "cz": "Tohle je nejdražší auto, jaké jsem kdy viděl.",
+          "en": "This is the most expensive car I've ever seen."
+        }
+      ],
+      "unit_id": 21
+    },
+    {
+      "id": "GR-203",
+      "rule_name": "Comparative and superlative adverbs",
+      "pattern": "rychle→rychleji→nejrychleji, dobře→lépe→nejlépe, špatně→hůře→nejhůře, často→častěji→nejčastěji.",
+      "explanation": "Adverbs also form comparatives and superlatives. Pattern: adverb → -eji/-ěji (comparative) → nej- (superlative). Rychle (quickly) → rychleji → nejrychleji. Notable irregulars: dobře→lépe (well→better), špatně→hůře (badly→worse), hodně→více (a lot→more), málo→méně (little→less), brzy→dříve (soon→earlier), dlouho→déle (long→longer). These are crucial for expressing 'I speak better now' (Mluvím teď lépe), 'Come earlier' (Přijď dříve).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Mluvíš česky lépe než já.",
+          "en": "You speak Czech better than me."
+        },
+        {
+          "cz": "Přijď dříve, prosím.",
+          "en": "Come earlier, please."
+        },
+        {
+          "cz": "Chodím do kina častěji než dřív.",
+          "en": "I go to the cinema more often than before."
+        }
+      ],
+      "unit_id": 21
+    },
+    {
+      "id": "GR-210",
+      "rule_name": "že — 'that' clauses",
+      "pattern": "Vím, že... Myslím, že... Řekl, že... + normal word order after že.",
+      "explanation": "'Že' (that) introduces a subordinate clause with normal word order. Vím, že máš pravdu (I know that you're right). Myslím, že přijde zítra (I think that he'll come tomorrow). Řekla, že je nemocná (She said that she is sick). Unlike German/Dutch, Czech does NOT send the verb to the end after 'že'. The subject-verb order stays the same: že + subject + verb + rest. This is simpler than many learners expect. Common verbs: říct/říkat (say), myslet (think), vědět (know), slyšet (hear), vidět (see), doufat (hope).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Myslím, že máš pravdu.",
+          "en": "I think that you're right."
+        },
+        {
+          "cz": "Vím, že je to těžké.",
+          "en": "I know that it's difficult."
+        },
+        {
+          "cz": "Slyšel jsem, že se stěhuješ.",
+          "en": "I heard that you're moving."
+        }
+      ],
+      "unit_id": 22
+    },
+    {
+      "id": "GR-211",
+      "rule_name": "Protože and když — cause and time clauses",
+      "pattern": "Protože + clause (because). Když + clause (when/whenever). Word order: standard SVO, auxiliary clitics in 2nd position.",
+      "explanation": "'Protože' (because) introduces a reason clause: Nepřišel, protože byl nemocný (He didn't come because he was sick). 'Když' (when/whenever) for factual or repeated events: Když prší, zůstávám doma (When it rains, I stay home). Both use standard word order. With 'protože', the se/si reflexive stays near the verb: protože se učím (because I'm studying). With 'když', clitics follow: když se vrátím (when I return). Jestli/zda = if/whether for indirect questions: Nevím, jestli přijde (I don't know if he'll come).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Nepřišel, protože byl nemocný.",
+          "en": "He didn't come because he was sick."
+        },
+        {
+          "cz": "Když mám čas, rád čtu.",
+          "en": "When I have time, I like to read."
+        },
+        {
+          "cz": "Nevím, jestli to stihnu.",
+          "en": "I don't know if I'll make it."
+        }
+      ],
+      "unit_id": 22
+    },
+    {
+      "id": "GR-212",
+      "rule_name": "Aby — purpose clauses",
+      "pattern": "Abych, abys, aby, abychom, abyste, aby + -l participle. Aby = 'so that / in order to'.",
+      "explanation": "'Aby' introduces purpose clauses — why you do something. It uses the conditional forms + -l participle: Musím se učit, abych udělal zkoušku (I must study so that I pass the exam). Přišel jsem dřív, abychom si mohli popovídat (I came earlier so we could chat). When the subject is the same in both clauses, Czech prefers aby over the infinitive: Chci, abys přišel (I want you to come) vs Chci přijít (I want to come — same subject). The aby form bych/bys/by/bychom/byste/by matches the subject of the subordinate clause.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Učím se česky, abych mohl pracovat v Praze.",
+          "en": "I'm learning Czech so that I can work in Prague."
+        },
+        {
+          "cz": "Chci, abys mi pomohl.",
+          "en": "I want you to help me."
+        },
+        {
+          "cz": "Zavřel okno, aby nebyla zima.",
+          "en": "He closed the window so it wouldn't be cold."
+        }
+      ],
+      "unit_id": 22
+    },
+    {
+      "id": "GR-213",
+      "rule_name": "Word order in complex sentences",
+      "pattern": "Main clause: SVO. Subordinate clause after že/když/protože: SVO (normal). After aby/kdyby: S + conditional + -l participle. Clitics (se, si, mi, ti, ho) in 2nd position.",
+      "explanation": "Czech word order in complex sentences follows consistent rules. In main clauses: standard SVO with clitics in 2nd position (Já se učím česky). After že, protože, když, jestli: normal word order, clitics in 2nd position (Vím, že se učíš česky). After aby/kdyby: the aby/kdyby form takes 2nd position, followed by the -l participle (Chci, aby ses učil). The reflexive se/si is absorbed into the aby form: aby + se → aby ses, aby + si → aby sis. For 1st person: abych se, 2nd: aby ses, 3rd: aby se.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Vím, že se učíš česky.",
+          "en": "I know that you're studying Czech."
+        },
+        {
+          "cz": "Chci, aby ses víc učil.",
+          "en": "I want you to study more."
+        },
+        {
+          "cz": "Když jsem přišel domů, nikdo tam nebyl.",
+          "en": "When I came home, nobody was there."
+        }
+      ],
+      "unit_id": 22
     }
   ]
 }

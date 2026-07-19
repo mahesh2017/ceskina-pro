@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../../domain/entities/flashcard.dart';
 import '../../providers/lesson_providers.dart';
 import '../../providers/gamification_providers.dart';
 import '../../widgets/lesson/exercise_widget.dart';
 import '../../widgets/common/grammar_tip_card.dart';
+import '../../widgets/common/soft_ui.dart';
 import '../../widgets/common/stat_row.dart';
+
+/// Maps a flashcard `gender` string to a short pill label + token colors.
+({String label, Color bg, Color fg}) _genderPill(BuildContext context, String g) {
+  final t = context.tokens;
+  final v = g.toLowerCase();
+  if (v.startsWith('fem')) return (label: 'fem', bg: t.redSoft, fg: t.red);
+  if (v.startsWith('neut')) return (label: 'neut', bg: t.amberSoft, fg: t.amber);
+  if (v.contains('inanimate')) {
+    return (label: 'masc inan', bg: t.violetSoft, fg: t.violet);
+  }
+  if (v.startsWith('masc')) return (label: 'masc anim', bg: t.priSoft, fg: t.priInk);
+  return (label: g, bg: t.chipBg, fg: t.muted);
+}
 
 /// Lesson player — loads exercises from DB, cycles through them one by one.
 /// Shows progress bar, hearts, and feedback after each answer.
@@ -297,50 +312,61 @@ class _TeachPhaseScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
     final cards = session.teachCards;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: onExit,
-        ),
-        title: Text(session.lesson?.title ?? 'New words'),
-      ),
+      backgroundColor: t.bg,
       body: SafeArea(
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 6),
               child: Row(
                 children: [
-                  const Icon(Icons.school, size: 20, color: Colors.blue),
-                  const SizedBox(width: 8),
+                  InkWell(
+                    onTap: onExit,
+                    borderRadius: BorderRadius.circular(999),
+                    child: Container(
+                      width: 36,
+                      height: 36,
+                      decoration:
+                          BoxDecoration(color: t.chipBg, shape: BoxShape.circle),
+                      child: Icon(Icons.close, size: 18, color: t.ink),
+                    ),
+                  ),
+                  const SizedBox(width: 14),
                   Expanded(
-                    child: Text(
-                      '${cards.length} new words in this lesson — tap 🔊 to hear them',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(session.lesson?.title ?? 'New words',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: t.ink)),
+                        Text('${cards.length} new words · tap to hear',
+                            style: TextStyle(fontSize: 12, color: t.muted)),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
                 itemCount: cards.length,
+                separatorBuilder: (_, __) => const SizedBox(height: 10),
                 itemBuilder: (context, i) => _TeachWordCard(card: cards[i]),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
-              child: FilledButton.icon(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+              child: PrimaryButton(
+                label: 'Start practice',
+                icon: Icons.play_arrow_rounded,
                 onPressed: onStart,
-                icon: const Icon(Icons.play_arrow),
-                label: const Text('Start Practice'),
-                style: FilledButton.styleFrom(
-                  minimumSize: const Size.fromHeight(48),
-                ),
               ),
             ),
           ],
@@ -357,61 +383,62 @@ class _TeachWordCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          card.wordCz,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
+    final t = context.tokens;
+    final pill = card.gender == null ? null : _genderPill(context, card.gender!);
+    return SoftCard(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        card.wordCz,
+                        style: const TextStyle(
+                          fontFamily: AppFonts.display,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      if (card.gender != null) ...[
-                        const SizedBox(width: 8),
-                        Text(
-                          card.gender!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(color: Colors.grey),
-                        ),
-                      ],
-                    ],
-                  ),
-                  Text(
-                    card.wordEn,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                  ),
-                  if (card.exampleCz != null) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      card.exampleCz!,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontStyle: FontStyle.italic),
                     ),
+                    if (pill != null) ...[
+                      const SizedBox(width: 8),
+                      PillChip(label: pill.label, bg: pill.bg, fg: pill.fg,
+                          fontSize: 11),
+                    ],
                   ],
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  card.wordEn,
+                  style: TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600, color: t.pri),
+                ),
+                if (card.exampleCz != null) ...[
+                  const SizedBox(height: 3),
+                  Text(
+                    card.exampleCz!,
+                    style: TextStyle(
+                        fontSize: 12.5,
+                        fontStyle: FontStyle.italic,
+                        color: t.muted),
+                  ),
                 ],
-              ),
+              ],
             ),
-            TtsButton(text: card.wordCz),
-          ],
-        ),
+          ),
+          const SizedBox(width: 12),
+          Container(
+            decoration: BoxDecoration(color: t.priSoft, shape: BoxShape.circle),
+            child: TtsButton(text: card.wordCz),
+          ),
+        ],
       ),
     );
   }

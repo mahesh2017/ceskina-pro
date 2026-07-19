@@ -7,6 +7,7 @@ import '../../data/repositories/drift_conversation_repository.dart';
 import '../../data/repositories/drift_progress_repository.dart';
 import '../../data/repositories/drift_exam_repository.dart';
 import '../../data/seeds/content_seeder.dart';
+import '../../data/content/curriculum_pack_source.dart';
 import '../../domain/repositories/curriculum_repository.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import '../../domain/repositories/conversation_repository.dart';
@@ -23,7 +24,10 @@ final databaseProvider = Provider<db.AppDatabase>((ref) {
 
 /// Content seeder provider.
 final contentSeederProvider = Provider<ContentSeeder>((ref) {
-  return ContentSeeder(ref.read(databaseProvider));
+  return ContentSeeder(
+    ref.read(databaseProvider),
+    CurriculumPackSource(backend: ref.read(backendServiceProvider)),
+  );
 });
 
 /// Curriculum repository provider.
@@ -56,13 +60,10 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) {
   return SharedPreferences.getInstance();
 });
 
-/// App initialization provider — seeds the database on first launch and brings
-/// up the backend (Supabase + anonymous session). Backend init never throws and
-/// is a no-op when unconfigured, so the app always launches, online or not.
+/// App initialization provider — establishes the Supabase session, downloads
+/// the complete curriculum snapshot, and synchronizes it into Drift.
 final appInitializationProvider = FutureProvider<void>((ref) async {
   final seeder = ref.read(contentSeederProvider);
-  await Future.wait([
-    seeder.seedIfNeeded(),
-    ref.watch(backendInitProvider.future),
-  ]);
+  await ref.watch(backendInitProvider.future);
+  await seeder.seedIfNeeded();
 });

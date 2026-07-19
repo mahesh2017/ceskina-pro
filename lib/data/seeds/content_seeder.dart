@@ -1,25 +1,23 @@
 import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart' show FlutterError;
-import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import '../database/database.dart' as db;
+import '../content/curriculum_pack_source.dart';
 
-/// Seeds the Drift database from JSON content packs in assets/.
-///
-/// On first launch, loads curriculum units, lessons, exercises,
-/// grammar rules, and vocabulary from bundled JSON files.
+/// Synchronizes the Supabase curriculum snapshot into the local Drift database.
 class ContentSeeder {
   final db.AppDatabase _db;
+  final CurriculumPackSource _source;
   final _log = Logger('ContentSeeder');
 
-  /// Unit ids present in the bundled unit files — used to validate
+  /// Unit ids present in the remote unit packs — used to validate
   /// unit references in other content so one dangling reference
   /// (e.g. vocabulary for a unit that isn't written yet) can't
   /// FK-fail and roll back the whole content sync.
   final Set<int> _validUnitIds = {};
 
-  /// Lesson ids present in the bundled lesson files — used to validate the
+  /// Lesson ids present in the remote lesson packs — used to validate the
   /// per-word `lesson_id` gating reference the same way unit ids are checked.
   final Set<int> _validLessonIds = {};
 
@@ -39,24 +37,38 @@ class ContentSeeder {
     return null;
   }
 
-  ContentSeeder(this._db);
+  ContentSeeder(this._db, this._source);
 
-  /// Sync bundled content into the database on every launch.
+  /// Sync Supabase content into the database on every launch.
   ///
-  /// All content inserts are upserts, so this is idempotent AND delivers
-  /// units/lessons/vocabulary added in an app update to existing installs.
-  /// Learner state (SRS scheduling, lesson progress, XP) is never touched;
-  /// new flashcards get fresh SRS cards afterwards.
-  ///
-  /// Runs inside a single transaction: a crash or bad asset mid-sync
-  /// rolls everything back, so the next launch retries cleanly.
+  /// Each step runs in its own transaction with explicit yields between
+  /// steps so the UI can render frames. This avoids the iOS watchdog
+  /// (which kills apps that block the main isolate for >20s during launch).
   Future<void> seedIfNeeded() async {
-    _log.info('Syncing bundled content into the database...');
+    _log.info('Syncing curriculum content into the database...');
+
+    await _source.refresh(requiredPackPaths);
+
+    // Yield before starting so the loading screen has time to render.
+    await Future.delayed(Duration.zero);
 
     await _db.transaction(() async {
       await _seedUnits();
+    });
+
+    await _db.transaction(() async {
       await _seedGrammarRules();
+    });
+
+    // Seed lessons in small batches to yield between them — 30 lesson
+    // files in one transaction triggers the iOS watchdog (>20s block).
+    await _seedLessonsInBatches();
+
+    await _db.transaction(() async {
       await _seedVocabulary();
+    });
+
+    await _db.transaction(() async {
       await _createMissingSrsCards();
     });
 
@@ -70,77 +82,140 @@ class ContentSeeder {
   /// plain string. Preserve those non-destructively by JSON-encoding them
   /// instead of failing the whole content sync with a cast error.
   static String? _asNullableString(Object? value) => switch (value) {
-        null => null,
-        final String s => s,
-        final other => jsonEncode(other),
-      };
+    null => null,
+    final String s => s,
+    final other => jsonEncode(other),
+  };
 
   /// Load and insert all units (A1 + A2).
   Future<void> _seedUnits() async {
     // A1 units
     final a1Json = await _loadAsset('assets/curriculum/a1_units.json');
-    final a1Units = (jsonDecode(a1Json)['units'] as List<dynamic>)
-        .cast<Map<String, dynamic>>();
+    final a1Units =
+        (jsonDecode(a1Json)['units'] as List<dynamic>)
+            .cast<Map<String, dynamic>>();
 
-    final a1Companions = a1Units.map((u) => db.UnitsCompanion.insert(
-          id: Value(u['id'] as int),
-          title: u['title'] as String,
-          description: u['description'] as String,
-          phase: u['phase'] as String,
-          orderIndex: u['order_index'] as int,
-          grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
-          isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
-        ),);
+    final a1Companions = a1Units.map(
+      (u) => db.UnitsCompanion.insert(
+        id: Value(u['id'] as int),
+        title: u['title'] as String,
+        description: u['description'] as String,
+        phase: u['phase'] as String,
+        orderIndex: u['order_index'] as int,
+        grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
+        isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
+      ),
+    );
 
     await _db.curriculumDao.insertUnits(a1Companions.toList());
     _validUnitIds.addAll(a1Units.map((u) => u['id'] as int));
 
     // A2 units
     final a2Json = await _loadAsset('assets/curriculum/a2_units.json');
-    final a2Units = (jsonDecode(a2Json)['units'] as List<dynamic>)
-        .cast<Map<String, dynamic>>();
+    final a2Units =
+        (jsonDecode(a2Json)['units'] as List<dynamic>)
+            .cast<Map<String, dynamic>>();
 
-    final a2Companions = a2Units.map((u) => db.UnitsCompanion.insert(
-          id: Value(u['id'] as int),
-          title: u['title'] as String,
-          description: u['description'] as String,
-          phase: u['phase'] as String,
-          orderIndex: u['order_index'] as int,
-          grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
-          isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
-        ),);
+    final a2Companions = a2Units.map(
+      (u) => db.UnitsCompanion.insert(
+        id: Value(u['id'] as int),
+        title: u['title'] as String,
+        description: u['description'] as String,
+        phase: u['phase'] as String,
+        orderIndex: u['order_index'] as int,
+        grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
+        isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
+      ),
+    );
 
     await _db.curriculumDao.insertUnits(a2Companions.toList());
     _validUnitIds.addAll(a2Units.map((u) => u['id'] as int));
 
-    // Load lessons from individual lesson files (if they exist)
-    await _seedLessons();
+    // NOTE: _seedLessons was moved to its own step in seedIfNeeded()
+    // so each batch of lesson files gets its own transaction + yield.
   }
 
   /// Load lessons from JSON files.
+  // Retained temporarily as a readable reference for the batched equivalent.
+  // ignore: unused_element
   Future<void> _seedLessons() async {
     // Lesson files are named: unit{NN}_lesson{NN}.json
-    // Dynamically try loading lesson files for Units 1-8
+    // Dynamically try loading lesson files for Units 1-15
     final lessonFiles = [
+      // Unit 1: Sounds & Pronunciation
       'assets/curriculum/lessons/unit01_lesson01.json',
       'assets/curriculum/lessons/unit01_lesson02.json',
+      // Unit 2: Greetings & Introductions
       'assets/curriculum/lessons/unit02_lesson01.json',
       'assets/curriculum/lessons/unit02_lesson02.json',
+      // Unit 3: Gender & Nominative Case
       'assets/curriculum/lessons/unit03_lesson01.json',
       'assets/curriculum/lessons/unit03_lesson02.json',
+      // Unit 4: Present Tense — být & mít
       'assets/curriculum/lessons/unit04_lesson01.json',
       'assets/curriculum/lessons/unit04_lesson02.json',
+      // Unit 5: Present Tense — Regular Verbs
       'assets/curriculum/lessons/unit05_lesson01.json',
       'assets/curriculum/lessons/unit05_lesson02.json',
+      // Unit 6: Accusative Case
       'assets/curriculum/lessons/unit06_lesson01.json',
       'assets/curriculum/lessons/unit06_lesson02.json',
+      // Unit 7: Pronouns & Possessives
       'assets/curriculum/lessons/unit07_lesson01.json',
       'assets/curriculum/lessons/unit07_lesson02.json',
+      // Unit 8: Family & Basic Descriptions
       'assets/curriculum/lessons/unit08_lesson01.json',
       'assets/curriculum/lessons/unit08_lesson02.json',
+      // Unit 9: Numbers, Time & Dates
+      'assets/curriculum/lessons/unit09_lesson01.json',
+      'assets/curriculum/lessons/unit09_lesson02.json',
+      // Unit 10: Daily Routine & Reflexive Verbs
+      'assets/curriculum/lessons/unit10_lesson01.json',
+      'assets/curriculum/lessons/unit10_lesson02.json',
+      // Unit 11: Food, Drink & Restaurants
+      'assets/curriculum/lessons/unit11_lesson01.json',
+      'assets/curriculum/lessons/unit11_lesson02.json',
+      // Unit 12: Shopping, Prices & Clothes
+      'assets/curriculum/lessons/unit12_lesson01.json',
+      'assets/curriculum/lessons/unit12_lesson02.json',
+      // Unit 13: Hobbies & Free Time
+      'assets/curriculum/lessons/unit13_lesson01.json',
+      'assets/curriculum/lessons/unit13_lesson02.json',
+      // Unit 14: Directions, Places & Transport
+      'assets/curriculum/lessons/unit14_lesson01.json',
+      'assets/curriculum/lessons/unit14_lesson02.json',
+      // Unit 15: Weather, Seasons & Travel
+      'assets/curriculum/lessons/unit15_lesson01.json',
+      'assets/curriculum/lessons/unit15_lesson02.json',
+      // A2 — Unit 16: Genitive Case
+      'assets/curriculum/lessons/unit16_lesson01.json',
+      'assets/curriculum/lessons/unit16_lesson02.json',
+      // A2 — Unit 17: Dative Case
+      'assets/curriculum/lessons/unit17_lesson01.json',
+      'assets/curriculum/lessons/unit17_lesson02.json',
+      // A2 — Unit 18: Locative & Instrumental Cases
+      'assets/curriculum/lessons/unit18_lesson01.json',
+      'assets/curriculum/lessons/unit18_lesson02.json',
+      // A2 — Unit 19: Past Tense Full
+      'assets/curriculum/lessons/unit19_lesson01.json',
+      'assets/curriculum/lessons/unit19_lesson02.json',
+      // A2 — Unit 20: Future & Conditional
+      'assets/curriculum/lessons/unit20_lesson01.json',
+      'assets/curriculum/lessons/unit20_lesson02.json',
+      // A2 — Unit 21: Comparisons & Adverbs
+      'assets/curriculum/lessons/unit21_lesson01.json',
+      'assets/curriculum/lessons/unit21_lesson02.json',
+      // A2 — Unit 22: Complex Sentences
+      'assets/curriculum/lessons/unit22_lesson01.json',
+      'assets/curriculum/lessons/unit22_lesson02.json',
     ];
 
+    var idx = 0;
     for (final filePath in lessonFiles) {
+      // Yield every 5 files so the event loop can render frames — avoids
+      // iOS watchdog during the initial seed of 30+ lesson files.
+      if (idx++ % 5 == 0) await Future.delayed(Duration.zero);
+
       final String json;
       try {
         json = await _loadAsset(filePath);
@@ -162,26 +237,31 @@ class ContentSeeder {
             title: lessonData['title'] as String,
             description: lessonData['description'] as String,
             durationMinutes: Value(lessonData['duration_min'] as int? ?? 10),
-            lessonType: Value(lessonData['lesson_type'] as String? ?? 'introduction'),
+            lessonType: Value(
+              lessonData['lesson_type'] as String? ?? 'introduction',
+            ),
             isReview: Value(lessonData['is_review'] as bool? ?? false),
           ),
         ]);
 
         // Insert exercises for this lesson
-        final exercises =
-            (lessonData['exercises'] as List<dynamic>?) ?? [];
+        final exercises = (lessonData['exercises'] as List<dynamic>?) ?? [];
         if (exercises.isNotEmpty) {
           await _db.curriculumDao.insertExercises(
-            exercises.map((e) => db.ExercisesCompanion.insert(
-                  id: Value((e as Map<String, dynamic>)['id'] as int),
-                  lessonId: e['lesson_id'] as int,
-                  type: e['type'] as String,
-                  prompt: e['prompt'] as String,
-                  data: jsonEncode(e['data']),
-                  answerKey: Value(_asNullableString(e['answer_key'])),
-                  grammarRuleId: Value(e['grammar_rule_id'] as String?),
-                  xpReward: Value(e['xp_reward'] as int? ?? 10),
-                ),).toList(),
+            exercises
+                .map(
+                  (e) => db.ExercisesCompanion.insert(
+                    id: Value((e as Map<String, dynamic>)['id'] as int),
+                    lessonId: e['lesson_id'] as int,
+                    type: e['type'] as String,
+                    prompt: e['prompt'] as String,
+                    data: jsonEncode(e['data']),
+                    answerKey: Value(_asNullableString(e['answer_key'])),
+                    grammarRuleId: Value(e['grammar_rule_id'] as String?),
+                    xpReward: Value(e['xp_reward'] as int? ?? 10),
+                  ),
+                )
+                .toList(),
           );
         }
 
@@ -189,6 +269,136 @@ class ContentSeeder {
       }
     }
   }
+
+  /// Seed lessons in small batches (3 files per transaction) with yields
+  /// between batches. 30 files in one transaction triggers the iOS watchdog.
+  Future<void> _seedLessonsInBatches() async {
+    const batchSize = 3;
+    const files = _lessonFilePaths;
+    var done = 0;
+
+    for (var i = 0; i < files.length; i += batchSize) {
+      // Yield so the loading screen can render a frame.
+      await Future.delayed(Duration.zero);
+
+      final end = (i + batchSize < files.length) ? i + batchSize : files.length;
+      final batch = files.sublist(i, end);
+
+      await _db.transaction(() async {
+        for (final filePath in batch) {
+          final String json;
+          try {
+            json = await _loadAsset(filePath);
+          } on FlutterError {
+            _log.fine('Skipped (not found): $filePath');
+            continue;
+          }
+          {
+            final lessonData = jsonDecode(json) as Map<String, dynamic>;
+            _validLessonIds.add(lessonData['id'] as int);
+            await _db.curriculumDao.insertLessons([
+              db.LessonsCompanion.insert(
+                id: Value(lessonData['id'] as int),
+                unitId: lessonData['unit_id'] as int,
+                orderInUnit: lessonData['order_in_unit'] as int,
+                title: lessonData['title'] as String,
+                description: lessonData['description'] as String,
+                durationMinutes: Value(
+                  lessonData['duration_min'] as int? ?? 10,
+                ),
+                lessonType: Value(
+                  lessonData['lesson_type'] as String? ?? 'introduction',
+                ),
+                isReview: Value(lessonData['is_review'] as bool? ?? false),
+              ),
+            ]);
+
+            final exercises = (lessonData['exercises'] as List<dynamic>?) ?? [];
+            if (exercises.isNotEmpty) {
+              await _db.curriculumDao.insertExercises(
+                exercises
+                    .map(
+                      (e) => db.ExercisesCompanion.insert(
+                        id: Value((e as Map<String, dynamic>)['id'] as int),
+                        lessonId: e['lesson_id'] as int,
+                        type: e['type'] as String,
+                        prompt: e['prompt'] as String,
+                        data: jsonEncode(e['data']),
+                        answerKey: Value(_asNullableString(e['answer_key'])),
+                        grammarRuleId: Value(e['grammar_rule_id'] as String?),
+                        xpReward: Value(e['xp_reward'] as int? ?? 10),
+                      ),
+                    )
+                    .toList(),
+              );
+            }
+
+            _log.info('Loaded lesson: $filePath');
+          }
+        }
+      });
+      done += batch.length;
+      _log.info('Lesson batch complete: $done/${files.length}');
+    }
+  }
+
+  /// Shared list of all lesson asset file paths.
+  static const _lessonFilePaths = <String>[
+    // Unit 1: Sounds & Pronunciation
+    'assets/curriculum/lessons/unit01_lesson01.json',
+    'assets/curriculum/lessons/unit01_lesson02.json',
+    // Unit 2: Greetings & Introductions
+    'assets/curriculum/lessons/unit02_lesson01.json',
+    'assets/curriculum/lessons/unit02_lesson02.json',
+    // Unit 3: Gender & Nominative Case
+    'assets/curriculum/lessons/unit03_lesson01.json',
+    'assets/curriculum/lessons/unit03_lesson02.json',
+    // Unit 4: Present Tense — být & mít
+    'assets/curriculum/lessons/unit04_lesson01.json',
+    'assets/curriculum/lessons/unit04_lesson02.json',
+    // Unit 5: Present Tense — Regular Verbs
+    'assets/curriculum/lessons/unit05_lesson01.json',
+    'assets/curriculum/lessons/unit05_lesson02.json',
+    // Unit 6: Accusative Case
+    'assets/curriculum/lessons/unit06_lesson01.json',
+    'assets/curriculum/lessons/unit06_lesson02.json',
+    // Unit 7: Pronouns & Possessives
+    'assets/curriculum/lessons/unit07_lesson01.json',
+    'assets/curriculum/lessons/unit07_lesson02.json',
+    // Unit 8: Family & Basic Descriptions
+    'assets/curriculum/lessons/unit08_lesson01.json',
+    'assets/curriculum/lessons/unit08_lesson02.json',
+    // Unit 9: Numbers, Time & Dates
+    'assets/curriculum/lessons/unit09_lesson01.json',
+    'assets/curriculum/lessons/unit09_lesson02.json',
+    // Unit 10: Daily Routine & Reflexive Verbs
+    'assets/curriculum/lessons/unit10_lesson01.json',
+    'assets/curriculum/lessons/unit10_lesson02.json',
+    // Unit 11: Food, Drink & Restaurants
+    'assets/curriculum/lessons/unit11_lesson01.json',
+    'assets/curriculum/lessons/unit11_lesson02.json',
+    // Unit 12: Shopping, Prices & Clothes
+    'assets/curriculum/lessons/unit12_lesson01.json',
+    'assets/curriculum/lessons/unit12_lesson02.json',
+    // Unit 13: Hobbies & Free Time
+    'assets/curriculum/lessons/unit13_lesson01.json',
+    'assets/curriculum/lessons/unit13_lesson02.json',
+    // Unit 14: Directions, Places & Transport
+    'assets/curriculum/lessons/unit14_lesson01.json',
+    'assets/curriculum/lessons/unit14_lesson02.json',
+    // Unit 15: Weather, Seasons & Travel
+    'assets/curriculum/lessons/unit15_lesson01.json',
+    'assets/curriculum/lessons/unit15_lesson02.json',
+  ];
+
+  static final Set<String> requiredPackPaths = {
+    'assets/curriculum/a1_units.json',
+    'assets/curriculum/a2_units.json',
+    'assets/curriculum/grammar_rules.json',
+    'assets/vocabulary/a1_vocabulary.json',
+    'assets/vocabulary/a2_vocabulary.json',
+    ..._lessonFilePaths,
+  };
 
   /// Load and insert grammar rules.
   Future<void> _seedGrammarRules() async {
@@ -211,16 +421,21 @@ class ContentSeeder {
       if (ruleList.isEmpty) return;
 
       await _db.curriculumDao.insertGrammarRules(
-        ruleList.map((r) => db.GrammarRulesCompanion.insert(
-              id: (r as Map<String, dynamic>)['id'] as String,
-              ruleName: r['rule_name'] as String,
-              pattern: r['pattern'] as String,
-              explanation: r['explanation'] as String,
-              caseAffected: Value(r['case_affected'] as String?),
-              examples: Value(jsonEncode(r['examples'] ?? [])),
-              unitId: Value(_validatedUnitId(
-                  r['unit_id'], 'Grammar rule ${r['id']}',),),
-            ),).toList(),
+        ruleList
+            .map(
+              (r) => db.GrammarRulesCompanion.insert(
+                id: (r as Map<String, dynamic>)['id'] as String,
+                ruleName: r['rule_name'] as String,
+                pattern: r['pattern'] as String,
+                explanation: r['explanation'] as String,
+                caseAffected: Value(r['case_affected'] as String?),
+                examples: Value(jsonEncode(r['examples'] ?? [])),
+                unitId: Value(
+                  _validatedUnitId(r['unit_id'], 'Grammar rule ${r['id']}'),
+                ),
+              ),
+            )
+            .toList(),
       );
     }
   }
@@ -240,22 +455,35 @@ class ContentSeeder {
 
         if (words.isEmpty) continue;
 
-        final flashcardCompanions = words.map((w) => db.FlashcardsCompanion.insert(
-              id: Value((w as Map<String, dynamic>)['id'] as int),
-              wordCz: w['word_cz'] as String,
-              wordEn: w['word_en'] as String,
-              ipa: Value(w['ipa'] as String?),
-              gender: Value(w['gender'] as String?),
-              caseInfo: Value(w['case_info'] as String?),
-              audioHash: Value(w['audio_hash'] as String?),
-              imagePath: Value(w['image_path'] as String?),
-              exampleCz: Value(w['example_cz'] as String?),
-              exampleEn: Value(w['example_en'] as String?),
-              unitId: Value(_validatedUnitId(
-                  w['unit_id'], "Flashcard ${w['id']} '${w['word_cz']}'",),),
-              lessonId: Value(_validatedLessonId(
-                  w['lesson_id'], "Flashcard ${w['id']} '${w['word_cz']}'",),),
-            ),).toList();
+        final flashcardCompanions =
+            words
+                .map(
+                  (w) => db.FlashcardsCompanion.insert(
+                    id: Value((w as Map<String, dynamic>)['id'] as int),
+                    wordCz: w['word_cz'] as String,
+                    wordEn: w['word_en'] as String,
+                    ipa: Value(w['ipa'] as String?),
+                    gender: Value(w['gender'] as String?),
+                    caseInfo: Value(w['case_info'] as String?),
+                    audioHash: Value(w['audio_hash'] as String?),
+                    imagePath: Value(w['image_path'] as String?),
+                    exampleCz: Value(w['example_cz'] as String?),
+                    exampleEn: Value(w['example_en'] as String?),
+                    unitId: Value(
+                      _validatedUnitId(
+                        w['unit_id'],
+                        "Flashcard ${w['id']} '${w['word_cz']}'",
+                      ),
+                    ),
+                    lessonId: Value(
+                      _validatedLessonId(
+                        w['lesson_id'],
+                        "Flashcard ${w['id']} '${w['word_cz']}'",
+                      ),
+                    ),
+                  ),
+                )
+                .toList();
 
         await _db.vocabularyDao.insertFlashcards(flashcardCompanions);
 
@@ -272,15 +500,17 @@ class ContentSeeder {
     if (missingIds.isEmpty) return;
 
     for (final flashcardId in missingIds) {
-      await _db.vocabularyDao.upsertSrsCard(db.SrsCardsCompanion.insert(
-        cardType: 'vocabulary',
-        flashcardId: Value(flashcardId),
-        stability: const Value(0.0),
-        difficulty: const Value(0.0),
-        due: Value(DateTime.now()),
-        reps: const Value(0),
-        state: const Value('newCard'),
-      ),);
+      await _db.vocabularyDao.upsertSrsCard(
+        db.SrsCardsCompanion.insert(
+          cardType: 'vocabulary',
+          flashcardId: Value(flashcardId),
+          stability: const Value(0.0),
+          difficulty: const Value(0.0),
+          due: Value(DateTime.now()),
+          reps: const Value(0),
+          state: const Value('newCard'),
+        ),
+      );
     }
 
     _log.info('Created SRS cards for ${missingIds.length} new flashcards.');
@@ -288,6 +518,6 @@ class ContentSeeder {
 
   /// Load a text asset, returning empty string if not found.
   Future<String> _loadAsset(String path) async {
-    return await rootBundle.loadString(path);
+    return _source.load(path);
   }
 }

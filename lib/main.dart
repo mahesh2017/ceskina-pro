@@ -6,6 +6,7 @@ import 'core/theme/app_theme.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/providers/database_providers.dart';
 import 'presentation/providers/settings_providers.dart';
+import 'presentation/providers/sync_providers.dart';
 import 'presentation/screens/onboarding/loading_screen.dart';
 
 /// App entry point.
@@ -13,16 +14,14 @@ void main() {
   // Surface package:logging output during development; keep release quiet.
   Logger.root.level = kDebugMode ? Level.INFO : Level.WARNING;
   Logger.root.onRecord.listen((record) {
-    debugPrint('[${record.level.name}] ${record.loggerName}: '
-        '${record.message}'
-        '${record.error != null ? ' — ${record.error}' : ''}');
+    debugPrint(
+      '[${record.level.name}] ${record.loggerName}: '
+      '${record.message}'
+      '${record.error != null ? ' — ${record.error}' : ''}',
+    );
   });
 
-  runApp(
-    const ProviderScope(
-      child: CeskinaProApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: CeskinaProApp()));
 }
 
 /// Root app widget.
@@ -41,7 +40,13 @@ class CeskinaProApp extends ConsumerWidget {
       return const LoadingScreen();
     }
     if (initFuture.hasError) {
-      return LoadingScreen(error: initFuture.error.toString());
+      return LoadingScreen(
+        error: _startupErrorMessage(initFuture.error),
+        onRetry: () {
+          ref.invalidate(backendInitProvider);
+          ref.invalidate(appInitializationProvider);
+        },
+      );
     }
 
     return MaterialApp.router(
@@ -53,4 +58,14 @@ class CeskinaProApp extends ConsumerWidget {
       routerConfig: ref.watch(appRouterProvider),
     );
   }
+}
+
+String _startupErrorMessage(Object? error) {
+  final detail = error?.toString().toLowerCase() ?? '';
+  if (detail.contains('incomplete') || detail.contains('missing')) {
+    return 'The course update is temporarily incomplete. '
+        'Please try again in a few moments.';
+  }
+  return 'Check your internet connection and try again. '
+      'A connection is required to download the latest course.';
 }
