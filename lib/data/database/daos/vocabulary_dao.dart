@@ -95,9 +95,38 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
     return result.read<int>('c');
   }
 
-  Future<void> updateSrsCard(SrsCardsCompanion card) =>
-      (update(srsCards)..where((s) => s.id.equals(card.id.value)))
-          .write(card);
+  Future<void> updateSrsCard(SrsCardsCompanion card) async {
+    final id = card.id.value;
+    await (update(srsCards)..where((s) => s.id.equals(id))).write(card);
+    await _enqueueSrsCard(id);
+  }
+
+  /// Append the current SRS state of card [id] to the sync outbox, keyed by
+  /// content (flashcard id or grammar pattern key) so it stays stable across
+  /// devices — never the local autoincrement id.
+  Future<void> _enqueueSrsCard(int id) async {
+    final row =
+        await (select(srsCards)..where((s) => s.id.equals(id))).getSingleOrNull();
+    if (row == null) return;
+    final contentKey = row.cardType == 'grammar'
+        ? row.grammarPatternKey
+        : row.flashcardId?.toString();
+    if (contentKey == null) return; // malformed card; nothing stable to key on
+    await attachedDatabase.syncDao.enqueue(
+      entity: 'srs_cards',
+      entityKey: '${row.cardType}:$contentKey',
+      payload: {
+        'card_type': row.cardType,
+        'content_key': contentKey,
+        'stability': row.stability,
+        'difficulty': row.difficulty,
+        'due': row.due.toUtc().toIso8601String(),
+        'reps': row.reps,
+        'state': row.state,
+        'last_reviewed': row.lastReviewed?.toUtc().toIso8601String(),
+      },
+    );
+  }
 
   // ── Seed helpers ──
 
