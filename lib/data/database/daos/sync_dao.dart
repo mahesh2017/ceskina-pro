@@ -11,12 +11,13 @@ part 'sync_dao.g.dart';
 class SyncDao extends DatabaseAccessor<AppDatabase> with _$SyncDaoMixin {
   SyncDao(super.db);
 
-  /// Append a mutation to the outbox.
+  /// Append a mutation to the outbox. [deviceId] is left blank here and
+  /// stamped by the sync service at push time — every outbox row is authored
+  /// by this device, so it need not be threaded through each write path.
   Future<void> enqueue({
     required String entity,
     required String entityKey,
     required Map<String, dynamic> payload,
-    required String deviceId,
     String op = 'upsert',
   }) {
     return into(syncQueue).insert(SyncQueueCompanion.insert(
@@ -24,7 +25,7 @@ class SyncDao extends DatabaseAccessor<AppDatabase> with _$SyncDaoMixin {
       entityKey: entityKey,
       op: Value(op),
       payload: jsonEncode(payload),
-      deviceId: deviceId,
+      deviceId: '',
       updatedAt: Value(DateTime.now()),
     ));
   }
