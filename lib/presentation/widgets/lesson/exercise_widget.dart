@@ -421,8 +421,11 @@ class _FillBlankView extends StatefulWidget {
 }
 
 class _FillBlankViewState extends State<_FillBlankView> {
-  // Blanks are written as runs of 3+ underscores (content varies: ___ or _____).
-  static final _blankPattern = RegExp(r'_{3,}');
+  // Blanks are written as runs of underscores. Length varies across the
+  // content (a single "_" for one missing letter, "___"/"_____" for words),
+  // so match one-or-more. Underscores only ever appear as blanks in the
+  // sentence text, so this won't over-match.
+  static final _blankPattern = RegExp(r'_+');
 
   final Map<int, TextEditingController> _controllers = {};
   bool answered = false;
@@ -1035,6 +1038,24 @@ class _PronunciationViewState extends ConsumerState<_PronunciationView> {
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
+
+          // Escape hatch: on-device Czech recognition can be unavailable or
+          // unreliable, and pronunciation should never hard-block progress.
+          // Skipping passes the exercise without a heart penalty.
+          if (!isProcessing)
+            TextButton(
+              onPressed: () => widget.onAnswered(ExerciseResult(
+                isCorrect: true,
+                explanation: 'Skipped — keep practising this one aloud with the '
+                    '🔊 button.',
+                correctAnswer: targetText,
+              )),
+              child: Text(
+                hasRecorded && (score ?? 0) == 0
+                    ? 'Mic not working? Skip'
+                    : "Can't record right now? Skip",
+              ),
+            ),
 
           // Score display
           if (hasRecorded && score != null) ...[
