@@ -30,6 +30,10 @@ dependencies:
   # Networking
   dio: ^5.4.0
 
+  # Backend / sync (offline-first)
+  supabase_flutter: ^2.5.0
+  uuid: ^4.0.0
+
   # Utilities
   collection: ^1.18.0
   path: ^1.9.0
@@ -57,3 +61,11 @@ flutter:
     - assets/vocabulary/
     - assets/audio/
     - assets/images/
+
+  fonts:
+    - family: Bricolage Grotesque
+      fonts:
+        - asset: assets/fonts/BricolageGrotesque.ttf
+    - family: Schibsted Grotesk
+      fonts:
+        - asset: assets/fonts/SchibstedGrotesk.ttf

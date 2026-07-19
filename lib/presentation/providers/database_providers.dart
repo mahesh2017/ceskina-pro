@@ -12,6 +12,7 @@ import '../../domain/repositories/vocabulary_repository.dart';
 import '../../domain/repositories/conversation_repository.dart';
 import '../../domain/repositories/progress_repository.dart';
 import '../../domain/repositories/exam_repository.dart';
+import 'sync_providers.dart';
 
 /// Database singleton provider.
 final databaseProvider = Provider<db.AppDatabase>((ref) {
@@ -55,8 +56,13 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) {
   return SharedPreferences.getInstance();
 });
 
-/// App initialization provider — seeds the database on first launch.
+/// App initialization provider — seeds the database on first launch and brings
+/// up the backend (Supabase + anonymous session). Backend init never throws and
+/// is a no-op when unconfigured, so the app always launches, online or not.
 final appInitializationProvider = FutureProvider<void>((ref) async {
   final seeder = ref.read(contentSeederProvider);
-  await seeder.seedIfNeeded();
+  await Future.wait([
+    seeder.seedIfNeeded(),
+    ref.watch(backendInitProvider.future),
+  ]);
 });
