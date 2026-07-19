@@ -16,10 +16,12 @@ import 'tables/exam_results.dart';
 import 'tables/user_progress.dart';
 import 'tables/earned_badges.dart';
 import 'tables/lesson_progress.dart';
+import 'tables/sync_queue.dart';
 import 'daos/curriculum_dao.dart';
 import 'daos/vocabulary_dao.dart';
 import 'daos/conversation_dao.dart';
 import 'daos/progress_dao.dart';
+import 'daos/sync_dao.dart';
 
 part 'database.g.dart';
 
@@ -38,12 +40,14 @@ part 'database.g.dart';
     UserProgress,
     EarnedBadges,
     LessonProgress,
+    SyncQueue,
   ],
   daos: [
     CurriculumDao,
     VocabularyDao,
     ConversationDao,
     ProgressDao,
+    SyncDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -53,7 +57,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -66,6 +70,10 @@ class AppDatabase extends _$AppDatabase {
           // next launch, so the column just needs to exist.
           if (from < 2) {
             await m.addColumn(flashcards, flashcards.lessonId);
+          }
+          // v3: sync outbox for offline-first backend sync.
+          if (from < 3) {
+            await m.createTable(syncQueue);
           }
         },
         beforeOpen: (details) async {
