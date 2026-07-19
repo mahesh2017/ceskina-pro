@@ -15,6 +15,10 @@ final ttsProvider = Provider<FlutterTts>((ref) {
   tts.setLanguage('cs-CZ');
   tts.setPitch(1.0);
   tts.setVolume(1.0);
+  // Upgrade from the default (often "compact") voice to the best-quality Czech
+  // voice the device has — a large audible improvement at no cost. Fire and
+  // forget; if it fails the default cs-CZ voice still works.
+  _selectBestCzechVoice(tts);
   ref.onDispose(() => tts.stop());
 
   // Apply the user's speech rate now and whenever the setting changes.
@@ -25,6 +29,37 @@ final ttsProvider = Provider<FlutterTts>((ref) {
   );
   return tts;
 });
+
+/// Pick the highest-quality Czech voice available and set it on [tts].
+/// Prefers voices flagged enhanced/premium/neural; otherwise the first Czech
+/// voice. Best-effort — any failure leaves the default voice in place.
+Future<void> _selectBestCzechVoice(FlutterTts tts) async {
+  try {
+    final raw = await tts.getVoices;
+    if (raw is! List) return;
+    final czech = raw
+        .whereType<Map>()
+        .where((v) =>
+            (v['locale'] ?? '').toString().toLowerCase().startsWith('cs'))
+        .toList();
+    if (czech.isEmpty) return;
+
+    final qualityRe = RegExp('enhanced|premium|neural', caseSensitive: false);
+    final best = czech.firstWhere(
+      (v) => qualityRe.hasMatch(
+          '${v['name'] ?? ''} ${v['identifier'] ?? ''} ${v['quality'] ?? ''}'),
+      orElse: () => czech.first,
+    );
+
+    final name = best['name']?.toString();
+    final locale = best['locale']?.toString();
+    if (name != null && locale != null) {
+      await tts.setVoice({'name': name, 'locale': locale});
+    }
+  } catch (_) {
+    // Keep the default cs-CZ voice.
+  }
+}
 
 /// Audio player for playing cached TTS files.
 final audioPlayerProvider = Provider<AudioPlayer>((ref) {
@@ -86,6 +121,21 @@ class CzechTts {
     await stop();
 
     final effectiveRate = rate ?? _speechRate();
+
+    // macOS: flutter_tts's synthesizeToFile resolves paths relative to the
+    // sandbox Documents dir and can't write mp3 (AVFoundation 'fmt?' error),
+    // which spams retries and never produces a playable cache file. Speak
+    // directly — native TTS is offline and instant, so the cache adds
+    // nothing on this platform anyway.
+    if (Platform.isMacOS) {
+      if (rate != null) await _tts.setSpeechRate(rate);
+      try {
+        await _tts.speak(trimmed);
+      } finally {
+        if (rate != null) await _tts.setSpeechRate(_speechRate());
+      }
+      return;
+    }
 
     try {
       final filePath = await _cachedFilePath(trimmed, effectiveRate);

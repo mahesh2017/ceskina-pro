@@ -216,25 +216,34 @@ class _ScoreDisplay extends StatelessWidget {
                 backgroundColor: color.withValues(alpha: 0.15),
                 valueColor: AlwaysStoppedAnimation<Color>(color),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '$scorePercent%',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: color,
-                    ),
+              // Keep the number + label inside the ring regardless of the
+              // device's system font scale: pad in from the stroke, then let
+              // FittedBox shrink the text to fit rather than overflow/overlap.
+              Padding(
+                padding: const EdgeInsets.all(18),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '$scorePercent%',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                        ),
+                      ),
+                      Text(
+                        label,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: color,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: color,
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
