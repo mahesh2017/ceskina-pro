@@ -41,6 +41,7 @@ final syncServiceProvider = Provider<SyncService>((ref) {
 /// throws when the backend is unconfigured, so app startup can always await it.
 final backendInitProvider = FutureProvider<void>((ref) async {
   await ref.watch(backendServiceProvider).init();
-  // Fire-and-forget an initial drain of anything queued while offline.
-  unawaited(ref.read(syncServiceProvider).push());
+  // Fire-and-forget an initial full sync: push anything queued while offline,
+  // then pull remote changes from other devices.
+  unawaited(ref.read(syncServiceProvider).sync());
 });

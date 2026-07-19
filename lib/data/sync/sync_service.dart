@@ -77,6 +77,113 @@ class SyncService {
     }
   }
 
+  /// Full sync cycle: push local changes, then pull remote ones.
+  Future<void> sync() async {
+    await push();
+    await pull();
+  }
+
+  bool _pulling = false;
+
+  /// Pull remote changes since the last cursor and merge them into Drift.
+  /// Merges are domain-aware/monotonic (see the DAO merge methods), so this is
+  /// safe to run repeatedly and in any order relative to local edits.
+  Future<void> pull() async {
+    if (!_backend.isEnabled || !_backend.isSignedIn) return;
+    if (_pulling) return;
+    _pulling = true;
+    try {
+      final client = Supabase.instance.client;
+      final userId = _backend.userId!;
+      final deviceId = await _deviceId.get();
+
+      for (final entity in _conflictKeys.keys) {
+        try {
+          final cursor = await _db.syncDao.pullCursor(entity);
+          var query = client.from(entity).select().eq('user_id', userId);
+          if (cursor != null) {
+            query = query.gt('updated_at', cursor.toUtc().toIso8601String());
+          }
+          final rows = await query.order('updated_at');
+
+          DateTime? maxSeen = cursor;
+          for (final row in rows.cast<Map<String, dynamic>>()) {
+            // Skip our own echoes — this device already has these locally.
+            if (row['device_id'] == deviceId) {
+              maxSeen = _maxTs(maxSeen, row['updated_at']);
+              continue;
+            }
+            await _applyRemote(entity, row);
+            maxSeen = _maxTs(maxSeen, row['updated_at']);
+          }
+          if (maxSeen != null) {
+            await _db.syncDao.setPullCursor(entity, maxSeen);
+          }
+        } catch (e) {
+          _log.warning('Pull failed for $entity', e);
+        }
+      }
+    } finally {
+      _pulling = false;
+    }
+  }
+
+  DateTime? _maxTs(DateTime? current, Object? iso) {
+    final t = iso is String ? DateTime.tryParse(iso) : null;
+    if (t == null) return current;
+    if (current == null) return t;
+    return t.isAfter(current) ? t : current;
+  }
+
+  DateTime? _ts(Object? iso) =>
+      iso is String ? DateTime.tryParse(iso)?.toLocal() : null;
+
+  Future<void> _applyRemote(String entity, Map<String, dynamic> r) async {
+    switch (entity) {
+      case 'lesson_progress':
+        await _db.progressDao.mergeLessonProgress(
+          lessonId: (r['lesson_id'] as num).toInt(),
+          unitId: (r['unit_id'] as num).toInt(),
+          isCompleted: r['is_completed'] as bool? ?? false,
+          bestScore: (r['best_score'] as num?)?.toDouble() ?? 0,
+          attempts: (r['attempts'] as num?)?.toInt() ?? 0,
+          lastAttempted: _ts(r['last_attempted']),
+        );
+        break;
+      case 'earned_badges':
+        await _db.progressDao.mergeBadge(
+          r['badge_id'] as String,
+          _ts(r['earned_at']) ?? DateTime.now(),
+        );
+        break;
+      case 'user_progress':
+        await _db.progressDao.mergeUserProgress(
+          r['key'] as String,
+          _decodeKvValue(r['value']),
+        );
+        break;
+      case 'srs_cards':
+        await _db.vocabularyDao.mergeSrsCard(
+          cardType: r['card_type'] as String,
+          contentKey: r['content_key'] as String,
+          stability: (r['stability'] as num?)?.toDouble() ?? 0,
+          difficulty: (r['difficulty'] as num?)?.toDouble() ?? 0,
+          due: _ts(r['due']) ?? DateTime.now(),
+          reps: (r['reps'] as num?)?.toInt() ?? 0,
+          state: r['state'] as String? ?? 'newCard',
+          lastReviewed: _ts(r['last_reviewed']),
+        );
+        break;
+    }
+  }
+
+  /// user_progress.value is jsonb. Locally it's an app-defined string; unwrap a
+  /// bare JSON string, otherwise re-encode structured JSON back to a string.
+  String _decodeKvValue(Object? value) {
+    if (value is String) return value;
+    return jsonEncode(value);
+  }
+
   Future<void> _send(
     SupabaseClient client,
     SyncQueueData row,

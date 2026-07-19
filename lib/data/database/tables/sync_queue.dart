@@ -36,3 +36,13 @@ class SyncQueue extends Table {
   /// Set when a push attempt fails, for backoff/inspection.
   IntColumn get attempts => integer().withDefault(const Constant(0))();
 }
+
+/// Local-only sync bookkeeping (e.g. per-entity pull cursors). Never synced to
+/// the backend — this is device-private state about the sync process itself.
+class SyncState extends Table {
+  TextColumn get key => text()();
+  TextColumn get value => text()();
+
+  @override
+  Set<Column> get primaryKey => {key};
+}

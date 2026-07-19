@@ -105,6 +105,91 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
 
   // ── User Progress KV ──
 
+  // ── Merge from backend (pull) ──
+  //
+  // These apply remote state WITHOUT re-enqueueing to the outbox, and use
+  // monotonic/domain-aware merges rather than blind overwrite, so pulling can
+  // never lose local progress regardless of ordering.
+
+  Future<void> mergeLessonProgress({
+    required int lessonId,
+    required int unitId,
+    required bool isCompleted,
+    required double bestScore,
+    required int attempts,
+    DateTime? lastAttempted,
+  }) async {
+    final existing = await (select(lessonProgress)
+          ..where((l) => l.lessonId.equals(lessonId)))
+        .getSingleOrNull();
+    if (existing == null) {
+      await into(lessonProgress).insert(LessonProgressCompanion.insert(
+        lessonId: Value(lessonId),
+        unitId: unitId,
+        isCompleted: Value(isCompleted),
+        bestScore: Value(bestScore),
+        attempts: Value(attempts),
+        lastAttempted: Value(lastAttempted),
+      ));
+      return;
+    }
+    await (update(lessonProgress)..where((l) => l.lessonId.equals(lessonId)))
+        .write(LessonProgressCompanion(
+      isCompleted: Value(existing.isCompleted || isCompleted),
+      bestScore:
+          Value(bestScore > existing.bestScore ? bestScore : existing.bestScore),
+      attempts:
+          Value(attempts > existing.attempts ? attempts : existing.attempts),
+      lastAttempted: Value(_latest(existing.lastAttempted, lastAttempted)),
+    ));
+  }
+
+  Future<void> mergeBadge(String badgeId, DateTime earnedAt) async {
+    final existing = await (select(earnedBadges)
+          ..where((b) => b.badgeId.equals(badgeId)))
+        .getSingleOrNull();
+    if (existing != null) return; // union: a badge is never un-earned
+    await into(earnedBadges).insert(
+        EarnedBadgesCompanion.insert(badgeId: badgeId, earnedAt: Value(earnedAt)));
+  }
+
+  /// Merge a KV value from the backend. Known monotonic keys are combined;
+  /// anything else takes the remote value (it's newer than our pull cursor).
+  Future<void> mergeUserProgress(String key, String remoteValue) async {
+    final local = await getProgressValue(key);
+    String merged;
+    if (local == null) {
+      merged = remoteValue;
+    } else if (key == 'longest_streak' || key == 'streak') {
+      final a = int.tryParse(local) ?? 0;
+      final b = int.tryParse(remoteValue) ?? 0;
+      merged = (a > b ? a : b).toString();
+    } else if (key == 'exams_passed') {
+      merged = jsonEncode(_unionJsonList(local, remoteValue));
+    } else {
+      merged = remoteValue;
+    }
+    // Direct write, bypassing the outbox hook.
+    await into(userProgress).insertOnConflictUpdate(
+        UserProgressCompanion.insert(key: key, value: merged));
+  }
+
+  DateTime? _latest(DateTime? a, DateTime? b) {
+    if (a == null) return b;
+    if (b == null) return a;
+    return a.isAfter(b) ? a : b;
+  }
+
+  List<String> _unionJsonList(String a, String b) {
+    final set = <String>{};
+    for (final s in [a, b]) {
+      try {
+        set.addAll((jsonDecode(s) as List<dynamic>).map((e) => e.toString()));
+      } catch (_) {/* ignore malformed */}
+    }
+    return set.toList();
+  }
+
   Future<String?> getProgressValue(String key) async {
     final row = await (select(userProgress)
           ..where((u) => u.key.equals(key)))
