@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/database/daos/gamification_dao.dart';
 import '../../domain/entities/gamification_state.dart';
@@ -27,7 +28,13 @@ class GamificationNotifier extends Notifier<GamificationState> {
 
   @override
   GamificationState build() {
-    _readyFuture = _initAsync();
+    _readyFuture = _initAsync().catchError((Object e, StackTrace st) {
+      // Never let gamification init crash the app — fall back to defaults.
+      // The error is logged but swallowed so the learner can still use the app.
+      Logger('GamificationNotifier').warning(
+        'Gamification init failed; using defaults.', e, st,
+      );
+    });
     return const GamificationState();
   }
 

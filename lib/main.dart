@@ -21,6 +21,23 @@ void main() {
     );
   });
 
+  // Catch unhandled async errors that would otherwise crash the app in
+  // release/non-debug mode. In debug mode these are surfaced via the
+  // Flutter Error widget; without this guard they terminate the process
+  // silently when launched from the home screen.
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    Logger('FlutterError').severe(
+      details.exceptionAsString(),
+      details.exception,
+      details.stack,
+    );
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    Logger('PlatformDispatcher').warning('Unhandled async error', error, stack);
+    return true; // Suppress — the app stays alive.
+  };
+
   runApp(const ProviderScope(child: CeskinaProApp()));
 }
 
