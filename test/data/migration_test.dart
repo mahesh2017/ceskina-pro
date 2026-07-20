@@ -6,7 +6,7 @@ import 'package:sqlite3/sqlite3.dart' as raw;
 import 'package:ceskina_pro/data/database/database.dart';
 
 void main() {
-  test('schema v1 → v4 migration preserves data and adds new schema', () async {
+  test('schema v1 → v6 migration preserves data and adds new schema', () async {
     final file = File(
       p.join(
         Directory.systemTemp.path,
@@ -27,6 +27,7 @@ void main() {
     rawDb.execute('ALTER TABLE flashcards DROP COLUMN lesson_id');
     rawDb.execute('DROP TABLE sync_queue');
     rawDb.execute('DROP TABLE sync_state');
+    rawDb.execute('DROP TABLE gamification_state_table');
     rawDb.execute('PRAGMA user_version = 1');
     // Seed a row the way a v1 install would have it.
     rawDb.execute(
@@ -45,6 +46,7 @@ void main() {
             .toList();
     expect(tablesBefore, isNot(contains('sync_queue')));
     expect(tablesBefore, isNot(contains('sync_state')));
+    expect(tablesBefore, isNot(contains('gamification_state_table')));
     rawDb.dispose();
 
     // 2. Reopen through AppDatabase — the complete upgrade chain must add
@@ -70,10 +72,72 @@ void main() {
             .customSelect("SELECT name FROM sqlite_master WHERE type = 'table'")
             .get();
     final tableNames = tables.map((r) => r.read<String>('name'));
-    expect(tableNames, containsAll(<String>['sync_queue', 'sync_state']));
+    expect(
+      tableNames,
+      containsAll(<String>[
+        'sync_queue',
+        'sync_state',
+        'gamification_state_table',
+      ]),
+    );
 
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.read<int>('user_version'), 4);
+    expect(version.read<int>('user_version'), 6);
+
+    final queueColumns =
+        await db
+            .customSelect("SELECT name FROM pragma_table_info('sync_queue')")
+            .get();
+    expect(
+      queueColumns.map((row) => row.read<String>('name')),
+      containsAll(['next_attempt_at', 'dead_lettered_at', 'last_error']),
+    );
+    await db.close();
+  });
+
+  test('schema v4 → v6 adds retry metadata and gamification table', () async {
+    final file = File(
+      p.join(
+        Directory.systemTemp.path,
+        'ceskina_v4_migration_${DateTime.now().microsecondsSinceEpoch}.db',
+      ),
+    );
+    addTearDown(() {
+      if (file.existsSync()) file.deleteSync();
+    });
+
+    var db = AppDatabase.forTesting(NativeDatabase(file));
+    await db.customSelect('SELECT 1').get();
+    await db.close();
+
+    final rawDb = raw.sqlite3.open(file.path);
+    rawDb.execute('ALTER TABLE sync_queue DROP COLUMN next_attempt_at');
+    rawDb.execute('ALTER TABLE sync_queue DROP COLUMN dead_lettered_at');
+    rawDb.execute('ALTER TABLE sync_queue DROP COLUMN last_error');
+    rawDb.execute('DROP TABLE gamification_state_table');
+    rawDb.execute('PRAGMA user_version = 4');
+    rawDb.dispose();
+
+    db = AppDatabase.forTesting(NativeDatabase(file));
+    final columns =
+        await db
+            .customSelect("SELECT name FROM pragma_table_info('sync_queue')")
+            .get();
+    expect(
+      columns.map((row) => row.read<String>('name')),
+      containsAll(['next_attempt_at', 'dead_lettered_at', 'last_error']),
+    );
+    final version = await db.customSelect('PRAGMA user_version').getSingle();
+    expect(version.read<int>('user_version'), 6);
+
+    // v6 should have created the gamification_state table.
+    final gTables =
+        await db
+            .customSelect(
+              "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'gamification_state_table'",
+            )
+            .get();
+    expect(gTables, isNotEmpty);
     await db.close();
   });
 }

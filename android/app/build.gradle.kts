@@ -20,6 +20,16 @@ val keystoreProperties = Properties().apply {
     }
 }
 val hasReleaseKeystore = keystoreProperties.getProperty("storeFile") != null
+val releaseTaskRequested = gradle.startParameter.taskNames.any {
+    it.contains("release", ignoreCase = true)
+}
+
+if (releaseTaskRequested && !hasReleaseKeystore) {
+    throw GradleException(
+        "Release signing is not configured. Add android/key.properties " +
+            "with the upload keystore credentials before building a release artifact.",
+    )
+}
 
 android {
     namespace = "com.ceskinapro.ceskina_pro"
@@ -54,12 +64,8 @@ android {
 
     buildTypes {
         release {
-            // Store builds require android/key.properties; without it we fall
-            // back to debug signing so `flutter run --release` still works.
-            signingConfig = if (hasReleaseKeystore) {
-                signingConfigs.getByName("release")
-            } else {
-                signingConfigs.getByName("debug")
+            if (hasReleaseKeystore) {
+                signingConfig = signingConfigs.getByName("release")
             }
         }
     }

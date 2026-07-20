@@ -1,11 +1,14 @@
-/// SRS card state (FSRS).
+/// SRS card state.
 enum CardState { newCard, learning, review, relearning }
 
 /// Type of SRS card.
 enum CardType { vocabulary, grammar }
 
-/// FSRS card state for spaced repetition scheduling.
-class FSRSCard {
+/// SRS card state for spaced repetition scheduling.
+///
+/// Uses SM-2 algorithm parameters (ease factor as difficulty, interval as
+/// stability). See [SrsScheduler] for the scheduling logic.
+class SrsCard {
   final String id;
   final CardType cardType;
   final double stability; // memory strength in days
@@ -15,7 +18,7 @@ class FSRSCard {
   final CardState state;
   final DateTime? lastReview;
 
-  const FSRSCard({
+  const SrsCard({
     required this.id,
     required this.cardType,
     this.stability = 0.0,
@@ -26,7 +29,7 @@ class FSRSCard {
     this.lastReview,
   });
 
-  FSRSCard copyWith({
+  SrsCard copyWith({
     double? stability,
     double? difficulty,
     DateTime? due,
@@ -34,7 +37,7 @@ class FSRSCard {
     CardState? state,
     DateTime? lastReview,
   }) {
-    return FSRSCard(
+    return SrsCard(
       id: id,
       cardType: cardType,
       stability: stability ?? this.stability,

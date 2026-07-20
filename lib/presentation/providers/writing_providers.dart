@@ -25,17 +25,22 @@ class WritingEvaluation {
   factory WritingEvaluation.fromJson(Map<String, dynamic> json) {
     final score = json['score'] as Map<String, dynamic>? ?? {};
     return WritingEvaluation(
-      grammar: (score['grammar'] as num?)?.toInt() ?? 0,
-      vocabulary: (score['vocabulary'] as num?)?.toInt() ?? 0,
-      coherence: (score['coherence'] as num?)?.toInt() ?? 0,
-      overall: (score['overall'] as num?)?.toInt() ?? 0,
+      grammar: _boundedScore(score['grammar']),
+      vocabulary: _boundedScore(score['vocabulary']),
+      coherence: _boundedScore(score['coherence']),
+      overall: _boundedScore(score['overall']),
       feedback: json['feedback'] as String? ?? '',
       errors:
           (json['errors'] as List<dynamic>?)
-              ?.map((e) => e as Map<String, dynamic>)
+              ?.whereType<Map<String, dynamic>>()
               .toList() ??
           [],
     );
+  }
+
+  static int _boundedScore(Object? value) {
+    final numeric = value is num && value.isFinite ? value : 0;
+    return numeric.clamp(0, 100).round();
   }
 }
 

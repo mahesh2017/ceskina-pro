@@ -1,26 +1,25 @@
 /// Backend (Supabase) configuration.
 ///
-/// Defaults target the Čeština Pro project and can be overridden at build time.
-/// The publishable key is safe to ship in the client — row-level security is what
-/// protects data, not key secrecy. (Your DeepSeek key is a different story and
-/// must move behind an Edge Function; it is NOT stored here.)
+/// Backend selection is explicit: source builds never default to production.
+/// The publishable key is safe to ship in the client, but accidentally targeting
+/// production from development still creates users, writes sync data, and can
+/// consume paid AI quota.
 ///
 /// For staging or local projects, override them at build time:
 ///   flutter run --dart-define=SUPABASE_URL=... --dart-define=SUPABASE_ANON_KEY=...
 ///
-/// Setting either override to an empty value disables the backend so development
-/// builds can still run completely offline.
+/// Setting either value to an empty string disables the backend.
 class BackendConfig {
   const BackendConfig._();
 
   static const String supabaseUrl = String.fromEnvironment(
     'SUPABASE_URL',
-    defaultValue: 'https://pxhjcazremdnsdzpeajo.supabase.co',
+    defaultValue: '',
   );
 
   static const String supabaseAnonKey = String.fromEnvironment(
     'SUPABASE_ANON_KEY',
-    defaultValue: 'sb_publishable_ekIEz6xzgQN4uaQAgLwR0Q_ZfZ9e47r',
+    defaultValue: '',
   );
 
   /// True once a project URL + anon key are supplied.

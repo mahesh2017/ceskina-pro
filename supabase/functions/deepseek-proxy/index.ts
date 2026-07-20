@@ -1,14 +1,29 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2.110.7";
+import {
+  buildUpstreamRequest,
+  parseContext,
+  parseBoundedInteger,
+  parseMessages,
+} from "./request_policy.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info",
+  "Access-Control-Allow-Headers":
+    "authorization, apikey, content-type, x-client-info",
 };
 
-const jsonResponse = (body: Record<string, unknown>, status = 200) =>
+const jsonResponse = (
+  body: Record<string, unknown>,
+  status = 200,
+  headers: Record<string, string> = {},
+) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { ...corsHeaders, "Content-Type": "application/json" },
+    headers: {
+      ...corsHeaders,
+      "Content-Type": "application/json",
+      ...headers,
+    },
   });
 
 Deno.serve(async (request) => {
@@ -48,45 +63,75 @@ Deno.serve(async (request) => {
     return jsonResponse({ error: "Invalid JSON request." }, 400);
   }
 
-  const messages = body.messages;
-  if (!Array.isArray(messages) || messages.length < 1 || messages.length > 24) {
-    return jsonResponse({ error: "Messages must contain 1–24 items." }, 400);
+  const operation = body.operation;
+  if (
+    operation !== "conversation" && operation !== "grammar_check" &&
+    operation !== "writing_evaluation"
+  ) {
+    return jsonResponse({ error: "Unsupported AI operation." }, 400);
   }
-  const allowedRoles = new Set(["system", "user", "assistant"]);
-  let totalCharacters = 0;
-  for (const message of messages) {
-    if (
-      typeof message !== "object" || message === null ||
-      !allowedRoles.has(message.role) || typeof message.content !== "string"
-    ) {
-      return jsonResponse({ error: "Invalid message format." }, 400);
-    }
-    totalCharacters += message.content.length;
+  const context = parseContext(body.context);
+  const messages = parseMessages(body.messages);
+  if (!context || !messages) {
+    return jsonResponse({ error: "Invalid AI request." }, 400);
   }
-  if (totalCharacters > 20_000) {
-    return jsonResponse({ error: "Conversation is too long." }, 413);
+  const upstreamRequest = buildUpstreamRequest(operation, context, messages);
+  if (!upstreamRequest) {
+    return jsonResponse({ error: "Invalid operation context." }, 400);
   }
 
-  const configuredLimit = Number(Deno.env.get("AI_DAILY_REQUEST_LIMIT") ?? "20");
-  const dailyLimit = Number.isFinite(configuredLimit)
-    ? Math.max(1, Math.min(500, Math.floor(configuredLimit)))
-    : 20;
-  const { data: allowed, error: quotaError } = await admin.rpc("consume_ai_quota", {
-    p_user_id: userData.user.id,
-    p_daily_limit: dailyLimit,
-  });
+  const userBurstLimit = parseBoundedInteger(
+    Deno.env.get("AI_USER_REQUESTS_PER_MINUTE"),
+    5,
+    1,
+    100,
+  );
+  const projectBurstLimit = parseBoundedInteger(
+    Deno.env.get("AI_PROJECT_REQUESTS_PER_MINUTE"),
+    60,
+    1,
+    5_000,
+  );
+  const { data: burstAllowed, error: burstError } = await admin.rpc(
+    "consume_ai_burst_quota",
+    {
+      p_user_id: userData.user.id,
+      p_user_limit: userBurstLimit,
+      p_project_limit: projectBurstLimit,
+    },
+  );
+  if (burstError) {
+    console.error("Burst quota check failed", burstError.code);
+    return jsonResponse({ error: "AI tutor is temporarily unavailable." }, 503);
+  }
+  if (!burstAllowed) {
+    return jsonResponse(
+      { error: "Too many AI tutor requests. Try again shortly." },
+      429,
+      { "Retry-After": "60" },
+    );
+  }
+
+  const dailyLimit = parseBoundedInteger(
+    Deno.env.get("AI_DAILY_REQUEST_LIMIT"),
+    20,
+    1,
+    500,
+  );
+  const { data: allowed, error: quotaError } = await admin.rpc(
+    "consume_ai_quota",
+    { p_user_id: userData.user.id, p_daily_limit: dailyLimit },
+  );
   if (quotaError) {
-    console.error("Quota check failed", quotaError);
+    console.error("Quota check failed", quotaError.code);
     return jsonResponse({ error: "AI tutor is temporarily unavailable." }, 503);
   }
   if (!allowed) {
-    return jsonResponse({ error: "Daily AI tutor limit reached. Try again tomorrow." }, 429);
+    return jsonResponse(
+      { error: "Daily AI tutor limit reached. Try again tomorrow." },
+      429,
+    );
   }
-
-  const requestedTemperature = Number(body.temperature ?? 0.7);
-  const temperature = Number.isFinite(requestedTemperature)
-    ? Math.max(0, Math.min(1.5, requestedTemperature))
-    : 0.7;
 
   let upstream: Response;
   try {
@@ -98,27 +143,39 @@ Deno.serve(async (request) => {
       },
       body: JSON.stringify({
         model: "deepseek-chat",
-        messages,
-        temperature,
+        messages: upstreamRequest.messages,
+        temperature: upstreamRequest.temperature,
+        max_tokens: upstreamRequest.maxTokens,
         response_format: { type: "json_object" },
       }),
       signal: AbortSignal.timeout(60_000),
     });
   } catch (error) {
-    console.error("DeepSeek request failed", error);
+    console.error(
+      "DeepSeek request failed",
+      error instanceof Error ? error.name : "unknown",
+    );
     return jsonResponse({ error: "AI tutor request timed out." }, 504);
   }
 
   const upstreamBody = await upstream.json().catch(() => null);
   if (!upstream.ok) {
-    console.error("DeepSeek error", upstream.status, upstreamBody);
+    console.error("DeepSeek error", upstream.status);
     const status = upstream.status === 429 ? 429 : 502;
-    return jsonResponse({ error: "AI tutor is temporarily unavailable." }, status);
+    return jsonResponse(
+      { error: "AI tutor is temporarily unavailable." },
+      status,
+    );
   }
 
   const content = upstreamBody?.choices?.[0]?.message?.content;
-  if (typeof content !== "string" || content.length === 0) {
-    return jsonResponse({ error: "AI tutor returned an empty response." }, 502);
+  if (
+    typeof content !== "string" || content.length < 1 || content.length > 20_000
+  ) {
+    return jsonResponse(
+      { error: "AI tutor returned an invalid response." },
+      502,
+    );
   }
   const usage = upstreamBody.usage ?? {};
   return jsonResponse({

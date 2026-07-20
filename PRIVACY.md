@@ -1,45 +1,70 @@
 # Privacy Policy
 
-**Last updated:** July 18, 2026
+**Last updated:** July 20, 2026
 
 Čeština Pro ("the App") is built with privacy in mind. This policy explains what data the App handles and how.
 
-## Data Stored on Your Device
+## Local Data
 
-All your learning data stays on your device and is **never transmitted** to any server:
+The App stores curriculum content and learning data locally using SQLite,
+SharedPreferences, secure storage, and audio files. This includes lesson
+progress, scores, XP, streaks, hearts, badges, vocabulary/SRS state, AI chat
+history, and settings.
 
-- **Learning progress:** Unit completion, lesson scores, exercise answers, XP, streaks, hearts, and badges — stored locally in SQLite (Drift) and SharedPreferences.
-- **Vocabulary flashcards:** Words you're learning, SRS scheduling data (when to review each card) — stored locally.
-- **AI chat conversations:** Your conversations with the AI tutor — stored locally.
-- **Settings:** Your preferences (theme, daily goals, onboarding completion) — stored locally.
+## Supabase Account, Curriculum, and Sync
 
-## AI Features (Optional)
+When the App is built with its backend enabled, it connects to Supabase and
+automatically creates or restores an anonymous account. Supabase provides the
+published curriculum and stores selected learning state for synchronization:
 
-The App offers optional AI-powered features (AI conversation tutor, writing evaluation). These features are **off by default**. To enable them, you must provide your own API key:
+- lesson completion, scores, and attempt counts;
+- earned badge identifiers;
+- streak and exam-completion counters; and
+- vocabulary and grammar review scheduling state.
 
-- The App connects directly to the AI provider's API (e.g., DeepSeek, OpenAI) using your key.
-- Your messages are sent to the AI provider's servers for processing.
-- We do not intermediate, log, or store these API calls on any third-party server.
-- Review the AI provider's privacy policy for how they handle your data.
+The anonymous Supabase user ID and an installation-specific device ID are
+attached to synchronized records. Settings, locally stored chat history, and
+audio recordings are not currently synchronized. You can link a verified email
+to preserve the same cloud identity, sign in on another device, export local
+and cloud learning data as JSON, or delete the cloud account and local learner
+data from **Settings → Account & data**. Temporary export files are deleted
+after the platform share/save flow completes. Supabase operational backups and
+logs may remain for their documented retention periods.
+
+## AI Features
+
+When you use the AI conversation tutor, grammar check, or writing evaluation,
+the relevant learner text and recent conversation context are sent over HTTPS
+to a Supabase Edge Function and then to DeepSeek for processing. The App uses a
+server-managed API credential; users do not provide their own AI key.
+
+The Edge Function authenticates the anonymous/user session, enforces daily and
+short-window request quotas, and returns the model response. The App stores the
+resulting chat messages locally. Do not include sensitive personal information
+in AI prompts.
 
 ## Speech & Microphone (Optional)
 
-The App offers pronunciation practice using on-device speech recognition:
+The App offers pronunciation practice using the operating system's speech
+recognition service:
 
 - Microphone access is requested only when you use pronunciation features.
-- On-device speech-to-text (Apple/Google speech recognition) processes your voice locally.
-- No audio recordings are stored or transmitted.
+- Recognition may run on-device or use Apple/Google services depending on the
+  operating system, installed language support, device settings, and network.
+- The App does not intentionally retain the microphone recording after the
+  recognition operation, but the platform provider's terms govern its service.
 
 ## Internet Access
 
-The App may access the internet for:
-- AI features (if you provide an API key)
-- Text-to-speech synthesis (if using cloud TTS providers)
-- Standard HTTPS connections for these purposes
+The App accesses the internet for Supabase authentication, curriculum delivery,
+learning-state sync, course audio, AI features, and supported speech/audio
+fallbacks.
 
 ## Analytics & Tracking
 
-The App does **not** include any analytics, tracking, or advertising SDKs. We do not collect usage statistics, crash reports, or any telemetry.
+The App does **not** currently include analytics, advertising, or crash-reporting
+SDKs. Supabase and DeepSeek may generate operational/security logs under their
+own terms when their services are used.
 
 ## Children's Privacy
 

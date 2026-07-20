@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 /// A chat message in an AI conversation.
 class ChatMessage {
   final String id;
@@ -24,7 +26,7 @@ class ChatMessage {
 
   factory ChatMessage.user(String text, {String? conversationId}) {
     return ChatMessage(
-      id: '${DateTime.now().millisecondsSinceEpoch}',
+      id: const Uuid().v4(),
       conversationId: conversationId ?? '',
       role: MessageRole.user,
       content: text,
@@ -41,7 +43,7 @@ class ChatMessage {
     String? conversationId,
   }) {
     return ChatMessage(
-      id: '${DateTime.now().millisecondsSinceEpoch}_tutor',
+      id: const Uuid().v4(),
       conversationId: conversationId ?? '',
       role: MessageRole.tutor,
       content: text,

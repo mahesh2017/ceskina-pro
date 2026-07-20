@@ -1,20 +1,20 @@
 import '../entities/flashcard.dart';
-import '../entities/fsrs_card.dart';
+import '../entities/srs_card.dart';
 
 /// A card due for review: the flashcard content plus its stored SRS
-/// scheduling state. The [fsrs] card's id is the srs_cards row id, so
+/// scheduling state. The [srs] card's id is the srs_cards row id, so
 /// rating updates target the exact row the state was loaded from.
 class ReviewCard {
   final Flashcard flashcard;
-  final FSRSCard fsrs;
+  final SrsCard srs;
 
-  const ReviewCard({required this.flashcard, required this.fsrs});
+  const ReviewCard({required this.flashcard, required this.srs});
 }
 
 /// Abstract interface for vocabulary + SRS data access.
 abstract class VocabularyRepository {
   Future<List<ReviewCard>> getDueCards({DateTime? asOf});
-  Future<void> updateCard(FSRSCard card, Rating rating, DateTime reviewedAt);
+  Future<void> updateCard(SrsCard card, Rating rating, DateTime reviewedAt);
   Future<List<Flashcard>> searchCards(String query);
   Future<List<Flashcard>> getCardsForUnit(int unitId);
 

@@ -1,26 +1,30 @@
-import '../entities/fsrs_card.dart';
+import '../entities/srs_card.dart';
 
 /// Result of scheduling a card review.
 class SchedulingResult {
-  final FSRSCard card;
+  final SrsCard card;
   final DateTime nextReviewDate;
 
   const SchedulingResult({required this.card, required this.nextReviewDate});
 }
 
-/// FSRS-based spaced repetition scheduler.
+/// Spaced repetition scheduler using the SM-2 algorithm.
 ///
-/// Wraps the dart-fsrs package. Until the package is published,
-/// this uses a simplified SM-2 fallback implementation.
-class FSRSScheduler {
-  // SM-2 parameters (fallback until dart-fsrs is available)
+/// This is a simplified SM-2 implementation (ease factor, interval
+/// multiplication). It is **not** FSRS — the Free Spaced Repetition Scheduler
+/// uses a different parameter space (w-matrix, retrievability, stability).
+///
+/// The public API is designed so a future migration to real FSRS can replace
+/// this class without touching callers. When that happens, a one-time data
+/// migration will be needed to convert stored SM-2 state to FSRS parameters.
+class SrsScheduler {
+  // SM-2 parameters.
   static const double _initialEaseFactor = 2.5;
   static const double _minEaseFactor = 1.3;
 
   /// Calculate the next review date and update card state.
-  SchedulingResult schedule(FSRSCard card, Rating rating, DateTime now) {
-    // Simplified SM-2 implementation
-    // TODO: Replace with dart-fsrs when package is available on pub.dev
+  SchedulingResult schedule(SrsCard card, Rating rating, DateTime now) {
+    // SM-2 implementation.
     var newReps = card.reps + 1;
     // Use the card's existing difficulty (ease factor) instead of always resetting to 2.5
     var newEase = card.difficulty > 0 ? card.difficulty : _initialEaseFactor;
@@ -81,13 +85,13 @@ class FSRSScheduler {
   /// Preview the interval (in whole days) a given rating would schedule,
   /// without mutating the card. Used to show honest interval hints on the
   /// rating buttons instead of hardcoded values.
-  int previewIntervalDays(FSRSCard card, Rating rating, DateTime now) {
+  int previewIntervalDays(SrsCard card, Rating rating, DateTime now) {
     final result = schedule(card, rating, now);
     return result.nextReviewDate.difference(now).inDays;
   }
 
   /// Get all cards due for review on or before [asOf].
-  List<FSRSCard> getDueCards(List<FSRSCard> allCards, DateTime asOf) {
+  List<SrsCard> getDueCards(List<SrsCard> allCards, DateTime asOf) {
     return allCards.where((c) => c.due.isBefore(asOf) || c.due.isAtSameMomentAs(asOf)).toList();
   }
 }

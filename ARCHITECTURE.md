@@ -127,7 +127,7 @@ abstract class CurriculumRepository {
 
 abstract class VocabularyRepository {
   Future<List<Flashcard>> getDueCards({DateTime? asOf});
-  Future<void> updateCard(FSRSCard card, Rating rating, DateTime reviewedAt);
+  Future<void> updateCard(SrsCard card, Rating rating, DateTime reviewedAt);
   Future<List<Flashcard>> searchCards(String query);
 }
 
@@ -170,34 +170,19 @@ abstract class LlmService {
 
 ## 3. Domain Layer — Core Engines
 
-### 3.1 FSRS Scheduler
+### 3.1 SRS Scheduler
 
-Wraps the `dart-fsrs` package. Manages review scheduling for vocabulary and grammar pattern cards.
+Uses a simplified SM-2 scheduler for vocabulary and grammar pattern cards. The
+stored `difficulty` field is the ease factor and `stability` is the interval in
+days; these are not FSRS parameters.
 
 ```dart
-class FSRSScheduler {
-  final Fsrs _fsrs; // from dart-fsrs
-
-  FSRSScheduler() : _fsrs = Fsrs(defaultFSRSConfig());
-
+class SrsScheduler {
   /// Calculate the next review date and update card state.
-  SchedulingResult schedule(FSRSCard card, Rating rating, DateTime now) {
-    final srsCard = card.toSrsCard();
-    final updated = _fsrs.repeat(srsCard, now, rating);
-    return SchedulingResult(
-      card: card.copyWith(
-        stability: updated.stability,
-        difficulty: updated.difficulty,
-        due: updated.due,
-        reps: updated.reps,
-        state: updated.state,
-      ),
-      nextReviewDate: updated.due,
-    );
-  }
+  SchedulingResult schedule(SrsCard card, Rating rating, DateTime now);
 
   /// Get all cards due for review before or on [asOf].
-  List<FSRSCard> getDueCards(List<FSRSCard> allCards, DateTime asOf) {
+  List<SrsCard> getDueCards(List<SrsCard> allCards, DateTime asOf) {
     return allCards.where((c) => c.due.isBefore(asOf) || c.due.isAtSameMomentAs(asOf)).toList();
   }
 }
@@ -1196,18 +1181,18 @@ score_pronunciation(expected_text, actual_text):
 
 ---
 
-## 10. Spaced Repetition (FSRS) Integration
+## 10. Spaced Repetition (SM-2) Integration
 
 ### 10.1 Card States
 
 ```dart
 enum CardState { new_, learning, review, relearning }
 
-class FSRSCard {
+class SrsCard {
   final String id;
   final CardType cardType;    // vocabulary or grammar
-  final double stability;     // memory strength (days)
-  final double difficulty;    // 1.0-10.0
+  final double stability;     // scheduled interval in days
+  final double difficulty;    // SM-2 ease factor
   final DateTime due;         // next review date
   final int reps;              // total repetitions
   final CardState state;
@@ -1222,7 +1207,9 @@ class FSRSCard {
 | **Vocabulary SRS** | Individual words/phrases | Flashcard: Czech audio → recall meaning, or English → type Czech |
 | **Grammar SRS** | Grammar patterns | Exercise: "Decline 'žena' in dative" or "Choose correct aspect" |
 
-Both tracks use FSRS but with separate card pools. The learner sees a mixed review session that interleaves vocabulary and grammar cards.
+Both tracks use the same SM-2-style scheduler with separate card pools. The
+learner sees a mixed review session that interleaves vocabulary and grammar
+cards. Adopting real FSRS later requires an explicit stored-state migration.
 
 ### 10.3 FSRS Configuration
 
@@ -1612,7 +1599,7 @@ ceskina_pro/
 │   │   │   ├── lesson.dart
 │   │   │   ├── exercise.dart
 │   │   │   ├── flashcard.dart
-│   │   │   ├── fsrs_card.dart
+│   │   │   ├── srs_card.dart
 │   │   │   ├── chat_message.dart
 │   │   │   ├── badge.dart
 │   │   │   ├── gamification_state.dart
@@ -1629,7 +1616,7 @@ ceskina_pro/
 │   │   │   └── update_streak.dart
 │   │   │
 │   │   ├── engines/                  # Core algorithms
-│   │   │   ├── fsrs_scheduler.dart
+│   │   │   ├── srs_scheduler.dart
 │   │   │   ├── gamification_engine.dart
 │   │   │   ├── pronunciation_scorer.dart
 │   │   │   ├── llm_orchestrator.dart
@@ -1770,7 +1757,7 @@ ceskina_pro/
 ├── test/
 │   ├── domain/
 │   │   ├── engines/
-│   │   │   ├── fsrs_scheduler_test.dart
+│   │   │   ├── srs_scheduler_test.dart
 │   │   │   ├── gamification_engine_test.dart
 │   │   │   ├── pronunciation_scorer_test.dart
 │   │   │   └── llm_orchestrator_test.dart

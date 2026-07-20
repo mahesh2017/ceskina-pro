@@ -9,17 +9,30 @@ abstract class LlmService {
 
 /// LLM request.
 class LlmRequest {
+  final LlmOperation operation;
   final String model;
   final List<LlmMessage> messages;
-  final double temperature;
-  final Map<String, dynamic>? responseFormat;
+  final Map<String, String> context;
 
   const LlmRequest({
+    required this.operation,
     required this.model,
     required this.messages,
-    this.temperature = 0.7,
-    this.responseFormat,
+    this.context = const {},
   });
+}
+
+/// Product operations exposed by the server-side AI gateway.
+///
+/// The Edge Function owns prompts, model parameters, and output limits; the
+/// client supplies only bounded learner content and operation context.
+enum LlmOperation {
+  conversation('conversation'),
+  grammarCheck('grammar_check'),
+  writingEvaluation('writing_evaluation');
+
+  const LlmOperation(this.apiName);
+  final String apiName;
 }
 
 /// LLM message.
@@ -82,17 +95,20 @@ class TutorResponse {
     return TutorResponse(
       tutorReplyCz: replyCz,
       tutorReplyEn: json['tutor_reply_en'] as String? ?? '',
-      corrections: (json['corrections'] as List<dynamic>?)
+      corrections:
+          (json['corrections'] as List<dynamic>?)
               ?.whereType<Map<String, dynamic>>()
               .map(Correction.fromJson)
               .toList() ??
           [],
-      newVocabulary: (json['new_vocabulary'] as List<dynamic>?)
+      newVocabulary:
+          (json['new_vocabulary'] as List<dynamic>?)
               ?.whereType<Map<String, dynamic>>()
               .map(NewVocabulary.fromJson)
               .toList() ??
           [],
-      suggestedReplies: (json['suggested_replies'] as List<dynamic>?)
+      suggestedReplies:
+          (json['suggested_replies'] as List<dynamic>?)
               ?.whereType<String>()
               .toList() ??
           [],

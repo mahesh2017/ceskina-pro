@@ -9,6 +9,7 @@ import '../screens/pronunciation/pronunciation_screen.dart';
 import '../screens/exam/mock_exam_screen.dart';
 import '../screens/stats/stats_screen.dart';
 import '../screens/settings/settings_screen.dart';
+import '../screens/settings/account_screen.dart';
 import '../screens/grammar/grammar_reference_screen.dart';
 import '../screens/onboarding/onboarding_screen.dart';
 import '../providers/settings_providers.dart';
@@ -22,10 +23,9 @@ import '../../domain/entities/enums.dart';
 /// invalidated mid-session (that would recreate the router and reset
 /// navigation state).
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final onboardingDone = ref.watch(onboardingDoneProvider).maybeWhen(
-        data: (done) => done,
-        orElse: () => true,
-      );
+  final onboardingDone = ref
+      .watch(onboardingDoneProvider)
+      .maybeWhen(data: (done) => done, orElse: () => true);
 
   return GoRouter(
     initialLocation: onboardingDone ? '/' : '/onboarding',
@@ -34,10 +34,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ShellRoute(
         builder: (context, state, child) => AdaptiveScaffold(child: child),
         routes: [
-          GoRoute(
-            path: '/',
-            builder: (context, state) => const HomeScreen(),
-          ),
+          GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
           GoRoute(
             path: '/curriculum',
             builder: (context, state) => const CurriculumScreen(),
@@ -64,30 +61,38 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       // Full-screen flows — no bottom nav / side rail. These are pushed
       // (context.push) so closing them pops back to where the user was.
       GoRoute(
+        path: '/account',
+        builder: (context, state) => const AccountScreen(),
+      ),
+      GoRoute(
         path: '/lesson/:id',
-        builder: (context, state) => LessonPlayerScreen(
-          lessonId: int.parse(state.pathParameters['id']!),
-        ),
+        builder:
+            (context, state) => LessonPlayerScreen(
+              lessonId: int.parse(state.pathParameters['id']!),
+            ),
       ),
       GoRoute(
         path: '/pronunciation/:id',
-        builder: (context, state) => PronunciationScreen(
-          exerciseId: state.pathParameters['id']!,
-        ),
+        builder:
+            (context, state) =>
+                PronunciationScreen(exerciseId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: '/exam/:level',
-        builder: (context, state) => MockExamScreen(
-          level: state.pathParameters['level']! == 'a2'
-              ? ExamLevel.a2
-              : ExamLevel.a1,
-        ),
+        builder:
+            (context, state) => MockExamScreen(
+              level:
+                  state.pathParameters['level']! == 'a2'
+                      ? ExamLevel.a2
+                      : ExamLevel.a1,
+            ),
       ),
       GoRoute(
         path: '/grammar',
-        builder: (context, state) => GrammarReferenceScreen(
-          highlightRuleId: state.uri.queryParameters['rule'],
-        ),
+        builder:
+            (context, state) => GrammarReferenceScreen(
+              highlightRuleId: state.uri.queryParameters['rule'],
+            ),
       ),
       GoRoute(
         path: '/onboarding',

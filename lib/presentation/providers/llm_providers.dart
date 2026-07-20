@@ -30,11 +30,8 @@ class MockLlmService implements LlmService {
   Future<LlmResponse> complete(LlmRequest request) async {
     await Future.delayed(const Duration(milliseconds: 800));
 
-    final systemPrompt =
-        request.messages.isNotEmpty ? request.messages.first.content : '';
-
     final String mockJson;
-    if (systemPrompt.contains('CCE exam evaluator')) {
+    if (request.operation == LlmOperation.writingEvaluation) {
       // Writing evaluation contract
       mockJson = jsonEncode({
         'score': {
@@ -48,7 +45,7 @@ class MockLlmService implements LlmService {
             'backend for real AI feedback on your writing.',
         'errors': <Map<String, dynamic>>[],
       });
-    } else if (systemPrompt.contains('grammar expert')) {
+    } else if (request.operation == LlmOperation.grammarCheck) {
       // Grammar check contract
       mockJson = jsonEncode({
         'corrected_text': '',

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 
 import '../sync/backend_service.dart';
@@ -7,22 +8,34 @@ import '../sync/backend_service.dart';
 // A public named parameter initializes an intentionally private dependency.
 // ignore_for_file: prefer_initializing_formals
 
-/// Loads the complete published curriculum snapshot from Supabase.
-///
-/// Curriculum is deliberately not bundled with the application. A failed or
-/// incomplete remote fetch is an initialization error rather than a signal to
-/// silently use stale packaged content.
+/// Loads a complete curriculum snapshot from either bundled assets or
+/// Supabase. A snapshot is exposed only after every required pack is present.
 class CurriculumPackSource {
-  CurriculumPackSource({required BackendService backend, Logger? log})
-    : _backend = backend,
-      _log = log ?? Logger('CurriculumPackSource');
+  CurriculumPackSource({
+    required BackendService backend,
+    AssetBundle? bundle,
+    Logger? log,
+  }) : _backend = backend,
+       _bundle = bundle ?? rootBundle,
+       _log = log ?? Logger('CurriculumPackSource');
 
   final BackendService _backend;
+  final AssetBundle _bundle;
   final Logger _log;
   Map<String, Object?> _packs = const {};
 
+  /// Load and validate the packaged bootstrap snapshot.
+  Future<void> loadBundled(Set<String> requiredPackKeys) async {
+    final bundled = <String, Object?>{};
+    for (final key in requiredPackKeys) {
+      bundled[key] = jsonDecode(await _bundle.loadString(key));
+    }
+    _packs = bundled;
+    _log.info('Loaded ${bundled.length} bundled curriculum packs.');
+  }
+
   /// Fetch and validate a complete live curriculum snapshot.
-  Future<void> refresh(Set<String> requiredPackKeys) async {
+  Future<void> refreshRemote(Set<String> requiredPackKeys) async {
     final client = _backend.client;
     if (client == null) {
       throw StateError(
@@ -51,8 +64,8 @@ class CurriculumPackSource {
   }
 
   Future<String> load(String path) async {
-    final remote = _packs[path];
-    if (remote != null) return jsonEncode(remote);
-    throw StateError('Curriculum pack was not returned by Supabase: $path');
+    final pack = _packs[path];
+    if (pack != null) return jsonEncode(pack);
+    throw StateError('Curriculum pack is not present in the snapshot: $path');
   }
 }

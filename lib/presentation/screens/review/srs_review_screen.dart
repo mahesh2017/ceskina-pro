@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../providers/review_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../../domain/entities/flashcard.dart';
-import '../../../domain/entities/fsrs_card.dart';
-import '../../../domain/engines/fsrs_scheduler.dart';
+import '../../../domain/entities/srs_card.dart';
+import '../../../domain/engines/srs_scheduler.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../widgets/common/soft_ui.dart';
 
@@ -125,7 +125,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
             // Rating buttons (only after flip)
             if (session.isFlipped)
               _RatingButtons(
-                intervals: _intervalLabels(card.fsrs),
+                intervals: _intervalLabels(card.srs),
                 onRate: (rating) {
                   ref.read(reviewSessionProvider.notifier).rateCard(rating);
                 },
@@ -150,8 +150,8 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
   /// Honest interval hints computed from the real scheduler for the
   /// current card. "Again" re-appears within this session, so it shows
   /// "Soon" rather than a day count.
-  Map<Rating, String> _intervalLabels(FSRSCard card) {
-    final scheduler = FSRSScheduler();
+  Map<Rating, String> _intervalLabels(SrsCard card) {
+    final scheduler = SrsScheduler();
     final now = DateTime.now();
     String fmt(Rating r) {
       if (r == Rating.again) return 'Soon';

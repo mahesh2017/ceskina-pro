@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/entities/flashcard.dart';
-import '../../domain/entities/fsrs_card.dart';
-import '../../domain/engines/fsrs_scheduler.dart';
+import '../../domain/entities/srs_card.dart';
+import '../../domain/engines/srs_scheduler.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import 'curriculum_providers.dart';
 import 'database_providers.dart';
@@ -75,15 +75,15 @@ class SessionCard {
   const SessionCard(this.review, this.direction);
 
   Flashcard get flashcard => review.flashcard;
-  FSRSCard get fsrs => review.fsrs;
+  SrsCard get srs => review.srs;
 }
 
 /// Direction for a card this session: new cards are always recognition;
 /// once a card has a few successful reps, mix in production and listening
 /// fronts deterministically so the variety is stable within a session.
 CardDirection directionFor(ReviewCard c) {
-  if (c.fsrs.reps < 2) return CardDirection.czToEn;
-  return switch ((c.flashcard.id + c.fsrs.reps) % 3) {
+  if (c.srs.reps < 2) return CardDirection.czToEn;
+  return switch ((c.flashcard.id + c.srs.reps) % 3) {
     0 => CardDirection.enToCz,
     1 => CardDirection.audio,
     _ => CardDirection.czToEn,
@@ -125,7 +125,7 @@ SessionPlan planReviewSession({
   final newCards = <ReviewCard>[];
   final reviewCards = <ReviewCard>[];
   for (final c in allDue) {
-    final isNew = c.fsrs.state == CardState.newCard || c.fsrs.reps == 0;
+    final isNew = c.srs.state == CardState.newCard || c.srs.reps == 0;
     if (isNew) {
       if (_introducible(c, completedLessons, unlockedUnits)) newCards.add(c);
     } else {
@@ -229,7 +229,7 @@ class ReviewSessionState {
 
 /// Provider that manages an SRS review session.
 class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
-  final _scheduler = FSRSScheduler();
+  final _scheduler = SrsScheduler();
 
   @override
   ReviewSessionState build() => const ReviewSessionState();
@@ -280,7 +280,7 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
 
     // Schedule from the card's stored SRS state so intervals and ease
     // accumulate across reviews, then persist the scheduled result.
-    final result = _scheduler.schedule(card.fsrs, rating, now);
+    final result = _scheduler.schedule(card.srs, rating, now);
 
     final repo = ref.read(vocabularyRepositoryProvider);
     repo.updateCard(result.card, rating, now).whenComplete(() {

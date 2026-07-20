@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/tts_providers.dart';
@@ -230,6 +231,21 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
 
             // ── AI configuration ──
+            const _GroupLabel('Account & data'),
+            _Group(
+              children: [
+                _Row(
+                  icon: Icons.manage_accounts_outlined,
+                  tint: t.priSoft,
+                  fg: t.pri,
+                  title: 'Account, export & deletion',
+                  subtitle: 'Protect, recover, export, or delete your data',
+                  onTap: () => context.push('/account'),
+                ),
+              ],
+            ),
+
+            // ── AI configuration ──
             const _GroupLabel('AI configuration'),
             _Group(
               children: [
@@ -295,29 +311,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   void _showPrivacyPolicy(BuildContext context) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Privacy Policy'),
-        content: const SingleChildScrollView(
-          child: Text(
-            'Čeština Pro stores all your learning data locally on your '
-            'device — progress, flashcards, AI conversations, and settings '
-            'are never transmitted to any server.\n\n'
-            'AI features (tutor chat, writing evaluation) are optional and '
-            'connect directly to AI providers using your own API key. '
-            'No third-party analytics, tracking, or advertising SDKs are '
-            'included.\n\n'
-            'Microphone access is used only for on-device pronunciation '
-            'practice. No audio is recorded or stored.\n\n'
-            'Full privacy policy: PRIVACY.md in the app repository.',
+      builder:
+          (ctx) => AlertDialog(
+            title: const Text('Privacy Policy'),
+            content: const SingleChildScrollView(
+              child: Text(
+                'When the backend is enabled, Čeština Pro creates an anonymous '
+                'Supabase account, downloads curriculum, and synchronizes selected '
+                'lesson, badge, streak, exam, and review-scheduling data.\n\n'
+                'AI tutor and writing requests are sent through a Supabase Edge '
+                'Function to DeepSeek. Chat history remains stored locally. Do '
+                'not include sensitive personal information in AI prompts.\n\n'
+                'Pronunciation uses the operating system speech recognizer, which '
+                'may process speech on-device or through Apple/Google services. '
+                'No analytics, advertising, or crash-reporting SDK is included.\n\n'
+                'Account linking, portable data export, and cloud/local account '
+                'deletion are available under Account & data.\n\n'
+                'Full privacy policy: PRIVACY.md in the app repository.',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: const Text('Close'),
+              ),
+            ],
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
     );
   }
 }

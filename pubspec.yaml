@@ -29,6 +29,7 @@ dependencies:
 
   # Networking
   dio: ^5.4.0
+  connectivity_plus: ^6.1.5
 
   # Backend / sync (offline-first)
   supabase_flutter: ^2.5.0
@@ -40,6 +41,7 @@ dependencies:
   path_provider: ^2.1.0
   crypto: ^3.0.0
   logging: ^1.2.0
+  share_plus: ^12.0.2
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +60,9 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/curriculum/
+    - assets/curriculum/lessons/
+    - assets/vocabulary/
 
   fonts:
     - family: Bricolage Grotesque

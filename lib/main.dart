@@ -43,11 +43,15 @@ class CeskinaProApp extends ConsumerWidget {
       return LoadingScreen(
         error: _startupErrorMessage(initFuture.error),
         onRetry: () {
-          ref.invalidate(backendInitProvider);
           ref.invalidate(appInitializationProvider);
         },
       );
     }
+
+    // Keep remote auth, sync, and curriculum refresh alive after the verified
+    // local course is ready. Its failure must not replace the usable app UI.
+    ref.watch(backgroundInitializationProvider);
+    ref.watch(syncTriggerCoordinatorProvider);
 
     return MaterialApp.router(
       title: 'Čeština Pro',
@@ -63,9 +67,8 @@ class CeskinaProApp extends ConsumerWidget {
 String _startupErrorMessage(Object? error) {
   final detail = error?.toString().toLowerCase() ?? '';
   if (detail.contains('incomplete') || detail.contains('missing')) {
-    return 'The course update is temporarily incomplete. '
-        'Please try again in a few moments.';
+    return 'The packaged course content is incomplete. Please reinstall or '
+        'update the app.';
   }
-  return 'Check your internet connection and try again. '
-      'A connection is required to download the latest course.';
+  return 'The course could not be prepared on this device. Please try again.';
 }

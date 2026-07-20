@@ -35,6 +35,16 @@ class SyncQueue extends Table {
 
   /// Set when a push attempt fails, for backoff/inspection.
   IntColumn get attempts => integer().withDefault(const Constant(0))();
+
+  /// Earliest time this row may be retried after a transient failure.
+  DateTimeColumn get nextAttemptAt => dateTime().nullable()();
+
+  /// Rows exceeding the retry budget remain inspectable but are no longer
+  /// selected for automatic delivery.
+  DateTimeColumn get deadLetteredAt => dateTime().nullable()();
+
+  /// Sanitized diagnostic text for support and future recovery UI.
+  TextColumn get lastError => text().nullable()();
 }
 
 /// Local-only sync bookkeeping (e.g. per-entity pull cursors). Never synced to

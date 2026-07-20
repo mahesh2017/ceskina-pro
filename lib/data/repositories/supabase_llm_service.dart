@@ -18,6 +18,7 @@ class SupabaseLlmService implements LlmService {
       final response = await _client.functions.invoke(
         'deepseek-proxy',
         body: {
+          'operation': request.operation.apiName,
           'messages':
               request.messages
                   .map(
@@ -27,9 +28,7 @@ class SupabaseLlmService implements LlmService {
                     },
                   )
                   .toList(),
-          'temperature': request.temperature,
-          if (request.responseFormat != null)
-            'response_format': request.responseFormat,
+          'context': request.context,
         },
       );
       final data = Map<String, dynamic>.from(response.data as Map);
