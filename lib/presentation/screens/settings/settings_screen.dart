@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/config/backend_config.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/tts_providers.dart';
@@ -15,6 +16,40 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  Future<void> _editName(BuildContext context, WidgetRef ref) async {
+    final controller = TextEditingController(
+      text: ref.read(settingsProvider).learnerName,
+    );
+    final result = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Your name'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          textCapitalization: TextCapitalization.words,
+          decoration: const InputDecoration(
+            hintText: 'Your first name',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, controller.text),
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (result != null && result.trim().isNotEmpty) {
+      await ref.read(settingsProvider.notifier).setLearnerName(result);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = context.tokens;
@@ -37,6 +72,40 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ],
             ),
             const SizedBox(height: 8),
+
+            // ── Profile ──
+            const _GroupLabel('Profile'),
+            _Group(
+              children: [
+                _Row(
+                  icon: Icons.person_outline,
+                  tint: t.priSoft,
+                  fg: t.pri,
+                  title: 'Your name',
+                  subtitle: settings.learnerName.isEmpty
+                      ? 'Not set'
+                      : settings.learnerName,
+                  onTap: () => _editName(context, ref),
+                ),
+              ],
+            ),
+
+            // ── Account (only when backend is configured) ──
+            if (BackendConfig.isConfigured) ...[
+              const _GroupLabel('Account'),
+              _Group(
+                children: [
+                  _Row(
+                    icon: Icons.manage_accounts_outlined,
+                    tint: t.priSoft,
+                    fg: t.pri,
+                    title: 'Account, sign in & data',
+                    subtitle: 'Protect, recover, export, or delete your data',
+                    onTap: () => context.push('/account'),
+                  ),
+                ],
+              ),
+            ],
 
             // ── Appearance ──
             const _GroupLabel('Appearance'),
@@ -241,22 +310,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   title: 'Account, export & deletion',
                   subtitle: 'Protect, recover, export, or delete your data',
                   onTap: () => context.push('/account'),
-                ),
-              ],
-            ),
-
-            // ── AI configuration ──
-            const _GroupLabel('AI configuration'),
-            _Group(
-              children: [
-                _Row(
-                  icon: Icons.vpn_key_outlined,
-                  tint: t.greenSoft,
-                  fg: t.green,
-                  title: 'AI tutor',
-                  subtitle: 'Protected by the Čeština Pro server',
-                  subtitleColor: t.green,
-                  trailing: const Icon(Icons.lock_outline, size: 18),
                 ),
               ],
             ),

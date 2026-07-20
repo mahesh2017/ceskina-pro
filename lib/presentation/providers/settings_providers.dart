@@ -21,6 +21,11 @@ class AppSettings {
   /// are where learning happens, so this makes hearts opt-in pressure.
   final bool heartsEnabled;
 
+  /// The learner's first name, collected during onboarding. Used to
+  /// personalize greetings and AI tutor interactions. Empty string when
+  /// the user hasn't provided it yet.
+  final String learnerName;
+
   const AppSettings({
     this.themeMode = AppThemeMode.system,
     this.dailyGoalXp = 50,
@@ -28,6 +33,7 @@ class AppSettings {
     this.ttsVoiceGender = TtsVoiceGender.female,
     this.startingLevel = CEFRLevel.preA1,
     this.heartsEnabled = true,
+    this.learnerName = '',
   });
 
   AppSettings copyWith({
@@ -37,6 +43,7 @@ class AppSettings {
     TtsVoiceGender? ttsVoiceGender,
     CEFRLevel? startingLevel,
     bool? heartsEnabled,
+    String? learnerName,
   }) {
     return AppSettings(
       themeMode: themeMode ?? this.themeMode,
@@ -45,6 +52,7 @@ class AppSettings {
       ttsVoiceGender: ttsVoiceGender ?? this.ttsVoiceGender,
       startingLevel: startingLevel ?? this.startingLevel,
       heartsEnabled: heartsEnabled ?? this.heartsEnabled,
+      learnerName: learnerName ?? this.learnerName,
     );
   }
 }
@@ -58,6 +66,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
   static const _kOnboardingDone = 'settings_onboarding_done';
   static const _kStartingLevel = 'settings_starting_level';
   static const _kHeartsEnabled = 'settings_hearts_enabled';
+  static const _kLearnerName = 'settings_learner_name';
 
   @override
   AppSettings build() {
@@ -92,6 +101,7 @@ class SettingsNotifier extends Notifier<AppSettings> {
       startingLevel:
           CEFRLevel.values[levelIdx.clamp(0, CEFRLevel.values.length - 1)],
       heartsEnabled: prefs.getBool(_kHeartsEnabled) ?? true,
+      learnerName: prefs.getString(_kLearnerName) ?? '',
     );
   }
 
@@ -135,6 +145,14 @@ class SettingsNotifier extends Notifier<AppSettings> {
     state = state.copyWith(startingLevel: level);
     final prefs = await _prefs();
     await prefs.setInt(_kStartingLevel, level.index);
+  }
+
+  /// Set the learner's first name (from onboarding or settings).
+  Future<void> setLearnerName(String name) async {
+    final trimmed = name.trim();
+    state = state.copyWith(learnerName: trimmed);
+    final prefs = await _prefs();
+    await prefs.setString(_kLearnerName, trimmed);
   }
 
   /// Check if onboarding has been completed.

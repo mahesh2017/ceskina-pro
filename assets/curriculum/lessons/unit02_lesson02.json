@@ -16,11 +16,11 @@
       "data": {
         "type": "translation",
         "direction": "en_to_cz",
-        "source": "My name is Mahesh.",
-        "accepted_answers": ["Jmenuju se Mahesh.", "Jmenuji se Mahesh."],
+        "source": "My name is Petr.",
+        "accepted_answers": ["Jmenuju se Petr.", "Jmenuji se Petr."],
         "grammar_note": "Jmenuju se (colloquial) or Jmenuji se (formal). Both are correct for A1."
       },
-      "answer_key": "Jmenuju se Mahesh.",
+      "answer_key": "Jmenuju se Petr.",
       "grammar_rule_id": "GR-011",
       "xp_reward": 10
     },
@@ -127,11 +127,11 @@
       "data": {
         "type": "translation",
         "direction": "cz_to_en",
-        "source": "Jmenuju se Mahesh. Jsem z Indie. Těší mě.",
-        "accepted_answers": ["My name is Mahesh. I am from India. Nice to meet you."],
-        "grammar_note": "Full self-introduction. 'Indie' genitive = 'Indie' (same form for this one)."
+        "source": "Jmenuju se Petr. Jsem z Česka. Těší mě.",
+        "accepted_answers": ["My name is Petr. I am from Czechia. Nice to meet you."],
+        "grammar_note": "Full self-introduction. 'Česko' genitive = 'Česka'."
       },
-      "answer_key": "My name is Mahesh. I am from India. Nice to meet you.",
+      "answer_key": "My name is Petr. I am from Czechia. Nice to meet you.",
       "xp_reward": 15
     },
     {
@@ -156,13 +156,13 @@
       "prompt": "Say this self-introduction aloud",
       "data": {
         "type": "pronunciation",
-        "target_text": "Jmenuju se Mahesh. Jsem z Indie. Těší mě.",
+        "target_text": "Jmenuju se Petr. Jsem z Česka. Těší mě.",
         "target_audio_hash": "placeholder_2110",
         "focus_sounds": ["ě"],
         "min_score": 0.55,
-        "translation_en": "My name is Mahesh. I'm from India. Nice to meet you."
+        "translation_en": "My name is Petr. I'm from Czechia. Nice to meet you."
       },
-      "answer_key": "Jmenuju se Mahesh. Jsem z Indie. Těší mě.",
+      "answer_key": "Jmenuju se Petr. Jsem z Česka. Těší mě.",
       "grammar_rule_id": "GR-011",
       "xp_reward": 20
     },
@@ -176,13 +176,13 @@
         "scenario": "Meeting someone new at a party",
         "lines": [
           {"speaker": "stranger", "text": "Ahoj, já jsem Petra. Jak se jmenuješ ty?"},
-          {"speaker": "you", "text": "_____ (My name is Mahesh.)"},
-          {"speaker": "stranger", "text": "Těší mě, Mahesh!"}
+          {"speaker": "you", "text": "_____ (My name is Petr.)"},
+          {"speaker": "stranger", "text": "Těší mě, Petr!"}
         ],
-        "accepted_answers": ["Jmenuju se Mahesh.", "Já se jmenuju Mahesh.", "Jmenuji se Mahesh."],
+        "accepted_answers": ["Jmenuju se Petr.", "Já se jmenuju Petr.", "Jmenuji se Petr."],
         "explanation": "Informal context (ahoj, jmenuješ), so use Jmenuju se (colloquial)."
       },
-      "answer_key": "Jmenuju se Mahesh.",
+      "answer_key": "Jmenuju se Petr.",
       "grammar_rule_id": "GR-011",
       "xp_reward": 15
     }

@@ -5,6 +5,7 @@ import '../../../core/theme/app_tokens.dart';
 import '../../providers/curriculum_providers.dart';
 import '../../providers/gamification_providers.dart';
 import '../../providers/review_providers.dart';
+import '../../providers/settings_providers.dart';
 import '../../widgets/common/soft_ui.dart';
 
 /// Home dashboard — greeting, daily goal hero, continue learning, quick
@@ -16,7 +17,19 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.tokens;
     final g = ref.watch(gamificationProvider);
+    final settings = ref.watch(settingsProvider);
     final dueCount = ref.watch(dueCardCountProvider).value ?? 0;
+
+    // Time-aware greeting + personalized name.
+    final hour = DateTime.now().hour;
+    final greeting = hour < 12
+        ? 'Dobré ráno'
+        : hour < 18
+            ? 'Dobré odpoledne'
+            : 'Dobrý večer';
+    final name = settings.learnerName.isNotEmpty
+        ? ', ${settings.learnerName}'
+        : '';
 
     return Scaffold(
       backgroundColor: t.bg,
@@ -33,7 +46,7 @@ class HomeScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Dobré ráno 👋',
+                      Text('$greeting$name 👋',
                           style: TextStyle(fontSize: 13, color: t.muted)),
                       const SizedBox(height: 2),
                       const DisplayText('Čeština', size: 26),
@@ -58,10 +71,10 @@ class HomeScreen extends ConsumerWidget {
                   onTap: () => context.push('/settings'),
                   borderRadius: BorderRadius.circular(999),
                   child: Container(
-                    width: 36,
-                    height: 36,
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(color: t.chipBg, shape: BoxShape.circle),
-                    child: Icon(Icons.settings_outlined, size: 17, color: t.muted),
+                    child: Icon(Icons.settings_outlined, size: 22, color: t.muted),
                   ),
                 ),
               ],
