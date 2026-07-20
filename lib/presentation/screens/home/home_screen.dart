@@ -7,6 +7,7 @@ import '../../providers/gamification_providers.dart';
 import '../../providers/review_providers.dart';
 import '../../providers/settings_providers.dart';
 import '../../widgets/common/soft_ui.dart';
+import '../../widgets/common/learning_tip_card.dart';
 
 /// Home dashboard — greeting, daily goal hero, continue learning, quick
 /// actions and shortcuts. Redesigned per the "Calm & premium" handoff.
@@ -90,6 +91,10 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 14),
 
             const _ContinueLearningCard(),
+            const SizedBox(height: 14),
+
+            // Daily learning tip — evidence-based strategies.
+            const LearningTipCard(),
             const SizedBox(height: 14),
 
             // Quick actions row.
