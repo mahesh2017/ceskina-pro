@@ -38,12 +38,12 @@ void main() {
     return true; // Suppress — the app stays alive.
   };
 
-  runApp(const ProviderScope(child: CeskinaProApp()));
+  runApp(const ProviderScope(child: CzechifyApp()));
 }
 
 /// Root app widget.
-class CeskinaProApp extends ConsumerWidget {
-  const CeskinaProApp({super.key});
+class CzechifyApp extends ConsumerWidget {
+  const CzechifyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,7 +71,7 @@ class CeskinaProApp extends ConsumerWidget {
     ref.watch(syncTriggerCoordinatorProvider);
 
     return MaterialApp.router(
-      title: 'Čeština Pro',
+      title: 'Czechify',
       debugShowCheckedModeBanner: false,
       theme: lightTheme(),
       darkTheme: darkTheme(),

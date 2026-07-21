@@ -60,22 +60,14 @@ class LoadingScreen extends StatelessWidget {
                   : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 84,
-                        height: 84,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.school,
-                          size: 40,
-                          color: Colors.white,
-                        ),
+                      Image.asset(
+                        'assets/images/czechify_logo.png',
+                        width: 92,
+                        height: 92,
                       ),
                       const SizedBox(height: 24),
                       const Text(
-                        'Čeština',
+                        'Czechify',
                         style: TextStyle(
                           fontFamily: 'Bricolage Grotesque',
                           fontSize: 24,

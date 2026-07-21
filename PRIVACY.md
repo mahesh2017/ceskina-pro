@@ -2,7 +2,7 @@
 
 **Last updated:** July 20, 2026
 
-Čeština Pro ("the App") is built with privacy in mind. This policy explains what data the App handles and how.
+Czechify ("the App") is built with privacy in mind. This policy explains what data the App handles and how.
 
 ## Local Data
 

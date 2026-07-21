@@ -41,7 +41,7 @@ class MockLlmService implements LlmService {
           'overall': 70,
         },
         'feedback':
-            'Mock evaluation (backend not configured). Connect the Čeština Pro '
+            'Mock evaluation (backend not configured). Connect the Czechify '
             'backend for real AI feedback on your writing.',
         'errors': <Map<String, dynamic>>[],
       });

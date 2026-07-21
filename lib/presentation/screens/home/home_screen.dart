@@ -50,7 +50,7 @@ class HomeScreen extends ConsumerWidget {
                       Text('$greeting$name 👋',
                           style: TextStyle(fontSize: 13, color: t.muted)),
                       const SizedBox(height: 2),
-                      const DisplayText('Čeština', size: 26),
+                      const DisplayText('Czechify', size: 26),
                     ],
                   ),
                 ),

@@ -4,7 +4,7 @@
     <!-- Internet permission for LLM/TTS/STT cloud APIs (Phase 2) -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="Čeština Pro"
+        android:label="Czechify"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="true"

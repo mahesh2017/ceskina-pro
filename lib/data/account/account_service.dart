@@ -37,7 +37,7 @@ class AccountService {
     Map<String, dynamic>? cloud;
     if (_backend.isSignedIn) cloud = await _backend.exportCloudData();
     final payload = {
-      'format': 'ceskina-pro-user-export',
+      'format': 'czechify-user-export',
       'format_version': 1,
       'exported_at': DateTime.now().toUtc().toIso8601String(),
       'local_data': local,
@@ -45,7 +45,7 @@ class AccountService {
     };
     final directory = await getTemporaryDirectory();
     final file = File(
-      '${directory.path}/ceskina-pro-export-${DateTime.now().millisecondsSinceEpoch}.json',
+      '${directory.path}/czechify-export-${DateTime.now().millisecondsSinceEpoch}.json',
     );
     await file.writeAsString(
       const JsonEncoder.withIndent('  ').convert(payload),
@@ -60,7 +60,7 @@ class AccountService {
       await SharePlus.instance.share(
         ShareParams(
           files: [XFile(file.path, mimeType: 'application/json')],
-          subject: 'Čeština Pro data export',
+          subject: 'Czechify data export',
         ),
       );
     } finally {

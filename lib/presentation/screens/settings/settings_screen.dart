@@ -322,7 +322,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   icon: Icons.school_outlined,
                   tint: t.priSoft,
                   fg: t.pri,
-                  title: 'Čeština Pro',
+                  title: 'Czechify',
                   subtitle: 'AI-powered Czech learning · CEFR A1 → A2',
                   trailing: const SizedBox.shrink(),
                 ),
@@ -369,7 +369,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             title: const Text('Privacy Policy'),
             content: const SingleChildScrollView(
               child: Text(
-                'When the backend is enabled, Čeština Pro creates an anonymous '
+                'When the backend is enabled, Czechify creates an anonymous '
                 'Supabase account, downloads curriculum, and synchronizes selected '
                 'lesson, badge, streak, exam, and review-scheduling data.\n\n'
                 'AI tutor and writing requests are sent through a Supabase Edge '

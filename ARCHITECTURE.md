@@ -1,6 +1,6 @@
 # ARCHITECTURE.md — AI-Powered Czech Language Learning App
 
-> **App Name (Working):** Čeština Pro (Czech For You)
+> **App Name:** Czechify
 > **Target:** CEFR A1 → A2 Czech proficiency, CCE exam preparation
 > **Platforms:** iOS, Android, macOS, Windows
 > **Framework:** Flutter 3.x (Dart, AOT compiled)

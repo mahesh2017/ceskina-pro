@@ -1,4 +1,4 @@
-# Čeština Pro 🇨🇿
+# Czechify 🇨🇿
 
 AI-powered Czech language learning app targeting CEFR A1 → A2 proficiency and CCE exam preparation.
 
@@ -108,7 +108,7 @@ lib/
 
 - Generate a real Android upload keystore and fill in `android/key.properties`
   (see `android/app/build.gradle.kts` for the expected keys).
-- Publish a privacy policy — AI requests pass through the Čeština Pro Supabase
+- Publish a privacy policy — AI requests pass through the Czechify Supabase
   Edge Function and are processed by DeepSeek.
 - Replace the sample mock-exam content with a full CCE-format question bank.
 

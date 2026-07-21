@@ -1,4 +1,4 @@
-# Čeština Pro — Code and Architecture Review
+# Czechify — Code and Architecture Review
 
 **Review date:** 20 July 2026  
 **Reviewed branch:** `ux-learning-improvements`  

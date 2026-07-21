@@ -230,11 +230,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       children: [
         const SizedBox(height: 12),
         Center(
-          child: Container(
-            width: 96,
-            height: 96,
-            decoration: BoxDecoration(color: t.priFill, shape: BoxShape.circle),
-            child: Icon(Icons.school, size: 44, color: t.onFill),
+          child: Image.asset(
+            'assets/images/czechify_logo.png',
+            width: 104,
+            height: 104,
           ),
         ),
         const SizedBox(height: 24),
@@ -242,7 +241,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         const SizedBox(height: 6),
         Center(
           child: Text(
-            'Welcome to Čeština',
+            'Welcome to Czechify',
             style: TextStyle(fontSize: 16, color: t.muted),
           ),
         ),

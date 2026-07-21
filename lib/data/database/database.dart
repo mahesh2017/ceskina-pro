@@ -27,7 +27,7 @@ import 'daos/gamification_dao.dart';
 
 part 'database.g.dart';
 
-/// Main Drift database for Čeština Pro.
+/// Main Drift database for Czechify.
 @DriftDatabase(
   tables: [
     Units,
@@ -147,7 +147,7 @@ class AppDatabase extends _$AppDatabase {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'ceskina_pro.db'));
+    final file = File(p.join(dbFolder.path, 'czechify.db'));
     return NativeDatabase.createInBackground(file);
   });
 }
