@@ -53,7 +53,7 @@ class GrammarTipCard extends StatelessWidget {
                         explanation!,
                         style: TextStyle(
                           color: Colors.green.shade700,
-                          fontSize: 13,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -127,22 +127,22 @@ class GrammarTipCard extends StatelessWidget {
                 color: isCorrect
                     ? Colors.green.shade800
                     : Colors.orange.shade800,
-                fontSize: 13,
+                fontSize: 15,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Text(
               explanation!,
               style: TextStyle(
                 color: isCorrect
                     ? Colors.green.shade700
                     : Colors.orange.shade700,
-                fontSize: 14,
+                fontSize: 15,
               ),
             ),
           ],
           if (grammarRuleId != null) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton.icon(

@@ -98,8 +98,8 @@ class AppTokens extends ThemeExtension<AppTokens> {
     card: Color(0xFFFFFFFF),
     elev: Color(0xFFEFECE4),
     ink: Color(0xFF1E1C26),
-    muted: Color(0xFF716D7C),
-    faint: Color(0xFFA5A1AE),
+    muted: Color(0xFF5A5664),
+    faint: Color(0xFF85818E),
     line: Color(0x141E1C26), // rgba(30,28,38,.08)
     pri: Color(0xFF1F6F6B),
     priFill: Color(0xFF1F6F6B),
@@ -128,8 +128,8 @@ class AppTokens extends ThemeExtension<AppTokens> {
     card: Color(0xFF1E1C25),
     elev: Color(0xFF282631),
     ink: Color(0xFFF1EFE9),
-    muted: Color(0xFFA29EAD),
-    faint: Color(0xFF6E6A7A),
+    muted: Color(0xFFB0ACBB),
+    faint: Color(0xFF868294),
     line: Color(0x17F1EFE9), // rgba(241,239,233,.09)
     pri: Color(0xFF63BFB8),
     priFill: Color(0xFF2A6A66),

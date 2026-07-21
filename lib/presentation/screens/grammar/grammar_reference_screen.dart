@@ -131,7 +131,7 @@ class _RuleCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text('Examples',
                 style: Theme.of(context).textTheme.labelLarge,),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             ...examples.map((ex) {
               final cz = ex['cz'] as String? ?? '';
               final en = ex['en'] as String? ?? '';

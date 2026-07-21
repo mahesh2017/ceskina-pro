@@ -180,7 +180,7 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                           style: TextStyle(
                             color: Colors.amber.shade700,
                             fontWeight: FontWeight.bold,
-                            fontSize: 13,
+                            fontSize: 15,
                           ),
                         ),
                       ],
@@ -346,7 +346,7 @@ class _TeachPhaseScreen extends ConsumerWidget {
                                 fontWeight: FontWeight.w700,
                                 color: t.ink)),
                         Text('${cards.length} new words · tap to hear',
-                            style: TextStyle(fontSize: 12, color: t.muted)),
+                            style: TextStyle(fontSize: 14, color: t.muted)),
                       ],
                     ),
                   ),
@@ -410,22 +410,22 @@ class _TeachWordCard extends ConsumerWidget {
                     if (pill != null) ...[
                       const SizedBox(width: 8),
                       PillChip(label: pill.label, bg: pill.bg, fg: pill.fg,
-                          fontSize: 11),
+                          fontSize: 15),
                     ],
                   ],
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 6),
                 Text(
                   card.wordEn,
                   style: TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w600, color: t.pri),
+                      fontSize: 15.5, fontWeight: FontWeight.w600, color: t.pri),
                 ),
                 if (card.exampleCz != null) ...[
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 7),
                   Text(
                     card.exampleCz!,
                     style: TextStyle(
-                        fontSize: 12.5,
+                        fontSize: 14,
                         fontStyle: FontStyle.italic,
                         color: t.muted),
                   ),

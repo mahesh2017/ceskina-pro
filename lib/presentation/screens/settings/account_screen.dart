@@ -353,7 +353,7 @@ class _Message extends StatelessWidget {
                   title,
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(message),
               ],
             ),

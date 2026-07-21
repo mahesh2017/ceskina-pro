@@ -39,7 +39,7 @@ class XpBadge extends ConsumerWidget {
           child: Text(
             league.label,
             style: TextStyle(
-              fontSize: 10,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
               color: _leagueColor(league),
             ),

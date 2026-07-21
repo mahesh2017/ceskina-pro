@@ -179,7 +179,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           'We\'ll use your name to personalize your learning experience. '
           'You can change it later in Settings.',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 12.5, color: t.faint, height: 1.4),
+          style: TextStyle(fontSize: 14, color: t.faint, height: 1.4),
         ),
       ],
     );
@@ -210,7 +210,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         Text(
           subtitle,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14, color: t.muted, height: 1.5),
+          style: TextStyle(fontSize: 15.5, color: t.muted, height: 1.5),
         ),
       ],
     );
@@ -259,7 +259,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     child: Text(
                       f.$2,
                       style: TextStyle(
-                        fontSize: 13.5,
+                        fontSize: 15,
                         color: t.ink,
                         height: 1.35,
                         fontWeight: FontWeight.w500,
@@ -289,7 +289,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           Text(
             'You can also continue without an account and sign in later from Settings.',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12, color: t.faint, height: 1.4),
+            style: TextStyle(fontSize: 14, color: t.faint, height: 1.4),
           ),
         ],
       ],
@@ -408,10 +408,10 @@ class _ChoiceCard extends StatelessWidget {
                     color: isSelected ? t.priInk : t.ink,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 6),
                 Text(
                   subtitle,
-                  style: TextStyle(fontSize: 12.5, color: t.muted),
+                  style: TextStyle(fontSize: 14, color: t.muted),
                 ),
               ],
             ),

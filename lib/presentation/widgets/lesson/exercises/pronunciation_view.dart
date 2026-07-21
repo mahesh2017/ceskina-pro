@@ -160,7 +160,7 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
                     child: Chip(
                       label: Text(s as String),
                       padding: EdgeInsets.zero,
-                      labelStyle: const TextStyle(fontSize: 12),
+                      labelStyle: const TextStyle(fontSize: 14),
                     ),
                   ),
                 ),
@@ -243,7 +243,7 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
                 feedback!,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 13,
+                  fontSize: 15,
                   color: Colors.grey,
                   fontStyle: FontStyle.italic,
                 ),

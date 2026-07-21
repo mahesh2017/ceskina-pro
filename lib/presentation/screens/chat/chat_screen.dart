@@ -154,7 +154,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                       chat.error!,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.error,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -206,10 +206,10 @@ class _ScenarioPicker extends ConsumerWidget {
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
       children: [
         const DisplayText('AI Tutor', size: 26),
-        const SizedBox(height: 4),
+        const SizedBox(height: 6),
         Text(
           'Practice real-life Czech conversations. The tutor adapts to your level.',
-          style: TextStyle(fontSize: 14, color: t.muted, height: 1.5),
+          style: TextStyle(fontSize: 15.5, color: t.muted, height: 1.5),
         ),
         const SizedBox(height: 18),
         GridView.count(
@@ -239,16 +239,16 @@ class _ScenarioPicker extends ConsumerWidget {
                   const SizedBox(height: 10),
                   Text(scenario.title,
                       style: TextStyle(
-                          fontSize: 14.5,
+                          fontSize: 16,
                           fontWeight: FontWeight.w700,
                           color: t.ink)),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 7),
                   Expanded(
                     child: Text(scenario.description,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontSize: 12, color: t.muted, height: 1.4)),
+                            fontSize: 14, color: t.muted, height: 1.4)),
                   ),
                 ],
               ),
@@ -341,7 +341,7 @@ class _MessageBubble extends ConsumerWidget {
                   child: Text(
                     message.translation!,
                     style: TextStyle(
-                        fontSize: 12.5,
+                        fontSize: 14,
                         color: t.muted,
                         fontStyle: FontStyle.italic),
                   ),
@@ -434,14 +434,14 @@ class _CorrectionCard extends StatelessWidget {
               Text(
                 correction.type.name,
                 style: TextStyle(
-                  fontSize: 11,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: severityColor,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 6),
           Text.rich(
             TextSpan(
               children: [
@@ -463,7 +463,7 @@ class _CorrectionCard extends StatelessWidget {
           Text(
             correction.rule,
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 15,
               color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
@@ -568,11 +568,11 @@ class _InputBar extends StatelessWidget {
                       child: TextField(
                         controller: controller,
                         enabled: !isLoading,
-                        style: TextStyle(fontSize: 14.5, color: t.ink),
+                        style: TextStyle(fontSize: 16, color: t.ink),
                         decoration: InputDecoration(
                           isCollapsed: true,
                           hintText: isListening ? 'Listening… speak Czech' : 'Napiš česky…',
-                          hintStyle: TextStyle(color: t.faint, fontSize: 14.5),
+                          hintStyle: TextStyle(color: t.faint, fontSize: 16),
                           border: InputBorder.none,
                         ),
                         onSubmitted: (_) => onSend(),

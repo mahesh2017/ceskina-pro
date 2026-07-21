@@ -48,8 +48,8 @@ class HomeScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('$greeting$name 👋',
-                          style: TextStyle(fontSize: 13, color: t.muted)),
-                      const SizedBox(height: 2),
+                          style: TextStyle(fontSize: 15, color: t.muted)),
+                      const SizedBox(height: 6),
                       const DisplayText('Czechify', size: 26),
                     ],
                   ),
@@ -249,7 +249,7 @@ class _DailyGoalHero extends StatelessWidget {
               children: [
                 Text('DAILY GOAL',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.9,
                       color: white.withValues(alpha: 0.7),
@@ -291,11 +291,11 @@ class _DailyGoalHero extends StatelessWidget {
                   children: [
                     Text('🔥 $streak day streak',
                         style: TextStyle(
-                            fontSize: 13, color: white.withValues(alpha: 0.85))),
+                            fontSize: 15, color: white.withValues(alpha: 0.85))),
                     const SizedBox(width: 14),
                     Text('⭐ $totalXp total XP',
                         style: TextStyle(
-                            fontSize: 13, color: white.withValues(alpha: 0.85))),
+                            fontSize: 15, color: white.withValues(alpha: 0.85))),
                   ],
                 ),
               ],
@@ -392,11 +392,11 @@ class _ContinueLearningCard extends ConsumerWidget {
                     Text('Continue learning',
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w700, color: t.ink)),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 6),
                     Text('${next.unitTitle} · ${next.lesson.title}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 13, color: t.muted)),
+                        style: TextStyle(fontSize: 15, color: t.muted)),
                   ],
                 ),
               ),
@@ -441,9 +441,9 @@ class _QuickAction extends StatelessWidget {
           const SizedBox(height: 8),
           Text(label,
               style: TextStyle(
-                  fontSize: 12.5, fontWeight: FontWeight.w600, color: t.ink)),
-          const SizedBox(height: 2),
-          Text(sub, style: TextStyle(fontSize: 11, color: t.muted)),
+                  fontSize: 14, fontWeight: FontWeight.w600, color: t.ink)),
+          const SizedBox(height: 6),
+          Text(sub, style: TextStyle(fontSize: 14, color: t.muted)),
         ],
       ),
     );
@@ -484,9 +484,9 @@ class _ShortcutRow extends StatelessWidget {
               children: [
                 Text(title,
                     style: TextStyle(
-                        fontSize: 14.5, fontWeight: FontWeight.w700, color: t.ink)),
-                const SizedBox(height: 1),
-                Text(subtitle, style: TextStyle(fontSize: 12.5, color: t.muted)),
+                        fontSize: 16, fontWeight: FontWeight.w700, color: t.ink)),
+                const SizedBox(height: 5),
+                Text(subtitle, style: TextStyle(fontSize: 14, color: t.muted)),
               ],
             ),
           ),

@@ -143,7 +143,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     style: TextStyle(
                       color: t.pri,
                       fontWeight: FontWeight.w700,
-                      fontSize: 13,
+                      fontSize: 15,
                     ),
                     onChanged: (xp) {
                       if (xp != null) {
@@ -247,7 +247,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 Text(
                                   '${(settings.ttsSpeechRate * 100).round()}% — slower is easier',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: t.muted,
                                   ),
                                 ),
@@ -488,7 +488,7 @@ class _Row extends StatelessWidget {
                   Text(
                     subtitle,
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
                       color: subtitleColor ?? t.muted,
                       fontWeight:
                           subtitleColor != null
@@ -534,7 +534,7 @@ class _ThemeToggle extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
               color: selected ? t.ink : t.muted,
             ),

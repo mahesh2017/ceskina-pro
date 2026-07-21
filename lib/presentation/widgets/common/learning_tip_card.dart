@@ -67,7 +67,7 @@ class _LearningTipCardState extends State<LearningTipCard> {
                       Text(
                         '💡 Tip of the day',
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 13,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 0.6,
                           color: t.muted,
@@ -77,7 +77,7 @@ class _LearningTipCardState extends State<LearningTipCard> {
                       Icon(Icons.refresh, size: 14, color: t.faint),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Text(
                     _tip.title,
                     style: TextStyle(
@@ -86,11 +86,11 @@ class _LearningTipCardState extends State<LearningTipCard> {
                       color: t.ink,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Text(
                     _tip.body,
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 15,
                       color: t.muted,
                       height: 1.4,
                     ),

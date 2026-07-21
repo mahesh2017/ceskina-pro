@@ -150,13 +150,13 @@ class _CefrLevelCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SectionLabel('CEFR level'),
-                const SizedBox(height: 3),
+                const SizedBox(height: 7),
                 Text(_levelTitle(level),
                     style: TextStyle(
                         fontSize: 16, fontWeight: FontWeight.w700, color: t.ink)),
-                const SizedBox(height: 3),
+                const SizedBox(height: 7),
                 Text('$pct% of the beginner track — ${_levelHint(level)}',
-                    style: TextStyle(fontSize: 13, color: t.muted, height: 1.45)),
+                    style: TextStyle(fontSize: 15, color: t.muted, height: 1.45)),
               ],
             ),
           ),
@@ -222,10 +222,10 @@ class _ProgressRow extends StatelessWidget {
           children: [
             Text(label,
                 style: TextStyle(
-                    fontSize: 13.5, fontWeight: FontWeight.w600, color: t.ink)),
+                    fontSize: 15, fontWeight: FontWeight.w600, color: t.ink)),
             Text('$percent%',
                 style: TextStyle(
-                    fontSize: 13.5,
+                    fontSize: 15,
                     fontWeight: FontWeight.w700,
                     color: percent == 0 ? t.muted : t.pri)),
           ],
@@ -296,8 +296,8 @@ class _StatTile extends StatelessWidget {
                       height: 1,
                       fontWeight: FontWeight.w700,
                       color: t.ink)),
-              const SizedBox(height: 3),
-              Text(label, style: TextStyle(fontSize: 11.5, color: t.muted)),
+              const SizedBox(height: 7),
+              Text(label, style: TextStyle(fontSize: 15, color: t.muted)),
             ],
           ),
         ],
@@ -337,7 +337,7 @@ class _ExamHistoryCard extends ConsumerWidget {
                       style:
                           TextStyle(fontWeight: FontWeight.w700, color: t.ink)),
                   const SizedBox(width: 8),
-                  Text(date, style: TextStyle(fontSize: 12, color: t.muted)),
+                  Text(date, style: TextStyle(fontSize: 14, color: t.muted)),
                   const Spacer(),
                   Text('${r.totalScore}%',
                       style:
@@ -388,7 +388,7 @@ class _UnitMasteryCard extends StatelessWidget {
           if (a1Units.isNotEmpty) ...[
             Text('A1 Units',
                 style: TextStyle(
-                    fontSize: 12, color: t.pri, fontWeight: FontWeight.w700)),
+                    fontSize: 14, color: t.pri, fontWeight: FontWeight.w700)),
             const SizedBox(height: 8),
             ...a1Units.map((id) =>
                 _UnitScoreRow(unitId: id, score: unitScores[id] ?? 0)),
@@ -397,7 +397,7 @@ class _UnitMasteryCard extends StatelessWidget {
             const SizedBox(height: 10),
             Text('A2 Units',
                 style: TextStyle(
-                    fontSize: 12, color: t.green, fontWeight: FontWeight.w700)),
+                    fontSize: 14, color: t.green, fontWeight: FontWeight.w700)),
             const SizedBox(height: 8),
             ...a2Units.map((id) =>
                 _UnitScoreRow(unitId: id, score: unitScores[id] ?? 0)),
@@ -431,7 +431,7 @@ class _UnitScoreRow extends StatelessWidget {
           SizedBox(
             width: 58,
             child: Text('Unit $unitId',
-                style: TextStyle(fontSize: 13, color: t.ink)),
+                style: TextStyle(fontSize: 15, color: t.ink)),
           ),
           Expanded(child: SoftProgressBar(value: score, color: color)),
           const SizedBox(width: 10),
@@ -439,7 +439,7 @@ class _UnitScoreRow extends StatelessWidget {
             width: 36,
             child: Text('$percent%',
                 style: TextStyle(
-                    fontSize: 12, fontWeight: FontWeight.w700, color: color),
+                    fontSize: 14, fontWeight: FontWeight.w700, color: color),
                 textAlign: TextAlign.right),
           ),
         ],
@@ -469,7 +469,7 @@ class _BadgesCard extends StatelessWidget {
               const SectionLabel('Badges'),
               Text('${earnedBadges.length} of ${Badge.all.length}',
                   style: TextStyle(
-                      fontSize: 12.5, fontWeight: FontWeight.w700, color: t.pri)),
+                      fontSize: 14, fontWeight: FontWeight.w700, color: t.pri)),
             ],
           ),
           const SizedBox(height: 14),
@@ -517,7 +517,7 @@ class _BadgeTile extends StatelessWidget {
               const SizedBox(height: 6),
               Text(badge.name,
                   style: TextStyle(
-                      fontSize: 10.5,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: isEarned ? t.ink : t.muted),
                   textAlign: TextAlign.center,

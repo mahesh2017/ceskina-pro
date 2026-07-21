@@ -76,7 +76,7 @@ class CurriculumScreen extends ConsumerWidget {
                     const SizedBox(width: 10),
                     Text('$unlockedA1 of ${a1Units.length} units',
                         style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: t.muted)),
                   ],
@@ -94,7 +94,7 @@ class CurriculumScreen extends ConsumerWidget {
                       const SizedBox(width: 6),
                       Text('More A2 lessons are being added',
                           style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 14,
                               fontStyle: FontStyle.italic,
                               color: t.amber)),
                     ],
@@ -131,7 +131,7 @@ class _LevelChip extends StatelessWidget {
       ),
       child: Text(label,
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
             color: selected ? t.onFill : t.muted,
           )),
@@ -199,7 +199,7 @@ class _UnitCard extends ConsumerWidget {
           title: Text(
             'Unit ${unit.id} · ${unit.title}',
             style: TextStyle(
-              fontSize: 14.5,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: isUnlocked ? t.ink : t.muted,
             ),
@@ -212,7 +212,7 @@ class _UnitCard extends ConsumerWidget {
                 Text(unit.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12.5, color: t.muted, height: 1.4)),
+                    style: TextStyle(fontSize: 14, color: t.muted, height: 1.4)),
                 if (isUnlocked && lessons.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Row(
@@ -224,7 +224,7 @@ class _UnitCard extends ConsumerWidget {
                       const SizedBox(width: 8),
                       Text('$doneCount/${lessons.length}',
                           style: TextStyle(
-                              fontSize: 11.5,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600,
                               color: t.muted)),
                     ],
@@ -321,11 +321,11 @@ class _LessonTile extends StatelessWidget {
                 children: [
                   Text(lesson.title,
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 15.5,
                           fontWeight: FontWeight.w600,
                           color: isUnlocked ? t.ink : t.muted)),
                   Text('$typeLabel · ${lesson.durationMinutes} min',
-                      style: TextStyle(fontSize: 12, color: t.muted)),
+                      style: TextStyle(fontSize: 14, color: t.muted)),
                 ],
               ),
             ),
