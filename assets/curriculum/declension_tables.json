@@ -1,0 +1,502 @@
+{
+  "title": "Czech Declension Reference Tables",
+  "description": "Complete declension paradigms for all noun types, adjectives, possessives, and demonstratives across the 7 Czech cases (nominative, genitive, dative, accusative, vocative, locative, instrumental)",
+  "cases": ["nominative", "genitive", "dative", "accusative", "vocative", "locative", "instrumental"],
+  "case_questions": {
+    "nominative": "kdo? co?",
+    "genitive": "koho? čeho?",
+    "dative": "komu? čemu?",
+    "accusative": "koho? co?",
+    "vocative": "—",
+    "locative": "o kom? o čem?",
+    "instrumental": "s kým? s čím?"
+  },
+  "tables": [
+    {
+      "id": "decl_masc_animate_hard",
+      "title": "Masculine Animate — Hard Stem",
+      "category": "noun",
+      "pattern_word": "pan",
+      "singular": {
+        "nominative": {"ending": "—", "form": "pan", "question": "kdo? co?"},
+        "genitive": {"ending": "-a", "form": "pana", "question": "koho? čeho?"},
+        "dative": {"ending": "-ovi / -u", "form": "panovi", "question": "komu? čemu?"},
+        "accusative": {"ending": "-a", "form": "pana", "question": "koho? co?"},
+        "vocative": {"ending": "-e", "form": "pane", "question": "—"},
+        "locative": {"ending": "-ovi / -u", "form": "panovi", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-em", "form": "panem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-i", "form": "pani", "question": "kdo? co?"},
+        "genitive": {"ending": "-ů", "form": "panů", "question": "koho? čeho?"},
+        "dative": {"ending": "-ům", "form": "panům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-y", "form": "pany", "question": "koho? co?"},
+        "vocative": {"ending": "-ové / -i", "form": "panové", "question": "—"},
+        "locative": {"ending": "-ech", "form": "panech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-y", "form": "pany", "question": "s kým? s čím?"}
+      },
+      "notes": "Hard-stem masculine animate nouns end in a hard consonant (not softened by háček). The dative/locative singular has two possible endings: -ovi (more personal, used for people) and -u (used for some animals and titles). The nominative plural -i triggers consonant alternation in some words (e.g., student → studenti). The vocative singular -e often causes consonant softening (e.g., student → studente).",
+      "example_words": ["pan", "student", "učitel", "pán", "bratr"]
+    },
+    {
+      "id": "decl_masc_animate_soft",
+      "title": "Masculine Animate — Soft Stem",
+      "category": "noun",
+      "pattern_word": "muž",
+      "singular": {
+        "nominative": {"ending": "—", "form": "muž", "question": "kdo? co?"},
+        "genitive": {"ending": "-e", "form": "muže", "question": "koho? čeho?"},
+        "dative": {"ending": "-ovi / -i", "form": "mužovi", "question": "komu? čemu?"},
+        "accusative": {"ending": "-e", "form": "muže", "question": "koho? co?"},
+        "vocative": {"ending": "-i", "form": "muži", "question": "—"},
+        "locative": {"ending": "-ovi / -i", "form": "mužovi", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-em", "form": "mužem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-i", "form": "muži", "question": "kdo? co?"},
+        "genitive": {"ending": "-ů", "form": "mužů", "question": "koho? čeho?"},
+        "dative": {"ending": "-ům", "form": "mužům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-e", "form": "muže", "question": "koho? co?"},
+        "vocative": {"ending": "-i", "form": "muži", "question": "—"},
+        "locative": {"ending": "-ích", "form": "mužích", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-i", "form": "muži", "question": "s kým? s čím?"}
+      },
+      "notes": "Soft-stem masculine animate nouns end in a soft consonant (š, ž, č, ř, c, ď, ť, ň) or -j. The genitive singular ends in -e (not -a like hard stems). The instrumental singular ends in -em (same as hard). The plural locative is -ích and instrumental is -i (soft endings differ from hard -ech/-y). Nouns ending in -ř (lékař) follow this pattern.",
+      "example_words": ["muž", "lékař", "učitel (also hard)", "kočička (dimin.)", "Francouz"]
+    },
+    {
+      "id": "decl_masc_inanimate_hard",
+      "title": "Masculine Inanimate — Hard Stem",
+      "category": "noun",
+      "pattern_word": "hrad",
+      "singular": {
+        "nominative": {"ending": "—", "form": "hrad", "question": "kdo? co?"},
+        "genitive": {"ending": "-u", "form": "hradu", "question": "koho? čeho?"},
+        "dative": {"ending": "-u", "form": "hradu", "question": "komu? čemu?"},
+        "accusative": {"ending": "—", "form": "hrad", "question": "kdo? co?"},
+        "vocative": {"ending": "—", "form": "hrade", "question": "—"},
+        "locative": {"ending": "-u / -ě", "form": "hradu", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-em", "form": "hradem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-y", "form": "hrady", "question": "kdo? co?"},
+        "genitive": {"ending": "-ů", "form": "hradů", "question": "koho? čeho?"},
+        "dative": {"ending": "-ům", "form": "hradům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-y", "form": "hrady", "question": "kdo? co?"},
+        "vocative": {"ending": "-y", "form": "hrady", "question": "—"},
+        "locative": {"ending": "-ech", "form": "hradech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-y", "form": "hrady", "question": "s kým? s čím?"}
+      },
+      "notes": "Masculine inanimate hard stems: the accusative singular is identical to the nominative singular (key distinction from animate nouns). The genitive singular ends in -u (not -a as in animate). The locative singular can be -u or -ě depending on the word. The nominative/accusative plural is -y. Note: 'les' has genitive 'lesa' (exception — some monosyllabic words take -a).",
+      "example_words": ["hrad", "les", "strom", "dům", "most"]
+    },
+    {
+      "id": "decl_masc_inanimate_soft",
+      "title": "Masculine Inanimate — Soft Stem",
+      "category": "noun",
+      "pattern_word": "stroj",
+      "singular": {
+        "nominative": {"ending": "—", "form": "stroj", "question": "kdo? co?"},
+        "genitive": {"ending": "-e", "form": "stroje", "question": "koho? čeho?"},
+        "dative": {"ending": "-i", "form": "stroji", "question": "komu? čemu?"},
+        "accusative": {"ending": "—", "form": "stroj", "question": "kdo? co?"},
+        "vocative": {"ending": "-i", "form": "stroji", "question": "—"},
+        "locative": {"ending": "-i", "form": "stroji", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-em", "form": "strojem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-e", "form": "stroje", "question": "kdo? co?"},
+        "genitive": {"ending": "-ů", "form": "strojů", "question": "koho? čeho?"},
+        "dative": {"ending": "-ům", "form": "strojům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-e", "form": "stroje", "question": "kdo? co?"},
+        "vocative": {"ending": "-e", "form": "stroje", "question": "—"},
+        "locative": {"ending": "-ích", "form": "strojích", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-i", "form": "stroji", "question": "s kým? s čím?"}
+      },
+      "notes": "Soft-stem masculine inanimate nouns end in soft consonants (š, ž, č, ř, c, ĥ) or -j. The accusative singular equals nominative (like all inanimate). Genitive singular ends in -e. Dative/locative singular end in -i. The plural nominative/accusative is -e (not -y as in hard stems). The plural locative is -ích and instrumental is -i. Nouns like 'moř' follow a similar but distinct pattern (some take -e in nom sg, see neuter -e type for 'moře' which is actually neuter).",
+      "example_words": ["stroj", "nůž", "papír", "klíč", "dědej"]
+    },
+    {
+      "id": "decl_fem_a_hard",
+      "title": "Feminine -a — Hard Stem",
+      "category": "noun",
+      "pattern_word": "žena",
+      "singular": {
+        "nominative": {"ending": "-a", "form": "žena", "question": "kdo? co?"},
+        "genitive": {"ending": "-y", "form": "ženy", "question": "koho? čeho?"},
+        "dative": {"ending": "-ě", "form": "ženě", "question": "komu? čemu?"},
+        "accusative": {"ending": "-u", "form": "ženu", "question": "koho? co?"},
+        "vocative": {"ending": "-o", "form": "ženo", "question": "—"},
+        "locative": {"ending": "-ě", "form": "ženě", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ou", "form": "ženou", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-y", "form": "ženy", "question": "kdo? co?"},
+        "genitive": {"ending": "—", "form": "žen", "question": "koho? čeho?"},
+        "dative": {"ending": "-ám", "form": "ženám", "question": "komu? čemu?"},
+        "accusative": {"ending": "-y", "form": "ženy", "question": "kdo? co?"},
+        "vocative": {"ending": "-y", "form": "ženy", "question": "—"},
+        "locative": {"ending": "-ách", "form": "ženách", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ami", "form": "ženami", "question": "s kým? s čím?"}
+      },
+      "notes": "The most common feminine declension. Hard stem means the consonant before -a is not soft. The genitive plural has zero ending (the -a is dropped), which often causes consonant changes (e.g., knih → knih, but some words insert -e- for euphony: hra → her). The instrumental singular ends in -ou. The vocative singular ends in -o.",
+      "example_words": ["žena", "kniha", "škola", "rata", "voda"]
+    },
+    {
+      "id": "decl_fem_a_soft",
+      "title": "Feminine -a — Soft Stem",
+      "category": "noun",
+      "pattern_word": "ulice",
+      "singular": {
+        "nominative": {"ending": "-e", "form": "ulice", "question": "kdo? co?"},
+        "genitive": {"ending": "-e", "form": "ulice", "question": "koho? čeho?"},
+        "dative": {"ending": "-i", "form": "ulici", "question": "komu? čemu?"},
+        "accusative": {"ending": "-i", "form": "ulici", "question": "koho? co?"},
+        "vocative": {"ending": "-e", "form": "ulice", "question": "—"},
+        "locative": {"ending": "-i", "form": "ulici", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-í", "form": "ulicí", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-e", "form": "ulice", "question": "kdo? co?"},
+        "genitive": {"ending": "—", "form": "ulic", "question": "koho? čeho?"},
+        "dative": {"ending": "-ím", "form": "ulicím", "question": "komu? čemu?"},
+        "accusative": {"ending": "-e", "form": "ulice", "question": "kdo? co?"},
+        "vocative": {"ending": "-e", "form": "ulice", "question": "—"},
+        "locative": {"ending": "-ích", "form": "ulicích", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-emi", "form": "ulicemi", "question": "s kým? s čím?"}
+      },
+      "notes": "Feminine nouns ending in -e (soft stem) after soft consonants or c. The genitive singular ends in -e (not -y as in hard). Dative/accusative/locative singular end in -i. Instrumental singular is -í (short, not -ou). The genitive plural is zero ending (drop -e). The dative/locative plural are -ím/-ích (soft variants of -ám/-ách). Some words like 'slečna' follow the hard pattern (-y, -ě, -u) despite ending in -a; 'ulice' is the true soft -e pattern.",
+      "example_words": ["ulice", "pisnice", "tabule", "židle", "stanice"]
+    },
+    {
+      "id": "decl_fem_ost",
+      "title": "Feminine -ost",
+      "category": "noun",
+      "pattern_word": "kost",
+      "singular": {
+        "nominative": {"ending": "—", "form": "kost", "question": "kdo? co?"},
+        "genitive": {"ending": "-i", "form": "kosti", "question": "koho? čeho?"},
+        "dative": {"ending": "-i", "form": "kosti", "question": "komu? čemu?"},
+        "accusative": {"ending": "—", "form": "kost", "question": "kdo? co?"},
+        "vocative": {"ending": "—", "form": "kosti", "question": "—"},
+        "locative": {"ending": "-i", "form": "kosti", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-í", "form": "kostí", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-i", "form": "kosti", "question": "kdo? co?"},
+        "genitive": {"ending": "—", "form": "kostí", "question": "koho? čeho?"},
+        "dative": {"ending": "-em", "form": "kostem", "question": "komu? čemu?"},
+        "accusative": {"ending": "-i", "form": "kosti", "question": "kdo? co?"},
+        "vocative": {"ending": "-i", "form": "kosti", "question": "—"},
+        "locative": {"ending": "-ech", "form": "kostech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-mi", "form": "kostmi", "question": "s kým? s čím?"}
+      },
+      "notes": "Feminine nouns ending in -ost form a large and productive class (abstract nouns). The stem is the full nominative form. Genitive/dative/locative singular all end in -i. The accusative singular is identical to nominative (no ending). The instrumental singular is -í (with lengthening). The genitive plural has zero ending with -í lengthening (kostí). The dative plural is -em (irregular, not -ám), locative is -ech, and instrumental is -mi (irregular, not -ami).",
+      "example_words": ["kost", "mladost", "radost", "vlast", "velikost"]
+    },
+    {
+      "id": "decl_fem_consonant",
+      "title": "Feminine — Consonant Stem",
+      "category": "noun",
+      "pattern_word": "věc",
+      "singular": {
+        "nominative": {"ending": "—", "form": "věc", "question": "kdo? co?"},
+        "genitive": {"ending": "-i", "form": "věci", "question": "koho? čeho?"},
+        "dative": {"ending": "-i", "form": "věci", "question": "komu? čemu?"},
+        "accusative": {"ending": "—", "form": "věc", "question": "kdo? co?"},
+        "vocative": {"ending": "-i", "form": "věci", "question": "—"},
+        "locative": {"ending": "-i", "form": "věci", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-í", "form": "věcí", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-i", "form": "věci", "question": "kdo? co?"},
+        "genitive": {"ending": "—", "form": "věcí", "question": "koho? čeho?"},
+        "dative": {"ending": "-em", "form": "věcem", "question": "komu? čemu?"},
+        "accusative": {"ending": "-i", "form": "věci", "question": "kdo? co?"},
+        "vocative": {"ending": "-i", "form": "věci", "question": "—"},
+        "locative": {"ending": "-ech", "form": "věcech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-mi", "form": "věcmi", "question": "s kým? s čím?"}
+      },
+      "notes": "Feminine nouns ending in a consonant (other than -ost). This is a smaller class but includes common words. The declension mirrors the -ost pattern: genitive/dative/locative singular -i, accusative = nominative, instrumental -í. Plural: dative -em, locative -ech, instrumental -mi. Some words have stem changes in the plural (myš → myši, but myš → myš in nom sg). 'Myš' follows this pattern: nom sg myš, gen sg myši, etc.",
+      "example_words": ["věc", "myš", "noc", "mysl", "pečeť"]
+    },
+    {
+      "id": "decl_neut_o",
+      "title": "Neuter -o",
+      "category": "noun",
+      "pattern_word": "město",
+      "singular": {
+        "nominative": {"ending": "-o", "form": "město", "question": "kdo? co?"},
+        "genitive": {"ending": "-a", "form": "města", "question": "koho? čeho?"},
+        "dative": {"ending": "-u", "form": "městu", "question": "komu? čemu?"},
+        "accusative": {"ending": "-o", "form": "město", "question": "kdo? co?"},
+        "vocative": {"ending": "-o", "form": "město", "question": "—"},
+        "locative": {"ending": "-u / -ě", "form": "městě", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-em", "form": "městem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-a", "form": "města", "question": "kdo? co?"},
+        "genitive": {"ending": "—", "form": "měst", "question": "koho? čeho?"},
+        "dative": {"ending": "-ům", "form": "městům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-a", "form": "města", "question": "kdo? co?"},
+        "vocative": {"ending": "-a", "form": "města", "question": "—"},
+        "locative": {"ending": "-ech", "form": "městech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-y", "form": "městy", "question": "s kým? s čím?"}
+      },
+      "notes": "Neuter nouns ending in -o. The accusative singular equals the nominative (all neuters). The genitive singular is -a (like masc animate). The locative singular can be -u or -ě (městě, but letišti for -i stem words). The nominative/accusative plural is -a. The genitive plural has zero ending (měst, but some words insert a vowel: pivo → piv). The instrumental plural is -y (note: not -ami as in feminine).",
+      "example_words": ["město", "pivo", "okno", "auto", "slovo"]
+    },
+    {
+      "id": "decl_neut_e",
+      "title": "Neuter -e / -ě",
+      "category": "noun",
+      "pattern_word": "moře",
+      "singular": {
+        "nominative": {"ending": "-e", "form": "moře", "question": "kdo? co?"},
+        "genitive": {"ending": "-e", "form": "moře", "question": "koho? čeho?"},
+        "dative": {"ending": "-i", "form": "moři", "question": "komu? čemu?"},
+        "accusative": {"ending": "-e", "form": "moře", "question": "kdo? co?"},
+        "vocative": {"ending": "-e", "form": "moře", "question": "—"},
+        "locative": {"ending": "-i", "form": "moři", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-em", "form": "mořem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-e", "form": "moře", "question": "kdo? co?"},
+        "genitive": {"ending": "—", "form": "moří", "question": "koho? čeho?"},
+        "dative": {"ending": "-ím", "form": "mořím", "question": "komu? čemu?"},
+        "accusative": {"ending": "-e", "form": "moře", "question": "kdo? co?"},
+        "vocative": {"ending": "-e", "form": "moře", "question": "—"},
+        "locative": {"ending": "-ích", "form": "mořích", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-i", "form": "moři", "question": "s kým? s čím?"}
+      },
+      "notes": "Neuter nouns ending in -e or -ě (usually after soft consonants or ř). Genitive singular = nominative singular (-e). Dative/locative singular -i. The genitive plural is zero ending with lengthening (-í: moří, polí). Dative/locative plural are -ím/-ích (soft endings). Instrumental plural is -i (soft). 'Pole' follows the same pattern: pole, pole, poli, pole, pole, poli, polem; plural: pole, polí, polím, pole, pole, polích, poli.",
+      "example_words": ["moře", "pole", "kuře", "tele", "rozhlase"]
+    },
+    {
+      "id": "decl_neut_i",
+      "title": "Neuter -í",
+      "category": "noun",
+      "pattern_word": "náměstí",
+      "singular": {
+        "nominative": {"ending": "-í", "form": "náměstí", "question": "kdo? co?"},
+        "genitive": {"ending": "-í", "form": "náměstí", "question": "koho? čeho?"},
+        "dative": {"ending": "-í", "form": "náměstí", "question": "komu? čemu?"},
+        "accusative": {"ending": "-í", "form": "náměstí", "question": "kdo? co?"},
+        "vocative": {"ending": "-í", "form": "náměstí", "question": "—"},
+        "locative": {"ending": "-í", "form": "náměstí", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ím", "form": "náměstím", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-í", "form": "náměstí", "question": "kdo? co?"},
+        "genitive": {"ending": "—", "form": "náměstí", "question": "koho? čeho?"},
+        "dative": {"ending": "-ím", "form": "náměstím", "question": "komu? čemu?"},
+        "accusative": {"ending": "-í", "form": "náměstí", "question": "kdo? co?"},
+        "vocative": {"ending": "-í", "form": "náměstí", "question": "—"},
+        "locative": {"ending": "-ích", "form": "náměstích", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-mi", "form": "náměstími", "question": "s kým? s čím?"}
+      },
+      "notes": "Neuter nouns ending in -í (many are deverbal/collective nouns). This is the simplest declension: all singular forms are identical (-í), except instrumental which is -ím. The plural nominative through accusative are also -í. Genitive plural is zero ending (but looks the same: náměstí). The only distinct forms are instrumental singular (-ím), dative/locative plural (-ím/-ích), and instrumental plural (-mi or -i). Includes words like stavení, nádraží, vyobrazení, rozhodnutí.",
+      "example_words": ["náměstí", "stavení", "nádraží", "víno (not -í)", "překvapení"]
+    },
+    {
+      "id": "decl_adj_masc_animate_sg",
+      "title": "Adjective — Masculine Animate Singular",
+      "category": "adjective",
+      "pattern_word": "dobrý pan",
+      "singular": {
+        "nominative": {"ending": "-ý", "form": "dobrý pan", "question": "kdo? co?"},
+        "genitive": {"ending": "-ého", "form": "dobrého pana", "question": "koho? čeho?"},
+        "dative": {"ending": "-ému", "form": "dobrému panovi", "question": "komu? čemu?"},
+        "accusative": {"ending": "-ého", "form": "dobrého pana", "question": "koho? co?"},
+        "vocative": {"ending": "-ý", "form": "dobrý pane", "question": "—"},
+        "locative": {"ending": "-ém", "form": "o dobrém panovi", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ým", "form": "s dobrým panem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-í", "form": "dobří pani", "question": "kdo? co?"},
+        "genitive": {"ending": "-ých", "form": "dobrých panů", "question": "koho? čeho?"},
+        "dative": {"ending": "-ým", "form": "dobrým panům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-é", "form": "dobré pany", "question": "koho? co?"},
+        "vocative": {"ending": "-í", "form": "dobří pani", "question": "—"},
+        "locative": {"ending": "-ých", "form": "o dobrých panech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ými", "form": "s dobrými pany", "question": "s kým? s čím?"}
+      },
+      "notes": "Hard-stem adjectives with masculine animate nouns. The nominative singular is -ý (hard) or -í (soft-stem adjectives like jarní). Key endings: genitive -ého, dative -ému, accusative -ého (matches genitive for animate), locative -ém, instrumental -ým. The plural nominative is -í (with lengthening). The accusative plural is -é (for masculine animate). The vocative of adjectives always matches the nominative form.",
+      "example_words": ["dobrý pan", "mladý muž", "starý učitel", "nový student", "chytřý lékař"]
+    },
+    {
+      "id": "decl_adj_masc_inanimate_sg",
+      "title": "Adjective — Masculine Inanimate Singular",
+      "category": "adjective",
+      "pattern_word": "dobrý hrad",
+      "singular": {
+        "nominative": {"ending": "-ý", "form": "dobrý hrad", "question": "kdo? co?"},
+        "genitive": {"ending": "-ého", "form": "dobrého hradu", "question": "koho? čeho?"},
+        "dative": {"ending": "-ému", "form": "dobrému hradu", "question": "komu? čemu?"},
+        "accusative": {"ending": "-ý", "form": "dobrý hrad", "question": "kdo? co?"},
+        "vocative": {"ending": "-ý", "form": "dobrý hrade", "question": "—"},
+        "locative": {"ending": "-ém", "form": "o dobrém hradu", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ým", "form": "s dobrým hradem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-é", "form": "dobré hrady", "question": "kdo? co?"},
+        "genitive": {"ending": "-ých", "form": "dobrých hradů", "question": "koho? čeho?"},
+        "dative": {"ending": "-ým", "form": "dobrým hradům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-é", "form": "dobré hrady", "question": "kdo? co?"},
+        "vocative": {"ending": "-é", "form": "dobré hrady", "question": "—"},
+        "locative": {"ending": "-ých", "form": "o dobrých hradech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ými", "form": "s dobrými hrady", "question": "s kým? s čím?"}
+      },
+      "notes": "Hard-stem adjectives with masculine inanimate nouns. The key difference from animate: accusative singular is -ý (matches nominative, not -ého). The plural nominative/accusative is -é (not -í as in animate). All other endings are the same as the animate pattern. The adjective agrees with the noun in gender, number, and case.",
+      "example_words": ["dobrý hrad", "nový dům", "starý strom", "velký les", "krásný most"]
+    },
+    {
+      "id": "decl_adj_fem_sg",
+      "title": "Adjective — Feminine Singular",
+      "category": "adjective",
+      "pattern_word": "dobrá žena",
+      "singular": {
+        "nominative": {"ending": "-á", "form": "dobrá žena", "question": "kdo? co?"},
+        "genitive": {"ending": "-é", "form": "dobré ženy", "question": "koho? čeho?"},
+        "dative": {"ending": "-é", "form": "dobré ženě", "question": "komu? čemu?"},
+        "accusative": {"ending": "-ou", "form": "dobrou ženu", "question": "koho? co?"},
+        "vocative": {"ending": "-á", "form": "dobrá ženo", "question": "—"},
+        "locative": {"ending": "-é", "form": "o dobré ženě", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ou", "form": "s dobrou ženou", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-é", "form": "dobré ženy", "question": "kdo? co?"},
+        "genitive": {"ending": "-ých", "form": "dobrých žen", "question": "koho? čeho?"},
+        "dative": {"ending": "-ým", "form": "dobrým ženám", "question": "komu? čemu?"},
+        "accusative": {"ending": "-é", "form": "dobré ženy", "question": "kdo? co?"},
+        "vocative": {"ending": "-é", "form": "dobré ženy", "question": "—"},
+        "locative": {"ending": "-ých", "form": "o dobrých ženách", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ými", "form": "s dobrými ženami", "question": "s kým? s čím?"}
+      },
+      "notes": "Hard-stem adjectives with feminine nouns. Nominative singular is -á (feminine long ending). Genitive/dative/locative singular are all -é. The accusative and instrumental singular are -ou (distinctive feminine endings). The plural follows the common plural pattern: nominative/accusative -é, genitive/locative -ých, dative -ým, instrumental -ými. Soft-stem adjectives (jarní, poslední) use -í instead of -á/-é/-ý throughout.",
+      "example_words": ["dobrá žena", "mladá dívka", "stará kniha", "nová škola", "krásná ulice"]
+    },
+    {
+      "id": "decl_adj_neut_sg",
+      "title": "Adjective — Neuter Singular",
+      "category": "adjective",
+      "pattern_word": "dobré město",
+      "singular": {
+        "nominative": {"ending": "-é", "form": "dobré město", "question": "kdo? co?"},
+        "genitive": {"ending": "-ého", "form": "dobrého města", "question": "koho? čeho?"},
+        "dative": {"ending": "-ému", "form": "dobrému městu", "question": "komu? čemu?"},
+        "accusative": {"ending": "-é", "form": "dobré město", "question": "kdo? co?"},
+        "vocative": {"ending": "-é", "form": "dobré město", "question": "—"},
+        "locative": {"ending": "-ém", "form": "o dobrém městě", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ým", "form": "s dobrým městem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "nominative": {"ending": "-á", "form": "dobrá města", "question": "kdo? co?"},
+        "genitive": {"ending": "-ých", "form": "dobrých měst", "question": "koho? čeho?"},
+        "dative": {"ending": "-ým", "form": "dobrým městům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-á", "form": "dobrá města", "question": "kdo? co?"},
+        "vocative": {"ending": "-á", "form": "dobrá města", "question": "—"},
+        "locative": {"ending": "-ých", "form": "o dobrých městech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ými", "form": "s dobrými městy", "question": "s kým? s čím?"}
+      },
+      "notes": "Hard-stem adjectives with neuter nouns. Nominative/accusative singular is -é (neuter short ending). The accusative matches the nominative (all neuters). The plural nominative/accusative is -á (neuter plural ending). All other cases follow the common adjective pattern. Soft-stem adjectives use -í throughout for nom/acc.",
+      "example_words": ["dobré město", "nové auto", "staré okno", "velké pivo", "krásné moře"]
+    },
+    {
+      "id": "decl_adj_plural",
+      "title": "Adjective — Plural (All Genders)",
+      "category": "adjective",
+      "pattern_word": "dobří lidé / dobré ženy / dobrá města",
+      "singular": {
+        "nominative": {"ending": "varies by gender", "form": "—", "question": "see singular tables"},
+        "genitive": {"ending": "varies by gender", "form": "—", "question": "see singular tables"},
+        "dative": {"ending": "varies by gender", "form": "—", "question": "see singular tables"},
+        "accusative": {"ending": "varies by gender", "form": "—", "question": "see singular tables"},
+        "vocative": {"ending": "varies by gender", "form": "—", "question": "see singular tables"},
+        "locative": {"ending": "varies by gender", "form": "—", "question": "see singular tables"},
+        "instrumental": {"ending": "varies by gender", "form": "—", "question": "see singular tables"}
+      },
+      "plural": {
+        "nominative": {"ending": "-í (masc animate) / -é (masc inanimate, fem) / -á (neut)", "form": "dobří lidé / dobré hrady / dobré ženy / dobrá města", "question": "kdo? co?"},
+        "genitive": {"ending": "-ých (all genders)", "form": "dobrých lidí / dobrých hradů / dobrých žen / dobrých měst", "question": "koho? čeho?"},
+        "dative": {"ending": "-ým (all genders)", "form": "dobrým lidem / dobrým hradům / dobrým ženám / dobrým městům", "question": "komu? čemu?"},
+        "accusative": {"ending": "-é (masc animate, masc inanimate, fem) / -á (neut)", "form": "dobré lidi / dobré hrady / dobré ženy / dobrá města", "question": "kdo? co?"},
+        "vocative": {"ending": "-í / -é / -á", "form": "dobří lidé / dobré hrady / dobré ženy / dobrá města", "question": "—"},
+        "locative": {"ending": "-ých (all genders)", "form": "o dobrých lidech / o dobrých hradech / o dobrých ženách / o dobrých městech", "question": "o kom? o čem?"},
+        "instrumental": {"ending": "-ými (all genders)", "form": "s dobrými lidmi / s dobrými hrady / s dobrými ženami / s dobrými městy", "question": "s kým? s čím?"}
+      },
+      "notes": "The plural adjective declension is largely unified across genders. The genitive (-ých), dative (-ým), locative (-ých), and instrumental (-ými) endings are the SAME for all genders. Only the nominative and accusative plural differ by gender: masculine animate uses -í, masculine inanimate and feminine use -é, and neuter uses -á. The accusative plural matches the nominative for inanimate and neuter; for masculine animate it is -é (not -í). Soft-stem adjectives use -í for nom sg and -í/-í/-í for nom pl (all genders).",
+      "example_words": ["dobří lidé", "dobré ženy", "dobrá města", "mladí studenti", "nové domy"]
+    },
+    {
+      "id": "decl_possessive_muj",
+      "title": "Possessive Adjectives — můj, tvůj, náš, váš",
+      "category": "pronoun",
+      "pattern_word": "můj",
+      "singular": {
+        "masc_animate_nom": {"ending": "—", "form": "můj pan", "question": "kdo? co?"},
+        "masc_animate_gen": {"ending": "-eho", "form": "mého pana", "question": "koho? čeho?"},
+        "masc_animate_dat": {"ending": "-emu", "form": "mému panovi", "question": "komu? čemu?"},
+        "masc_animate_acc": {"ending": "-eho", "form": "mého pana", "question": "koho? co?"},
+        "masc_animate_voc": {"ending": "—", "form": "můj pane", "question": "—"},
+        "masc_animate_loc": {"ending": "-ém", "form": "o mém panovi", "question": "o kom? o čem?"},
+        "masc_animate_ins": {"ending": "-ým", "form": "s mým panem", "question": "s kým? s čím?"},
+        "masc_inanimate_nom_acc": {"ending": "— / —", "form": "můj hrad (nom), můj hrad (acc)", "question": "kdo? co?"},
+        "fem_nom": {"ending": "—", "form": "má žena", "question": "kdo? co?"},
+        "fem_gen_dat_loc": {"ending": "-é", "form": "mé ženy / mé ženě / o mé ženě", "question": "koho? čeho? / komu? čemu? / o kom? o čem?"},
+        "fem_acc_ins": {"ending": "-ou", "form": "mou ženu / s mou ženou", "question": "koho? co? / s kým? s čím?"},
+        "neut_nom_acc": {"ending": "-é", "form": "mé město", "question": "kdo? co?"}
+      },
+      "plural": {
+        "masc_animate_nom": {"ending": "-i", "form": "mí pani", "question": "kdo? co?"},
+        "masc_animate_acc": {"ending": "-é", "form": "mé pany", "question": "koho? co?"},
+        "masc_inanimate_nom_acc": {"ending": "-é", "form": "mé hrady", "question": "kdo? co?"},
+        "fem_nom_acc": {"ending": "-é", "form": "mé ženy", "question": "kdo? co?"},
+        "neut_nom_acc": {"ending": "-á", "form": "má města", "question": "kdo? co?"},
+        "all_gen": {"ending": "-ých", "form": "mých panů / mých hradů / mých žen / mých měst", "question": "koho? čeho?"},
+        "all_dat": {"ending": "-ým", "form": "mým panům / mým hradům / mým ženám / mým městům", "question": "komu? čemu?"},
+        "all_loc": {"ending": "-ých", "form": "o mých panech / o mých hradech / o mých ženách / o mých městech", "question": "o kom? o čem?"},
+        "all_ins": {"ending": "-ými", "form": "s mými pany / s mými hrady / s mými ženami / s mými městy", "question": "s kým? s čím?"}
+      },
+      "notes": "The possessive pronouns můj (my), tvůj (your sg), náš (our), váš (your pl) all share the same declension pattern. Key features: (1) The nominative singular masculine has a special long form: můj (but shortened mé- in other cases). (2) The feminine singular nominative is má (má žena). (3) The neuter singular is mé (mé město). (4) The masculine animate plural nominative is mí (mí pani) — distinctive long form. (5) All other plural endings match regular adjective declension. For náš/váš, the pattern is: náš/náš hrad, naše/nase žena, naše/nase město; plural: naši/nši pani, naše hrady, naše ženy, naše města. The forms 'naše' and 'naši' are used (not 'náš' declined like 'můj').",
+      "example_words": ["můj", "tvůj", "náš", "váš"]
+    },
+    {
+      "id": "decl_demonstrative_ten",
+      "title": "Demonstrative Pronouns — ten, ta, to, ty",
+      "category": "pronoun",
+      "pattern_word": "ten (this/that)",
+      "singular": {
+        "masc_animate_nom": {"ending": "—", "form": "ten pan", "question": "kdo? co?"},
+        "masc_animate_gen": {"ending": "-oho", "form": "toho pana", "question": "koho? čeho?"},
+        "masc_animate_dat": {"ending": "-omu", "form": "tomu panovi", "question": "komu? čemu?"},
+        "masc_animate_acc": {"ending": "-oh / -en", "form": "toho pana", "question": "koho? co?"},
+        "masc_animate_voc": {"ending": "—", "form": "ten pane", "question": "—"},
+        "masc_animate_loc": {"ending": "-om", "form": "o tom panovi", "question": "o kom? o čem?"},
+        "masc_animate_ins": {"ending": "-ím", "form": "s tím panem", "question": "s kým? s čím?"},
+        "masc_inanimate_nom_acc": {"ending": "—", "form": "ten hrad (nom), ten hrad (acc)", "question": "kdo? co?"},
+        "fem_nom": {"ending": "—", "form": "ta žena", "question": "kdo? co?"},
+        "fem_gen_dat_loc": {"ending": "-é", "form": "té ženy / té ženě / o té ženě", "question": "koho? čeho? / komu? čemu? / o kom? o čem?"},
+        "fem_acc_ins": {"ending": "-u / -ou", "form": "tu ženu / s tou ženou", "question": "koho? co? / s kým? s čím?"},
+        "neut_nom_acc": {"ending": "—", "form": "to město", "question": "kdo? co?"},
+        "neut_gen": {"ending": "-oho", "form": "toho města", "question": "koho? čeho?"},
+        "neut_dat": {"ending": "-omu", "form": "tomu městu", "question": "komu? čemu?"},
+        "neut_loc": {"ending": "-om", "form": "o tom městě", "question": "o kom? o čem?"},
+        "neut_ins": {"ending": "-ím", "form": "s tím městem", "question": "s kým? s čím?"}
+      },
+      "plural": {
+        "masc_animate_nom": {"ending": "-i", "form": "ti pani", "question": "kdo? co?"},
+        "masc_animate_acc": {"ending": "-y / -ě", "form": "ty pany", "question": "koho? co?"},
+        "masc_inanimate_nom_acc": {"ending": "-y / -ě", "form": "ty hrady", "question": "kdo? co?"},
+        "fem_nom_acc": {"ending": "-y / -ě", "form": "ty ženy", "question": "kdo? co?"},
+        "neut_nom_acc": {"ending": "-a", "form": "ta města", "question": "kdo? co?"},
+        "all_gen": {"ending": "-ěch", "form": "těch panů / těch hradů / těch žen / těch měst", "question": "koho? čeho?"},
+        "all_dat": {"ending": "-ěm", "form": "těm panům / těm hradům / těm ženám / těm městům", "question": "komu? čemu?"},
+        "all_loc": {"ending": "-ěch", "form": "o těch panech / o těch hradech / o těch ženách / o těch městech", "question": "o kom? o čem?"},
+        "all_ins": {"ending": "-ěmi", "form": "těmi pany / těmi hrady / těmi ženami / těmi městy", "question": "s kým? s čím?"}
+      },
+      "notes": "The demonstrative pronoun 'ten' (this/that) has pronominal declension (distinct from adjective declension). Key differences from adjectives: (1) genitive singular masc/neut is -oho (not -ého as in adjectives). (2) dative singular is -omu (not -ému). (3) instrumental singular is -ím (not -ým). (4) The feminine genitive/dative/locative is -é (té, not -é as in adjectives — same form but different stem). (5) Plural: nominative masc animate is ti (not -í). (6) Plural genitive/locative is -ěch (těch, not -ých). (7) Plural dative is -ěm (těm, not -ým). (8) Plural instrumental is -ěmi (těmi, not -ými). The forms 'ten, ta, to' serve as both definite article equivalents and demonstratives.",
+      "example_words": ["ten (masc)", "ta (fem)", "to (neut)", "ti / ty (plural)"]
+    }
+  ]
+}

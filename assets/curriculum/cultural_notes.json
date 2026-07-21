@@ -1,0 +1,535 @@
+{
+  "title": "Czech Cultural & Contextual Notes",
+  "description": "Cultural context and practical usage notes for each unit",
+  "notes": [
+    {
+      "unit_id": 1,
+      "title": "Czech Pronunciation Culture",
+      "content": "Czech pronunciation matters more than in many other languages because incorrect pronunciation can change meaning entirely — vowel length (káva vs kava) and háček marks (š vs s) are not optional. Czechs will appreciate your effort to pronounce ř correctly even if you struggle, because it shows genuine interest in their language. The Czech alphabet has 42 letters including combinations with diacritics that are treated as distinct letters — not modifications of base letters.\n\nUnlike English, Czech is pronounced exactly as written. Once you learn the rules, you can read any Czech word correctly. This means pronunciation is not about memorizing exceptions but about mastering a finite set of rules. Czechs are generally patient with foreigners' pronunciation but may struggle to understand you if you ignore vowel length or consonant softening, because these features are phonemic.",
+      "practical_tips": [
+        "Practice ř by saying 'r' and 'zh' simultaneously — it's unique to Czech and Czechs will notice if you get it right",
+        "Always stress the first syllable — Czechs will understand you even with bad grammar if your stress is correct",
+        "Long vowels are pronounced about twice as long as short ones — don't skip this, it changes meaning (dům = house, dum = stupidity)",
+        "When unsure about pronunciation, ask a Czech to say it — they're usually happy to help and won't judge"
+      ],
+      "common_mistakes": [
+        "Ignoring vowel length — saying 'kava' instead of 'káva' is like saying 'bat' instead of 'bath'",
+        "Pronouncing č, š, ž as English ch, sh, zh but without realizing they're separate letters in Czech, not modifications",
+        "Treating ě as a simple 'e' — it softens the preceding consonant (dě sounds like 'dye', not 'deh')"
+      ],
+      "did_you_know": "The letter ř is so unique to Czech that it's used as a shibboleth — a way to identify non-native speakers. Even Slovak, the closest language to Czech, doesn't have it."
+    },
+    {
+      "unit_id": 2,
+      "title": "Greetings & The Ty/Vy Distinction",
+      "content": "The Ty/Vy (informal/formal) distinction is one of the most important cultural features of Czech social interaction. Using Ty when Vy is expected can be deeply offensive, especially with older people or in professional settings. The transition from Vy to Ty is a ritual — someone proposes it ('Můžeme si tykat?') and the other agrees. Until that moment, you must use Vy.\n\nIn practice, Czechs use Vy with strangers, elderly people, teachers, doctors, shop assistants, and anyone in a professional context. Ty is used with friends, family, children, fellow students (usually after a brief acquaintance), and pets. When in doubt, always start with Vy — it's safer to be too formal than too informal.\n\nShaking hands is the standard greeting in formal situations. Men shake hands with men; men usually wait for a woman to extend her hand first. Close friends may kiss on the cheek (one kiss, right cheek), but this is less common than in some other European countries.",
+      "practical_tips": [
+        "When meeting someone new, always start with 'Dobrý den' and Vy. Wait for them to suggest switching to Ty",
+        "The question 'Můžeme si tykat?' (Can we use Ty with each other?) is the standard way to transition — don't skip it",
+        "Use 'pane' (Mr.) or 'paní' (Mrs.) + last name in formal settings — first names are only for Ty relationships",
+        "When greeting a group, greet each person individually — don't say a general 'ahoj' to everyone at once in formal settings"
+      ],
+      "common_mistakes": [
+        "Using 'ahoj' (informal hi/bye) with shop assistants, teachers, or elderly people — use 'dobrý den' and 'na shledanou' instead",
+        "Switching to Ty too early — even after several meetings with a colleague, wait for the explicit invitation",
+        "Assuming that because someone speaks English with you, you can use Ty — the Ty/Vy rule applies regardless of language"
+      ],
+      "did_you_know": "The Ty/Vy distinction is so culturally important that there's a verb for the transition: 'tykat si' (to use Ty with each other). A friendship isn't considered real until you've agreed to tykat."
+    },
+    {
+      "unit_id": 3,
+      "title": "Gender — Why It Matters More Than You Think",
+      "content": "Every Czech noun has a grammatical gender (masculine, feminine, or neuter), and this affects every sentence you build — adjectives, past tense verbs, pronouns, and numerals must all agree. Unlike English, where gender is mostly natural, Czech gender is grammatical and often unpredictable from meaning alone. 'Dívka' (girl) is feminine, but 'děvče' (girl) is neuter.\n\nThe most visible impact for foreigners is with professions. Czech has gendered forms for almost every profession: učitel/učitelka, lékař/lékařka, student/studentka. Using the wrong form is grammatically incorrect. The female form typically adds -ka to the male stem.\n\nWomen's surnames also follow this pattern — a woman's surname gets the suffix -ová (Novák → Nováková, Dvořák → Dvořáková). This is mandatory in Czech grammar and official documents, even for foreign women. However, some women, particularly in international contexts, choose to use the non-suffixed form.",
+      "practical_tips": [
+        "Learn the gender with every new noun — don't try to guess, memorize it from the start",
+        "When learning professions, always learn both forms (učitel/učitelka) as a pair",
+        "If you're a woman, your Czech documents will likely use the -ová suffix on your surname — this is standard, not optional",
+        "Don't assume gender from meaning — 'město' (city) is neuter, 'škola' (school) is feminine, 'obchod' (shop) is masculine inanimate"
+      ],
+      "common_mistakes": [
+        "Using masculine as a 'default' gender — Czech doesn't have a neutral default, you must use the correct gender",
+        "Forgetting that masculine is split into animate and inanimate — this affects accusative case endings",
+        "Translating English 'the' as a single Czech word — Czech has no articles, but gender replaces their function"
+      ],
+      "did_you_know": "The -ová surname suffix for women was challenged in courts by women who wanted to use their family name without it. While some succeeded, the suffix remains the default in Czech law and official documents."
+    },
+    {
+      "unit_id": 4,
+      "title": "Age, Possession, and Czech Directness",
+      "content": "Czechs express age differently from English — you don't 'are' an age, you 'have' years. 'Je mi dvacet let' (I am twenty, literally 'it is to me twenty years'). This reflects the Czech tendency to express states as possession rather than identity. The same pattern applies to hunger ('mám hlad' = I have hunger), thirst ('mám žízeň'), and cold ('mám zima').\n\nCzech communication style is more direct than English-speaking cultures. Czechs say what they mean without softening qualifiers. 'Ne' (no) is a complete answer — it doesn't need to be 'unfortunately no' or 'I'm afraid not'. This directness is not rudeness; it's efficiency. Conversely, when a Czech says things are 'fine' or 'okay', they usually mean exactly that — there's no hidden negative meaning.\n\nThis directness extends to compliments and criticism. Czechs rarely give effusive compliments and may seem unenthusiastic to foreigners. A Czech saying 'not bad' (není špatné) is actually giving praise.",
+      "practical_tips": [
+        "Always use 'mám [number] let' for age — never 'jsem [number]' which sounds like 'I am [number] things'",
+        "Don't take Czech directness personally — 'no' means 'no', not 'I don't like you'",
+        "When a Czech says 'je to v pohodě' (it's fine), take it at face value — no hidden meaning",
+        "Use 'mám hlad/žízeň/zimu' instead of 'jsem hladový/žíznivý/studený' — the 'have' construction is more natural"
+      ],
+      "common_mistakes": [
+        "Saying 'jsem dvacet' (I am twenty) instead of 'je mi dvacet let' (I have twenty years) — Czechs will understand but it sounds wrong",
+        "Adding politeness fillers that Czechs don't use — 'bohužel ne' (unfortunately no) is formal, a simple 'ne' is fine among acquaintances",
+        "Interpreting Czech lack of enthusiasm as dislike — 'je to dobrý' (it's good) is a genuine compliment in Czech"
+      ],
+      "did_you_know": "The Czech directness is sometimes called 'negative politeness' — by not wasting your time with filler words, Czechs are being respectful of your time. This is the opposite of English 'positive politeness' which uses softening words to protect feelings."
+    },
+    {
+      "unit_id": 5,
+      "title": "Pro-Drop Language and Speaking Patterns",
+      "content": "Czech is a pro-drop (pronoun-dropping) language — subject pronouns (já, ty, on, ona) are usually omitted because the verb ending tells you who the subject is. 'Jsem student' (I am a student) is more natural than 'Já jsem student'. Using pronouns unnecessarily sounds unnatural or emphasizes the subject.\n\nThis feature makes Czech sound more compact than English. A sentence like 'Jdu do obchodu' (I'm going to the shop) contains no pronoun, but the meaning is clear from 'jdu' (first person singular of jít). Pronouns are used for emphasis ('Já jdu, ale on ne' — I am going, but he isn't) or contrast.\n\nIn spoken Czech, verb endings are often simplified or contracted. 'Jsem' becomes 'sem', 'jsi' becomes 'se', 'jsme' becomes 'sme'. This is normal colloquial Czech, not slang — even educated speakers use these forms in conversation.",
+      "practical_tips": [
+        "Drop subject pronouns in normal speech — 'Mluvím česky' is better than 'Já mluvím česky'",
+        "Use pronouns only for emphasis or contrast: 'Já to vím, ale on ne' (I know that, but he doesn't)",
+        "Don't be alarmed when Czechs say 'sem' instead of 'jsem' in conversation — this is standard spoken Czech, not incorrect",
+        "In writing, use the full forms ('jsem', 'jsi') — the shortened forms are for speech only"
+      ],
+      "common_mistakes": [
+        "Including pronouns in every sentence — this sounds stilted and unnatural to Czech ears",
+        "Confusing spoken 'se' (shortened 'jsi') with the reflexive 'se' — context makes it clear but beginners often get confused",
+        "Trying to use the shortened spoken forms in writing — 'sem' instead of 'jsem' in a formal text is a spelling error"
+      ],
+      "did_you_know": "The pro-drop feature is shared with other Slavic languages but contrasts sharply with English, which requires subjects. This is why Czechs speaking English sometimes say 'Am student' instead of 'I am a student' — they're applying Czech patterns to English."
+    },
+    {
+      "unit_id": 6,
+      "title": "Accusative Case and Word Order Freedom",
+      "content": "Czech word order is remarkably flexible compared to English because grammatical relationships are shown by case endings, not position. 'Žena vidí psa' and 'Psa vidí žena' both mean 'The woman sees the dog' — the accusative ending '-a' on 'psa' tells you it's the object regardless of position. In English, word order determines meaning, so 'The dog sees the woman' is a different sentence.\n\nHowever, this doesn't mean word order is random. Czech has a preferred word order (Subject-Verb-Object) and uses variations for emphasis. The most important information typically comes first. 'Psa vidí žena' emphasizes 'the dog' — it's the dog that the woman sees, not something else.\n\nThe accusative case is the first case beyond nominative that learners encounter, and it's the most common object case. Mastering the accusative (-a → -u for feminine, -a/-e for masculine animate, no change for inanimate/neuter) unlocks the ability to form basic transitive sentences.",
+      "practical_tips": [
+        "Use default SVO word order for simple sentences — vary it only when you want to emphasize something",
+        "The thing you want to emphasize goes first: 'Kávu chci' (It's coffee I want) vs 'Chci kávu' (I want coffee)",
+        "Learn accusative endings with each new noun — don't try to apply them retroactively",
+        "In questions, the question word usually goes first: 'Koho vidíš?' (Who do you see?)"
+      ],
+      "common_mistakes": [
+        "Assuming Czech word order works like English — 'Psa vidí žena' is NOT 'The dog sees the woman'",
+        "Forgetting that masculine animate changes in accusative (pes → psa) but masculine inanimate doesn't (hrad → hrad)",
+        "Putting the verb first in declarative sentences — this is for questions only (Mluvíš česky? = Do you speak Czech?)"
+      ],
+      "did_you_know": "Czech's flexible word order is exploited in poetry and literature for rhythm and emphasis. Famous Czech poems use word orders that would be impossible in English, creating nuances of meaning through position alone."
+    },
+    {
+      "unit_id": 7,
+      "title": "Formal Vy Conjugation and Svůj",
+      "content": "The formal 'Vy' takes plural verb forms even when addressing one person. 'Jak se máte?' (How are you? - formal) uses the same form as addressing multiple people. This is because 'Vy' historically addressed someone as if they were a group (the 'royal we' in reverse). The possessive 'váš' (your - formal) also uses the plural form.\n\nThe reflexive possessive 'svůj' (one's own) is a uniquely Slavic concept that has no direct English equivalent. 'Můj pes' (my dog) and 'Svůj pes' (my own dog) both mean 'my dog', but 'svůj' refers back to the subject of the sentence. 'Vidím svůj pes' would be wrong (it should be 'Vidím svého psa' in accusative), but the key point is: use 'svůj' when the possessor is the subject.\n\nThis distinction matters because Czech distinguishes 'John saw John's dog' (Jan viděl svého psa — svůj refers to John's own dog) from 'John saw his dog' where 'his' could be someone else's (Jan viděl jeho psa — jeho = someone else's dog).",
+      "practical_tips": [
+        "Always use plural verb forms with Vy: 'Máte čas?' not 'Máš čas?' when speaking formally",
+        "Use 'svůj' when the subject owns the object: 'Beru svůj deštník' (I'm taking my umbrella)",
+        "Use 'můj/tvůj/jeho' when someone else owns it: 'Vidím jeho auto' (I see his car — not my own)",
+        "When in doubt, use 'můj' — it's always grammatically correct, just less precise than 'svůj'"
+      ],
+      "common_mistakes": [
+        "Using singular verb forms with formal Vy — 'Vy máte' not 'Vy máš'",
+        "Using 'svůj' when the possessor is NOT the subject — 'Vidím jeho psa' (I see his dog) is correct, not 'Vidím svého psa' unless it's my own dog",
+        "Confusing 'váš' (your - formal/plural) with 'tvůj' (your - informal singular)"
+      ],
+      "did_you_know": "The Ty/Vy distinction extends to possessives in a way English can't express: 'tvůj pes' (your dog - informal) vs 'váš pes' (your dog - formal) tells you the relationship between the speaker and the listener without any extra context."
+    },
+    {
+      "unit_id": 8,
+      "title": "Family, Naming Conventions, and In-Laws",
+      "content": "Czech family structure is nuclear — extended families are close but don't typically live together. Czechs distinguish formal and informal words for parents: 'matka/otec' (formal, like 'mother/father') and 'máma/táta' (informal, like 'mom/dad'). Using 'matka' in casual conversation sounds stilted; using 'máma' in formal writing is too casual.\n\nCzech naming has unique features. Women's surnames get the -ová suffix (Novák → Nováková). Children are traditionally given names from a regulated list — the Czech name day calendar (kalendář) assigns a name to each day, and children are often named after the saint whose day falls near their birth. Name days (svátek) are celebrated almost like birthdays.\n\nAddressing in-laws follows the Ty/Vy rules strictly. You typically use Vy with your parents-in-law until they invite you to use Ty — which can take months or even years. The terms for in-laws are specific: 'tchán' (father-in-law), 'tchyně' (mother-in-law), 'zeť' (son-in-law), 'snacha' (daughter-in-law).",
+      "practical_tips": [
+        "Use 'máma/táta' in conversation and 'matka/otec' in formal contexts — matching the register is important",
+        "Remember to add -ová to women's surnames in Czech contexts — 'paní Nováková' not 'paní Novák'",
+        "Celebrate name days (svátek) — saying 'všechno nejlepší ke svátku' (happy name day) to Czechs is appreciated",
+        "Start with Vy with your in-laws and wait for them to propose Ty — don't assume familiarity"
+      ],
+      "common_mistakes": [
+        "Using English-style first names with Czech elders — Czechs use 'paní/pan + surname' until invited to use first names",
+        "Forgetting the -ová suffix on women's surnames — it's grammatically required in Czech",
+        "Treating name days as unimportant — for many Czechs, a name day wish is as important as a birthday wish"
+      ],
+      "did_you_know": "Czech parents must choose baby names from an officially approved list. If they want a name not on the list, they need special permission from the registry office. This is why most Czechs have traditional Slavic or Christian names."
+    },
+    {
+      "unit_id": 9,
+      "title": "Time, Dates, and Name Days",
+      "content": "Czech uses the 24-hour clock in all formal contexts — schedules, appointments, official documents. '16:30' is read as 'šestnáct třicet' or 'půl páté' (half of five, meaning 4:30). The Czech way of telling time counts half-hours from the next hour, which can confuse English speakers: 'půl třetí' means 2:30 (half of three), not 3:30.\n\nDates are written day.month.year (21.7.2026). Czechs say 'dvacátého prvního července' (the twenty-first of July) — the day comes first in both writing and speaking. Days of the week and months are NOT capitalized in Czech, unlike English.\n\nName days (svátek) are a uniquely Czech/Central European tradition. Each day of the year is associated with a first name. On your name day, Czechs wish you 'všechno nejlepší ke svátku' and may give small gifts or flowers. Many Czechs consider their name day as important as their birthday. Calendar displays in Czech homes and offices always show name days alongside dates.",
+      "practical_tips": [
+        "Use 24-hour time in formal contexts — 'v šestnáct hodin' (at 16:00) not 'v čtyři odpoledne'",
+        "Learn the half-hour pattern: 'půl třetí' = 2:30, 'půl čtvrté' = 3:30 — it counts from the NEXT hour",
+        "Write dates as DD.MM.YYYY — 21.7.2026, not 7/21/2026",
+        "Check the Czech name day calendar and wish your Czech friends 'všechno nejlepší ke svátku' on their name day"
+      ],
+      "common_mistakes": [
+        "Interpreting 'půl třetí' as 3:30 — it means 2:30 (half OF three, not half PAST two)",
+        "Capitalizing days and months — 'pondělí' and 'červenec' are lowercase in Czech",
+        "Forgetting name days entirely — missing a Czech friend's name day is like forgetting their birthday"
+      ],
+      "did_you_know": "The Czech name day calendar has assigned names for every day of the year. If your name isn't on the calendar (common for foreign names), Czechs may ask you 'kdy máš svátek?' and be genuinely puzzled when you say you don't have one."
+    },
+    {
+      "unit_id": 10,
+      "title": "Daily Routine, Work Culture, and Shop Hours",
+      "content": "Czech daily life follows a rhythm that may surprise foreigners. Shops traditionally close early — many smaller shops close by 18:00 or 19:00, and supermarkets rarely stay open past 20:00 (though large shopping malls like Nový Smíchov or Arkády stay open until 22:00). Sunday shopping is limited — only small shops and those at transit hubs can open on Sundays.\n\nThe Czech workday typically runs 8:00-16:30 or 9:00-17:00 with a 30-minute lunch break. Lunch is an important meal — many restaurants offer 'polední menu' (lunch menu) with discounted prices between 11:00 and 14:00. This is so ingrained that office workers routinely go out for lunch rather than eating at their desks.\n\nCzechs value their free time and work-life balance. Working overtime is less common than in many other countries, and weekends are generally reserved for family, hobbies, and cottage trips. 'Šprticket' (doing nothing, relaxing) is a valued Czech activity.",
+      "practical_tips": [
+        "Do your shopping before 18:00 on weekdays — late-night shopping is limited to big malls",
+        "Take advantage of 'polední menu' — restaurants offer 2-3 course lunches for 100-200 Kč (vs 300+ for dinner)",
+        "Don't expect shops to be open on Sundays except for small convenience stores (Žabka, Potraviny) and mall restaurants",
+        "Respect Czech lunch time — scheduling meetings at 12:00-13:00 is inconsiderate"
+      ],
+      "common_mistakes": [
+        "Expecting 24/7 shopping like in some countries — Czech shops have limited hours, especially on weekends",
+        "Eating lunch at your desk — Czechs find this strange and a bit sad; lunch is a social activity",
+        "Trying to schedule work meetings after 17:00 on Friday — Czechs protect their weekend starting Friday afternoon"
+      ],
+      "did_you_know": "The Czech tradition of 'polední menu' is so strong that many restaurants make most of their revenue from lunch, not dinner. Some restaurants are effectively lunch-only establishments that close after 14:00."
+    },
+    {
+      "unit_id": 11,
+      "title": "Restaurant Culture, Tipping, and Czech Cuisine",
+      "content": "Czech restaurant culture has specific norms. When you enter a restaurant, you can usually sit wherever you like (unless there's a 'rezervováno' sign). The waiter comes to your table — you don't go to a counter. Ordering is done verbally; menus are brought to the table. 'Dám si...' (I'll have...) is the standard way to order.\n\nTipping in Czech restaurants is done by rounding up — not by percentage. If the bill is 285 Kč, you say 'třista' (300) and the waiter keeps the change. A typical tip is 10-20 Kč per person, or roughly 5-10%. You tell the waiter the total you want to pay when they bring the bill — you don't leave money on the table.\n\nCzech cuisine is meat-heavy and substantial. Traditional dishes include svíčková (beef in cream sauce), guláš (goulash), vepřo knedlo zelo (pork, dumplings, cabbage), and smažený sýr (fried cheese — popular with vegetarians). Lunch menus always include soup as a first course. Czech beer (pivo) is a point of national pride — Pilsner Urquell (Plzeň) and Budweiser Budvar (Budějovice) are the originals that inspired global brands.",
+      "practical_tips": [
+        "Round up the bill for tipping — say the total amount out loud when the waiter brings the check",
+        "Order 'polední menu' on weekdays — it's 50-70% cheaper than the regular menu",
+        "Try 'svíčková na smetaně' as your first traditional Czech dish — it's the most beloved Czech meal",
+        "Czechs never pour beer with the foam completely removed — the foam is considered part of the beer"
+      ],
+      "common_mistakes": [
+        "Leaving a 15-20% tip like in the US — Czechs round up by 10-20 Kč, not by percentage",
+        "Waiting to be seated — in most Czech restaurants (except upscale ones), just find a table",
+        "Asking for substitutions or customizations — Czech restaurants don't typically accommodate 'on the side' requests",
+        "Ordering beer without foam — 'bez pěny' marks you as a foreigner; the foam is part of the pour"
+      ],
+      "did_you_know": "Czech beer is classified as 'protected geographical indication' — only beer brewed in Plzeň can be called Pilsner Urquell, and only beer from České Budějovice can be called Budweiser. The American 'Budweiser' is a different beer that borrowed the name."
+    },
+    {
+      "unit_id": 12,
+      "title": "Shopping, Sizes, and Return Policies",
+      "content": "Czech shopping culture ranges from small local shops ('potraviny') to large shopping malls (Nový Smíchov, Arkády Pankrác, OC Chodov). Small shops are more expensive but convenient; supermarkets (Billa, Albert, Kaufland, Lidl) are cheaper. Markets (Havelské tržiště, Náplavka farmers market) sell fresh produce and local products.\n\nClothing sizes use the European system. Shoes use EU sizing (38-46 typically). Returns are generally accepted within 14-30 days with a receipt, but the item must be unworn with tags attached. Online shopping is growing — Alza.cz and Mall.cz are major Czech e-retailers; Amazon delivers to Czech Republic but isn't widely used.\n\nVAT (DPH in Czech) is 21% on most goods and is always included in the displayed price — unlike the US where sales tax is added at checkout. The price you see is the price you pay.",
+      "practical_tips": [
+        "Prices always include VAT (DPH) — no surprise taxes at checkout",
+        "Keep your receipt ('účtenka') — you need it for returns and warranties",
+        "Clothing sizes are EU standard — a US size 8 is approximately EU 38",
+        "For electronics, check Alza.cz first — it's the Czech Amazon equivalent with good prices and fast delivery"
+      ],
+      "common_mistakes": [
+        "Expecting tax to be added at checkout — Czech prices are final, tax is already included",
+        "Trying to return items without a receipt — Czech stores require the original 'účtenka'",
+        "Assuming 24/7 shopping — most stores close by 20:00 on weekdays and are closed Sundays"
+      ],
+      "did_you_know": "The Czech Republic has one of the highest densities of shopping malls per capita in Europe. Prague alone has over 10 major malls, partly because the communist era left very little retail space, leading to a mall-building boom in the 2000s."
+    },
+    {
+      "unit_id": 13,
+      "title": "Free Time, Sports, and Cottage Culture",
+      "content": "Czech leisure culture centers around several key activities: sports (especially ice hockey and football), outdoor activities (hiking, cycling, mushroom picking), and the uniquely Czech 'chata/chalupa' culture. A 'chata' is a small weekend cottage, often with a garden, where Czechs escape on weekends. A 'chalupa' is a larger farmhouse, often inherited from grandparents in rural areas.\n\nIce hockey is the national sport — Czechs are passionate about it, and the national team's success is a source of enormous pride. Football (soccer) is also popular but historically less successful internationally. Other popular sports include tennis, athletics, and biathlon.\n\nBeer gardens (pivnice s zahradou) are a summer institution. Prague's Letná park beer garden and Riegrovy sady offer outdoor beer drinking with city views. Czechs socialize over beer — it's not just drinking, it's a social ritual. Refusing a beer is fine, but understand that beer is the default social lubricant in Czech culture.",
+      "practical_tips": [
+        "If invited to someone's chata, bring food or drink as a contribution — it's expected",
+        "Mushroom picking is a national obsession in autumn — don't be surprised if Czechs disappear into forests in September",
+        "Beer gardens are family-friendly during the day — they're not just for drinking, they're social spaces",
+        "Learn the names of Czech hockey teams (Sparta Prague, Kometa Brno) — it's great small talk material"
+      ],
+      "common_mistakes": [
+        "Refusing food at a Czech home without trying it — Czech hospitality includes food, and refusing can seem rude",
+        "Comparing Czech beer to other countries' beer — Czechs consider their beer the best in the world, and they have data to support it",
+        "Underestimating how much Czechs value their weekend cottage time — many Czechs would rather spend a weekend at a simple cottage than a luxury hotel"
+      ],
+      "did_you_know": "Czechs consume more beer per capita than any other country in the world — approximately 140 liters per person per year. Beer is cheaper than water in many Czech restaurants, and it's been a staple of Czech culture since the Middle Ages."
+    },
+    {
+      "unit_id": 14,
+      "title": "Prague Public Transport — The System Czechs Are Proud Of",
+      "content": "Prague's public transport (MHD — městská hromadná doprava) is extensive, reliable, and affordable. It includes three metro lines (A-green, B-yellow, C-red), numerous trams, and buses. The metro runs from approximately 5:00 to midnight; trams run all night (reduced schedule after midnight). Night trams (numbers 51-59) replace metro service after midnight.\n\nTickets are time-based, not distance-based. You buy a 30-minute, 90-minute, or 24-hour ticket and validate it in the yellow machines upon entering. Once validated, you can use any transport within the time limit. Transfer between metro, tram, and bus is free within your ticket duration. The PID Lítačka app lets you buy tickets on your phone.\n\nCzechs are proud of their transport system and generally follow the rules. Fare evasion is rare and carries a fine of 1,500 Kč. Transport workers (controllers) do random checks — they wear plain clothes and show badges. Being caught without a valid ticket is embarrassing and expensive.",
+      "practical_tips": [
+        "Download 'PID Lítačka' app — buy and validate tickets on your phone, no need for coins",
+        "Always validate paper tickets in the yellow machines — an unvalidated ticket is the same as not having one",
+        "Night trams (51-59) run every 30-40 minutes after midnight when metro is closed",
+        "The 22 tram is a tourist's best friend — it passes most major sights from Pražský hrad to Národní divadlo"
+      ],
+      "common_mistakes": [
+        "Forgetting to validate your ticket — an unvalidated ticket results in a 1,500 Kč fine, no excuses accepted",
+        "Buying a new ticket every time you transfer — one ticket covers all transport within its time limit",
+        "Assuming metro runs 24/7 — it stops at midnight, and you need night trams or buses after that"
+      ],
+      "did_you_know": "Prague's metro is built deep underground because it was designed to double as nuclear bomb shelters during the Cold War. The escalators are among the longest in Europe, and some stations have blast doors that can be sealed."
+    },
+    {
+      "unit_id": 15,
+      "title": "Weather, Seasons, and Czech Holiday Traditions",
+      "content": "Czech has four distinct seasons. Winters are cold (−5 to 5°C) with snow common but not guaranteed in Prague. Summers are warm (20-30°C) and can be humid. Spring and autumn are mild but unpredictable. Czechs talk about weather as small talk, similar to Brits — 'Dnes je hezky' (It's nice today) is the most common conversation opener.\n\nChristmas (Vánoce) is the biggest Czech holiday, celebrated on December 24th (Štědrý den) with carp and potato salad for dinner, followed by unwrapping gifts under a decorated tree. Unlike many countries, the main celebration is the evening of the 24th, not the morning of the 25th. Baby Jesus (Ježíšek) brings presents, not Santa Claus.\n\nEaster (Velikonoce) has unique Czech traditions. On Easter Monday, boys and men braid willow whips (pomlázky) and gently whip girls and women, who give them painted eggs and ribbons in return. This tradition symbolizes youth and fertility. Women pour cold water on men in some regions as retaliation.",
+      "practical_tips": [
+        "Layer clothing in spring and autumn — weather can change from sunny to rainy within hours",
+        "If invited to Czech Christmas dinner, bring nothing but yourself — and don't eat before, the meal is substantial",
+        "Carp (kapr) is sold live from street vats before Christmas — don't be alarmed, this is traditional",
+        "On Easter Monday, don't be surprised to see men with braided whicks walking around — it's a beloved tradition"
+      ],
+      "common_mistakes": [
+        "Wishing 'Veselé Vánoce' after December 25 — Czech Christmas is on the 24th, the 25th and 26th are just bank holidays",
+        "Expecting Santa Claus — Czech presents come from Ježíšek (Baby Jesus), and the gift-opening is on Christmas Eve",
+        "Underdressing for Czech winter — Prague can feel colder than the temperature suggests due to wind and humidity"
+      ],
+      "did_you_know": "The Czech tradition of keeping a live carp in the bathtub for a few days before Christmas (to clean it in fresh water before cooking) is dying out in cities, but many rural families still do it. If you visit a Czech home before Christmas and see a fish in the bathtub, it's dinner, not a pet."
+    },
+    {
+      "unit_id": 16,
+      "title": "Genitive Case — Possession Czech Style",
+      "content": "Czech expresses possession differently from English. Instead of 'John's book', Czech says 'kniha Jana' (the book of John) — the possessor goes after the possessed thing and takes the genitive case. This is similar to Romance languages but feels different from English's possessive 's. 'Dům mého bratra' (my brother's house, literally 'the house of my brother').\n\nThe genitive is also used after prepositions like 'do' (into), 'z/ze' (from/out of), 'bez' (without), 'od' (from), and after quantity words: 'hodně vody' (a lot of water), 'sklenice vína' (a glass of wine). Negated verbs also take genitive objects in some constructions.\n\nFor foreigners, the genitive is the first case that requires memorizing multiple endings per gender. It's also the most frequently used case after nominative and accusative, so mastering it is essential for everyday communication.",
+      "practical_tips": [
+        "Use 'od' + genitive for 'from' a person: 'Mám to od kamaráda' (I got it from a friend)",
+        "For possession, put the owned thing first: 'auto mého otce' (my father's car, literally 'the car of my father')",
+        "After quantity words (hodně, málo, dost), use genitive: 'hodně času' (a lot of time)",
+        "Practice genitive endings systematically — they appear in everyday phrases constantly"
+      ],
+      "common_mistakes": [
+        "Using English word order for possession — 'Janův dům' exists (Jan's house) but 'dům Jana' is more common and natural",
+        "Forgetting that 'do' (into) takes genitive, not accusative — 'Jdu do školy' not 'Jdu do školu'",
+        "Mixing up 'z' (from - a place) with 'od' (from - a person): 'Jsem z Prahy' (I'm from Prague) vs 'Mám to od Anny' (I got it from Anna)"
+      ],
+      "did_you_know": "Czech has a possessive adjective construction ('otcův dům' = father's house, 'matčina kniha' = mother's book) that's archaic but still used. It's most common in literature and formal writing, less so in everyday speech."
+    },
+    {
+      "unit_id": 17,
+      "title": "Dative Case — Giving, Receiving, and Czech Hospitality",
+      "content": "The dative case marks the indirect object — the recipient or beneficiary of an action. 'Dávám kamarádovi knihu' (I give a book to my friend). In Czech, the dative is also required by certain verbs that take different prepositions in English: 'pomáhat někomu' (to help someone), 'rozumět něčemu' (to understand something), 'telefonovat někomu' (to call someone on the phone).\n\nCzech hospitality is closely tied to giving. When invited to a Czech home, you should bring a small gift — flowers for the hostess, wine for the host, or chocolates. The gift-giving ritual involves the host opening the gift immediately and thanking you. Refusing hospitality (food, drink) is impolite — even if you're not hungry, accept something.\n\nThe dative also appears in common expressions: 'Je mi zima' (I'm cold, literally 'it is to me cold'), 'Je mi líto' (I'm sorry), 'Líbí se mi' (I like it). These constructions have no direct English equivalent and require the dative case.",
+      "practical_tips": [
+        "Bring a gift when invited to a Czech home — flowers (odd number, not 13), wine, or chocolates",
+        "Learn dative-requiring verbs as a set: pomáhat (help), rozumět (understand), telefonovat (call), radit (advise), odpovídat (answer)",
+        "Use 'líbí se mi' (it appeals to me) for expressing preferences — it's more natural than 'mám rád' for things",
+        "When declining nouns in dative, masculine animate typically gets '-ovi': 'kamarádovi', 'učiteli', 'lékaři'"
+      ],
+      "common_mistakes": [
+        "Using accusative instead of dative after 'pomáhat' — 'pomáhám kamaráda' is wrong, it's 'pomáhám kamarádovi'",
+        "Bringing an even number of flowers — even numbers are for funerals; always bring odd numbers (3, 5, 7)",
+        "Refusing food or drink at a Czech home — even if you're full, accept at least a glass of water"
+      ],
+      "did_you_know": "The Czech expression 'děkuji za...' (thank you for) takes the accusative, but 'děkuji komu' (thank you, to someone) takes the dative. This distinction — thanking FOR something vs thanking SOMEONE — is encoded in the grammar itself."
+    },
+    {
+      "unit_id": 18,
+      "title": "Locative, Instrumental, and the Czech Concept of Home",
+      "content": "The locative case is used after prepositions 'v/ve' (in), 'na' (on/at), 'o' (about), and 'při' (during). It answers the questions 'o kom? o čem?' (about whom/what?) and 'kde?' (where?). 'Bydlím v Praze' (I live in Prague), 'Pracuji v kanceláři' (I work in an office). The locative only exists with prepositions — it never appears on its own.\n\nThe instrumental case marks the means or instrument of an action: 'píšu perem' (I write with a pen), 'jezdim autem' (I travel by car). It's also used after 's' (with): 's kamarádem' (with a friend). The instrumental also appears in 'to be' constructions for professions: 'Je učitelem' (He is a teacher, literally 'he is by-a-teacher').\n\nCzech distinguishes 'domů' (going home, direction) from 'doma' (at home, location) from 'domov' (the concept of home). 'Jdu domů' (I'm going home), 'Jsem doma' (I'm at home), 'Domov je kde srdce' (Home is where the heart is). This three-way distinction reflects the importance of home in Czech culture.",
+      "practical_tips": [
+        "Use 'v' + locative for being inside: 'Jsem v restauraci' (I'm in a restaurant)",
+        "Use 'na' + locative for being at/on: 'Jsem na nádraží' (I'm at the station), 'Jsem na univerzitě' (I'm at the university)",
+        "Use instrumental for 'by' (means of transport): 'autem' (by car), 'tramvají' (by tram), 'metrem' (by metro), 'pěšky' (on foot)",
+        "For professions with 'být', use instrumental: 'Je lékařem' (She is a doctor) — though 'Je lékař' (nominative) is also acceptable"
+      ],
+      "common_mistakes": [
+        "Confusing 'domů' (direction: going home) with 'doma' (location: at home) — 'Jdu domů' vs 'Jsem doma'",
+        "Using accusative after 'v' for location — 'Jsem v Praze' (locative) not 'Jsem v Prahu' (accusative would mean motion into)",
+        "Forgetting that 's' (with) takes instrumental: 's kamarádem' not 's kamarád'"
+      ],
+      "did_you_know": "Czech has no single word that perfectly translates the English 'home'. 'Dům' means the physical house, 'domov' means the emotional concept of home, and 'doma' means the state of being at home. Czechs feel these as completely different things."
+    },
+    {
+      "unit_id": 19,
+      "title": "Past Tense, Gender, and Czech Storytelling",
+      "content": "Czech past tense encodes the gender of the subject — 'já dělal' (I did - male) vs 'já dělala' (I did - female). This means that when a Czech tells a story about what happened, the listener knows the gender of every person mentioned through the verb form alone. 'Šel jsem do obchodu' (I went to the shop - male) vs 'Šla jsem do obchodu' (I went to the shop - female).\n\nThis gender marking extends to all persons: 'oni dělali' (they did - masculine group) vs 'ony dělaly' (they did - feminine/neuter group). The plural form depends on whether the group includes any males — if yes, use the masculine plural; if all female, use the feminine plural.\n\nCzech storytelling tends to be chronological and detailed. Czechs use past tense extensively in conversation — sharing what happened, what someone said, what went wrong. The perfective/imperfective aspect distinction is crucial: 'psal jsem dopis' (I was writing a letter - process) vs 'napsal jsem dopis' (I wrote a letter - completed).",
+      "practical_tips": [
+        "Always use the correct gender form in past tense — using the wrong one is a clear error that Czechs notice",
+        "Use perfective for completed actions and imperfective for ongoing/repeated actions in the past",
+        "When telling a story, Czechs use a chronological structure — start from the beginning, not the most dramatic part",
+        "The auxiliary ('jsem/jsi') goes in the second position: 'Včera jsem šel...' not 'Jsem včera šel...'"
+      ],
+      "common_mistakes": [
+        "Using masculine past tense as a 'default' — female speakers must use feminine forms ('dělala jsem' not 'dělal jsem')",
+        "Mixing up perfective and imperfective — 'psal jsem' (was writing, maybe didn't finish) vs 'napsal jsem' (wrote, completed)",
+        "Putting the auxiliary verb first — 'Jsem šel' is wrong; it should be 'Šel jsem' or 'Včera jsem šel'"
+      ],
+      "did_you_know": "The Czech past tense is actually a compound form: a participle (děl-al, děl-la) + an auxiliary (jsem, jsi). The 3rd person drops the auxiliary entirely — 'on dělal' (he did) with no 'jsem/jsi'. This makes 3rd person past tense look like just one word."
+    },
+    {
+      "unit_id": 20,
+      "title": "Future, Conditional, and Czech Politeness",
+      "content": "The conditional is the key to Czech politeness. 'Chtěl bych' (I would like) is the polite way to order, request, or express preferences. Using 'chci' (I want) directly can sound rude in formal contexts. 'Chtěl bych kávu' (I would like a coffee) is the standard polite ordering phrase. The conditional softens requests and is used in all formal interactions.\n\nCzech punctuality is valued — being on time means arriving at the agreed time, not 5-10 minutes late. If you're going to be late, call or text. 'Omlouvám se za zpoždění' (I apologize for being late) is expected. Czechs generally arrive 5 minutes early to meetings as a courtesy.\n\nThe future tense in Czech has two forms. Imperfective future uses 'budu' + infinitive ('budu dělat' = I will be doing). Perfective future uses the perfective verb's present form, which automatically implies future ('udělám' = I will do/complete). This distinction is crucial because Czech has no separate future tense form for perfective verbs — the present form IS the future.",
+      "practical_tips": [
+        "Always use 'chtěl bych' (male) / 'chtěla bych' (female) for polite requests — it's the Czech 'I would like'",
+        "Arrive on time or 5 minutes early — being late without notice is disrespectful",
+        "Use 'budu' + infinitive for ongoing future actions: 'budu pracovat' (I will be working)",
+        "Use perfective present for completed future actions: 'napíšu email' (I will write an email - and finish it)"
+      ],
+      "common_mistakes": [
+        "Using 'chci' (I want) in formal settings — use 'chtěl bych' instead, even in restaurants",
+        "Confusing perfective present with actual present — 'napíšu dopis' means 'I will write a letter', not 'I am writing a letter'",
+        "Being 10 minutes late without apologizing — Czechs take punctuality seriously"
+      ],
+      "did_you_know": "The Czech conditional 'bych' forms are actually the past tense auxiliary 'by' + personal endings. This is why the conditional looks like 'dělal bych' (I would do) — it's literally 'I would-be doing' with the participle."
+    },
+    {
+      "unit_id": 21,
+      "title": "Comparisons and Czech Understatement",
+      "content": "Czech comparative and superlative forms are relatively straightforward: '-ější/-ší' for comparatives and 'nej-' prefix for superlatives. 'Velký → větší → největší' (big → bigger → biggest). Several adjectives have irregular comparatives: 'dobrý → lepší → nejlepší' (good → better → best), 'špatný → horší → nejhorší' (bad → worse → worst).\n\nCzech culture values modesty and understatement. Czechs rarely use superlatives in everyday speech — calling something 'nejlepší' (the best) is reserved for genuine enthusiasm. The more common evaluation is 'není špatný' (not bad), which is actually a compliment. This understatement can confuse foreigners who interpret 'not bad' as mediocre when Czechs mean it positively.\n\nComparisons use 'než' (than): 'Praha je větší než Brno' (Prague is bigger than Brno). For emphasis, Czechs use adverbs of degree: 'mnohem' (much), 'trochu' (a little), 'o něco' (somewhat). 'Praha je mnohem větší než Brno' (Prague is much bigger than Brno).",
+      "practical_tips": [
+        "When a Czech says 'není to špatné' (it's not bad), they mean it's good — don't interpret it as criticism",
+        "Use 'mnohem' for 'much' in comparisons: 'mnohem lepší' (much better), 'mnohem větší' (much bigger)",
+        "Learn the irregular comparatives by heart: dobrý/lepší, špatný/horší, velký/větší, malý/menší",
+        "Use 'než' (than) for comparisons — it's always 'než', never 'jak' in standard Czech"
+      ],
+      "common_mistakes": [
+        "Interpreting Czech understatement as criticism — 'je to fajn' (it's fine) is genuine praise",
+        "Overusing superlatives — Czechs find 'nejlepší' and 'nejkrásnější' excessive in casual conversation",
+        "Using 'jak' instead of 'než' for 'than' in comparisons — 'jak' is colloquial/regional, 'než' is standard"
+      ],
+      "did_you_know": "Czech understatement is so culturally ingrained that excessive enthusiasm can make Czechs suspicious. If someone says something is 'absolutely amazing' or 'the best ever', Czechs may wonder what they're trying to sell."
+    },
+    {
+      "unit_id": 22,
+      "title": "Complex Sentences — Written vs Spoken Czech",
+      "content": "Czech has a significant gap between spoken and written language — more than most European languages. Written Czech (spisovná čeština) follows strict grammatical rules and is used in books, newspapers, official documents, and formal speeches. Spoken Czech (obecná čeština) uses different endings, simplified declensions, and vocabulary that would be considered incorrect in writing.\n\nIn subordinate clauses, Czech word order places the verb at or near the end: 'Nevím, jestli přijde.' (I don't know if he'll come — literally 'I don't know, whether he-will-come'). The conjunction 'že' (that) is the most common subordinator: 'Řekl, že přijde.' (He said that he would come).\n\nKey conjunctions for complex sentences: 'protože' (because), 'když' (when), 'až' (when in future), 'jestli' (if/whether), 'aby' (so that), 'ačkoli' (although), 'zatímco' (while). Each requires specific word order and sometimes specific cases or moods.",
+      "practical_tips": [
+        "Use 'že' as your default 'that' for reported speech: 'Řekl, že...' (He said that...)",
+        "Use 'protože' for 'because' — it's the most natural causal connector",
+        "In writing, use full standard forms ('jsem', 'jsi', 'dělali') — save shortened forms for speech",
+        "Learn 'až' vs 'když': 'když' = when (same time), 'až' = when (future, after something happens)"
+      ],
+      "common_mistakes": [
+        "Using spoken Czech forms in writing — 'von' instead of 'on', 'ty' instead of 'ti' is wrong in formal contexts",
+        "Confusing 'když' (when, same time/past) with 'až' (when, future): 'Přijdu, až skončíš' (I'll come when you finish)",
+        "Putting verbs in English word order in subordinate clauses — Czech puts the verb later: 'Nevím, co dělá' (I don't know what he does)"
+      ],
+      "did_you_know": "The gap between written and spoken Czech is so large that linguists consider them almost different registers. A foreigner who learns only standard Czech may struggle to understand casual conversation, and vice versa — this is why exposure to both is essential."
+    },
+    {
+      "unit_id": 23,
+      "title": "Modal Verbs, Obligation, and Czech Rules",
+      "content": "Czech modal verbs — 'muset' (must), 'moct' (can/be able to), 'smět' (be allowed to) — distinguish three types of modality that English handles with just 'must' and 'can'. 'Muset' is obligation (you have to), 'moct' is ability (you are able to), and 'smět' is permission (you are allowed to). This three-way distinction is crucial for expressing obligation and permission correctly.\n\nCzech public spaces are full of rules — signs saying 'zakázáno' (forbidden), 'nepovoleno' (not permitted), 'venčení psů povoleno' (dog walking permitted), 'vstup zakázán' (no entry). Czechs generally respect these signs and expect foreigners to do the same. Crossing on a red pedestrian light when no cars are coming is technically illegal and Czechs may comment on it.\n\nThe verb 'muset' expresses strong obligation. 'Musím jít' (I must go) means there's no choice. 'Měl bych' (I should) is milder — it's advice or recommendation, not obligation. 'Nemusím' (I don't have to) means absence of obligation, which is different from 'nesmím' (I must not / I'm not allowed to).",
+      "practical_tips": [
+        "Learn the three-way modal distinction: muset (must), moct (can), smět (may/be allowed)",
+        "Use 'měl bych' (male) / 'měla bych' (female) for advice/recommendation: 'Měl bych se učit více' (I should study more)",
+        "Pay attention to prohibition signs — 'zakázáno' means strictly forbidden, not 'discouraged'",
+        "Don't jaywalk — Czechs may verbally reprimand you for crossing on red, especially in front of children"
+      ],
+      "common_mistakes": [
+        "Confusing 'nemusím' (I don't have to) with 'nesmím' (I must not) — these are opposite meanings",
+        "Using 'moct' (can = able to) when you mean 'smět' (can = allowed to): 'Můžu tu parkovat?' could mean both, but 'Smím tu parkovat?' is clearer for permission",
+        "Ignoring 'zakázáno' signs — Czechs take these seriously and may report violations"
+      ],
+      "did_you_know": "The Czech distinction between 'moct' (can, physically able) and 'smět' (may, permitted) solves an ambiguity that English has. In English, 'Can I smoke here?' could mean 'Am I able to?' or 'Am I allowed to?' — Czech has separate verbs for each meaning."
+    },
+    {
+      "unit_id": 24,
+      "title": "Healthcare — Lékárna vs Drogerie and the Czech Medical System",
+      "content": "Czech healthcare is universal — all residents must have health insurance. EU citizens use their EHIC card; non-EU residents must have Czech insurance (VZP is the largest public insurer). Doctor visits are essentially free (covered by insurance) with a small registration fee for some services.\n\nA crucial distinction: 'lékárna' is a pharmacy (sells prescription and over-the-counter medicine, has a trained pharmacist) while 'drogerie' is a drugstore (sells cosmetics, toiletries, cleaning supplies — NO medicine). This distinction doesn't exist in some countries where pharmacies sell everything. In Czech Republic, you can only buy medicine at a lékárna, which is marked by a green cross sign.\n\nFor doctor visits, you typically call to make an appointment ('objednat se'). Walk-ins are possible but involve long waits. Czech doctors generally speak some English, especially in Prague, but having key medical vocabulary ready helps. 'Mám bolesti...' (I have pain in...), 'Mám teplotu' (I have a fever), 'Potřebuji recept' (I need a prescription).",
+      "practical_tips": [
+        "Look for the green cross sign — that's a 'lékárna' (pharmacy). 'Drogerie' (like Teta or dm) does NOT sell medicine",
+        "Carry your EHIC (EU) or insurance card to all medical appointments",
+        "Learn key medical phrases: 'Mám bolesti [body part]', 'Mám teplotu', 'Potřebuji lékaře'",
+        "Call ahead for appointments — 'Chtěl(a) bych se objednat k lékaři' (I'd like to make a doctor's appointment)"
+      ],
+      "common_mistakes": [
+        "Going to 'drogerie' (Teta, dm, Rossmann) for medicine — they don't sell it, you need 'lékárna'",
+        "Expecting walk-in doctor visits without long waits — always call first: 'Můžu se objednat?'",
+        "Assuming all doctors speak English — in Prague likely, but in smaller towns, Czech is essential"
+      ],
+      "did_you_know": "Czech pharmacies (lékárny) have a rotation system for night and weekend service. Each area has one 'pharmacy on duty' (lékárna s pohotovostní službou) that stays open overnight. The list is posted on every pharmacy door and available online."
+    },
+    {
+      "unit_id": 25,
+      "title": "Work Culture, CVs, and Business Etiquette",
+      "content": "Czech work culture values punctuality, reliability, and respect for hierarchy. The working week is typically Monday-Friday, 40 hours. Office workers usually start between 8:00 and 9:00. Lunch breaks are 30 minutes minimum and are taken seriously — eating at your desk is uncommon.\n\nCzech CVs (životopis) follow a specific format: personal details (including date of birth and sometimes marital status), education chronologically, work experience chronologically, language skills with CEFR levels, and a photo. Unlike US CVs, Czech CVs include personal information that would be illegal to ask in some countries (age, gender, photo). This is normal and expected in Czech Republic.\n\nBusiness etiquette uses formal Vy and titles. Czechs address colleagues by 'pan/paní + surname' until invited to use first names. Academic titles are important — a Czech with a 'Ing.' (engineer) or 'Mgr.' (master) degree expects to be addressed with the title: 'pane inženýre', 'paní magistro'. Using titles correctly shows respect.",
+      "practical_tips": [
+        "Include a photo, date of birth, and education on your Czech CV — this is standard, not discriminatory",
+        "Address colleagues as 'pan/paní + surname' until explicitly invited to use first names",
+        "Use academic titles when known: 'pane inženýre' (Mr. Engineer), 'paní doktorko' (Dr. Mrs.)",
+        "Be on time for meetings — arriving late without notice damages your professional reputation"
+      ],
+      "common_mistakes": [
+        "Using US-style CVs without photo or personal details — Czech employers expect this information",
+        "Using first names with colleagues immediately — wait for the 'tykání' invitation",
+        "Ignoring academic titles — calling 'Ing. Novák' just 'pan Novák' can be seen as disrespectful",
+        "Eating lunch at your desk — Czechs find this unhealthy and antisocial"
+      ],
+      "did_you_know": "Czech academic titles are legally part of your name. An engineer (Ing.) or doctor (PhDr., MUDr., etc.) can require their title to be used in official correspondence. The titles appear on ID cards and official documents — Czechs take academic credentials very seriously."
+    },
+    {
+      "unit_id": 26,
+      "title": "Housing — Paneláky, Renting, and Czech Home Life",
+      "content": "Czech housing is dominated by 'paneláky' — prefabricated concrete apartment buildings from the communist era. While they look drab from outside, many have been renovated with insulation and modern interiors. Most Czechs live in apartments, not houses — home ownership in Prague is among the lowest in Europe due to high prices.\n\nThe rental market in Prague is competitive. Rent for a 1-bedroom flat in central Prague ranges from 15,000-25,000 Kč/month; in outer areas, 10,000-15,000 Kč. Landlords typically require a deposit (kauce) of 1-3 months' rent plus the first month upfront. Lease agreements (nájemní smlouva) should be in writing and registered with the Czech authorities.\n\nCzech apartments typically have a separate kitchen (kuchyně), living room (obývací pokoj), bedroom (ložnice), and bathroom (koupelna) — often with a separate toilet (WC) from the bathroom. Many older apartments have high ceilings and parquet floors. Central heating (ústřední topení) is standard, usually included in utility costs (poplatky).",
+      "practical_tips": [
+        "Budget for kauce (deposit) = 1-3 months' rent + first month + agency fees if applicable",
+        "Check if utilities (poplatky: voda, elektrika, plyn, vytápění) are included in the rent or extra",
+        "Register your lease at the foreign police (cizinecká policie) within 3 days of moving — this is legally required",
+        "Look for apartments near metro stations — transport access matters more than exact address in Prague"
+      ],
+      "common_mistakes": [
+        "Not registering your address at the foreign police — it's a legal requirement for foreigners, with fines for non-compliance",
+        "Assuming utilities are included — in many Czech rentals, 'poplatky' (utilities) are separate from rent",
+        "Judging paneláky by their exterior — many have beautifully renovated interiors"
+      ],
+      "did_you_know": "Paneláky house about one-third of the Czech population — the highest proportion of any country. Despite their reputation, many Czechs prefer them for their solid construction, spacious rooms, and green surroundings compared to modern developments."
+    },
+    {
+      "unit_id": 27,
+      "title": "Motion Verbs and Czech Navigation Culture",
+      "content": "Czech motion verbs distinguish going on foot (jít) from going by vehicle (jet), and one-time trips from habitual trips (chodit vs jít, jezdit vs jet). This four-way distinction is essential and has no English equivalent. 'Jdu do školy' (I'm going to school - on foot, now), 'Jedu do školy' (I'm going to school - by vehicle, now), 'Chodím do školy' (I go to school - on foot, regularly), 'Ježdím do školy' (I go to school - by vehicle, regularly).\n\nPrefixed motion verbs add direction: 'přijet' (arrive by vehicle), 'odjet' (depart by vehicle), 'dojet' (reach destination), 'přejet' (cross), 'objet' (go around). These prefixed forms are almost always perfective and create precise spatial descriptions.\n\nPrague is a very walkable city — most central areas are within 20-30 minutes' walk. Czechs walk a lot and expect others to walk reasonable distances. Suggesting a taxi for a 15-minute walk might seem lazy to Czechs. The city center is compact and designed for pedestrians, with many pedestrian zones (pěší zóna).",
+      "practical_tips": [
+        "Master the four-way distinction: jít (walk, once), jet (drive, once), chodit (walk, regularly), jezdit (drive, regularly)",
+        "When giving directions, use 'rovně' (straight), 'doleva' (left), 'doprava' (right) — Czechs use these, not compass directions",
+        "Walk when distances are reasonable — Czechs prefer walking in the center and will notice if you always take taxis",
+        "Use 'přijet' (arrive) and 'odjet' (depart) for travel by vehicle — they're more precise than just 'jet'"
+      ],
+      "common_mistakes": [
+        "Using 'jít' for vehicle travel — 'jdu do Brna' implies you're walking to Brno, which sounds absurd to Czechs",
+        "Confusing one-time and habitual: 'chodím do práce' (I go to work regularly) vs 'jdu do práce' (I'm going to work now)",
+        "Using 'jet' when you mean 'chodit' — 'jezdim do školy' implies you drive, which may be wrong if you walk"
+      ],
+      "did_you_know": "Czech has over 20 prefixed forms of motion verbs, each specifying a different kind of movement (arrival, departure, crossing, reaching, going around, going through, going up, going down, etc.). This precision comes from Czech being a satellite-framed language, like German, where direction is encoded in verb prefixes."
+    },
+    {
+      "unit_id": 28,
+      "title": "A1 Exam — Czech Permanent Residence Requirement",
+      "content": "The Czech A1 exam is required for permanent residence in Czech Republic. It's administered by the Czech Ministry of Education through accredited language schools. The exam tests reading, listening, writing, and speaking at CEFR A1 level. It's not a formality — the pass rate for first-time takers is around 60-70%, so preparation matters.\n\nThe A1 exam format: reading comprehension (reading short texts and answering questions), listening comprehension (listening to short recordings), writing (filling forms, writing short messages), and speaking (answering personal questions, describing simple situations). The entire exam takes about 2 hours.\n\nKey tips for foreigners: start preparing at least 2-3 months in advance. Practice with sample exams (available online). Focus on practical vocabulary (personal information, shopping, directions, time). The speaking section often asks you to introduce yourself, describe your daily routine, and talk about your family. These are predictable topics you can prepare in advance.",
+      "practical_tips": [
+        "Download official sample exams from the Czech Ministry of Education website",
+        "Prepare your self-introduction (jméno, věk, odkud, profese, proč se učím česky) — this is always asked",
+        "Practice writing short messages: 'Dobrý den, omlouvám se, ale nemůžu přijít, protože...' (formal apology)",
+        "Learn exam instruction vocabulary: 'vyberte správnou odpověď' (choose the correct answer), 'doplňte' (fill in)"
+      ],
+      "common_mistakes": [
+        "Underestimating the A1 exam — it's not trivial, and the failure rate is 30-40%",
+        "Not preparing the speaking section — it's predictable, so memorize your self-introduction",
+        "Ignoring writing practice — filling forms and writing short messages requires specific vocabulary"
+      ],
+      "did_you_know": "The Czech A1 exam for permanent residence was introduced in 2013. Before that, there was no language requirement. The exam is controversial — some argue it's too easy to be meaningful, while others say the failure rate proves it's an adequate filter."
+    },
+    {
+      "unit_id": 29,
+      "title": "A2 Exam — New Format (April 2026) and Preparation",
+      "content": "The Czech A2 exam was updated in April 2026 with a new format. It tests reading comprehension (5 tasks with various text types), listening comprehension (5 recordings including dialogues and announcements), writing (formal and informal emails, diary entries, excuses, invitations), and speaking (monologue, role-play, picture discussion). The exam takes approximately 2.5 hours.\n\nThe A2 exam is required for Czech citizenship (after 5 years of permanent residence). It's significantly harder than A1 — the grammar requirements include all seven cases, past/future/conditional tenses, verbal aspect, and complex sentences. The writing section requires producing connected text, not just filling forms.\n\nPreparation strategy: focus on formal writing (emails, applications, complaints) as this is the section where most candidates fail. Practice speaking with picture descriptions — you'll need to describe a scene using at least 5-7 sentences with appropriate grammar. Reading practice should include formal letters, news excerpts, and informational texts.",
+      "practical_tips": [
+        "Practice formal email writing: 'Vážený pane..., obracím se na Vás s žádostí o...' (Dear Mr..., I'm writing to request...)",
+        "For the speaking section, practice picture description: describe who is in the picture, what they're doing, where they are",
+        "Learn formal letter phrases: 'Vážený pane/paní', 'S pozdravem', 'Předem děkuji za odpověď'",
+        "Time management is crucial — the writing section has 2 tasks in 30 minutes, so practice writing quickly"
+      ],
+      "common_mistakes": [
+        "Using informal language in formal writing tasks — the A2 exam specifically tests formal vs informal register",
+        "Not practicing enough writing — most failures are in the writing section, not reading or listening",
+        "Speaking too briefly in the speaking section — aim for 7-10 sentences per task, not 3-4"
+      ],
+      "did_you_know": "The April 2026 A2 exam format change added a 'picture discussion' speaking task that wasn't in the previous format. This was based on feedback that candidates could memorize monologues but couldn't describe spontaneous situations — the picture task tests genuine communication ability."
+    },
+    {
+      "unit_id": 30,
+      "title": "A1 Review — Study Strategies and Common Pitfalls",
+      "content": "Reviewing A1 Czech is about consolidating fundamentals, not learning new material. The core A1 grammar is: nominative and accusative cases, present tense (all three conjugation classes plus být/mít), gender agreement (adjectives matching nouns), personal pronouns, possessive adjectives, numbers/time/dates, and basic sentence structure. If any of these feel shaky, spend time reinforcing them before moving to A2.\n\nSpaced repetition is the most effective method for vocabulary retention. Review words at increasing intervals: 1 day, 3 days, 1 week, 2 weeks, 1 month. The app's SRS system handles this automatically, but you must be consistent — skipping reviews breaks the algorithm's timing.\n\nCommon A1 pitfalls: forgetting gender when learning new nouns (always learn the gender with the word), confusing accusative endings (feminine -a→-u vs masculine animate -a/-e), and not practicing speaking enough. A1 learners often read and write well but struggle with listening and speaking because they don't practice those skills.",
+      "practical_tips": [
+        "Always learn nouns WITH their gender — 'žena (f)' not just 'žena'",
+        "Practice accusative endings systematically: feminine -a→-u, masc animate +a/+e, masc inanimate and neuter unchanged",
+        "Don't skip SRS reviews — consistency is more important than quantity",
+        "Balance your skills: if you read well but can't speak, switch to speaking practice"
+      ],
+      "common_mistakes": [
+        "Learning vocabulary without gender — this forces you to relearn every word when you need to decline it",
+        "Neglecting speaking and listening — reading and writing are easier to practice alone but less useful in real life",
+        "Rushing to A2 before A1 is solid — gaps in A1 grammar will haunt you in A2 where everything builds on it"
+      ],
+      "did_you_know": "Research shows that the most common reason adult learners fail to progress past A1 is insufficient speaking practice. Reading and writing can be done alone, but speaking requires interaction — which is why language apps with speaking exercises are more effective than pure reading apps."
+    },
+    {
+      "unit_id": 31,
+      "title": "A2 Review — Transitioning to B1 and Czech Immersion",
+      "content": "Completing A2 means you can handle everyday situations in Czech — shopping, doctor visits, social conversations, basic work interactions. The transition to B1 involves moving from 'survival Czech' to 'comfortable Czech' — understanding news, participating in discussions, expressing opinions, and handling unexpected situations.\n\nCzech media is your best immersion tool. Czech television (Česká televize) offers free streaming with subtitles. Czech radio (Český rozhlas) has podcasts at various speeds. Czech newspapers (iDNES.cz, Novinky.cz, Aktuálně.cz) are free online. Start with short news articles and gradually move to opinion pieces. Czech films on Netflix or Czech Film have subtitles — watching with Czech audio and Czech subtitles is excellent practice.\n\nImmersion strategies: switch your phone to Czech, follow Czech social media accounts, join Czech Facebook groups for your hobbies, attend Czech cultural events. The key is daily exposure — 15 minutes of Czech media every day is more effective than 2 hours once a week. Find Czech content you genuinely enjoy — if you like cooking, follow Czech recipe channels; if you like sports, read Czech sports news.",
+      "practical_tips": [
+        "Switch your phone/computer language to Czech — this forces you to read Czech every day",
+        "Watch Czech films with Czech subtitles (not English) — this connects spoken and written forms",
+        "Read Czech news daily — start with short articles on iDNES.cz or Novinky.cz",
+        "Join Czech conversation groups — Meetup.com and Facebook have Prague-based Czech practice groups"
+      ],
+      "common_mistakes": [
+        "Stopping Czech study after A2 — without continued practice, A2 skills decay within 6-12 months",
+        "Using Czech media with English subtitles — this defeats the purpose; use Czech subtitles or none",
+        "Studying Czech only through textbooks — real-world media and conversation are essential for B1 transition"
+      ],
+      "did_you_know": "Czech has one of the highest ratios of 'passive vocabulary to active vocabulary' — Czechs understand far more words than they use in daily speech. This means that at B1, your goal is to expand passive vocabulary massively while gradually activating the most useful words. Don't try to use every word you learn — focus on understanding everything and using what's practical."
+    }
+  ]
+}
