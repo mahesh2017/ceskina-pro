@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" width="800" height="620" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#8E44AD"/>
+      <stop offset="1" stop-color="#6C3483"/>
+    </linearGradient>
+    <linearGradient id="impBox" x1="0" x2="1">
+      <stop offset="0" stop-color="#4A90D9"/>
+      <stop offset="1" stop-color="#357ABD"/>
+    </linearGradient>
+    <linearGradient id="perfBox" x1="0" x2="1">
+      <stop offset="0" stop-color="#27AE60"/>
+      <stop offset="1" stop-color="#1E8449"/>
+    </linearGradient>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4A90D9"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#27AE60"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="620" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="800" height="74" fill="url(#hdr)"/>
+  <text x="40" y="34" fill="#FFFFFF" font-size="22" font-weight="700">Budoucí čas · Future Tense</text>
+  <text x="40" y="58" fill="#E8DAEF" font-size="13">Two ways to form the future — depends on verb aspect</text>
+
+  <!-- Path 1: budu + infinitive (imperfective) -->
+  <g>
+    <rect x="30" y="94" width="360" height="340" rx="12" fill="#F4F9FE" stroke="#4A90D9" stroke-width="2"/>
+    <rect x="30" y="94" width="360" height="50" rx="12" fill="url(#impBox)"/>
+    <rect x="30" y="130" width="360" height="14" fill="url(#impBox)"/>
+    <text x="210" y="124" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">Way 1: budu + infinitive</text>
+
+    <text x="50" y="172" fill="#4A90D9" font-size="13" font-weight="700">IMPERFECTIVE verbs</text>
+    <text x="50" y="192" fill="#7F8C8D" font-size="12">(ongoing, process, repeated actions)</text>
+
+    <!-- Formula visual -->
+    <g transform="translate(50, 210)">
+      <rect x="0" y="0" width="120" height="50" rx="8" fill="#4A90D9"/>
+      <text x="60" y="32" text-anchor="middle" fill="#FFFFFF" font-size="18" font-weight="700">budu</text>
+      <text x="138" y="32" fill="#2C3E50" font-size="24" font-weight="700">+</text>
+      <rect x="160" y="0" width="150" height="50" rx="8" fill="#AED6F1"/>
+      <text x="235" y="32" text-anchor="middle" fill="#1A5276" font-size="18" font-weight="700">dělat</text>
+    </g>
+
+    <text x="50" y="290" fill="#2C3E50" font-size="14" font-weight="700">= I will be doing / I will do</text>
+
+    <!-- Conjugation of budu -->
+    <g font-size="13" fill="#34495E">
+      <text x="50" y="318"><tspan font-weight="700" fill="#4A90D9">budu</tspan> dělat — I will do</text>
+      <text x="50" y="340"><tspan font-weight="700" fill="#4A90D9">budeš</tspan> dělat — you will do</text>
+      <text x="50" y="362"><tspan font-weight="700" fill="#4A90D9">bude</tspan> dělat — he/she will do</text>
+      <text x="50" y="384"><tspan font-weight="700" fill="#4A90D9">budeme</tspan> dělat — we will do</text>
+      <text x="50" y="406"><tspan font-weight="700" fill="#4A90D9">budete</tspan> dělat — you (pl) will do</text>
+      <text x="50" y="428"><tspan font-weight="700" fill="#4A90D9">budou</tspan> dělat — they will do</text>
+    </g>
+  </g>
+
+  <!-- Arrow between two boxes -->
+  <g transform="translate(400, 250)">
+    <line x1="0" y1="0" x2="0" y2="80" stroke="#BDC3C7" stroke-width="2" stroke-dasharray="4,4"/>
+    <text x="0" y="130" text-anchor="middle" fill="#7F8C8D" font-size="11" font-style="italic">aspect</text>
+    <text x="0" y="146" text-anchor="middle" fill="#7F8C8D" font-size="11" font-style="italic">decides</text>
+  </g>
+
+  <!-- Path 2: perfective present = future -->
+  <g>
+    <rect x="410" y="94" width="360" height="340" rx="12" fill="#F0F9F4" stroke="#27AE60" stroke-width="2"/>
+    <rect x="410" y="94" width="360" height="50" rx="12" fill="url(#perfBox)"/>
+    <rect x="410" y="130" width="360" height="14" fill="url(#perfBox)"/>
+    <text x="590" y="124" text-anchor="middle" fill="#FFFFFF" font-size="17" font-weight="700">Way 2: perfective present</text>
+
+    <text x="430" y="172" fill="#27AE60" font-size="13" font-weight="700">PERFECTIVE verbs</text>
+    <text x="430" y="192" fill="#7F8C8D" font-size="12">(completed, result, one-time actions)</text>
+
+    <!-- Formula visual -->
+    <g transform="translate(430, 210)">
+      <rect x="0" y="0" width="140" height="50" rx="8" fill="#27AE60"/>
+      <text x="70" y="32" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="700">present form</text>
+      <text x="158" y="32" fill="#2C3E50" font-size="24" font-weight="700">=</text>
+      <rect x="180" y="0" width="130" height="50" rx="8" fill="#A9DFBF"/>
+      <text x="245" y="32" text-anchor="middle" fill="#145A32" font-size="16" font-weight="700">FUTURE</text>
+    </g>
+
+    <text x="430" y="290" fill="#2C3E50" font-size="14" font-weight="700">= The present form IS the future</text>
+
+    <!-- Examples -->
+    <g font-size="13" fill="#34495E">
+      <text x="430" y="318"><tspan font-weight="700" fill="#27AE60">přijdu</tspan> — I will arrive</text>
+      <text x="430" y="340"><tspan font-weight="700" fill="#27AE60">přijdeš</tspan> — you will arrive</text>
+      <text x="430" y="362"><tspan font-weight="700" fill="#27AE60">koupím</tspan> — I will buy</text>
+      <text x="430" y="384"><tspan font-weight="700" fill="#27AE60">napíšu</tspan> — I will write</text>
+      <text x="430" y="406"><tspan font-weight="700" fill="#27AE60">udělám</tspan> — I will do (it)</text>
+      <text x="430" y="428"><tspan font-weight="700" fill="#27AE60">řeknu</tspan> — I will say</text>
+    </g>
+  </g>
+
+  <!-- Bottom: comparison summary -->
+  <rect x="30" y="454" width="740" height="146" rx="10" fill="#F4F6F7" stroke="#BDC3C7" stroke-width="1"/>
+  <text x="50" y="482" font-size="15" font-weight="700" fill="#2C3E50">✦ How to choose</text>
+  <g font-size="13" fill="#34495E">
+    <text x="50" y="510"><tspan font-weight="700" fill="#4A90D9">Imperfective</tspan> (dělat, psát, číst): focus on process → use <tspan font-weight="700">budu + infinitive</tspan></text>
+    <text x="50" y="534"><tspan font-weight="700" fill="#27AE60">Perfective</tspan> (udělat, napsat, přečíst): focus on result → <tspan font-weight="700">present tense form = future</tspan></text>
+    <text x="50" y="566" font-style="italic" fill="#7F8C8D">budu dělat  =  "I will be doing" (process)     vs.     udělám  =  "I will do it" (completion)</text>
+    <text x="50" y="588" font-style="italic" fill="#7F8C8D">Perfective verbs have NO present tense meaning — their "present" form always means future.</text>
+  </g>
+</svg>
