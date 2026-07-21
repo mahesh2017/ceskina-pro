@@ -645,7 +645,8 @@
     "gender": "neuter",
     "unit_id": 9,
     "example_cz": "Mám rád maso.",
-    "example_en": "I like meat."
+    "example_en": "I like meat.",
+    "lesson_id": 901
   },
   {
     "id": 60,
@@ -655,7 +656,8 @@
     "gender": null,
     "unit_id": 9,
     "example_cz": "Piju kávu.",
-    "example_en": "I drink coffee."
+    "example_en": "I drink coffee.",
+    "lesson_id": 901
   },
   {
     "id": 61,
@@ -665,7 +667,8 @@
     "gender": null,
     "unit_id": 9,
     "example_cz": "Jím chleba.",
-    "example_en": "I eat bread."
+    "example_en": "I eat bread.",
+    "lesson_id": 901
   },
   {
     "id": 62,
@@ -675,7 +678,8 @@
     "gender": null,
     "unit_id": 9,
     "example_cz": "Dám si kávu, prosím.",
-    "example_en": "I'll have a coffee, please."
+    "example_en": "I'll have a coffee, please.",
+    "lesson_id": 902
   },
   {
     "id": 63,
@@ -685,7 +689,8 @@
     "gender": null,
     "unit_id": 9,
     "example_cz": "Zaplatím, prosím.",
-    "example_en": "I'll pay, please."
+    "example_en": "I'll pay, please.",
+    "lesson_id": 902
   },
   {
     "id": 64,
@@ -695,7 +700,8 @@
     "gender": null,
     "unit_id": 9,
     "example_cz": "Kolik to stojí?",
-    "example_en": "How much does it cost?"
+    "example_en": "How much does it cost?",
+    "lesson_id": 901
   },
   {
     "id": 65,
@@ -705,7 +711,8 @@
     "gender": "neuter",
     "unit_id": 9,
     "example_cz": "Dám si pivo.",
-    "example_en": "I'll have a beer."
+    "example_en": "I'll have a beer.",
+    "lesson_id": 901
   },
   {
     "id": 66,
@@ -714,7 +721,9 @@
     "ipa": "ˈnula",
     "gender": "feminine",
     "unit_id": 7,
-    "lesson_id": 701
+    "lesson_id": 701,
+    "example_cz": "Mám nula korun.",
+    "example_en": "I have zero crowns."
   },
   {
     "id": 67,
@@ -723,7 +732,9 @@
     "ipa": "ˈjɛdɛn",
     "gender": null,
     "unit_id": 7,
-    "lesson_id": 701
+    "lesson_id": 701,
+    "example_cz": "Mám jeden bratr.",
+    "example_en": "I have one brother."
   },
   {
     "id": 68,
@@ -732,7 +743,9 @@
     "ipa": "dva",
     "gender": null,
     "unit_id": 7,
-    "lesson_id": 701
+    "lesson_id": 701,
+    "example_cz": "Mám dvě sestry.",
+    "example_en": "I have two sisters."
   },
   {
     "id": 69,
@@ -741,7 +754,9 @@
     "ipa": "tʃi",
     "gender": null,
     "unit_id": 7,
-    "lesson_id": 701
+    "lesson_id": 701,
+    "example_cz": "Mám tři přátele.",
+    "example_en": "I have three friends."
   },
   {
     "id": 70,
@@ -750,7 +765,9 @@
     "ipa": "ˈtʃtɪr̝i",
     "gender": null,
     "unit_id": 7,
-    "lesson_id": 701
+    "lesson_id": 701,
+    "example_cz": "Mám čtyři knihy.",
+    "example_en": "I have four books."
   },
   {
     "id": 71,
@@ -1012,7 +1029,9 @@
     "ipa": "ˈano",
     "gender": null,
     "unit_id": 2,
-    "lesson_id": 201
+    "lesson_id": 201,
+    "example_cz": "Ano, rozumím.",
+    "example_en": "Yes, I understand."
   },
   {
     "id": 95,
@@ -1021,7 +1040,9 @@
     "ipa": "ˈnɛbo",
     "gender": null,
     "unit_id": 3,
-    "lesson_id": 301
+    "lesson_id": 301,
+    "example_cz": "Nebo, jestli chceš.",
+    "example_en": "Or, if you want."
   },
   {
     "id": 96,
@@ -3948,5 +3969,1017 @@
     "example_cz": "Minulý rok.",
     "example_en": "Last year.",
     "lesson_id": 1502
+  },
+  {
+    "id": 362,
+    "word_cz": "č",
+    "word_en": "č (letter č)",
+    "ipa": "t͡ʃɛː",
+    "gender": null,
+    "unit_id": 1,
+    "example_cz": "Č jako čaj.",
+    "example_en": "Č as in tea.",
+    "lesson_id": 101
+  },
+  {
+    "id": 363,
+    "word_cz": "š",
+    "word_en": "š (letter š)",
+    "ipa": "ʃɛː",
+    "gender": null,
+    "unit_id": 1,
+    "example_cz": "Š jako škola.",
+    "example_en": "Š as in school.",
+    "lesson_id": 101
+  },
+  {
+    "id": 364,
+    "word_cz": "ž",
+    "word_en": "ž (letter ž)",
+    "ipa": "ʒɛː",
+    "gender": null,
+    "unit_id": 1,
+    "example_cz": "Ž jako žirafa.",
+    "example_en": "Ž as in giraffe.",
+    "lesson_id": 101
+  },
+  {
+    "id": 365,
+    "word_cz": "ř",
+    "word_en": "ř (letter ř)",
+    "ipa": "r̝ɛː",
+    "gender": null,
+    "unit_id": 1,
+    "example_cz": "Ř jako řeka.",
+    "example_en": "Ř as in river.",
+    "lesson_id": 101
+  },
+  {
+    "id": 366,
+    "word_cz": "ť",
+    "word_en": "ť (letter ť)",
+    "ipa": "cɛː",
+    "gender": null,
+    "unit_id": 1,
+    "example_cz": "Ť jako tři.",
+    "example_en": "Ť as in three.",
+    "lesson_id": 101
+  },
+  {
+    "id": 367,
+    "word_cz": "Haló",
+    "word_en": "hello (on phone)",
+    "ipa": "ˈhaloː",
+    "gender": null,
+    "unit_id": 2,
+    "example_cz": "Haló, kdo tam je?",
+    "example_en": "Hello, who is there?",
+    "lesson_id": 201
+  },
+  {
+    "id": 368,
+    "word_cz": "Tady je",
+    "word_en": "this is (speaking)",
+    "ipa": "ˈtadɪ jɛ",
+    "gender": null,
+    "unit_id": 2,
+    "example_cz": "Tady je Anna, dobrý den.",
+    "example_en": "This is Anna speaking, hello.",
+    "lesson_id": 201
+  },
+  {
+    "id": 369,
+    "word_cz": "Tak zatím",
+    "word_en": "so long for now",
+    "ipa": "tak ˈzatɪiːm",
+    "gender": null,
+    "unit_id": 2,
+    "example_cz": "Tak zatím, uvidíme se zítra.",
+    "example_en": "So long for now, see you tomorrow.",
+    "lesson_id": 201
+  },
+  {
+    "id": 370,
+    "word_cz": "Uvidíme se",
+    "word_en": "see you",
+    "ipa": "uˈvidiːmɛ sɛ",
+    "gender": null,
+    "unit_id": 2,
+    "example_cz": "Uvidíme se v pondělí.",
+    "example_en": "See you on Monday.",
+    "lesson_id": 201
+  },
+  {
+    "id": 371,
+    "word_cz": "Mějte se hezky",
+    "word_en": "take care",
+    "ipa": "mɲɛjtɛ sɛ ˈhɛski",
+    "gender": null,
+    "unit_id": 2,
+    "example_cz": "Mějte se hezky, na shledanou.",
+    "example_en": "Take care, goodbye.",
+    "lesson_id": 201
+  },
+  {
+    "id": 372,
+    "word_cz": "S dovolením",
+    "word_en": "excuse me / with permission",
+    "ipa": "s ˈdovolɛniːm",
+    "gender": null,
+    "unit_id": 2,
+    "example_cz": "S dovolením, mohu projít?",
+    "example_en": "Excuse me, may I pass?",
+    "lesson_id": 201
+  },
+  {
+    "id": 373,
+    "word_cz": "židle",
+    "word_en": "chair",
+    "ipa": "ˈʒɪldɛ",
+    "gender": "feminine",
+    "unit_id": 3,
+    "example_cz": "Židle je v pokoji.",
+    "example_en": "The chair is in the room.",
+    "lesson_id": 301
+  },
+  {
+    "id": 374,
+    "word_cz": "kdy",
+    "word_en": "when",
+    "ipa": "ɡdi",
+    "gender": null,
+    "unit_id": 4,
+    "example_cz": "Kdy přijdeš?",
+    "example_en": "When will you arrive?",
+    "lesson_id": 401
+  },
+  {
+    "id": 375,
+    "word_cz": "jak",
+    "word_en": "how",
+    "ipa": "jak",
+    "gender": null,
+    "unit_id": 4,
+    "example_cz": "Jak se jmenuješ?",
+    "example_en": "What is your name?",
+    "lesson_id": 401
+  },
+  {
+    "id": 376,
+    "word_cz": "proč",
+    "word_en": "why",
+    "ipa": "prot͡ʃ",
+    "gender": null,
+    "unit_id": 4,
+    "example_cz": "Proč se učíš česky?",
+    "example_en": "Why are you learning Czech?",
+    "lesson_id": 401
+  },
+  {
+    "id": 377,
+    "word_cz": "odkud",
+    "word_en": "where from",
+    "ipa": "ˈodkud",
+    "gender": null,
+    "unit_id": 4,
+    "example_cz": "Odkud jsi?",
+    "example_en": "Where are you from?",
+    "lesson_id": 401
+  },
+  {
+    "id": 378,
+    "word_cz": "unavený",
+    "word_en": "tired",
+    "ipa": "ˈunavɛniː",
+    "gender": "masculine adjective",
+    "unit_id": 4,
+    "example_cz": "Jsem unavený po práci.",
+    "example_en": "I am tired after work.",
+    "lesson_id": 401
+  },
+  {
+    "id": 379,
+    "word_cz": "spokojený",
+    "word_en": "satisfied / content",
+    "ipa": "ˈspokojɛniː",
+    "gender": "masculine adjective",
+    "unit_id": 4,
+    "example_cz": "Jsem spokojený se životem.",
+    "example_en": "I am satisfied with life.",
+    "lesson_id": 401
+  },
+  {
+    "id": 380,
+    "word_cz": "hladový",
+    "word_en": "hungry",
+    "ipa": "ˈhladoviː",
+    "gender": "masculine adjective",
+    "unit_id": 4,
+    "example_cz": "Jsem hladový, co budeme jíst?",
+    "example_en": "I am hungry, what will we eat?",
+    "lesson_id": 401
+  },
+  {
+    "id": 381,
+    "word_cz": "studovat",
+    "word_en": "to study",
+    "ipa": "ˈstudovat",
+    "gender": null,
+    "unit_id": 5,
+    "example_cz": "Studuji na univerzitě.",
+    "example_en": "I study at the university.",
+    "lesson_id": 501
+  },
+  {
+    "id": 382,
+    "word_cz": "vařit",
+    "word_en": "to cook",
+    "ipa": "ˈvařit",
+    "gender": null,
+    "unit_id": 5,
+    "example_cz": "Ráda vařím večeři.",
+    "example_en": "I like to cook dinner.",
+    "lesson_id": 501
+  },
+  {
+    "id": 383,
+    "word_cz": "prodávat",
+    "word_en": "to sell",
+    "ipa": "ˈprodaːvat",
+    "gender": null,
+    "unit_id": 5,
+    "example_cz": "Prodávají ovoce na trhu.",
+    "example_en": "They sell fruit at the market.",
+    "lesson_id": 501
+  },
+  {
+    "id": 384,
+    "word_cz": "přítelkyni",
+    "word_en": "girlfriend (accusative)",
+    "ipa": "ˈpriːtɛlɡɲi",
+    "gender": "feminine",
+    "unit_id": 6,
+    "example_cz": "Vidím přítelkyni v parku.",
+    "example_en": "I see my girlfriend in the park.",
+    "lesson_id": 601
+  },
+  {
+    "id": 385,
+    "word_cz": "zmrzlinu",
+    "word_en": "ice cream (accusative)",
+    "ipa": "ˈzmrzlinu",
+    "gender": "feminine",
+    "unit_id": 6,
+    "example_cz": "Koupím si zmrzlinu.",
+    "example_en": "I will buy an ice cream.",
+    "lesson_id": 601
+  },
+  {
+    "id": 386,
+    "word_cz": "rohlík",
+    "word_en": "roll / bread roll",
+    "ipa": "ˈroɦliːk",
+    "gender": "masculine inanimate",
+    "unit_id": 6,
+    "example_cz": "Jím rohlík s máslem.",
+    "example_en": "I eat a roll with butter.",
+    "lesson_id": 601
+  },
+  {
+    "id": 387,
+    "word_cz": "cukr",
+    "word_en": "sugar",
+    "ipa": "t͡sukr",
+    "gender": "masculine inanimate",
+    "unit_id": 6,
+    "example_cz": "Cukr je ve skleničce.",
+    "example_en": "Sugar is in the jar.",
+    "lesson_id": 601
+  },
+  {
+    "id": 388,
+    "word_cz": "sůl",
+    "word_en": "salt",
+    "ipa": "suːl",
+    "gender": "feminine",
+    "unit_id": 6,
+    "example_cz": "Sůl je na stole.",
+    "example_en": "Salt is on the table.",
+    "lesson_id": 601
+  },
+  {
+    "id": 389,
+    "word_cz": "svůj",
+    "word_en": "one's own",
+    "ipa": "svuːj",
+    "gender": null,
+    "unit_id": 7,
+    "example_cz": "Mám svůj pokoj.",
+    "example_en": "I have my own room.",
+    "lesson_id": 701
+  },
+  {
+    "id": 390,
+    "word_cz": "tenhle",
+    "word_en": "this (masculine)",
+    "ipa": "ˈtɛŋlɛ",
+    "gender": null,
+    "unit_id": 7,
+    "example_cz": "Tenhle muž je můj učitel.",
+    "example_en": "This man is my teacher.",
+    "lesson_id": 701
+  },
+  {
+    "id": 391,
+    "word_cz": "tahle",
+    "word_en": "this (feminine)",
+    "ipa": "ˈtahlɛ",
+    "gender": null,
+    "unit_id": 7,
+    "example_cz": "Tahle žena je lékařka.",
+    "example_en": "This woman is a doctor.",
+    "lesson_id": 701
+  },
+  {
+    "id": 392,
+    "word_cz": "tohle",
+    "word_en": "this (neuter)",
+    "ipa": "ˈtohlɛ",
+    "gender": null,
+    "unit_id": 7,
+    "example_cz": "Tohle auto je nové.",
+    "example_en": "This car is new.",
+    "lesson_id": 701
+  },
+  {
+    "id": 393,
+    "word_cz": "čí",
+    "word_en": "whose",
+    "ipa": "t͡ʃiː",
+    "gender": null,
+    "unit_id": 7,
+    "example_cz": "Čí to je kniha?",
+    "example_en": "Whose book is that?",
+    "lesson_id": 701
+  },
+  {
+    "id": 394,
+    "word_cz": "teta",
+    "word_en": "aunt",
+    "ipa": "ˈtɛta",
+    "gender": "feminine",
+    "unit_id": 8,
+    "example_cz": "Moje teta bydlí v Brně.",
+    "example_en": "My aunt lives in Brno.",
+    "lesson_id": 801
+  },
+  {
+    "id": 395,
+    "word_cz": "strýc",
+    "word_en": "uncle",
+    "ipa": "striːt͡s",
+    "gender": "masculine animate",
+    "unit_id": 8,
+    "example_cz": "Strýc pracuje v bance.",
+    "example_en": "My uncle works in a bank.",
+    "lesson_id": 801
+  },
+  {
+    "id": 396,
+    "word_cz": "bratranec",
+    "word_en": "cousin (male)",
+    "ipa": "ˈbratrant͡s",
+    "gender": "masculine animate",
+    "unit_id": 8,
+    "example_cz": "Můj bratranec je student.",
+    "example_en": "My cousin is a student.",
+    "lesson_id": 801
+  },
+  {
+    "id": 397,
+    "word_cz": "sestřenice",
+    "word_en": "cousin (female)",
+    "ipa": "ˈsɛstruːɲɪt͡sɛ",
+    "gender": "feminine",
+    "unit_id": 8,
+    "example_cz": "Sestřenice bydlí v Praze.",
+    "example_en": "My cousin lives in Prague.",
+    "lesson_id": 801
+  },
+  {
+    "id": 398,
+    "word_cz": "vnuk",
+    "word_en": "grandson",
+    "ipa": "vnuːk",
+    "gender": "masculine animate",
+    "unit_id": 8,
+    "example_cz": "Vnuk navštěvuje babičku.",
+    "example_en": "The grandson visits his grandmother.",
+    "lesson_id": 801
+  },
+  {
+    "id": 399,
+    "word_cz": "vnučka",
+    "word_en": "granddaughter",
+    "ipa": "ˈvnut͡ʃka",
+    "gender": "feminine",
+    "unit_id": 8,
+    "example_cz": "Vnučka je ještě malá.",
+    "example_en": "The granddaughter is still small.",
+    "lesson_id": 801
+  },
+  {
+    "id": 400,
+    "word_cz": "prarodiče",
+    "word_en": "grandparents",
+    "ipa": "ˈprarodit͡ʃɛ",
+    "gender": "masculine animate",
+    "unit_id": 8,
+    "example_cz": "Moje prarodiče jsou staří.",
+    "example_en": "My grandparents are old.",
+    "lesson_id": 801
+  },
+  {
+    "id": 401,
+    "word_cz": "mladý",
+    "word_en": "young",
+    "ipa": "ˈmladiː",
+    "gender": "masculine adjective",
+    "unit_id": 8,
+    "example_cz": "Můj bratr je ještě mladý.",
+    "example_en": "My brother is still young.",
+    "lesson_id": 801
+  },
+  {
+    "id": 402,
+    "word_cz": "první",
+    "word_en": "first",
+    "ipa": "ˈprvniː",
+    "gender": "masculine adjective",
+    "unit_id": 9,
+    "example_cz": "To je moje první lekce.",
+    "example_en": "This is my first lesson.",
+    "lesson_id": 901
+  },
+  {
+    "id": 403,
+    "word_cz": "druhý",
+    "word_en": "second",
+    "ipa": "ˈdruɦiː",
+    "gender": "masculine adjective",
+    "unit_id": 9,
+    "example_cz": "Druhý den byl hezký.",
+    "example_en": "The second day was nice.",
+    "lesson_id": 901
+  },
+  {
+    "id": 404,
+    "word_cz": "třetí",
+    "word_en": "third",
+    "ipa": "ˈtr̝ɛtiː",
+    "gender": "masculine adjective",
+    "unit_id": 9,
+    "example_cz": "Třetí lekce je těžká.",
+    "example_en": "The third lesson is difficult.",
+    "lesson_id": 901
+  },
+  {
+    "id": 405,
+    "word_cz": "čtvrtý",
+    "word_en": "fourth",
+    "ipa": "ˈt͡ʃtvrtiː",
+    "gender": "masculine adjective",
+    "unit_id": 9,
+    "example_cz": "Čtvrtý student přišel pozdě.",
+    "example_en": "The fourth student arrived late.",
+    "lesson_id": 901
+  },
+  {
+    "id": 406,
+    "word_cz": "pátý",
+    "word_en": "fifth",
+    "ipa": "ˈpaːtiː",
+    "gender": "masculine adjective",
+    "unit_id": 9,
+    "example_cz": "Pátý den v týdnu je pátek.",
+    "example_en": "The fifth day of the week is Friday.",
+    "lesson_id": 901
+  },
+  {
+    "id": 407,
+    "word_cz": "červená",
+    "word_en": "red (feminine)",
+    "ipa": "ˈt͡ʃɛrvɛnaː",
+    "gender": "feminine",
+    "unit_id": 9,
+    "example_cz": "Má červenou sukni.",
+    "example_en": "She has a red skirt.",
+    "lesson_id": 901
+  },
+  {
+    "id": 408,
+    "word_cz": "modrá",
+    "word_en": "blue (feminine)",
+    "ipa": "ˈmodraː",
+    "gender": "feminine",
+    "unit_id": 9,
+    "example_cz": "Modrá barva je hezká.",
+    "example_en": "The blue color is nice.",
+    "lesson_id": 901
+  },
+  {
+    "id": 409,
+    "word_cz": "zelená",
+    "word_en": "green (feminine)",
+    "ipa": "ˈzɛlɛnaː",
+    "gender": "feminine",
+    "unit_id": 9,
+    "example_cz": "Zelená je barva trávy.",
+    "example_en": "Green is the color of grass.",
+    "lesson_id": 901
+  },
+  {
+    "id": 410,
+    "word_cz": "umývat se",
+    "word_en": "to wash oneself",
+    "ipa": "ˈumiːvat sɛ",
+    "gender": null,
+    "unit_id": 10,
+    "example_cz": "Umývám se ráno.",
+    "example_en": "I wash myself in the morning.",
+    "lesson_id": 1001
+  },
+  {
+    "id": 411,
+    "word_cz": "holit se",
+    "word_en": "to shave oneself",
+    "ipa": "ˈholit sɛ",
+    "gender": null,
+    "unit_id": 10,
+    "example_cz": "Holí se každé ráno.",
+    "example_en": "He shaves every morning.",
+    "lesson_id": 1001
+  },
+  {
+    "id": 412,
+    "word_cz": "česat se",
+    "word_en": "to comb one's hair",
+    "ipa": "ˈt͡ʃɛsat sɛ",
+    "gender": null,
+    "unit_id": 10,
+    "example_cz": "Češu se před zrcadlem.",
+    "example_en": "I comb my hair in front of the mirror.",
+    "lesson_id": 1001
+  },
+  {
+    "id": 413,
+    "word_cz": "budík",
+    "word_en": "alarm clock",
+    "ipa": "ˈbudiːk",
+    "gender": "masculine inanimate",
+    "unit_id": 10,
+    "example_cz": "Budík zvoní v šest hodin.",
+    "example_en": "The alarm clock rings at six o'clock.",
+    "lesson_id": 1001
+  },
+  {
+    "id": 414,
+    "word_cz": "zubní kartáček",
+    "word_en": "toothbrush",
+    "ipa": "ˈzubniː ˈkartaːt͡ʃɛk",
+    "gender": "masculine inanimate",
+    "unit_id": 10,
+    "example_cz": "Mám nový zubní kartáček.",
+    "example_en": "I have a new toothbrush.",
+    "lesson_id": 1001
+  },
+  {
+    "id": 415,
+    "word_cz": "ručník",
+    "word_en": "towel",
+    "ipa": "ˈrut͡ʃɲiːk",
+    "gender": "masculine inanimate",
+    "unit_id": 10,
+    "example_cz": "Ručník je suchý.",
+    "example_en": "The towel is dry.",
+    "lesson_id": 1001
+  },
+  {
+    "id": 416,
+    "word_cz": "sprcha",
+    "word_en": "shower",
+    "ipa": "ˈsprxa",
+    "gender": "feminine",
+    "unit_id": 10,
+    "example_cz": "Sprcha je ráno studená.",
+    "example_en": "The shower is cold in the morning.",
+    "lesson_id": 1001
+  },
+  {
+    "id": 417,
+    "word_cz": "knedlík",
+    "word_en": "dumpling",
+    "ipa": "ˈknɛdliːk",
+    "gender": "masculine inanimate",
+    "unit_id": 11,
+    "example_cz": "Knedlík je tradiční jídlo.",
+    "example_en": "Dumpling is a traditional dish.",
+    "lesson_id": 1101
+  },
+  {
+    "id": 418,
+    "word_cz": "brambory",
+    "word_en": "potatoes",
+    "ipa": "ˈbramborɪ",
+    "gender": "feminine",
+    "unit_id": 11,
+    "example_cz": "Brambory jsou v hrnci.",
+    "example_en": "The potatoes are in the pot.",
+    "lesson_id": 1101
+  },
+  {
+    "id": 419,
+    "word_cz": "rýže",
+    "word_en": "rice",
+    "ipa": "ˈriːʒɛ",
+    "gender": "feminine",
+    "unit_id": 11,
+    "example_cz": "Rýže je s masem.",
+    "example_en": "Rice is with meat.",
+    "lesson_id": 1101
+  },
+  {
+    "id": 420,
+    "word_cz": "džus",
+    "word_en": "juice",
+    "ipa": "d͡ʒus",
+    "gender": "masculine inanimate",
+    "unit_id": 11,
+    "example_cz": "Džus je pomerančový.",
+    "example_en": "The juice is orange.",
+    "lesson_id": 1101
+  },
+  {
+    "id": 421,
+    "word_cz": "kabát",
+    "word_en": "coat",
+    "ipa": "ˈkabaːt",
+    "gender": "masculine inanimate",
+    "unit_id": 12,
+    "example_cz": "Kabát je teplý.",
+    "example_en": "The coat is warm.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 422,
+    "word_cz": "tričko",
+    "word_en": "t-shirt",
+    "ipa": "ˈtrit͡ʃko",
+    "gender": "neuter",
+    "unit_id": 12,
+    "example_cz": "Tričko je modré.",
+    "example_en": "The t-shirt is blue.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 423,
+    "word_cz": "sukně",
+    "word_en": "skirt",
+    "ipa": "ˈsukɲɛ",
+    "gender": "feminine",
+    "unit_id": 12,
+    "example_cz": "Sukně je dlouhá.",
+    "example_en": "The skirt is long.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 424,
+    "word_cz": "ponožky",
+    "word_en": "socks",
+    "ipa": "ˈponoʃkɪ",
+    "gender": "feminine",
+    "unit_id": 12,
+    "example_cz": "Ponožky jsou v šatníku.",
+    "example_en": "The socks are in the wardrobe.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 425,
+    "word_cz": "obchod",
+    "word_en": "shop / store",
+    "ipa": "ˈopt͡ʃot",
+    "gender": "masculine inanimate",
+    "unit_id": 12,
+    "example_cz": "Obchod je otevřený.",
+    "example_en": "The shop is open.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 426,
+    "word_cz": "supermarket",
+    "word_en": "supermarket",
+    "ipa": "ˈsupɛrmarkɛt",
+    "gender": "masculine inanimate",
+    "unit_id": 12,
+    "example_cz": "Supermarket je blízko.",
+    "example_en": "The supermarket is nearby.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 427,
+    "word_cz": "trh",
+    "word_en": "market",
+    "ipa": "tr̥x",
+    "gender": "masculine inanimate",
+    "unit_id": 12,
+    "example_cz": "Trh je na náměstí.",
+    "example_en": "The market is on the square.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 428,
+    "word_cz": "platit",
+    "word_en": "to pay",
+    "ipa": "ˈplatit",
+    "gender": null,
+    "unit_id": 12,
+    "example_cz": "Platím v hotovosti.",
+    "example_en": "I pay in cash.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 429,
+    "word_cz": "hotovost",
+    "word_en": "cash",
+    "ipa": "ˈhotovost",
+    "gender": "feminine",
+    "unit_id": 12,
+    "example_cz": "Nemám hotovost u sebe.",
+    "example_en": "I don't have cash with me.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 430,
+    "word_cz": "karta",
+    "word_en": "card",
+    "ipa": "ˈkarta",
+    "gender": "feminine",
+    "unit_id": 12,
+    "example_cz": "Platím kartou.",
+    "example_en": "I pay by card.",
+    "lesson_id": 1201
+  },
+  {
+    "id": 431,
+    "word_cz": "sport",
+    "word_en": "sport",
+    "ipa": "sport",
+    "gender": "masculine inanimate",
+    "unit_id": 13,
+    "example_cz": "Sport je zdravý.",
+    "example_en": "Sport is healthy.",
+    "lesson_id": 1301
+  },
+  {
+    "id": 432,
+    "word_cz": "čtení",
+    "word_en": "reading",
+    "ipa": "ˈt͡ʃtɛɲiː",
+    "gender": "neuter",
+    "unit_id": 13,
+    "example_cz": "Čtení je můj koníček.",
+    "example_en": "Reading is my hobby.",
+    "lesson_id": 1301
+  },
+  {
+    "id": 433,
+    "word_cz": "zahradničení",
+    "word_en": "gardening",
+    "ipa": "ˈzahradɲit͡ʃɛɲiː",
+    "gender": "neuter",
+    "unit_id": 13,
+    "example_cz": "Zahradničení je relax.",
+    "example_en": "Gardening is relaxing.",
+    "lesson_id": 1301
+  },
+  {
+    "id": 434,
+    "word_cz": "vaření",
+    "word_en": "cooking",
+    "ipa": "ˈvařɛɲiː",
+    "gender": "neuter",
+    "unit_id": 13,
+    "example_cz": "Vaření mě baví.",
+    "example_en": "Cooking is fun for me.",
+    "lesson_id": 1301
+  },
+  {
+    "id": 435,
+    "word_cz": "cestování",
+    "word_en": "traveling",
+    "ipa": "ˈt͡sɛstovaːɲiː",
+    "gender": "neuter",
+    "unit_id": 13,
+    "example_cz": "Cestování je moje vášeň.",
+    "example_en": "Traveling is my passion.",
+    "lesson_id": 1301
+  },
+  {
+    "id": 436,
+    "word_cz": "divadlo",
+    "word_en": "theater",
+    "ipa": "ˈdivadlo",
+    "gender": "neuter",
+    "unit_id": 13,
+    "example_cz": "Divadlo je v centru.",
+    "example_en": "The theater is in the center.",
+    "lesson_id": 1301
+  },
+  {
+    "id": 437,
+    "word_cz": "koncert",
+    "word_en": "concert",
+    "ipa": "ˈkont͡sɛrt",
+    "gender": "masculine inanimate",
+    "unit_id": 13,
+    "example_cz": "Koncert začíná v sedm.",
+    "example_en": "The concert starts at seven.",
+    "lesson_id": 1301
+  },
+  {
+    "id": 438,
+    "word_cz": "zastávka",
+    "word_en": "stop / station stop",
+    "ipa": "ˈzastaːfka",
+    "gender": "feminine",
+    "unit_id": 14,
+    "example_cz": "Zastávka je na rohu.",
+    "example_en": "The stop is on the corner.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 439,
+    "word_cz": "pošta",
+    "word_en": "post office",
+    "ipa": "ˈpoʃta",
+    "gender": "feminine",
+    "unit_id": 14,
+    "example_cz": "Pošta je otevřená do pěti.",
+    "example_en": "The post office is open until five.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 440,
+    "word_cz": "banka",
+    "word_en": "bank",
+    "ipa": "ˈbanka",
+    "gender": "feminine",
+    "unit_id": 14,
+    "example_cz": "Banka je vedle pošty.",
+    "example_en": "The bank is next to the post office.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 441,
+    "word_cz": "nemocnice",
+    "word_en": "hospital",
+    "ipa": "ˈnɛmotsɲɪt͡sɛ",
+    "gender": "feminine",
+    "unit_id": 14,
+    "example_cz": "Nemocnice je velká.",
+    "example_en": "The hospital is big.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 442,
+    "word_cz": "lékárna",
+    "word_en": "pharmacy",
+    "ipa": "ˈlɛkaːrna",
+    "gender": "feminine",
+    "unit_id": 14,
+    "example_cz": "Lékárna je otevřená.",
+    "example_en": "The pharmacy is open.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 443,
+    "word_cz": "park",
+    "word_en": "park",
+    "ipa": "park",
+    "gender": "masculine inanimate",
+    "unit_id": 14,
+    "example_cz": "Park je hezký a tichý.",
+    "example_en": "The park is nice and quiet.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 444,
+    "word_cz": "vlak",
+    "word_en": "train",
+    "ipa": "vlak",
+    "gender": "masculine inanimate",
+    "unit_id": 14,
+    "example_cz": "Vlak jede do Prahy.",
+    "example_en": "The train goes to Prague.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 445,
+    "word_cz": "jízdenka",
+    "word_en": "ticket",
+    "ipa": "ˈjiːzdɛnka",
+    "gender": "feminine",
+    "unit_id": 14,
+    "example_cz": "Jízdenka stojí třicet korun.",
+    "example_en": "The ticket costs thirty crowns.",
+    "lesson_id": 1401
+  },
+  {
+    "id": 446,
+    "word_cz": "déšť",
+    "word_en": "rain",
+    "ipa": "dɛːʃt͡ʃ",
+    "gender": "masculine inanimate",
+    "unit_id": 15,
+    "example_cz": "Déšť padá celý den.",
+    "example_en": "Rain falls all day.",
+    "lesson_id": 1501
+  },
+  {
+    "id": 447,
+    "word_cz": "sníh",
+    "word_en": "snow",
+    "ipa": "sɲiːx",
+    "gender": "masculine inanimate",
+    "unit_id": 15,
+    "example_cz": "Sníh je bílý a studený.",
+    "example_en": "Snow is white and cold.",
+    "lesson_id": 1501
+  },
+  {
+    "id": 448,
+    "word_cz": "mlha",
+    "word_en": "fog",
+    "ipa": "ˈmlɦa",
+    "gender": "feminine",
+    "unit_id": 15,
+    "example_cz": "Mlha je ráno hustá.",
+    "example_en": "The fog is thick in the morning.",
+    "lesson_id": 1501
+  },
+  {
+    "id": 449,
+    "word_cz": "oblačno",
+    "word_en": "cloudy",
+    "ipa": "ˈoblat͡ʃno",
+    "gender": null,
+    "unit_id": 15,
+    "example_cz": "Dnes je oblačno.",
+    "example_en": "Today it is cloudy.",
+    "lesson_id": 1501
+  },
+  {
+    "id": 450,
+    "word_cz": "bouřka",
+    "word_en": "thunderstorm",
+    "ipa": "ˈbour̝ka",
+    "gender": "feminine",
+    "unit_id": 15,
+    "example_cz": "Bouřka je večer.",
+    "example_en": "There is a thunderstorm in the evening.",
+    "lesson_id": 1501
+  },
+  {
+    "id": 451,
+    "word_cz": "teplota",
+    "word_en": "temperature",
+    "ipa": "ˈtɛplota",
+    "gender": "feminine",
+    "unit_id": 15,
+    "example_cz": "Teplota je dvacet stupňů.",
+    "example_en": "The temperature is twenty degrees.",
+    "lesson_id": 1501
+  },
+  {
+    "id": 452,
+    "word_cz": "pas",
+    "word_en": "passport",
+    "ipa": "pas",
+    "gender": "masculine inanimate",
+    "unit_id": 15,
+    "example_cz": "Pas je v tašce.",
+    "example_en": "The passport is in the bag.",
+    "lesson_id": 1501
+  },
+  {
+    "id": 453,
+    "word_cz": "kufr",
+    "word_en": "suitcase",
+    "ipa": "kufr",
+    "gender": "masculine inanimate",
+    "unit_id": 15,
+    "example_cz": "Kufr je těžký.",
+    "example_en": "The suitcase is heavy.",
+    "lesson_id": 1501
   }
 ]

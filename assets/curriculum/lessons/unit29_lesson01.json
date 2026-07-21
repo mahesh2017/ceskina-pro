@@ -1,0 +1,573 @@
+{
+  "id": 2901,
+  "unit_id": 29,
+  "order_in_unit": 1,
+  "title": "A2 Exam Practice: Reading & Listening",
+  "description": "A2-level exam practice for reading and listening comprehension. Read informal emails, job listings, public notices, news articles, and diary entries. Listen to doctor conversations, phone calls, apartment viewings, work schedule discussions, and public transport announcements. Includes A2 grammar multiple-choice on cases, past tense, verb aspect, and conditional.",
+  "duration_min": 40,
+  "lesson_type": "practice",
+  "is_review": true,
+  "exercises": [
+    {
+      "id": 29001,
+      "lesson_id": 2901,
+      "type": "reading_comprehension",
+      "prompt": "Read the informal email about the weekend.",
+      "data": {
+        "type": "reading_comprehension",
+        "prompt_en": "Read the email about the weekend and answer the questions.",
+        "text_cz": "Ahoj Pavle,\nděkuju za tvůj e-mail. Měl jsem hezký víkend! V sobotu jsem byl na koncertě s kamarády. Hrála se tam česká kapela a byla to super náladu. V neděli jsem zůstal doma protože pršelo. Četl jsem knihu a díval se na film. Byl jsem trochu unavený, ale byl to pohodový den.\nNapiš mi, jaký jsi měl víkend!\nZatím čau,\nMartin",
+        "text_en": "Hi Pavel, thanks for your email. I had a nice weekend! On Saturday I was at a concert with friends. A Czech band played there and it was a great atmosphere. On Sunday I stayed home because it was raining. I read a book and watched a film. I was a bit tired, but it was a relaxing day. Write me what kind of weekend you had! Cheers, Martin",
+        "questions": [
+          {
+            "question_cz": "Co dělal v sobotu?",
+            "question_en": "What did he do on Saturday?",
+            "options": [
+              "Byl na koncertě",
+              "Četl knihu",
+              "Zůstal doma",
+              "Šel do kina"
+            ],
+            "correct_index": 0
+          },
+          {
+            "question_cz": "Proč zůstal doma v neděli?",
+            "question_en": "Why did he stay home on Sunday?",
+            "options": [
+              "Protože byl unavený",
+              "Protože pršelo",
+              "Protože neměl peníze",
+              "Protože pracoval"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Jakou náladu měl v neděli?",
+            "question_en": "What was his mood on Sunday?",
+            "options": [
+              "Špatnou",
+              "Pohodovou",
+              "Vzteklou",
+              "Smutnou"
+            ],
+            "correct_index": 1
+          }
+        ]
+      },
+      "answer_key": "Byl na koncertě; Protože pršelo; Pohodovou",
+      "xp_reward": 20
+    },
+    {
+      "id": 29002,
+      "lesson_id": 2901,
+      "type": "reading_comprehension",
+      "prompt": "Read the job listing and answer.",
+      "data": {
+        "type": "reading_comprehension",
+        "prompt_en": "Read the job listing and answer the questions.",
+        "text_cz": "HLEDÁME RECEPCIONISTKU / RECEPCIONISTU\nHotel U Slunce, Brno\nNabízíme: plný úvazek, plat 28 000 Kč měsíčně, 4 týdny dovolené. Požadavky: znalost angličtiny a češtiny, komunikační dovednosti, praxe v oboru výhodou. Pracovní doba: 6:00–14:00 / 14:00–22:00, střídavě. Náplň práce: přivítání hostů, správa rezervací, odpověď na telefonáty. Životopis posílejte na: recepcie@uslunce.cz do 30. listopadu.",
+        "text_en": "WE ARE LOOKING FOR A RECEPTIONIST\nHotel U Slunce, Brno\nWe offer: full-time, salary 28,000 CZK/month, 4 weeks of vacation. Requirements: knowledge of English and Czech, communication skills, experience in the field is an advantage. Working hours: 6 AM–2 PM / 2 PM–10 PM, alternating. Job description: welcoming guests, managing reservations, answering phone calls. Send your CV to: recepcie@uslunce.cz by November 30.",
+        "questions": [
+          {
+            "question_cz": "Jaké jazyky musí uchazeč umět?",
+            "question_en": "What languages must the applicant know?",
+            "options": [
+              "Češtinu a němčinu",
+              "Angličtinu a češtinu",
+              "Angličtinu a němčinu",
+              "Pouze češtinu"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Do kdy je třeba poslat životopis?",
+            "question_en": "By when must the CV be sent?",
+            "options": [
+              "Do 30. listopadu",
+              "Do 30. prosince",
+              "Do 30. října",
+              "Do 15. listopadu"
+            ],
+            "correct_index": 0
+          }
+        ]
+      },
+      "answer_key": "Angličtinu a češtinu; Do 30. listopadu",
+      "xp_reward": 20
+    },
+    {
+      "id": 29003,
+      "lesson_id": 2901,
+      "type": "reading_comprehension",
+      "prompt": "Read the public notice about parking.",
+      "data": {
+        "type": "reading_comprehension",
+        "prompt_en": "Read the parking notice and answer the questions.",
+        "text_cz": "OZNÁMENÍ — PARKOVÁNÍ\nVážení obyvatelé,\nod 1. března do 31. května bude ulice Na Hradbách uzavřena pro parkování z důvodu rekonstrukce povrchu. Parkovat je možné na parkovišti u kostela, které je zdarma pro obyvatele s trvalým bydlištěm. Ostatní řidiči musí zaplatit 30 Kč za hodinu. Děkujeme za pochopení.\nOÚ města",
+        "text_en": "NOTICE — PARKING\nDear residents,\nfrom March 1 to May 31, Na Hradbách street will be closed for parking due to surface reconstruction. Parking is available at the church parking lot, which is free for residents with permanent residence. Other drivers must pay 30 CZK per hour. Thank you for your understanding.\nMunicipal Office",
+        "questions": [
+          {
+            "question_cz": "Proč je ulice uzavřena?",
+            "question_en": "Why is the street closed?",
+            "options": [
+              "Kvůli rekonstrukci povrchu",
+              "Kvůli svátku",
+              "Kvůli havárii",
+              "Kvůli sportovní akci"
+            ],
+            "correct_index": 0
+          },
+          {
+            "question_cz": "Kdo má parkování zdarma?",
+            "question_en": "Who gets free parking?",
+            "options": [
+              "Všichni řidiči",
+              "Obyvatelé s trvalým bydlištěm",
+              "Seniori",
+              "Návštěvníci"
+            ],
+            "correct_index": 1
+          }
+        ]
+      },
+      "answer_key": "Kvůli rekonstrukci povrchu; Obyvatelé s trvalým bydlištěm",
+      "xp_reward": 20
+    },
+    {
+      "id": 29004,
+      "lesson_id": 2901,
+      "type": "reading_comprehension",
+      "prompt": "Read the short news article about weather.",
+      "data": {
+        "type": "reading_comprehension",
+        "prompt_en": "Read the weather news and answer.",
+        "text_cz": "Předpověď počasí: O víkendu čeká Moravu teplotní rekord. V sobotu teploty vystoupají až na 32 °C, což je pro měsíc květen neobvyklé. Meteorologové varují před vysokým rizikem požárů v lesích. V neděli odpoledne přijdou bouřky s přívalovými dešti, které by měly ochladit vzduch. Lidem se doporučuje pít hodně vody a nevystavovat se přímému slunci mezi 11:00 a 15:00.",
+        "text_en": "Weather forecast: Moravia will see a temperature record this weekend. On Saturday, temperatures will rise up to 32 °C, which is unusual for May. Meteorologists warn of a high risk of forest fires. On Sunday afternoon, storms with torrential rains will arrive, which should cool the air down. People are advised to drink plenty of water and avoid direct sun between 11 AM and 3 PM.",
+        "questions": [
+          {
+            "question_cz": "Jaká teplota bude v sobotu?",
+            "question_en": "What temperature will it be on Saturday?",
+            "options": [
+              "Až 32 °C",
+              "Až 25 °C",
+              "Až 20 °C",
+              "Až 35 °C"
+            ],
+            "correct_index": 0
+          },
+          {
+            "question_cz": "Co varují meteorologové?",
+            "question_en": "What do meteorologists warn about?",
+            "options": [
+              "Před povodněmi",
+              "Před rizikem požárů v lesích",
+              "Před silným větrem",
+              "Před sněhem"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Kdy by se lidé neměli vystavovat slunci?",
+            "question_en": "When should people avoid the sun?",
+            "options": [
+              "Mezi 9:00 a 11:00",
+              "Mezi 11:00 a 15:00",
+              "Mezi 15:00 a 18:00",
+              "Celý den"
+            ],
+            "correct_index": 1
+          }
+        ]
+      },
+      "answer_key": "Až 32 °C; Před rizikem požárů v lesích; Mezi 11:00 a 15:00",
+      "xp_reward": 20
+    },
+    {
+      "id": 29005,
+      "lesson_id": 2901,
+      "type": "reading_comprehension",
+      "prompt": "Read the diary entry.",
+      "data": {
+        "type": "reading_comprehension",
+        "prompt_en": "Read the diary entry and answer.",
+        "text_cz": "Milý deníčku,\ndneska jsem měl důležitý den. Ráno jsem šel na pohovor do nové firmy. Byl jsem trochu nervózní, ale myslím, že to dopadlo dobře. Ptali se mě na mé zkušenosti a na to, proč bych chtěl pracovat u nich. Řekl jsem, že mě zajímá jejich projekt a že bych se rád naučil nové věci. Odpoledne jsem zavolal mamince, aby jí to řekl. Držte mi palce!\nVečer jsem šel běhat do parku a cítil jsem se skvěle.",
+        "text_en": "Dear diary, today I had an important day. In the morning I went to an interview at a new company. I was a bit nervous, but I think it went well. They asked me about my experiences and about why I'd want to work for them. I said I'm interested in their project and that I'd like to learn new things. In the afternoon I called my mom to tell her. Keep your fingers crossed! In the evening I went running in the park and felt great.",
+        "questions": [
+          {
+            "question_cz": "Kam šel ráno?",
+            "question_en": "Where did he go in the morning?",
+            "options": [
+              "Do školy",
+              "Na pohovor do firmy",
+              "Do parku",
+              "Na nákup"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Jak se cítil na pohovoru?",
+            "question_en": "How did he feel at the interview?",
+            "options": [
+              "Skvěle",
+              "Trochu nervózní",
+              "Hrozně",
+              "Uvolněně"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Co dělal večer?",
+            "question_en": "What did he do in the evening?",
+            "options": [
+              "Šel běhat do parku",
+              "Díval se na televizi",
+              "Zavolal mamince",
+              "Četl knihu"
+            ],
+            "correct_index": 0
+          }
+        ]
+      },
+      "answer_key": "Na pohovor do firmy; Trochu nervózní; Šel běhat do parku",
+      "xp_reward": 20
+    },
+    {
+      "id": 29006,
+      "lesson_id": 2901,
+      "type": "listening_comprehension",
+      "prompt": "Listen to the doctor conversation about symptoms.",
+      "data": {
+        "type": "listening_comprehension",
+        "prompt_en": "Listen to the conversation at the doctor's and answer.",
+        "audio_hash": "list_29_06",
+        "transcript_cz": "Lékař: Tak co vás trápí dneska?\nPacientka: Už týden mě bolí hlava a cítím se unavená. Také mě bolí krk při polykání.\nLékař: Máte teplotu?\nPacientka: Ano, měřila jsem si ráno, měla jsem 37,8.\nLékař: Podívám se do krku. Je to zanícené. Napišu vám recept na antibiotika. Užívejte je 7 dní, dvakrát denně. A přijďte za týden na kontrolu.\nPacientka: Děkuji, pane doktore.",
+        "transcript_en": "Doctor: So what's bothering you today?\nPatient: For a week now I've had a headache and feel tired. My throat also hurts when swallowing.\nDoctor: Do you have a temperature?\nPatient: Yes, I measured this morning, I had 37.8.\nDoctor: Let me look at your throat. It's inflamed. I'll write you a prescription for antibiotics. Take them for 7 days, twice a day. And come back in a week for a check-up.\nPatient: Thank you, doctor.",
+        "questions": [
+          {
+            "question_cz": "Jak dlouho ji bolí hlava?",
+            "question_en": "How long has she had a headache?",
+            "options": [
+              "Tři dny",
+              "Týden",
+              "Dva týdny",
+              "Měsíc"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Jakou měla teplotu ráno?",
+            "question_en": "What temperature did she have in the morning?",
+            "options": [
+              "37,5",
+              "37,8",
+              "38,0",
+              "38,5"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Kolik dní má brát antibiotika?",
+            "question_en": "How many days should she take antibiotics?",
+            "options": [
+              "5 dní",
+              "7 dní",
+              "10 dní",
+              "14 dní"
+            ],
+            "correct_index": 1
+          }
+        ]
+      },
+      "answer_key": "Týden; 37,8; 7 dní",
+      "xp_reward": 20
+    },
+    {
+      "id": 29007,
+      "lesson_id": 2901,
+      "type": "listening_comprehension",
+      "prompt": "Listen to the phone call arranging a meeting.",
+      "data": {
+        "type": "listening_comprehension",
+        "prompt_en": "Listen to the phone call and answer.",
+        "audio_hash": "list_29_07",
+        "transcript_cz": "Jana: Haló, tady Jana. Můžu mluvit s Petrem?\nPetra: Ahoj Jano, Petra tady není, je v práci. Můžu ti vyřídit vzkaz?\nJana: Ano, prosím. Řekni jí, že se nemůžeme sejít ve středu, protože mám schůzku. Známe se v pátek v 15:00 v kavárně na náměstí?\nPetra: Dobře, vyřídím jí to. Něco dalšího?\nJana: Ne, to je všechno. Děkuju!\nPetra: Zatím ahoj!",
+        "transcript_en": "Jana: Hello, this is Jana. Can I speak to Petra?\nPetra: Hi Jana, Petra isn't here, she's at work. Can I take a message?\nJana: Yes please. Tell her we can't meet on Wednesday because I have a meeting. Shall we meet Friday at 3 PM at the café on the square?\nPetra: Okay, I'll pass it on. Anything else?\nJana: No, that's all. Thanks!\nPetra: Bye!",
+        "questions": [
+          {
+            "question_cz": "Kdy se nemohou sejít?",
+            "question_en": "When can they not meet?",
+            "options": [
+              "V pondělí",
+              "Ve středu",
+              "V pátek",
+              "V sobotu"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Kde se sejdou v pátek?",
+            "question_en": "Where will they meet on Friday?",
+            "options": [
+              "V práci",
+              "V kavárně na náměstí",
+              "Doma",
+              "V restauraci"
+            ],
+            "correct_index": 1
+          }
+        ]
+      },
+      "answer_key": "Ve středu; V kavárně na náměstí",
+      "xp_reward": 20
+    },
+    {
+      "id": 29008,
+      "lesson_id": 2901,
+      "type": "listening_comprehension",
+      "prompt": "Listen to the apartment viewing conversation.",
+      "data": {
+        "type": "listening_comprehension",
+        "prompt_en": "Listen to the apartment viewing and answer.",
+        "audio_hash": "list_29_08",
+        "transcript_cz": "Majitel: Dobrý den, pojďte dál. Tady je byt o velikosti 50 metrů čtverečních. Má dvě místnosti, kuchyň a koupelnu.\nNájemce: A je tu balkon?\nMajitel: Ano, balkon je z obývacího pokoje. Nájem je 15 000 Kč měsíčně plus poplatky 3 000 Kč.\nNájemce: To je trochu hodně. Je možné smlouvat?\nMajitel: Cenu nemůžu snížit, ale můžu vám darovat první měsíc zdarma.\nNájemce: To zní dobře. Kdy bych se mohl nastěhovat?\nMajitel: Od 1. dubna, pokud vás to vyhovuje.\nNájemce: Ano, to by šlo.",
+        "transcript_en": "Landlord: Hello, come in. This is a 50 square meter apartment. It has two rooms, a kitchen, and a bathroom.\nTenant: Is there a balcony?\nLandlord: Yes, the balcony is off the living room. The rent is 15,000 CZK/month plus fees of 3,000 CZK.\nTenant: That's a bit much. Is it possible to negotiate?\nLandlord: I can't lower the price, but I can give you the first month free.\nTenant: That sounds good. When could I move in?\nLandlord: From April 1, if that works for you.\nTenant: Yes, that would work.",
+        "questions": [
+          {
+            "question_cz": "Kolik má byt místností?",
+            "question_en": "How many rooms does the apartment have?",
+            "options": [
+              "Jednu",
+              "Dvě",
+              "Tři",
+              "Čtyři"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Kolik je nájem plus poplatky?",
+            "question_en": "How much is rent plus fees?",
+            "options": [
+              "15 000 Kč",
+              "18 000 Kč",
+              "20 000 Kč",
+              "12 000 Kč"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Kdy se může nastěhovat?",
+            "question_en": "When can he move in?",
+            "options": [
+              "Od 1. března",
+              "Od 1. dubna",
+              "Od 1. května",
+              "Hned"
+            ],
+            "correct_index": 1
+          }
+        ]
+      },
+      "answer_key": "Dvě; 18 000 Kč; Od 1. dubna",
+      "xp_reward": 20
+    },
+    {
+      "id": 29009,
+      "lesson_id": 2901,
+      "type": "listening_comprehension",
+      "prompt": "Listen to the conversation about work schedule.",
+      "data": {
+        "type": "listening_comprehension",
+        "prompt_en": "Listen to the conversation about the work schedule and answer.",
+        "audio_hash": "list_29_09",
+        "transcript_cz": "Šéf: Takže, příští týden máme změnu. V pondělí a úterý pracujeme normálně od 8 do 16. Ve středu máme poradu od 9 do 11, takže začneme později. Ve čtvrtek bude firma uzavřena kvůli technické přestávce. V pátek pracujeme jen do 12, protože je půlden.\nZaměstnanec: A co přesčas? Bylo by potřeba pracovat víc v pondělí?\nŠéf: Ne, přesčasy tento týden nebudou. Máme dost práce hotové.",
+        "transcript_en": "Boss: So, next week we have a change. On Monday and Tuesday we work normally from 8 to 4. On Wednesday we have a meeting from 9 to 11, so we'll start later. On Thursday the company will be closed due to a technical break. On Friday we work only until 12 because it's a half-day.\nEmployee: What about overtime? Would we need to work more on Monday?\nBoss: No, there won't be overtime this week. We have enough work done.",
+        "questions": [
+          {
+            "question_cz": "Proč je firma uzavřena ve čtvrtek?",
+            "question_en": "Why is the company closed on Thursday?",
+            "options": [
+              "Kvůli svátku",
+              "Kvůli technické přestávce",
+              "Kvůli poradě",
+              "Kvůli dovolené"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Do kolika pracují v pátek?",
+            "question_en": "Until what time do they work on Friday?",
+            "options": [
+              "Do 12",
+              "Do 14",
+              "Do 16",
+              "Do 18"
+            ],
+            "correct_index": 0
+          }
+        ]
+      },
+      "answer_key": "Kvůli technické přestávce; Do 12",
+      "xp_reward": 20
+    },
+    {
+      "id": 29010,
+      "lesson_id": 2901,
+      "type": "listening_comprehension",
+      "prompt": "Listen to the public transport announcement.",
+      "data": {
+        "type": "listening_comprehension",
+        "prompt_en": "Listen to the public transport announcement and answer.",
+        "audio_hash": "list_29_10",
+        "transcript_cz": "Vážení cestující, oznamujeme vám, že z důvodu oprav kolejí nebude jezdit tramvaj číslo 9 v úseku mezi zastávkami Náměstí Republiky a Hlavní nádraží od 1. července do 31. srpna. Místo tramvaje je zřízena náhradní autobusová doprava linka X9, která jede každých 10 minut. Omlouváme se vám za nepříjemnosti a děkujeme za pochopení.",
+        "transcript_en": "Dear passengers, we announce that due to track repairs, tram number 9 will not run in the section between Náměstí Republiky and Hlavní nádraží stops from July 1 to August 31. Instead of the tram, a replacement bus service line X9 has been set up, running every 10 minutes. We apologize for the inconvenience and thank you for your understanding.",
+        "questions": [
+          {
+            "question_cz": "Která tramvaj nebude jezdit?",
+            "question_en": "Which tram will not run?",
+            "options": [
+              "Číslo 5",
+              "Číslo 9",
+              "Číslo 19",
+              "Číslo 22"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Jak dlouho bude oprava trvat?",
+            "question_en": "How long will the repair last?",
+            "options": [
+              "Měsíc",
+              "Dva měsíce",
+              "Tři měsíce",
+              "Týden"
+            ],
+            "correct_index": 1
+          },
+          {
+            "question_cz": "Jak často jezdí náhradní autobus?",
+            "question_en": "How often does the replacement bus run?",
+            "options": [
+              "Každých 5 minut",
+              "Každých 10 minut",
+              "Každých 15 minut",
+              "Každých 20 minut"
+            ],
+            "correct_index": 1
+          }
+        ]
+      },
+      "answer_key": "Číslo 9; Dva měsíce; Každých 10 minut",
+      "xp_reward": 20
+    },
+    {
+      "id": 29011,
+      "lesson_id": 2901,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct preposition + case form.",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správnou předložku a pád.",
+        "question_en": "Choose the correct form: 'Jdu ___ školu.' (to school — accusative)",
+        "options": [
+          "do",
+          "na",
+          "v",
+          "k"
+        ],
+        "correct_index": 1,
+        "explanation": "With the accusative for destination, 'na' is used for school: 'Jdu na školu.' = I'm going to school. 'Do' is used with genitive for institutions: 'do školy' is also possible, but 'na školu' is more common for the building/activity. Here we want accusative after 'na' (direction)."
+      },
+      "answer_key": "na",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-130"
+    },
+    {
+      "id": 29012,
+      "lesson_id": 2901,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct past tense form.",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správný tvar minulého času.",
+        "question_en": "Choose the correct past tense form: 'Včera jsem ___ do kina.' (jít — to go, male speaker)",
+        "options": [
+          "šel",
+          "šla",
+          "šli",
+          "šly"
+        ],
+        "correct_index": 0,
+        "explanation": "'Včera jsem šel do kina.' = Yesterday I went to the cinema (male speaker). 'Šel' is the masculine singular past participle of 'jít'. Feminine: 'šla', masculine plural: 'šli', feminine/non-masculine plural: 'šly'."
+      },
+      "answer_key": "šel",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-140"
+    },
+    {
+      "id": 29013,
+      "lesson_id": 2901,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct verb aspect (imperfective vs perfective).",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správný vid slovesa (dokonavý/nedokonavý).",
+        "question_en": "Choose the correct aspect: 'Když ___ domů, zavolal jsem ti.' (přijít — to arrive)",
+        "options": [
+          "přicházel jsem",
+          "přišel jsem",
+          "chodil jsem",
+          "jsem přišel"
+        ],
+        "correct_index": 1,
+        "explanation": "The correct form is 'přišel jsem': 'Když jsem přišel domů, zavolal jsem ti.' After 'když' (when — factual), we use the past tense. 'Přišel' (perfective past participle) indicates a single completed event. 'Přicházel' (imperfective) would imply a repeated or ongoing action, not suitable here. Word order: 'jsem přišel' or 'přišel jsem' are both correct."
+      },
+      "answer_key": "přišel",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-141"
+    },
+    {
+      "id": 29014,
+      "lesson_id": 2901,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct conditional form.",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správnou formu podmiňovacího způsobu.",
+        "question_en": "Choose the correct conditional form: 'Kdybych ___ čas, šel bych s tebou.' (mít — to have, male speaker)",
+        "options": [
+          "měl",
+          "mít",
+          "má",
+          "měl bych"
+        ],
+        "correct_index": 0,
+        "explanation": "The correct form is 'měl': 'Kdybych měl čas, šel bych s tebou.' = If I had time, I would go with you. After 'kdybych' (if I — conditional), we use the past participle 'měl' (masc.) of 'mít'. The result clause uses 'šel bych' (past participle + conditional auxiliary bych)."
+      },
+      "answer_key": "měl",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-213"
+    },
+    {
+      "id": 29015,
+      "lesson_id": 2901,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct case after the preposition.",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správný tvar po předložce.",
+        "question_en": "Choose the correct form: 'Mluvil jsem s ___.' (s kamarád — with a friend, masculine)",
+        "options": [
+          "kamarád",
+          "kamaráda",
+          "kamarádem",
+          "kamarádovi"
+        ],
+        "correct_index": 2,
+        "explanation": "The correct form is 'kamarádem' (instrumental): 'Mluvil jsem s kamarádem.' = I spoke with a friend. The preposition 's' (with) requires the instrumental case. Masculine animate instrumental singular: kamarád → kamarádem."
+      },
+      "answer_key": "kamarádem",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-170"
+    }
+  ]
+}

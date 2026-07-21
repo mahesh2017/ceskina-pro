@@ -1,0 +1,223 @@
+{
+  "id": 2501,
+  "unit_id": 25,
+  "order_in_unit": 0,
+  "title": "Professions & Workplace",
+  "description": "Learn to talk about professions and jobs in Czech. Practice the instrumental case with 'být' (to be) and the construction 'pracovat jako' (to work as) with the nominative case.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 25001,
+      "lesson_id": 2501,
+      "type": "matching",
+      "prompt": "Match each Czech profession with its English translation.",
+      "data": {
+        "type": "matching",
+        "instructions_cz": "Spojte české profese s anglickým překladem.",
+        "instructions_en": "Match each Czech profession with its English translation.",
+        "pairs": [
+          {"cz": "lékař", "en": "doctor"},
+          {"cz": "učitel", "en": "teacher"},
+          {"cz": "inženýr", "en": "engineer"},
+          {"cz": "právník", "en": "lawyer"}
+        ],
+        "accepted_answers": ["lékař-doctor|učitel-teacher|inženýr-engineer|právník-lawyer"],
+        "explanation": "These are common masculine profession nouns in Czech. The feminine forms add -ka: lékařka, učitelka, inženýrka, právnička."
+      },
+      "answer_key": "lékař-doctor|učitel-teacher|inženýr-engineer|právník-lawyer",
+      "grammar_rule_id": "GR-241",
+      "xp_reward": 15
+    },
+    {
+      "id": 25002,
+      "lesson_id": 2501,
+      "type": "matching",
+      "prompt": "Match each Czech profession with its English translation.",
+      "data": {
+        "type": "matching",
+        "instructions_cz": "Spojte české profese s anglickým překladem.",
+        "instructions_en": "Match each Czech profession with its English translation.",
+        "pairs": [
+          {"cz": "programátor", "en": "programmer"},
+          {"cz": "kuchař", "en": "cook"},
+          {"cz": "řidič", "en": "driver"},
+          {"cz": "prodavač", "en": "salesman"}
+        ],
+        "accepted_answers": ["programátor-programmer|kuchař-cook|řidič-driver|prodavač-salesman"],
+        "explanation": "More common professions. Feminine forms: programátorka, kuchařka, řidička, prodavačka. Note that 'řidič' can mean any driver (taxi, bus, truck)."
+      },
+      "answer_key": "programátor-programmer|kuchař-cook|řidič-driver|prodavač-salesman",
+      "grammar_rule_id": "GR-241",
+      "xp_reward": 15
+    },
+    {
+      "id": 25003,
+      "lesson_id": 2501,
+      "type": "multiple_choice",
+      "prompt": "Complete the sentence with the instrumental form: 'On je ___ (lékař).'",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Doplňte instrumentál: 'On je ___ (lékař).'",
+        "question_en": "Complete with the instrumental form: 'He is a doctor.'",
+        "options": ["lékař", "lékaře", "lékařem", "lékařovi"],
+        "correct_index": 2,
+        "explanation": "After 'být' (to be), the profession takes the instrumental case: lékař → lékařem. 'On je lékařem.' = He is a doctor. The instrumental ending for masculine animate nouns is -em."
+      },
+      "answer_key": "lékařem",
+      "grammar_rule_id": "GR-240",
+      "xp_reward": 10
+    },
+    {
+      "id": 25004,
+      "lesson_id": 2501,
+      "type": "multiple_choice",
+      "prompt": "What case follows 'pracovat jako' (to work as)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaký pád následuje po 'pracovat jako'?",
+        "question_en": "What case follows 'pracovat jako' (to work as)?",
+        "options": ["instrumental", "nominative", "accusative", "genitive"],
+        "correct_index": 1,
+        "explanation": "'Pracovat jako' is followed by the nominative case: 'Pracuje jako lékař' (not 'lékařem'). This contrasts with 'být' + instrumental: 'Je lékařem.' Both mean 'He is/works as a doctor' but use different cases."
+      },
+      "answer_key": "nominative",
+      "grammar_rule_id": "GR-241",
+      "xp_reward": 10
+    },
+    {
+      "id": 25005,
+      "lesson_id": 2501,
+      "type": "fill_blank",
+      "prompt": "Fill in the instrumental form of 'učitelka' (female teacher): 'Ona je ___.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Ona je ___. (učitelka — instrumental)",
+        "blank_count": 1,
+        "accepted_answers": ["učitelkou"],
+        "explanation": "Feminine nouns ending in -ka form the instrumental by changing -ka to -kou: učitelka → učitelkou. 'Ona je učitelkou.' = She is a teacher."
+      },
+      "answer_key": "učitelkou",
+      "grammar_rule_id": "GR-240",
+      "xp_reward": 15
+    },
+    {
+      "id": 25006,
+      "lesson_id": 2501,
+      "type": "fill_blank",
+      "prompt": "Fill in the instrumental form of 'inženýr': 'Můj bratr je ___.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Můj bratr je ___. (inženýr — instrumental)",
+        "blank_count": 1,
+        "accepted_answers": ["inženýrem"],
+        "explanation": "Masculine animate nouns ending in a consonant add -em in the instrumental: inženýr → inženýrem. 'Můj bratr je inženýrem.' = My brother is an engineer."
+      },
+      "answer_key": "inženýrem",
+      "grammar_rule_id": "GR-240",
+      "xp_reward": 15
+    },
+    {
+      "id": 25007,
+      "lesson_id": 2501,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'She works as a lawyer.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "She works as a lawyer.",
+        "accepted_answers": ["Pracuje jako právník.", "Ona pracuje jako právník.", "Pracuje jako právnička.", "Ona pracuje jako právnička."],
+        "grammar_note": "'Pracovat jako' + nominative. 'Pracuje jako právník' = She works as a lawyer. You can also use the feminine form 'právnícička' — but note 'právník' is often used for both genders in professional contexts. The feminine form is 'právníčka'."
+      },
+      "answer_key": "Pracuje jako právník.",
+      "grammar_rule_id": "GR-241",
+      "xp_reward": 10
+    },
+    {
+      "id": 25008,
+      "lesson_id": 2501,
+      "type": "translation",
+      "prompt": "Translate to English: 'On je programátorem.'",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "On je programátorem.",
+        "accepted_answers": ["He is a programmer.", "He's a programmer."],
+        "grammar_note": "'On je programátorem' uses the instrumental case ('programátorem') after 'být'. This is the formal/standard form. In colloquial Czech, you may also hear 'On je programátor' (nominative). Both mean 'He is a programmer.'"
+      },
+      "answer_key": "He is a programmer.",
+      "grammar_rule_id": "GR-240",
+      "xp_reward": 10
+    },
+    {
+      "id": 25009,
+      "lesson_id": 2501,
+      "type": "error_correction",
+      "prompt": "Find and correct the error in this sentence.",
+      "data": {
+        "type": "error_correction",
+        "sentence_with_error": "On pracuje jako lékařem.",
+        "hint": "Think about which case 'jako' requires.",
+        "accepted_answers": ["On pracuje jako lékař.", "Pracuje jako lékař."],
+        "explanation": "'Pracovat jako' takes the nominative case, not the instrumental. 'Lékařem' is instrumental — correct after 'být' (je lékařem) but wrong after 'jako'. The correct sentence is 'On pracuje jako lékař.' Compare: 'On je lékařem.' (být + instrumental) vs. 'On pracuje jako lékař.' (jako + nominative)."
+      },
+      "answer_key": "On pracuje jako lékař.",
+      "grammar_rule_id": "GR-241",
+      "xp_reward": 15
+    },
+    {
+      "id": 25010,
+      "lesson_id": 2501,
+      "type": "word_order",
+      "prompt": "Arrange the words to form: 'My sister works as a teacher.'",
+      "data": {
+        "type": "word_order",
+        "scrambled": ["učitelka", "pracuje", "Moje", "jako", "sestra"],
+        "correct_order": ["Moje", "sestra", "pracuje", "jako", "učitelka"],
+        "explanation": "'Moje sestra pracuje jako učitelka.' = My sister works as a teacher. 'Pracovat jako' + nominative (učitelka, not učitelkou). Word order: subject + verb + jako + profession."
+      },
+      "answer_key": "Moje sestra pracuje jako učitelka.",
+      "grammar_rule_id": "GR-241",
+      "xp_reward": 15
+    },
+    {
+      "id": 25011,
+      "lesson_id": 2501,
+      "type": "pronunciation",
+      "prompt": "Pronounce the following sentence about your profession.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Pracuji jako programátor.",
+        "target_audio_hash": "placeholder_25011",
+        "focus_sounds": ["Pracuji", "jako", "programátor", "á"],
+        "min_score": 0.6,
+        "translation_en": "I work as a programmer."
+      },
+      "answer_key": "Pracuji jako programátor.",
+      "grammar_rule_id": "GR-241",
+      "xp_reward": 15
+    },
+    {
+      "id": 25012,
+      "lesson_id": 2501,
+      "type": "dialogue",
+      "prompt": "Complete the dialogue about professions at a social gathering.",
+      "data": {
+        "type": "dialogue",
+        "scenario": "Na párty — At a party. Two people meet and ask about each other's jobs.",
+        "lines": [
+          {"speaker": "person_a", "text": "Aha, tak co děláte? Jakou máte profesi?"},
+          {"speaker": "person_b", "text": "Jsem lékařem. Pracuji v nemocnici."},
+          {"speaker": "person_a", "text": "To je zajímavé! A pracujete jako lékař dlouho?"},
+          {"speaker": "person_b", "text": "Ano, už deset let. A co vy? Co děláte?"}
+        ],
+        "accepted_answers": ["Jsem lékařem. Pracuji v nemocnici.|Jsem lékařem.|Pracuji v nemocnici.|Jsem lékařem a pracuji v nemocnici."],
+        "explanation": "'Jsem lékařem' uses the instrumental case after 'být' (GR-240). 'Pracuji v nemocnici' = I work in a hospital (v + locative). 'Jakou máte profesi?' = What is your profession? Note the formal address ('děláte', 'máte', 'pracujete')."
+      },
+      "answer_key": "Jsem lékařem. Pracuji v nemocnici.",
+      "grammar_rule_id": "GR-240",
+      "xp_reward": 25
+    }
+  ]
+}
