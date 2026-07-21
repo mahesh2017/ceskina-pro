@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" width="800" height="620" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#4A90D9"/>
+      <stop offset="1" stop-color="#357ABD"/>
+    </linearGradient>
+    <linearGradient id="accentA" x1="0" x2="1">
+      <stop offset="0" stop-color="#E67E22"/>
+      <stop offset="1" stop-color="#D35400"/>
+    </linearGradient>
+    <linearGradient id="accentI" x1="0" x2="1">
+      <stop offset="0" stop-color="#27AE60"/>
+      <stop offset="1" stop-color="#1E8449"/>
+    </linearGradient>
+    <linearGradient id="accentE" x1="0" x2="1">
+      <stop offset="0" stop-color="#8E44AD"/>
+      <stop offset="1" stop-color="#6C3483"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="620" fill="#FFFFFF"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="800" height="78" fill="url(#hdr)"/>
+  <text x="40" y="36" fill="#FFFFFF" font-size="24" font-weight="700">Přítomný čas · Present Tense</text>
+  <text x="40" y="62" fill="#E8F1FB" font-size="14">Three conjugation classes by infinitive ending</text>
+
+  <!-- Legend -->
+  <g transform="translate(490, 22)">
+    <rect x="0" y="0" width="14" height="14" rx="3" fill="url(#accentA)"/>
+    <text x="20" y="12" fill="#FFFFFF" font-size="12">-át class</text>
+    <rect x="100" y="0" width="14" height="14" rx="3" fill="url(#accentI)"/>
+    <text x="120" y="12" fill="#FFFFFF" font-size="12">-ít/-et class</text>
+    <rect x="210" y="0" width="14" height="14" rx="3" fill="url(#accentE)"/>
+    <text x="230" y="12" fill="#FFFFFF" font-size="12">-et/-ět class</text>
+  </g>
+
+  <!-- Column headers -->
+  <g font-size="14" font-weight="700" fill="#2C3E50">
+    <text x="40" y="110">Person</text>
+    <text x="170" y="110">dělat (to do)</text>
+    <text x="330" y="110">prosit (to beg)</text>
+    <text x="490" y="110">rozumět (to understand)</text>
+  </g>
+  <line x1="30" y1="118" x2="770" y2="118" stroke="#BDC3C7" stroke-width="1"/>
+
+  <!-- Class label pills -->
+  <g font-size="11" font-weight="700">
+    <rect x="160" y="125" width="110" height="22" rx="11" fill="url(#accentA)"/>
+    <text x="215" y="140" text-anchor="middle" fill="#FFFFFF">-át class</text>
+    <rect x="320" y="125" width="110" height="22" rx="11" fill="url(#accentI)"/>
+    <text x="375" y="140" text-anchor="middle" fill="#FFFFFF">-ít/-et class</text>
+    <rect x="480" y="125" width="130" height="22" rx="11" fill="url(#accentE)"/>
+    <text x="545" y="140" text-anchor="middle" fill="#FFFFFF">-et/-ět class</text>
+  </g>
+
+  <!-- Row data: 6 persons -->
+  <!-- Each row: pronoun, dělat form, prosit form, rozumět form. Endings color-coded. -->
+  <g font-size="16" fill="#2C3E50">
+    <!-- já -->
+    <rect x="30" y="158" width="740" height="44" rx="6" fill="#F8F9FA"/>
+    <text x="40" y="186" font-weight="700" fill="#2C3E50">já</text>
+    <text x="170" y="186">děl<tspan font-weight="700" fill="#E67E22">ám</tspan></text>
+    <text x="330" y="186">pros<tspan font-weight="700" fill="#27AE60">ím</tspan></text>
+    <text x="490" y="186">rozum<tspan font-weight="700" fill="#8E44AD">ím</tspan></text>
+
+    <!-- ty -->
+    <rect x="30" y="204" width="740" height="44" rx="6" fill="#FFFFFF"/>
+    <text x="40" y="232" font-weight="700" fill="#2C3E50">ty</text>
+    <text x="170" y="232">děl<tspan font-weight="700" fill="#E67E22">áš</tspan></text>
+    <text x="330" y="232">pros<tspan font-weight="700" fill="#27AE60">íš</tspan></text>
+    <text x="490" y="232">rozum<tspan font-weight="700" fill="#8E44AD">íš</tspan></text>
+
+    <!-- on/ona/ono -->
+    <rect x="30" y="250" width="740" height="44" rx="6" fill="#F8F9FA"/>
+    <text x="40" y="278" font-weight="700" fill="#2C3E50">on/ona</text>
+    <text x="170" y="278">děl<tspan font-weight="700" fill="#E67E22">á</tspan></text>
+    <text x="330" y="278">pros<tspan font-weight="700" fill="#27AE60">í</tspan></text>
+    <text x="490" y="278">rozum<tspan font-weight="700" fill="#8E44AD">í</tspan></text>
+
+    <!-- my -->
+    <rect x="30" y="296" width="740" height="44" rx="6" fill="#FFFFFF"/>
+    <text x="40" y="324" font-weight="700" fill="#2C3E50">my</text>
+    <text x="170" y="324">děl<tspan font-weight="700" fill="#E67E22">áme</tspan></text>
+    <text x="330" y="324">pros<tspan font-weight="700" fill="#27AE60">íme</tspan></text>
+    <text x="490" y="324">rozum<tspan font-weight="700" fill="#8E44AD">íme</tspan></text>
+
+    <!-- vy -->
+    <rect x="30" y="342" width="740" height="44" rx="6" fill="#F8F9FA"/>
+    <text x="40" y="370" font-weight="700" fill="#2C3E50">vy</text>
+    <text x="170" y="370">děl<tspan font-weight="700" fill="#E67E22">áte</tspan></text>
+    <text x="330" y="370">pros<tspan font-weight="700" fill="#27AE60">íte</tspan></text>
+    <text x="490" y="370">rozum<tspan font-weight="700" fill="#8E44AD">íte</tspan></text>
+
+    <!-- oni/ony -->
+    <rect x="30" y="388" width="740" height="44" rx="6" fill="#FFFFFF"/>
+    <text x="40" y="416" font-weight="700" fill="#2C3E50">oni/ony</text>
+    <text x="170" y="416">děl<tspan font-weight="700" fill="#E67E22">ají</tspan></text>
+    <text x="330" y="416">pros<tspan font-weight="700" fill="#27AE60">í</tspan></text>
+    <text x="490" y="416">rozum<tspan font-weight="700" fill="#8E44AD">í</tspan></text>
+  </g>
+
+  <!-- Pattern highlight box -->
+  <rect x="30" y="448" width="740" height="150" rx="10" fill="#F4F6F7" stroke="#BDC3C7" stroke-width="1"/>
+  <text x="50" y="476" font-size="15" font-weight="700" fill="#2C3E50">✦ The Pattern</text>
+
+  <g font-size="13" fill="#34495E">
+    <text x="50" y="504"><tspan font-weight="700" fill="#E67E22">-át class</tspan>: stem + -ám, -áš, -á, -áme, -áte, -ají  →  ends in <tspan font-weight="700">-á-</tspan></text>
+    <text x="50" y="528"><tspan font-weight="700" fill="#27AE60">-ít/-et class</tspan>: stem + -ím, -íš, -í, -íme, -íte, -í  →  ends in <tspan font-weight="700">-í-</tspan></text>
+    <text x="50" y="552"><tspan font-weight="700" fill="#8E44AD">-et/-ět class</tspan>: stem + -ím, -íš, -í, -íme, -íte, -í  →  ends in <tspan font-weight="700">-í-</tspan> (same as -ít)</text>
+    <text x="50" y="584" font-style="italic" fill="#7F8C8D">Tip: drop the infinitive ending, keep the stem, add the person ending.</text>
+  </g>
+</svg>

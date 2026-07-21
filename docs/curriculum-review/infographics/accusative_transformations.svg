@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 720" width="800" height="720" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrowGold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F39C12"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="720" fill="#FAFBFC"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#2C3E50">Accusative Transformations</text>
+  <text x="400" y="62" text-anchor="middle" font-size="14" fill="#7F8C8D" font-style="italic">4. pád — akuzativ · how nouns change as direct objects (A1)</text>
+
+  <!-- Subtitle bar -->
+  <rect x="40" y="85" width="720" height="36" rx="8" fill="#ECF0F1"/>
+  <text x="400" y="108" text-anchor="middle" font-size="12" font-weight="700" fill="#2C3E50">NOMINATIVE (1.)  →  ACCUSATIVE (4.)    ·    changes depend on gender &amp; animacy</text>
+
+  <!-- Row 1: žena → ženu (Feminine, -a → -u) -->
+  <g transform="translate(40, 145)">
+    <rect x="0" y="0" width="720" height="100" rx="12" fill="#FCE8F1" stroke="#E91E8C" stroke-width="2"/>
+
+    <!-- Gender tag -->
+    <rect x="14" y="14" width="120" height="28" rx="14" fill="#E91E8C"/>
+    <text x="74" y="33" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">FEMININE · -a</text>
+
+    <!-- Nominative word -->
+    <g transform="translate(160, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">1. NOM</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">žen<tspan fill="#E91E8C">a</tspan></text>
+    </g>
+
+    <!-- Arrow -->
+    <g transform="translate(310, 50)">
+      <line x1="0" y1="20" x2="120" y2="20" stroke="#F39C12" stroke-width="4" marker-end="url(#arrowGold)"/>
+      <text x="60" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#F39C12">-a → -u</text>
+      <text x="60" y="44" text-anchor="middle" font-size="10" fill="#7F8C8D" font-style="italic">changes</text>
+    </g>
+
+    <!-- Accusative word -->
+    <g transform="translate(460, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">4. ACC</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">žen<tspan fill="#E91E8C">u</tspan></text>
+    </g>
+
+    <!-- Example sentence -->
+    <text x="610" y="60" font-size="11" fill="#7F8C8D" font-style="italic">Vidím ženu.</text>
+    <text x="610" y="78" font-size="10" fill="#95A5A6">"I see the woman."</text>
+  </g>
+
+  <!-- Row 2: hrad → hrad (Masc inanimate, no change) -->
+  <g transform="translate(40, 260)">
+    <rect x="0" y="0" width="720" height="100" rx="12" fill="#E8F8EE" stroke="#27AE60" stroke-width="2"/>
+
+    <rect x="14" y="14" width="180" height="28" rx="14" fill="#27AE60"/>
+    <text x="104" y="33" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">MASC INANIMATE · cons.</text>
+
+    <g transform="translate(220, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">1. NOM</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">hrad</text>
+    </g>
+
+    <g transform="translate(340, 50)">
+      <line x1="0" y1="20" x2="120" y2="20" stroke="#95A5A6" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrowGold)"/>
+      <text x="60" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">= no change</text>
+      <text x="60" y="44" text-anchor="middle" font-size="10" fill="#95A5A6" font-style="italic">inanimate</text>
+    </g>
+
+    <g transform="translate(490, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">4. ACC</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">hrad</text>
+    </g>
+
+    <text x="610" y="60" font-size="11" fill="#7F8C8D" font-style="italic">Vidím hrad.</text>
+    <text x="610" y="78" font-size="10" fill="#95A5A6">"I see the castle."</text>
+  </g>
+
+  <!-- Row 3: muž → muže (Masc animate, +e) -->
+  <g transform="translate(40, 375)">
+    <rect x="0" y="0" width="720" height="100" rx="12" fill="#E8F0FA" stroke="#4A90D9" stroke-width="2"/>
+
+    <rect x="14" y="14" width="160" height="28" rx="14" fill="#4A90D9"/>
+    <text x="94" y="33" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">MASC ANIMATE · cons.</text>
+
+    <g transform="translate(200, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">1. NOM</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">muž</text>
+    </g>
+
+    <g transform="translate(310, 50)">
+      <line x1="0" y1="20" x2="120" y2="20" stroke="#F39C12" stroke-width="4" marker-end="url(#arrowGold)"/>
+      <text x="60" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#F39C12">+ -e</text>
+      <text x="60" y="44" text-anchor="middle" font-size="10" fill="#7F8C8D" font-style="italic">animate +e</text>
+    </g>
+
+    <g transform="translate(460, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">4. ACC</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">muž<tspan fill="#4A90D9">e</tspan></text>
+    </g>
+
+    <text x="610" y="60" font-size="11" fill="#7F8C8D" font-style="italic">Vidím muže.</text>
+    <text x="610" y="78" font-size="10" fill="#95A5A6">"I see the man."</text>
+  </g>
+
+  <!-- Row 4: město → město (Neuter, no change) -->
+  <g transform="translate(40, 490)">
+    <rect x="0" y="0" width="720" height="100" rx="12" fill="#FDF2E9" stroke="#E67E22" stroke-width="2"/>
+
+    <rect x="14" y="14" width="120" height="28" rx="14" fill="#E67E22"/>
+    <text x="74" y="33" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">NEUTER · -o/-e</text>
+
+    <g transform="translate(160, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">1. NOM</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">měst<tspan fill="#E67E22">o</tspan></text>
+    </g>
+
+    <g transform="translate(310, 50)">
+      <line x1="0" y1="20" x2="120" y2="20" stroke="#95A5A6" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrowGold)"/>
+      <text x="60" y="10" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">= no change</text>
+      <text x="60" y="44" text-anchor="middle" font-size="10" fill="#95A5A6" font-style="italic">neuter never changes</text>
+    </g>
+
+    <g transform="translate(460, 50)">
+      <text x="0" y="0" font-size="11" fill="#7F8C8D">4. ACC</text>
+      <text x="0" y="30" font-size="34" font-weight="700" fill="#2C3E50">měst<tspan fill="#E67E22">o</tspan></text>
+    </g>
+
+    <text x="610" y="60" font-size="11" fill="#7F8C8D" font-style="italic">Vidím město.</text>
+    <text x="610" y="78" font-size="10" fill="#95A5A6">"I see the city."</text>
+  </g>
+
+  <!-- Summary rule box -->
+  <g transform="translate(40, 610)">
+    <rect width="720" height="85" rx="12" fill="#2C3E50"/>
+    <text x="20" y="26" font-size="13" font-weight="700" fill="#fff" letter-spacing="1.5">RULE OF THUMB</text>
+    <text x="20" y="48" font-size="12" fill="#fff" opacity="0.9">• Feminine -a → -u   •  Masc animate consonant → +e   •  Masc inanimate &amp; neuter = no change</text>
+    <text x="20" y="68" font-size="11" fill="#BDC3C7" font-style="italic">Animate masculine is the only gender that "grows" an ending in accusative singular.</text>
+  </g>
+</svg>

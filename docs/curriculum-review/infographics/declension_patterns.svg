@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 720" width="800" height="720" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="800" height="720" fill="#FAFBFC"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#2C3E50">Declension Patterns</text>
+  <text x="400" y="62" text-anchor="middle" font-size="14" fill="#7F8C8D" font-style="italic">Skloňování — one noun per gender across all 6 cases (singular)</text>
+
+  <!-- Table grid: 5 columns (Case | pán | hrad | žena | město), 7 rows (header + 6 cases) -->
+  <!-- Col widths: 90, 175, 175, 175, 175 = 790, start at x=5 -->
+  <!-- Row heights: 50 header, 60 each = 50 + 360 = 410, start at y=90 -->
+
+  <!-- Header row -->
+  <g>
+    <rect x="5" y="90" width="790" height="50" fill="#2C3E50"/>
+    <rect x="5" y="90" width="90" height="50" fill="#34495E"/>
+    <text x="50" y="118" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">PÁD</text>
+    <text x="50" y="133" text-anchor="middle" font-size="10" fill="#BDC3C7">case</text>
+
+    <!-- pán header -->
+    <rect x="95" y="90" width="175" height="50" fill="#4A90D9"/>
+    <text x="182" y="113" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">pán</text>
+    <text x="182" y="131" text-anchor="middle" font-size="10" fill="#fff" opacity="0.9">masc. animate · "master"</text>
+
+    <!-- hrad header -->
+    <rect x="270" y="90" width="175" height="50" fill="#27AE60"/>
+    <text x="357" y="113" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">hrad</text>
+    <text x="357" y="131" text-anchor="middle" font-size="10" fill="#fff" opacity="0.9">masc. inanimate · "castle"</text>
+
+    <!-- žena header -->
+    <rect x="445" y="90" width="175" height="50" fill="#E91E8C"/>
+    <text x="532" y="113" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">žena</text>
+    <text x="532" y="131" text-anchor="middle" font-size="10" fill="#fff" opacity="0.9">feminine · "woman"</text>
+
+    <!-- město header -->
+    <rect x="620" y="90" width="175" height="50" fill="#E67E22"/>
+    <text x="707" y="113" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">město</text>
+    <text x="707" y="131" text-anchor="middle" font-size="10" fill="#fff" opacity="0.9">neuter · "city"</text>
+  </g>
+
+  <!-- Row 1: Nominative -->
+  <g transform="translate(0, 140)">
+    <rect x="5" y="0" width="790" height="60" fill="#F4F6F7"/>
+    <rect x="5" y="0" width="90" height="60" fill="#ECF0F1"/>
+    <text x="50" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#2C3E50">1. NOM</text>
+    <text x="50" y="42" text-anchor="middle" font-size="9" fill="#7F8C8D" font-style="italic">subject</text>
+    <text x="182" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">pán</text>
+    <text x="357" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">hrad</text>
+    <text x="532" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">žen<tspan font-weight="800" fill="#E91E8C">a</tspan></text>
+    <text x="707" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">měst<tspan font-weight="800" fill="#E67E22">o</tspan></text>
+  </g>
+
+  <!-- Row 2: Genitive -->
+  <g transform="translate(0, 200)">
+    <rect x="5" y="0" width="790" height="60" fill="#fff"/>
+    <rect x="5" y="0" width="90" height="60" fill="#ECF0F1"/>
+    <text x="50" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#2C3E50">2. GEN</text>
+    <text x="50" y="42" text-anchor="middle" font-size="9" fill="#7F8C8D" font-style="italic">of / from</text>
+    <text x="182" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">pán<tspan font-weight="800" fill="#4A90D9">a</tspan></text>
+    <text x="357" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">hrad<tspan font-weight="800" fill="#27AE60">u</tspan></text>
+    <text x="532" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">žen<tspan font-weight="800" fill="#E91E8C">y</tspan></text>
+    <text x="707" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">měst<tspan font-weight="800" fill="#E67E22">a</tspan></text>
+  </g>
+
+  <!-- Row 3: Dative -->
+  <g transform="translate(0, 260)">
+    <rect x="5" y="0" width="790" height="60" fill="#F4F6F7"/>
+    <rect x="5" y="0" width="90" height="60" fill="#ECF0F1"/>
+    <text x="50" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#2C3E50">3. DAT</text>
+    <text x="50" y="42" text-anchor="middle" font-size="9" fill="#7F8C8D" font-style="italic">to / for</text>
+    <text x="182" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">pán<tspan font-weight="800" fill="#4A90D9">ovi</tspan></text>
+    <text x="357" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">hrad<tspan font-weight="800" fill="#27AE60">u</tspan></text>
+    <text x="532" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">žen<tspan font-weight="800" fill="#E91E8C">ě</tspan></text>
+    <text x="707" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">měst<tspan font-weight="800" fill="#E67E22">u</tspan></text>
+  </g>
+
+  <!-- Row 4: Accusative -->
+  <g transform="translate(0, 320)">
+    <rect x="5" y="0" width="790" height="60" fill="#fff"/>
+    <rect x="5" y="0" width="90" height="60" fill="#ECF0F1"/>
+    <text x="50" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#2C3E50">4. ACC</text>
+    <text x="50" y="42" text-anchor="middle" font-size="9" fill="#7F8C8D" font-style="italic">object</text>
+    <text x="182" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">pán<tspan font-weight="800" fill="#4A90D9">a</tspan></text>
+    <text x="357" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">hrad</text>
+    <text x="532" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">žen<tspan font-weight="800" fill="#E91E8C">u</tspan></text>
+    <text x="707" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">město</text>
+  </g>
+
+  <!-- Row 5: Locative -->
+  <g transform="translate(0, 380)">
+    <rect x="5" y="0" width="790" height="60" fill="#F4F6F7"/>
+    <rect x="5" y="0" width="90" height="60" fill="#ECF0F1"/>
+    <text x="50" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#2C3E50">5. LOC</text>
+    <text x="50" y="42" text-anchor="middle" font-size="9" fill="#7F8C8D" font-style="italic">about / in</text>
+    <text x="182" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">pán<tspan font-weight="800" fill="#4A90D9">ovi</tspan></text>
+    <text x="357" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">hrad<tspan font-weight="800" fill="#27AE60">ě</tspan></text>
+    <text x="532" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">žen<tspan font-weight="800" fill="#E91E8C">ě</tspan></text>
+    <text x="707" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">měst<tspan font-weight="800" fill="#E67E22">ě</tspan></text>
+  </g>
+
+  <!-- Row 6: Instrumental -->
+  <g transform="translate(0, 440)">
+    <rect x="5" y="0" width="790" height="60" fill="#fff"/>
+    <rect x="5" y="0" width="90" height="60" fill="#ECF0F1"/>
+    <text x="50" y="25" text-anchor="middle" font-size="12" font-weight="700" fill="#2C3E50">6. INST</text>
+    <text x="50" y="42" text-anchor="middle" font-size="9" fill="#7F8C8D" font-style="italic">with / by</text>
+    <text x="182" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">pán<tspan font-weight="800" fill="#4A90D9">em</tspan></text>
+    <text x="357" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">hrad<tspan font-weight="800" fill="#27AE60">em</tspan></text>
+    <text x="532" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">žen<tspan font-weight="800" fill="#E91E8C">ou</tspan></text>
+    <text x="707" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#2C3E50">měst<tspan font-weight="800" fill="#E67E22">em</tspan></text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(5, 530)">
+    <rect x="0" y="0" width="790" height="80" rx="10" fill="#F4F6F7"/>
+    <text x="20" y="25" font-size="12" font-weight="700" fill="#2C3E50" letter-spacing="1.5">ENDING HIGHLIGHTS — colored &amp; bold</text>
+
+    <g transform="translate(20, 40)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#4A90D9"/>
+      <text x="22" y="12" font-size="11" fill="#2C3E50">masc. animate</text>
+    </g>
+    <g transform="translate(180, 40)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#27AE60"/>
+      <text x="22" y="12" font-size="11" fill="#2C3E50">masc. inanimate</text>
+    </g>
+    <g transform="translate(360, 40)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#E91E8C"/>
+      <text x="22" y="12" font-size="11" fill="#2C3E50">feminine</text>
+    </g>
+    <g transform="translate(490, 40)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="#E67E22"/>
+      <text x="22" y="12" font-size="11" fill="#2C3E50">neuter</text>
+    </g>
+
+    <text x="20" y="72" font-size="10" fill="#7F8C8D" font-style="italic">Note: hrad and město don't change in accusative (inanimate / neuter). pán → pána (animate -a).</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="400" y="690" text-anchor="middle" font-size="11" fill="#95A5A6">Singular only · these four "paradigm" nouns are the standard Czech reference models.</text>
+</svg>
