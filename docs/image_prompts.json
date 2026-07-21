@@ -1,0 +1,437 @@
+{
+  "title": "Czechify Image Prompt Catalog",
+  "description": "AI image generation prompts for all app visuals. Optimized for realistic photo-style output via Gemini/Imagen. Each prompt includes subject, style, composition, lighting, and technical notes.",
+  "generator": "Gemini Pro (Imagen / Nano Banana)",
+  "aspect_ratio_default": "3:2 (landscape, croppable to 16:9 or square)",
+  "total_prompts": 56,
+  "categories": [
+    {
+      "category": "unit_heroes",
+      "description": "Hero images for each unit — realistic, warm, natural photography style. All set in authentic Czech environments.",
+      "count": 31,
+      "prompts": [
+        {
+          "unit_id": 1,
+          "title": "Sounds & Pronunciation",
+          "filename": "unit_01_pronunciation.jpg",
+          "prompt": "Close-up portrait of a friendly Czech person in their 30s speaking, warm natural light, mouth slightly open forming the distinctive Czech 'ř' sound, blurred Prague street background with cobblestones, photorealistic style, warm color palette, shallow depth of field, 3:2 aspect ratio, editorial portrait photography",
+          "alt_text": "Person practicing Czech pronunciation"
+        },
+        {
+          "unit_id": 2,
+          "title": "Greetings & Introductions",
+          "filename": "unit_02_greetings.jpg",
+          "prompt": "Two people warmly shaking hands in front of a historic Prague building with baroque architecture, morning golden hour light, friendly genuine smiles, one person appears to be a foreigner in their 20s meeting a Czech local, cobblestone street visible, warm inviting atmosphere, photorealistic editorial style, 3:2 aspect ratio",
+          "alt_text": "Two people greeting each other in Prague"
+        },
+        {
+          "unit_id": 3,
+          "title": "Gender & Nominative Case",
+          "filename": "unit_03_gender.jpg",
+          "prompt": "Beautifully arranged still life on a wooden Czech table with everyday objects representing Czech grammatical genders — a book (kniha, feminine), a castle model (hrad, masculine), and a city map (město, neuter), each with a small handwritten Czech label, soft window light from the left, warm cozy atmosphere, photorealistic, 3:2 aspect ratio",
+          "alt_text": "Objects demonstrating Czech grammatical gender"
+        },
+        {
+          "unit_id": 4,
+          "title": "Present Tense — být & mít",
+          "filename": "unit_04_byt_mit.jpg",
+          "prompt": "A young person sitting in a cozy Prague café, holding a cup of coffee and looking content, warm interior lighting, steam rising from the coffee, notebook on the table with Czech handwriting visible, the person appears to be in a state of 'being' — relaxed and present, photorealistic lifestyle photography, warm amber tones, 3:2 aspect ratio",
+          "alt_text": "Person enjoying coffee in a Prague café"
+        },
+        {
+          "unit_id": 5,
+          "title": "Regular Verb Conjugation",
+          "filename": "unit_05_verbs.jpg",
+          "prompt": "Split-screen composition showing the same person doing three different everyday activities — speaking on a phone (mluvit, to speak), reading a book (číst, to read), and cooking in a Czech kitchen (vařit, to cook), natural lighting throughout, photorealistic style, triptych layout, warm authentic feel, 3:2 aspect ratio",
+          "alt_text": "Person doing three different daily activities"
+        },
+        {
+          "unit_id": 6,
+          "title": "Accusative Case",
+          "filename": "unit_06_accusative.jpg",
+          "prompt": "A person at a Czech farmers market reaching to pick up a fresh apple, the action showing direct object interaction — the accusative case in motion, colorful market stalls with fresh produce in background, natural sunlight, vibrant fresh colors, shallow depth of field focusing on the hand and apple, photorealistic, 3:2 aspect ratio",
+          "alt_text": "Person picking up an apple at a Czech market"
+        },
+        {
+          "unit_id": 7,
+          "title": "Pronouns & Possessives",
+          "filename": "unit_07_pronouns.jpg",
+          "prompt": "A group of four friends with distinctly different belongings visible — one holding their own phone, another with their dog on a leash, a couple sharing a backpack, each person and object relationship visible, outdoor Prague park setting with autumn leaves, natural golden hour light, warm friendly atmosphere, photorealistic, 3:2 aspect ratio",
+          "alt_text": "Group of friends with their personal belongings"
+        },
+        {
+          "unit_id": 8,
+          "title": "Family & Descriptions",
+          "filename": "unit_08_family.jpg",
+          "prompt": "A Czech family gathering in a warm living room — grandparents, parents, and children, multi-generational, authentic Czech home interior with traditional elements like a tiled stove (kachlová kamna), family photos on the wall, natural window light, genuine warmth and connection visible, photorealistic editorial family portrait, 3:2 aspect ratio",
+          "alt_text": "Multi-generational Czech family gathering"
+        },
+        {
+          "unit_id": 9,
+          "title": "Numbers, Time & Dates",
+          "filename": "unit_09_numbers.jpg",
+          "prompt": "A close-up of the famous Prague Astronomical Clock (Orloj) on the Old Town Hall, showing the intricate astrolabe dial, golden details glowing in afternoon light, tourists in soft blur below, the clock face clearly visible showing both old Czech time and modern time, deep blue sky background, photorealistic architectural detail shot, 3:2 aspect ratio",
+          "alt_text": "Prague Astronomical Clock showing time"
+        },
+        {
+          "unit_id": 10,
+          "title": "Daily Routine & Reflexive Verbs",
+          "filename": "unit_10_routine.jpg",
+          "prompt": "Morning routine scene — a person looking at themselves in a bathroom mirror while washing their face (mýt se), soft morning light streaming through a window, steam in the air, bathroom with modern Czech design elements, reflection visible in mirror, intimate personal moment, photorealistic lifestyle photography, soft diffused lighting, 3:2 aspect ratio",
+          "alt_text": "Person washing their face in morning routine"
+        },
+        {
+          "unit_id": 11,
+          "title": "Food, Drink & Restaurants",
+          "filename": "unit_11_food.jpg",
+          "prompt": "Overhead shot of a beautifully set Czech restaurant table — traditional svíčková with dumplings and cranberry sauce as the centerpiece, a tall glass of golden Czech beer beside it, rustic wooden table, warm candlelight, restaurant ambiance visible in soft blur background, steam rising from the food, photorealistic food photography, rich warm tones, 3:2 aspect ratio",
+          "alt_text": "Traditional Czech meal with beer on a restaurant table"
+        },
+        {
+          "unit_id": 12,
+          "title": "Shopping, Prices & Clothes",
+          "filename": "unit_12_shopping.jpg",
+          "prompt": "Interior of a stylish Czech boutique clothing store with a customer trying on a jacket in front of a full-length mirror, price tags visible with Czech koruna (Kč) symbols, modern minimalist shop design, warm interior lighting, the customer looks satisfied with their choice, photorealistic commercial photography, clean crisp look, 3:2 aspect ratio",
+          "alt_text": "Customer trying on clothes in a Czech boutique"
+        },
+        {
+          "unit_id": 13,
+          "title": "Hobbies & Free Time",
+          "filename": "unit_13_hobbies.jpg",
+          "prompt": "Scenic outdoor shot at a Prague beer garden (Letná or Riegrovy sady) with a panoramic view of Prague's red rooftops and the Vltava River in the background, wooden picnic tables, people enjoying cold beer and conversation, golden evening sunlight, relaxed cheerful atmosphere, Prague castle visible on the horizon, photorealistic travel photography, 3:2 aspect ratio",
+          "alt_text": "People enjoying a beer garden with Prague skyline view"
+        },
+        {
+          "unit_id": 14,
+          "title": "Directions, Places & Transport",
+          "filename": "unit_14_directions.jpg",
+          "prompt": "A red Prague tram passing through a picturesque cobblestone street in Malá Strana, with a person consulting a map on their phone at the tram stop, directional street signs in Czech visible, historic baroque buildings lining the street, soft morning light, photorealistic urban photography, the tram sharply in focus with background slightly blurred, 3:2 aspect ratio",
+          "alt_text": "Prague tram on cobblestone street with person checking directions"
+        },
+        {
+          "unit_id": 15,
+          "title": "Weather, Seasons & Travel",
+          "filename": "unit_15_weather.jpg",
+          "prompt": "Charles Bridge in Prague during a gentle snowfall in winter, the bridge lamps glowing warm yellow against the blue twilight, a lone figure walking with an umbrella, the Prague Castle silhouette on the hill in the background, snow dusting the baroque statues along the bridge, atmospheric moody lighting, photorealistic fine art photography, cool blue and warm amber tones, 3:2 aspect ratio",
+          "alt_text": "Charles Bridge in winter snow with Prague Castle background"
+        },
+        {
+          "unit_id": 16,
+          "title": "Genitive Case",
+          "filename": "unit_16_genitive.jpg",
+          "prompt": "A bookshelf in a cozy Czech library, with books organized by topic, one book pulled slightly out showing 'kniha mého bratra' (my brother's book) on its spine, demonstrating possession through genitive case, warm reading lamp light, scholarly atmosphere, wooden shelves, the ladder of a rolling library ladder visible, photorealistic interior photography, 3:2 aspect ratio",
+          "alt_text": "Library bookshelf demonstrating genitive possession"
+        },
+        {
+          "unit_id": 17,
+          "title": "Dative Case",
+          "filename": "unit_17_dative.jpg",
+          "prompt": "A warm scene of a person handing a beautifully wrapped gift to a friend in a cozy Czech living room, the act of giving demonstrating the dative case (komu? — to whom?), both people smiling genuinely, soft window light, the gift wrapped in simple kraft paper with a ribbon, photorealistic lifestyle photography, warm emotional tone, 3:2 aspect ratio",
+          "alt_text": "Person giving a gift to a friend"
+        },
+        {
+          "unit_id": 18,
+          "title": "Locative & Instrumental Cases",
+          "filename": "unit_18_locative.jpg",
+          "prompt": "Interior of a modern Czech apartment with large windows, a person sitting at a desk writing with a fountain pen (píšu perem — instrumental), the room clearly showing location (v pokoji — locative), warm afternoon light streaming in, plants on the windowsill, Prague cityscape visible through the window, photorealistic interior photography, 3:2 aspect ratio",
+          "alt_text": "Person writing at a desk in a Prague apartment"
+        },
+        {
+          "unit_id": 19,
+          "title": "Past Tense — Full Conjugation",
+          "filename": "unit_19_past.jpg",
+          "prompt": "Nostalgic scene of old black-and-white family photographs spread across a wooden table, each photo showing different family members at different times — a wedding, a child's first steps, a graduation — the photos telling stories of things that happened (past tense), warm sepia tones, soft overhead lamp light, photorealistic still life, 3:2 aspect ratio",
+          "alt_text": "Old family photographs spread on a table"
+        },
+        {
+          "unit_id": 20,
+          "title": "Future Tense & Conditional",
+          "filename": "unit_20_future.jpg",
+          "prompt": "A young person sitting at a desk with a dream board or vision board on the wall behind them, showing images of future goals — travel destinations, career aspirations, a new home — the person looking thoughtfully toward the future (budu, chtěl bych, conditional mood), morning light streaming in, hopeful optimistic atmosphere, photorealistic, 3:2 aspect ratio",
+          "alt_text": "Person planning their future with a vision board"
+        },
+        {
+          "unit_id": 21,
+          "title": "Comparisons & Superlatives",
+          "filename": "unit_21_comparisons.jpg",
+          "prompt": "Split comparison view — left side shows a small cozy Czech village cottage (menší, smaller), right side shows the grand Prague Castle complex (největší, largest), both photographed from the same elevated angle, dramatic clouds in the sky connecting both images, photorealistic composite style, 3:2 aspect ratio",
+          "alt_text": "Comparison between a small Czech cottage and Prague Castle"
+        },
+        {
+          "unit_id": 22,
+          "title": "Complex Sentences",
+          "filename": "unit_22_complex.jpg",
+          "prompt": "Two people in deep conversation at a cozy Prague café, one speaking animatedly while the other listens intently, coffee cups on the table between them, the scene capturing the flow of complex connected speech (protože, když, že, aby), warm amber café lighting, intimate conversational atmosphere, photorealistic lifestyle photography, 3:2 aspect ratio",
+          "alt_text": "Two people in deep conversation at a café"
+        },
+        {
+          "unit_id": 23,
+          "title": "Modal Verbs & Permission",
+          "filename": "unit_23_modals.jpg",
+          "prompt": "A Czech street scene showing contrasting signs — a green 'vstup povolen' (entry permitted) sign on one door and a red 'zákaz vstupu' (no entry) sign on another, a person standing between them looking at their phone deciding which way to go (musím, můžu, nesmím — modal verbs), natural daylight, photorealistic urban photography, 3:2 aspect ratio",
+          "alt_text": "Person between permitted and forbidden signs"
+        },
+        {
+          "unit_id": 24,
+          "title": "Health & Body",
+          "filename": "unit_24_health.jpg",
+          "prompt": "Interior of a modern Czech doctor's office (ordinace), a friendly doctor in a white coat talking to a patient, medical equipment visible but not intimidating, anatomical chart on the wall in Czech, warm reassuring lighting, professional yet approachable atmosphere, photorealistic medical interior photography, 3:2 aspect ratio",
+          "alt_text": "Doctor consulting with a patient in a Czech office"
+        },
+        {
+          "unit_id": 25,
+          "title": "Work, Professions & Education",
+          "filename": "unit_25_work.jpg",
+          "prompt": "Modern open-plan office in Prague with diverse professionals working — someone giving a presentation, another coding on a laptop, a group collaborating at a whiteboard, the space bright with natural light and plants, contemporary Czech workplace culture visible, photorealistic corporate photography, clean professional aesthetic, 3:2 aspect ratio",
+          "alt_text": "Modern Czech office with professionals working"
+        },
+        {
+          "unit_id": 26,
+          "title": "Housing & Home",
+          "filename": "unit_26_housing.jpg",
+          "prompt": "Exterior of a renovated Czech panelák (panel building) in a residential Prague neighborhood, the facade freshly painted in warm colors, balconies with flowers and plants, trees lining the street, children playing on a small playground in front, afternoon sunlight, modern clean aesthetic despite the communist-era architecture, photorealistic urban photography, 3:2 aspect ratio",
+          "alt_text": "Renovated Czech panelák in a Prague neighborhood"
+        },
+        {
+          "unit_id": 27,
+          "title": "Verbs of Motion",
+          "filename": "unit_27_motion.jpg",
+          "prompt": "Dynamic street scene at a Prague intersection — a tram arriving (přijíždí), a person walking across the crosswalk (jde), a car turning (odbočuje), a cyclist passing by (projíždí), all capturing different motion verbs in one frame, soft afternoon light, the historic architecture of Prague as backdrop, photorealistic street photography, 3:2 aspect ratio",
+          "alt_text": "Prague intersection showing various types of motion"
+        },
+        {
+          "unit_id": 28,
+          "title": "A1 Exam Preparation",
+          "filename": "unit_28_a1_exam.jpg",
+          "prompt": "A student sitting at a clean desk with a Czech language textbook open, a cup of tea nearby, a practice test paper visible with multiple choice questions in Czech, the student looks focused but calm, soft desk lamp lighting, study atmosphere, a Prague view outside the window showing it's evening, photorealistic study scene, 3:2 aspect ratio",
+          "alt_text": "Student studying for Czech A1 exam"
+        },
+        {
+          "unit_id": 29,
+          "title": "A2 Exam Preparation",
+          "filename": "unit_29_a2_exam.jpg",
+          "prompt": "A more advanced study scene — a person practicing Czech writing at a desk, a formal letter template visible (Vážený pane...), a Czech dictionary beside them, a laptop showing a Czech news website, the person looks confident and prepared, bright natural daylight, organized but lived-in desk, photorealistic, 3:2 aspect ratio",
+          "alt_text": "Person practicing Czech formal writing for A2 exam"
+        },
+        {
+          "unit_id": 30,
+          "title": "A1 Review & Consolidation",
+          "filename": "unit_30_a1_review.jpg",
+          "prompt": "A satisfying overview shot — colorful Czech flashcards spread across a table organized by grammatical gender (blue for masculine, red for feminine, green for neuter), a person's hand holding a card, a notebook with neat Czech handwriting visible, the scene showing mastery and organization, warm morning light, photorealistic, 3:2 aspect ratio",
+          "alt_text": "Organized Czech flashcards by grammatical gender"
+        },
+        {
+          "unit_id": 31,
+          "title": "A2 Review & Consolidation",
+          "filename": "unit_31_a2_review.jpg",
+          "prompt": "Immersive scene — a person comfortably settled on a couch in a Prague apartment, reading a Czech newspaper (iDNES or Lidové noviny visible), Czech radio playing on a speaker, a Czech film paused on the TV, the person surrounded by Czech media showing full language immersion, warm evening light, photorealistic lifestyle photography, 3:2 aspect ratio",
+          "alt_text": "Person immersed in Czech media at home"
+        }
+      ]
+    },
+    {
+      "category": "onboarding",
+      "description": "Screens shown during first app launch — welcoming, inspiring, set in Czech environment.",
+      "count": 4,
+      "prompts": [
+        {
+          "onboarding_id": 1,
+          "title": "Welcome to Czechify",
+          "filename": "onboarding_01_welcome.jpg",
+          "prompt": "Wide panoramic shot of Prague's historic skyline at golden hour — Charles Bridge, red rooftops, Prague Castle on the hill, the Vltava River reflecting golden light, a sense of arrival and new beginnings, warm welcoming atmosphere, the most iconic view of Prague, photorealistic travel photography, 9:16 vertical aspect ratio for phone screens, vibrant but natural colors",
+          "alt_text": "Panoramic Prague skyline at golden hour"
+        },
+        {
+          "onboarding_id": 2,
+          "title": "Learn Naturally",
+          "filename": "onboarding_02_learn.jpg",
+          "prompt": "A person sitting at an outdoor café in a picturesque Prague square (like Malé náměstí), having a friendly conversation with a Czech local over coffee, the scene showing natural language learning through real conversation, warm afternoon sunlight, authentic Czech café culture, photorealistic lifestyle photography, 9:16 vertical aspect ratio",
+          "alt_text": "Person learning Czech naturally through conversation at a Prague café"
+        },
+        {
+          "onboarding_id": 3,
+          "title": "Your Czech Journey",
+          "filename": "onboarding_03_journey.jpg",
+          "prompt": "A cobblestone path winding through a beautiful Czech landscape — leading from a small village church through golden wheat fields toward a distant mountain, the path symbolizing the language learning journey, warm afternoon light, inspirational and peaceful, photorealistic landscape photography, 9:16 vertical aspect ratio",
+          "alt_text": "Winding path through Czech countryside symbolizing learning journey"
+        },
+        {
+          "onboarding_id": 4,
+          "title": "Start Learning",
+          "filename": "onboarding_04_start.jpg",
+          "prompt": "Close-up of hands opening a beautiful leather-bound Czech language notebook, the first page blank and ready, a pen beside it, a cup of coffee with steam rising, the scene representing the beginning of the learning journey, warm morning light from a window, shallow depth of field, photorealistic still life, 9:16 vertical aspect ratio",
+          "alt_text": "Opening a new Czech learning notebook"
+        }
+      ]
+    },
+    {
+      "category": "achievement_badges",
+      "description": "Gamification badges for streaks, levels, and milestones. Simple, iconic, suitable for small display sizes.",
+      "count": 10,
+      "prompts": [
+        {
+          "badge_id": "streak_7",
+          "title": "7-Day Streak",
+          "filename": "badge_streak_7.png",
+          "prompt": "A circular achievement badge design featuring a golden flame icon on a deep blue round background, the number 7 subtly integrated into the flame design, metallic gold border with subtle shine effect, minimalist modern badge style, clean vector-like flat design with realistic metallic rendering, square aspect ratio suitable for small app icons, transparent background",
+          "note": "Generate as square PNG with transparent background, suitable for 128x128px or 256x256px"
+        },
+        {
+          "badge_id": "streak_30",
+          "title": "30-Day Streak",
+          "filename": "badge_streak_30.png",
+          "prompt": "A circular achievement badge featuring a golden diamond-shaped flame on a deep purple round background, the number 30 visible, more ornate design than the 7-day version, luminous gold border with glow effect, premium feel, square aspect ratio, transparent background",
+          "note": "More ornate/premium version of streak badge for higher achievement"
+        },
+        {
+          "badge_id": "level_a1",
+          "title": "A1 Achieved",
+          "filename": "badge_level_a1.png",
+          "prompt": "A circular badge with a bronze metallic finish, the text 'A1' in the center with elegant typography, a small Czech lion (český lev) emblem above the text, bronze metallic border, the style suggesting a beginner achievement but with dignity, square aspect ratio, transparent background",
+          "note": "Bronze color scheme for beginner level"
+        },
+        {
+          "badge_id": "level_a2",
+          "title": "A2 Achieved",
+          "filename": "badge_level_a2.png",
+          "prompt": "A circular badge with a silver metallic finish, slightly more ornate than the bronze A1 badge, the text 'A2' in the center, the Czech lion emblem above, silver gradient border with subtle reflection, square aspect ratio, transparent background",
+          "note": "Silver color scheme for intermediate level"
+        },
+        {
+          "badge_id": "level_b1",
+          "title": "B1 Achieved",
+          "filename": "badge_level_b1.png",
+          "prompt": "A circular badge with a rich gold metallic finish, the most ornate of the level badges, the text 'B1' in elegant typography, the Czech lion prominently featured, golden rays emanating subtly from behind, premium achievement look, square aspect ratio, transparent background",
+          "note": "Gold color scheme for advanced level"
+        },
+        {
+          "badge_id": "vocab_100",
+          "title": "100 Words Learned",
+          "filename": "badge_vocab_100.png",
+          "prompt": "A circular badge featuring an open book icon with pages turning, stylized in copper metallic finish on a cream background, the number 100 integrated into the open pages, academic themed, warm scholarly feel, square aspect ratio, transparent background",
+          "note": "Book and pages motif for vocabulary achievements"
+        },
+        {
+          "badge_id": "perfect_lesson",
+          "title": "Perfect Lesson",
+          "filename": "badge_perfect_lesson.png",
+          "prompt": "A circular badge with a glowing star at the center, surrounded by a subtle laurel wreath, rendered in gold and white on a deep emerald green background, the star having a warm luminous glow, achievement and excellence theme, square aspect ratio, transparent background",
+          "note": "Star and laurel wreath for perfect scores"
+        },
+        {
+          "badge_id": "grammar_master",
+          "title": "Grammar Master",
+          "filename": "badge_grammar_master.png",
+          "prompt": "A circular badge featuring a stylized quill pen crossing a scroll, rendered in silver with purple accents on a dark navy background, the design suggesting scholarly achievement, elegant and refined, square aspect ratio, transparent background",
+          "note": "Quill and scroll for grammar achievements"
+        },
+        {
+          "badge_id": "social_butterfly",
+          "title": "Social Butterfly",
+          "filename": "badge_social.png",
+          "prompt": "A circular badge featuring two overlapping speech bubbles with a subtle butterfly wing pattern, rendered in warm coral and teal on a light cream background, friendly social theme, modern playful design, square aspect ratio, transparent background",
+          "note": "Speech bubbles for conversation practice achievements"
+        },
+        {
+          "badge_id": "night_owl",
+          "title": "Night Owl",
+          "filename": "badge_night_owl.png",
+          "prompt": "A circular badge featuring a wise owl silhouette with glasses, rendered in deep purple and silver on a midnight blue background with tiny star dots, the owl looking studious, theme of dedication and late-night studying, square aspect ratio, transparent background",
+          "note": "Owl motif for dedication/late-night study achievements"
+        }
+      ]
+    },
+    {
+      "category": "exercise_icons",
+      "description": "Simple, recognizable icons for each exercise type. Clean design, works at small sizes.",
+      "count": 8,
+      "prompts": [
+        {
+          "exercise_type": "multiple_choice",
+          "filename": "icon_exercise_multiple_choice.png",
+          "prompt": "A simple flat icon showing a hand pointer selecting one of four circular radio buttons arranged in a 2x2 grid, the selected option highlighted in the app's accent color, clean minimalist design, suitable for small display sizes, square aspect ratio, transparent background, modern app icon style",
+          "note": "Keep simple and recognizable at 32x32px"
+        },
+        {
+          "exercise_type": "fill_blank",
+          "filename": "icon_exercise_fill_blank.png",
+          "prompt": "A simple flat icon showing a sentence with an underlined blank space and a cursor or pencil pointing at the blank, suggesting fill-in-the-blank, clean minimalist design, square aspect ratio, transparent background",
+          "note": "Underscore/blank visual for fill-in exercises"
+        },
+        {
+          "exercise_type": "translation",
+          "filename": "icon_exercise_translation.png",
+          "prompt": "A simple flat icon showing two overlapping speech bubbles or text boxes with a double-headed arrow between them, suggesting bidirectional translation between Czech and English, clean minimalist design, square aspect ratio, transparent background",
+          "note": "Double arrow between languages for translation"
+        },
+        {
+          "exercise_type": "pronunciation",
+          "filename": "icon_exercise_pronunciation.png",
+          "prompt": "A simple flat icon showing a simplified mouth or lips shape with sound waves emanating outward, suggesting speaking and pronunciation practice, clean minimalist design, square aspect ratio, transparent background",
+          "note": "Mouth and sound waves for speaking exercises"
+        },
+        {
+          "exercise_type": "word_order",
+          "filename": "icon_exercise_word_order.png",
+          "prompt": "A simple flat icon showing three or four rectangular word tiles being dragged into correct order with a subtle arrow indicating arrangement, suggesting sentence word order practice, clean minimalist design, square aspect ratio, transparent background",
+          "note": "Draggable tiles for word ordering exercises"
+        },
+        {
+          "exercise_type": "dictation",
+          "filename": "icon_exercise_dictation.png",
+          "prompt": "A simple flat icon showing a pair of headphones and a pencil, with sound waves connecting them, suggesting listening and writing, clean minimalist design, square aspect ratio, transparent background",
+          "note": "Headphones plus writing for dictation"
+        },
+        {
+          "exercise_type": "dialogue",
+          "filename": "icon_exercise_dialogue.png",
+          "prompt": "A simple flat icon showing two simplified person silhouettes facing each other with speech bubbles between them, suggesting conversation and dialogue practice, clean minimalist design, square aspect ratio, transparent background",
+          "note": "Two people talking for dialogue exercises"
+        },
+        {
+          "exercise_type": "matching",
+          "filename": "icon_exercise_matching.png",
+          "prompt": "A simple flat icon showing two columns of items with connecting lines between matched pairs, suggesting matching exercise, clean minimalist design, square aspect ratio, transparent background",
+          "note": "Connected columns for matching exercises"
+        }
+      ]
+    },
+    {
+      "category": "empty_states",
+      "description": "Friendly illustrations shown when lists are empty — encouraging, not alarming.",
+      "count": 3,
+      "prompts": [
+        {
+          "state": "no_lessons",
+          "title": "No Lessons Yet",
+          "filename": "empty_no_lessons.jpg",
+          "prompt": "A cozy reading nook in a Czech apartment — a comfortable armchair by a window overlooking a Prague street, a small stack of Czech books on a side table, a warm reading lamp, the scene inviting someone to begin their learning journey, warm afternoon light, peaceful and encouraging atmosphere, photorealistic interior photography, 3:2 aspect ratio",
+          "alt_text": "Cozy reading nook inviting you to start learning"
+        },
+        {
+          "state": "empty_srs",
+          "title": "SRS Queue Empty",
+          "filename": "empty_srs_queue.jpg",
+          "prompt": "A clean organized desk with a set of fresh unused Czech flashcards stacked neatly, a cup of tea beside them, a window with morning light and a view of a Prague garden, the scene suggesting readiness and a clean slate, peaceful organized atmosphere, photorealistic still life, 3:2 aspect ratio",
+          "alt_text": "Fresh flashcards ready for review"
+        },
+        {
+          "state": "no_progress",
+          "title": "No Progress Data Yet",
+          "filename": "empty_no_progress.jpg",
+          "prompt": "A single small green plant sprouting from soil in a terracotta pot on a windowsill, with Prague rooftops visible through the window, the seedling symbolizing the beginning of growth and progress yet to come, soft morning light, hopeful and encouraging atmosphere, photorealistic, 3:2 aspect ratio",
+          "alt_text": "Small plant sprouting symbolizing beginning of progress"
+        }
+      ]
+    }
+  ],
+  "generation_notes": {
+    "quality": "Use highest quality settings available — these are production assets",
+    "consistency": "Maintain consistent warm color palette (amber, gold, deep blue, cream) across all hero images",
+    "people": "Include diverse people of different ages and appearances where relevant — Czech Republic has international residents",
+    "branding": "No text overlay needed — these are raw background images; text will be added in-app",
+    "resolution": "Target 2048px on the longer edge minimum for hero images, 512px for icons/badges",
+    "naming": "Save files using the specified filenames for easy integration into the Flutter asset pipeline",
+    "output_format": "JPG for hero photos, PNG for badges and icons (transparent background)"
+  }
+}
