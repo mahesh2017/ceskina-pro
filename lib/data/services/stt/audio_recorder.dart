@@ -1,0 +1,102 @@
+import 'dart:async';
+import 'dart:io';
+import 'package:logging/logging.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
+
+/// Records audio to a temporary .wav file for Whisper transcription.
+///
+/// Uses the `record` package which provides raw PCM/WAV output — unlike
+/// `speech_to_text` which only gives text, this gives us the actual audio
+/// bytes needed to send to Whisper.
+class AudioRecorderService {
+  AudioRecorderService({Logger? log}) : _log = log ?? Logger('AudioRecorderService');
+
+  final Logger _log;
+  final AudioRecorder _recorder = AudioRecorder();
+
+  bool _isRecording = false;
+  String? _currentPath;
+
+  bool get isRecording => _isRecording;
+
+  /// Start recording to a temporary WAV file.
+  /// Returns the file path where audio will be saved.
+  Future<String> start() async {
+    if (_isRecording) {
+      throw StateError('Already recording');
+    }
+
+    // Check microphone permission
+    if (!await _recorder.hasPermission()) {
+      throw Exception('Microphone permission not granted');
+    }
+
+    final dir = await getTemporaryDirectory();
+    final path = p.join(
+      dir.path,
+      'pronunciation_${DateTime.now().millisecondsSinceEpoch}.wav',
+    );
+
+    await _recorder.start(
+      const RecordConfig(
+        encoder: AudioEncoder.wav,
+        sampleRate: 16000,
+        numChannels: 1,
+        bitRate: 256000,
+      ),
+      path: path,
+    );
+
+    _isRecording = true;
+    _currentPath = path;
+    _log.info('Started recording to $path');
+    return path;
+  }
+
+  /// Stop recording and return the path to the recorded WAV file.
+  Future<String> stop() async {
+    if (!_isRecording) {
+      throw StateError('Not recording');
+    }
+
+    final path = await _recorder.stop();
+    _isRecording = false;
+    _currentPath = path;
+    _log.info('Stopped recording: $path');
+    return path ?? '';
+  }
+
+  /// Cancel recording and delete the audio file.
+  Future<void> cancel() async {
+    if (_isRecording) {
+      await _recorder.cancel();
+      _isRecording = false;
+    }
+    if (_currentPath != null) {
+      try {
+        final file = File(_currentPath!);
+        if (await file.exists()) await file.delete();
+      } catch (_) {}
+      _currentPath = null;
+    }
+  }
+
+  /// Clean up the last recording file.
+  Future<void> cleanup() async {
+    if (_currentPath != null) {
+      try {
+        final file = File(_currentPath!);
+        if (await file.exists()) await file.delete();
+      } catch (_) {}
+      _currentPath = null;
+    }
+  }
+
+  /// Dispose the recorder.
+  Future<void> dispose() async {
+    if (_isRecording) await _recorder.cancel();
+    await _recorder.dispose();
+  }
+}

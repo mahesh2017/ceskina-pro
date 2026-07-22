@@ -22,8 +22,9 @@ dependencies:
 
   # Audio
   just_audio: ^0.9.39
+  record: ^5.1.2
 
-  # Speech (OS-native)
+  # Speech (OS-native, fallback only)
   speech_to_text: ^7.0.0
   flutter_tts: ^4.0.0
 

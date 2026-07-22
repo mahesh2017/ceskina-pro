@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/utils/score_colors.dart';
 import '../../../../domain/entities/exercise.dart';
-import '../../../../domain/engines/pronunciation_scorer.dart';
-import '../../../providers/stt_providers.dart';
+import '../../../providers/pronunciation_providers.dart';
 import 'exercise_shared.dart';
 
 /// Pronunciation exercise view: record and get feedback.
+///
+/// Uses the [pronunciationAssessmentProvider] which tries Whisper first
+/// (high-quality Czech transcription with word-level confidence) and falls
+/// back to OS-native STT when unavailable.
 class PronunciationView extends ConsumerStatefulWidget {
   final Exercise exercise;
   final OnExerciseAnswered onAnswered;
@@ -22,63 +25,29 @@ class PronunciationView extends ConsumerStatefulWidget {
 }
 
 class _PronunciationViewState extends ConsumerState<PronunciationView> {
-  bool isRecording = false;
-  bool hasRecorded = false;
-  bool isProcessing = false;
   double? score;
   String? feedback;
+  bool hasRecorded = false;
 
   Future<void> _toggleRecording() async {
-    if (isProcessing) return;
+    if (ref.read(pronunciationProvider).isProcessing) return;
 
-    if (isRecording) {
-      // Stop — the listenFor() will return when speech ends
-      setState(() => isRecording = false);
+    final notifier = ref.read(pronunciationProvider.notifier);
+    final currentState = ref.read(pronunciationProvider);
+
+    if (currentState.isRecording) {
+      await notifier.stopRecording();
       return;
     }
 
+    // Reset state
     setState(() {
-      isRecording = true;
-      hasRecorded = false;
       score = null;
       feedback = null;
+      hasRecorded = false;
     });
 
-    try {
-      final stt = ref.read(sttServiceProvider) as NativeSttService;
-      final transcription = await stt.listenFor(
-        timeout: const Duration(seconds: 8),
-      );
-
-      final targetText = widget.exercise.data['target_text'] as String;
-
-      setState(() {
-        isRecording = false;
-        isProcessing = true;
-      });
-
-      // Score the pronunciation
-      final scorer = PronunciationScorer();
-      final result = scorer.score(
-        expectedText: targetText,
-        actualTranscription: transcription,
-      );
-
-      setState(() {
-        isProcessing = false;
-        hasRecorded = true;
-        score = result.overallScore;
-        feedback = result.feedback;
-      });
-    } catch (e) {
-      setState(() {
-        isRecording = false;
-        isProcessing = false;
-        hasRecorded = true;
-        score = 0.0;
-        feedback = 'Speech recognition failed. Check mic permissions.';
-      });
-    }
+    await notifier.startRecording();
   }
 
   void _submitResult() {
@@ -89,8 +58,7 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
     widget.onAnswered(
       ExerciseResult(
         isCorrect: passed,
-        explanation:
-            data['note'] as String? ??
+        explanation: data['note'] as String? ??
             (passed
                 ? 'Good pronunciation!'
                 : 'Try again — focus on the highlighted sounds.'),
@@ -105,6 +73,18 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
     final targetText = data['target_text'] as String;
     final translation = data['translation_en'] as String?;
     final focusSounds = (data['focus_sounds'] as List<dynamic>?) ?? [];
+
+    final pronState = ref.watch(pronunciationProvider);
+    final isRecording = pronState.isRecording;
+    final isProcessing = pronState.isProcessing;
+    final result = pronState.result;
+
+    // Update local score/feedback when result arrives
+    if (result != null && score == null) {
+      score = result.overallScore;
+      feedback = result.feedback;
+      hasRecorded = true;
+    }
 
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -133,9 +113,9 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
                     const SizedBox(height: 8),
                     Text(
                       translation,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.grey,
+                          ),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -177,25 +157,23 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
               height: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color:
-                    isRecording
-                        ? Colors.red.shade400
-                        : Theme.of(context).colorScheme.primary,
+                color: isRecording
+                    ? Colors.red.shade400
+                    : Theme.of(context).colorScheme.primary,
               ),
-              child:
-                  isProcessing
-                      ? const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 3,
-                          color: Colors.white,
-                        ),
-                      )
-                      : Icon(
-                        isRecording ? Icons.stop : Icons.mic,
+              child: isProcessing
+                  ? const Padding(
+                      padding: EdgeInsets.all(20),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 3,
                         color: Colors.white,
-                        size: 32,
                       ),
+                    )
+                  : Icon(
+                      isRecording ? Icons.stop : Icons.mic,
+                      color: Colors.white,
+                      size: 32,
+                    ),
             ),
           ),
           const SizedBox(height: 8),
@@ -203,29 +181,39 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
             isRecording
                 ? 'Listening... tap to stop'
                 : isProcessing
-                ? 'Analyzing...'
-                : hasRecorded
-                ? 'Recorded! Tap to try again'
-                : 'Tap to record',
+                    ? 'Analyzing...'
+                    : hasRecorded
+                        ? 'Recorded! Tap to try again'
+                        : 'Tap to record',
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
 
-          // Escape hatch: on-device Czech recognition can be unavailable or
-          // unreliable, and pronunciation should never hard-block progress.
-          // Skipping passes the exercise without a heart penalty.
+          // Engine indicator
+          if (pronState.usedWhisper && hasRecorded) ...[
+            const SizedBox(height: 4),
+            Text(
+              '✓ Whisper AI',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.green.shade600,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+
+          // Escape hatch: pronunciation should never hard-block progress.
           if (!isProcessing)
             TextButton(
-              onPressed:
-                  () => widget.onAnswered(
-                    ExerciseResult(
-                      isCorrect: true,
-                      explanation:
-                          'Skipped — keep practising this one aloud with the '
-                          '🔊 button.',
-                      correctAnswer: targetText,
-                    ),
-                  ),
+              onPressed: () => widget.onAnswered(
+                ExerciseResult(
+                  isCorrect: true,
+                  explanation: 'Skipped — keep practising this one aloud with '
+                      'the 🔊 button.',
+                  correctAnswer: targetText,
+                ),
+              ),
               child: Text(
                 hasRecorded && (score ?? 0) == 0
                     ? 'Mic not working? Skip'
