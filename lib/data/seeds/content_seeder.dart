@@ -45,12 +45,12 @@ class ContentSeeder {
     final row =
         await _db.customSelect('''
       SELECT
-        (SELECT COUNT(*) FROM units WHERE id BETWEEN 1 AND 22) AS unit_count,
+        (SELECT COUNT(*) FROM units WHERE id BETWEEN 1 AND 31) AS unit_count,
         (SELECT COUNT(*) FROM lessons) AS lesson_count,
         (SELECT COUNT(*) FROM exercises) AS exercise_count,
         (SELECT COUNT(*) FROM flashcards) AS flashcard_count
     ''').getSingle();
-    return row.read<int>('unit_count') == 22 &&
+    return row.read<int>('unit_count') == 31 &&
         row.read<int>('lesson_count') >= _lessonFilePaths.length &&
         row.read<int>('exercise_count') > 0 &&
         row.read<int>('flashcard_count') > 0;
@@ -261,6 +261,31 @@ class ContentSeeder {
     // A2 — Unit 22: Complex Sentences
     'assets/curriculum/lessons/unit22_lesson01.json',
     'assets/curriculum/lessons/unit22_lesson02.json',
+    // A2 — Unit 23: Modal Verbs
+    'assets/curriculum/lessons/unit23_lesson01.json',
+    'assets/curriculum/lessons/unit23_lesson02.json',
+    // A2 — Unit 24: Health & Body
+    'assets/curriculum/lessons/unit24_lesson01.json',
+    'assets/curriculum/lessons/unit24_lesson02.json',
+    // A2 — Unit 25: Professions & Education
+    'assets/curriculum/lessons/unit25_lesson01.json',
+    'assets/curriculum/lessons/unit25_lesson02.json',
+    // A2 — Unit 26: Housing & Home
+    'assets/curriculum/lessons/unit26_lesson01.json',
+    'assets/curriculum/lessons/unit26_lesson02.json',
+    // A2 — Unit 27: Motion Verbs
+    'assets/curriculum/lessons/unit27_lesson01.json',
+    'assets/curriculum/lessons/unit27_lesson02.json',
+    // A2 — Unit 28: A1 Exam Prep
+    'assets/curriculum/lessons/unit28_lesson01.json',
+    'assets/curriculum/lessons/unit28_lesson02.json',
+    // A2 — Unit 29: A2 Exam Prep
+    'assets/curriculum/lessons/unit29_lesson01.json',
+    'assets/curriculum/lessons/unit29_lesson02.json',
+    // A2 — Unit 30: A1 Review
+    'assets/curriculum/lessons/unit30_lesson01.json',
+    // A2 — Unit 31: A2 Review
+    'assets/curriculum/lessons/unit31_lesson01.json',
   ];
 
   static final Set<String> requiredPackPaths = {
