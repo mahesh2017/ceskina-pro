@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/repositories/llm_service_exception.dart';
+import '../../domain/engines/llm_orchestrator.dart';
 import '../../domain/entities/chat_message.dart';
 import '../../domain/entities/enums.dart';
 import 'database_providers.dart';
@@ -10,8 +11,8 @@ import 'settings_providers.dart';
 class ChatState {
   final String? conversationId;
 
-  /// The scenario prompt sent to the LLM.
-  final String scenario;
+  /// Server-recognized scenario identifier; privileged prompts stay server-side.
+  final String scenarioId;
 
   /// Human-readable scenario name for the app bar (e.g. "At the Doctor").
   final String scenarioTitle;
@@ -26,7 +27,7 @@ class ChatState {
 
   const ChatState({
     this.conversationId,
-    this.scenario = 'Casual conversation',
+    this.scenarioId = 'casual_chat',
     this.scenarioTitle = 'AI Tutor',
     this.level = CEFRLevel.a1,
     this.messages = const [],
@@ -37,7 +38,7 @@ class ChatState {
 
   ChatState copyWith({
     String? conversationId,
-    String? scenario,
+    String? scenarioId,
     String? scenarioTitle,
     CEFRLevel? level,
     List<ChatMessage>? messages,
@@ -47,7 +48,7 @@ class ChatState {
   }) {
     return ChatState(
       conversationId: conversationId ?? this.conversationId,
-      scenario: scenario ?? this.scenario,
+      scenarioId: scenarioId ?? this.scenarioId,
       scenarioTitle: scenarioTitle ?? this.scenarioTitle,
       level: level ?? this.level,
       messages: messages ?? this.messages,
@@ -60,50 +61,46 @@ class ChatState {
 
 /// Conversation scenarios available for role-play.
 class ChatScenario {
+  final String id;
   final String title;
   final String description;
-  final String prompt;
 
   const ChatScenario({
+    required this.id,
     required this.title,
     required this.description,
-    required this.prompt,
   });
 
   static const List<ChatScenario> all = [
     ChatScenario(
+      id: 'casual_chat',
       title: 'Casual Chat',
       description: 'Everyday small talk — greetings, weather, how are you',
-      prompt: 'Casual conversation between two friends meeting in a café',
     ),
     ChatScenario(
+      id: 'restaurant',
       title: 'At the Restaurant',
       description: 'Order food, ask about menu, pay the bill',
-      prompt:
-          'You are a waiter at a Czech restaurant. The learner is a customer ordering food',
     ),
     ChatScenario(
+      id: 'directions',
       title: 'Asking Directions',
       description: 'Ask for and give directions in the city',
-      prompt:
-          'The learner is a tourist asking for directions to a landmark in Prague',
     ),
     ChatScenario(
+      id: 'shopping',
       title: 'Shopping',
       description: 'Buy items, ask prices, negotiate',
-      prompt: 'You are a shop assistant. The learner is buying groceries',
     ),
     ChatScenario(
+      id: 'doctor',
       title: 'At the Doctor',
       description: 'Describe symptoms, make an appointment',
-      prompt:
-          'You are a Czech doctor. The learner is a patient describing symptoms',
     ),
     ChatScenario(
+      id: 'job_interview',
       title: 'Job Interview',
       description: 'Practice a basic job interview in Czech',
-      prompt:
-          'You are interviewing the learner for a basic job position. Ask simple questions',
     ),
   ];
 }
@@ -133,7 +130,7 @@ class ChatNotifier extends Notifier<ChatState> {
 
     state = ChatState(
       conversationId: convId,
-      scenario: scenario.prompt,
+      scenarioId: scenario.id,
       scenarioTitle: scenario.title,
       level: effectiveLevel,
       messages: [],
@@ -173,7 +170,7 @@ class ChatNotifier extends Notifier<ChatState> {
       final orchestrator = ref.read(llmOrchestratorProvider);
       final request = orchestrator.buildConversationRequest(
         level: state.level,
-        scenario: state.scenario,
+        scenarioId: state.scenarioId,
         userMessage: text,
         history: history,
       );
@@ -182,8 +179,12 @@ class ChatNotifier extends Notifier<ChatState> {
       final llm = ref.read(llmServiceProvider);
       final response = await llm.complete(request);
 
-      // Parse response
-      final tutorResponse = orchestrator.parseTutorResponse(response);
+      final parsed = orchestrator.parseTutorResponseSafe(response);
+      if (parsed case TutorParseError(:final reason)) {
+        state = state.copyWith(isLoading: false, error: reason);
+        return;
+      }
+      final tutorResponse = (parsed as TutorParseOk).response;
 
       final tutorMsg = ChatMessage.tutor(
         text: tutorResponse.tutorReplyCz,
@@ -203,11 +204,6 @@ class ChatNotifier extends Notifier<ChatState> {
       await convRepo.saveMessage(tutorMsg);
     } on LlmServiceException catch (e) {
       state = state.copyWith(isLoading: false, error: e.message);
-    } on FormatException {
-      state = state.copyWith(
-        isLoading: false,
-        error: 'The tutor sent an unreadable reply. Please try again.',
-      );
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
@@ -234,14 +230,18 @@ class ChatNotifier extends Notifier<ChatState> {
       final orchestrator = ref.read(llmOrchestratorProvider);
       final request = orchestrator.buildConversationRequest(
         level: state.level,
-        scenario: state.scenario,
+        scenarioId: state.scenarioId,
         userMessage: 'Start the conversation by greeting me.',
         history: [],
       );
 
       final llm = ref.read(llmServiceProvider);
       final response = await llm.complete(request);
-      final tutorResponse = orchestrator.parseTutorResponse(response);
+      final parsed = orchestrator.parseTutorResponseSafe(response);
+      if (parsed is TutorParseError) {
+        throw LlmServiceException(parsed.reason);
+      }
+      final tutorResponse = (parsed as TutorParseOk).response;
 
       final greeting = ChatMessage.tutor(
         text: tutorResponse.tutorReplyCz,

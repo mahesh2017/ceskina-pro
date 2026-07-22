@@ -1,0 +1,253 @@
+{
+  "id": 2802,
+  "unit_id": 28,
+  "order_in_unit": 2,
+  "title": "A1 Exam Practice: Writing & Speaking",
+  "description": "A1-level exam practice for writing and speaking production. Write personal info forms, messages to friends, and party invitations. Speak about yourself, describe a family photo, and role-play ordering food. Includes A1 vocabulary review and exam-style translations.",
+  "duration_min": 25,
+  "lesson_type": "practice",
+  "is_review": true,
+  "exercises": [
+    {
+      "id": 28016,
+      "lesson_id": 2802,
+      "type": "writing_task",
+      "prompt": "Fill out the personal information form in Czech.",
+      "data": {
+        "type": "writing_task",
+        "prompt_cz": "Vyplňte formulář s osobními údaji v češtině: jméno, příjmení, datum narození, adresa, telefon, e-mail.",
+        "prompt_en": "Fill out a personal information form in Czech: first name, last name, date of birth, address, phone, email.",
+        "min_words": 30,
+        "max_words": 80,
+        "required_elements": [
+          "first_name",
+          "last_name",
+          "date_of_birth",
+          "address",
+          "phone",
+          "email"
+        ],
+        "sample_answer_cz": "Jmenuji se Jan Novák. Narodil jsem se 15. dubna 1990. Bydlím v Praze, v ulici Na Příkopě 20. Můj telefon je +420 777 123 456 a můj e-mail je jan.novak@email.cz.",
+        "evaluation_criteria": "Must include all six required fields with correct Czech forms. Name should use 'Jmenuji se' (I am called). Address should use 'Bydlím v/na' (I live at). Birthdate should use the Czech format (day month year)."
+      },
+      "answer_key": "Jmenuji se Jan Novák. Narodil jsem se 15. dubna 1990...",
+      "xp_reward": 20
+    },
+    {
+      "id": 28017,
+      "lesson_id": 2802,
+      "type": "writing_task",
+      "prompt": "Write a short message to a friend.",
+      "data": {
+        "type": "writing_task",
+        "prompt_cz": "Napište krátkou zprávu kamarádovi/kamarádce. Řekněte, jak se máte, co děláte dnes a co budete dělat o víkendu.",
+        "prompt_en": "Write a short message to a friend. Say how you are, what you're doing today, and what you'll do this weekend.",
+        "min_words": 30,
+        "max_words": 80,
+        "required_elements": [
+          "greeting",
+          "how_are_you",
+          "today_activity",
+          "weekend_plan",
+          "closing"
+        ],
+        "sample_answer_cz": "Ahoj Tomáši! Jak se máš? Já se mám dobře. Dnes pracuju doma a večer vařím večeři. O víkendu půjdu do kina a pak navštívím babičku. Co děláš ty? Napiš mi! Tvůj Pavel",
+        "evaluation_criteria": "Must include greeting (Ahoj), how are you question/statement, today's activity, weekend plan, and a closing. Use informal 'ty' form. Keep sentences at A1 level (present tense, simple vocabulary)."
+      },
+      "answer_key": "Ahoj Tomáši! Jak se máš? Já se mám dobře...",
+      "xp_reward": 20
+    },
+    {
+      "id": 28018,
+      "lesson_id": 2802,
+      "type": "writing_task",
+      "prompt": "Write a party invitation.",
+      "data": {
+        "type": "writing_task",
+        "prompt_cz": "Napište pozvánku na oslavu. Uveďte: co oslavujete, kdy a kde to bude, v kolik hodin, a žádost o odpověď.",
+        "prompt_en": "Write a party invitation. Include: what you're celebrating, when and where, what time, and an RSVP request.",
+        "min_words": 40,
+        "max_words": 100,
+        "required_elements": [
+          "occasion",
+          "date",
+          "location",
+          "time",
+          "rsvp"
+        ],
+        "sample_answer_cz": "Ahoj všichni! Pozvánka na oslavu! Oslavuju své narozeniny v sobotu 15. června. Oslava bude v restauraci U Lipky v centru Prahy. Začínáme v 18:00. Prosím, napište mi, jestli přijdete, do pátku 14. června. Těším se na vás! Eva",
+        "evaluation_criteria": "Must include the occasion (narozeniny, oslava), date (v sobotu + date), location (v restauraci/v bytě), time (v + hour), and RSVP (prosím, napište mi). Use inviting, friendly tone with informal address."
+      },
+      "answer_key": "Ahoj všichni! Pozvánka na oslavu!...",
+      "xp_reward": 20
+    },
+    {
+      "id": 28019,
+      "lesson_id": 2802,
+      "type": "speaking_task",
+      "prompt": "Answer 5 questions about yourself in Czech.",
+      "data": {
+        "type": "speaking_task",
+        "prompt_cz": "Odpovězte na 5 otázek o sobě v češtině.",
+        "prompt_en": "Answer 5 questions about yourself in Czech.",
+        "task_type": "interview",
+        "guiding_questions_cz": [
+          "Jak se jmenujete?",
+          "Odkud jste?",
+          "Kde bydlíte?",
+          "Co děláte (práce/škola)?",
+          "Co máte rád/a (koníček)?"
+        ],
+        "guiding_questions_en": [
+          "What is your name?",
+          "Where are you from?",
+          "Where do you live?",
+          "What do you do (work/school)?",
+          "What do you like (hobby)?"
+        ],
+        "min_duration_seconds": 60,
+        "evaluation_criteria": "Should answer all 5 questions with complete sentences at A1 level. Use formal forms (jmenuji se, jsem z, bydlím v, jsem student/pracuji, mám rád). Speak clearly with appropriate Czech pronunciation."
+      },
+      "answer_key": "Full spoken response to 5 personal questions.",
+      "xp_reward": 25
+    },
+    {
+      "id": 28020,
+      "lesson_id": 2802,
+      "type": "speaking_task",
+      "prompt": "Describe a family photo in Czech.",
+      "data": {
+        "type": "speaking_task",
+        "prompt_cz": "Popište rodinnou fotografii v češtině.",
+        "prompt_en": "Describe a family photo in Czech.",
+        "task_type": "picture_description",
+        "guiding_questions_cz": [
+          "Kdo je na obrázku?",
+          "Kde jsou?",
+          "Co dělají?",
+          "Jak vypadají?",
+          "Jaké je počasí?"
+        ],
+        "guiding_questions_en": [
+          "Who is in the picture?",
+          "Where are they?",
+          "What are they doing?",
+          "What do they look like?",
+          "What's the weather like?"
+        ],
+        "min_duration_seconds": 45,
+        "evaluation_criteria": "Should describe at least 3 family members using family vocabulary (matka, otec, bratr, sestra, babička). Use present tense (je, jsou, mají) and basic adjectives (vysoký, mladý, hezký). Mention location and activity. Speak for at least 45 seconds."
+      },
+      "answer_key": "Full spoken description of a family photo.",
+      "xp_reward": 25
+    },
+    {
+      "id": 28021,
+      "lesson_id": 2802,
+      "type": "speaking_task",
+      "prompt": "Role-play ordering food at a restaurant.",
+      "data": {
+        "type": "speaking_task",
+        "prompt_cz": "Představte si, že jste v restauraci. Objednejte si jídlo a pití. Hrajte roli hosta.",
+        "prompt_en": "Role-play ordering food at a restaurant. You are the guest.",
+        "task_type": "role_play",
+        "guiding_questions_cz": [
+          "Co si přejete?",
+          "Chtěl/a byste polévku?",
+          "Jaké hlavní jídlo?",
+          "Co k pití?",
+          "Zaplatíte hotově nebo kartou?"
+        ],
+        "guiding_questions_en": [
+          "What would you like?",
+          "Would you like a soup?",
+          "What main dish?",
+          "What to drink?",
+          "Will you pay cash or card?"
+        ],
+        "min_duration_seconds": 60,
+        "evaluation_criteria": "Should use restaurant phrases: 'Dobrý den', 'Chtěl/a bych...', 'Prosím', 'Zaplatím kartou/hotově'. Order at least one main dish and one drink. Use formal address to the waiter. Complete the interaction from greeting to payment."
+      },
+      "answer_key": "Full spoken role-play of ordering food.",
+      "xp_reward": 25
+    },
+    {
+      "id": 28022,
+      "lesson_id": 2802,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct Czech word for the English meaning.",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správné české slovo.",
+        "question_en": "Choose the correct Czech word for 'breakfast'.",
+        "options": [
+          "večeře",
+          "snídaně",
+          "oběd",
+          "svačina"
+        ],
+        "correct_index": 1,
+        "explanation": "'Snídaně' = breakfast. 'Oběd' = lunch. 'Večeře' = dinner. 'Svačina' = snack. These are the four main meal words in Czech."
+      },
+      "answer_key": "snídaně",
+      "xp_reward": 10
+    },
+    {
+      "id": 28023,
+      "lesson_id": 2802,
+      "type": "multiple_choice",
+      "prompt": "Choose the correct Czech word for the English meaning.",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Vyberte správné české slovo.",
+        "question_en": "Choose the correct Czech word for 'Monday'.",
+        "options": [
+          "úterý",
+          "pondělí",
+          "středa",
+          "čtvrtek"
+        ],
+        "correct_index": 1,
+        "explanation": "'Pondělí' = Monday. Days of the week: pondělí (Mon), úterý (Tue), středa (Wed), čtvrtek (Thu), pátek (Fri), sobota (Sat), neděle (Sun)."
+      },
+      "answer_key": "pondělí",
+      "xp_reward": 10
+    },
+    {
+      "id": 28024,
+      "lesson_id": 2802,
+      "type": "translation",
+      "prompt": "Translate from English to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "My name is Anna and I am from Prague. I live in a big apartment.",
+        "accepted_answers": [
+          "Jmenuji se Anna a jsem z Prahy. Bydlím ve velkém bytě.",
+          "Já se jmenuji Anna a jsem z Prahy. Bydlím ve velkém bytě."
+        ],
+        "grammar_note": "'Jmenuji se Anna a jsem z Prahy. Bydlím ve velkém bytě.' = My name is Anna and I'm from Prague. I live in a big apartment. Note 'z Prahy' (genitive after 'z' = from), 've velkém bytě' (locative after 'v' = in). Adjective 'velký' → locative 'velkém' (neuter/masculine inanimate locative)."
+      },
+      "answer_key": "Jmenuji se Anna a jsem z Prahy. Bydlím ve velkém bytě.",
+      "xp_reward": 15
+    },
+    {
+      "id": 28025,
+      "lesson_id": 2802,
+      "type": "translation",
+      "prompt": "Translate from Czech to English.",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "Mám rád čaj a piju ho každé ráno.",
+        "accepted_answers": [
+          "I like tea and I drink it every morning.",
+          "I like tea and drink it every morning."
+        ],
+        "grammar_note": "'Mám rád čaj a piju ho každé ráno.' = I like tea and I drink it every morning. 'Mám rád' = I like (masculine speaker; feminine would be 'mám ráda'). 'čaj' = tea (masc. inanimate), 'ho' = it ( accusative pronoun for masculine). 'každé ráno' = every morning (neuter accusative of time)."
+      },
+      "answer_key": "I like tea and I drink it every morning.",
+      "xp_reward": 15
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/config/backend_config.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/gamification_providers.dart';
@@ -20,7 +21,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   CEFRLevel _selectedLevel = CEFRLevel.preA1;
   int _selectedGoal = 50;
   bool _finishing = false;
-  static const _totalSteps = 3;
+  final _nameController = TextEditingController();
+  static const _totalSteps = 4; // name → welcome → level → goal
 
   void _next() {
     if (_step < _totalSteps - 1) {
@@ -42,6 +44,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     // onboarding — always mark it complete and navigate home.
     try {
       final settings = ref.read(settingsProvider.notifier);
+      await settings.setLearnerName(_nameController.text);
       await settings.setDailyGoalXp(_selectedGoal);
       await settings.setStartingLevel(_selectedLevel);
       await ref.read(gamificationProvider.notifier).setDailyGoal(_selectedGoal);
@@ -54,6 +57,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     }
 
     if (mounted) context.go('/');
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -113,11 +122,67 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   Widget _buildStep() {
     return switch (_step) {
-      0 => _buildWelcomeStep(),
-      1 => _buildLevelStep(),
-      2 => _buildGoalStep(),
+      0 => _buildNameStep(),
+      1 => _buildWelcomeStep(),
+      2 => _buildLevelStep(),
+      3 => _buildGoalStep(),
       _ => const SizedBox(),
     };
+  }
+
+  Widget _buildNameStep() {
+    final t = context.tokens;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SizedBox(height: 24),
+        Center(
+          child: Container(
+            width: 96,
+            height: 96,
+            decoration: BoxDecoration(color: t.priSoft, shape: BoxShape.circle),
+            child: Icon(Icons.waving_hand_outlined, size: 44, color: t.pri),
+          ),
+        ),
+        const SizedBox(height: 24),
+        const Center(child: DisplayText('Ahoj! 👋', size: 34)),
+        const SizedBox(height: 8),
+        Center(
+          child: Text(
+            'What should we call you?',
+            style: TextStyle(fontSize: 16, color: t.muted),
+          ),
+        ),
+        const SizedBox(height: 28),
+        TextField(
+          controller: _nameController,
+          autofocus: true,
+          textCapitalization: TextCapitalization.words,
+          textInputAction: TextInputAction.done,
+          decoration: InputDecoration(
+            hintText: 'Your first name',
+            hintStyle: TextStyle(color: t.faint),
+            filled: true,
+            fillColor: t.elev,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+          ),
+          style: TextStyle(fontSize: 17, color: t.ink, fontWeight: FontWeight.w600),
+          onSubmitted: (_) => _next(),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          'We\'ll use your name to personalize your learning experience. '
+          'You can change it later in Settings.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 14, color: t.faint, height: 1.4),
+        ),
+      ],
+    );
   }
 
   Widget _stepHeader(
@@ -145,7 +210,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         Text(
           subtitle,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14, color: t.muted, height: 1.5),
+          style: TextStyle(fontSize: 15.5, color: t.muted, height: 1.5),
         ),
       ],
     );
@@ -165,11 +230,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       children: [
         const SizedBox(height: 12),
         Center(
-          child: Container(
-            width: 96,
-            height: 96,
-            decoration: BoxDecoration(color: t.priFill, shape: BoxShape.circle),
-            child: Icon(Icons.school, size: 44, color: t.onFill),
+          child: Image.asset(
+            'assets/images/czechify_logo.png',
+            width: 104,
+            height: 104,
           ),
         ),
         const SizedBox(height: 24),
@@ -177,7 +241,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         const SizedBox(height: 6),
         Center(
           child: Text(
-            'Welcome to Čeština',
+            'Welcome to Czechify',
             style: TextStyle(fontSize: 16, color: t.muted),
           ),
         ),
@@ -195,7 +259,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     child: Text(
                       f.$2,
                       style: TextStyle(
-                        fontSize: 13.5,
+                        fontSize: 15,
                         color: t.ink,
                         height: 1.35,
                         fontWeight: FontWeight.w500,
@@ -207,6 +271,27 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             ),
           ),
         ),
+        // Sign-up / Sign-in — only when the cloud backend is configured.
+        if (BackendConfig.isConfigured) ...[
+          const SizedBox(height: 20),
+          FilledButton.icon(
+            onPressed: () => context.push('/account'),
+            icon: const Icon(Icons.person_add_outlined),
+            label: const Text('Create an account'),
+          ),
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            onPressed: () => context.push('/account'),
+            icon: const Icon(Icons.login),
+            label: const Text('I already have an account'),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'You can also continue without an account and sign in later from Settings.',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14, color: t.faint, height: 1.4),
+          ),
+        ],
       ],
     );
   }
@@ -323,10 +408,10 @@ class _ChoiceCard extends StatelessWidget {
                     color: isSelected ? t.priInk : t.ink,
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 6),
                 Text(
                   subtitle,
-                  style: TextStyle(fontSize: 12.5, color: t.muted),
+                  style: TextStyle(fontSize: 14, color: t.muted),
                 ),
               ],
             ),

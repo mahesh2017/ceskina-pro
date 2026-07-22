@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="800" height="640" fill="#FFFFFF"/>
+
+  <!-- Header -->
+  <text x="400" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#2C3E50">Czech Conjunctions &amp; Clause Types</text>
+  <text x="400" y="64" text-anchor="middle" font-size="14" fill="#7F8C8D">Souřadné a podřadné spojky — main clause vs. subordinate clause</text>
+  <line x1="120" y1="78" x2="680" y2="78" stroke="#ECF0F1" stroke-width="2"/>
+
+  <!-- Legend -->
+  <rect x="80" y="92" width="640" height="40" rx="6" fill="#F8F9FA" stroke="#ECEFF1" stroke-width="1"/>
+  <rect x="100" y="103" width="16" height="16" rx="3" fill="#E8F4FB" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="124" y="116" font-size="12" fill="#2C3E50" font-weight="600">Main clause</text>
+  <rect x="240" y="103" width="16" height="16" rx="3" fill="#EAFAF1" stroke="#27AE60" stroke-width="1.5"/>
+  <text x="264" y="116" font-size="12" fill="#2C3E50" font-weight="600">Subordinate clause</text>
+  <rect x="430" y="103" width="16" height="16" rx="3" fill="#FFF3E0" stroke="#E67E22" stroke-width="2"/>
+  <text x="454" y="116" font-size="12" fill="#2C3E50" font-weight="600">Conjunction (highlighted)</text>
+
+  <!-- Conjunction cards (3 cols x 2 rows) -->
+  <!-- Row 1: že, protože, když -->
+  <!-- že -->
+  <g>
+    <rect x="80" y="148" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#ECEFF1" stroke-width="1.5"/>
+    <rect x="80" y="148" width="200" height="28" rx="8" fill="#E67E22"/>
+    <rect x="80" y="168" width="200" height="8" fill="#E67E22"/>
+    <text x="180" y="167" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">že</text>
+    <text x="180" y="194" text-anchor="middle" font-size="11" fill="#7F8C8D" font-style="italic">"that"</text>
+    <text x="180" y="212" text-anchor="middle" font-size="11" fill="#2C3E50">content / declarative</text>
+    <text x="180" y="232" text-anchor="middle" font-size="11" fill="#2C3E50" font-style="italic">Vím, že přijde.</text>
+    <text x="180" y="248" text-anchor="middle" font-size="10" fill="#95A5A6">I know that he'll come.</text>
+  </g>
+  <!-- protože -->
+  <g>
+    <rect x="300" y="148" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#ECEFF1" stroke-width="1.5"/>
+    <rect x="300" y="148" width="200" height="28" rx="8" fill="#E67E22"/>
+    <rect x="300" y="168" width="200" height="8" fill="#E67E22"/>
+    <text x="400" y="167" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">protože</text>
+    <text x="400" y="194" text-anchor="middle" font-size="11" fill="#7F8C8D" font-style="italic">"because"</text>
+    <text x="400" y="212" text-anchor="middle" font-size="11" fill="#2C3E50">reason / cause</text>
+    <text x="400" y="232" text-anchor="middle" font-size="11" fill="#2C3E50" font-style="italic">Zůstanu, protože prší.</text>
+    <text x="400" y="248" text-anchor="middle" font-size="10" fill="#95A5A6">I'll stay because it's raining.</text>
+  </g>
+  <!-- když -->
+  <g>
+    <rect x="520" y="148" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#ECEFF1" stroke-width="1.5"/>
+    <rect x="520" y="148" width="200" height="28" rx="8" fill="#E67E22"/>
+    <rect x="520" y="168" width="200" height="8" fill="#E67E22"/>
+    <text x="620" y="167" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">když</text>
+    <text x="620" y="194" text-anchor="middle" font-size="11" fill="#7F8C8D" font-style="italic">"when / if"</text>
+    <text x="620" y="212" text-anchor="middle" font-size="11" fill="#2C3E50">time / condition</text>
+    <text x="620" y="232" text-anchor="middle" font-size="11" fill="#2C3E50" font-style="italic">Když přijdeš, budu rád.</text>
+    <text x="620" y="248" text-anchor="middle" font-size="10" fill="#95A5A6">When you come, I'll be glad.</text>
+  </g>
+
+  <!-- Row 2: pokud, aby, ačkoli -->
+  <!-- pokud -->
+  <g>
+    <rect x="80" y="278" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#ECEFF1" stroke-width="1.5"/>
+    <rect x="80" y="278" width="200" height="28" rx="8" fill="#E67E22"/>
+    <rect x="80" y="298" width="200" height="8" fill="#E67E22"/>
+    <text x="180" y="297" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">pokud</text>
+    <text x="180" y="324" text-anchor="middle" font-size="11" fill="#7F8C8D" font-style="italic">"if (conditional)"</text>
+    <text x="180" y="342" text-anchor="middle" font-size="11" fill="#2C3E50">condition</text>
+    <text x="180" y="362" text-anchor="middle" font-size="11" fill="#2C3E50" font-style="italic">Pokud máš čas, pojď.</text>
+    <text x="180" y="378" text-anchor="middle" font-size="10" fill="#95A5A6">If you have time, let's go.</text>
+  </g>
+  <!-- aby -->
+  <g>
+    <rect x="300" y="278" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#ECEFF1" stroke-width="1.5"/>
+    <rect x="300" y="278" width="200" height="28" rx="8" fill="#E67E22"/>
+    <rect x="300" y="298" width="200" height="8" fill="#E67E22"/>
+    <text x="400" y="297" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">aby</text>
+    <text x="400" y="324" text-anchor="middle" font-size="11" fill="#7F8C8D" font-style="italic">"so that"</text>
+    <text x="400" y="342" text-anchor="middle" font-size="11" fill="#2C3E50">purpose</text>
+    <text x="400" y="362" text-anchor="middle" font-size="11" fill="#2C3E50" font-style="italic">Učím se, abych měl práci.</text>
+    <text x="400" y="378" text-anchor="middle" font-size="10" fill="#95A5A6">I study so that I get a job.</text>
+  </g>
+  <!-- ačkoli -->
+  <g>
+    <rect x="520" y="278" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#ECEFF1" stroke-width="1.5"/>
+    <rect x="520" y="278" width="200" height="28" rx="8" fill="#E67E22"/>
+    <rect x="520" y="298" width="200" height="8" fill="#E67E22"/>
+    <text x="620" y="297" text-anchor="middle" font-size="15" font-weight="700" fill="#FFFFFF">ačkoli</text>
+    <text x="620" y="324" text-anchor="middle" font-size="11" fill="#7F8C8D" font-style="italic">"although"</text>
+    <text x="620" y="342" text-anchor="middle" font-size="11" fill="#2C3E50">concession</text>
+    <text x="620" y="362" text-anchor="middle" font-size="11" fill="#2C3E50" font-style="italic">Ačkoli prší, jdu ven.</text>
+    <text x="620" y="378" text-anchor="middle" font-size="10" fill="#95A5A6">Although it's raining, I go out.</text>
+  </g>
+
+  <!-- Color-coded example sentence breakdown -->
+  <text x="80" y="420" font-size="14" font-weight="700" fill="#7F8C8D">FULL SENTENCE — clause structure color-coded</text>
+
+  <!-- Example: protože -->
+  <text x="80" y="448" font-size="11" font-weight="600" fill="#7F8C8D">EXAMPLE with protože:</text>
+  <g>
+    <!-- main clause -->
+    <rect x="80" y="458" width="270" height="38" rx="4" fill="#E8F4FB" stroke="#4A90D9" stroke-width="1.5"/>
+    <text x="215" y="482" text-anchor="middle" font-size="14" fill="#2C3E50">Nemám čas,</text>
+    <text x="215" y="496" text-anchor="middle" font-size="9" fill="#5D7A99">MAIN CLAUSE</text>
+    <!-- conjunction -->
+    <rect x="355" y="458" width="100" height="38" rx="4" fill="#FFF3E0" stroke="#E67E22" stroke-width="2"/>
+    <text x="405" y="482" text-anchor="middle" font-size="14" font-weight="700" fill="#E67E22">protože</text>
+    <text x="405" y="496" text-anchor="middle" font-size="9" fill="#B9772E">CONJUNCTION</text>
+    <!-- subordinate clause -->
+    <rect x="460" y="458" width="260" height="38" rx="4" fill="#EAFAF1" stroke="#27AE60" stroke-width="1.5"/>
+    <text x="590" y="482" text-anchor="middle" font-size="14" fill="#2C3E50">pracuji.</text>
+    <text x="590" y="496" text-anchor="middle" font-size="9" fill="#1E8449">SUBORDINATE CLAUSE</text>
+  </g>
+  <text x="400" y="520" text-anchor="middle" font-size="12" fill="#7F8C8D" font-style="italic">"I have no time, because I am working."</text>
+
+  <!-- Example: že -->
+  <text x="80" y="552" font-size="11" font-weight="600" fill="#7F8C8D">EXAMPLE with že:</text>
+  <g>
+    <rect x="80" y="562" width="150" height="38" rx="4" fill="#E8F4FB" stroke="#4A90D9" stroke-width="1.5"/>
+    <text x="155" y="586" text-anchor="middle" font-size="14" fill="#2C3E50">Myslím,</text>
+    <text x="155" y="600" text-anchor="middle" font-size="9" fill="#5D7A99">MAIN CLAUSE</text>
+    <rect x="235" y="562" width="70" height="38" rx="4" fill="#FFF3E0" stroke="#E67E22" stroke-width="2"/>
+    <text x="270" y="586" text-anchor="middle" font-size="14" font-weight="700" fill="#E67E22">že</text>
+    <text x="270" y="600" text-anchor="middle" font-size="9" fill="#B9772E">CONJ.</text>
+    <rect x="310" y="562" width="410" height="38" rx="4" fill="#EAFAF1" stroke="#27AE60" stroke-width="1.5"/>
+    <text x="515" y="586" text-anchor="middle" font-size="14" fill="#2C3E50">máš pravdu.</text>
+    <text x="515" y="600" text-anchor="middle" font-size="9" fill="#1E8449">SUBORDINATE CLAUSE</text>
+  </g>
+  <text x="400" y="624" text-anchor="middle" font-size="12" fill="#7F8C8D" font-style="italic">"I think that you are right."</text>
+</svg>

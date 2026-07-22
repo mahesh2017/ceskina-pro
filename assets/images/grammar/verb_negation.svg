@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 580" width="800" height="580" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#E74C3C"/>
+      <stop offset="1" stop-color="#C0392B"/>
+    </linearGradient>
+    <linearGradient id="negPill" x1="0" x2="1">
+      <stop offset="0" stop-color="#E74C3C"/>
+      <stop offset="1" stop-color="#C0392B"/>
+    </linearGradient>
+    <marker id="arrN" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#E74C3C"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="580" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="800" height="74" fill="url(#hdr)"/>
+  <text x="40" y="34" fill="#FFFFFF" font-size="22" font-weight="700">Zápor sloves · Verb Negation</text>
+  <text x="40" y="58" fill="#FADBD8" font-size="13">Just add the prefix ne- to any verb form</text>
+
+  <!-- The rule: big ne- prefix visual -->
+  <g transform="translate(0, 94)">
+    <rect x="30" y="0" width="740" height="80" rx="10" fill="#FDEDEC" stroke="#E74C3C" stroke-width="1.5"/>
+    <text x="50" y="32" font-size="16" font-weight="700" fill="#E74C3C">The Rule:</text>
+    <rect x="160" y="12" width="70" height="44" rx="22" fill="url(#negPill)"/>
+    <text x="195" y="40" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700">ne-</text>
+    <text x="250" y="40" fill="#2C3E50" font-size="18" font-weight="700">+ verb = negated verb</text>
+    <text x="50" y="68" fill="#7F8C8D" font-size="12" font-style="italic">Czech uses a single prefix "ne-" for ALL verb negation — no auxiliary "do not" needed!</text>
+  </g>
+
+  <!-- Column headers -->
+  <g font-size="13" font-weight="700">
+    <text x="80" y="208" fill="#27AE60">Affirmative</text>
+    <text x="350" y="208" text-anchor="middle" fill="#E74C3C">prefix</text>
+    <text x="560" y="208" fill="#E74C3C">Negative</text>
+    <text x="700" y="208" fill="#7F8C8D">English</text>
+  </g>
+  <line x1="30" y1="218" x2="770" y2="218" stroke="#BDC3C7" stroke-width="1"/>
+
+  <!-- Example rows with "no" symbol (circle + slash) -->
+  <g font-size="18">
+    <!-- dělám → nedělám -->
+    <rect x="30" y="228" width="740" height="52" rx="6" fill="#F8F9FA"/>
+    <text x="80" y="262" fill="#2C3E50" font-weight="700">dělám</text>
+    <line x1="210" y1="256" x2="320" y2="256" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <rect x="335" y="240" width="50" height="32" rx="6" fill="#E74C3C"/>
+    <text x="360" y="262" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">ne-</text>
+    <line x1="400" y1="256" x2="510" y2="256" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <text x="560" y="262" fill="#E74C3C" font-weight="700">nedělám</text>
+    <!-- no symbol -->
+    <g transform="translate(620, 246)" stroke="#E74C3C" stroke-width="2.5" fill="none">
+      <circle cx="14" cy="14" r="13"/>
+      <line x1="4" y1="4" x2="24" y2="24"/>
+    </g>
+    <text x="700" y="262" fill="#7F8C8D" font-size="13">I don't do</text>
+
+    <!-- mám → nemám -->
+    <rect x="30" y="282" width="740" height="52" rx="6" fill="#FFFFFF"/>
+    <text x="80" y="316" fill="#2C3E50" font-weight="700">mám</text>
+    <line x1="210" y1="310" x2="320" y2="310" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <rect x="335" y="294" width="50" height="32" rx="6" fill="#E74C3C"/>
+    <text x="360" y="316" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">ne-</text>
+    <line x1="400" y1="310" x2="510" y2="310" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <text x="560" y="316" fill="#E74C3C" font-weight="700">nemám</text>
+    <g transform="translate(620, 300)" stroke="#E74C3C" stroke-width="2.5" fill="none">
+      <circle cx="14" cy="14" r="13"/>
+      <line x1="4" y1="4" x2="24" y2="24"/>
+    </g>
+    <text x="700" y="316" fill="#7F8C8D" font-size="13">I don't have</text>
+
+    <!-- jsem → nejsem -->
+    <rect x="30" y="336" width="740" height="52" rx="6" fill="#F8F9FA"/>
+    <text x="80" y="370" fill="#2C3E50" font-weight="700">jsem</text>
+    <line x1="210" y1="364" x2="320" y2="364" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <rect x="335" y="348" width="50" height="32" rx="6" fill="#E74C3C"/>
+    <text x="360" y="370" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">ne-</text>
+    <line x1="400" y1="364" x2="510" y2="364" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <text x="560" y="370" fill="#E74C3C" font-weight="700">nejsem</text>
+    <g transform="translate(620, 354)" stroke="#E74C3C" stroke-width="2.5" fill="none">
+      <circle cx="14" cy="14" r="13"/>
+      <line x1="4" y1="4" x2="24" y2="24"/>
+    </g>
+    <text x="700" y="370" fill="#7F8C8D" font-size="13">I am not</text>
+
+    <!-- můžu → nemůžu -->
+    <rect x="30" y="390" width="740" height="52" rx="6" fill="#FFFFFF"/>
+    <text x="80" y="424" fill="#2C3E50" font-weight="700">můžu</text>
+    <line x1="210" y1="418" x2="320" y2="418" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <rect x="335" y="402" width="50" height="32" rx="6" fill="#E74C3C"/>
+    <text x="360" y="424" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">ne-</text>
+    <line x1="400" y1="418" x2="510" y2="418" stroke="#E74C3C" stroke-width="2.5" marker-end="url(#arrN)"/>
+    <text x="560" y="424" fill="#E74C3C" font-weight="700">nemůžu</text>
+    <g transform="translate(620, 408)" stroke="#E74C3C" stroke-width="2.5" fill="none">
+      <circle cx="14" cy="14" r="13"/>
+      <line x1="4" y1="4" x2="24" y2="24"/>
+    </g>
+    <text x="700" y="424" fill="#7F8C8D" font-size="13">I can't</text>
+  </g>
+
+  <!-- Key points box -->
+  <rect x="30" y="462" width="740" height="100" rx="10" fill="#F4F6F7" stroke="#BDC3C7" stroke-width="1"/>
+  <text x="50" y="490" font-size="15" font-weight="700" fill="#2C3E50">✦ Key Points</text>
+  <g font-size="13" fill="#34495E">
+    <text x="50" y="516">• The prefix <tspan font-weight="700" fill="#E74C3C">ne-</tspan> attaches to the verb — no extra word needed (unlike English "do not")</text>
+    <text x="50" y="538">• Works for ALL verbs: present, past (<tspan font-weight="700">nedělal jsem</tspan>), conditional (<tspan font-weight="700">nedělal bych</tspan>), imperative (<tspan font-weight="700">nedělej!</tspan>)</text>
+    <text x="50" y="556" font-style="italic" fill="#7F8C8D">• Double negatives are standard in Czech: "Nic nevidím" = "I don't see anything" (lit. "I don't see nothing")</text>
+  </g>
+</svg>

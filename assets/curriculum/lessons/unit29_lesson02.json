@@ -1,0 +1,244 @@
+{
+  "id": 2902,
+  "unit_id": 29,
+  "order_in_unit": 2,
+  "title": "A2 Exam Practice: Writing & Speaking",
+  "description": "A2-level exam practice for writing and speaking production. Write informal emails, diary entries with past tense, and formal excuses. Speak in monologues about vacations, role-play formal situations at government offices, and compare apartments in picture-based discussions. Includes A2 error correction and complex-sentence translations.",
+  "duration_min": 35,
+  "lesson_type": "practice",
+  "is_review": true,
+  "exercises": [
+    {
+      "id": 29016,
+      "lesson_id": 2902,
+      "type": "writing_task",
+      "prompt": "Write an informal email inviting a friend to a birthday party.",
+      "data": {
+        "type": "writing_task",
+        "prompt_cz": "Napište neformální e-mail kamarádovi/kamarádce a pozvěte ho/ji na oslavu narozenin. Uveďte datum, čas, místo a co si má přinést. Použijte minulý čas alespoň jednou (např. o minulé oslavě).",
+        "prompt_en": "Write an informal email inviting a friend to your birthday party. Include date, time, place, and what to bring. Use the past tense at least once (e.g., about last year's party).",
+        "min_words": 50,
+        "max_words": 120,
+        "required_elements": [
+          "greeting",
+          "invitation",
+          "date_time",
+          "location",
+          "what_to_bring",
+          "past_reference",
+          "closing"
+        ],
+        "sample_answer_cz": "Ahoj Tomáši!\nZvu tě na oslavu mých narozenin! Bude to v pátek 20. června od 18:00 u mě doma. Bydlíš daleko, ale loňské oslavě ses účastnil a bylo to super. Tentokrát bude grilování, takže si můžeš přinést své oblíbené pití. Ozvi se mi, jestli přijdeš!\nTěším se na tebe,\nEva",
+        "evaluation_criteria": "Must include greeting, invitation with occasion, date+time, location, what to bring, at least one past tense usage (e.g., 'loňské oslavě ses účastnil' — you attended last year's party), and a closing. Use informal address ('ty' forms). Sentences should be A2 level — combine clauses with protože, ale, takže."
+      },
+      "answer_key": "Ahoj Tomáši! Zvu tě na oslavu mých narozenin!...",
+      "xp_reward": 25
+    },
+    {
+      "id": 29017,
+      "lesson_id": 2902,
+      "type": "writing_task",
+      "prompt": "Write a diary entry about your past weekend using the past tense.",
+      "data": {
+        "type": "writing_task",
+        "prompt_cz": "Napište zápis do deníku o minulém víkendu. Použijte minulý čas (byl/a, šel/šla, dělal/dělala, viděl/a). Popište, co jste dělali v sobotu a v neděli, s kým jste byli a jak se vám to líbilo.",
+        "prompt_en": "Write a diary entry about your past weekend. Use the past tense (byl/a, šel/šla, dělal/dělala, viděl/a). Describe what you did on Saturday and Sunday, who you were with, and how you liked it.",
+        "min_words": 60,
+        "max_words": 150,
+        "required_elements": [
+          "date_or_intro",
+          "saturday_activities",
+          "sunday_activities",
+          "companions",
+          "feelings",
+          "past_tense_verbs"
+        ],
+        "sample_answer_cz": "Milý deníčku,\nO víkendu jsem měl hezké dny. V sobotu jsem vstal brzy a šel jsem běhat do parku. Po obědě jsem se sešel s kamarády a šli jsme do kina na nový film. Film se mi líbil, byl velmi zábavný. V neděli jsem navštívil babičku. Vařili jsme spolu oběd a povídali jsme si o rodině. Odpoledne jsem četl knihu a odpočíval. Byl to klidný víkend a cítil jsem se dobře.",
+        "evaluation_criteria": "Must use past tense throughout (byl, šel, dělal, viděl, líbil se, četl, cítil). Mention both Saturday and Sunday activities, who you were with, and your feelings. A2 level: use subordinate clauses with protože, když, takže, a (and)."
+      },
+      "answer_key": "Milý deníčku, O víkendu jsem měl hezké dny...",
+      "xp_reward": 25
+    },
+    {
+      "id": 29018,
+      "lesson_id": 2902,
+      "type": "writing_task",
+      "prompt": "Write a formal excuse for missing work.",
+      "data": {
+        "type": "writing_task",
+        "prompt_cz": "Napište formální omluvu z práce. Omluvte se, že nemůžete přijít do práce dne [datum], uveďte důvod (např. nemoc, rodinný důvod) a řekněte, kdy se vrátíte. Použijte formální styl.",
+        "prompt_en": "Write a formal excuse for missing work. Apologize that you cannot come to work on [date], state the reason (e.g., illness, family reason), and say when you'll return. Use formal style.",
+        "min_words": 50,
+        "max_words": 120,
+        "required_elements": [
+          "formal_greeting",
+          "absence_date",
+          "reason",
+          "expected_return",
+          "apology",
+          "formal_closing"
+        ],
+        "sample_answer_cz": "Vážený pane Nováku,\nomlouvám se, ale bohužel nemohu přijít do práce ve čtvrtek 15. května, protože jsem onemocněl a mám vysokou teplotu. Byl jsem u lékaře, který mi doporučil tři dny klidu. Vrátím se do práce v pondělí 19. května. Své úkoly jsem předal kolegovi Karlu Dvořákovi. Děkuji za pochopení.\nS pozdravem,\nJan Svoboda",
+        "evaluation_criteria": "Must use formal address (Vážený pane/paní + last name vocative). Include absence date, reason (nemoc/rodinný důvod), expected return date, apology, and formal closing (S pozdravem). Use formal register — no informal expressions. A2 formal writing style."
+      },
+      "answer_key": "Vážený pane Nováku, omlouvám se...",
+      "xp_reward": 25
+    },
+    {
+      "id": 29019,
+      "lesson_id": 2902,
+      "type": "speaking_task",
+      "prompt": "Give a 1-minute monologue about your last vacation using the past tense.",
+      "data": {
+        "type": "speaking_task",
+        "prompt_cz": "Povězte něco o své poslední dovolené (1 minuta). Kde jste byl/a, s kým, co jste dělal/a, jaké bylo počasí, co se vám líbilo/nelíbilo. Použijte minulý čas.",
+        "prompt_en": "Give a 1-minute monologue about your last vacation. Where you went, who with, what you did, what the weather was like, what you liked/disliked. Use the past tense.",
+        "task_type": "monologue",
+        "guiding_questions_cz": [
+          "Kde jste byl/a na dovolené?",
+          "S kým jste tam byl/a?",
+          "Co jste dělal/a?",
+          "Jaké bylo počasí?",
+          "Co se vám líbilo/nelíbilo?"
+        ],
+        "guiding_questions_en": [
+          "Where did you go on vacation?",
+          "Who were you with?",
+          "What did you do?",
+          "What was the weather like?",
+          "What did you like/dislike?"
+        ],
+        "min_duration_seconds": 60,
+        "evaluation_criteria": "Should speak for at least 60 seconds using past tense forms (byl/byla, šel/šla, viděl/viděla, líbilo se). Cover at least 4 of the 5 guiding questions. Use A2 vocabulary for travel, weather, activities. Connect ideas with protože, ale, takže, a. Maintain consistent past tense."
+      },
+      "answer_key": "Full 1-minute spoken monologue about a vacation.",
+      "xp_reward": 30
+    },
+    {
+      "id": 29020,
+      "lesson_id": 2902,
+      "type": "speaking_task",
+      "prompt": "Role-play a formal situation at a government office arranging documents.",
+      "data": {
+        "type": "speaking_task",
+        "prompt_cz": "Představte si, že jste na úřadě. Potřebujete vyřídit doklady (např. občanský průkaz, pas). Hrajte roli občana. Pozdravte, vysvětlete, co potřebujete, odpovězte na otázky úředníka a poděkujte.",
+        "prompt_en": "Role-play a formal situation at a government office. You need to arrange documents (e.g., ID card, passport). You play the citizen. Greet, explain what you need, answer the official's questions, and thank them.",
+        "task_type": "role_play",
+        "guiding_questions_cz": [
+          "Dobrý den, co byste potřeboval/a?",
+          "Máte u sebe fotografie a starý průkaz?",
+          "Kde máte trvalé bydliště?",
+          "Bude to hotové za dva týdny, vyhovuje vám to?"
+        ],
+        "guiding_questions_en": [
+          "Hello, what do you need?",
+          "Do you have photos and your old ID?",
+          "Where is your permanent residence?",
+          "It'll be ready in two weeks, does that work for you?"
+        ],
+        "min_duration_seconds": 90,
+        "evaluation_criteria": "Must use formal address throughout (Dobrý den, chtěl/a bych, prosím, děkuji vám). Explain the document needed (občanský průkaz, pas, rodný list). Answer questions with complete sentences. Use formal register — 'vy' forms. A2-level formal communication at an úřad."
+      },
+      "answer_key": "Full spoken role-play at a government office.",
+      "xp_reward": 30
+    },
+    {
+      "id": 29021,
+      "lesson_id": 2902,
+      "type": "speaking_task",
+      "prompt": "Picture-based discussion: compare two apartments.",
+      "data": {
+        "type": "speaking_task",
+        "prompt_cz": "Podívejte se na obrázky dvou bytů a porovnejte je. Popište velikost, umístění, cenu, výhody a nevýhody. Řekněte, který byt byste si vybral/a a proč.",
+        "prompt_en": "Look at pictures of two apartments and compare them. Describe size, location, price, advantages and disadvantages. Say which apartment you would choose and why.",
+        "task_type": "picture_description",
+        "guiding_questions_cz": [
+          "Jak velký je první byt?",
+          "Jak velký je druhý byt?",
+          "Kde se nacházejí?",
+          "Kolik stojí každý z nich?",
+          "Který byste si vybral/a a proč?"
+        ],
+        "guiding_questions_en": [
+          "How big is the first apartment?",
+          "How big is the second apartment?",
+          "Where are they located?",
+          "How much does each cost?",
+          "Which would you choose and why?"
+        ],
+        "min_duration_seconds": 60,
+        "evaluation_criteria": "Should use comparative forms (větší, menší, dražší, levnější, lepší) and superlatives. Compare at least 3 features (size, location, price). Express preference with 'Vybral/a bych si...' + reason. Use A2 vocabulary for housing, adjectives, comparisons. Speak for at least 60 seconds."
+      },
+      "answer_key": "Full spoken comparison of two apartments.",
+      "xp_reward": 30
+    },
+    {
+      "id": 29022,
+      "lesson_id": 2902,
+      "type": "error_correction",
+      "prompt": "Find and correct the case agreement error.",
+      "data": {
+        "type": "error_correction",
+        "prompt_en": "Find and correct the case agreement error in this sentence.",
+        "sentence_cz": "Mluvil jsem s kamarád o filmu.",
+        "correct_sentence_cz": "Mluvil jsem s kamarádem o filmu.",
+        "error_type": "case_agreement",
+        "explanation": "The preposition 's' (with) requires the instrumental case. 'Kamarád' (masculine animate) in instrumental singular is 'kamarádem'. 'Mluvil jsem s kamarádem o filmu.' = I spoke with a friend about the film. 'o filmu' is correct (locative after 'o')."
+      },
+      "answer_key": "Mluvil jsem s kamarádem o filmu.",
+      "xp_reward": 15
+    },
+    {
+      "id": 29023,
+      "lesson_id": 2902,
+      "type": "error_correction",
+      "prompt": "Find and correct the verb aspect error.",
+      "data": {
+        "type": "error_correction",
+        "prompt_en": "Find and correct the verb aspect error in this sentence.",
+        "sentence_cz": "Včera jsem dlouho četl knihu, ale ještě jsem ji nedočítal.",
+        "correct_sentence_cz": "Včera jsem dlouho četl knihu, ale ještě jsem ji nedočetl.",
+        "error_type": "aspect_choice",
+        "explanation": "The correct perfective form is 'nedočetl' (not 'nedočítal'). 'Dočíst' (perfective) = to finish reading. 'Dočítat' (imperfective) = to be in the process of finishing reading. In the negative with 'ještě ne...' (not yet), we want the perfective to express that the action has not been completed: 'ještě jsem ji nedočetl' = I haven't finished it yet."
+      },
+      "answer_key": "Včera jsem dlouho četl knihu, ale ještě jsem ji nedočetl.",
+      "xp_reward": 15
+    },
+    {
+      "id": 29024,
+      "lesson_id": 2902,
+      "type": "translation",
+      "prompt": "Translate from English to Czech.",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I didn't go to work yesterday because I was sick, so I stayed home and rested.",
+        "accepted_answers": [
+          "Včera jsem nešel do práce, protože jsem byl nemocný, takže jsem zůstal doma a odpočíval.",
+          "Včera jsem nešla do práce, protože jsem byla nemocná, takže jsem zůstala doma a odpočívala."
+        ],
+        "grammar_note": "'Včera jsem nešel do práce, protože jsem byl nemocný, takže jsem zůstal doma a odpočíval.' (male speaker) = Yesterday I didn't go to work because I was sick, so I stayed home and rested. Note three subordinate clauses connected by protože (because) and takže (so). All verbs in past tense: nešel, byl, zůstal, odpočíval. Female speaker would use šla, byla, zůstala, odpočívala."
+      },
+      "answer_key": "Včera jsem nešel do práce, protože jsem byl nemocný, takže jsem zůstal doma a odpočíval.",
+      "xp_reward": 15
+    },
+    {
+      "id": 29025,
+      "lesson_id": 2902,
+      "type": "translation",
+      "prompt": "Translate from Czech to English.",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "Když jsem přišel domů, viděl jsem, že na stole je dopis od maminky.",
+        "accepted_answers": [
+          "When I came home, I saw that there was a letter from mom on the table.",
+          "When I got home, I saw that there was a letter from my mother on the table."
+        ],
+        "grammar_note": "'Když jsem přišel domů, viděl jsem, že na stole je dopis od maminky.' = When I came home, I saw that there was a letter from mom on the table. Complex sentence with 'když' (when — factual past) + main clause + 'že' (that — subordinate). Past tense 'přišel' and 'viděl' (masc.). Present 'je' in the že-clause (the letter IS on the table). 'od maminky' = from mom (genitive after 'od')."
+      },
+      "answer_key": "When I came home, I saw that there was a letter from mom on the table.",
+      "xp_reward": 15
+    }
+  ]
+}

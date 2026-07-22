@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../../../core/config/backend_config.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/tts_providers.dart';
@@ -14,6 +16,40 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  Future<void> _editName(BuildContext context, WidgetRef ref) async {
+    final controller = TextEditingController(
+      text: ref.read(settingsProvider).learnerName,
+    );
+    final result = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Your name'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          textCapitalization: TextCapitalization.words,
+          decoration: const InputDecoration(
+            hintText: 'Your first name',
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, controller.text),
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (result != null && result.trim().isNotEmpty) {
+      await ref.read(settingsProvider.notifier).setLearnerName(result);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final t = context.tokens;
@@ -36,6 +72,40 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ],
             ),
             const SizedBox(height: 8),
+
+            // ── Profile ──
+            const _GroupLabel('Profile'),
+            _Group(
+              children: [
+                _Row(
+                  icon: Icons.person_outline,
+                  tint: t.priSoft,
+                  fg: t.pri,
+                  title: 'Your name',
+                  subtitle: settings.learnerName.isEmpty
+                      ? 'Not set'
+                      : settings.learnerName,
+                  onTap: () => _editName(context, ref),
+                ),
+              ],
+            ),
+
+            // ── Account (only when backend is configured) ──
+            if (BackendConfig.isConfigured) ...[
+              const _GroupLabel('Account'),
+              _Group(
+                children: [
+                  _Row(
+                    icon: Icons.manage_accounts_outlined,
+                    tint: t.priSoft,
+                    fg: t.pri,
+                    title: 'Account, sign in & data',
+                    subtitle: 'Protect, recover, export, or delete your data',
+                    onTap: () => context.push('/account'),
+                  ),
+                ],
+              ),
+            ],
 
             // ── Appearance ──
             const _GroupLabel('Appearance'),
@@ -73,7 +143,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     style: TextStyle(
                       color: t.pri,
                       fontWeight: FontWeight.w700,
-                      fontSize: 13,
+                      fontSize: 15,
                     ),
                     onChanged: (xp) {
                       if (xp != null) {
@@ -177,7 +247,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                 Text(
                                   '${(settings.ttsSpeechRate * 100).round()}% — slower is easier',
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: 14,
                                     color: t.muted,
                                   ),
                                 ),
@@ -230,17 +300,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
 
             // ── AI configuration ──
-            const _GroupLabel('AI configuration'),
+            const _GroupLabel('Account & data'),
             _Group(
               children: [
                 _Row(
-                  icon: Icons.vpn_key_outlined,
-                  tint: t.greenSoft,
-                  fg: t.green,
-                  title: 'AI tutor',
-                  subtitle: 'Protected by the Čeština Pro server',
-                  subtitleColor: t.green,
-                  trailing: const Icon(Icons.lock_outline, size: 18),
+                  icon: Icons.manage_accounts_outlined,
+                  tint: t.priSoft,
+                  fg: t.pri,
+                  title: 'Account, export & deletion',
+                  subtitle: 'Protect, recover, export, or delete your data',
+                  onTap: () => context.push('/account'),
                 ),
               ],
             ),
@@ -253,7 +322,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   icon: Icons.school_outlined,
                   tint: t.priSoft,
                   fg: t.pri,
-                  title: 'Čeština Pro',
+                  title: 'Czechify',
                   subtitle: 'AI-powered Czech learning · CEFR A1 → A2',
                   trailing: const SizedBox.shrink(),
                 ),
@@ -295,29 +364,32 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   void _showPrivacyPolicy(BuildContext context) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Privacy Policy'),
-        content: const SingleChildScrollView(
-          child: Text(
-            'Čeština Pro stores all your learning data locally on your '
-            'device — progress, flashcards, AI conversations, and settings '
-            'are never transmitted to any server.\n\n'
-            'AI features (tutor chat, writing evaluation) are optional and '
-            'connect directly to AI providers using your own API key. '
-            'No third-party analytics, tracking, or advertising SDKs are '
-            'included.\n\n'
-            'Microphone access is used only for on-device pronunciation '
-            'practice. No audio is recorded or stored.\n\n'
-            'Full privacy policy: PRIVACY.md in the app repository.',
+      builder:
+          (ctx) => AlertDialog(
+            title: const Text('Privacy Policy'),
+            content: const SingleChildScrollView(
+              child: Text(
+                'When the backend is enabled, Czechify creates an anonymous '
+                'Supabase account, downloads curriculum, and synchronizes selected '
+                'lesson, badge, streak, exam, and review-scheduling data.\n\n'
+                'AI tutor and writing requests are sent through a Supabase Edge '
+                'Function to DeepSeek. Chat history remains stored locally. Do '
+                'not include sensitive personal information in AI prompts.\n\n'
+                'Pronunciation uses the operating system speech recognizer, which '
+                'may process speech on-device or through Apple/Google services. '
+                'No analytics, advertising, or crash-reporting SDK is included.\n\n'
+                'Account linking, portable data export, and cloud/local account '
+                'deletion are available under Account & data.\n\n'
+                'Full privacy policy: PRIVACY.md in the app repository.',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: const Text('Close'),
+              ),
+            ],
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -368,7 +440,6 @@ class _Row extends StatelessWidget {
   final Color fg;
   final String title;
   final String subtitle;
-  final Color? subtitleColor;
   final Widget? trailing;
   final VoidCallback? onTap;
 
@@ -378,7 +449,6 @@ class _Row extends StatelessWidget {
     required this.fg,
     required this.title,
     required this.subtitle,
-    this.subtitleColor,
     this.trailing,
     this.onTap,
   });
@@ -416,12 +486,9 @@ class _Row extends StatelessWidget {
                   Text(
                     subtitle,
                     style: TextStyle(
-                      fontSize: 12,
-                      color: subtitleColor ?? t.muted,
-                      fontWeight:
-                          subtitleColor != null
-                              ? FontWeight.w600
-                              : FontWeight.normal,
+                      fontSize: 14,
+                      color: t.muted,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ],
@@ -462,7 +529,7 @@ class _ThemeToggle extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
               color: selected ? t.ink : t.muted,
             ),

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" width="800" height="560" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="beHdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#4A90D9"/>
+      <stop offset="1" stop-color="#357ABD"/>
+    </linearGradient>
+    <linearGradient id="haveHdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#E67E22"/>
+      <stop offset="1" stop-color="#D35400"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="560" fill="#FFFFFF"/>
+
+  <!-- Main title -->
+  <rect x="0" y="0" width="800" height="74" fill="#2C3E50"/>
+  <text x="40" y="34" fill="#FFFFFF" font-size="22" font-weight="700">Irregular Verbs: být &amp; mít</text>
+  <text x="40" y="58" fill="#BDC3C7" font-size="13">Two essential irregular verbs — memorize these forms</text>
+
+  <!-- být card -->
+  <g>
+    <rect x="30" y="94" width="360" height="442" rx="12" fill="#F4F9FE" stroke="#4A90D9" stroke-width="2"/>
+    <rect x="30" y="94" width="360" height="52" rx="12" fill="url(#beHdr)"/>
+    <rect x="30" y="134" width="360" height="12" fill="url(#beHdr)"/>
+    <text x="210" y="120" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">být</text>
+    <text x="210" y="140" text-anchor="middle" fill="#D6EAF8" font-size="12">to be</text>
+
+    <!-- Person rows -->
+    <g font-size="16">
+      <!-- já -->
+      <text x="60" y="184" fill="#7F8C8D" font-size="13" font-weight="700">já</text>
+      <text x="60" y="204" fill="#BDC3C7" font-size="11">I</text>
+      <text x="180" y="194" fill="#2C3E50" font-weight="700">jsem</text>
+      <line x1="50" y1="214" x2="370" y2="214" stroke="#E5E8E8" stroke-width="1"/>
+
+      <!-- ty -->
+      <text x="60" y="244" fill="#7F8C8D" font-size="13" font-weight="700">ty</text>
+      <text x="60" y="264" fill="#BDC3C7" font-size="11">you</text>
+      <text x="180" y="254" fill="#2C3E50" font-weight="700">jsi</text>
+      <line x1="50" y1="274" x2="370" y2="274" stroke="#E5E8E8" stroke-width="1"/>
+
+      <!-- on/ona -->
+      <text x="60" y="304" fill="#7F8C8D" font-size="13" font-weight="700">on/ona</text>
+      <text x="60" y="324" fill="#BDC3C7" font-size="11">he/she</text>
+      <text x="180" y="314" fill="#2C3E50" font-weight="700">je</text>
+      <line x1="50" y1="334" x2="370" y2="334" stroke="#E5E8E8" stroke-width="1"/>
+
+      <!-- my -->
+      <text x="60" y="364" fill="#7F8C8D" font-size="13" font-weight="700">my</text>
+      <text x="60" y="384" fill="#BDC3C7" font-size="11">we</text>
+      <text x="180" y="374" fill="#2C3E50" font-weight="700">jsme</text>
+      <line x1="50" y1="394" x2="370" y2="394" stroke="#E5E8E8" stroke-width="1"/>
+
+      <!-- vy -->
+      <text x="60" y="424" fill="#7F8C8D" font-size="13" font-weight="700">vy</text>
+      <text x="60" y="444" fill="#BDC3C7" font-size="11">you (pl)</text>
+      <text x="180" y="434" fill="#2C3E50" font-weight="700">jste</text>
+      <line x1="50" y1="454" x2="370" y2="454" stroke="#E5E8E8" stroke-width="1"/>
+
+      <!-- oni -->
+      <text x="60" y="484" fill="#7F8C8D" font-size="13" font-weight="700">oni/ony</text>
+      <text x="60" y="504" fill="#BDC3C7" font-size="11">they</text>
+      <text x="180" y="494" fill="#2C3E50" font-weight="700">jsou</text>
+    </g>
+    <text x="210" y="524" text-anchor="middle" fill="#4A90D9" font-size="12" font-style="italic">Note: 3sg "je" and 3pl "jsou" — unique!</text>
+  </g>
+
+  <!-- mít card -->
+  <g>
+    <rect x="410" y="94" width="360" height="442" rx="12" fill="#FDF2E9" stroke="#E67E22" stroke-width="2"/>
+    <rect x="410" y="94" width="360" height="52" rx="12" fill="url(#haveHdr)"/>
+    <rect x="410" y="134" width="360" height="12" fill="url(#haveHdr)"/>
+    <text x="590" y="120" text-anchor="middle" fill="#FFFFFF" font-size="22" font-weight="700">mít</text>
+    <text x="590" y="140" text-anchor="middle" fill="#FAE5D3" font-size="12">to have</text>
+
+    <g font-size="16">
+      <text x="440" y="184" fill="#7F8C8D" font-size="13" font-weight="700">já</text>
+      <text x="440" y="204" fill="#BDC3C7" font-size="11">I</text>
+      <text x="560" y="194" fill="#2C3E50" font-weight="700">m<tspan fill="#E67E22">ám</tspan></text>
+      <line x1="430" y1="214" x2="750" y2="214" stroke="#E5E8E8" stroke-width="1"/>
+
+      <text x="440" y="244" fill="#7F8C8D" font-size="13" font-weight="700">ty</text>
+      <text x="440" y="264" fill="#BDC3C7" font-size="11">you</text>
+      <text x="560" y="254" fill="#2C3E50" font-weight="700">m<tspan fill="#E67E22">áš</tspan></text>
+      <line x1="430" y1="274" x2="750" y2="274" stroke="#E5E8E8" stroke-width="1"/>
+
+      <text x="440" y="304" fill="#7F8C8D" font-size="13" font-weight="700">on/ona</text>
+      <text x="440" y="324" fill="#BDC3C7" font-size="11">he/she</text>
+      <text x="560" y="314" fill="#2C3E50" font-weight="700">m<tspan fill="#E67E22">á</tspan></text>
+      <line x1="430" y1="334" x2="750" y2="334" stroke="#E5E8E8" stroke-width="1"/>
+
+      <text x="440" y="364" fill="#7F8C8D" font-size="13" font-weight="700">my</text>
+      <text x="440" y="384" fill="#BDC3C7" font-size="11">we</text>
+      <text x="560" y="374" fill="#2C3E50" font-weight="700">m<tspan fill="#E67E22">áme</tspan></text>
+      <line x1="430" y1="394" x2="750" y2="394" stroke="#E5E8E8" stroke-width="1"/>
+
+      <text x="440" y="424" fill="#7F8C8D" font-size="13" font-weight="700">vy</text>
+      <text x="440" y="444" fill="#BDC3C7" font-size="11">you (pl)</text>
+      <text x="560" y="434" fill="#2C3E50" font-weight="700">m<tspan fill="#E67E22">áte</tspan></text>
+      <line x1="430" y1="454" x2="750" y2="454" stroke="#E5E8E8" stroke-width="1"/>
+
+      <text x="440" y="484" fill="#7F8C8D" font-size="13" font-weight="700">oni/ony</text>
+      <text x="440" y="504" fill="#BDC3C7" font-size="11">they</text>
+      <text x="560" y="494" fill="#2C3E50" font-weight="700">m<tspan fill="#E67E22">ají</tspan></text>
+    </g>
+    <text x="590" y="524" text-anchor="middle" fill="#E67E22" font-size="12" font-style="italic">Pattern: má- + person ending (regular!)</text>
+  </g>
+</svg>

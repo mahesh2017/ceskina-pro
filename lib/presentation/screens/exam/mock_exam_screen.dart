@@ -561,7 +561,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         const SizedBox(height: 8),
         Text(
           'Write ${question['min_words'] ?? 30}+ words in Czech.',
-          style: const TextStyle(color: Colors.grey, fontSize: 13),
+          style: const TextStyle(color: Colors.grey, fontSize: 15),
         ),
         const SizedBox(height: 16),
         Expanded(
@@ -618,7 +618,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                   const SizedBox(height: 8),
                   Text(
                     writingState.evaluation!.feedback,
-                    style: const TextStyle(fontSize: 13),
+                    style: const TextStyle(fontSize: 15),
                   ),
                 ],
               ),
@@ -690,7 +690,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
           const Text(
             'Tap the microphone and read the text aloud. Speech recognition '
             'scores your pronunciation.',
-            style: TextStyle(color: Colors.grey, fontSize: 13),
+            style: TextStyle(color: Colors.grey, fontSize: 15),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
@@ -742,7 +742,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 child: Text(
                   'Heard: "$_speakingTranscription"',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  style: const TextStyle(color: Colors.grey, fontSize: 14),
                 ),
               ),
           ],
@@ -923,11 +923,11 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                   ],
                 ),
                 if (audioText != null) ...[
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Text(
                     'Audio said: "$audioText"',
                     style: const TextStyle(
-                        fontSize: 12, fontStyle: FontStyle.italic,),
+                        fontSize: 14, fontStyle: FontStyle.italic,),
                   ),
                 ],
                 const SizedBox(height: 6),
@@ -936,11 +936,11 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                     userIdx is int && userIdx < options.length
                         ? 'Your answer: ${options[userIdx]}'
                         : 'Not answered',
-                    style: const TextStyle(color: Colors.red, fontSize: 13),
+                    style: const TextStyle(color: Colors.red, fontSize: 15),
                   ),
                 Text(
                   'Correct: ${options[correctIdx]}',
-                  style: const TextStyle(color: Colors.green, fontSize: 13),
+                  style: const TextStyle(color: Colors.green, fontSize: 15),
                 ),
               ],
             ),
@@ -1025,7 +1025,7 @@ class _MiniScoreRow extends StatelessWidget {
         children: [
           SizedBox(
               width: 80,
-              child: Text(label, style: const TextStyle(fontSize: 12)),),
+              child: Text(label, style: const TextStyle(fontSize: 14)),),
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(3),
@@ -1047,7 +1047,7 @@ class _MiniScoreRow extends StatelessWidget {
           const SizedBox(width: 8),
           SizedBox(
             width: 28,
-            child: Text('$score', style: const TextStyle(fontSize: 11)),
+            child: Text('$score', style: const TextStyle(fontSize: 13)),
           ),
         ],
       ),

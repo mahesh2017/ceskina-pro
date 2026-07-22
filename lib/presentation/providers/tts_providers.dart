@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
@@ -157,6 +158,19 @@ class CzechTts {
   }
 
   Future<Map<String, Map<String, String>>> _loadRemoteAudio() async {
+    if (!BackendConfig.isConfigured) {
+      // The binary was built without the Supabase --dart-defines, so
+      // BackendConfig.supabaseUrl is empty and the manifest request below
+      // would hit '<empty>/storage/...' and silently fall back to platform
+      // TTS. Short-circuit and log loudly so the cause is obvious on-device.
+      debugPrint(
+        '[czech_tts] Neural audio disabled: SUPABASE_URL/SUPABASE_ANON_KEY '
+        'not supplied at build time. Using on-device TTS fallback. '
+        'Rebuild with both --dart-define values to enable neural audio.',
+      );
+      return const {};
+    }
+
     final cacheDir = await _getNeuralCacheDir();
     final cachedManifest = File('$cacheDir/manifest.json');
 

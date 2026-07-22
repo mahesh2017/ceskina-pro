@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ceskina_pro/domain/entities/fsrs_card.dart';
-import 'package:ceskina_pro/domain/engines/fsrs_scheduler.dart';
+import 'package:ceskina_pro/domain/entities/srs_card.dart';
+import 'package:ceskina_pro/domain/engines/srs_scheduler.dart';
 
 void main() {
-  group('FSRSScheduler', () {
-    final scheduler = FSRSScheduler();
+  group('SrsScheduler', () {
+    final scheduler = SrsScheduler();
     final now = DateTime(2026, 7, 16, 12, 0);
 
-    FSRSCard newCard() => FSRSCard(
+    SrsCard newCard() => SrsCard(
           id: '1',
           cardType: CardType.vocabulary,
           due: now,
@@ -90,9 +90,9 @@ void main() {
 
     test('getDueCards returns cards due on or before the reference date', () {
       final cards = [
-        FSRSCard(id: '1', cardType: CardType.vocabulary, due: now.subtract(const Duration(days: 1))),
-        FSRSCard(id: '2', cardType: CardType.vocabulary, due: now),
-        FSRSCard(id: '3', cardType: CardType.vocabulary, due: now.add(const Duration(days: 1))),
+        SrsCard(id: '1', cardType: CardType.vocabulary, due: now.subtract(const Duration(days: 1))),
+        SrsCard(id: '2', cardType: CardType.vocabulary, due: now),
+        SrsCard(id: '3', cardType: CardType.vocabulary, due: now.add(const Duration(days: 1))),
       ];
 
       final due = scheduler.getDueCards(cards, now);

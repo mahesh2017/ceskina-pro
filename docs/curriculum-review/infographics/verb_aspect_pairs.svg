@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 680" width="800" height="680" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#E67E22"/>
+      <stop offset="1" stop-color="#D35400"/>
+    </linearGradient>
+    <linearGradient id="impGrad" x1="0" x2="1">
+      <stop offset="0" stop-color="#4A90D9"/>
+      <stop offset="1" stop-color="#357ABD"/>
+    </linearGradient>
+    <linearGradient id="perfGrad" x1="0" x2="1">
+      <stop offset="0" stop-color="#27AE60"/>
+      <stop offset="1" stop-color="#1E8449"/>
+    </linearGradient>
+    <marker id="arrowR" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#8E44AD"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="680" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="800" height="74" fill="url(#hdr)"/>
+  <text x="40" y="34" fill="#FFFFFF" font-size="22" font-weight="700">Slovesný vid · Verb Aspect Pairs</text>
+  <text x="40" y="58" fill="#FAE5D3" font-size="13">Imperfective (process) ↔ Perfective (completion) — linked by prefixes</text>
+
+  <!-- Concept explanation row -->
+  <g transform="translate(0, 88)">
+    <!-- Imperfective concept -->
+    <rect x="30" y="0" width="350" height="64" rx="10" fill="#E8F1FB" stroke="#4A90D9" stroke-width="1.5"/>
+    <text x="50" y="24" fill="#4A90D9" font-size="14" font-weight="700">IMPERFECTIVE = process</text>
+    <text x="50" y="46" fill="#34495E" font-size="12">ongoing, repeated, habitual action</text>
+    <!-- ongoing arrow icon -->
+    <g transform="translate(300, 22)" stroke="#4A90D9" stroke-width="2.5" fill="none">
+      <path d="M0,10 Q15,0 30,10 T60,10" marker-end="url(#arrowR)"/>
+    </g>
+
+    <!-- Perfective concept -->
+    <rect x="420" y="0" width="350" height="64" rx="10" fill="#E8F8EE" stroke="#27AE60" stroke-width="1.5"/>
+    <text x="440" y="24" fill="#27AE60" font-size="14" font-weight="700">PERFECTIVE = completion</text>
+    <text x="440" y="46" fill="#34495E" font-size="12">finished, result, one-time action</text>
+    <!-- checkmark icon -->
+    <g transform="translate(700, 18)" stroke="#27AE60" stroke-width="3" fill="none">
+      <path d="M0,12 L8,22 L22,2"/>
+    </g>
+  </g>
+
+  <!-- Column headers -->
+  <g font-size="13" font-weight="700">
+    <text x="60" y="180" fill="#4A90D9">Imperfective</text>
+    <text x="380" y="180" text-anchor="middle" fill="#8E44AD">prefix</text>
+    <text x="620" y="180" fill="#27AE60">Perfective</text>
+    <text x="720" y="180" fill="#7F8C8D">Meaning</text>
+  </g>
+  <line x1="30" y1="190" x2="770" y2="190" stroke="#BDC3C7" stroke-width="1"/>
+
+  <!-- Pair rows -->
+  <g font-size="16">
+    <!-- dělat → udělat -->
+    <rect x="30" y="200" width="740" height="50" rx="6" fill="#F8F9FA"/>
+    <text x="60" y="232" fill="#2C3E50" font-weight="700">dělat</text>
+    <text x="150" y="232" fill="#7F8C8D" font-size="12">to do</text>
+    <line x1="240" y1="226" x2="380" y2="226" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <rect x="395" y="212" width="50" height="28" rx="6" fill="#8E44AD"/>
+    <text x="420" y="231" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700">u-</text>
+    <line x1="460" y1="226" x2="560" y2="226" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <text x="590" y="232" fill="#2C3E50" font-weight="700">udělat</text>
+    <text x="720" y="232" fill="#7F8C8D" font-size="12">to do (it)</text>
+
+    <!-- psát → napsat -->
+    <rect x="30" y="252" width="740" height="50" rx="6" fill="#FFFFFF"/>
+    <text x="60" y="284" fill="#2C3E50" font-weight="700">psát</text>
+    <text x="150" y="284" fill="#7F8C8D" font-size="12">to write</text>
+    <line x1="240" y1="278" x2="380" y2="278" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <rect x="395" y="264" width="50" height="28" rx="6" fill="#8E44AD"/>
+    <text x="420" y="283" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700">na-</text>
+    <line x1="460" y1="278" x2="560" y2="278" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <text x="590" y="284" fill="#2C3E50" font-weight="700">napsat</text>
+    <text x="720" y="284" fill="#7F8C8D" font-size="12">to write (it)</text>
+
+    <!-- číst → přečíst -->
+    <rect x="30" y="304" width="740" height="50" rx="6" fill="#F8F9FA"/>
+    <text x="60" y="336" fill="#2C3E50" font-weight="700">číst</text>
+    <text x="150" y="336" fill="#7F8C8D" font-size="12">to read</text>
+    <line x1="240" y1="330" x2="380" y2="330" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <rect x="395" y="316" width="50" height="28" rx="6" fill="#8E44AD"/>
+    <text x="420" y="335" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700">pře-</text>
+    <line x1="460" y1="330" x2="560" y2="330" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <text x="590" y="336" fill="#2C3E50" font-weight="700">přečíst</text>
+    <text x="720" y="336" fill="#7F8C8D" font-size="12">to read (it)</text>
+
+    <!-- vařit → uvařit -->
+    <rect x="30" y="356" width="740" height="50" rx="6" fill="#FFFFFF"/>
+    <text x="60" y="388" fill="#2C3E50" font-weight="700">vařit</text>
+    <text x="150" y="388" fill="#7F8C8D" font-size="12">to cook</text>
+    <line x1="240" y1="382" x2="380" y2="382" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <rect x="395" y="368" width="50" height="28" rx="6" fill="#8E44AD"/>
+    <text x="420" y="387" text-anchor="middle" fill="#FFFFFF" font-size="13" font-weight="700">u-</text>
+    <line x1="460" y1="382" x2="560" y2="382" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <text x="590" y="388" fill="#2C3E50" font-weight="700">uvařit</text>
+    <text x="720" y="388" fill="#7F8C8D" font-size="12">to cook (it)</text>
+
+    <!-- kupovat → koupit -->
+    <rect x="30" y="408" width="740" height="50" rx="6" fill="#F8F9FA"/>
+    <text x="60" y="440" fill="#2C3E50" font-weight="700">kupovat</text>
+    <text x="170" y="440" fill="#7F8C8D" font-size="12">to buy</text>
+    <line x1="240" y1="434" x2="380" y2="434" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <rect x="395" y="420" width="50" height="28" rx="6" fill="#8E44AD"/>
+    <text x="420" y="439" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="700">kou-</text>
+    <line x1="460" y1="434" x2="560" y2="434" stroke="#8E44AD" stroke-width="2.5" marker-end="url(#arrowR)"/>
+    <text x="590" y="440" fill="#2C3E50" font-weight="700">koupit</text>
+    <text x="720" y="440" fill="#7F8C8D" font-size="12">to buy (it)</text>
+  </g>
+
+  <!-- Note about kupovat→koupit -->
+  <text x="40" y="478" font-size="11" font-style="italic" fill="#7F8C8D">Note: kupovat→koupit changes stem &amp; suffix (not just prefix) — some pairs are suppletive.</text>
+
+  <!-- Semantic difference box -->
+  <rect x="30" y="496" width="740" height="168" rx="10" fill="#F4F6F7" stroke="#BDC3C7" stroke-width="1"/>
+  <text x="50" y="524" font-size="15" font-weight="700" fill="#2C3E50">✦ Semantic Difference</text>
+
+  <g font-size="13" fill="#34495E">
+    <text x="50" y="552"><tspan font-weight="700" fill="#4A90D9">Dělám.</tspan>  "I am doing / I do (regularly)." — process, no end in sight</text>
+    <text x="50" y="574"><tspan font-weight="700" fill="#27AE60">Udělal jsem to.</tspan>  "I did it (and it's done)." — completed action with result</text>
+
+    <text x="50" y="606" font-weight="700" fill="#2C3E50">Each imperfective verb has a perfective partner (and vice versa):</text>
+    <text x="50" y="628" fill="#7F8C8D">• Same root, different prefix: psát → napsat, číst → přečíst</text>
+    <text x="50" y="648" fill="#7F8C8D">• Different stem/suffix: kupovat → koupit, brát → vzít  (suppletive pairs)</text>
+  </g>
+</svg>

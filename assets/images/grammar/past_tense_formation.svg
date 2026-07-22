@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" width="800" height="640" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#27AE60"/>
+      <stop offset="1" stop-color="#1E8449"/>
+    </linearGradient>
+    <linearGradient id="auxBox" x1="0" x2="1">
+      <stop offset="0" stop-color="#4A90D9"/>
+      <stop offset="1" stop-color="#357ABD"/>
+    </linearGradient>
+    <linearGradient id="partBox" x1="0" x2="1">
+      <stop offset="0" stop-color="#E67E22"/>
+      <stop offset="1" stop-color="#D35400"/>
+    </linearGradient>
+    <linearGradient id="resultBox" x1="0" x2="1">
+      <stop offset="0" stop-color="#27AE60"/>
+      <stop offset="1" stop-color="#1E8449"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="640" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="800" height="74" fill="url(#hdr)"/>
+  <text x="40" y="34" fill="#FFFFFF" font-size="22" font-weight="700">Minulý čas · Past Tense Formation</text>
+  <text x="40" y="58" fill="#D5F0E0" font-size="13">auxiliary + l-participle = past tense</text>
+
+  <!-- Formula row -->
+  <g transform="translate(0, 100)">
+    <!-- Auxiliary box -->
+    <rect x="70" y="0" width="200" height="80" rx="10" fill="url(#auxBox)"/>
+    <text x="170" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">AUXILIARY</text>
+    <text x="170" y="56" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700">jsem / jsi</text>
+    <text x="170" y="72" text-anchor="middle" fill="#D6EAF8" font-size="11">(1st/2nd person only)</text>
+
+    <!-- + sign -->
+    <text x="305" y="52" text-anchor="middle" fill="#2C3E50" font-size="36" font-weight="700">+</text>
+
+    <!-- Participle box -->
+    <rect x="335" y="0" width="220" height="80" rx="10" fill="url(#partBox)"/>
+    <text x="445" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">L-PARTICIPLE</text>
+    <text x="445" y="56" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700">dělal / dělala …</text>
+    <text x="445" y="72" text-anchor="middle" fill="#FAE5D3" font-size="11">(changes by gender)</text>
+
+    <!-- = sign -->
+    <text x="590" y="52" text-anchor="middle" fill="#2C3E50" font-size="36" font-weight="700">=</text>
+
+    <!-- Result box -->
+    <rect x="620" y="0" width="140" height="80" rx="10" fill="url(#resultBox)"/>
+    <text x="690" y="32" text-anchor="middle" fill="#FFFFFF" font-size="14" font-weight="700">PAST TENSE</text>
+    <text x="690" y="56" text-anchor="middle" fill="#FFFFFF" font-size="18" font-weight="700">dělal jsem</text>
+  </g>
+
+  <!-- Explanation -->
+  <text x="40" y="220" font-size="14" fill="#2C3E50" font-weight="700">The l-participle changes by gender and number:</text>
+
+  <!-- Gender grid -->
+  <g font-size="14">
+    <!-- Header row -->
+    <rect x="30" y="238" width="740" height="34" rx="6" fill="#E8F1FB"/>
+    <text x="50" y="260" fill="#2C3E50" font-weight="700">Gender / Number</text>
+    <text x="320" y="260" fill="#2C3E50" font-weight="700">L-participle (dělat)</text>
+    <text x="540" y="260" fill="#2C3E50" font-weight="700">Example: já + participle</text>
+
+    <!-- Masc singular -->
+    <rect x="30" y="274" width="740" height="40" rx="6" fill="#FFFFFF"/>
+    <text x="50" y="300" fill="#34495E">masculine singular</text>
+    <text x="320" y="300" fill="#E67E22" font-weight="700">dělal</text>
+    <text x="540" y="300" fill="#2C3E50">já <tspan fill="#27AE60" font-weight="700">dělal jsem</tspan></text>
+
+    <!-- Fem singular -->
+    <rect x="30" y="316" width="740" height="40" rx="6" fill="#F8F9FA"/>
+    <text x="50" y="342" fill="#34495E">feminine singular</text>
+    <text x="320" y="342" fill="#E67E22" font-weight="700">dělala</text>
+    <text x="540" y="342" fill="#2C3E50">já <tspan fill="#27AE60" font-weight="700">dělala jsem</tspan></text>
+
+    <!-- Neut singular -->
+    <rect x="30" y="358" width="740" height="40" rx="6" fill="#FFFFFF"/>
+    <text x="50" y="384" fill="#34495E">neuter singular</text>
+    <text x="320" y="384" fill="#E67E22" font-weight="700">dělalo</text>
+    <text x="540" y="384" fill="#2C3E50">ono <tspan fill="#27AE60" font-weight="700">dělalo</tspan> <tspan fill="#7F8C8D" font-size="12">(no aux for 3rd person)</tspan></text>
+
+    <!-- Masc plural (animate) -->
+    <rect x="30" y="400" width="740" height="40" rx="6" fill="#F8F9FA"/>
+    <text x="50" y="426" fill="#34495E">masculine plural (animate)</text>
+    <text x="320" y="426" fill="#E67E22" font-weight="700">dělali</text>
+    <text x="540" y="426" fill="#2C3E50">my <tspan fill="#27AE60" font-weight="700">dělali jsme</tspan></text>
+
+    <!-- Fem/neut plural (inanimate) -->
+    <rect x="30" y="442" width="740" height="40" rx="6" fill="#FFFFFF"/>
+    <text x="50" y="468" fill="#34495E">feminine / neuter plural</text>
+    <text x="320" y="468" fill="#E67E22" font-weight="700">dělaly</text>
+    <text x="540" y="468" fill="#2C3E50">ony <tspan fill="#27AE60" font-weight="700">dělaly</tspan></text>
+  </g>
+
+  <!-- Key rules box -->
+  <rect x="30" y="502" width="740" height="120" rx="10" fill="#FEF9E7" stroke="#F4D03F" stroke-width="1"/>
+  <text x="50" y="528" font-size="15" font-weight="700" fill="#7D6608">✦ Key Rules</text>
+  <g font-size="13" fill="#34495E">
+    <text x="50" y="552">• 1st &amp; 2nd person (já, ty, my, vy): use auxiliary <tspan font-weight="700" fill="#4A90D9">jsem/jsi/jsme/jste</tspan> + participle</text>
+    <text x="50" y="574">• 3rd person (on, ona, ono, oni, ony): <tspan font-weight="700" fill="#E74C3C">no auxiliary</tspan> — participle stands alone</text>
+    <text x="50" y="596">• The participle agrees with the <tspan font-weight="700">subject's gender &amp; number</tspan>, not the speaker's</text>
+    <text x="50" y="614" font-style="italic" fill="#7F8C8D">  e.g. a man says "dělal jsem", a woman says "dělala jsem" for the same "I did"</text>
+  </g>
+</svg>

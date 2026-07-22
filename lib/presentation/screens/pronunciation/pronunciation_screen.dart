@@ -237,7 +237,7 @@ class _ScoreDisplay extends StatelessWidget {
                       Text(
                         label,
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 14,
                           color: color,
                         ),
                       ),
@@ -319,7 +319,7 @@ class _ScoreDisplay extends StatelessWidget {
                                   : p.phoneme,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 13,
+                                fontSize: 15,
                               ),
                             ),
                           ),
@@ -328,7 +328,7 @@ class _ScoreDisplay extends StatelessWidget {
                             child: Text(
                               'in "${p.word}"',
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 15,
                                 color: Colors.grey.shade700,
                               ),
                             ),
@@ -349,7 +349,7 @@ class _ScoreDisplay extends StatelessWidget {
           result.feedback,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 15,
             color: Colors.grey.shade700,
             fontStyle: FontStyle.italic,
           ),
@@ -386,7 +386,7 @@ class _ErrorDisplay extends StatelessWidget {
         const SizedBox(height: 8),
         const Text(
           'Make sure microphone permissions are granted.',
-          style: TextStyle(fontSize: 12, color: Colors.grey),
+          style: TextStyle(fontSize: 14, color: Colors.grey),
           textAlign: TextAlign.center,
         ),
       ],

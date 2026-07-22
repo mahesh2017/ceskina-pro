@@ -20,8 +20,8 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<List<Flashcard>> getFlashcardsByLesson(int lessonId) {
-    return (select(flashcards)..where((f) => f.lessonId.equals(lessonId)))
-        .get();
+    return (select(flashcards)
+      ..where((f) => f.lessonId.equals(lessonId))).get();
   }
 
   Future<List<Flashcard>> getFlashcardsByIds(List<int> ids) {
@@ -30,10 +30,9 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<List<Flashcard>> searchFlashcards(String query) {
-    return (select(flashcards)
-          ..where((f) =>
-              f.wordCz.like('%$query%') | f.wordEn.like('%$query%'),))
-        .get();
+    return (select(flashcards)..where(
+      (f) => f.wordCz.like('%$query%') | f.wordEn.like('%$query%'),
+    )).get();
   }
 
   /// Upsert (update-in-place on conflict) so vocabulary edits in app
@@ -44,28 +43,30 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
   /// Next free flashcard id — user-added cards (e.g. from chat) get ids
   /// above the seeded content so they never collide with content updates.
   Future<int> nextFlashcardId() async {
-    final r = await customSelect(
-      'SELECT COALESCE(MAX(id), 0) AS m FROM flashcards',
-    ).getSingle();
+    final r =
+        await customSelect(
+          'SELECT COALESCE(MAX(id), 0) AS m FROM flashcards',
+        ).getSingle();
     // Keep manual cards well clear of the seeded id range.
     final maxId = r.read<int>('m');
     return (maxId < 900000 ? 900000 : maxId) + 1;
   }
 
   Future<Flashcard?> findByWordCz(String wordCz) async {
-    final rows = await (select(flashcards)
-          ..where((f) => f.wordCz.lower().equals(wordCz.toLowerCase())))
-        .get();
+    final rows =
+        await (select(flashcards)
+          ..where((f) => f.wordCz.lower().equals(wordCz.toLowerCase()))).get();
     return rows.isEmpty ? null : rows.first;
   }
 
   /// Flashcards that don't have an SRS card yet (new content).
   Future<List<int>> flashcardIdsWithoutSrsCards() async {
-    final rows = await customSelect(
-      'SELECT f.id AS id FROM flashcards f '
-      'LEFT JOIN srs_cards s ON s.flashcard_id = f.id '
-      'WHERE s.id IS NULL',
-    ).get();
+    final rows =
+        await customSelect(
+          'SELECT f.id AS id FROM flashcards f '
+          'LEFT JOIN srs_cards s ON s.flashcard_id = f.id '
+          'WHERE s.id IS NULL',
+        ).get();
     return rows.map((r) => r.read<int>('id')).toList();
   }
 
@@ -79,10 +80,11 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<int> getDueCount(DateTime asOf) async {
-    final result = await customSelect(
-      'SELECT COUNT(*) AS c FROM srs_cards WHERE due <= ?',
-      variables: [Variable.withDateTime(asOf)],
-    ).getSingle();
+    final result =
+        await customSelect(
+          'SELECT COUNT(*) AS c FROM srs_cards WHERE due <= ?',
+          variables: [Variable.withDateTime(asOf)],
+        ).getSingle();
     return result.read<int>('c');
   }
 
@@ -90,27 +92,30 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
       into(srsCards).insertOnConflictUpdate(card);
 
   Future<int> srsCardCount() async {
-    final result = await customSelect('SELECT COUNT(*) AS c FROM srs_cards')
-        .getSingle();
+    final result =
+        await customSelect('SELECT COUNT(*) AS c FROM srs_cards').getSingle();
     return result.read<int>('c');
   }
 
-  Future<void> updateSrsCard(SrsCardsCompanion card) async {
-    final id = card.id.value;
-    await (update(srsCards)..where((s) => s.id.equals(id))).write(card);
-    await _enqueueSrsCard(id);
-  }
+  Future<void> updateSrsCard(SrsCardsCompanion card) =>
+      attachedDatabase.transaction(() async {
+        final id = card.id.value;
+        await (update(srsCards)..where((s) => s.id.equals(id))).write(card);
+        await _enqueueSrsCard(id);
+      });
 
   /// Append the current SRS state of card [id] to the sync outbox, keyed by
   /// content (flashcard id or grammar pattern key) so it stays stable across
   /// devices — never the local autoincrement id.
   Future<void> _enqueueSrsCard(int id) async {
     final row =
-        await (select(srsCards)..where((s) => s.id.equals(id))).getSingleOrNull();
+        await (select(srsCards)
+          ..where((s) => s.id.equals(id))).getSingleOrNull();
     if (row == null) return;
-    final contentKey = row.cardType == 'grammar'
-        ? row.grammarPatternKey
-        : row.flashcardId?.toString();
+    final contentKey =
+        row.cardType == 'grammar'
+            ? row.grammarPatternKey
+            : row.flashcardId?.toString();
     if (contentKey == null) return; // malformed card; nothing stable to key on
     await attachedDatabase.syncDao.enqueue(
       entity: 'srs_cards',
@@ -128,7 +133,7 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
     );
   }
 
-  /// Merge remote FSRS state for one card (pull). Keyed by content, not local
+  /// Merge remote SRS state for one card (pull). Keyed by content, not local
   /// id. Newer [lastReviewed] wins; a card missing locally is created. Writes
   /// directly, bypassing the outbox hook so pulls don't echo back.
   Future<void> mergeSrsCard({
@@ -145,49 +150,56 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
     final flashcardId = isGrammar ? null : int.tryParse(contentKey);
     if (!isGrammar && flashcardId == null) return; // malformed key
 
-    final existing = await (select(srsCards)
-          ..where((s) => isGrammar
-              ? (s.cardType.equals('grammar') &
-                  s.grammarPatternKey.equals(contentKey))
-              : (s.flashcardId.equals(flashcardId!))))
-        .getSingleOrNull();
+    final existing =
+        await (select(srsCards)..where(
+          (s) =>
+              isGrammar
+                  ? (s.cardType.equals('grammar') &
+                      s.grammarPatternKey.equals(contentKey))
+                  : (s.flashcardId.equals(flashcardId!)),
+        )).getSingleOrNull();
 
     if (existing == null) {
-      await into(srsCards).insert(SrsCardsCompanion.insert(
-        cardType: cardType,
-        flashcardId: Value(flashcardId),
-        grammarPatternKey: Value(isGrammar ? contentKey : null),
+      await into(srsCards).insert(
+        SrsCardsCompanion.insert(
+          cardType: cardType,
+          flashcardId: Value(flashcardId),
+          grammarPatternKey: Value(isGrammar ? contentKey : null),
+          stability: Value(stability),
+          difficulty: Value(difficulty),
+          due: Value(due),
+          reps: Value(reps),
+          state: Value(state),
+          lastReviewed: Value(lastReviewed),
+        ),
+      );
+      return;
+    }
+
+    // Newer review wins. A null local lastReviewed is treated as oldest.
+    final localTime = existing.lastReviewed;
+    final remoteWins =
+        localTime == null ||
+        (lastReviewed != null && lastReviewed.isAfter(localTime));
+    if (!remoteWins) return;
+
+    await (update(srsCards)..where((s) => s.id.equals(existing.id))).write(
+      SrsCardsCompanion(
         stability: Value(stability),
         difficulty: Value(difficulty),
         due: Value(due),
         reps: Value(reps),
         state: Value(state),
         lastReviewed: Value(lastReviewed),
-      ));
-      return;
-    }
-
-    // Newer review wins. A null local lastReviewed is treated as oldest.
-    final localTime = existing.lastReviewed;
-    final remoteWins = localTime == null ||
-        (lastReviewed != null && lastReviewed.isAfter(localTime));
-    if (!remoteWins) return;
-
-    await (update(srsCards)..where((s) => s.id.equals(existing.id)))
-        .write(SrsCardsCompanion(
-      stability: Value(stability),
-      difficulty: Value(difficulty),
-      due: Value(due),
-      reps: Value(reps),
-      state: Value(state),
-      lastReviewed: Value(lastReviewed),
-    ));
+      ),
+    );
   }
 
   // ── Seed helpers ──
 
   Future<bool> isVocabularySeeded() async {
-    final result = await customSelect('SELECT COUNT(*) AS c FROM flashcards').getSingle();
+    final result =
+        await customSelect('SELECT COUNT(*) AS c FROM flashcards').getSingle();
     return result.read<int>('c') > 0;
   }
 }

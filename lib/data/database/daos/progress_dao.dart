@@ -19,34 +19,39 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
     required int lessonId,
     required int unitId,
     required double score,
-  }) async {
-    final existing = await (select(lessonProgress)
-          ..where((l) => l.lessonId.equals(lessonId)))
-        .getSingleOrNull();
+  }) => attachedDatabase.transaction(() async {
+    final existing =
+        await (select(lessonProgress)
+          ..where((l) => l.lessonId.equals(lessonId))).getSingleOrNull();
 
     final now = DateTime.now();
     final bestScore =
-        existing == null ? score : (score > existing.bestScore ? score : existing.bestScore);
+        existing == null
+            ? score
+            : (score > existing.bestScore ? score : existing.bestScore);
     final attempts = existing == null ? 1 : existing.attempts + 1;
 
     if (existing == null) {
-      await into(lessonProgress).insert(LessonProgressCompanion.insert(
-        lessonId: Value(lessonId),
-        unitId: unitId,
-        isCompleted: const Value(true),
-        bestScore: Value(bestScore),
-        attempts: Value(attempts),
-        lastAttempted: Value(now),
-      ),);
+      await into(lessonProgress).insert(
+        LessonProgressCompanion.insert(
+          lessonId: Value(lessonId),
+          unitId: unitId,
+          isCompleted: const Value(true),
+          bestScore: Value(bestScore),
+          attempts: Value(attempts),
+          lastAttempted: Value(now),
+        ),
+      );
     } else {
       await (update(lessonProgress)
-            ..where((l) => l.lessonId.equals(lessonId)))
-          .write(LessonProgressCompanion(
-        isCompleted: const Value(true),
-        bestScore: Value(bestScore),
-        attempts: Value(attempts),
-        lastAttempted: Value(now),
-      ),);
+        ..where((l) => l.lessonId.equals(lessonId))).write(
+        LessonProgressCompanion(
+          isCompleted: const Value(true),
+          bestScore: Value(bestScore),
+          attempts: Value(attempts),
+          lastAttempted: Value(now),
+        ),
+      );
     }
 
     await attachedDatabase.syncDao.enqueue(
@@ -61,24 +66,21 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
         'last_attempted': now.toUtc().toIso8601String(),
       },
     );
-  }
+  });
 
   Future<List<LessonProgressData>> getCompletedLessons() {
     return (select(lessonProgress)
-          ..where((l) => l.isCompleted.equals(true)))
-        .get();
+      ..where((l) => l.isCompleted.equals(true))).get();
   }
 
   Future<List<LessonProgressData>> getLessonsByUnit(int unitId) {
     return (select(lessonProgress)
-          ..where((l) => l.unitId.equals(unitId)))
-        .get();
+      ..where((l) => l.unitId.equals(unitId))).get();
   }
 
   Stream<List<LessonProgressData>> watchCompletedLessons() {
     return (select(lessonProgress)
-          ..where((l) => l.isCompleted.equals(true)))
-        .watch();
+      ..where((l) => l.isCompleted.equals(true))).watch();
   }
 
   // ── Earned Badges ──
@@ -88,20 +90,21 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
     return rows.map((b) => b.badgeId).toList();
   }
 
-  Future<void> earnBadge(String badgeId) async {
-    final now = DateTime.now();
-    await into(earnedBadges).insertOnConflictUpdate(
-        EarnedBadgesCompanion.insert(
-            badgeId: badgeId, earnedAt: Value(now)),);
-    await attachedDatabase.syncDao.enqueue(
-      entity: 'earned_badges',
-      entityKey: badgeId,
-      payload: {
-        'badge_id': badgeId,
-        'earned_at': now.toUtc().toIso8601String(),
-      },
-    );
-  }
+  Future<void> earnBadge(String badgeId) =>
+      attachedDatabase.transaction(() async {
+        final now = DateTime.now();
+        await into(earnedBadges).insertOnConflictUpdate(
+          EarnedBadgesCompanion.insert(badgeId: badgeId, earnedAt: Value(now)),
+        );
+        await attachedDatabase.syncDao.enqueue(
+          entity: 'earned_badges',
+          entityKey: badgeId,
+          payload: {
+            'badge_id': badgeId,
+            'earned_at': now.toUtc().toIso8601String(),
+          },
+        );
+      });
 
   // ── User Progress KV ──
 
@@ -119,38 +122,45 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
     required int attempts,
     DateTime? lastAttempted,
   }) async {
-    final existing = await (select(lessonProgress)
-          ..where((l) => l.lessonId.equals(lessonId)))
-        .getSingleOrNull();
+    final existing =
+        await (select(lessonProgress)
+          ..where((l) => l.lessonId.equals(lessonId))).getSingleOrNull();
     if (existing == null) {
-      await into(lessonProgress).insert(LessonProgressCompanion.insert(
-        lessonId: Value(lessonId),
-        unitId: unitId,
-        isCompleted: Value(isCompleted),
-        bestScore: Value(bestScore),
-        attempts: Value(attempts),
-        lastAttempted: Value(lastAttempted),
-      ));
+      await into(lessonProgress).insert(
+        LessonProgressCompanion.insert(
+          lessonId: Value(lessonId),
+          unitId: unitId,
+          isCompleted: Value(isCompleted),
+          bestScore: Value(bestScore),
+          attempts: Value(attempts),
+          lastAttempted: Value(lastAttempted),
+        ),
+      );
       return;
     }
-    await (update(lessonProgress)..where((l) => l.lessonId.equals(lessonId)))
-        .write(LessonProgressCompanion(
-      isCompleted: Value(existing.isCompleted || isCompleted),
-      bestScore:
-          Value(bestScore > existing.bestScore ? bestScore : existing.bestScore),
-      attempts:
-          Value(attempts > existing.attempts ? attempts : existing.attempts),
-      lastAttempted: Value(_latest(existing.lastAttempted, lastAttempted)),
-    ));
+    await (update(lessonProgress)
+      ..where((l) => l.lessonId.equals(lessonId))).write(
+      LessonProgressCompanion(
+        isCompleted: Value(existing.isCompleted || isCompleted),
+        bestScore: Value(
+          bestScore > existing.bestScore ? bestScore : existing.bestScore,
+        ),
+        attempts: Value(
+          attempts > existing.attempts ? attempts : existing.attempts,
+        ),
+        lastAttempted: Value(_latest(existing.lastAttempted, lastAttempted)),
+      ),
+    );
   }
 
   Future<void> mergeBadge(String badgeId, DateTime earnedAt) async {
-    final existing = await (select(earnedBadges)
-          ..where((b) => b.badgeId.equals(badgeId)))
-        .getSingleOrNull();
+    final existing =
+        await (select(earnedBadges)
+          ..where((b) => b.badgeId.equals(badgeId))).getSingleOrNull();
     if (existing != null) return; // union: a badge is never un-earned
     await into(earnedBadges).insert(
-        EarnedBadgesCompanion.insert(badgeId: badgeId, earnedAt: Value(earnedAt)));
+      EarnedBadgesCompanion.insert(badgeId: badgeId, earnedAt: Value(earnedAt)),
+    );
   }
 
   /// Merge a KV value from the backend. Known monotonic keys are combined;
@@ -171,7 +181,8 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
     }
     // Direct write, bypassing the outbox hook.
     await into(userProgress).insertOnConflictUpdate(
-        UserProgressCompanion.insert(key: key, value: merged));
+      UserProgressCompanion.insert(key: key, value: merged),
+    );
   }
 
   DateTime? _latest(DateTime? a, DateTime? b) {
@@ -185,21 +196,27 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
     for (final s in [a, b]) {
       try {
         set.addAll((jsonDecode(s) as List<dynamic>).map((e) => e.toString()));
-      } catch (_) {/* ignore malformed */}
+      } catch (_) {
+        /* ignore malformed */
+      }
     }
     return set.toList();
   }
 
   Future<String?> getProgressValue(String key) async {
-    final row = await (select(userProgress)
-          ..where((u) => u.key.equals(key)))
-        .getSingleOrNull();
+    final row =
+        await (select(userProgress)
+          ..where((u) => u.key.equals(key))).getSingleOrNull();
     return row?.value;
   }
 
-  Future<void> setProgressValue(String key, String value) async {
+  Future<void> setProgressValue(
+    String key,
+    String value,
+  ) => attachedDatabase.transaction(() async {
     await into(userProgress).insertOnConflictUpdate(
-        UserProgressCompanion.insert(key: key, value: value),);
+      UserProgressCompanion.insert(key: key, value: value),
+    );
     await attachedDatabase.syncDao.enqueue(
       entity: 'user_progress',
       entityKey: key,
@@ -207,7 +224,7 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
       // wrap it to preserve it verbatim regardless of whether it's JSON.
       payload: {'key': key, 'value': _asJsonValue(value)},
     );
-  }
+  });
 
   /// Best-effort: if [value] already parses as JSON keep its structure,
   /// otherwise store it as a JSON string.

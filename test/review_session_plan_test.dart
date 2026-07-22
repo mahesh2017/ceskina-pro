@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ceskina_pro/domain/entities/flashcard.dart';
-import 'package:ceskina_pro/domain/entities/fsrs_card.dart';
+import 'package:ceskina_pro/domain/entities/srs_card.dart';
 import 'package:ceskina_pro/domain/repositories/vocabulary_repository.dart';
 import 'package:ceskina_pro/presentation/providers/review_providers.dart';
 
@@ -15,13 +15,13 @@ void main() {
           unitId: unitId,
           lessonId: lessonId,
         ),
-        fsrs: FSRSCard(id: '$id', cardType: CardType.vocabulary, due: now),
+        srs: SrsCard(id: '$id', cardType: CardType.vocabulary, due: now),
       );
 
   ReviewCard reviewCard(int id, {int? unitId}) => ReviewCard(
         flashcard: Flashcard(
             id: id, wordCz: 'cz$id', wordEn: 'en$id', unitId: unitId,),
-        fsrs: FSRSCard(
+        srs: SrsCard(
           id: '$id',
           cardType: CardType.vocabulary,
           due: now,

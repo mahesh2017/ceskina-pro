@@ -2,11 +2,11 @@
 class AppConstants {
   AppConstants._();
 
-  static const String appName = 'Čeština Pro';
+  static const String appName = 'Czechify';
   static const String appVersion = '1.0.0';
 
   // Database
-  static const String dbName = 'ceskina_pro.db';
+  static const String dbName = 'czechify.db';
 
   // Audio
   static const int sampleRate = 16000;

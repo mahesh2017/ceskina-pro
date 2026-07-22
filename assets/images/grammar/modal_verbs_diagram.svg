@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 740" width="800" height="740" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" x2="1">
+      <stop offset="0" stop-color="#2C3E50"/>
+      <stop offset="1" stop-color="#1A252F"/>
+    </linearGradient>
+    <linearGradient id="redG" x1="0" x2="1">
+      <stop offset="0" stop-color="#E74C3C"/>
+      <stop offset="1" stop-color="#C0392B"/>
+    </linearGradient>
+    <linearGradient id="greenG" x1="0" x2="1">
+      <stop offset="0" stop-color="#27AE60"/>
+      <stop offset="1" stop-color="#1E8449"/>
+    </linearGradient>
+    <linearGradient id="blueG" x1="0" x2="1">
+      <stop offset="0" stop-color="#3498DB"/>
+      <stop offset="1" stop-color="#2471A3"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="740" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="800" height="74" fill="url(#hdr)"/>
+  <text x="40" y="34" fill="#FFFFFF" font-size="22" font-weight="700">Modální slovesa · Modal Verbs</text>
+  <text x="40" y="58" fill="#BDC3C7" font-size="13">Three modal verbs — each with a different meaning</text>
+
+  <!-- Three modal cards -->
+  <!-- MUSÉT (red) -->
+  <g>
+    <rect x="30" y="94" width="245" height="300" rx="10" fill="#FDEDEC" stroke="#E74C3C" stroke-width="2"/>
+    <rect x="30" y="94" width="245" height="50" rx="10" fill="url(#redG)"/>
+    <rect x="30" y="130" width="245" height="14" fill="url(#redG)"/>
+    <text x="152" y="124" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700">muset</text>
+    <text x="152" y="142" text-anchor="middle" fill="#FADBD8" font-size="11">must · obligation</text>
+
+    <g font-size="13" fill="#34495E">
+      <text x="50" y="178"><tspan font-weight="700" fill="#E74C3C">musím</tspan> — I must</text>
+      <text x="50" y="202"><tspan font-weight="700" fill="#E74C3C">musíš</tspan> — you must</text>
+      <text x="50" y="226"><tspan font-weight="700" fill="#E74C3C">musí</tspan> — he/she must</text>
+      <text x="50" y="250"><tspan font-weight="700" fill="#E74C3C">musíme</tspan> — we must</text>
+      <text x="50" y="274"><tspan font-weight="700" fill="#E74C3C">musíte</tspan> — you (pl) must</text>
+      <text x="50" y="298"><tspan font-weight="700" fill="#E74C3C">musí</tspan> — they must</text>
+    </g>
+    <text x="50" y="332" font-size="12" fill="#7F8C8D" font-style="italic">External obligation —</text>
+    <text x="50" y="350" font-size="12" fill="#7F8C8D" font-style="italic">you have no choice.</text>
+    <text x="50" y="374" font-size="12" fill="#E74C3C" font-weight="700">Musím jít do práce.</text>
+  </g>
+
+  <!-- MOCT (green) -->
+  <g>
+    <rect x="278" y="94" width="245" height="300" rx="10" fill="#E8F8EE" stroke="#27AE60" stroke-width="2"/>
+    <rect x="278" y="94" width="245" height="50" rx="10" fill="url(#greenG)"/>
+    <rect x="278" y="130" width="245" height="14" fill="url(#greenG)"/>
+    <text x="400" y="124" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700">moct</text>
+    <text x="400" y="142" text-anchor="middle" fill="#D4EFDF" font-size="11">can · ability</text>
+
+    <g font-size="13" fill="#34495E">
+      <text x="298" y="178"><tspan font-weight="700" fill="#27AE60">můžu/mohu</tspan></text>
+      <text x="298" y="198" font-size="11" fill="#7F8C8D">I can</text>
+      <text x="298" y="224"><tspan font-weight="700" fill="#27AE60">můžeš</tspan> — you can</text>
+      <text x="298" y="248"><tspan font-weight="700" fill="#27AE60">může</tspan> — he/she can</text>
+      <text x="298" y="272"><tspan font-weight="700" fill="#27AE60">můžeme</tspan> — we can</text>
+      <text x="298" y="296"><tspan font-weight="700" fill="#27AE60">můžete</tspan> — you (pl) can</text>
+      <text x="298" y="320"><tspan font-weight="700" fill="#27AE60">můžou/mohou</tspan></text>
+      <text x="298" y="338" font-size="11" fill="#7F8C8D">they can</text>
+    </g>
+    <text x="298" y="366" font-size="12" fill="#27AE60" font-weight="700">Můžu plavat.</text>
+    <text x="298" y="384" font-size="12" fill="#7F8C8D" font-style="italic">Physical ability / skill.</text>
+  </g>
+
+  <!-- SMĚT (blue) -->
+  <g>
+    <rect x="525" y="94" width="245" height="300" rx="10" fill="#EAF2F8" stroke="#3498DB" stroke-width="2"/>
+    <rect x="525" y="94" width="245" height="50" rx="10" fill="url(#blueG)"/>
+    <rect x="525" y="130" width="245" height="14" fill="url(#blueG)"/>
+    <text x="647" y="124" text-anchor="middle" fill="#FFFFFF" font-size="20" font-weight="700">smět</text>
+    <text x="647" y="142" text-anchor="middle" fill="#D4E6F1" font-size="11">may · permission</text>
+
+    <g font-size="13" fill="#34495E">
+      <text x="545" y="178"><tspan font-weight="700" fill="#3498DB">smím</tspan> — I may</text>
+      <text x="545" y="202"><tspan font-weight="700" fill="#3498DB">smíš</tspan> — you may</text>
+      <text x="545" y="226"><tspan font-weight="700" fill="#3498DB">smí</tspan> — he/she may</text>
+      <text x="545" y="250"><tspan font-weight="700" fill="#3498DB">smíme</tspan> — we may</text>
+      <text x="545" y="274"><tspan font-weight="700" fill="#3498DB">smíte</tspan> — you (pl) may</text>
+      <text x="545" y="298"><tspan font-weight="700" fill="#3498DB">smí</tspan> — they may</text>
+    </g>
+    <text x="545" y="332" font-size="12" fill="#7F8C8D" font-style="italic">Permission granted —</text>
+    <text x="545" y="350" font-size="12" fill="#7F8C8D" font-style="italic">allowed by rules/person.</text>
+    <text x="545" y="374" font-size="12" fill="#3498DB" font-weight="700">Smím vstoupit?</text>
+  </g>
+
+  <!-- Critical distinction section -->
+  <rect x="30" y="410" width="740" height="310" rx="12" fill="#FEF9E7" stroke="#F4D03F" stroke-width="2"/>
+  <text x="50" y="442" font-size="17" font-weight="700" fill="#7D6608">⚠ Critical Distinction: nesmět vs. nemuset</text>
+  <text x="50" y="466" font-size="13" fill="#34495E">These two negations look similar but mean OPPOSITE things — a common trap for learners!</text>
+
+  <!-- nesmět (prohibition) -->
+  <g>
+    <rect x="50" y="486" width="345" height="210" rx="8" fill="#FDEDEC" stroke="#E74C3C" stroke-width="1.5"/>
+    <rect x="50" y="486" width="345" height="40" rx="8" fill="#E74C3C"/>
+    <rect x="50" y="516" width="345" height="10" fill="#E74C3C"/>
+    <text x="222" y="512" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="700">nesmět = MUST NOT</text>
+
+    <text x="70" y="550" font-size="14" fill="#E74C3C" font-weight="700">Prohibition — it is forbidden</text>
+    <text x="70" y="580" font-size="14" fill="#2C3E50"><tspan font-weight="700">Nesmíš</tspan> sem vstoupit.</text>
+    <text x="70" y="600" font-size="12" fill="#7F8C8D" font-style="italic">"You must not enter here."</text>
+    <text x="70" y="630" font-size="14" fill="#2C3E50"><tspan font-weight="700">Nesmíš</tspan> kouřit.</text>
+    <text x="70" y="650" font-size="12" fill="#7F8C8D" font-style="italic">"You must not smoke."</text>
+    <text x="70" y="678" font-size="12" fill="#E74C3C" font-weight="700">→ You are NOT ALLOWED (forbidden)</text>
+  </g>
+
+  <!-- nemuset (no obligation) -->
+  <g>
+    <rect x="405" y="486" width="345" height="210" rx="8" fill="#E8F8EE" stroke="#27AE60" stroke-width="1.5"/>
+    <rect x="405" y="486" width="345" height="40" rx="8" fill="#27AE60"/>
+    <rect x="405" y="516" width="345" height="10" fill="#27AE60"/>
+    <text x="577" y="512" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="700">nemuset = DON'T HAVE TO</text>
+
+    <text x="425" y="550" font-size="14" fill="#27AE60" font-weight="700">No obligation — it's optional</text>
+    <text x="425" y="580" font-size="14" fill="#2C3E50"><tspan font-weight="700">Nemusíš</tspan> přijít.</text>
+    <text x="425" y="600" font-size="12" fill="#7F8C8D" font-style="italic">"You don't have to come."</text>
+    <text x="425" y="630" font-size="14" fill="#2C3E50"><tspan font-weight="700">Nemusím</tspan> pracovat.</text>
+    <text x="425" y="650" font-size="12" fill="#7F8C8D" font-style="italic">"I don't have to work."</text>
+    <text x="425" y="678" font-size="12" fill="#27AE60" font-weight="700">→ You CAN, but you're not required</text>
+  </g>
+</svg>

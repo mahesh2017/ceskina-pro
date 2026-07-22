@@ -60,10 +60,17 @@ final sharedPreferencesProvider = FutureProvider<SharedPreferences>((ref) {
   return SharedPreferences.getInstance();
 });
 
-/// App initialization provider — establishes the Supabase session, downloads
-/// the complete curriculum snapshot, and synchronizes it into Drift.
+/// App initialization is local-first: verify existing content or atomically
+/// install the bundled snapshot. Network availability never gates the router.
 final appInitializationProvider = FutureProvider<void>((ref) async {
-  final seeder = ref.read(contentSeederProvider);
+  await ref.read(contentSeederProvider).ensureBundledContent();
+});
+
+/// Refresh backend state and curriculum after local startup has completed.
+/// Consumers deliberately ignore errors so cached/bundled content remains
+/// usable during outages.
+final backgroundInitializationProvider = FutureProvider<void>((ref) async {
+  await ref.watch(appInitializationProvider.future);
   await ref.watch(backendInitProvider.future);
-  await seeder.seedIfNeeded();
+  await ref.read(contentSeederProvider).refreshFromRemote();
 });

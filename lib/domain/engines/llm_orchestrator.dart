@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:logging/logging.dart';
 import '../repositories/llm_service.dart';
 import '../entities/chat_message.dart';
 import '../entities/enums.dart';
@@ -9,34 +10,95 @@ import '../entities/enums.dart';
 class LLMOrchestrator {
   const LLMOrchestrator();
 
+  static final _log = Logger('LLMOrchestrator');
+
   /// Build a conversation turn request with system prompt and history.
   LlmRequest buildConversationRequest({
     required CEFRLevel level,
-    required String scenario,
+    required String scenarioId,
     required String userMessage,
     required List<ChatMessage> history,
   }) {
-    final systemPrompt = _buildTutorPrompt(level, scenario);
     final messages = <LlmMessage>[
-      LlmMessage(LlmRole.system, systemPrompt),
-      ...history.map((m) => LlmMessage(
-            m.role == MessageRole.user ? LlmRole.user : LlmRole.assistant,
-            m.content,
-          ),),
+      ...history.map(
+        (m) => LlmMessage(
+          m.role == MessageRole.user ? LlmRole.user : LlmRole.assistant,
+          m.content,
+        ),
+      ),
       LlmMessage(LlmRole.user, userMessage),
     ];
 
     return LlmRequest(
+      operation: LlmOperation.conversation,
       model: _selectModel(level),
       messages: messages,
-      temperature: 0.7,
+      context: {'level': level.name, 'scenario_id': scenarioId},
     );
   }
 
   /// Parse the LLM response into structured data.
+  ///
+  /// Throws [FormatException] when the response is not valid JSON or is
+  /// missing required fields. Callers are expected to catch this and show
+  /// a user-facing fallback. The [parseTutorResponseSafe] variant returns
+  /// a typed result instead.
   TutorResponse parseTutorResponse(LlmResponse response) {
     final json = jsonDecode(response.content) as Map<String, dynamic>;
     return TutorResponse.fromJson(json);
+  }
+
+  /// Parse the LLM response with structured error handling.
+  ///
+  /// Returns a [TutorParseResult] that distinguishes between:
+  /// - [TutorParseOk] — successful parse
+  /// - [TutorParseError] — malformed JSON or missing fields, with a
+  ///   human-readable reason and the raw content length for telemetry.
+  ///
+  /// This is the preferred entry point for new call sites. The throwing
+  /// [parseTutorResponse] is retained for backward compatibility.
+  TutorParseResult parseTutorResponseSafe(LlmResponse response) {
+    final content = response.content;
+    if (content.isEmpty) {
+      _log.warning('LLM returned empty content');
+      return const TutorParseError(
+        reason: 'The tutor returned an empty response.',
+      );
+    }
+
+    Map<String, dynamic> json;
+    try {
+      final decoded = jsonDecode(content);
+      if (decoded is! Map<String, dynamic>) {
+        _log.warning('LLM returned non-object JSON: ${decoded.runtimeType}');
+        return const TutorParseError(
+          reason: 'The tutor response was not a JSON object.',
+        );
+      }
+      json = decoded;
+    } on FormatException catch (e) {
+      _log.warning('LLM returned invalid JSON: ${e.message}');
+      return TutorParseError(
+        reason: 'The tutor sent an unreadable reply.',
+        rawLength: content.length,
+      );
+    }
+
+    try {
+      return TutorParseOk(TutorResponse.fromJson(json));
+    } on FormatException catch (e) {
+      _log.warning('LLM JSON missing required fields: ${e.message}');
+      return TutorParseError(
+        reason: 'The tutor response was missing required information.',
+        rawLength: content.length,
+      );
+    } on TypeError catch (e) {
+      _log.warning('LLM JSON has wrong types: $e');
+      return TutorParseError(
+        reason: 'The tutor response had unexpected data.',
+        rawLength: content.length,
+      );
+    }
   }
 
   /// Build a grammar check request.
@@ -44,24 +106,11 @@ class LLMOrchestrator {
     required CEFRLevel level,
     required String userText,
   }) {
-    final systemPrompt = '''
-You are a Czech grammar expert. Correct the following Czech text from a CEFR ${level.label} learner.
-
-Return JSON: {
-  "corrected_text": "...",
-  "errors": [
-    {"type": "case|verb_conjugation|aspect|word_order|gender_agreement|spelling|vowel_length|preposition",
-     "original": "...", "correction": "...", "explanation": "..."}
-  ]
-}
-
-User's text: "$userText"
-''';
-
     return LlmRequest(
+      operation: LlmOperation.grammarCheck,
       model: _selectModel(level),
-      messages: [LlmMessage(LlmRole.system, systemPrompt)],
-      temperature: 0.3,
+      messages: [LlmMessage(LlmRole.user, userText)],
+      context: {'level': level.name},
     );
   }
 
@@ -71,51 +120,12 @@ User's text: "$userText"
     required String taskDescription,
     required String learnerText,
   }) {
-    final systemPrompt = '''
-You are a CCE exam evaluator. Assess the learner's Czech writing at ${level.label} level.
-
-Task: $taskDescription
-Learner's text: "$learnerText"
-
-Evaluate grammar, vocabulary, and coherence (0-100 each).
-Return JSON: {
-  "score": {"grammar": 0-100, "vocabulary": 0-100, "coherence": 0-100, "overall": 0-100},
-  "feedback": "...",
-  "errors": [...]
-}
-''';
-
     return LlmRequest(
+      operation: LlmOperation.writingEvaluation,
       model: _selectModel(level),
-      messages: [LlmMessage(LlmRole.system, systemPrompt)],
-      temperature: 0.3,
+      messages: [LlmMessage(LlmRole.user, learnerText)],
+      context: {'level': level.name, 'task_description': taskDescription},
     );
-  }
-
-  String _buildTutorPrompt(CEFRLevel level, String scenario) {
-    return '''
-You are a patient Czech language tutor for a CEFR ${level.label} learner.
-
-Rules:
-- Respond primarily in Czech using vocabulary appropriate for ${level.label}.
-- Keep responses short: max 3 sentences for A1, max 5 sentences for A2.
-- If the learner makes a grammar error, correct it and explain the rule briefly in English.
-- Stay in character for the scenario: "$scenario".
-- Include English translation for any new vocabulary in brackets.
-- Return your response as JSON matching this schema:
-{
-  "tutor_reply_cz": "...",
-  "tutor_reply_en": "...",
-  "corrections": [
-    {"type": "case|verb_conjugation|aspect|word_order|gender_agreement|spelling|vowel_length",
-     "user_said": "...", "correct": "...", "rule": "...", "severity": "error|minor|stylistic"}
-  ],
-  "new_vocabulary": [
-    {"cz": "...", "en": "...", "ipa": "..."}
-  ],
-  "suggested_replies": ["two or three short Czech replies the learner could send next, at their level"]
-}
-''';
   }
 
   String _selectModel(CEFRLevel level) {
@@ -123,4 +133,26 @@ Rules:
     // the cheapest model that handles Czech well.
     return 'deepseek-chat';
   }
+}
+
+/// Result of parsing a tutor response — either OK or an error.
+sealed class TutorParseResult {
+  const TutorParseResult();
+}
+
+/// Successful parse.
+class TutorParseOk extends TutorParseResult {
+  final TutorResponse response;
+  const TutorParseOk(this.response);
+}
+
+/// Failed parse with a human-readable reason.
+class TutorParseError extends TutorParseResult {
+  final String reason;
+
+  /// Length of the raw LLM content, for telemetry. Null when the content
+  /// was empty or not string-typed.
+  final int? rawLength;
+
+  const TutorParseError({required this.reason, this.rawLength});
 }

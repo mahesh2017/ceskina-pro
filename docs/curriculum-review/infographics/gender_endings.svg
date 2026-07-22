@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" width="800" height="620" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="800" height="620" fill="#FAFBFC"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#2C3E50">Czech Noun Genders</text>
+  <text x="400" y="62" text-anchor="middle" font-size="14" fill="#7F8C8D" font-style="italic">Rod podstatných jmen — 4 genders, recognized by ending</text>
+
+  <!-- Section label -->
+  <text x="40" y="105" font-size="13" font-weight="700" fill="#7F8C8D" letter-spacing="2">TYPICAL ENDING → GENDER → EXAMPLES</text>
+
+  <!-- Card 1: Masculine Animate - Blue -->
+  <g transform="translate(40, 130)">
+    <rect width="175" height="440" rx="14" fill="#4A90D9"/>
+    <rect x="0" y="0" width="175" height="60" rx="14" fill="#3A7BC8"/>
+    <rect x="0" y="46" width="175" height="14" fill="#3A7BC8"/>
+    <text x="14" y="28" font-size="13" font-weight="700" fill="#fff" opacity="0.85">ROD MUŽSKÝ ŽIVOTNÝ</text>
+    <text x="14" y="50" font-size="18" font-weight="700" fill="#fff">Masculine Animate</text>
+
+    <!-- Ending box -->
+    <rect x="14" y="78" width="147" height="50" rx="8" fill="#fff" opacity="0.18"/>
+    <text x="87" y="100" text-anchor="middle" font-size="11" fill="#fff" opacity="0.9">ENDING</text>
+    <text x="87" y="120" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">consonant</text>
+
+    <text x="14" y="158" font-size="11" font-weight="700" fill="#fff" opacity="0.85" letter-spacing="1.5">EXAMPLES</text>
+    <g font-size="20" font-weight="700" fill="#fff">
+      <text x="14" y="186">pán</text>
+      <text x="14" y="216">muž</text>
+      <text x="14" y="246">student</text>
+      <text x="14" y="276">pes</text>
+      <text x="14" y="306">bratr</text>
+      <text x="14" y="336">lékař</text>
+    </g>
+    <g font-size="11" fill="#fff" opacity="0.75" font-style="italic">
+      <text x="14" y="200">master / gentleman</text>
+      <text x="14" y="230">man</text>
+      <text x="14" y="260">student</text>
+      <text x="14" y="290">dog</text>
+      <text x="14" y="320">brother</text>
+      <text x="14" y="350">doctor</text>
+    </g>
+
+    <line x1="14" y1="375" x2="161" y2="375" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    <text x="87" y="395" text-anchor="middle" font-size="10" fill="#fff" opacity="0.85">people, animals</text>
+    <text x="87" y="412" text-anchor="middle" font-size="10" fill="#fff" opacity="0.7" font-style="italic">acc. ≠ nom. (muž → muže)</text>
+  </g>
+
+  <!-- Card 2: Masculine Inanimate - Green -->
+  <g transform="translate(222, 130)">
+    <rect width="175" height="440" rx="14" fill="#27AE60"/>
+    <rect x="0" y="0" width="175" height="60" rx="14" fill="#1E8449"/>
+    <rect x="0" y="46" width="175" height="14" fill="#1E8449"/>
+    <text x="14" y="28" font-size="13" font-weight="700" fill="#fff" opacity="0.85">ROD MUŽSKÝ NEŽIVOTNÝ</text>
+    <text x="14" y="50" font-size="18" font-weight="700" fill="#fff">Masculine Inanimate</text>
+
+    <rect x="14" y="78" width="147" height="50" rx="8" fill="#fff" opacity="0.18"/>
+    <text x="87" y="100" text-anchor="middle" font-size="11" fill="#fff" opacity="0.9">ENDING</text>
+    <text x="87" y="120" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">consonant</text>
+
+    <text x="14" y="158" font-size="11" font-weight="700" fill="#fff" opacity="0.85" letter-spacing="1.5">EXAMPLES</text>
+    <g font-size="20" font-weight="700" fill="#fff">
+      <text x="14" y="186">hrad</text>
+      <text x="14" y="216">les</text>
+      <text x="14" y="246">strom</text>
+      <text x="14" y="276">dům</text>
+      <text x="14" y="306">stroj</text>
+      <text x="14" y="336">hrad</text>
+    </g>
+    <g font-size="11" fill="#fff" opacity="0.75" font-style="italic">
+      <text x="14" y="200">castle</text>
+      <text x="14" y="230">forest</text>
+      <text x="14" y="260">tree</text>
+      <text x="14" y="290">house</text>
+      <text x="14" y="320">machine</text>
+      <text x="14" y="350">castle</text>
+    </g>
+
+    <line x1="14" y1="375" x2="161" y2="375" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    <text x="87" y="395" text-anchor="middle" font-size="10" fill="#fff" opacity="0.85">things, places</text>
+    <text x="87" y="412" text-anchor="middle" font-size="10" fill="#fff" opacity="0.7" font-style="italic">acc. = nom. (hrad → hrad)</text>
+  </g>
+
+  <!-- Card 3: Feminine - Pink -->
+  <g transform="translate(404, 130)">
+    <rect width="175" height="440" rx="14" fill="#E91E8C"/>
+    <rect x="0" y="0" width="175" height="60" rx="14" fill="#C2185B"/>
+    <rect x="0" y="46" width="175" height="14" fill="#C2185B"/>
+    <text x="14" y="28" font-size="13" font-weight="700" fill="#fff" opacity="0.85">ROD ŽENSKÝ</text>
+    <text x="14" y="50" font-size="18" font-weight="700" fill="#fff">Feminine</text>
+
+    <rect x="14" y="78" width="147" height="50" rx="8" fill="#fff" opacity="0.18"/>
+    <text x="87" y="100" text-anchor="middle" font-size="11" fill="#fff" opacity="0.9">ENDING</text>
+    <text x="87" y="120" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">-a</text>
+
+    <text x="14" y="158" font-size="11" font-weight="700" fill="#fff" opacity="0.85" letter-spacing="1.5">EXAMPLES</text>
+    <g font-size="20" font-weight="700" fill="#fff">
+      <text x="14" y="186">žena</text>
+      <text x="14" y="216">škola</text>
+      <text x="14" y="246">kniha</text>
+      <text x="14" y="276">voda</text>
+      <text x="14" y="306">ruka</text>
+      <text x="14" y="336">maminka</text>
+    </g>
+    <g font-size="11" fill="#fff" opacity="0.75" font-style="italic">
+      <text x="14" y="200">woman</text>
+      <text x="14" y="230">school</text>
+      <text x="14" y="260">book</text>
+      <text x="14" y="290">water</text>
+      <text x="14" y="320">hand</text>
+      <text x="14" y="350">mum</text>
+    </g>
+
+    <line x1="14" y1="375" x2="161" y2="375" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    <text x="87" y="395" text-anchor="middle" font-size="10" fill="#fff" opacity="0.85">most -a nouns</text>
+    <text x="87" y="412" text-anchor="middle" font-size="10" fill="#fff" opacity="0.7" font-style="italic">also: -st (kost), -ň (myš)</text>
+  </g>
+
+  <!-- Card 4: Neuter - Orange -->
+  <g transform="translate(586, 130)">
+    <rect width="175" height="440" rx="14" fill="#E67E22"/>
+    <rect x="0" y="0" width="175" height="60" rx="14" fill="#C0651A"/>
+    <rect x="0" y="46" width="175" height="14" fill="#C0651A"/>
+    <text x="14" y="28" font-size="13" font-weight="700" fill="#fff" opacity="0.85">ROD STŘEDNÍ</text>
+    <text x="14" y="50" font-size="18" font-weight="700" fill="#fff">Neuter</text>
+
+    <rect x="14" y="78" width="147" height="50" rx="8" fill="#fff" opacity="0.18"/>
+    <text x="87" y="100" text-anchor="middle" font-size="11" fill="#fff" opacity="0.9">ENDING</text>
+    <text x="87" y="120" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">-o / -e</text>
+
+    <text x="14" y="158" font-size="11" font-weight="700" fill="#fff" opacity="0.85" letter-spacing="1.5">EXAMPLES</text>
+    <g font-size="20" font-weight="700" fill="#fff">
+      <text x="14" y="186">město</text>
+      <text x="14" y="216">okno</text>
+      <text x="14" y="246">auto</text>
+      <text x="14" y="276">dítě</text>
+      <text x="14" y="306">moře</text>
+      <text x="14" y="336">pole</text>
+    </g>
+    <g font-size="11" fill="#fff" opacity="0.75" font-style="italic">
+      <text x="14" y="200">city</text>
+      <text x="14" y="230">window</text>
+      <text x="14" y="260">car</text>
+      <text x="14" y="290">child</text>
+      <text x="14" y="320">sea</text>
+      <text x="14" y="350">field</text>
+    </g>
+
+    <line x1="14" y1="375" x2="161" y2="375" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    <text x="87" y="395" text-anchor="middle" font-size="10" fill="#fff" opacity="0.85">things, ideas, young</text>
+    <text x="87" y="412" text-anchor="middle" font-size="10" fill="#fff" opacity="0.7" font-style="italic">also: -í (nádraží)</text>
+  </g>
+
+  <!-- Footer tip -->
+  <text x="400" y="595" text-anchor="middle" font-size="11" fill="#95A5A6">Tip: Recognize the gender from the dictionary form ending — it predicts how the noun declines.</text>
+</svg>

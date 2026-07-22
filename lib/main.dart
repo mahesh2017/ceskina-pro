@@ -21,12 +21,29 @@ void main() {
     );
   });
 
-  runApp(const ProviderScope(child: CeskinaProApp()));
+  // Catch unhandled async errors that would otherwise crash the app in
+  // release/non-debug mode. In debug mode these are surfaced via the
+  // Flutter Error widget; without this guard they terminate the process
+  // silently when launched from the home screen.
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    Logger('FlutterError').severe(
+      details.exceptionAsString(),
+      details.exception,
+      details.stack,
+    );
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    Logger('PlatformDispatcher').warning('Unhandled async error', error, stack);
+    return true; // Suppress — the app stays alive.
+  };
+
+  runApp(const ProviderScope(child: CzechifyApp()));
 }
 
 /// Root app widget.
-class CeskinaProApp extends ConsumerWidget {
-  const CeskinaProApp({super.key});
+class CzechifyApp extends ConsumerWidget {
+  const CzechifyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,14 +60,18 @@ class CeskinaProApp extends ConsumerWidget {
       return LoadingScreen(
         error: _startupErrorMessage(initFuture.error),
         onRetry: () {
-          ref.invalidate(backendInitProvider);
           ref.invalidate(appInitializationProvider);
         },
       );
     }
 
+    // Keep remote auth, sync, and curriculum refresh alive after the verified
+    // local course is ready. Its failure must not replace the usable app UI.
+    ref.watch(backgroundInitializationProvider);
+    ref.watch(syncTriggerCoordinatorProvider);
+
     return MaterialApp.router(
-      title: 'Čeština Pro',
+      title: 'Czechify',
       debugShowCheckedModeBanner: false,
       theme: lightTheme(),
       darkTheme: darkTheme(),
@@ -63,9 +84,8 @@ class CeskinaProApp extends ConsumerWidget {
 String _startupErrorMessage(Object? error) {
   final detail = error?.toString().toLowerCase() ?? '';
   if (detail.contains('incomplete') || detail.contains('missing')) {
-    return 'The course update is temporarily incomplete. '
-        'Please try again in a few moments.';
+    return 'The packaged course content is incomplete. Please reinstall or '
+        'update the app.';
   }
-  return 'Check your internet connection and try again. '
-      'A connection is required to download the latest course.';
+  return 'The course could not be prepared on this device. Please try again.';
 }

@@ -1,49 +1,49 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../data/database/daos/gamification_dao.dart';
 import '../../domain/entities/gamification_state.dart';
 import '../../domain/engines/gamification_engine.dart';
 import 'database_providers.dart';
 
-/// Keys for SharedPreferences storage.
-const _kHearts = 'gamification_hearts';
-const _kMaxHearts = 'gamification_max_hearts';
-const _kCurrentStreak = 'gamification_current_streak';
-const _kLongestStreak = 'gamification_longest_streak';
-const _kTotalXp = 'gamification_total_xp';
-const _kDailyXp = 'gamification_daily_xp';
-const _kDailyGoalXp = 'gamification_daily_goal_xp';
-const _kGems = 'gamification_gems';
-const _kEarnedBadges = 'gamification_earned_badges';
-const _kLastHeartRefill = 'gamification_last_heart_refill';
-const _kStreakFreezeAvailable = 'gamification_streak_freeze';
-const _kLastOpenDate = 'gamification_last_open_date';
-const _kDailyXpResetDate = 'gamification_daily_xp_reset_date';
-
 /// How often a missing heart regenerates.
 const heartRegenInterval = Duration(minutes: 30);
 
-/// Gamification state provider with full SharedPreferences persistence.
+/// Gamification state provider with Drift persistence.
+///
+/// State is stored in the Drift database (gamification_state table, v6 schema
+/// migration) for transactional integrity and future cross-device sync.
+///
+/// On first launch after the migration, existing SharedPreferences values are
+/// migrated to Drift automatically.
 final gamificationProvider =
     NotifierProvider<GamificationNotifier, GamificationState>(
-  GamificationNotifier.new,
-);
+      GamificationNotifier.new,
+    );
 
 class GamificationNotifier extends Notifier<GamificationState> {
   final _engine = GamificationEngine();
-  SharedPreferences? _prefs;
-  late Future<void> _ready;
+  GamificationDao? _dao;
 
   @override
   GamificationState build() {
-    _ready = _initAsync();
+    _readyFuture = _initAsync().catchError((Object e, StackTrace st) {
+      // Never let gamification init crash the app — fall back to defaults.
+      // The error is logged but swallowed so the learner can still use the app.
+      Logger('GamificationNotifier').warning(
+        'Gamification init failed; using defaults.', e, st,
+      );
+    });
     return const GamificationState();
   }
 
-  /// Initialize asynchronously — loads from SharedPreferences and checks
-  /// streak, daily-XP rollover, and heart regeneration.
+  /// Initialize asynchronously — loads from Drift, migrates from
+  /// SharedPreferences if needed, and checks streak, daily-XP rollover,
+  /// and heart regeneration.
   Future<void> _initAsync() async {
-    _prefs = await SharedPreferences.getInstance();
+    _dao = ref.read(databaseProvider).gamificationDao;
+    await _migrateFromPrefsIfNeeded();
     await _loadState();
     await _checkStreakOnOpen();
     await _rolloverDailyXpIfNeeded();
@@ -52,39 +52,41 @@ class GamificationNotifier extends Notifier<GamificationState> {
 
   /// All public mutators await this so a lesson/review finishing right
   /// after startup can't persist default state over the stored values.
-  Future<void> _ensureReady() => _ready;
+  ///
+  /// We use a sentinel Future that completes when _initAsync finishes.
+  late final Future<void> _readyFuture;
 
-  /// Load persisted state from SharedPreferences.
-  Future<void> _loadState() async {
-    final prefs = _prefs;
-    if (prefs == null) return;
+  Future<void> _ensureReady() => _readyFuture;
 
-    final hearts = prefs.getInt(_kHearts) ?? 5;
-    final maxHearts = prefs.getInt(_kMaxHearts) ?? 5;
-    final currentStreak = prefs.getInt(_kCurrentStreak) ?? 0;
-    final longestStreak = prefs.getInt(_kLongestStreak) ?? 0;
-    final totalXp = prefs.getInt(_kTotalXp) ?? 0;
-    final dailyXp = prefs.getInt(_kDailyXp) ?? 0;
-    final dailyGoalXp = prefs.getInt(_kDailyGoalXp) ?? 50;
-    final gems = prefs.getInt(_kGems) ?? 0;
-    final streakFreeze = prefs.getBool(_kStreakFreezeAvailable) ?? true;
+  /// One-time migration: if the Drift gamification table is empty AND
+  /// SharedPreferences has gamification keys, copy them into Drift.
+  Future<void> _migrateFromPrefsIfNeeded() async {
+    final existing = await _dao?.load();
+    if (existing != null) return; // Already migrated or fresh start
 
-    // Load earned badges
-    final badgesJson = prefs.getString(_kEarnedBadges);
-    final earnedBadges = <String>{};
-    if (badgesJson != null) {
-      final list = jsonDecode(badgesJson) as List<dynamic>;
-      earnedBadges.addAll(list.cast<String>());
-    }
+    final prefs = await SharedPreferences.getInstance();
+    final hasPrefs = prefs.containsKey('gamification_hearts');
+    if (!hasPrefs) return; // Fresh install — nothing to migrate
 
-    // Load last heart refill time
-    final lastRefillStr = prefs.getString(_kLastHeartRefill);
-    DateTime? lastHeartRefill;
-    if (lastRefillStr != null) {
-      lastHeartRefill = DateTime.tryParse(lastRefillStr);
-    }
+    // Migrate from SharedPreferences to Drift
+    final hearts = prefs.getInt('gamification_hearts') ?? 5;
+    final maxHearts = prefs.getInt('gamification_max_hearts') ?? 5;
+    final currentStreak = prefs.getInt('gamification_current_streak') ?? 0;
+    final longestStreak = prefs.getInt('gamification_longest_streak') ?? 0;
+    final totalXp = prefs.getInt('gamification_total_xp') ?? 0;
+    final dailyXp = prefs.getInt('gamification_daily_xp') ?? 0;
+    final dailyGoalXp = prefs.getInt('gamification_daily_goal_xp') ?? 50;
+    final gems = prefs.getInt('gamification_gems') ?? 0;
+    final streakFreeze = prefs.getBool('gamification_streak_freeze') ?? true;
 
-    state = GamificationState(
+    final badgesJson = prefs.getString('gamification_earned_badges') ?? '[]';
+    final lastRefillStr = prefs.getString('gamification_last_heart_refill');
+    final lastOpenDate = prefs.getString('gamification_last_open_date');
+    final dailyXpResetDate = prefs.getString(
+      'gamification_daily_xp_reset_date',
+    );
+
+    await _dao?.save(
       hearts: hearts,
       maxHearts: maxHearts,
       currentStreak: currentStreak,
@@ -93,9 +95,58 @@ class GamificationNotifier extends Notifier<GamificationState> {
       dailyXp: dailyXp,
       dailyGoalXp: dailyGoalXp,
       gems: gems,
-      earnedBadges: earnedBadges,
-      lastHeartRefill: lastHeartRefill, // null is fine — no refill yet
+      earnedBadgesJson: badgesJson,
+      lastHeartRefill:
+          lastRefillStr != null ? DateTime.tryParse(lastRefillStr) : null,
       streakFreezeAvailable: streakFreeze,
+      lastOpenDate: lastOpenDate,
+      dailyXpResetDate: dailyXpResetDate,
+    );
+
+    // Clear SharedPreferences gamification keys to avoid stale reads
+    await prefs.remove('gamification_hearts');
+    await prefs.remove('gamification_max_hearts');
+    await prefs.remove('gamification_current_streak');
+    await prefs.remove('gamification_longest_streak');
+    await prefs.remove('gamification_total_xp');
+    await prefs.remove('gamification_daily_xp');
+    await prefs.remove('gamification_daily_goal_xp');
+    await prefs.remove('gamification_gems');
+    await prefs.remove('gamification_earned_badges');
+    await prefs.remove('gamification_last_heart_refill');
+    await prefs.remove('gamification_streak_freeze');
+    await prefs.remove('gamification_last_open_date');
+    await prefs.remove('gamification_daily_xp_reset_date');
+  }
+
+  /// Load persisted state from Drift.
+  Future<void> _loadState() async {
+    final row = await _dao?.load();
+    if (row == null) return; // Fresh install — use defaults
+
+    final badgesJson = row.earnedBadges;
+    final earnedBadges = <String>{};
+    if (badgesJson.isNotEmpty) {
+      try {
+        final list = jsonDecode(badgesJson) as List<dynamic>;
+        earnedBadges.addAll(list.cast<String>());
+      } catch (_) {
+        // Badges JSON corrupted — start with empty set
+      }
+    }
+
+    state = GamificationState(
+      hearts: row.hearts,
+      maxHearts: row.maxHearts,
+      currentStreak: row.currentStreak,
+      longestStreak: row.longestStreak,
+      totalXp: row.totalXp,
+      dailyXp: row.dailyXp,
+      dailyGoalXp: row.dailyGoalXp,
+      gems: row.gems,
+      earnedBadges: earnedBadges,
+      lastHeartRefill: row.lastHeartRefill,
+      streakFreezeAvailable: row.streakFreezeAvailable,
     );
   }
 
@@ -103,79 +154,69 @@ class GamificationNotifier extends Notifier<GamificationState> {
   /// Only breaks stale streaks; does NOT write today's date.
   /// The actual streak increment happens in _maybeIncrementStreak on first XP earn.
   Future<void> _checkStreakOnOpen() async {
-    final prefs = _prefs;
-    if (prefs == null) return;
+    final row = await _dao?.load();
+    if (row == null) return;
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    final lastActivityStr = prefs.getString(_kLastOpenDate);
+    final lastActivityStr = row.lastOpenDate;
 
-    if (lastActivityStr == null) {
-      // First ever open — no streak to check, no date to write yet.
-      // Streak will start at 1 on first XP earn.
-      return;
-    }
+    if (lastActivityStr == null) return;
 
     final lastActivity = DateTime.tryParse(lastActivityStr);
     if (lastActivity == null) return;
 
-    final lastActivityDay =
-        DateTime(lastActivity.year, lastActivity.month, lastActivity.day);
+    final lastActivityDay = DateTime(
+      lastActivity.year,
+      lastActivity.month,
+      lastActivity.day,
+    );
     final diffDays = _calendarDaysBetween(lastActivityDay, today);
 
-    if (diffDays == 0) {
-      // Same day — no streak change needed
-      return;
-    }
+    if (diffDays == 0) return;
 
-    if (diffDays == 1) {
-      // Consecutive day — streak continues; increment will happen on XP earn.
-      // Do NOT write today's date here — _maybeIncrementStreak will do that.
-      return;
-    }
+    if (diffDays == 1) return;
 
     // Gap > 1 day — streak broken
     if (state.streakFreezeAvailable && diffDays == 2) {
-      // Streak freeze saves a 1-day gap
       state = state.copyWith(streakFreezeAvailable: false);
-      await prefs.setBool(_kStreakFreezeAvailable, false);
-      // Don't write today's date — let _maybeIncrementStreak handle it on XP earn
+      await _persist();
       return;
     }
 
-    // Streak broken — reset to 0
     state = state.copyWith(currentStreak: 0);
-    await prefs.setInt(_kCurrentStreak, 0);
-    // Don't write today's date — let _maybeIncrementStreak handle it
+    await _persist();
   }
 
   /// Reset daily XP when the calendar day has rolled over.
   Future<void> _rolloverDailyXpIfNeeded() async {
-    final prefs = _prefs;
-    if (prefs == null) return;
+    final row = await _dao?.load();
+    if (row == null) return;
 
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
-    final lastResetStr = prefs.getString(_kDailyXpResetDate);
+    final lastResetStr = row.dailyXpResetDate;
     final lastReset =
         lastResetStr != null ? DateTime.tryParse(lastResetStr) : null;
 
     if (lastReset != null) {
-      final lastResetDay =
-          DateTime(lastReset.year, lastReset.month, lastReset.day);
+      final lastResetDay = DateTime(
+        lastReset.year,
+        lastReset.month,
+        lastReset.day,
+      );
       if (lastResetDay == today) return; // Already reset today
     }
 
     state = state.copyWith(dailyXp: 0);
-    await prefs.setString(_kDailyXpResetDate, today.toIso8601String());
-    await prefs.setInt(_kDailyXp, 0);
+    await _persist(resetDate: today.toIso8601String());
   }
 
   /// Check if hearts should regenerate based on time elapsed.
   Future<void> _checkHeartRegen() async {
     if (state.hearts >= state.maxHearts) return;
-    if (state.lastHeartRefill == null) return; // no refill timestamp yet
+    if (state.lastHeartRefill == null) return;
 
     final now = DateTime.now();
     final lastRefill = state.lastHeartRefill!;
@@ -184,38 +225,39 @@ class GamificationNotifier extends Notifier<GamificationState> {
     final heartsToRegen = elapsed.inMinutes ~/ heartRegenInterval.inMinutes;
 
     if (heartsToRegen > 0) {
-      final newHearts = (state.hearts + heartsToRegen).clamp(0, state.maxHearts);
-      state = state.copyWith(
-        hearts: newHearts,
-        lastHeartRefill: now,
+      final newHearts = (state.hearts + heartsToRegen).clamp(
+        0,
+        state.maxHearts,
       );
+      state = state.copyWith(hearts: newHearts, lastHeartRefill: now);
       await _persist();
     }
   }
 
-  /// Persist all state to SharedPreferences.
-  Future<void> _persist() async {
-    final prefs = _prefs ??= await SharedPreferences.getInstance();
+  /// Persist all state to Drift.
+  ///
+  /// [resetDate] — when set, updates the daily XP reset date marker.
+  /// [openDate] — when set, updates the last-open-date marker.
+  Future<void> _persist({String? resetDate, String? openDate}) async {
+    final row = await _dao?.load();
+    final currentReset = resetDate ?? row?.dailyXpResetDate;
+    final currentOpen = openDate ?? row?.lastOpenDate;
 
-    await prefs.setInt(_kHearts, state.hearts);
-    await prefs.setInt(_kMaxHearts, state.maxHearts);
-    await prefs.setInt(_kCurrentStreak, state.currentStreak);
-    await prefs.setInt(_kLongestStreak, state.longestStreak);
-    await prefs.setInt(_kTotalXp, state.totalXp);
-    await prefs.setInt(_kDailyXp, state.dailyXp);
-    await prefs.setInt(_kDailyGoalXp, state.dailyGoalXp);
-    await prefs.setInt(_kGems, state.gems);
-    await prefs.setBool(_kStreakFreezeAvailable, state.streakFreezeAvailable);
-    await prefs.setString(
-      _kEarnedBadges,
-      jsonEncode(state.earnedBadges.toList()),
+    await _dao?.save(
+      hearts: state.hearts,
+      maxHearts: state.maxHearts,
+      currentStreak: state.currentStreak,
+      longestStreak: state.longestStreak,
+      totalXp: state.totalXp,
+      dailyXp: state.dailyXp,
+      dailyGoalXp: state.dailyGoalXp,
+      gems: state.gems,
+      earnedBadgesJson: jsonEncode(state.earnedBadges.toList()),
+      lastHeartRefill: state.lastHeartRefill,
+      streakFreezeAvailable: state.streakFreezeAvailable,
+      lastOpenDate: currentOpen,
+      dailyXpResetDate: currentReset,
     );
-    if (state.lastHeartRefill != null) {
-      await prefs.setString(
-        _kLastHeartRefill,
-        state.lastHeartRefill!.toIso8601String(),
-      );
-    }
   }
 
   // ── Public API ──
@@ -230,7 +272,6 @@ class GamificationNotifier extends Notifier<GamificationState> {
       accuracy: accuracy,
     );
 
-    // Check if this is the first XP earned today → increment streak
     await _maybeIncrementStreak();
 
     state = state.copyWith(
@@ -370,7 +411,7 @@ class GamificationNotifier extends Notifier<GamificationState> {
     try {
       await ref.read(databaseProvider).progressDao.earnBadge(badgeId);
     } catch (_) {
-      // Prefs remain the source of truth for badge display.
+      // Drift gamification state remains the source of truth for display.
     }
   }
 
@@ -382,7 +423,6 @@ class GamificationNotifier extends Notifier<GamificationState> {
       final progressRepo = ref.read(progressRepositoryProvider);
       final dbSnapshot = await progressRepo.getSnapshot();
 
-      // Merge DB-derived progress with prefs-tracked streak and badges.
       final snapshot = ProgressSnapshot(
         unitScores: dbSnapshot.unitScores,
         longestStreak: state.longestStreak,
@@ -418,24 +458,25 @@ class GamificationNotifier extends Notifier<GamificationState> {
 
   /// Increment streak if this is the first XP earned today.
   Future<bool> _maybeIncrementStreak() async {
-    final prefs = _prefs;
+    final row = await _dao?.load();
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
-    final lastOpenStr = prefs?.getString(_kLastOpenDate);
+    final lastOpenStr = row?.lastOpenDate;
     if (lastOpenStr != null) {
       final lastOpen = DateTime.tryParse(lastOpenStr);
       if (lastOpen != null) {
-        final lastOpenDay =
-            DateTime(lastOpen.year, lastOpen.month, lastOpen.day);
+        final lastOpenDay = DateTime(
+          lastOpen.year,
+          lastOpen.month,
+          lastOpen.day,
+        );
         if (lastOpenDay == today) {
-          // Already earned XP today — don't increment streak
           return false;
         }
       }
     }
 
-    // First XP today — increment streak
     final newStreak = state.currentStreak + 1;
     final newLongest =
         newStreak > state.longestStreak ? newStreak : state.longestStreak;
@@ -443,20 +484,17 @@ class GamificationNotifier extends Notifier<GamificationState> {
     state = state.copyWith(
       currentStreak: newStreak,
       longestStreak: newLongest,
-      streakFreezeAvailable: true, // Earn back freeze on new day
+      streakFreezeAvailable: true,
     );
 
-    await prefs?.setString(_kLastOpenDate, today.toIso8601String());
-    await prefs?.setBool(_kStreakFreezeAvailable, true);
+    await _persist(openDate: today.toIso8601String());
 
-    // Mirror the streak into the database KV store so progress
-    // snapshots (badge checks, stats) see the same numbers.
     try {
       await ref
           .read(progressRepositoryProvider)
           .updateStreak(newStreak, newLongest);
     } catch (_) {
-      // Prefs remain the source of truth.
+      // Drift gamification state remains the source of truth.
     }
     return true;
   }

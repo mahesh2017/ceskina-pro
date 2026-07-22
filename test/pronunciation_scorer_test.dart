@@ -74,6 +74,75 @@ void main() {
 
       expect(result.overallScore, 1.0);
     });
+
+    // ── New tests for sequence alignment ──
+
+    test('Extra spoken words reduce the score', () {
+      final result = scorer.score(
+        expectedText: 'dobrý den',
+        actualTranscription: 'dobrý den ahoj',
+      );
+
+      // Two expected matches plus one insertion: 2 / 3.
+      expect(result.overallScore, closeTo(0.667, 0.01));
+      expect(result.wordScores, hasLength(2));
+    });
+
+    test('Missing words are scored as 0', () {
+      final result = scorer.score(
+        expectedText: 'dobrý den ahoj',
+        actualTranscription: 'dobrý den',
+      );
+
+      // 'ahoj' was expected but not spoken → score 0.
+      // Overall = (1.0 + 1.0 + 0.0) / 3 = 0.667
+      expect(result.wordScores, hasLength(3));
+      expect(result.wordScores[0].isCorrect, isTrue);
+      expect(result.wordScores[1].isCorrect, isTrue);
+      expect(result.wordScores[2].isCorrect, isFalse);
+      expect(result.wordScores[2].score, 0.0);
+      expect(result.overallScore, closeTo(0.667, 0.01));
+    });
+
+    test('Reordered words are aligned, not positional', () {
+      // Expected: [ahoj, jak, se, máš]
+      // Actual:   [jak, ahoj, se, máš]
+      //
+      // Needleman-Wunsch finds the optimal alignment:
+      //   GAP↔jak (extra), ahoj↔ahoj (match), jak↔GAP (missing), se↔se, máš↔máš
+      //
+      // 'jak' is both spoken-as-extra and expected-but-missed because it
+      // appears in a different position. The alignment correctly identifies
+      // that the user said 'ahoj' and 'se' and 'máš' correctly, but 'jak'
+      // was in the wrong position — it counts as both an insertion and a
+      // deletion. The overall score reflects this: 3/4 expected words
+      // matched, one was in the wrong place.
+      final result = scorer.score(
+        expectedText: 'ahoj jak se máš',
+        actualTranscription: 'jak ahoj se máš',
+      );
+
+      expect(result.wordScores, hasLength(4));
+      // ahoj, se, and máš should match
+      final matched = result.wordScores.where((w) => w.isCorrect).toList();
+      expect(matched, hasLength(3));
+      // Three matches, one deletion, and one insertion: 3 / 5.
+      expect(result.overallScore, closeTo(0.6, 0.01));
+    });
+
+    test('Partial match with extra and missing words', () {
+      final result = scorer.score(
+        expectedText: 'jak se máš',
+        actualTranscription: 'jak ahoj se',
+      );
+
+      // Expected: [jak, se, máš]
+      // Actual:   [jak, ahoj, se]
+      // Optimal alignment: jak↔jak (1.0), se↔se (1.0), máš↔gap (0.0), gap↔ahoj (extra)
+      // Two matches, one deletion, and one insertion: 2 / 4.
+      expect(result.wordScores, hasLength(3));
+      expect(result.overallScore, closeTo(0.5, 0.01));
+    });
   });
 
   group('PhonemeMapper', () {

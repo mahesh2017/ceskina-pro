@@ -2210,6 +2210,552 @@
         }
       ],
       "unit_id": 22
+    },
+    {
+      "id": "GR-220",
+      "rule_name": "muset — must / have to (obligation)",
+      "pattern": "muset + infinitive — expresses strong obligation or necessity",
+      "explanation": "The modal verb muset expresses internal or external obligation — 'must' or 'have to'. It conjugates: musím, musíš, musí, musíme, musíte, musí. The main verb stays in the infinitive. Unlike English, there is no separate 'have to' — muset covers both 'must' and 'have to'. Negation: nemuset = 'don't have to' (lack of obligation, NOT 'must not').",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Musím jít do práce.",
+          "en": "I must go to work."
+        },
+        {
+          "cz": "Musíš se učit.",
+          "en": "You have to study."
+        },
+        {
+          "cz": "Nemusíš přijít, pokud nechceš.",
+          "en": "You don't have to come if you don't want to."
+        },
+        {
+          "cz": "Musíme si koupit jízdenky.",
+          "en": "We have to buy tickets."
+        }
+      ],
+      "unit_id": 23
+    },
+    {
+      "id": "GR-221",
+      "rule_name": "moct — can / be able to (ability)",
+      "pattern": "moct + infinitive — expresses ability or permission",
+      "explanation": "The modal verb moct expresses ability or permission — 'can' or 'be able to'. It conjugates: můžu/mohu, můžeš, může, můžeme, můžete, mohou. The forms můžu and mohu are interchangeable (můžu is more common in speech, mohu in formal writing). Negation: nemoci = 'cannot'. This is the most irregular Czech modal verb.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Můžu přijít zítra.",
+          "en": "I can come tomorrow."
+        },
+        {
+          "cz": "Můžeš mi pomoci?",
+          "en": "Can you help me?"
+        },
+        {
+          "cz": "Nemůžu najít klíče.",
+          "en": "I can't find the keys."
+        },
+        {
+          "cz": "Mohou mluvit česky.",
+          "en": "They can speak Czech."
+        }
+      ],
+      "unit_id": 23
+    },
+    {
+      "id": "GR-222",
+      "rule_name": "smět — be allowed to (permission)",
+      "pattern": "smět + infinitive — expresses permission or prohibition",
+      "explanation": "The modal verb smět expresses permission — 'be allowed to' or 'may'. It conjugates: smím, smíš, smí, smíme, smíte, smí. Negation: nesmět = 'must not' / 'be not allowed to'. This is the KEY difference from muset: nesmět = prohibition (you must NOT), while nemuset = lack of obligation (you don't have to). This distinction is essential for Czech learners.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Smím vstoupit?",
+          "en": "May I come in?"
+        },
+        {
+          "cz": "Nesmíš tu parkovat.",
+          "en": "You must not park here."
+        },
+        {
+          "cz": "Děti nesmějí pít alkohol.",
+          "en": "Children are not allowed to drink alcohol."
+        },
+        {
+          "cz": "Smíme kouřit tady?",
+          "en": "Are we allowed to smoke here?"
+        }
+      ],
+      "unit_id": 23
+    },
+    {
+      "id": "GR-223",
+      "rule_name": "Modal verb + infinitive construction",
+      "pattern": "Conjugated modal + infinitive of main verb — modal is conjugated, main verb stays in infinitive",
+      "explanation": "All Czech modal verbs (muset, moct, smět, chtít) follow the same pattern: the modal verb is conjugated for person and number, while the main verb remains in the infinitive form. The modal verb is always in the second position (if there's a clitic cluster, the modal comes after clitics). Word order: Subject + modal + infinitive + rest. The subject can be dropped when clear from context.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Musím pracovat.",
+          "en": "I must work."
+        },
+        {
+          "cz": "Chci se učit česky.",
+          "en": "I want to learn Czech."
+        },
+        {
+          "cz": "Můžete mi říct, kde je nádraží?",
+          "en": "Can you tell me where the station is?"
+        },
+        {
+          "cz": "Nesmíme zapomenout na doklady.",
+          "en": "We must not forget our documents."
+        }
+      ],
+      "unit_id": 23
+    },
+    {
+      "id": "GR-224",
+      "rule_name": "Expressing obligation, permission, and prohibition",
+      "pattern": "muset (obligation), moct (ability/permission), smět (formal permission), nesmět (prohibition)",
+      "explanation": "Czech distinguishes three types of modality that English often conflates: OBLIGATION (muset — you must/have to), ABILITY/PERMISSION (moct — you can/are able to), and FORMAL PERMISSION/PROHIBITION (smět/nesmět — you may/may not). Common confusion: 'nesmíš' means 'you must not' (prohibition), while 'nemusíš' means 'you don't have to' (no obligation). For expressing rules: Je dovoleno (it is allowed), Je zakázáno (it is forbidden), Je nutné (it is necessary), Je povinné (it is mandatory).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Musíte mít průkaz.",
+          "en": "You must have an ID. (obligation)"
+        },
+        {
+          "cz": "Můžete platit kartou.",
+          "en": "You can pay by card. (ability/permission)"
+        },
+        {
+          "cz": "Nesmíte fotit v muzeu.",
+          "en": "You must not take photos in the museum. (prohibition)"
+        },
+        {
+          "cz": "Je zakázáno kouřit.",
+          "en": "Smoking is forbidden."
+        }
+      ],
+      "unit_id": 23
+    },
+    {
+      "id": "GR-230",
+      "rule_name": "Bolí mě — expressing pain with body parts",
+      "pattern": "bolí + accusative pronoun (mě, tě, ho, ji, nás, vás, je) + body part (nominative)",
+      "explanation": "To say 'something hurts' in Czech, use the verb bolit (to hurt/ache) in third person singular 'bolí', followed by the accusative form of the pronoun (mě = me, tě = you, ho = him, ji = her, nás = us, vás = you.pl, je = them), and then the body part in the nominative. The verb bolí is always third person — it doesn't conjugate for the person experiencing pain. For plural body parts (eyes, ears, hands, legs), use bolí + pronoun + plural nominative.",
+      "case_affected": "accusative",
+      "examples": [
+        {
+          "cz": "Bolí mě hlava.",
+          "en": "My head hurts. / I have a headache."
+        },
+        {
+          "cz": "Bolí tě krk?",
+          "en": "Does your throat hurt?"
+        },
+        {
+          "cz": "Bolí mě oči.",
+          "en": "My eyes hurt."
+        },
+        {
+          "cz": "Bolí ho záda.",
+          "en": "His back hurts."
+        }
+      ],
+      "unit_id": 24
+    },
+    {
+      "id": "GR-231",
+      "rule_name": "cítit se — feeling unwell and reflexive health verbs",
+      "pattern": "cítit se + adverb (dobře, špatně, unavený, nemocný)",
+      "explanation": "The reflexive verb cítit se means 'to feel' (one's health/state). It conjugates: cítím se, cítíš se, cítí se, cítíme se, cítíte se, cítí se. Common combinations: cítit se dobře (feel well), cítit se špatně (feel unwell), cítit se unavený (feel tired), cítit se nemocný (feel sick). Other health reflexives: bolet se (to hurt — rare, usually just bolí), zvracet (to vomit — not reflexive), kašlat (to cough — not reflexive), kýchát (to sneeze — not reflexive). For temperature: mít teplotu (to have a fever).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Cítím se špatně.",
+          "en": "I feel unwell."
+        },
+        {
+          "cz": "Jak se cítíš?",
+          "en": "How do you feel?"
+        },
+        {
+          "cz": "Cítí se nemocný.",
+          "en": "He feels sick."
+        },
+        {
+          "cz": "Mám teplotu.",
+          "en": "I have a fever."
+        }
+      ],
+      "unit_id": 24
+    },
+    {
+      "id": "GR-232",
+      "rule_name": "At the doctor — questions and medical phrases",
+      "pattern": "Common doctor-patient exchanges: Co vás trápí? / Boli mě... / Ukážete jazyk? / Vypijte tohle.",
+      "explanation": "When visiting a Czech doctor, these phrases are essential. Doctor asks: Co vás trápí? (What's bothering you?), Na co si stěžujete? (What are you complaining about?), Ukážete jazyk? (Show your tongue?), Otevřete ústa (Open your mouth). Patient says: Jdu k lékaři (I'm going to the doctor), Boli mě hlava/krk/břicho (My head/throat/stomach hurts), Mám teplotu (I have a fever), Mám kašel (I have a cough), Mám rýmu (I have a runny nose), Potřebuji recept (I need a prescription), Kde je lékárna? (Where is the pharmacy?). Doctor may say: Vypijte tohle (Drink this), Užívejte tyto tablety (Take these tablets), Přijďte za týden (Come back in a week).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Co vás trápí?",
+          "en": "What's bothering you?"
+        },
+        {
+          "cz": "Bolí mě krk a mám teplotu.",
+          "en": "My throat hurts and I have a fever."
+        },
+        {
+          "cz": "Potřebuji recept na léky.",
+          "en": "I need a prescription for medicine."
+        },
+        {
+          "cz": "Užívejte tyto tablety třikrát denně.",
+          "en": "Take these tablets three times a day."
+        }
+      ],
+      "unit_id": 24
+    },
+    {
+      "id": "GR-240",
+      "rule_name": "Profession with být + instrumental",
+      "pattern": "být (conjugated) + noun in instrumental case — jsem učitelem, je lékařem",
+      "explanation": "In Czech, professions are often expressed with být + the instrumental case (not nominative). This construction answers 'What do you do?': jsem učitelem (I am a teacher), je lékařem (he is a doctor), je studentem (he is a student), je inženýrkou (she is an engineer). The instrumental endings: masculine -em/-ou, feminine -ou, neuter -em. Note: you can also use the nominative (jsem učitel), which is less formal and more common in everyday speech. The instrumental form emphasizes the profession as a role.",
+      "case_affected": "instrumental",
+      "examples": [
+        {
+          "cz": "Jsem učitelem.",
+          "en": "I am a teacher."
+        },
+        {
+          "cz": "On je lékařem v nemocnici.",
+          "en": "He is a doctor at the hospital."
+        },
+        {
+          "cz": "Ona je inženýrkou.",
+          "en": "She is an engineer."
+        },
+        {
+          "cz": "Jsme studenti.",
+          "en": "We are students. (nominative — common in speech)"
+        }
+      ],
+      "unit_id": 25
+    },
+    {
+      "id": "GR-241",
+      "rule_name": "pracovat jako — describing one's job",
+      "pattern": "pracovat jako + nominative noun — Pracuji jako učitel. / Dělá co + accusative",
+      "explanation": "To describe what you do, two constructions are common: (1) pracovat jako + nominative (Pracuji jako učitel = I work as a teacher) — the noun stays in nominative because 'jako' (as/like) preserves the original form. (2) dělat + accusative (Dělám učitele = I do teaching / I work as a teacher) — the noun takes accusative. Both are natural and interchangeable. For asking about someone's job: Co děláš? (What do you do?) or Čím se živíš? (What do you do for a living?) or Jaké je tvoje povolání? (What is your profession?).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Pracuji jako programátor.",
+          "en": "I work as a programmer."
+        },
+        {
+          "cz": "Co děláš? — Dělám učitele.",
+          "en": "What do you do? — I'm a teacher."
+        },
+        {
+          "cz": "Pracuje v bance.",
+          "en": "She works in a bank."
+        },
+        {
+          "cz": "Čím se živíš?",
+          "en": "What do you do for a living?"
+        }
+      ],
+      "unit_id": 25
+    },
+    {
+      "id": "GR-242",
+      "rule_name": "Education vocabulary and school-related grammar",
+      "pattern": "učit se (learn), studovat (study), zkouška (exam), předmět (subject) — common school constructions",
+      "explanation": "Czech distinguishes učit se (to learn — acquiring knowledge, reflexive) from učit (to teach — without 'se'). Studovat (to study at an institution) is used for university/school enrollment. Common constructions: učit se česky (learn Czech), studovat na univerzitě (study at university), dělat zkoušku (take an exam), udělat zkoušku (pass an exam), propadnout u zkoušky (fail an exam). Subjects: předmět. Academic year: školní rok. Semester: semestr. Grade/mark: známka (1=best, 5=worst in Czech system). To graduate: promoce / promovat.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Učím se česky.",
+          "en": "I am learning Czech."
+        },
+        {
+          "cz": "Studuji na Karlově univerzitě.",
+          "en": "I study at Charles University."
+        },
+        {
+          "cz": "Mám zkoušku z češtiny.",
+          "en": "I have a Czech exam."
+        },
+        {
+          "cz": "Učitel učí studenty.",
+          "en": "The teacher teaches the students. (no 'se')"
+        }
+      ],
+      "unit_id": 25
+    },
+    {
+      "id": "GR-250",
+      "rule_name": "Housing vocabulary — rooms and furniture genders",
+      "pattern": "Room names by gender: byt (masc inan), kuchyně (fem), ložnice (fem), koupelna (fem); furniture: stůl (masc inan), židle (fem), postel (fem), skříň (fem)",
+      "explanation": "Czech housing vocabulary follows standard gender rules but has some surprises. Rooms: byt (masc inanimate, consonant ending), pokoj (masc inanimate, consonant), kuchyně (feminine, -e ending), ložnice (feminine, -e ending), koupelna (feminine, -a ending), předsíň (feminine, consonant+soft ending). Furniture: stůl (masc inanimate), židle (feminine), postel (feminine), pohovka (feminine), skříň (feminine), regál (masc inanimate), komoda (feminine). Appliances: lednice (feminine), sporák (masc inanimate), pračka (feminine), televize (feminine). Remembering gender is essential for correct adjective agreement: velký byt, velká kuchyně, velké okno.",
+      "case_affected": "nominative",
+      "examples": [
+        {
+          "cz": "Mám nový byt.",
+          "en": "I have a new apartment. (byt = masc inanimate)"
+        },
+        {
+          "cz": "Naše kuchyně je velká.",
+          "en": "Our kitchen is big. (kuchyně = feminine)"
+        },
+        {
+          "cz": "Koupelna je malá.",
+          "en": "The bathroom is small. (koupelna = feminine)"
+        },
+        {
+          "cz": "Regál je v obývacím pokoji.",
+          "en": "The shelf is in the living room."
+        }
+      ],
+      "unit_id": 26
+    },
+    {
+      "id": "GR-251",
+      "rule_name": "Prepositions of location in housing",
+      "pattern": "v/ve (in) + locative, na (on) + locative, u (by/at) + genitive — location in rooms",
+      "explanation": "For describing where things are in a house, use these preposition-case combinations: v/ve + locative (v pokoji = in the room, v kuchyni = in the kitchen, v bytě = in the apartment), na + locative (na stole = on the table, na polici = on the shelf, na posteli = on the bed), u + genitive (u stolu = by the table, u okna = by the window, u dveří = by the door). Note the locative endings: masculine -u/-ovi, feminine -e/-i, neuter -o/-e. Also: před (in front of) + instrumental, za (behind) + instrumental, mezi (between) + instrumental.",
+      "case_affected": "locative",
+      "examples": [
+        {
+          "cz": "Kniha je na stole.",
+          "en": "The book is on the table."
+        },
+        {
+          "cz": "Stůl je v kuchyni.",
+          "en": "The table is in the kitchen."
+        },
+        {
+          "cz": "Sedím u okna.",
+          "en": "I'm sitting by the window."
+        },
+        {
+          "cz": "Lampa je vedle postele.",
+          "en": "The lamp is next to the bed."
+        }
+      ],
+      "unit_id": 26
+    },
+    {
+      "id": "GR-252",
+      "rule_name": "Renting and buying — pronajmout si, koupit si",
+      "pattern": "pronajmout si (rent for oneself) + accusative, koupit si (buy for oneself) + accusative — reflexive possessive svůj for one's own",
+      "explanation": "When talking about renting or buying property, use the reflexive particle 'si' to indicate it's for yourself: pronajmout si byt (rent an apartment for oneself), koupit si dům (buy a house for oneself). The noun takes the accusative case. Related vocabulary: nájem (rent, the cost), nájemník (tenant), majitel (owner), pronajmout (to rent out), splácet hypotéku (pay off a mortgage). Common phrases: Hledám byt k pronájmu (I'm looking for an apartment to rent), Kolik stojí nájem? (How much is the rent?), Byt má dvě místnosti (The apartment has two rooms).",
+      "case_affected": "accusative",
+      "examples": [
+        {
+          "cz": "Pronajmul jsem si byt v Praze.",
+          "en": "I rented an apartment in Prague."
+        },
+        {
+          "cz": "Chci si koupit dům.",
+          "en": "I want to buy a house."
+        },
+        {
+          "cz": "Kolik stojí nájem?",
+          "en": "How much is the rent?"
+        },
+        {
+          "cz": "Hledám byt k pronájmu.",
+          "en": "I'm looking for an apartment to rent."
+        }
+      ],
+      "unit_id": 26
+    },
+    {
+      "id": "GR-260",
+      "rule_name": "Motion verbs — jít vs jet vs chodit vs jezdit",
+      "pattern": "jít/jet = one-time motion (on foot/by vehicle), chodit/jezdit = habitual/repeated motion",
+      "explanation": "Czech has two pairs of basic motion verbs: (1) jít (to go on foot, one time) vs chodit (to go on foot, habitually/repeatedly), (2) jet (to go by vehicle, one time) vs jezdit (to go by vehicle, habitually/repeatedly). This distinction is crucial: 'Jdu do práce' = I'm going to work (right now, on foot), but 'Chodím do práce' = I go to work (every day, habitually). Similarly: 'Jedu do Prahy' = I'm going to Prague (by train/car now), 'Ježdím do Prahy' = I go to Prague regularly. Other motion verbs: běžet (run, one-time), běhat (run, habitual), letět (fly, one-time), létat (fly, habitual), plavat (swim), lézt (crawl).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Jdu do obchodu.",
+          "en": "I'm going to the store. (right now, on foot)"
+        },
+        {
+          "cz": "Chodím do školy každý den.",
+          "en": "I go to school every day. (habitual)"
+        },
+        {
+          "cz": "Jedu vlakem do Brna.",
+          "en": "I'm taking the train to Brno. (right now)"
+        },
+        {
+          "cz": "Ježdíme na chatu o víkendech.",
+          "en": "We go to the cottage on weekends. (habitual)"
+        }
+      ],
+      "unit_id": 27
+    },
+    {
+      "id": "GR-261",
+      "rule_name": "Prefixed motion verbs — přijít, odejít, dojít, vyjít, projít",
+      "pattern": "prefix + jít/jet = directional specification of motion",
+      "explanation": "Czech creates directional motion verbs by adding prefixes to jít (go on foot) and jet (go by vehicle). Common prefixes: při- (arrive: přijít/přijet), od- (leave: odejít/odjet), do- (reach destination: dojít/dojet), vy- (exit/go out: vyjít/vyjet), pro- (pass through: projít/projet), na- (climb onto: najít/najet), z- (descend: zajít/zajet), v- (enter: vejít/vjet). These prefixed forms are typically perfective (completed action). To say 'return': vracet se (imperfective), vrátit se (perfective). Note: najít (with na- prefix on jít) actually means 'to find', not 'to climb onto' — this is an irregular prefixed form.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Přišel domů v pět hodin.",
+          "en": "He arrived home at five o'clock."
+        },
+        {
+          "cz": "Odšli z kina po filmu.",
+          "en": "They left the cinema after the film."
+        },
+        {
+          "cz": "Došli k nemocnici.",
+          "en": "They reached the hospital."
+        },
+        {
+          "cz": "Vrátil se do práce.",
+          "en": "He returned to work."
+        }
+      ],
+      "unit_id": 27
+    },
+    {
+      "id": "GR-262",
+      "rule_name": "Aspect pairs — systematic prefix patterns",
+      "pattern": "Imperfective (process) ↔ Perfective (result) — paired by prefixes: u-, na-, s-/z-, vy-, do-, při-, od-",
+      "explanation": "Czech verbs come in aspect pairs: imperfective (ongoing/process) and perfective (completed/result). The perfective is usually formed by adding a prefix to the imperfective. Common prefix patterns: u- (dělat→udělat, vařit→uvařit), na- (psát→napsat, číst→přečíst — note 'na' for writing, 'pře' for reading), s-/z- (dělat→zdělat — rare; more commonly: tvořit→stvořit), vy- (myt→vymýt, brát→vzít), do- (dělat→dodělat, číst→dočíst), při- (nést→přinést), od- (nést→odnést). Not every prefix works with every verb — the pairs must be learned. The key semantic distinction: imperfective answers 'What were you doing?' (psal jsem = I was writing), perfective answers 'What did you do?' (napsal jsem = I wrote [and finished]).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "dělat (impf) → udělat (pf)",
+          "en": "to do — process → to do — completed"
+        },
+        {
+          "cz": "psát (impf) → napsat (pf)",
+          "en": "to write — process → to write — completed"
+        },
+        {
+          "cz": "číst (impf) → přečíst (pf)",
+          "en": "to read — process → to read — completed"
+        },
+        {
+          "cz": "kupovat (impf) → koupit (pf)",
+          "en": "to buy — process → to buy — completed"
+        }
+      ],
+      "unit_id": 27
+    },
+    {
+      "id": "GR-263",
+      "rule_name": "Direction adverbs — kam, odkud, tudy, tam, sem, ven",
+      "pattern": "kam (where to), odkud (where from), tudy (this way), tam (there), sem (here/to here), ven (outside/out)",
+      "explanation": "Czech direction adverbs specify movement toward or away. kam = where to? (asks about destination: Kam jdeš? = Where are you going?), odkud = where from? (Odkud jsi? = Where are you from?), tudy = this way/through here (Tudy se jde k nádraží = This way to the station), tam = there (Jdu tam = I'm going there), sem = here/to here (Pojď sem = Come here), ven = outside/out (Jdu ven = I'm going outside), dovnitř = inside/in (Jdu dovnitř = I'm going inside), nahoru = upward (Jdu nahoru = I'm going up), dolů = downward (Jdu dolů = I'm going down). These pair with motion verbs to give precise directional information.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Kam jdeš? — Jdu do školy.",
+          "en": "Where are you going? — I'm going to school."
+        },
+        {
+          "cz": "Odkud přicházíš?",
+          "en": "Where are you coming from?"
+        },
+        {
+          "cz": "Pojď sem, prosím.",
+          "en": "Come here, please."
+        },
+        {
+          "cz": "Musím jít ven.",
+          "en": "I have to go outside."
+        }
+      ],
+      "unit_id": 27
+    },
+    {
+      "id": "GR-264",
+      "rule_name": "Aspect in context — when to use imperfective vs perfective",
+      "pattern": "Imperfective for ongoing/repeated/habitual; perfective for single completed actions with results",
+      "explanation": "The choice between imperfective and perfective depends on what you want to communicate. USE IMPERFECTIVE when: describing a process (psal jsem celý večer = I was writing all evening), habitual actions (každý den čtu = I read every day), simultaneous actions (když jsem vařil, ona se dívala = while I was cooking, she was watching), asking 'what were you doing?'. USE PERFECTIVE when: describing a completed action with a result (napsal jsem e-mail = I wrote an email [it's done]), single events (včera jsem koupil auto = yesterday I bought a car), sequential actions (přišel, sedl si a začal číst = he came, sat down, and started reading), asking 'what did you do?'. At A2 level, learners need to RECOGNIZE the distinction — active production is B1.",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Psal jsem dopis, když telefonovala.",
+          "en": "I was writing a letter when she called. (imperfective — process)"
+        },
+        {
+          "cz": "Napsal jsem dopis a odeslal ho.",
+          "en": "I wrote a letter and sent it. (perfective — completed)"
+        },
+        {
+          "cz": "Každý den vařím oběd.",
+          "en": "Every day I cook lunch. (imperfective — habitual)"
+        },
+        {
+          "cz": "Včera jsem uvařil svíčkovou.",
+          "en": "Yesterday I cooked svíčková. (perfective — single completed)"
+        }
+      ],
+      "unit_id": 27
+    },
+    {
+      "id": "GR-290",
+      "rule_name": "A1 grammar summary — case, tense, and agreement overview",
+      "pattern": "Consolidation: nominative + accusative, present tense, gender agreement, pronouns, basic word order",
+      "explanation": "A1 LEVEL SUMMARY: (1) CASES: You know nominative (subject/dictionary form) and accusative (direct object: fem -a→-u, masc animate changes, masc inanimate and neuter unchanged). (2) TENSES: Present tense only — být (jsem, jsi, je, jsme, jste, jsou), mít (mám, máš, má, máme, máte, mají), regular verbs by conjugation class (-á, -í, -e). (3) GENDER: Three genders (masculine animate/inanimate, feminine, neuter) determine adjective endings (-ý, -á, -é) and pronoun forms. (4) PRONOUNS: Personal (já, ty, on/ona/ono, my, vy, oni/ony), possessive (můj, tvůj, jeho, její, náš, váš, jejich). (5) WORD ORDER: SVO default, flexible, verb in second position for clitics (se, si, jsem). (6) NEGATION: ne- prefix on verbs. (7) QUESTIONS: intonation or question words (kdo, co, kde, kam, kdy, jak, proč).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Jsem student a bydlím v Praze.",
+          "en": "I am a student and I live in Prague."
+        },
+        {
+          "cz": "Mám novou knihu.",
+          "en": "I have a new book. (accusative: nová→novou, kniha→knihu)"
+        },
+        {
+          "cz": "Nerozumím, můžete to zopakovat?",
+          "en": "I don't understand, can you repeat that?"
+        },
+        {
+          "cz": "Kde je nejbližší restaurace?",
+          "en": "Where is the nearest restaurant?"
+        }
+      ],
+      "unit_id": 30
+    },
+    {
+      "id": "GR-291",
+      "rule_name": "A2 grammar summary — complete case system, aspect, tenses, complex sentences",
+      "pattern": "Consolidation: all 6 cases, present/past/future/conditional, aspect recognition, adjective comparison, complex sentences",
+      "explanation": "A2 LEVEL SUMMARY: (1) CASES: All 6 cases — nominative (1st, subject), genitive (2nd, possession/quantity/negation), dative (3rd, indirect object/experiencer), accusative (4th, direct object), locative (5th, after v/na/o/po), instrumental (6th, means/accompaniment/profession). (2) TENSES: Present, past (l-participle + jsem/jsi), future (budu + infinitive or perfective present), conditional (bych + l-participle). (3) ASPECT: Recognize imperfective (process) vs perfective (completion) pairs — active production is B1. (4) ADJECTIVES: Comparison (-ejší/-ější, irregular: lepší, větší), superlative (nej-). (5) MODALS: muset (must), moct (can), smět (may), chtít (want). (6) SENTENCES: Compound (a, ale, nebo, proto, takže), complex (že, protože, když, aby). (7) CLITICS: Second position (jsem, se, si, by). (8) MOTION VERBS: jít/jet (one-time), chodit/jezdit (habitual), prefixed forms (přijít, odejít, vrátit se).",
+      "case_affected": null,
+      "examples": [
+        {
+          "cz": "Kdybych měl čas, šel bych do kina.",
+          "en": "If I had time, I would go to the cinema. (conditional + past)"
+        },
+        {
+          "cz": "Včera jsem koupil knihu, kterou mi doporučil učitel.",
+          "en": "Yesterday I bought a book that the teacher recommended to me. (past + relative clause)"
+        },
+        {
+          "cz": "Musím jít k lékaři, protože mě bolí krk.",
+          "en": "I must go to the doctor because my throat hurts. (modal + dative + causal)"
+        },
+        {
+          "cz": "Přišel domů, svlékl si kabát a sedl si ke stolu.",
+          "en": "He came home, took off his coat, and sat down at the table. (sequential perfective past)"
+        }
+      ],
+      "unit_id": 31
     }
   ]
 }

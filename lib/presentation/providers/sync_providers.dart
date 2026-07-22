@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../data/sync/backend_service.dart';
 import '../../data/sync/device_id.dart';
 import '../../data/sync/sync_service.dart';
+import '../coordinators/sync_trigger_coordinator.dart';
 import 'database_providers.dart';
 
 /// Secure storage instance (shared).
@@ -32,9 +33,19 @@ final syncDaoProvider = Provider((ref) {
 final syncServiceProvider = Provider<SyncService>((ref) {
   return SyncService(
     db: ref.watch(databaseProvider),
-    backend: ref.watch(backendServiceProvider),
-    deviceId: ref.watch(deviceIdProvider),
+    backend: SupabaseSyncBackend(
+      backend: ref.watch(backendServiceProvider),
+      deviceId: ref.watch(deviceIdProvider),
+    ),
   );
+});
+
+/// Lifecycle/connectivity trigger owner. [SyncService] coalesces all requests,
+/// so rapid resume and network events cannot create overlapping sync cycles.
+final syncTriggerCoordinatorProvider = Provider<SyncTriggerCoordinator>((ref) {
+  final coordinator = SyncTriggerCoordinator(ref.watch(syncServiceProvider));
+  ref.onDispose(coordinator.dispose);
+  return coordinator;
 });
 
 /// Initializes the backend (Supabase + anonymous session). No-op and never

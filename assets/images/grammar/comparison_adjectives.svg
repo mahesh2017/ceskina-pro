@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 620" width="800" height="620" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="800" height="620" fill="#FFFFFF"/>
+
+  <!-- Header -->
+  <text x="400" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#2C3E50">Adjective Comparison in Czech</text>
+  <text x="400" y="64" text-anchor="middle" font-size="14" fill="#7F8C8D">Stupňování přídavných jmen — positive → comparative → superlative</text>
+  <line x1="120" y1="78" x2="680" y2="78" stroke="#ECF0F1" stroke-width="2"/>
+
+  <!-- Rule banner -->
+  <rect x="80" y="92" width="640" height="46" rx="8" fill="#EAFAF1" stroke="#27AE60" stroke-width="1.5"/>
+  <text x="400" y="120" text-anchor="middle" font-size="15" fill="#2C3E50">
+    <tspan font-weight="700" fill="#27AE60">Rule:</tspan>
+    <tspan> comparative = stem + </tspan>
+    <tspan font-weight="700" fill="#27AE60">-ejší / -ější</tspan>
+    <tspan>  •  superlative = </tspan>
+    <tspan font-weight="700" fill="#27AE60">nej-</tspan>
+    <tspan> + comparative</tspan>
+  </text>
+
+  <!-- Step labels -->
+  <text x="30" y="170" font-size="11" font-weight="700" fill="#7F8C8D" transform="rotate(-90 30 170)">LEVEL ↑</text>
+
+  <!-- Stairs - three steps going up -->
+  <!-- Step 1: Positive (bottom, widest) -->
+  <rect x="80" y="430" width="620" height="90" rx="6" fill="#E8F4FB" stroke="#4A90D9" stroke-width="2"/>
+  <text x="100" y="458" font-size="13" font-weight="700" fill="#4A90D9">1 · POSITIVE</text>
+  <text x="100" y="478" font-size="11" fill="#5D7A99">(základní stupeň)</text>
+  <!-- examples row -->
+  <g font-size="16" fill="#2C3E50">
+    <text x="220" y="475" text-anchor="middle" font-weight="600">dobrý</text>
+    <text x="220" y="495" text-anchor="middle" font-size="10" fill="#95A5A6">good</text>
+    <text x="380" y="475" text-anchor="middle" font-weight="600">velký</text>
+    <text x="380" y="495" text-anchor="middle" font-size="10" fill="#95A5A6">big</text>
+    <text x="540" y="475" text-anchor="middle" font-weight="600">levný</text>
+    <text x="540" y="495" text-anchor="middle" font-size="10" fill="#95A5A6">cheap</text>
+    <text x="680" y="475" text-anchor="middle" font-weight="600">mladý</text>
+    <text x="680" y="495" text-anchor="middle" font-size="10" fill="#95A5A6">young</text>
+  </g>
+
+  <!-- Step 2: Comparative (middle) -->
+  <rect x="140" y="310" width="560" height="90" rx="6" fill="#FFF3E0" stroke="#E67E22" stroke-width="2"/>
+  <text x="160" y="338" font-size="13" font-weight="700" fill="#E67E22">2 · COMPARATIVE</text>
+  <text x="160" y="358" font-size="11" fill="#B9772E">(2. stupeň — -ejší/-ější)</text>
+  <g font-size="16" fill="#2C3E50">
+    <text x="270" y="355" text-anchor="middle" font-weight="700" fill="#E67E22">lepší</text>
+    <text x="270" y="375" text-anchor="middle" font-size="10" fill="#95A5A6" font-style="italic">irregular</text>
+    <text x="430" y="355" text-anchor="middle" font-weight="700" fill="#E67E22">větší</text>
+    <text x="430" y="375" text-anchor="middle" font-size="10" fill="#95A5A6" font-style="italic">irregular</text>
+    <text x="570" y="355" text-anchor="middle" font-weight="700" fill="#E67E22">levnější</text>
+    <text x="570" y="375" text-anchor="middle" font-size="10" fill="#95A5A6" font-style="italic">-nější (regular)</text>
+    <text x="690" y="355" text-anchor="middle" font-weight="700" fill="#E67E22">mladší</text>
+    <text x="690" y="375" text-anchor="middle" font-size="10" fill="#95A5A6" font-style="italic">-ší</text>
+  </g>
+
+  <!-- Step 3: Superlative (top) -->
+  <rect x="220" y="180" width="460" height="90" rx="6" fill="#F4ECF7" stroke="#8E44AD" stroke-width="2"/>
+  <text x="240" y="208" font-size="13" font-weight="700" fill="#8E44AD">3 · SUPERLATIVE</text>
+  <text x="240" y="228" font-size="11" fill="#7D5BA6">(3. stupeň — nej- + comp.)</text>
+  <g font-size="16" fill="#2C3E50">
+    <text x="310" y="225" text-anchor="middle" font-weight="700" fill="#8E44AD">nejlepší</text>
+    <text x="310" y="245" text-anchor="middle" font-size="10" fill="#95A5A6">the best</text>
+    <text x="450" y="225" text-anchor="middle" font-weight="700" fill="#8E44AD">největší</text>
+    <text x="450" y="245" text-anchor="middle" font-size="10" fill="#95A5A6">the biggest</text>
+    <text x="590" y="225" text-anchor="middle" font-weight="700" fill="#8E44AD">nejlevnější</text>
+    <text x="590" y="245" text-anchor="middle" font-size="10" fill="#95A5A6">the cheapest</text>
+  </g>
+
+  <!-- Up arrow connecting the steps -->
+  <path d="M 400 520 L 400 510 L 400 405 L 400 405 L 400 290 L 400 280" stroke="#7F8C8D" stroke-width="2" fill="none" stroke-dasharray="4 4"/>
+
+  <!-- Suffix reference box -->
+  <rect x="80" y="545" width="640" height="60" rx="8" fill="#F8F9FA" stroke="#ECEFF1" stroke-width="1"/>
+  <text x="100" y="568" font-size="12" font-weight="700" fill="#7F8C8D">REGULAR SUFFIXES</text>
+  <text x="100" y="586" font-size="11" fill="#2C3E50">
+    <tspan font-weight="600" fill="#E67E22">-ejší</tspan> (after soft stems)
+    <tspan>   •   </tspan>
+    <tspan font-weight="600" fill="#E67E22">-ější</tspan> (after hard stems: levný → levnější)
+    <tspan>   •   </tspan>
+    <tspan font-weight="600" fill="#E67E22">-ší</tspan> (short stems: mladý → mladší)
+  </text>
+  <text x="100" y="600" font-size="11" fill="#2C3E50">
+    <tspan font-weight="600" fill="#8E44AD">IRREGULAR:</tspan>
+    dobrý → lepší · velký → větší · malý → menší · zlý → horší · dlouhý → delší
+  </text>
+</svg>

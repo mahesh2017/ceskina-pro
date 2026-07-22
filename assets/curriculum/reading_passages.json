@@ -1,0 +1,1990 @@
+{
+  "title": "Graded Reading Passages",
+  "description": "Czech reading passages at A1 and A2 levels with comprehension questions",
+  "passages": [
+    {
+      "id": "rp_a1_01",
+      "level": "A1",
+      "unit_id": 2,
+      "title": "Nový kamarád",
+      "text": "Ahoj! Jmenuju se Mahesh a jsem z Indie. Teď bydlím v Praze a studuju na Karlově univerzitě. Dnes je pondělí a jdu do školy. V tramvaji potkám nového kamaráda. Jmenuje se Pavel a je z Česka. Pavel je student taky. Studuje historii. My mluvíme česky a anglicky. Pavel mluví anglicky velmi dobře. Já mluvím česky trochu, ale učím se každý den.\n\nPavel říká: \"Ahoj Mahesh, jak se máš?\" Já říkám: \"Mám se dobře, děkuji. A ty?\" Pavel říká: \"Já se mám taky dobře. Co děláš dnes?\" Já říkám: \"Jdu do školy. Mám českou hodinu. A co ty?\" Pavel říká: \"Já jdu do knihovny. Potřebuji knihu o českých dějinách.\"\n\nMy jsme kamarádi. Pavel mi pomáhá s češtinou. Já mu pomáhám s angličtinou. To je dobré! Po škole jdeme do kavárny. Pijeme kávu a mluvíme. Pavel říká, že pražská káva je velmi dobrá. Já říkám, že indický čaj je taky dobrý. My se máme rádi a jsme spokojení v Praze.",
+      "word_count": 168,
+      "glossary": [
+        {
+          "cz": "potkat",
+          "en": "to meet by chance",
+          "note": "perfective verb"
+        },
+        {
+          "cz": "trochu",
+          "en": "a little",
+          "note": "adverb"
+        },
+        {
+          "cz": "dějiny",
+          "en": "history",
+          "note": "plural noun"
+        },
+        {
+          "cz": "spokojený",
+          "en": "satisfied",
+          "note": "adjective"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Odkud je Mahesh?",
+          "question_en": "Where is Mahesh from?",
+          "options": [
+            "Z Česka",
+            "Z Indie",
+            "Z Anglie",
+            "Z Prahy"
+          ],
+          "correct_index": 1,
+          "explanation": "Mahesh je z Indie."
+        },
+        {
+          "question": "Co studuje Pavel?",
+          "question_en": "What does Pavel study?",
+          "options": [
+            "Angličtinu",
+            "Češtinu",
+            "Historii",
+            "Matematiku"
+          ],
+          "correct_index": 2,
+          "explanation": "Pavel studuje historii."
+        },
+        {
+          "question": "Kam jde Pavel dnes?",
+          "question_en": "Where is Pavel going today?",
+          "options": [
+            "Do školy",
+            "Do kavárny",
+            "Do knihovny",
+            "Domů"
+          ],
+          "correct_index": 2,
+          "explanation": "Pavel jde do knihovny."
+        },
+        {
+          "question": "Co dělají po škole?",
+          "question_en": "What do they do after school?",
+          "options": [
+            "Jdou domů",
+            "Jdou do kavárny",
+            "Jdou do knihovny",
+            "Jdou do školy"
+          ],
+          "correct_index": 1,
+          "explanation": "Po škole jdou do kavárny."
+        }
+      ],
+      "translation": "Hi! My name is Mahesh and I'm from India. Now I live in Prague and study at Charles University. Today is Monday and I'm going to school. On the tram I meet a new friend named Pavel from Czech Republic. Pavel is also a student studying history. We speak Czech and English. After school we go to a cafe. We are friends and happy in Prague."
+    },
+    {
+      "id": "rp_a1_02",
+      "level": "A1",
+      "unit_id": 5,
+      "title": "Můj den v Praze",
+      "text": "Jmenuju se Anna a bydlím v Praze. Každý den vstávám v šest hodin ráno. Piju kávu a snídám. K snídani mám chleba s máslem a sýrem. Pak piju ještě jednu kávu.\n\nV sedm hodin jdu do práce. Jezdím metrem. Cesta trvá dvacet minut. Pracuji v kanceláři v centru Prahy. Jsem sekretářka. V práci mluvím s lidmi, píšu emaily a volám telefonem.\n\nV poledne mám oběd. Obědvám v restauraci poblíž práce. Často si dávám polévku a salát. Po obědě piju kávu s kolegyní. Jmenuje se Petra a je velmi milá.\n\nOdpoledne pracuju ještě tři hodiny. V pěti hodin končím. Jdu domů metrem. Doma vařím večeři a dívám se na televizi. Večer čtu knížku nebo poslouchám hudbu. V deset hodin jdu spát. Mám ráda svůj den v Praze. Je to hezký život!",
+      "word_count": 155,
+      "glossary": [
+        {
+          "cz": "vstávat",
+          "en": "to get up",
+          "note": "imperfective"
+        },
+        {
+          "cz": "kancelář",
+          "en": "office",
+          "note": "feminine"
+        },
+        {
+          "cz": "kolegyně",
+          "en": "female colleague",
+          "note": "feminine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "V kolik hodin vstává Anna?",
+          "question_en": "What time does Anna get up?",
+          "options": [
+            "V pět",
+            "V šest",
+            "V sedm",
+            "V osm"
+          ],
+          "correct_index": 1,
+          "explanation": "Anna vstává v šest hodin."
+        },
+        {
+          "question": "Jak dopravou jezdí do práce?",
+          "question_en": "How does she travel to work?",
+          "options": [
+            "Autobusem",
+            "Tramvají",
+            "Metrem",
+            "Autem"
+          ],
+          "correct_index": 2,
+          "explanation": "Jezdí metrem."
+        },
+        {
+          "question": "Co dělá večer?",
+          "question_en": "What does she do in the evening?",
+          "options": [
+            "Pracuje",
+            "Čte knížku",
+            "Jde do restaurace",
+            "Volá telefonem"
+          ],
+          "correct_index": 1,
+          "explanation": "Večer čte knížku."
+        },
+        {
+          "question": "Kdo je Petra?",
+          "question_en": "Who is Petra?",
+          "options": [
+            "Anna sestra",
+            "Anna kolegyně",
+            "Anna kamarádka",
+            "Anna šéfová"
+          ],
+          "correct_index": 1,
+          "explanation": "Petra je kolegyně."
+        }
+      ],
+      "translation": "My name is Anna and I live in Prague. Every day I get up at six, have breakfast, and go to work by metro. I work as a secretary in central Prague. At noon I have lunch with my colleague Petra. I finish at five, go home, cook dinner, read or listen to music, and sleep at ten. I like my life in Prague!"
+    },
+    {
+      "id": "rp_a1_03",
+      "level": "A1",
+      "unit_id": 8,
+      "title": "Moje rodina",
+      "text": "Mám velkou rodinu. Moje rodina je z Prahy, ale někteří příbuzní bydlí v Brně a v Ostravě.\n\nMůj otec se jmenuje Josef. Je mu padesát let. Je učitel na základní škole. Učí matematiku a tělocvik. Je vysoký a má hnědé oči. Můj otec je velmi trpělivý a chytrý.\n\nMoje matka se jmenuje Marie. Je jí čtyřicet osm let. Pracuje v bance. Je malá a má modré oči. Moje máma je velmi milá a vaří skvělé jídlo.\n\nMám jednoho bratra a jednu sestru. Můj bratr Tomáš je starší než já. Je mu dvacet pět let. Studuje na univerzitě v Brně. Moje sestra Klára je mladší. Je jí šestnáct let. Chodí na gymnázium v Praze. Klára je velmi sportovní. Ráda plave a hraje tenis.\n\nMoje babička a dědeček bydlí taky v Praze. Babička se jmenuje Božena a dědeček se jmenuje Karel. Jsou velmi staří, ale aktivní. Babička ráda zahradničí a dědeček rád hraje šachy. Mám svou rodinu velmi rád.",
+      "word_count": 172,
+      "glossary": [
+        {
+          "cz": "příbuzný",
+          "en": "relative",
+          "note": "masculine animate"
+        },
+        {
+          "cz": "trpělivý",
+          "en": "patient",
+          "note": "adjective"
+        },
+        {
+          "cz": "gymnázium",
+          "en": "grammar school",
+          "note": "neuter"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kolik let je otci?",
+          "question_en": "How old is father?",
+          "options": [
+            "48",
+            "50",
+            "55",
+            "60"
+          ],
+          "correct_index": 1,
+          "explanation": "Otci je padesát let."
+        },
+        {
+          "question": "Kde pracuje matka?",
+          "question_en": "Where does mother work?",
+          "options": [
+            "Ve škole",
+            "V bance",
+            "V restauraci",
+            "V nemocnici"
+          ],
+          "correct_index": 1,
+          "explanation": "Matka pracuje v bance."
+        },
+        {
+          "question": "Kde studuje Tomáš?",
+          "question_en": "Where does Tomáš study?",
+          "options": [
+            "V Praze",
+            "V Brně",
+            "V Ostravě",
+            "V Plzni"
+          ],
+          "correct_index": 1,
+          "explanation": "Tomáš studuje v Brně."
+        },
+        {
+          "question": "Co dělá dědeček?",
+          "question_en": "What does grandfather do?",
+          "options": [
+            "Zahradničí",
+            "Hraje šachy",
+            "Hraje tenis",
+            "Vaří"
+          ],
+          "correct_index": 1,
+          "explanation": "Dědeček hraje šachy."
+        }
+      ],
+      "translation": "I have a big family from Prague, with relatives in Brno and Ostrava. My father Josef is 50, a math and PE teacher. My mother Marie is 48, works in a bank. Brother Tomáš is 25, studies in Brno. Sister Klára is 16, goes to grammar school in Prague, likes swimming and tennis. Grandparents Božena and Karel are active — grandma gardens, grandpa plays chess."
+    },
+    {
+      "id": "rp_a1_04",
+      "level": "A1",
+      "unit_id": 9,
+      "title": "V kavárně",
+      "text": "Dnes je sobota a já jsem s kamarádkou v kavárně. Kavárna se jmenuje 'Kavárna co hledá jméno' a je v centru Prahy. Je to hezká kavárna s velkými okny a pohodlnými křesly.\n\nJmenuju se Eva a moje kamarádka se jmenuje Lucie. Jsme tady od deseti hodin dopoledne. Je jedna hodina odpoledne a jsme tady pořád.\n\nCo pijeme? Já piju cappuccino a Lucie pije latte. Máme také dort. Já mám čokoládový dort a Lucie má jahodový cheesecake. Je to velmi chutné!\n\nKolik to stojí? Cappuccino stojí 65 korun, latte 60 korun. Dort stojí 85 korun. Spolu to je 295 korun. To není levné, ale je to dobré.\n\nV kavárně jsou další lidé. U okna sedí muž a čte noviny. U stolu vedle nás jsou dvě studentky a mluví anglicky. My se máme dobře. Lucie říká: 'To je hezký den!'",
+      "word_count": 145,
+      "glossary": [
+        {
+          "cz": "pohodlný",
+          "en": "comfortable",
+          "note": "adjective"
+        },
+        {
+          "cz": "pořád",
+          "en": "still",
+          "note": "adverb"
+        },
+        {
+          "cz": "chutný",
+          "en": "tasty",
+          "note": "adjective"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Jak se jmenuje kavárna?",
+          "question_en": "What is the cafe called?",
+          "options": [
+            "Kavárna v centru",
+            "Kavárna co hledá jméno",
+            "Čokoládová kavárna",
+            "Pražská kavárna"
+          ],
+          "correct_index": 1,
+          "explanation": "Jmenuje se 'Kavárna co hledá jméno'."
+        },
+        {
+          "question": "Co pije Eva?",
+          "question_en": "What does Eva drink?",
+          "options": [
+            "Latte",
+            "Cappuccino",
+            "Čaj",
+            "Vodu"
+          ],
+          "correct_index": 1,
+          "explanation": "Eva pije cappuccino."
+        },
+        {
+          "question": "Kdo čte noviny?",
+          "question_en": "Who reads a newspaper?",
+          "options": [
+            "Eva",
+            "Lucie",
+            "Muž u okna",
+            "Studentky"
+          ],
+          "correct_index": 2,
+          "explanation": "Muž u okna čte noviny."
+        },
+        {
+          "question": "Kolik stojí všechno?",
+          "question_en": "How much is everything?",
+          "options": [
+            "195",
+            "250",
+            "295",
+            "350"
+          ],
+          "correct_index": 2,
+          "explanation": "65+60+85+85=295 korun."
+        }
+      ],
+      "translation": "It's Saturday and I'm with my friend Lucie at a cafe called 'Cafe Looking for a Name' in central Prague. We've been here since 10 AM and it's now 1 PM. I have cappuccino, she has latte, and we both have cake. Total 295 Kč. A man by the window reads newspapers. We're having a nice time."
+    },
+    {
+      "id": "rp_a1_05",
+      "level": "A1",
+      "unit_id": 11,
+      "title": "V restauraci U Modré kachničky",
+      "text": "Dnes je neděle a my jsme v restauraci 'U Modré kachničky'. Je to slavná česká restaurace v Praze blízko Karlova mostu.\n\nJsme tady celá rodina. Je tady hezká atmosféra. Na stole jsou svíčky a květiny.\n\nTáta si dává svíčkovou na smetaně s knedlíky. Máma si dává smažený sýr a hranolky. Sestra si dává kuře s rýží. Já si dávám guláš s knedlíkem.\n\nK pití máme pivo. Táta pije Plzeň a já piju Bernard. Máma a sestra pijí limonádu.\n\nMáme také bramborovou polévku. Po hlavním jídlu si dáváme dort. Já mám jablečný závin. Je to skvělé!\n\nNakonec táta platí. Účet je 1850 korun. Dáváme spropitné 200 korun. Byl to velmi hezký oběd!",
+      "word_count": 130,
+      "glossary": [
+        {
+          "cz": "svíčková na smetaně",
+          "en": "beef in cream sauce",
+          "note": "Czech dish"
+        },
+        {
+          "cz": "knedlík",
+          "en": "dumpling",
+          "note": "Czech side"
+        },
+        {
+          "cz": "smažený sýr",
+          "en": "fried cheese",
+          "note": "Czech dish"
+        },
+        {
+          "cz": "spropitné",
+          "en": "tip",
+          "note": "neuter"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Jak se jmenuje restaurace?",
+          "question_en": "What is the restaurant called?",
+          "options": [
+            "U Karlova mostu",
+            "U Modré kachničky",
+            "U Zlatého lva",
+            "Pražská restaurace"
+          ],
+          "correct_index": 1,
+          "explanation": "Jmenuje se U Modré kachničky."
+        },
+        {
+          "question": "Co jí táta?",
+          "question_en": "What does dad eat?",
+          "options": [
+            "Smažený sýr",
+            "Kuře",
+            "Svíčkovou",
+            "Guláš"
+          ],
+          "correct_index": 2,
+          "explanation": "Táta má svíčkovou na smetaně."
+        },
+        {
+          "question": "Kolik je účet?",
+          "question_en": "How much is the bill?",
+          "options": [
+            "1500",
+            "1850",
+            "2000",
+            "2050"
+          ],
+          "correct_index": 1,
+          "explanation": "Účet je 1850 korun."
+        },
+        {
+          "question": "Kdo platí?",
+          "question_en": "Who pays?",
+          "options": [
+            "Máma",
+            "Táta",
+            "Sestra",
+            "Já"
+          ],
+          "correct_index": 1,
+          "explanation": "Táta platí."
+        }
+      ],
+      "translation": "Sunday lunch at the famous Czech restaurant 'U Modré kachničky' near Charles Bridge with the whole family. Dad has svíčková, mom has fried cheese, sister has chicken with rice, I have goulash. We drink beer and lemonade, have potato soup and apple strudel. Bill is 1850 Kč with 200 Kč tip. Great lunch!"
+    },
+    {
+      "id": "rp_a1_06",
+      "level": "A1",
+      "unit_id": 12,
+      "title": "Nakupování v OC Nový Smíchov",
+      "text": "Dnes jdeme nakupovat do obchodního centra Nový Smíchov. Je to velké obchodní centrum v Praze blízko stanice metra Anděl.\n\nJá a moje sestra jdeme do obchodu s oblečením. Sestra hledá nový svetr. Vidí hezký modrý svetr. Stojí 800 korun. Kupuje ho.\n\nJá kupuju nové boty. Boty stojí 1200 korun. Jsou černé a pohodlné. Velikost je 42. Prodavačka říká: 'Ty boty jsou velmi dobré.' Já říkám: 'Vezmu si je.'\n\nPak jdeme do supermarketu Albert. Kupujeme chleba, mléko, sýr, ovoce a zeleninu.\n\nNa konci jdeme do kavárny. Pijeme kávu a díváme se na lidi. Obchodní centrum je plné lidí. Je sobota a všichni nakupují.\n\nDnes jsme utratili 3000 korun. To je hodně! Ale máme nové oblečení a jídlo.",
+      "word_count": 135,
+      "glossary": [
+        {
+          "cz": "obchodní centrum",
+          "en": "shopping mall",
+          "note": "neuter"
+        },
+        {
+          "cz": "prodavačka",
+          "en": "shop assistant",
+          "note": "feminine"
+        },
+        {
+          "cz": "utratit",
+          "en": "to spend money",
+          "note": "perfective"
+        },
+        {
+          "cz": "velikost",
+          "en": "size",
+          "note": "feminine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kde nakupují?",
+          "question_en": "Where are they shopping?",
+          "options": [
+            "V Bille",
+            "V OC Nový Smíchov",
+            "V centru",
+            "V OC Chodov"
+          ],
+          "correct_index": 1,
+          "explanation": "Jdou do OC Nový Smíchov."
+        },
+        {
+          "question": "Co kupuje sestra?",
+          "question_en": "What does sister buy?",
+          "options": [
+            "Boty",
+            "Svetr",
+            "Čokoládu",
+            "Knihu"
+          ],
+          "correct_index": 1,
+          "explanation": "Sestra kupuje svetr."
+        },
+        {
+          "question": "Jakou velikost bot?",
+          "question_en": "What shoe size?",
+          "options": [
+            "40",
+            "41",
+            "42",
+            "43"
+          ],
+          "correct_index": 2,
+          "explanation": "Velikost je 42."
+        },
+        {
+          "question": "Kolik utratili?",
+          "question_en": "How much did they spend?",
+          "options": [
+            "1000",
+            "2000",
+            "3000",
+            "4000"
+          ],
+          "correct_index": 2,
+          "explanation": "Utratili 3000 korun."
+        }
+      ],
+      "translation": "We go shopping at Nový Smíchov mall near Anděl metro. Sister buys a blue sweater for 800 Kč. I buy black shoes size 42 for 1200 Kč. We also buy groceries at Albert. We people-watch in the cafe. Total spent: 3000 Kč."
+    },
+    {
+      "id": "rp_a1_07",
+      "level": "A1",
+      "unit_id": 13,
+      "title": "Můj volný čas",
+      "text": "Jmenuju se Tomáš a mám rád svůj volný čas. Mám hodně koníčků!\n\nNejraději sportuju. Každé ráno běhám v parku. Běhám třikrát týdně. Také hraju fotbal s kamarády každou sobotu. Jsme tým 'Sparta přátelé'. Po fotbale jdeme do hospody a pijeme pivo.\n\nDoma rád čtu knížky. Nejraději čtu detektivky. Také se dívám na filmy. Rád se dívám na české komedie. Jsou velmi vtipné!\n\nO víkendech často jezdím na chatu. Chata je v jižních Čechách, blízko Tábora. Tam opaluji zahradu, vařím na grilu a odpočívám. Moje přítelkyně tam jezdí se mnou.\n\nNěkdy večer hraju na kytaru. Nejsem velmi dobrý, ale baví mě to. Co děláš ty ve volném čase?",
+      "word_count": 125,
+      "glossary": [
+        {
+          "cz": "koníček",
+          "en": "hobby",
+          "note": "masculine"
+        },
+        {
+          "cz": "běhat",
+          "en": "to run regularly",
+          "note": "imperfective"
+        },
+        {
+          "cz": "hospoda",
+          "en": "pub",
+          "note": "feminine"
+        },
+        {
+          "cz": "chata",
+          "en": "cottage",
+          "note": "feminine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Co dělá Tomáš nejraději?",
+          "question_en": "What does Tomáš like most?",
+          "options": [
+            "Čte",
+            "Sportuje",
+            "Hraje kytaru",
+            "Jezdí na chatu"
+          ],
+          "correct_index": 1,
+          "explanation": "Nejraději sportuje."
+        },
+        {
+          "question": "Kdy hraje fotbal?",
+          "question_en": "When does he play football?",
+          "options": [
+            "V pondělí",
+            "Ve středu",
+            "V sobotu",
+            "V neděli"
+          ],
+          "correct_index": 2,
+          "explanation": "Hraje každou sobotu."
+        },
+        {
+          "question": "Kde je chata?",
+          "question_en": "Where is the cottage?",
+          "options": [
+            "V Praze",
+            "V Táboře",
+            "V Brně",
+            "V Plzni"
+          ],
+          "correct_index": 1,
+          "explanation": "Chata je blízko Tábora."
+        },
+        {
+          "question": "Jaké knížky čte?",
+          "question_en": "What books does he read?",
+          "options": [
+            "Romány",
+            "Detektivky",
+            "Historické",
+            "Kuchařky"
+          ],
+          "correct_index": 1,
+          "explanation": "Čte detektivky."
+        }
+      ],
+      "translation": "I'm Tomáš and I love my free time. I have many hobbies. I run in the park three times a week and play football every Saturday with friends. I read detective books and watch Czech comedies. On weekends I go to our cottage near Tábor to garden, grill, and relax with my girlfriend. Sometimes I play guitar in the evening."
+    },
+    {
+      "id": "rp_a1_08",
+      "level": "A1",
+      "unit_id": 14,
+      "title": "Cesta do školy",
+      "text": "Každý den jezdím do školy tramvají. Bydlím na Žižkově a škola je v centru Prahy. Cesta trvá asi dvacet minut.\n\nRano v sedm hodin vstávám a snídám. V půl osmé jdu na zastávku Husinecká. Čekám na tramvaj číslo devět. Tramvaj jezdí často, čekám jen tři minuty.\n\nV tramvaji je ráno hodně lidí. Všichni jedou do práce nebo do školy. Stojím, protože není volné místo. Někdy čtu knížku nebo poslouchám hudbu.\n\nPo deseti minutách vystupuji na zastávce Václavské náměstí. Pak jdu pěšky. Jdu rovně ulicí Na Příkopě, pak doleva na náměstí Republiky. Škola je naproti Obecnímu domu.\n\nCesta do školy není špatná. Líbí se mi cestovat tramvají. Vidím Prahu a lidé jsou zajímaví.",
+      "word_count": 130,
+      "glossary": [
+        {
+          "cz": "zastávka",
+          "en": "stop",
+          "note": "feminine"
+        },
+        {
+          "cz": "vystupovat",
+          "en": "to get off",
+          "note": "imperfective"
+        },
+        {
+          "cz": "rovně",
+          "en": "straight",
+          "note": "adverb"
+        },
+        {
+          "cz": "naproti",
+          "en": "opposite",
+          "note": "preposition + dative"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kde bydlí?",
+          "question_en": "Where does he live?",
+          "options": [
+            "V centru",
+            "Na Žižkově",
+            "Na Vinohradech",
+            "V Dejvicích"
+          ],
+          "correct_index": 1,
+          "explanation": "Bydlí na Žižkově."
+        },
+        {
+          "question": "Jakou tramvají?",
+          "question_en": "Which tram?",
+          "options": [
+            "5",
+            "7",
+            "9",
+            "22"
+          ],
+          "correct_index": 2,
+          "explanation": "Tramvaj číslo devět."
+        },
+        {
+          "question": "Kde vystupuje?",
+          "question_en": "Where does he get off?",
+          "options": [
+            "Husinecká",
+            "Václavské náměstí",
+            "Náměstí Republiky",
+            "Obecní dům"
+          ],
+          "correct_index": 1,
+          "explanation": "Vystupuje na Václavském náměstí."
+        },
+        {
+          "question": "Jak dlouho trvá cesta?",
+          "question_en": "How long is the journey?",
+          "options": [
+            "10 min",
+            "15 min",
+            "20 min",
+            "30 min"
+          ],
+          "correct_index": 2,
+          "explanation": "Cesta trvá dvacet minut."
+        }
+      ],
+      "translation": "Every day I take the tram to school from Žižkov to central Prague, about 20 minutes. I get up at 7, breakfast, walk to Husinecká stop, take tram 9. It's crowded in the morning. I get off at Václavské náměstí, walk along Na Příkopě to náměstí Republiky. School is opposite the Municipal House. I enjoy the tram journey."
+    },
+    {
+      "id": "rp_a1_09",
+      "level": "A1",
+      "unit_id": 15,
+      "title": "Víkend v Brně",
+      "text": "Minulý víkend jsem byl v Brně. Brno je druhé největší město v České republice. Je v Moravě. Jezdím tam často, protože tam bydlí můj bratr.\n\nV pátek večer jsem jel vlakem z Prahy. Cesta trvala dvě a půl hodiny. V Brně na nádraží mě čekal bratr.\n\nV sobotu jsme byli v centru Brna. Viděli jsme Špilberk — starý hrad nad městem. Je tam hezký výhled. Pak jsme byli na Zelném trhu. Koupili jsme ovoce a zeleninu.\n\nPo obědě jsme byli v kavárně. Brno má velmi dobré kavárny! Odpoledne jsme šli do parku Lužánky.\n\nV neděli bylo hezké počasí. Svítilo slunce a bylo teplo. Šli jsme na procházku kolem přehrady.\n\nV neděli večer jsem jel vlakem zpět do Prahy. Mám rád Brno. Je to hezké město. Příští víkend tam jedu znovu!",
+      "word_count": 140,
+      "glossary": [
+        {
+          "cz": "Špilberk",
+          "en": "Spilberk castle",
+          "note": "Brno landmark"
+        },
+        {
+          "cz": "Zelný trh",
+          "en": "Cabbage Market square",
+          "note": "Brno square"
+        },
+        {
+          "cz": "přehrada",
+          "en": "reservoir",
+          "note": "feminine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kde je Brno?",
+          "question_en": "Where is Brno?",
+          "options": [
+            "V Čechách",
+            "V Moravě",
+            "Ve Slezsku",
+            "Na Slovensku"
+          ],
+          "correct_index": 1,
+          "explanation": "Brno je v Moravě."
+        },
+        {
+          "question": "Jak dlouho cesta vlakem?",
+          "question_en": "How long by train?",
+          "options": [
+            "1h",
+            "2h",
+            "2,5h",
+            "3h"
+          ],
+          "correct_index": 2,
+          "explanation": "Cesta trvala 2,5 hodiny."
+        },
+        {
+          "question": "Co viděli v sobotu?",
+          "question_en": "What did they see Saturday?",
+          "options": [
+            "Pražský hrad",
+            "Špilberk",
+            "Karlův most",
+            "Obecní dům"
+          ],
+          "correct_index": 1,
+          "explanation": "Viděli Špilberk."
+        },
+        {
+          "question": "Jaké bylo počasí?",
+          "question_en": "What was the weather?",
+          "options": [
+            "Pršelo",
+            "Zima",
+            "Slunce",
+            "Zamračeno"
+          ],
+          "correct_index": 2,
+          "explanation": "Svítilo slunce a bylo teplo."
+        }
+      ],
+      "translation": "Last weekend I visited Brno, Czech Republic's second largest city in Moravia. I took a 2.5 hour train from Prague where my brother picked me up. We saw Špilberk castle, Zelný trh market, and had coffee. Sunday was sunny and warm, we walked around the reservoir. I love Brno and I'm going back next weekend!"
+    },
+    {
+      "id": "rp_a1_10",
+      "level": "A1",
+      "unit_id": 6,
+      "title": "Co dělám o víkendu",
+      "text": "O víkendu dělám hodně věcí. V sobotu ráno spím dlouho. Vstávám v devět hodin. Pak snídám — mám chleba s vejcem a piju čaj.\n\nPo snídani jdu do obchodu. Kupuju jídlo na celý týden. Chodím do Kauflandu, protože je levný. Kupuju chleba, mléko, maso, zeleninu a pivo.\n\nPo obědě jdu do parku. Čtu knížku nebo poslouchám hudbu. Někdy potkám kamaráda a mluvíme.\n\nVečer jdu do kina. Rád se dívám na akční filmy. Po filmu jdu s kamarády do restaurace. Jíme a pijeme pivo.\n\nV neděli je klidnější den. Rano volám mamince. Pak vařím oběd — kuře s bramborami.\n\nOdpoledne čtu, dívám se na televizi nebo studuji češtinu. Večer jdu brzy spát, protože v pondělí musím vstát brzy.",
+      "word_count": 130,
+      "glossary": [
+        {
+          "cz": "spát dlouho",
+          "en": "to sleep late",
+          "note": "phrase"
+        },
+        {
+          "cz": "klidný",
+          "en": "quiet",
+          "note": "adjective"
+        },
+        {
+          "cz": "akční film",
+          "en": "action movie",
+          "note": "masculine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "V kolik vstává v sobotu?",
+          "question_en": "What time Saturday?",
+          "options": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "correct_index": 2,
+          "explanation": "Vstává v devět."
+        },
+        {
+          "question": "Kam chodí nakupovat?",
+          "question_en": "Where does he shop?",
+          "options": [
+            "Billa",
+            "Albert",
+            "Kaufland",
+            "Lidl"
+          ],
+          "correct_index": 2,
+          "explanation": "Chodí do Kauflandu."
+        },
+        {
+          "question": "Co dělá v neděli ráno?",
+          "question_en": "What Sunday morning?",
+          "options": [
+            "Do parku",
+            "Volá mamince",
+            "Do kina",
+            "Vaří"
+          ],
+          "correct_index": 1,
+          "explanation": "Volá mamince."
+        },
+        {
+          "question": "Proč jde brzy spát?",
+          "question_en": "Why early to bed?",
+          "options": [
+            "Unavený",
+            "Musí vstát brzy",
+            "Nemocný",
+            "Hodně práce"
+          ],
+          "correct_index": 1,
+          "explanation": "V pondělí musí vstát brzy."
+        }
+      ],
+      "translation": "On weekends I do many things. Saturday I sleep until 9, breakfast, then shop at Kaufland for the week. After lunch I go to the park to read or listen to music. Evening: cinema and restaurant with friends. Sunday is quieter — I call mom, cook chicken with potatoes, study Czech. Early to bed because Monday comes early."
+    },
+    {
+      "id": "rp_a1_11",
+      "level": "A1",
+      "unit_id": 7,
+      "title": "Představení se",
+      "text": "Dobrý den! Rád se představím. Jmenuju se Mahesh Pathak a je mi pětadvacet let. Jsem z Indie, z města Dillí. Teď bydlím v Praze.\n\nMoje rodina je v Indii. Můj otec je inženýr a moje matka je učitelka. Mám jednoho bratra. Jmenuje se Vijay a je mladší než já.\n\nJá studuji na Karlově univerzitě v Praze. Studuji mezinárodní vztahy. Mluvím anglicky, hindsky a trochu česky. Čeština je těžká, ale krásná. Učím se česky už šest měsíců.\n\nBydlím v studentském koleji na Spořilově. Můj pokoj je malý, ale pohodlný. Mám postel, stůl, židli a skříň.\n\nMám tady nové kamarády. Jsou z různých zemí — z Česka, Německa, Francie a Japonska. Mluvíme anglicky a česky.\n\nO víkendu rád chodím do pražských parků. Mám rád Riegrovy sady a Letenské sady. Praha je velmi krásné město. Jsem spokojený.",
+      "word_count": 150,
+      "glossary": [
+        {
+          "cz": "představit se",
+          "en": "to introduce oneself",
+          "note": "reflexive"
+        },
+        {
+          "cz": "kolej",
+          "en": "dormitory",
+          "note": "feminine"
+        },
+        {
+          "cz": "různý",
+          "en": "various",
+          "note": "adjective"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Odkud je Mahesh?",
+          "question_en": "Where is Mahesh from?",
+          "options": [
+            "Praha",
+            "Dillí",
+            "Bombaj",
+            "Kalkata"
+          ],
+          "correct_index": 1,
+          "explanation": "Je z Dillí."
+        },
+        {
+          "question": "Co studuje?",
+          "question_en": "What does he study?",
+          "options": [
+            "Historii",
+            "Mezinárodní vztahy",
+            "Matematiku",
+            "Informatiku"
+          ],
+          "correct_index": 1,
+          "explanation": "Studuje mezinárodní vztahy."
+        },
+        {
+          "question": "Kde bydlí?",
+          "question_en": "Where does he live?",
+          "options": [
+            "Centrum",
+            "Spořilov",
+            "Žižkov",
+            "Dejvice"
+          ],
+          "correct_index": 1,
+          "explanation": "Bydlí na Spořilově."
+        },
+        {
+          "question": "Jak dlouho se učí česky?",
+          "question_en": "How long learning Czech?",
+          "options": [
+            "3 měsíce",
+            "6 měsíců",
+            "1 rok",
+            "2 roky"
+          ],
+          "correct_index": 1,
+          "explanation": "Šest měsíců."
+        }
+      ],
+      "translation": "Hello! I'm Mahesh Pathak, 25, from Delhi, India. Now I live in Prague. My family is in India — father is an engineer, mother is a teacher, brother Vijay is younger. I study international relations at Charles University. I speak English, Hindi, and some Czech (learning for 6 months). I live in a dorm at Spořilov. I have friends from Czech Republic, Germany, France, Japan. I love Prague's parks. I'm happy here."
+    },
+    {
+      "id": "rp_a1_12",
+      "level": "A1",
+      "unit_id": 10,
+      "title": "Moje ráno",
+      "text": "Každé ráno vstávám v šest hodin třicet. Budík zvoní a já se probudím. Nejprve se sprchuju. Sprcha je teplá a příjemná. Po sprše se oblékám.\n\nPak jdu do kuchyně a snídám. K snídani mám jogurt s medem a oříšky. Také piju silnou černou kávu. Bez kávy nejsem ráno dobrý!\n\nPo snídani se češu a čistím si zuby. Pak si balím batoh na školu. Dávám do batohu sešit, pero, knížku a láhev vody.\n\nV sedm hodin patnáct jdu z domova. Jdu na zastávku autobusu. Autobus jezdí v sedm třicet. Cesta do školy trvá patnáct minut.\n\nV autobusu se dívám z okna. Vidím Prahu ráno. Lidé spěchají do práce. Někteří lidé spí v autobuse!\n\nVe škole jsem v sedm padesát. Piju ještě jednu kávu v kantýně. V osm hodin začíná první hodina. Je to hezké ráno!",
+      "word_count": 150,
+      "glossary": [
+        {
+          "cz": "budík",
+          "en": "alarm clock",
+          "note": "masculine"
+        },
+        {
+          "cz": "probudit se",
+          "en": "to wake up",
+          "note": "reflexive"
+        },
+        {
+          "cz": "spěchat",
+          "en": "to hurry",
+          "note": "imperfective"
+        },
+        {
+          "cz": "kantýna",
+          "en": "canteen",
+          "note": "feminine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "V kolik vstává?",
+          "question_en": "What time does he get up?",
+          "options": [
+            "6:00",
+            "6:15",
+            "6:30",
+            "7:00"
+          ],
+          "correct_index": 2,
+          "explanation": "Vstává v 6:30."
+        },
+        {
+          "question": "Co má k snídani?",
+          "question_en": "What for breakfast?",
+          "options": [
+            "Chleba s sýrem",
+            "Jogurt s medem",
+            "Vejce",
+            "Rohlík"
+          ],
+          "correct_index": 1,
+          "explanation": "Jogurt s medem a oříšky."
+        },
+        {
+          "question": "Jak jezdí do školy?",
+          "question_en": "How to school?",
+          "options": [
+            "Tramvají",
+            "Metrem",
+            "Autobusem",
+            "Pěšky"
+          ],
+          "correct_index": 2,
+          "explanation": "Jezdí autobusem."
+        },
+        {
+          "question": "Kdy začíná první hodina?",
+          "question_en": "When does first class start?",
+          "options": [
+            "7:30",
+            "7:50",
+            "8:00",
+            "8:15"
+          ],
+          "correct_index": 2,
+          "explanation": "V osm hodin."
+        }
+      ],
+      "translation": "Every morning I get up at 6:30 when the alarm rings. I shower, get dressed, then have yogurt with honey and nuts plus strong black coffee. I comb my hair, brush teeth, pack my backpack. At 7:15 I leave for the bus stop — bus at 7:30, 15 minutes to school. I watch Prague from the window. At school by 7:50, I have another coffee. First class at 8:00. Nice morning!"
+    },
+    {
+      "id": "rp_a2_01",
+      "level": "A2",
+      "unit_id": 16,
+      "title": "Byt v Praze",
+      "text": "Hledám nový byt v Praze. Minulý měsíc jsem se přestěhoval z Indie a potřebuji lepší bydlení. Teď bydlím v studentském koleji, ale chci svůj vlastní byt.\n\nNašel jsem hezký byt na Vinohradech. Je to malý byt — jedna místnost, kuchyně a koupelna. Ale je to hezké místo. Byt je blízko parku Riegrovy sady a stanice metra Náměstí Míru.\n\nKolik stojí nájem? Pán, který pronajímá byt, říká, že nájem je 18 000 korun za měsíc. To je hodně peněz! Ale je to normální cena pro Vinohrady. Musím také zaplatit kauci — dva měsíce nájmu předem. To je 36 000 korun. Spolu s prvním měsícem musím zaplatit 54 000 korun. To je velmi hodně!\n\nMůj kamarád Pavel říká, že je to dobrá cena. On platí 22 000 korun za větší byt v centru. Říká, že Vinohrady jsou dobrá lokalita — je tam klid, parky, restaurace a dobré spojení metrem.\n\nRozhodl jsem se, že byt si vezmu. Podepsal jsem nájemní smlouvu a zaplatil kauci. Příští týden se stěhuji. Musím koupit nábytek — postel, stůl, židli a skříň. Pavel mi slíbil, že mi pomůže se stěhováním.\n\nJsem spokojený. Budu mít svůj vlastní byt v Praze!",
+      "word_count": 185,
+      "glossary": [
+        {
+          "cz": "nájem",
+          "en": "rent",
+          "note": "masculine"
+        },
+        {
+          "cz": "kauce",
+          "en": "deposit",
+          "note": "feminine"
+        },
+        {
+          "cz": "nájemní smlouva",
+          "en": "lease agreement",
+          "note": "feminine"
+        },
+        {
+          "cz": "lokalita",
+          "en": "location",
+          "note": "feminine"
+        },
+        {
+          "cz": "nábytek",
+          "en": "furniture",
+          "note": "masculine collective"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kde našel byt?",
+          "question_en": "Where did he find an apartment?",
+          "options": [
+            "Na Žižkově",
+            "Na Vinohradech",
+            "V Dejvicích",
+            "V centru"
+          ],
+          "correct_index": 1,
+          "explanation": "Našel byt na Vinohradech."
+        },
+        {
+          "question": "Kolik je nájem?",
+          "question_en": "How much is the rent?",
+          "options": [
+            "15 000",
+            "18 000",
+            "22 000",
+            "25 000"
+          ],
+          "correct_index": 1,
+          "explanation": "Nájem je 18 000 korun."
+        },
+        {
+          "question": "Kolik musí zaplatit spolu?",
+          "question_en": "How much must he pay total?",
+          "options": [
+            "36 000",
+            "45 000",
+            "54 000",
+            "72 000"
+          ],
+          "correct_index": 2,
+          "explanation": "Kauce 36 000 + první měsíc 18 000 = 54 000."
+        },
+        {
+          "question": "Co říká Pavel o ceně?",
+          "question_en": "What does Pavel say about the price?",
+          "options": [
+            "Je drahá",
+            "Je dobrá",
+            "Je levná",
+            "Je normální"
+          ],
+          "correct_index": 1,
+          "explanation": "Pavel říká, že je to dobrá cena."
+        }
+      ],
+      "translation": "I'm looking for a new apartment in Prague. I found a small one-bedroom on Vinohrady for 18,000 Kč/month. The deposit is two months' rent = 36,000 Kč. Total upfront: 54,000 Kč. My friend Pavel says it's a good price — he pays 22,000 for a bigger place in the center. I signed the lease and I'm moving in next week. I need to buy furniture and Pavel will help me move."
+    },
+    {
+      "id": "rp_a2_02",
+      "level": "A2",
+      "unit_id": 19,
+      "title": "Minulé léto u babičky",
+      "text": "Minulé léto jsem strávil dva týdny u babičky na venkově. Babička bydlí v malé vesnici blízko Tábora. Je tam hezky — je tam příroda, les a řeka.\n\nKaždé ráno jsem vstával v šest hodin. Babička už byla vzhůru a vařila snídani. K snídani jsme měli čerstvý chleba s máslem a domácí marmeládu. Babička dělá marmeládu z jahod a meruněk ze zahrady. Byla to nejlepší snídaně, jakou jsem kdy měl.\n\nDopoledne jsem pomáhal babičce na zahradě. Pěstovala tam rajčata, okurky, papriky a bylinky. Také jsem sekal trávu a opravoval plot. Babička říkala: 'Musíš odpočívat!' ale já jsem chtěl pomáhat.\n\nOdpoledne jsme šli na procházku do lesa. Babička znala všechny houby. Ukázala mi, které houby jsou dobré a které jsou jedovaté. Sbírali jsme hříbky a bedly. Večer jsem jim dělal houbové rizoto. Babička říkala, že je to velmi chutné.\n\nVečer jsme seděli na zahradě a dívali se na hvězdy. Na venkově je tma a hvězdy jsou velmi jasné. Babička mi vyprávěla příběhy z mládí. Bylo to hezké.\n\nBohužel, dva týdny utekly velmi rychle. Musel jsem se vrátit do Prahy. Ale slíbil jsem babičce, že přijedu znovu na podzim, až budou jablka.",
+      "word_count": 195,
+      "glossary": [
+        {
+          "cz": "venkov",
+          "en": "countryside",
+          "note": "masculine"
+        },
+        {
+          "cz": "marmeláda",
+          "en": "jam",
+          "note": "feminine"
+        },
+        {
+          "cz": "pěstovat",
+          "en": "to grow/cultivate",
+          "note": "imperfective"
+        },
+        {
+          "cz": "houby",
+          "en": "mushrooms",
+          "note": "plural feminine"
+        },
+        {
+          "cz": "jedovatý",
+          "en": "poisonous",
+          "note": "adjective"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kde bydlí babička?",
+          "question_en": "Where does grandmother live?",
+          "options": [
+            "V Praze",
+            "V Táboře",
+            "Ve vesnici",
+            "V Brně"
+          ],
+          "correct_index": 2,
+          "explanation": "Babička bydlí ve vesnici blízko Tábora."
+        },
+        {
+          "question": "Co dělali dopoledne?",
+          "question_en": "What did they do in the morning?",
+          "options": [
+            "Četli",
+            "Pracovali na zahradě",
+            "Šli do lesa",
+            "Vařili"
+          ],
+          "correct_index": 1,
+          "explanation": "Pomáhal babičce na zahradě."
+        },
+        {
+          "question": "Co sbírali v lese?",
+          "question_en": "What did they collect in the forest?",
+          "options": [
+            "Jahody",
+            "Houby",
+            "Jablka",
+            "Bylinky"
+          ],
+          "correct_index": 1,
+          "explanation": "Sbírali hříbky a bedly."
+        },
+        {
+          "question": "Kdy přijede znovu?",
+          "question_en": "When will he come back?",
+          "options": [
+            "V létě",
+            "Na podzim",
+            "V zimě",
+            "Na jaře"
+          ],
+          "correct_index": 1,
+          "explanation": "Slíbil, že přijede na podzim."
+        }
+      ],
+      "translation": "Last summer I spent two weeks at my grandmother's house in a village near Tábor. Every morning we had fresh bread with homemade jam. I helped in the garden — tomatoes, cucumbers, peppers, herbs. Afternoons we walked in the forest collecting mushrooms; grandmother knew which were edible and which poisonous. I cooked mushroom risotto. Evenings we sat in the garden watching stars and she told stories from her youth. Two weeks flew by. I promised to return in autumn for the apples."
+    },
+    {
+      "id": "rp_a2_03",
+      "level": "A2",
+      "unit_id": 22,
+      "title": "České Vánoce",
+      "text": "Vánoce jsou nejkrásnější svátky v České republice. V Česku se Vánoce slaví 24. prosince, ne 25. prosince jako v jiných zemích. Štědrý den, to je 24. prosince, je nejdůležitější den.\n\nRáno 24. prosince se zdobí vánoční stromek. Czech si kupují stromeček a zdobí ho s cukrovím, hvězdami a svíčkami. Pod stromeček se dávají dárky.\n\nOdpoledne se vaří štědrovečerní večeře. Tradiční večeře je kapr s bramborovým salátem. Mnoho lidí kupuje kapra živého a chová ho ve vaně pár dní před Vánocemi. Někteří lidé dávají kapra zpět do řeky po Vánocích.\n\nPři večeři se.cz rodina sejde u stolu. Než se začne jíst, všichni si přeřejí a řeknou: 'Štědrý večer dobrý!' Pak se jí kapr a bramborový salát. Po večeři se zpívají koledy. České koledy jsou krásné — nejznámější je 'Tichá noc'.\n\nPo koledách se rozbalují dárky. Dárky přináší Ježíšek, ne Santa Claus. Ježíšek je malé dítě, které přináší dárky. Děti jsou velmi spokojené, když dostanou, co chtěly.\n\nNa Štědrý večer se říkají také hádanky. Lidé vám řeknou: 'Hoď si střevíček za hlavu!' Pokud střevíček ukazuje ke dveřím, holka se vdá. Pokud ukazuje do pokoje, zůstane doma.",
+      "word_count": 200,
+      "glossary": [
+        {
+          "cz": "Štědrý den",
+          "en": "Christmas Eve",
+          "note": "masculine"
+        },
+        {
+          "cz": "kapr",
+          "en": "carp",
+          "note": "masculine animate"
+        },
+        {
+          "cz": "cukroví",
+          "en": "Christmas sweets/cookies",
+          "note": "neuter collective"
+        },
+        {
+          "cz": "koleda",
+          "en": "Christmas carol",
+          "note": "feminine"
+        },
+        {
+          "cz": "Ježíšek",
+          "en": "Baby Jesus",
+          "note": "masculine animate"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kdy se slaví Vánoce v Česku?",
+          "question_en": "When is Christmas in Czech Republic?",
+          "options": [
+            "23. prosince",
+            "24. prosince",
+            "25. prosince",
+            "26. prosince"
+          ],
+          "correct_index": 1,
+          "explanation": "V Česku se Vánoce slaví 24. prosince."
+        },
+        {
+          "question": "Co je tradiční večeře?",
+          "question_en": "What is the traditional dinner?",
+          "options": [
+            "Kuře a rýže",
+            "Kapr a salát",
+            "Guláš a knedlík",
+            "Svíčková"
+          ],
+          "correct_index": 1,
+          "explanation": "Tradiční večeře je kapr s bramborovým salátem."
+        },
+        {
+          "question": "Kdo přináší dárky?",
+          "question_en": "Who brings presents?",
+          "options": [
+            "Santa Claus",
+            "Ježíšek",
+            "Anděl",
+            "Mikuláš"
+          ],
+          "correct_index": 1,
+          "explanation": "Dárky přináší Ježíšek."
+        },
+        {
+          "question": "Co se dělá po večeři?",
+          "question_en": "What happens after dinner?",
+          "options": [
+            "Jdou spát",
+            "Zpívají koledy",
+            "Jdou do kostela",
+            "Sledují televizi"
+          ],
+          "correct_index": 1,
+          "explanation": "Po večeři se zpívají koledy."
+        }
+      ],
+      "translation": "Christmas is the most beautiful holiday in Czech Republic, celebrated on December 24th (Štědrý den). The tree is decorated in the morning. Traditional dinner is carp with potato salad — many people keep a live carp in the bathtub beforehand. The family gathers, wishes each other well, eats, and sings carols like 'Tichá noc'. Presents are brought by Ježíšek (Baby Jesus), not Santa Claus. There's also a shoe-tossing tradition to predict marriage."
+    },
+    {
+      "id": "rp_a2_04",
+      "level": "A2",
+      "unit_id": 24,
+      "title": "U lékaře",
+      "text": "Včera jsem byl u lékaře. Už týden jsem měl bolest v krku a kašel. Také jsem měl teplotu — 38 stupňů. Rozhodl jsem se, že musím jít k doktorovi.\n\nNejprve jsem volal do ordinace a objednal se. Sestřička řekla: 'Můžete přijít v 10 hodin dopoledne.' Došel jsem do ordinace v 9:45. V čekárně bylo několik lidí. Čekal jsem 30 minut.\n\nKdyž přišel lékař, řekl mi: 'Dobrý den, co vás trápí?' Já jsem řekl: 'Mám bolest v krku, kašel a teplotu.' Lékař se podíval do mého krku a řekl: 'Máte zánět. Potřebujete antibiotika.'\n\nLékař mi napsal recept a řekl: 'Užívejte tyto tablety třikrát denně po jídle. Pijte hodně vody a odpočívejte. Pokud se do týdne nezlepšíte, přijďte znovu.'\n\nPo ordinaci jsem šel do lékárny. V lékárně jsem dal recept lékárníkovi. Lékárník mi dal antibiotika a řekl: 'Tyto tablety užívejte sedm dní. Ne přestávejte brát dříve, i když se budete cítit lépe.' Zaplatil jsem 120 korun za léky.\n\nDnes se cítím lépe. Teplota je normální a bolest v krku je menší. Měl jsem jít k lékaři dříve!",
+      "word_count": 195,
+      "glossary": [
+        {
+          "cz": "ordinace",
+          "en": "doctor's office",
+          "note": "feminine"
+        },
+        {
+          "cz": "čekárna",
+          "en": "waiting room",
+          "note": "feminine"
+        },
+        {
+          "cz": "zánět",
+          "en": "inflammation",
+          "note": "masculine"
+        },
+        {
+          "cz": "antibiotika",
+          "en": "antibiotics",
+          "note": "plural neuter"
+        },
+        {
+          "cz": "recept",
+          "en": "prescription",
+          "note": "masculine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Co ho trápilo?",
+          "question_en": "What was bothering him?",
+          "options": [
+            "Bolest hlavy",
+            "Bolest v krku a kašel",
+            "Bolest břicha",
+            "Bolest zad"
+          ],
+          "correct_index": 1,
+          "explanation": "Měl bolest v krku, kašel a teplotu."
+        },
+        {
+          "question": "Kolik čekal v čekárně?",
+          "question_en": "How long did he wait?",
+          "options": [
+            "10 minut",
+            "20 minut",
+            "30 minut",
+            "45 minut"
+          ],
+          "correct_index": 2,
+          "explanation": "Čekal 30 minut."
+        },
+        {
+          "question": "Co mu předepsal lékař?",
+          "question_en": "What did the doctor prescribe?",
+          "options": [
+            "Sirup",
+            "Tablety",
+            "Injekci",
+            "Kapky"
+          ],
+          "correct_index": 1,
+          "explanation": "Lékař mu předepsal antibiotika — tablety."
+        },
+        {
+          "question": "Kolik zaplatil za léky?",
+          "question_en": "How much did he pay for medicine?",
+          "options": [
+            "80 Kč",
+            "100 Kč",
+            "120 Kč",
+            "150 Kč"
+          ],
+          "correct_index": 2,
+          "explanation": "Zaplatil 120 korun."
+        }
+      ],
+      "translation": "Yesterday I went to the doctor — I'd had a sore throat, cough, and 38°C fever for a week. I called to book an appointment and waited 30 minutes. The doctor examined my throat and diagnosed inflammation. He prescribed antibiotics — three times daily after meals for seven days. At the pharmacy I paid 120 Kč for the medicine. Today I feel better. I should have gone to the doctor earlier!"
+    },
+    {
+      "id": "rp_a2_05",
+      "level": "A2",
+      "unit_id": 25,
+      "title": "Pohovor o práci",
+      "text": "Příští týden mám pohovor o práci. Ucházím se o pozici marketingového specialisty v mezinárodní firmě v Praze. Je to dobrá příležitost a chci se připravit.\n\nNejprve jsem napsal životopis. V životopise jsem popsal své vzdělání a pracovní zkušenosti.Také jsem napsal, jaké jazyky mluvím — anglicky, hindsky a česky. Přidal jsem foto a informace o svém věku a bydlišti.\n\nFirma mi poslala email: 'Vážený pane Pathaku, rádi Vás pozvali na pohovor. Pohovor bude v úterý 15. července v 10 hodin dopoledne v naší kanceláři v Praze 5. Pohovor bude v angličtině a češtině. Prosím, přineste si svůj životopis a referenci.'\n\nPřipravil jsem se na otázky, které mi mohou položit:\n\n'Proč chcete pracovat u nás?' — Protože vaše firma je inovativní a pracuje v mezinárodním prostředí.\n\n'Jaké jsou vaše silné stránky?' — Jsem kreativní, organizovaný a umím pracovat v týmu.\n\n'Proč byste se měl stát naším zaměstnancem?' — Protože mám zkušenosti s marketingem a motivaci pracovat tvrdě.\n\nMám trochu strach, ale také jsem nadšený. Moje přítelkyně mi řekla: 'Buď v klidu a buď sám sebe!' To je dobrá rada. Příští týden uvidím, jak to dopadne.",
+      "word_count": 200,
+      "glossary": [
+        {
+          "cz": "pohovor",
+          "en": "job interview",
+          "note": "masculine"
+        },
+        {
+          "cz": "ucházet se",
+          "en": "to apply for",
+          "note": "reflexive imperfective"
+        },
+        {
+          "cz": "životopis",
+          "en": "CV/resume",
+          "note": "masculine"
+        },
+        {
+          "cz": "reference",
+          "en": "references",
+          "note": "plural feminine"
+        },
+        {
+          "cz": "silná stránka",
+          "en": "strength",
+          "note": "feminine phrase"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "O jakou pozici se uchází?",
+          "question_en": "What position is he applying for?",
+          "options": [
+            "Programátor",
+            "Marketingový specialista",
+            "Účetní",
+            "Ředitel"
+          ],
+          "correct_index": 1,
+          "explanation": "Uchází se o pozici marketingového specialisty."
+        },
+        {
+          "question": "Kdy je pohovor?",
+          "question_en": "When is the interview?",
+          "options": [
+            "V pondělí",
+            "V úterý",
+            "Ve středu",
+            "Ve čtvrtek"
+          ],
+          "correct_index": 1,
+          "explanation": "Pohovor bude v úterý."
+        },
+        {
+          "question": "Jaké jazyky mluví?",
+          "question_en": "What languages does he speak?",
+          "options": [
+            "Anglicky a německy",
+            "Anglicky, hindsky a česky",
+            "Anglicky a česky",
+            "Česky a slovensky"
+          ],
+          "correct_index": 1,
+          "explanation": "Mluví anglicky, hindsky a česky."
+        },
+        {
+          "question": "Co mu řekla přítelkyně?",
+          "question_en": "What did his girlfriend tell him?",
+          "options": [
+            "Buď připravený",
+            "Buď v klidu",
+            "Buď profesionální",
+            "Buď rychlý"
+          ],
+          "correct_index": 1,
+          "explanation": "Řekla: 'Buď v klidu a buď sám sebe!'"
+        }
+      ],
+      "translation": "Next week I have a job interview for a marketing specialist position at an international company in Prague. I wrote my CV with education, work experience, and languages (English, Hindi, Czech). The company invited me for an interview on Tuesday July 15 at 10 AM in Prague 5, in English and Czech. I prepared answers for common questions about why I want the job, my strengths, and why they should hire me. My girlfriend said: 'Stay calm and be yourself!'"
+    },
+    {
+      "id": "rp_a2_06",
+      "level": "A2",
+      "unit_id": 17,
+      "title": "Dárky pro rodinu",
+      "text": "Příští týden mají narozeniny moje matka a můj bratr. Matce bude 50 let a bratrovi 25 let. Musím koupit dárky pro oba.\n\nPro matku chci koupit něco hezkého. Moje přítelkyně Eva mi radí: 'Kup jí kytku a šálu. Matky mají rády květiny a hezké oblečení.' Ale já nevím, jakou barvu šály má máma ráda. Eva říká: 'Modrou — máma má ráda modrou barvu.' Takže jsem šel do obchodu a koupil modrou šálu z vlny. Stála 450 korun. Také jsem koupil kytici sedmi růží. Sedm růží — to je šťastné číslo.\n\nPro bratra je to těžší. Tomáš má rád sport, hudbu a knížky. Ale sportovní věci jsou drahé a já nevím, co přesně potřebuje. Nakonec jsem se rozhodl, že mu koupím knihu o historii Československa. Tomáš studuje historii a tato kniha bude pro něj zajímavá. Kniha stojí 380 korun.\n\nKoupil jsem také gratulační přání. Pro matku jsem napsal: 'Milá maminko, všechno nejlepší k narozeninám! Mám tě velmi rád.' Pro bratra jsem napsal: 'Milý Tomáši, všechno nejlepší! Ať ti tvůj nový rok života přinese hodně štěstí.'\n\nCelkem jsem utratil 1200 korun. To je hodně, ale moji rodinu mám rád a chci, aby byli spokojení.",
+      "word_count": 195,
+      "glossary": [
+        {
+          "cz": "šála",
+          "en": "scarf",
+          "note": "feminine"
+        },
+        {
+          "cz": "vlna",
+          "en": "wool",
+          "note": "feminine"
+        },
+        {
+          "cz": "kytice",
+          "en": "bouquet",
+          "note": "feminine"
+        },
+        {
+          "cz": "gratulační přání",
+          "en": "greeting card",
+          "note": "neuter"
+        },
+        {
+          "cz": "štěstí",
+          "en": "happiness/luck",
+          "note": "neuter"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kolik let bude matce?",
+          "question_en": "How old will mother be?",
+          "options": [
+            "45",
+            "48",
+            "50",
+            "55"
+          ],
+          "correct_index": 2,
+          "explanation": "Matce bude 50 let."
+        },
+        {
+          "question": "Jakou barvu šály má máma ráda?",
+          "question_en": "What color scarf does mom like?",
+          "options": [
+            "Červenou",
+            "Modrou",
+            "Zelenou",
+            "Černou"
+          ],
+          "correct_index": 1,
+          "explanation": "Máma má ráda modrou barvu."
+        },
+        {
+          "question": "Co koupil bratrovi?",
+          "question_en": "What did he buy for his brother?",
+          "options": [
+            "Sportovní věc",
+            "Hudbu",
+            "Knihu o historii",
+            "Šálu"
+          ],
+          "correct_index": 2,
+          "explanation": "Koupil knihu o historii Československa."
+        },
+        {
+          "question": "Kolik růží koupil?",
+          "question_en": "How many roses did he buy?",
+          "options": [
+            "3",
+            "5",
+            "7",
+            "12"
+          ],
+          "correct_index": 2,
+          "explanation": "Koupil sedm růží."
+        }
+      ],
+      "translation": "Next week my mother turns 50 and my brother turns 25. For mom I bought a blue wool scarf (450 Kč) and a bouquet of seven roses. For brother Tomáš, who studies history, I bought a book about Czechoslovak history (380 Kč). I wrote birthday cards for both. Total spent: 1200 Kč. It's a lot but I love my family and want them to be happy."
+    },
+    {
+      "id": "rp_a2_07",
+      "level": "A2",
+      "unit_id": 20,
+      "title": "Plány na příští rok",
+      "text": "Je konec roku a přemýšlím o svých plánech na příští rok. Mám hodně cílů, ale nevím, jestli je všechny splním.\n\nNejprve bych chtěl zlepšit svou češtinu. Teď mluvím česky na úrovni A2, ale příští rok bych chtěl dosáhnout úrovně B1. Budu se učit každý den — číst české noviny, sledovat české filmy a mluvit s českými kamarády. Také bych si chtěl najít učitele češtiny.\n\nDruhý cíl: najít lepší práci. Teď pracuju jako administrativní pracovník, ale chtěl bych pracovat v marketingu. Musím si napsat nový životopis a hledat práce na internetu. Pokud bych dostal lepší práci, měl bych také větší plat.\n\nTřetí cíl: cestovat více. Chtěl bych navštívit další města v České republice — Olomouc, Český Krumlov a Karlovy Vary. Také bych chtěl jet na Slovensko, protože slovenština je podobná češtině a chci vidět, jak moc se liší.\n\nČtvrtý cíl: sportovat více. Minulý rok jsem moc nesportoval. Chtěl bych běhat třikrát týdně a jezdit na kole o víkendech. Pokud bych sportoval, cítil bych se lépe.\n\nMoje přítelkyně říká: 'Nemusíš splnit všechny cíle najednou. Začni s jedním a pak pokračuj.' To je dobrá rada. Začnu s češtinou, protože to je pro mě nejdůležitější.",
+      "word_count": 200,
+      "glossary": [
+        {
+          "cz": "cíl",
+          "en": "goal",
+          "note": "masculine"
+        },
+        {
+          "cz": "zlepšit",
+          "en": "to improve",
+          "note": "perfective"
+        },
+        {
+          "cz": "dosáhnout",
+          "en": "to achieve/reach",
+          "note": "perfective"
+        },
+        {
+          "cz": "noviny",
+          "en": "newspapers",
+          "note": "plural feminine"
+        },
+        {
+          "cz": "pokračovat",
+          "en": "to continue",
+          "note": "imperfective"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Jakou úroveň češtiny má teď?",
+          "question_en": "What Czech level does he have now?",
+          "options": [
+            "A1",
+            "A2",
+            "B1",
+            "B2"
+          ],
+          "correct_index": 1,
+          "explanation": "Mluví česky na úrovni A2."
+        },
+        {
+          "question": "Jakou práci by chtěl?",
+          "question_en": "What job would he like?",
+          "options": [
+            "Administrativní",
+            "Marketing",
+            "Účetní",
+            "Učitel"
+          ],
+          "correct_index": 1,
+          "explanation": "Chtěl by pracovat v marketingu."
+        },
+        {
+          "question": "Která města chce navštívit?",
+          "question_en": "Which cities does he want to visit?",
+          "options": [
+            "Praha a Brno",
+            "Olomouc a Krumlov",
+            "Plzeň a Ostrava",
+            "Liberec a Hradec"
+          ],
+          "correct_index": 1,
+          "explanation": "Chce navštívit Olomouc, Český Krumlov a Karlovy Vary."
+        },
+        {
+          "question": "S čím začne?",
+          "question_en": "What will he start with?",
+          "options": [
+            "Sportem",
+            "Prací",
+            "Češtinou",
+            "Cestováním"
+          ],
+          "correct_index": 2,
+          "explanation": "Začne s češtinou."
+        }
+      ],
+      "translation": "End of year and I'm thinking about my plans for next year. Four goals: 1) Improve Czech from A2 to B1 — read Czech newspapers, watch films, find a teacher. 2) Find a better job in marketing. 3) Travel — visit Olomouc, Český Krumlov, Karlovy Vary, and Slovakia. 4) Exercise more — run three times a week, cycle on weekends. My girlfriend says: 'Don't try to do everything at once. Start with one.' I'll start with Czech — it's most important to me."
+    },
+    {
+      "id": "rp_a2_08",
+      "level": "A2",
+      "unit_id": 23,
+      "title": "Pravidla v koleji",
+      "text": "Bydlím v studentském koleji na Karlově univerzitě. V koleji jsou pravidla, která musí všichni dodržovat. Pokud někdo pravidla nedodržuje, může dostat varování nebo být vystěhován.\n\nNejprve: ticho. Od 22 hodin do 6 hodin ráno musí být ticho. Nesmí se pouštět hlasitá hudba, křičet nebo dělat hluk. Pokud někdo dělá hluk, sousedi mohou stěžovat správci.\n\nDruhé pravidlo: návštěvy. Návštěvy jsou povoleny, ale musí se ohlásit na recepci. Návštěvy mohou být v koleji od 8 do 22 hodin. Přespávání návštěv není povoleno — to je přísně zakázáno.\n\nTřetí pravidlo: čistota. Každý student musí udržovat čistotu ve svém pokoji a ve společných prostorách. Koupelna a kuchyně se musí uklidit po použití. Pokud kuchyně není uklizená, může přijít kontrola a pokuta.\n\nČtvrté pravidlo: bezpečnost. Vstup do koleje je možný jen s kartou. Kartu nesmíte nikomu půjčovat. Cizí lidé nesmí vstoupit bez povolení.\n\nPáté pravidlo: zvířata. V koleji není dovoleno mít zvířata — ani psy, ani kočky, ani rybičky. Jedině malé akvárium je povoleno, ale musí se schválit správou.\n\nTato pravidla nejsou přísná — jsou rozumná. Všichni studenti musí spolu vycházet a pravidla nám pomáhají. Já dodržuji pravidla a jsem spokojený v koleji.",
+      "word_count": 200,
+      "glossary": [
+        {
+          "cz": "dodržovat",
+          "en": "to follow/observe",
+          "note": "imperfective"
+        },
+        {
+          "cz": "varování",
+          "en": "warning",
+          "note": "neuter"
+        },
+        {
+          "cz": "přespávání",
+          "en": "overnight stay",
+          "note": "neuter"
+        },
+        {
+          "cz": "pokuta",
+          "en": "fine",
+          "note": "feminine"
+        },
+        {
+          "cz": "rozumný",
+          "en": "reasonable",
+          "note": "adjective"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Od kolika hodin musí být ticho?",
+          "question_en": "From what time must it be quiet?",
+          "options": [
+            "20:00",
+            "21:00",
+            "22:00",
+            "23:00"
+          ],
+          "correct_index": 2,
+          "explanation": "Ticho musí být od 22 hodin."
+        },
+        {
+          "question": "Co je přísně zakázáno?",
+          "question_en": "What is strictly forbidden?",
+          "options": [
+            "Hudba",
+            "Přespávání návštěv",
+            "Vaření",
+            "Studium v noci"
+          ],
+          "correct_index": 1,
+          "explanation": "Přespávání návštěv je přísně zakázáno."
+        },
+        {
+          "question": "Co musí mít student pro vstup?",
+          "question_en": "What must a student have to enter?",
+          "options": [
+            "Klíč",
+            "Kartu",
+            "Heslo",
+            "Recepční"
+          ],
+          "correct_index": 1,
+          "explanation": "Vstup je možný jen s kartou."
+        },
+        {
+          "question": "Jaká zvířata jsou povolena?",
+          "question_en": "What pets are allowed?",
+          "options": [
+            "Psi",
+            "Kočky",
+            "Jen malé akvárium",
+            "Nic"
+          ],
+          "correct_index": 2,
+          "explanation": "Jen malé akvárium je povoleno."
+        }
+      ],
+      "translation": "I live in a Charles University dormitory with rules everyone must follow: 1) Quiet from 10 PM to 6 AM. 2) Visitors allowed 8 AM-10 PM, must register at reception, no overnight guests. 3) Keep rooms and common areas clean. 4) Entry only with ID card, don't lend it. 5) No pets — only small aquariums with approval. Breaking rules can lead to warnings or eviction. The rules are reasonable and help students coexist."
+    },
+    {
+      "id": "rp_a2_09",
+      "level": "A2",
+      "unit_id": 26,
+      "title": "Stěhování",
+      "text": "Příští měsíc se stěhuji do nového bytu. Je to velká změna, protože teď bydlím v studentském koleji a přecházím do vlastního bytu.\n\nNový byt je v Praze 6 — Dejvice. Je to dvoupokojový byt s kuchyní a koupelnou. Byt je ve druhém patře paneláku. Panelák je starý, ale byt je rekonstruovaný — nová koupelna, nová kuchyně a čerstvě natřené stěny.\n\nNájem je 20 000 korun za měsíc. Kauce je 40 000 korun. Ale rodina mi pomáhá s penězi — otec mi poslal 50 000 korun, abych mohl zaplatit kauci a první měsíc.\n\nNejvětší problém je nábytek. V koleji jsem měl jen postel a stůl. Nový byt potřebuje více věcí — pohovku do obývacího pokoje, jídelní stůl s židlemi, skříň do ložnice, police na knížky a lampu.\n\nMůj kamarád Pavel mi řekl, že můžu koupit použitý nábytek na bazaru. Našel jsem na internetu hezkou pohovku za 2000 korun a jídelní stůl se čtyřmi židlemi za 3500 korun. To je mnohem levnější než nový nábytek!\n\nStěhování bude v sobotu. Pavel mi slíbil, že mi pomůže s autem. Jeho otec má dodávku, takže můžeme převézt všechno najednou. Budu se muset zapsat na cizinecké policii do tří dnů po stěhování — to je povinnost pro cizince.",
+      "word_count": 205,
+      "glossary": [
+        {
+          "cz": "stěhování",
+          "en": "moving",
+          "note": "neuter"
+        },
+        {
+          "cz": "panelák",
+          "en": "panel building",
+          "note": "masculine"
+        },
+        {
+          "cz": "rekonstruovaný",
+          "en": "renovated",
+          "note": "adjective"
+        },
+        {
+          "cz": "kauce",
+          "en": "deposit",
+          "note": "feminine"
+        },
+        {
+          "cz": "použitý",
+          "en": "used/second-hand",
+          "note": "adjective"
+        },
+        {
+          "cz": "dodávka",
+          "en": "van",
+          "note": "feminine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kde je nový byt?",
+          "question_en": "Where is the new apartment?",
+          "options": [
+            "Praha 1",
+            "Praha 6",
+            "Praha 7",
+            "Praha 10"
+          ],
+          "correct_index": 1,
+          "explanation": "Byt je v Praze 6 — Dejvice."
+        },
+        {
+          "question": "Kolik je nájem?",
+          "question_en": "How much is rent?",
+          "options": [
+            "15 000",
+            "18 000",
+            "20 000",
+            "22 000"
+          ],
+          "correct_index": 2,
+          "explanation": "Nájem je 20 000 korun."
+        },
+        {
+          "question": "Kde kupuje nábytek?",
+          "question_en": "Where is he buying furniture?",
+          "options": [
+            "V obchodě",
+            "Na bazaru",
+            "Na internetu — nový",
+            "Od rodiny"
+          ],
+          "correct_index": 1,
+          "explanation": "Kupuje použitý nábytek na bazaru."
+        },
+        {
+          "question": "Do kdy se musí zapsat na policii?",
+          "question_en": "By when must he register at the police?",
+          "options": [
+            "1 den",
+            "3 dny",
+            "7 dní",
+            "14 dní"
+          ],
+          "correct_index": 1,
+          "explanation": "Musí se zapsat do tří dnů."
+        }
+      ],
+      "translation": "Next month I'm moving to a renovated two-room apartment in Prague 6 — Dejvice. Rent is 20,000 Kč/month, deposit 40,000 Kč; my father sent 50,000 Kč to help. The biggest challenge is furniture — I found a used couch for 2,000 Kč and dining table with chairs for 3,500 Kč online. My friend Pavel will help with his father's van on Saturday. I must register at the foreign police within 3 days — mandatory for foreigners."
+    },
+    {
+      "id": "rp_a2_10",
+      "level": "A2",
+      "unit_id": 27,
+      "title": "Cesta na chatu",
+      "text": "V sobotu ráno jsme se rozhodli jet na chatu. Chata je v jižních Čechách, blízko města Tábor. Cesta autem trvá asi hodinu a půl.\n\nNejprve jsme odjeli z Prahy v osm hodin ráno. Jeli jsme po dálnici D1 směrem na Brno, ale u Mirošovic jsme odbočili na Tábor. Cesta byla hezká — projížděli jsme lesy a poli.\n\nPo hodině jízdy jsme přijeli do Tábora. Zastavili jsme se v obchodě a koupili jsme jídlo — maso na gril, zeleninu, pivo a případně něco sladkého. Pak jsme pokračovali dál.\n\nZ Tábora jsme odjeli na malou silnici. Silnice byla úzká a vedla přes les. Po deseti minutách jsme dojeli k chatě.\n\nChata je hezká — je to malý dům ze dřeva s zahradou. Na zahradě jsou stromy, keře a malý bazén. Uvnitř chaty je jedna místnost s krbem, kuchyňský kout a malá koupelna.\n\nOdpoledne jsme opékali špeky na grilu a pili pivo. Bylo hezky — slunce svítilo a bylo teplo. Večer jsme seděli u krbu a povídali si. Na obloze byly hvězdy.\n\nV neděli jsme se museli vrátit do Prahy. Odjeli jsme v odpoledních hodinách. Cesta zpět byla rychlejší, protože nebyl provoz. Byl to hezký víkend na chatě.",
+      "word_count": 200,
+      "glossary": [
+        {
+          "cz": "odbočit",
+          "en": "to turn off",
+          "note": "perfective"
+        },
+        {
+          "cz": "úzký",
+          "en": "narrow",
+          "note": "adjective"
+        },
+        {
+          "cz": "dojet",
+          "en": "to arrive/reach",
+          "note": "perfective"
+        },
+        {
+          "cz": "krb",
+          "en": "fireplace",
+          "note": "masculine"
+        },
+        {
+          "cz": "opékat",
+          "en": "to grill/roast",
+          "note": "imperfective"
+        },
+        {
+          "cz": "provoz",
+          "en": "traffic",
+          "note": "masculine"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Kdy odjeli z Prahy?",
+          "question_en": "When did they leave Prague?",
+          "options": [
+            "V 7:00",
+            "V 8:00",
+            "V 9:00",
+            "V 10:00"
+          ],
+          "correct_index": 1,
+          "explanation": "Odjeli v osm hodin ráno."
+        },
+        {
+          "question": "Kde je chata?",
+          "question_en": "Where is the cottage?",
+          "options": [
+            "U Prahy",
+            "U Tábora",
+            "U Brna",
+            "U Plzně"
+          ],
+          "correct_index": 1,
+          "explanation": "Chata je blízko Tábora."
+        },
+        {
+          "question": "Co opékali na grilu?",
+          "question_en": "What did they grill?",
+          "options": [
+            "Maso",
+            "Špeky",
+            "Zeleninu",
+            "Klobásy"
+          ],
+          "correct_index": 1,
+          "explanation": "Opékali špeky na grilu."
+        },
+        {
+          "question": "Jaká byla cesta zpět?",
+          "question_en": "How was the return trip?",
+          "options": [
+            "Pomalá",
+            "Rychlejší",
+            "Dlouhá",
+            "Nehoda"
+          ],
+          "correct_index": 1,
+          "explanation": "Cesta zpět byla rychlejší, nebyl provoz."
+        }
+      ],
+      "translation": "Saturday morning we drove to our cottage near Tábor in South Bohemia — about 1.5 hours by car. We left Prague at 8 AM, took the D1 highway, turned off at Mirošovice. We stopped in Tábor to buy food for grilling. The cottage is a small wooden house with a garden, trees, and a pool. We grilled bacon, drank beer in the sun, and sat by the fireplace in the evening watching stars. Sunday afternoon we drove back — faster with no traffic. Great weekend!"
+    },
+    {
+      "id": "rp_a2_11",
+      "level": "A2",
+      "unit_id": 21,
+      "title": "Srovnání měst",
+      "text": "V České republice jsem navštívil několik měst a můžu je porovnat. Každé město má své výhody a nevýhody.\n\nPraha je největší a nejkrásnější město. Je tu nejvíce památek, muzeí a restaurací. Ale Praha je také nejdražší město — bydlení je zde mnohem dražší než v jiných městech. Také je tu hodně turistů, což může být někdy nepříjemné.\n\nBrno je druhé největší město. Je menší než Praha, ale mám ho rád. Brno je mnohem klidnější než Praha. Není tu tolik turistů a život je levnější. Studenti tvoří velkou část obyvatel, protože v Brně jsou čtyři univerzity. Brno má také lepší kavárny než Praha — to je fakt!\n\nOlomouc je ještě menší než Brno, ale je velmi hezké. Je to historické město s krásným horním náměstím a sloupem Nejsvětější Trojice. Olomouc je nejklidnější ze tří měst. Také je nejlevnější — bydlení a jídlo jsou mnohem levnější než v Praze nebo v Brně.\n\nPokud bych se měl rozhodnout, kde bydlet, řekl bych:\n- Pro práci a kulturu — Praha\n- Pro studium a klid — Brno\n- Pro přírodu a levné bydlení — Olomouc\n\nKaždé město je jiné a každé má své kouzlo. Nejlepší město neexistuje — záleží na tom, co hledáte.",
+      "word_count": 195,
+      "glossary": [
+        {
+          "cz": "výhoda",
+          "en": "advantage",
+          "note": "feminine"
+        },
+        {
+          "cz": "nevýhoda",
+          "en": "disadvantage",
+          "note": "feminine"
+        },
+        {
+          "cz": "památka",
+          "en": "monument/sight",
+          "note": "feminine"
+        },
+        {
+          "cz": "obyvatel",
+          "en": "inhabitant",
+          "note": "masculine animate"
+        },
+        {
+          "cz": "kouzlo",
+          "en": "charm",
+          "note": "neuter"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Které město je nejdražší?",
+          "question_en": "Which city is most expensive?",
+          "options": [
+            "Brno",
+            "Praha",
+            "Olomouc",
+            "Ostrava"
+          ],
+          "correct_index": 1,
+          "explanation": "Praha je nejdražší město."
+        },
+        {
+          "question": "Co je Brno lepší na než Praha?",
+          "question_en": "What is Brno better at than Prague?",
+          "options": [
+            "Památky",
+            "Kavárny",
+            "Nákupy",
+            "Doprava"
+          ],
+          "correct_index": 1,
+          "explanation": "Brno má lepší kavárny než Praha."
+        },
+        {
+          "question": "Které město je nejklidnější?",
+          "question_en": "Which city is quietest?",
+          "options": [
+            "Praha",
+            "Brno",
+            "Olomouc",
+            "Plzeň"
+          ],
+          "correct_index": 2,
+          "explanation": "Olomouc je nejklidnější."
+        },
+        {
+          "question": "Pro co je Praha nejlepší?",
+          "question_en": "What is Prague best for?",
+          "options": [
+            "Studium",
+            "Práci a kulturu",
+            "Přírodu",
+            "Levné bydlení"
+          ],
+          "correct_index": 1,
+          "explanation": "Praha je nejlepší pro práci a kulturu."
+        }
+      ],
+      "translation": "I've visited several Czech cities and can compare them. Prague is the largest and most beautiful but also most expensive with many tourists. Brno is smaller, calmer, cheaper, with great cafes and many students. Olomouc is the smallest, quietest, and cheapest with beautiful historic square. My recommendation: Prague for work and culture, Brno for study and calm, Olomouc for nature and affordable living. No single best city — it depends on what you're looking for."
+    },
+    {
+      "id": "rp_a2_12",
+      "level": "A2",
+      "unit_id": 29,
+      "title": "Dopis z úřadu",
+      "text": "Vážený pane Pathaku,\n\nobracíme se na Vás s důležitým oznámením. Ministerstvo vnitra České republiky Vám tímto sděluje, že Vaše žádost o trvalý pobyt byla schválena.\n\nJak jste možná věděl, žádost o trvalý pobyt vyžaduje splnění několika podmínek. Bylo nutné prokázat:\n1. Pět let nepřetržitého pobytu v České republice\n2. Splnění požadavků na integraci (jazyková zkouška A2)\n3. Čistý trestní rejstřík\n4. Dostatečné finanční prostředky\n\nVaše jazyková zkouška A2 byla úspěšně složena 15. března 2026. Všechny ostatní podmínky byly také splněny. Gratulujeme!\n\nNyní je nutné, abyste osobně navštívil úřad pro splnění formálních kroků. Prosím, přijďte na Ministerstvo vnitra, náměstí Hradčanské náměstí 1/8, Praha 1, v následujícím termínu:\n\nDatum: 15. srpna 2026\nČas: 10:00\n\nPřineste si prosím:\n- Platný cestovní pas\n- Potvrzení o trvalém pobytu (které obdržíte v den návštěvy)\n- Dvě fotografie pasového formátu\n\nPokud byste nemohl přijít v tomto termínu, kontaktujte nás co nejdříve, abychom mohli domluvit nový termín. Pokud byste se nedostavil ani v náhradním termínu, bude rozhodnutí o trvalém pobytu zrušeno.\n\nV případě jakýchkoliv dotazů nás neváhejte kontaktovat na telefonním čísle 974 821 256 nebo emailem na adrese pobyty@mvcr.cz.\n\nS pozdravem,\n\nMinisterstvo vnitra ČR\nOdbor azylové a migrační politiky",
+      "word_count": 210,
+      "glossary": [
+        {
+          "cz": "trvalý pobyt",
+          "en": "permanent residence",
+          "note": "masculine"
+        },
+        {
+          "cz": "schváleno",
+          "en": "approved",
+          "note": "neuter adjective"
+        },
+        {
+          "cz": "nepřetržitý",
+          "en": "continuous",
+          "note": "adjective"
+        },
+        {
+          "cz": "trestní rejstřík",
+          "en": "criminal record",
+          "note": "masculine"
+        },
+        {
+          "cz": "potvrzení",
+          "en": "confirmation",
+          "note": "neuter"
+        }
+      ],
+      "comprehension_questions": [
+        {
+          "question": "Co bylo schváleno?",
+          "question_en": "What was approved?",
+          "options": [
+            "Žádost o občanství",
+            "Žádost o trvalý pobyt",
+            "Žádost o vízum",
+            "Žádost o azyl"
+          ],
+          "correct_index": 1,
+          "explanation": "Žádost o trvalý pobyt byla schválena."
+        },
+        {
+          "question": "Kdy složil jazykovou zkoušku?",
+          "question_en": "When did he pass the language exam?",
+          "options": [
+            "15. února",
+            "15. března",
+            "15. dubna",
+            "15. května"
+          ],
+          "correct_index": 1,
+          "explanation": "Zkoušku složil 15. března 2026."
+        },
+        {
+          "question": "Kdy musí přijít na úřad?",
+          "question_en": "When must he visit the office?",
+          "options": [
+            "15. července",
+            "15. srpna",
+            "15. září",
+            "15. října"
+          ],
+          "correct_index": 1,
+          "explanation": "Musí přijít 15. srpna 2026."
+        },
+        {
+          "question": "Co musí přinést?",
+          "question_en": "What must he bring?",
+          "options": [
+            "Cestovní pas",
+            "Fotografie",
+            "Potvrzení",
+            "Vše výše uvedené"
+          ],
+          "correct_index": 3,
+          "explanation": "Musí přinést pas, potvrzení a dvě fotografie."
+        }
+      ],
+      "translation": "Dear Mr. Pathak, the Ministry of Interior informs you that your permanent residence application has been approved. You met all conditions: 5 years continuous residence, A2 language exam (passed March 15, 2026), clean criminal record, sufficient financial means. Please visit the Ministry at Hradčanské náměstí 1/8, Prague 1, on August 15, 2026 at 10:00 AM. Bring: valid passport, confirmation (issued on visit), two passport photos. If you can't come, contact us to reschedule. Failure to appear may result in cancellation. Contact: 974 821 256 or pobyty@mvcr.cz."
+    }
+  ]
+}

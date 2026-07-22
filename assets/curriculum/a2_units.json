@@ -6,7 +6,12 @@
       "description": "Possession (kniha bratra), quantities (hodně), prepositions (bez, z/ze, do, od), negation objects",
       "phase": "a2",
       "order_index": 16,
-      "grammar_tags": ["genitive", "possession", "quantities", "negation"],
+      "grammar_tags": [
+        "genitive",
+        "possession",
+        "quantities",
+        "negation"
+      ],
       "is_exam_prep": false
     },
     {
@@ -15,7 +20,10 @@
       "description": "Indirect objects (dávám kamarádovi), verbs with dative (pomáhat, rozumět, telefonovat), líbit se, chutnat",
       "phase": "a2",
       "order_index": 17,
-      "grammar_tags": ["dative", "indirect_objects"],
+      "grammar_tags": [
+        "dative",
+        "indirect_objects"
+      ],
       "is_exam_prep": false
     },
     {
@@ -24,7 +32,11 @@
       "description": "Locative: o kom/čem?, v/na + loc. Instrumental: s kým/čím?, means of transport, professions (pracuju jako…), time expressions",
       "phase": "a2",
       "order_index": 18,
-      "grammar_tags": ["locative", "instrumental", "means"],
+      "grammar_tags": [
+        "locative",
+        "instrumental",
+        "means"
+      ],
       "is_exam_prep": false
     },
     {
@@ -33,7 +45,11 @@
       "description": "All persons, gender agreement, motion verbs (šel/šla/šli), perfective aspect intro (napsat vs psát), time markers (včera, minulý týden)",
       "phase": "a2",
       "order_index": 19,
-      "grammar_tags": ["past_tense", "aspect_intro", "motion_verbs"],
+      "grammar_tags": [
+        "past_tense",
+        "aspect_intro",
+        "motion_verbs"
+      ],
       "is_exam_prep": false
     },
     {
@@ -42,7 +58,11 @@
       "description": "Perfective future (napíšu), imperfective future (budu psát), conditional (chtěl bych, mohl bych), kdybych…",
       "phase": "a2",
       "order_index": 20,
-      "grammar_tags": ["future_tense", "perfective", "conditional"],
+      "grammar_tags": [
+        "future_tense",
+        "perfective",
+        "conditional"
+      ],
       "is_exam_prep": false
     },
     {
@@ -51,7 +71,11 @@
       "description": "Comparative (-ější/-ší), superlative (nej-), comparisons with než, adverbs, dobrý→lepší, špatný→horší, velký→větší",
       "phase": "a2",
       "order_index": 21,
-      "grammar_tags": ["comparative", "superlative", "adverbs"],
+      "grammar_tags": [
+        "comparative",
+        "superlative",
+        "adverbs"
+      ],
       "is_exam_prep": false
     },
     {
@@ -60,7 +84,124 @@
       "description": "že (that), protože (because), když (when), až (when in future), jestli (if/whether), aby (so that), word order in subordinate clauses",
       "phase": "a2",
       "order_index": 22,
-      "grammar_tags": ["conjunctions", "subordinate_clauses", "word_order"],
+      "grammar_tags": [
+        "conjunctions",
+        "subordinate_clauses",
+        "word_order"
+      ],
+      "is_exam_prep": false
+    },
+    {
+      "id": 23,
+      "title": "Modal Verbs & Permission",
+      "description": "Learn modal verbs muset (must), moct (can), and smět (be allowed to) for expressing obligation, ability, permission, and prohibition in everyday situations.",
+      "phase": "a2",
+      "order_index": 23,
+      "grammar_tags": [
+        "modal_verbs",
+        "obligation",
+        "permission",
+        "prohibition",
+        "muset",
+        "moct",
+        "smět"
+      ],
+      "is_exam_prep": false
+    },
+    {
+      "id": 24,
+      "title": "Health & Body",
+      "description": "Learn body parts, health vocabulary, and how to communicate at the doctor and pharmacy. Practice expressing pain, symptoms, and medical needs.",
+      "phase": "a2",
+      "order_index": 24,
+      "grammar_tags": [
+        "health",
+        "body_parts",
+        "doctor",
+        "pharmacy",
+        "accusative",
+        "reflexive_verbs"
+      ],
+      "is_exam_prep": false
+    },
+    {
+      "id": 25,
+      "title": "Work, Professions & Education",
+      "description": "Learn professions, workplace vocabulary, and education terminology. Practice describing jobs, studying, and workplace communication using instrumental and accusative cases.",
+      "phase": "a2",
+      "order_index": 25,
+      "grammar_tags": [
+        "professions",
+        "work",
+        "education",
+        "instrumental",
+        "být_instrumental"
+      ],
+      "is_exam_prep": false
+    },
+    {
+      "id": 26,
+      "title": "Housing & Home",
+      "description": "Learn housing vocabulary, rooms, furniture, and household activities. Practice describing where things are using locative and prepositions of location.",
+      "phase": "a2",
+      "order_index": 26,
+      "grammar_tags": [
+        "housing",
+        "rooms",
+        "furniture",
+        "locative",
+        "prepositions",
+        "renting"
+      ],
+      "is_exam_prep": false
+    },
+    {
+      "id": 27,
+      "title": "Verbs of Motion & Prefixed Verbs",
+      "description": "Learn Czech motion verbs (jít, jet, chodit, jezdit) and their prefixed forms. Practice the imperfective/perfective aspect distinction through directional movement.",
+      "phase": "a2",
+      "order_index": 27,
+      "grammar_tags": [
+        "motion_verbs",
+        "prefixed_verbs",
+        "aspect_pairs",
+        "direction",
+        "imperfective",
+        "perfective"
+      ],
+      "is_exam_prep": false
+    },
+    {
+      "id": 29,
+      "title": "A2 Exam Preparation",
+      "description": "Practice with A2-level exam-format exercises: reading comprehension (5 tasks), listening comprehension (5 recordings), writing tasks (emails, diary, excuses, invitations), and speaking practice (monologue, role-play, picture discussion). Modeled on the official Czech permanent residence A2 exam (new format April 2026).",
+      "phase": "a2",
+      "order_index": 29,
+      "grammar_tags": [
+        "exam_prep",
+        "reading",
+        "listening",
+        "writing",
+        "speaking",
+        "A2"
+      ],
+      "is_exam_prep": true
+    },
+    {
+      "id": 31,
+      "title": "A2 Review & Consolidation",
+      "description": "Review and consolidate all A2 grammar and vocabulary: complete case system, past/future/conditional tenses, verbal aspect, adjective comparison, modal verbs, complex sentences, and formal communication vocabulary.",
+      "phase": "a2",
+      "order_index": 31,
+      "grammar_tags": [
+        "review",
+        "consolidation",
+        "A2",
+        "cases",
+        "aspect",
+        "tenses",
+        "complex_sentences"
+      ],
       "is_exam_prep": false
     }
   ]

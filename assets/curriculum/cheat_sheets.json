@@ -1,0 +1,2561 @@
+{
+  "title": "Czechify Cheat Sheets",
+  "description": "One-page reference summaries for each curriculum unit. Includes key grammar rules, core vocabulary, key phrases, common mistakes, and study tips.",
+  "total_units": 31,
+  "cheat_sheets": [
+    {
+      "unit_id": 1,
+      "title": "Sounds & Pronunciation",
+      "phase": "A1",
+      "description": "Czech alphabet, háček, čárka, first-syllable stress, problem sounds",
+      "grammar_rules": [
+        {
+          "id": "GR-000",
+          "name": "First-syllable stress",
+          "pattern": "Czech stress always falls on the first syllable of a word",
+          "example": "Praha — Prague"
+        },
+        {
+          "id": "GR-001",
+          "name": "The letter ř",
+          "pattern": "ř is a unique Czech sound — a rolled r with ž/š quality",
+          "example": "řeka — river"
+        },
+        {
+          "id": "GR-002",
+          "name": "The letter ě and consonant softening",
+          "pattern": "ě softens the preceding consonant: dě→ďe, tě→ťe, ně→ně, bě→bje, pě→pje, vě→vje, mě→mě",
+          "example": "děti — children"
+        },
+        {
+          "id": "GR-003",
+          "name": "Long vs short vowels",
+          "pattern": "á/é/í/ó/ú/ů are long versions of a/e/i/o/u — length changes meaning",
+          "example": "dům — house"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "řeka",
+          "en": "river",
+          "gender": "feminine"
+        },
+        {
+          "cz": "Dvořák",
+          "en": "Dvořák (name)",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "děti",
+          "en": "children",
+          "gender": null
+        },
+        {
+          "cz": "teče",
+          "en": "flows",
+          "gender": null
+        },
+        {
+          "cz": "most",
+          "en": "bridge",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "slovo",
+          "en": "word",
+          "gender": "neuter"
+        },
+        {
+          "cz": "škola",
+          "en": "school",
+          "gender": "feminine"
+        },
+        {
+          "cz": "uložit",
+          "en": "to save / to store",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Dobrý den!",
+        "Jak se vyslovuje...?",
+        "Můžete to zopakovat?"
+      ],
+      "common_mistakes": [
+        "Ignorování délky samohlásek",
+        "Záměna č, š, ž za ch, sh, zh",
+        "Nesprávný přízvuk (ne na první slabice)"
+      ],
+      "study_tip": "Čtěte nahlas každý den 5 minut. Nahrávejte se a porovnávejte s rodilým mluvčím."
+    },
+    {
+      "unit_id": 2,
+      "title": "Greetings & Introductions",
+      "phase": "A1",
+      "description": "Dobrý den, na shledanou, formal vs informal, introducing yourself",
+      "grammar_rules": [
+        {
+          "id": "GR-010",
+          "name": "Formal vs informal greeting",
+          "pattern": "Use 'dobrý den' + 'Vy' for formal; 'ahoj' + 'ty' for informal",
+          "example": "Dobrý den, jak se máte? — Good day, how are you? (formal)"
+        },
+        {
+          "id": "GR-011",
+          "name": "Self-introduction phrases",
+          "pattern": "Jmenuju se + name; Jsem z + city; Těší mě",
+          "example": "Jmenuju se Mahesh. — My name is Mahesh."
+        },
+        {
+          "id": "GR-012",
+          "name": "Politeness words",
+          "pattern": "prosím (please/you're welcome), děkuji (thank you), promiňte (excuse me)",
+          "example": "Kávu, prosím. — A coffee, please."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "dobrý den",
+          "en": "hello / good day",
+          "gender": null
+        },
+        {
+          "cz": "na shledanou",
+          "en": "goodbye",
+          "gender": null
+        },
+        {
+          "cz": "děkuji",
+          "en": "thank you",
+          "gender": null
+        },
+        {
+          "cz": "prosím",
+          "en": "please / you're welcome",
+          "gender": null
+        },
+        {
+          "cz": "ano",
+          "en": "yes",
+          "gender": null
+        },
+        {
+          "cz": "ne",
+          "en": "no",
+          "gender": null
+        },
+        {
+          "cz": "jmenuju se",
+          "en": "my name is",
+          "gender": null
+        },
+        {
+          "cz": "jsem",
+          "en": "I am",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Dobrý den, jak se máte?",
+        "Těší mě.",
+        "Na shledanou!",
+        "Můžeme si tykat?"
+      ],
+      "common_mistakes": [
+        "Použití 'ahoj' s neznámými lidmi",
+        "Příliš brzké tykání",
+        "Zapomenutí na podání ruky"
+      ],
+      "study_tip": "Procvičujte formální a neformální pozdravy s různými lidmi. Všímejte si, kdo komu tyká/vyká."
+    },
+    {
+      "unit_id": 3,
+      "title": "Gender & Nominative Case",
+      "phase": "A1",
+      "description": "Masculine animate/inanimate, feminine, neuter. To je... pattern",
+      "grammar_rules": [
+        {
+          "id": "GR-020",
+          "name": "Three noun genders",
+          "pattern": "Masculine (animate + inanimate), Feminine, Neuter — identified by ending",
+          "example": "hrad — castle"
+        },
+        {
+          "id": "GR-021",
+          "name": "Masculine animate vs inanimate",
+          "pattern": "Masculine is split: animate (people, animals) vs inanimate (objects, concepts)",
+          "example": "muž (animate) — man"
+        },
+        {
+          "id": "GR-022",
+          "name": "Nominative case — subject of sentence",
+          "pattern": "Nominative is the dictionary form, used for the subject of sentences",
+          "example": "Žena pije kávu. — The woman drinks coffee."
+        },
+        {
+          "id": "GR-023",
+          "name": "To je... (This is...) identification pattern",
+          "pattern": "To je + noun — for identifying and introducing things",
+          "example": "To je kniha. — That is a book."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "žena",
+          "en": "woman",
+          "gender": "feminine"
+        },
+        {
+          "cz": "muž",
+          "en": "man",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "hrad",
+          "en": "castle",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "město",
+          "en": "city / town",
+          "gender": "neuter"
+        },
+        {
+          "cz": "kniha",
+          "en": "book",
+          "gender": "feminine"
+        },
+        {
+          "cz": "káva",
+          "en": "coffee",
+          "gender": "feminine"
+        },
+        {
+          "cz": "pes",
+          "en": "dog",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "auto",
+          "en": "car",
+          "gender": "neuter"
+        }
+      ],
+      "key_phrases": [
+        "To je kniha.",
+        "Kdo to je? Co to je?",
+        "On je učitel. Ona je učitelka."
+      ],
+      "common_mistakes": [
+        "Použití mužského rodu jako výchozího",
+        "Zapomenutí na životnost u maskulin",
+        "Hádání rodu podle významu"
+      ],
+      "study_tip": "Ke každému novému slovu si rovnou zapište rod. Vytvořte si barevný systém: modrá = masc, červená = fem, zelená = neut."
+    },
+    {
+      "unit_id": 4,
+      "title": "Present Tense — být & mít",
+      "phase": "A1",
+      "description": "To be and to have, negation, question forms, age expression",
+      "grammar_rules": [
+        {
+          "id": "GR-030",
+          "name": "být (to be) — present tense conjugation",
+          "pattern": "já jsem, ty jsi, on/ona/ono je, my jsme, vy jste, oni/ony jsou",
+          "example": "Jsem z Prahy. — I am from Prague."
+        },
+        {
+          "id": "GR-031",
+          "name": "mít (to have) — present tense conjugation",
+          "pattern": "já mám, ty máš, on/ona má, my máme, vy máte, oni/ony mají",
+          "example": "Mám kávu. — I have coffee."
+        },
+        {
+          "id": "GR-032",
+          "name": "Negation with být and mít",
+          "pattern": "ne- prefix: nejsem, nejsi, není, nemám, nemáš, nemá",
+          "example": "Nejsem učitel. — I am not a teacher."
+        },
+        {
+          "id": "GR-033",
+          "name": "Question formation with být and mít",
+          "pattern": "Yes/no questions by intonation; information questions with question words",
+          "example": "Jsi z Prahy? — Are you from Prague?"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "být",
+          "en": "to be",
+          "gender": null
+        },
+        {
+          "cz": "mít",
+          "en": "to have",
+          "gender": null
+        },
+        {
+          "cz": "být",
+          "en": "to be",
+          "gender": null
+        },
+        {
+          "cz": "mít",
+          "en": "to have",
+          "gender": null
+        },
+        {
+          "cz": "jsem",
+          "en": "I am",
+          "gender": null
+        },
+        {
+          "cz": "jsi",
+          "en": "you are",
+          "gender": null
+        },
+        {
+          "cz": "je",
+          "en": "he/she/it is",
+          "gender": null
+        },
+        {
+          "cz": "jsme",
+          "en": "we are",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Jsem student.",
+        "Mám kávu.",
+        "Kolik je ti let? — Je mi 25 let.",
+        "Nejsem z Prahy."
+      ],
+      "common_mistakes": [
+        "'Jsem dvacet' místo 'Je mi dvacet'",
+        "Zapomenutí záporu u 3. os. (není, nejsou)",
+        "Nadbytečné použití zájmen"
+      ],
+      "study_tip": "Naučte se časování být a mít nazpaměť jako básničku. Jsou to nejpoužívanější slovesa."
+    },
+    {
+      "unit_id": 5,
+      "title": "Regular Verb Conjugation",
+      "phase": "A1",
+      "description": "Three conjugation classes: -át, -ít, -et/-ět. Daily activities",
+      "grammar_rules": [
+        {
+          "id": "GR-040",
+          "name": "Verb conjugation class 1: -át verbs",
+          "pattern": "Infinitive -át → present: -ám, -áš, -á, -áme, -áte, -ají",
+          "example": "Dělám kávu. — I'm making coffee."
+        },
+        {
+          "id": "GR-041",
+          "name": "Verb conjugation class 2: -ít/-et verbs",
+          "pattern": "Infinitive -ít → present: -ím, -íš, -í, -íme, -íte, -í",
+          "example": "Mluvím česky. — I speak Czech."
+        },
+        {
+          "id": "GR-042",
+          "name": "Verb conjugation class 3: -et/-ět and irregular verbs",
+          "pattern": "-ět verbs: -ím, -íš, -í; irregular: číst → čtu, čteš, čte, čteme, čtete, čtou",
+          "example": "Rozumím česky. — I understand Czech."
+        },
+        {
+          "id": "GR-043",
+          "name": "Verb negation — ne- prefix",
+          "pattern": "Add ne- to the beginning of the verb: nedělám, nemluvím, nečtu",
+          "example": "Nemluvím česky. — I don't speak Czech."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "dělat",
+          "en": "to do / to make",
+          "gender": null
+        },
+        {
+          "cz": "mluvit",
+          "en": "to speak",
+          "gender": null
+        },
+        {
+          "cz": "prosit",
+          "en": "to ask / to request",
+          "gender": null
+        },
+        {
+          "cz": "dělat",
+          "en": "to do / to make",
+          "gender": null
+        },
+        {
+          "cz": "mluvit",
+          "en": "to speak",
+          "gender": null
+        },
+        {
+          "cz": "rozumět",
+          "en": "to understand",
+          "gender": null
+        },
+        {
+          "cz": "číst",
+          "en": "to read",
+          "gender": null
+        },
+        {
+          "cz": "znát",
+          "en": "to know (a person/place)",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Co děláš?",
+        "Mluvím česky.",
+        "Nerozumím.",
+        "Učím se česky."
+      ],
+      "common_mistakes": [
+        "Záměna konjugačních tříd",
+        "Použití infinitivu místo časovaného tvaru",
+        "Špatný zápor (ne- na špatném místě)"
+      ],
+      "study_tip": "Vytvořte si kartičky s konjugačními vzory (-ám, -ím, -u) a přiřazujte k nim nová slovesa."
+    },
+    {
+      "unit_id": 6,
+      "title": "Accusative Case",
+      "phase": "A1",
+      "description": "Direct objects: feminine -a→-u, masc animate +a/e, inanimate/neuter unchanged",
+      "grammar_rules": [
+        {
+          "id": "GR-050",
+          "name": "Accusative case — feminine -a → -u",
+          "pattern": "Feminine nouns ending in -a change to -u in accusative: káva → kávu",
+          "example": "Vidím ženu. — I see a woman."
+        },
+        {
+          "id": "GR-051",
+          "name": "Accusative case — masculine animate",
+          "pattern": "Masculine animate nouns change ending in accusative: pes → psa, muž → muže",
+          "example": "Vidím muže. — I see a man."
+        },
+        {
+          "id": "GR-052",
+          "name": "Accusative case — masculine inanimate: no change",
+          "pattern": "Masculine inanimate nouns stay the same in accusative: hrad → hrad, dům → dům",
+          "example": "Vidím hrad. — I see a castle."
+        },
+        {
+          "id": "GR-053",
+          "name": "Accusative case — neuter: no change",
+          "pattern": "Neuter nouns stay the same in accusative: město → město, pivo → pivo, auto → auto",
+          "example": "Mám auto. — I have a car."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "vidět",
+          "en": "to see",
+          "gender": null
+        },
+        {
+          "cz": "kávu",
+          "en": "coffee (accusative)",
+          "gender": null
+        },
+        {
+          "cz": "knihu",
+          "en": "book (accusative)",
+          "gender": null
+        },
+        {
+          "cz": "vodu",
+          "en": "water (accusative)",
+          "gender": null
+        },
+        {
+          "cz": "ženu",
+          "en": "woman (accusative)",
+          "gender": null
+        },
+        {
+          "cz": "psa",
+          "en": "dog (accusative)",
+          "gender": null
+        },
+        {
+          "cz": "muže",
+          "en": "man (accusative)",
+          "gender": null
+        },
+        {
+          "cz": "studenta",
+          "en": "student (accusative)",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Vidím ženu.",
+        "Mám psa.",
+        "Piju kávu.",
+        "Koho vidíš? Co čteš?"
+      ],
+      "common_mistakes": [
+        "Zapomenutí akuzativu u feminin (-a → -u)",
+        "Nerozlišení živ. a neživ. maskulin",
+        "Použití nominativu jako předmětu"
+      ],
+      "study_tip": "Trénujte akuzativ přeměňováním vět: 'To je žena' → 'Vidím ženu'. Dělejte to pro všechny rody."
+    },
+    {
+      "unit_id": 7,
+      "title": "Pronouns & Possessives",
+      "phase": "A1",
+      "description": "Personal pronouns, possessive adjectives, gender agreement, svůj",
+      "grammar_rules": [
+        {
+          "id": "GR-060",
+          "name": "Personal pronouns — subject forms",
+          "pattern": "já (I), ty (you), on (he), ona (she), ono (it), my (we), vy (you pl.), oni/ony (they)",
+          "example": "Já jsem Mahesh. — I am Mahesh."
+        },
+        {
+          "id": "GR-061",
+          "name": "Possessive adjectives",
+          "pattern": "můj (my), tvůj (your), jeho (his), její (her), náš (our), váš (your pl.), jejich (their)",
+          "example": "To je můj pes. — That is my dog."
+        },
+        {
+          "id": "GR-062",
+          "name": "Possessive gender agreement",
+          "pattern": "můj/tvůj → moje for feminine and neuter; náš/váš → naše/vaše for feminine and neuter",
+          "example": "můj bratr, moje sestra, moje auto — my brother, my sister, my car"
+        },
+        {
+          "id": "GR-063",
+          "name": "Pronoun dropping — subject pronouns are optional",
+          "pattern": "Czech is a pro-drop language — verb endings indicate person, so pronouns are optional",
+          "example": "Jsem z Prahy. — I'm from Prague."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "já",
+          "en": "I",
+          "gender": null
+        },
+        {
+          "cz": "ty",
+          "en": "you (informal)",
+          "gender": null
+        },
+        {
+          "cz": "on",
+          "en": "he",
+          "gender": null
+        },
+        {
+          "cz": "ona",
+          "en": "she",
+          "gender": null
+        },
+        {
+          "cz": "my",
+          "en": "we",
+          "gender": null
+        },
+        {
+          "cz": "vy",
+          "en": "you (plural/formal)",
+          "gender": null
+        },
+        {
+          "cz": "oni",
+          "en": "they (animate)",
+          "gender": null
+        },
+        {
+          "cz": "můj",
+          "en": "my (possessive)",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "To je můj pes.",
+        "Jak se jmenuješ?",
+        "Čí je to kniha?",
+        "To je moje sestra."
+      ],
+      "common_mistakes": [
+        "Použití 'svůj' místo 'můj' mimo podmět",
+        "Časté používání zájmen (já, ty)",
+        "Záměna 'váš' a 'tvůj'"
+      ],
+      "study_tip": "Používejte svůj/můj/tvůj v krátkých větách o sobě a svém okolí. Všímejte si shody s rodem."
+    },
+    {
+      "unit_id": 8,
+      "title": "Family & Descriptions",
+      "phase": "A1",
+      "description": "Family vocabulary, adjective-noun gender agreement, describing people",
+      "grammar_rules": [
+        {
+          "id": "GR-070",
+          "name": "Family vocabulary — core members",
+          "pattern": "rodina (family), matka/máma (mother), otec/táta (father), bratr (brother), sestra (sister)",
+          "example": "Mám velkou rodinu. — I have a big family."
+        },
+        {
+          "id": "GR-071",
+          "name": "Adjective-noun gender agreement",
+          "pattern": "Adjectives must match noun gender: masc -ý, fem -á, neuter -é",
+          "example": "velký pes — big dog"
+        },
+        {
+          "id": "GR-072",
+          "name": "Adjective endings — three genders",
+          "pattern": "Hard adjective endings: masc -ý, fem -á, neuter -é (in nominative singular)",
+          "example": "dobrý učitel — good teacher"
+        },
+        {
+          "id": "GR-073",
+          "name": "Word order: possessive + adjective + noun",
+          "pattern": "Standard order: possessive adjective + descriptive adjective + noun",
+          "example": "můj starý dům — my old house"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "rodina",
+          "en": "family",
+          "gender": "feminine"
+        },
+        {
+          "cz": "matka",
+          "en": "mother",
+          "gender": "feminine"
+        },
+        {
+          "cz": "otec",
+          "en": "father",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "bratr",
+          "en": "brother",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "sestra",
+          "en": "sister",
+          "gender": "feminine"
+        },
+        {
+          "cz": "dobrý",
+          "en": "good",
+          "gender": null
+        },
+        {
+          "cz": "velký",
+          "en": "big",
+          "gender": null
+        },
+        {
+          "cz": "malý",
+          "en": "small",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Mám velkou rodinu.",
+        "Moje matka je lékařka.",
+        "Jaký je? — Je vysoký.",
+        "Jaká je? — Je milá."
+      ],
+      "common_mistakes": [
+        "Špatná shoda adjektiva s rodem podstatného jména",
+        "Použití křestních jmen se staršími lidmi",
+        "Chybějící -ová u ženských příjmení"
+      ],
+      "study_tip": "Popište svou rodinu na 5 vět. Použijte různé koncovky adjektiv: můj starý otec, moje milá matka..."
+    },
+    {
+      "unit_id": 9,
+      "title": "Numbers, Time & Dates",
+      "phase": "A1",
+      "description": "0-100, telling time, days, months, name days, 24-hour clock",
+      "grammar_rules": [
+        {
+          "id": "GR-080",
+          "name": "Cardinal numbers 0–20",
+          "pattern": "jedna, dva, tři, čtyři, pět, šest, sedm, osm, devět, deset, jedenáct, dvanáct, třináct, čtrnáct, patnáct, šestnáct, sedm",
+          "example": "jeden, dva, tři — one, two, three"
+        },
+        {
+          "id": "GR-081",
+          "name": "Numbers 21–100 and counting objects",
+          "pattern": "dvacet jedna (21), třicet (30), čtyřicet (40), padesát (50), šedesát (60), sedmdesát (70), osmdesát (80), devadesát (90)",
+          "example": "dvacet jedna korun — 21 crowns"
+        },
+        {
+          "id": "GR-082",
+          "name": "Telling time — Kolik je hodin?",
+          "pattern": "Je jedna hodina. Jsou dvě/tři/čtyři hodiny. Je pět hodin. V jednu hodinu (at 1 o'clock) vs v pět hodin (at 5).",
+          "example": "Kolik je hodin? Je jedna. — What time is it? It's one o'clock."
+        },
+        {
+          "id": "GR-083",
+          "name": "Days of the week, months, and dates",
+          "pattern": "Pondělí, úterý, středa, čtvrtek, pátek, sobota, neděle. Leden, únor, březen... Dnes je pondělí. V pondělí (on Monday).",
+          "example": "Dnes je pondělí. — Today is Monday."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "maso",
+          "en": "meat",
+          "gender": "neuter"
+        },
+        {
+          "cz": "pít",
+          "en": "to drink",
+          "gender": null
+        },
+        {
+          "cz": "jíst",
+          "en": "to eat",
+          "gender": null
+        },
+        {
+          "cz": "dám si",
+          "en": "I'll have (ordering)",
+          "gender": null
+        },
+        {
+          "cz": "zaplatit",
+          "en": "to pay",
+          "gender": null
+        },
+        {
+          "cz": "kolik",
+          "en": "how much",
+          "gender": null
+        },
+        {
+          "cz": "pivo",
+          "en": "beer",
+          "gender": "neuter"
+        },
+        {
+          "cz": "jeden",
+          "en": "one (masc)",
+          "gender": "masculine animate"
+        }
+      ],
+      "key_phrases": [
+        "Kolik je hodin? — Je jedna.",
+        "Dnes je pondělí.",
+        "Stojí to 100 korun.",
+        "Všechno nejlepší k narozeninám!"
+      ],
+      "common_mistakes": [
+        "Neodlišení půl-třetí (2:30) vs 3:30",
+        "Psaní měsíců/dnů s velkým písmenem",
+        "Špatný formát data (měsíc před dnem)"
+      ],
+      "study_tip": "Nastavte si hodinky na 24hodinový formát. Čtěte český kalendář se jmeninami."
+    },
+    {
+      "unit_id": 10,
+      "title": "Daily Routine & Reflexive Verbs",
+      "phase": "A1",
+      "description": "Reflexive se/si, morning/evening routines, time adverbs",
+      "grammar_rules": [
+        {
+          "id": "GR-090",
+          "name": "Reflexive verbs — se (accusative reflexive)",
+          "pattern": "mýt se (wash oneself), učit se (learn/study), dívat se (watch/look), smát se (laugh), bát se (be afraid)",
+          "example": "Každý den se učím česky. — Every day I study Czech."
+        },
+        {
+          "id": "GR-091",
+          "name": "Reflexive verbs — si (dative reflexive)",
+          "pattern": "kupovat si (buy for oneself), vařit si (cook for oneself), číst si (read for oneself), přát si (wish)",
+          "example": "Kupuju si novou knihu. — I'm buying myself a new book."
+        },
+        {
+          "id": "GR-092",
+          "name": "Reflexive verb conjugation — present tense",
+          "pattern": "já se myju, ty se myješ, on/ona/ono se myje, my se myjeme, vy se myjete, oni se myjou",
+          "example": "Já se myju, ty se myješ, on se myje. — I wash, you wash, he washes."
+        },
+        {
+          "id": "GR-093",
+          "name": "Time adverbs for daily routine",
+          "pattern": "ráno (morning), dopoledne (late morning), v poledne (at noon), odpoledne (afternoon), večer (evening), v noci (at night)",
+          "example": "Ráno vstávám v šest hodin. — I get up at six in the morning."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "vstávat",
+          "en": "to get up",
+          "gender": null
+        },
+        {
+          "cz": "mýt se",
+          "en": "to wash oneself",
+          "gender": null
+        },
+        {
+          "cz": "sprchovat se",
+          "en": "to shower",
+          "gender": null
+        },
+        {
+          "cz": "oblékat se",
+          "en": "to get dressed",
+          "gender": null
+        },
+        {
+          "cz": "snídat",
+          "en": "to have breakfast",
+          "gender": null
+        },
+        {
+          "cz": "obědvat",
+          "en": "to have lunch",
+          "gender": null
+        },
+        {
+          "cz": "večeřet",
+          "en": "to have dinner",
+          "gender": null
+        },
+        {
+          "cz": "učit se",
+          "en": "to study / learn",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Každý den vstávám v šest.",
+        "Myju se ráno.",
+        "Učím se česky.",
+        "V kolik chodíš spát?"
+      ],
+      "common_mistakes": [
+        "Zapomenutí se/si u reflexivních sloves",
+        "Použití 'se' na špatné pozici ve větě",
+        "Záměna 'učit' a 'učit se'"
+      ],
+      "study_tip": "Sepište si svůj denní režim v bodech: 'Vstávám, sprchuju se, snídám...' Používejte reflexivní slovesa."
+    },
+    {
+      "unit_id": 11,
+      "title": "Food, Drink & Restaurants",
+      "phase": "A1",
+      "description": "Ordering, Czech cuisine, accusative with jíst/pít, restaurant phrases",
+      "grammar_rules": [
+        {
+          "id": "GR-100",
+          "name": "jíst and pít — eating and drinking verbs",
+          "pattern": "já jím, ty jíš, on jí, my jíme, vy jíte, oni jedí || já piju, ty piješ, on pije, my pijeme, vy pijete, oni pijou",
+          "example": "Jím chleba se sýrem. — I eat bread with cheese."
+        },
+        {
+          "id": "GR-101",
+          "name": "Food vocabulary — gender and accusative",
+          "pattern": "chléb (masc inan, acc=chleba), polévka (fem, acc=polévku), máslo (neut, acc=máslo), vejce (neut, acc=vejce), sýr (masc i",
+          "example": "Dám si guláš a pivo. — I'll have goulash and a beer."
+        },
+        {
+          "id": "GR-102",
+          "name": "Ordering at a restaurant",
+          "pattern": "Dám si... (I'll have...). Chtěl bych... (I would like...). Ještě něco? (Anything else?). Platit! (The bill!). Účet, pros",
+          "example": "Dám si smažený sýr a hranolky. — I'll have fried cheese and fries."
+        },
+        {
+          "id": "GR-103",
+          "name": "Quantities and partitive genitive with food",
+          "pattern": "trochu (a little), hodně (a lot), kilo (kilogram), litr (liter), kousek (piece)",
+          "example": "Dám si trochu polévky. — I'll have a little soup."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "chléb",
+          "en": "bread",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "máslo",
+          "en": "butter",
+          "gender": "neuter"
+        },
+        {
+          "cz": "sýr",
+          "en": "cheese",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "vejce",
+          "en": "egg",
+          "gender": "neuter"
+        },
+        {
+          "cz": "maso",
+          "en": "meat",
+          "gender": "neuter"
+        },
+        {
+          "cz": "kuře",
+          "en": "chicken",
+          "gender": "neuter"
+        },
+        {
+          "cz": "ryba",
+          "en": "fish",
+          "gender": "feminine"
+        },
+        {
+          "cz": "polévka",
+          "en": "soup",
+          "gender": "feminine"
+        }
+      ],
+      "key_phrases": [
+        "Dám si kávu, prosím.",
+        "Co si dáte k pití?",
+        "Účet, prosím.",
+        "Dobrou chuť!"
+      ],
+      "common_mistakes": [
+        "Objednávání bez akuzativu",
+        "Čekání na usazení v restauraci",
+        "Příliš vysoké spropitné (procentuální)"
+      ],
+      "study_tip": "Jděte do české restaurace a objednejte si česky. Začněte 'Dám si...' a 'Začínáme polévkou?'"
+    },
+    {
+      "unit_id": 12,
+      "title": "Shopping, Prices & Clothes",
+      "phase": "A1",
+      "description": "Kolik to stojí? prices, sizes, colors, shopping vocabulary",
+      "grammar_rules": [
+        {
+          "id": "GR-110",
+          "name": "Kolik to stojí? — asking and stating prices",
+          "pattern": "Kolik to stojí? Stojí to... korun. jedna koruna, dvě/tři/čtyři koruny, pět+ korun",
+          "example": "Kolik to stojí? — Stojí to třicet korun. — How much does it cost? — It costs 30 crowns."
+        },
+        {
+          "id": "GR-111",
+          "name": "Shopping — chtít and kupovat + accusative",
+          "pattern": "Chci... / Chtěl bych... + accusative. Kupuju... + accusative. Můžu...? (Can I...?)",
+          "example": "Hledám nový svetr. — I'm looking for a new sweater."
+        },
+        {
+          "id": "GR-112",
+          "name": "Clothes vocabulary and colors",
+          "pattern": "svetr (sweater), kalhoty (pants), košile (shirt), bunda (jacket), boty (shoes), šaty (dress). Colors: červený, modrý, ze",
+          "example": "Mám modrý svetr a černé kalhoty. — I have a blue sweater and black pants."
+        },
+        {
+          "id": "GR-113",
+          "name": "Comparisons — větší, menší, lepší, horší",
+          "pattern": "velký→větší, malý→menší, dobrý→lepší, špatný→horší, drahý→dražší, levný→levnější",
+          "example": "Tento svetr je levnější. — This sweater is cheaper."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "koruna",
+          "en": "crown (currency)",
+          "gender": "feminine"
+        },
+        {
+          "cz": "stát",
+          "en": "to cost",
+          "gender": null
+        },
+        {
+          "cz": "drahý",
+          "en": "expensive",
+          "gender": "masculine adjective"
+        },
+        {
+          "cz": "levný",
+          "en": "cheap",
+          "gender": "masculine adjective"
+        },
+        {
+          "cz": "kupovat",
+          "en": "to buy",
+          "gender": null
+        },
+        {
+          "cz": "chtít",
+          "en": "to want",
+          "gender": null
+        },
+        {
+          "cz": "svetr",
+          "en": "sweater",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "košile",
+          "en": "shirt",
+          "gender": "feminine"
+        }
+      ],
+      "key_phrases": [
+        "Kolik to stojí?",
+        "Máte větší velikost?",
+        "Vezmu si to.",
+        "Platím kartou."
+      ],
+      "common_mistakes": [
+        "Očekávání daně navíc při placení (DPH je v ceně)",
+        "Vrácení zboží bez účtenky",
+        "Předpoklad 24/7 otevírací doby"
+      ],
+      "study_tip": "Prohlížejte si české e-shopy (Alza, Mall) a čtěte popisky produktů česky. Naučte se velikosti."
+    },
+    {
+      "unit_id": 13,
+      "title": "Hobbies & Free Time",
+      "phase": "A1",
+      "description": "Mít rád, rád + verb, sports, music, adverbs of frequency",
+      "grammar_rules": [
+        {
+          "id": "GR-120",
+          "name": "mít rád — expressing likes",
+          "pattern": "Mám rád/ráda... + accusative. Nemám rád... . Máš rád...?",
+          "example": "Mám rád české pivo. — I like Czech beer. (male speaker)"
+        },
+        {
+          "id": "GR-121",
+          "name": "rád + verb — liking activities",
+          "pattern": "Rád/Ráda + conjugated verb. Rád čtu, rád sportuju, ráda vařím. Radši... (prefer).",
+          "example": "Rád sportuju a plavu. — I like to do sports and swim."
+        },
+        {
+          "id": "GR-122",
+          "name": "Hobbies & free time vocabulary",
+          "pattern": "číst (read), sportovat (do sports), plavat (swim), běhat (run), vařit (cook), cestovat (travel), hrát na... (play instru",
+          "example": "Ve volném čase rád čtu. — In my free time I like to read."
+        },
+        {
+          "id": "GR-123",
+          "name": "Adverbs of frequency",
+          "pattern": "vždycky (always), často (often), občas (sometimes), málokdy (rarely), nikdy (never)",
+          "example": "Často chodím do kina. — I often go to the cinema."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "mít rád",
+          "en": "to like",
+          "gender": null
+        },
+        {
+          "cz": "rád",
+          "en": "gladly / like to (masc)",
+          "gender": null
+        },
+        {
+          "cz": "volný čas",
+          "en": "free time",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "koníček",
+          "en": "hobby",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "číst",
+          "en": "to read",
+          "gender": null
+        },
+        {
+          "cz": "sportovat",
+          "en": "to do sports",
+          "gender": null
+        },
+        {
+          "cz": "plavat",
+          "en": "to swim",
+          "gender": null
+        },
+        {
+          "cz": "běhat",
+          "en": "to run",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Co rád děláš ve volném čase?",
+        "Mám rád sport.",
+        "Rád čtu.",
+        "Hraju na kytaru."
+      ],
+      "common_mistakes": [
+        "'Mám rád' bez předmětu v akuzativu",
+        "Špatný rod u 'rád/ráda'",
+        "Přílišné nadšení v hodnocení (Češi jsou rezervovaní)"
+      ],
+      "study_tip": "Sepište seznam svých koníčků s frází 'Rád/Ráda...' a sdílejte ho s českým kamarádem."
+    },
+    {
+      "unit_id": 14,
+      "title": "Directions, Places & Transport",
+      "phase": "A1",
+      "description": "Kde je...?, directions, places, transport, location vs motion",
+      "grammar_rules": [
+        {
+          "id": "GR-130",
+          "name": "Kde je...? — asking where things are (locative intro)",
+          "pattern": "Kde je...? (Where is...?). Je v... / na... (It's in/at...). Tady, tam, nahoře, dole.",
+          "example": "Kde je nádraží? — Je tam, vlevo. — Where is the station? — It's there, on the left."
+        },
+        {
+          "id": "GR-131",
+          "name": "Kam? — motion with accusative vs location with locative",
+          "pattern": "Kam jdeš? (Where are you going?) vs Kde jsi? (Where are you?) — Jdu do školy vs Jsem ve škole.",
+          "example": "Jdu do školy. vs Jsem ve škole. — I'm going to school. vs I'm at school."
+        },
+        {
+          "id": "GR-132",
+          "name": "Transport and movement verbs — jít vs jet",
+          "pattern": "jít (go on foot), jet (go by vehicle), chodit (walk regularly), jezdit (travel regularly)",
+          "example": "Jdu pěšky do školy. — I walk to school."
+        },
+        {
+          "id": "GR-133",
+          "name": "Places in town vocabulary",
+          "pattern": "obchod (shop), restaurace, nádraží (station), nemocnice (hospital), škola, pošta (post office), banka, lékárna (pharmacy",
+          "example": "Kde je nejbližší lékárna? — Where is the nearest pharmacy?"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "kde",
+          "en": "where",
+          "gender": null
+        },
+        {
+          "cz": "kam",
+          "en": "where to",
+          "gender": null
+        },
+        {
+          "cz": "tady",
+          "en": "here",
+          "gender": null
+        },
+        {
+          "cz": "tam",
+          "en": "there",
+          "gender": null
+        },
+        {
+          "cz": "rovně",
+          "en": "straight",
+          "gender": null
+        },
+        {
+          "cz": "doleva",
+          "en": "to the left",
+          "gender": null
+        },
+        {
+          "cz": "doprava",
+          "en": "to the right",
+          "gender": null
+        },
+        {
+          "cz": "vedle",
+          "en": "next to",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Kde je nádraží?",
+        "Jděte rovně a pak doleva.",
+        "Jedu metrem.",
+        "Je to blízko nebo daleko?"
+      ],
+      "common_mistakes": [
+        "Záměna 'kde' (lokace) a 'kam' (směr)",
+        "Použití 'jít' pro cestu vozidlem",
+        "Zapomenutí označení jízdenky"
+      ],
+      "study_tip": "Naučte se ptát na cestu a rozumět odpovědím. Používejte Mapy.cz pro české názvy ulic."
+    },
+    {
+      "unit_id": 15,
+      "title": "Weather, Seasons & Travel",
+      "phase": "A1",
+      "description": "Weather expressions, seasons, past tense intro, future intro",
+      "grammar_rules": [
+        {
+          "id": "GR-140",
+          "name": "Weather expressions — počasí",
+          "pattern": "Je... (It is...). Prší. Sněží. Svítí slunce. Je zima/teplo/horko/chladno.",
+          "example": "Jaké je dnes počasí? — Je hezky. — What's the weather like today? — It's nice."
+        },
+        {
+          "id": "GR-141",
+          "name": "Seasons — roční období",
+          "pattern": "jaro (spring), léto (summer), podzim (autumn), zima (winter). Na jaře, v létě, na podzim, v zimě.",
+          "example": "Na jaře kvetou květiny. — In spring, flowers bloom."
+        },
+        {
+          "id": "GR-142",
+          "name": "Future tense intro — budu + infinitive",
+          "pattern": "budu, budeš, bude, budeme, budete, budou + infinitive",
+          "example": "Zítra budu v práci. — Tomorrow I will be at work."
+        },
+        {
+          "id": "GR-143",
+          "name": "Past tense intro — byl, měl, dělal",
+          "pattern": "Byl jsem, byl jsi, byl... Měl jsem... Dělal jsem... The -l participle + být auxiliary.",
+          "example": "Byl jsem v Praze minulý týden. — I was in Prague last week. (male)"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "počasí",
+          "en": "weather",
+          "gender": "neuter"
+        },
+        {
+          "cz": "pršet",
+          "en": "to rain",
+          "gender": null
+        },
+        {
+          "cz": "sněžit",
+          "en": "to snow",
+          "gender": null
+        },
+        {
+          "cz": "slunce",
+          "en": "sun",
+          "gender": "neuter"
+        },
+        {
+          "cz": "vítr",
+          "en": "wind",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "teplo",
+          "en": "warm",
+          "gender": null
+        },
+        {
+          "cz": "zima",
+          "en": "cold / winter",
+          "gender": "feminine"
+        },
+        {
+          "cz": "horko",
+          "en": "hot",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Jaké je počasí?",
+        "Dnes je hezky.",
+        "Prší.",
+        "Byl jsem v Brně."
+      ],
+      "common_mistakes": [
+        "Slavení Vánoc 25.12. místo 24.12.",
+        "Očekávání Santa Clause (v ČR Ježíšek)",
+        "Podcenění zimního oblečení"
+      ],
+      "study_tip": "Sledujte předpověď počasí na ČT24. Pište si každý den jednu větu o počasí."
+    },
+    {
+      "unit_id": 16,
+      "title": "Genitive Case",
+      "phase": "A2",
+      "description": "Possession, quantities, prepositions (bez, do, od, z), negation",
+      "grammar_rules": [
+        {
+          "id": "GR-150",
+          "name": "Genitive — masculine endings",
+          "pattern": "Masculine animate: -a (bratr→bratra, učitel→učitele). Masculine inanimate: -u/-e (dům→domu, čaj→čaje).",
+          "example": "To je auto mého bratra. — That is my brother's car."
+        },
+        {
+          "id": "GR-151",
+          "name": "Genitive — feminine and neuter endings",
+          "pattern": "Feminine: -y/-i (žena→ženy, ulice→ulice). Neuter: -a/-e (město→města, moře→moře).",
+          "example": "Bydlím u sestry. — I live at my sister's."
+        },
+        {
+          "id": "GR-152",
+          "name": "Genitive plural and quantities",
+          "pattern": "With numbers 5+: pět mužů, šest žen, deset měst. Quantity words (hodně, málo, trochu) + genitive.",
+          "example": "Mám hodně práce. — I have a lot of work."
+        },
+        {
+          "id": "GR-153",
+          "name": "Negation and genitive",
+          "pattern": "Accusative objects become genitive when negated: Mám čas → Nemám času. Vidím knihu → Nevidím knihy.",
+          "example": "Nemám peněz. — I don't have money."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "bez",
+          "en": "without",
+          "gender": null
+        },
+        {
+          "cz": "z",
+          "en": "from (gen)",
+          "gender": null
+        },
+        {
+          "cz": "do",
+          "en": "to/into (gen)",
+          "gender": null
+        },
+        {
+          "cz": "od",
+          "en": "from (person)",
+          "gender": null
+        },
+        {
+          "cz": "u",
+          "en": "at/by (gen)",
+          "gender": null
+        },
+        {
+          "cz": "hodně",
+          "en": "a lot / many",
+          "gender": null
+        },
+        {
+          "cz": "málo",
+          "en": "little / few",
+          "gender": null
+        },
+        {
+          "cz": "trochu",
+          "en": "a little / a bit",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "To je kniha mého bratra.",
+        "Jdu do školy.",
+        "Bez cukru, prosím.",
+        "Hodně vody!"
+      ],
+      "common_mistakes": [
+        "Anglický slovosled u přivlastnění",
+        "Záměna 'z' (místo) a 'od' (osoba)",
+        "Zapomenutí genitivu po 'do'"
+      ],
+      "study_tip": "Procvičujte genitiv s předložkami: do školy, z práce, bez cukru, od kamaráda."
+    },
+    {
+      "unit_id": 17,
+      "title": "Dative Case",
+      "phase": "A2",
+      "description": "Indirect objects, dative verbs (pomáhat, rozumět), líbit se",
+      "grammar_rules": [
+        {
+          "id": "GR-160",
+          "name": "Dative — endings and indirect objects",
+          "pattern": "Masc -ovi/-u: bratr→bratrovi, pán→pánovi. Fem -e/-i: žena→ženě, ulice→ulici. Neut -u/-i: město→městu, nádraží→nádraží.",
+          "example": "Dávám dárek mamince. — I give a gift to mom."
+        },
+        {
+          "id": "GR-161",
+          "name": "Verbs requiring dative",
+          "pattern": "Pomáhat + dat, rozumět + dat, telefonovat + dat, věřit + dat, radit + dat.",
+          "example": "Rozumíš češtině? — Do you understand Czech?"
+        },
+        {
+          "id": "GR-162",
+          "name": "Líbit se and chutnat — liking in dative",
+          "pattern": "Líbí se mi... (I like...), Chutná mi... (I like the taste of...). The liked thing is the subject (nominative), the perso",
+          "example": "Líbí se ti Praha? — Do you like Prague?"
+        },
+        {
+          "id": "GR-163",
+          "name": "Impersonal expressions with dative",
+          "pattern": "Je mi zima/teplo/dobře/špatně. Je mi 20 let. Jde mi to. Záleží mi na tom.",
+          "example": "Je mi zima. Můžu zavřít okno? — I'm cold. Can I close the window?"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "dávat",
+          "en": "to give",
+          "gender": null
+        },
+        {
+          "cz": "kupovat",
+          "en": "to buy",
+          "gender": null
+        },
+        {
+          "cz": "pomáhat",
+          "en": "to help (+ dat)",
+          "gender": null
+        },
+        {
+          "cz": "rozumět",
+          "en": "to understand (+ dat)",
+          "gender": null
+        },
+        {
+          "cz": "telefonovat",
+          "en": "to telephone (+ dat)",
+          "gender": null
+        },
+        {
+          "cz": "věřit",
+          "en": "to believe (+ dat)",
+          "gender": null
+        },
+        {
+          "cz": "líbit se",
+          "en": "to like/please (+ dat)",
+          "gender": null
+        },
+        {
+          "cz": "chutnat",
+          "en": "to taste (+ dat)",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Pomáhám kamarádovi.",
+        "Líbí se mi ten film.",
+        "Je mi zima.",
+        "Dávám ti dárek."
+      ],
+      "common_mistakes": [
+        "Akuzativ místo dativu po 'pomáhat'",
+        "Sudý počet květin jako dárek",
+        "Odmítnutí jídla na návštěvě"
+      ],
+      "study_tip": "Seznamte se s dativními slovesy: pomáhat, rozumět, volat, radit. Každé použijte ve větě."
+    },
+    {
+      "unit_id": 18,
+      "title": "Locative & Instrumental",
+      "phase": "A2",
+      "description": "Locative: o kom/čem, v/na. Instrumental: s kým/čím, transport means",
+      "grammar_rules": [
+        {
+          "id": "GR-170",
+          "name": "Locative case — v/na + locative",
+          "pattern": "v + loc: v Praze, v pokoji, v kině. na + loc: na náměstí, na nádraží, na univerzitě.",
+          "example": "Bydlím v Praze. — I live in Prague."
+        },
+        {
+          "id": "GR-171",
+          "name": "Instrumental case — means and accompaniment",
+          "pattern": "s kým/čím? (with whom/what?). Means: autem, vlakem, metrem. Professions: pracovat jako... (+ nom or instr). Time: na jař",
+          "example": "Jedu do práce autem. — I go to work by car."
+        },
+        {
+          "id": "GR-172",
+          "name": "Locative — o + locative (about)",
+          "pattern": "o kom/čem? Mluvit o..., přemýšlet o..., kniha o..., film o..., starat se o...",
+          "example": "O čem mluvíte? — Mluvíme o dovolené. — What are you talking about? — We're talking about vacation."
+        },
+        {
+          "id": "GR-173",
+          "name": "Instrumental plural and time expressions",
+          "pattern": "Plural instrumental: -y/-i/-ami (muži, ženami, městy). Time: na jaře, v létě, na podzim, v zimě (loc). But: před rokem (",
+          "example": "Bydlím s rodiči. — I live with my parents."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "mluvit",
+          "en": "to speak/talk",
+          "gender": null
+        },
+        {
+          "cz": "přemýšlet",
+          "en": "to think about",
+          "gender": null
+        },
+        {
+          "cz": "bydlet",
+          "en": "to live/reside",
+          "gender": null
+        },
+        {
+          "cz": "sedět",
+          "en": "to sit",
+          "gender": null
+        },
+        {
+          "cz": "ležet",
+          "en": "to lie/be situated",
+          "gender": null
+        },
+        {
+          "cz": "jezdit",
+          "en": "to travel/ride regularly",
+          "gender": null
+        },
+        {
+          "cz": "cestovat",
+          "en": "to travel",
+          "gender": null
+        },
+        {
+          "cz": "psát",
+          "en": "to write",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Jsem v Praze.",
+        "Mluvíme o počasí.",
+        "Jedeme autem.",
+        "Pracuji jako učitel."
+      ],
+      "common_mistakes": [
+        "Záměna 'domů' (směr) a 'doma' (místo)",
+        "Akuzativ po 'v' pro lokaci",
+        "Zapomenutí instrumentálu po 's'"
+      ],
+      "study_tip": "Rozlišujte 'v' + lokál (kde?) a 'do' + genitiv (kam?). Kreslete si obrázky s popisky."
+    },
+    {
+      "unit_id": 19,
+      "title": "Past Tense — Full Conjugation",
+      "phase": "A2",
+      "description": "All persons, gender agreement, motion verbs, perfective aspect intro",
+      "grammar_rules": [
+        {
+          "id": "GR-180",
+          "name": "Past tense — formation and gender agreement",
+          "pattern": "-l (masc), -la (fem), -lo (neut), -li (masc pl), -ly (fem/neut pl). Auxiliary: jsem/jsi/jsme/jste (3rd person omitted).",
+          "example": "Včera jsem byl v kině. — Yesterday I was at the cinema. (male)"
+        },
+        {
+          "id": "GR-181",
+          "name": "Motion verbs in past tense",
+          "pattern": "jít→šel/šla/šlo/šli/šly. jet→jel/jela/jelo/jeli/jely. The auxiliary follows the -l participle: šel jsem, šla jsi.",
+          "example": "Kam jsi šel včera? — Šel jsem do práce. — Where did you go yesterday? — I went to work."
+        },
+        {
+          "id": "GR-182",
+          "name": "Perfective vs imperfective — aspect introduction",
+          "pattern": "Imperfective: dělat, psát, číst, kupovat (process/ongoing). Perfective: udělat, napsat, přečíst, koupit (completed actio",
+          "example": "Psal jsem dopis celé odpoledne. — I was writing the letter all afternoon. (imperfective, process)"
+        },
+        {
+          "id": "GR-183",
+          "name": "Time expressions for past tense",
+          "pattern": "včera (yesterday), předevčírem (day before yesterday), minulý týden/měsíc/rok (last week/month/year), před rokem (a year",
+          "example": "Včera jsem potkal starého kamaráda. — Yesterday I met an old friend."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "včera",
+          "en": "yesterday",
+          "gender": null
+        },
+        {
+          "cz": "minulý",
+          "en": "last / past",
+          "gender": null
+        },
+        {
+          "cz": "předevčírem",
+          "en": "the day before yesterday",
+          "gender": null
+        },
+        {
+          "cz": "loni",
+          "en": "last year",
+          "gender": null
+        },
+        {
+          "cz": "kdysi",
+          "en": "once / formerly",
+          "gender": null
+        },
+        {
+          "cz": "už",
+          "en": "already",
+          "gender": null
+        },
+        {
+          "cz": "ještě",
+          "en": "yet/still",
+          "gender": null
+        },
+        {
+          "cz": "nikdy",
+          "en": "never",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Včera jsem byl v kině.",
+        "Co jsi dělal o víkendu?",
+        "Šel jsem do parku.",
+        "Napsal jsem dopis."
+      ],
+      "common_mistakes": [
+        "Minulý čas v mužském rodě pro ženy",
+        "Záměna dokonavého a nedokonavého vidu",
+        "Pomocné sloveso na prvním místě"
+      ],
+      "study_tip": "Vyprávějte, co jste dělali včera. Používejte správný rod: 'Byl jsem...' / 'Byla jsem...'"
+    },
+    {
+      "unit_id": 20,
+      "title": "Future Tense & Conditional",
+      "phase": "A2",
+      "description": "Perfective future, imperfective future, conditional (chtěl bych)",
+      "grammar_rules": [
+        {
+          "id": "GR-190",
+          "name": "Future tense — imperfective (budu + infinitive)",
+          "pattern": "budu/budeš/bude/budeme/budete/budou + infinitive. Budu pracovat, budeš číst, budeme cestovat.",
+          "example": "Zítra budu pracovat celý den. — Tomorrow I will work all day."
+        },
+        {
+          "id": "GR-191",
+          "name": "Perfective future — present form = future meaning",
+          "pattern": "napíšu, přečtu, udělám, koupím — perfective verbs in present conjugation express FUTURE.",
+          "example": "Napíšu ti email zítra. — I'll write you an email tomorrow."
+        },
+        {
+          "id": "GR-192",
+          "name": "Conditional — bych, bys, by",
+          "pattern": "Já bych, ty bys, on/ona/ono by, my bychom, vy byste, oni by. + past participle (-l/-la/-lo).",
+          "example": "Chtěl bych kávu, prosím. — I would like a coffee, please. (male)"
+        },
+        {
+          "id": "GR-193",
+          "name": "Kdyby — conditional 'if'",
+          "pattern": "Kdybych, kdybys, kdyby, kdybychom, kdybyste, kdyby + -l participle. Word order: kdybych + past participle.",
+          "example": "Kdybych měl čas, šel bych do kina. — If I had time, I would go to the cinema."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "zítra",
+          "en": "tomorrow",
+          "gender": null
+        },
+        {
+          "cz": "příští",
+          "en": "next",
+          "gender": null
+        },
+        {
+          "cz": "brzy",
+          "en": "soon",
+          "gender": null
+        },
+        {
+          "cz": "později",
+          "en": "later",
+          "gender": null
+        },
+        {
+          "cz": "možná",
+          "en": "maybe",
+          "gender": null
+        },
+        {
+          "cz": "určitě",
+          "en": "definitely",
+          "gender": null
+        },
+        {
+          "cz": "snad",
+          "en": "hopefully",
+          "gender": null
+        },
+        {
+          "cz": "chtěl bych",
+          "en": "I would like (masc)",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Zítra budu pracovat.",
+        "Napíšu ti email.",
+        "Chtěl bych kávu.",
+        "Kdybys měl čas, přijď."
+      ],
+      "common_mistakes": [
+        "'Chci' místo 'chtěl bych' ve formálním kontextu",
+        "Nedokonavé futurum pro dokončené akce",
+        "Pozdní příchod bez omluvy"
+      ],
+      "study_tip": "Procvičujte 'chtěl bych' v restauracích a obchodech. Je to vaše nejdůležitější zdvořilostní fráze."
+    },
+    {
+      "unit_id": 21,
+      "title": "Comparisons & Superlatives",
+      "phase": "A2",
+      "description": "Comparative -ější/-ší, superlative nej-, comparisons with než",
+      "grammar_rules": [
+        {
+          "id": "GR-200",
+          "name": "Comparative adjectives — regular formation",
+          "pattern": "-ější/-ejší (mladý→mladší, starý→starší, chytrý→chytřejší), -ší (čistý→čistší, bohatý→bohatší), or -í (tichý→tišší).",
+          "example": "Praha je větší než Brno. — Prague is bigger than Brno."
+        },
+        {
+          "id": "GR-201",
+          "name": "Irregular comparative adjectives",
+          "pattern": "dobrý→lepší, špatný→horší, velký→větší, malý→menší, dlouhý→delší, krátký→kratší, vysoký→vyšší, nízký→nižší.",
+          "example": "Tohle je lepší varianta. — This is a better option."
+        },
+        {
+          "id": "GR-202",
+          "name": "Superlative — nej- prefix",
+          "pattern": "nej- + comparative: nejlepší, největší, nejdražší. Declines like a soft adjective.",
+          "example": "To je nejlepší restaurace ve městě. — That's the best restaurant in the city."
+        },
+        {
+          "id": "GR-203",
+          "name": "Comparative and superlative adverbs",
+          "pattern": "rychle→rychleji→nejrychleji, dobře→lépe→nejlépe, špatně→hůře→nejhůře, často→častěji→nejčastěji.",
+          "example": "Mluvíš česky lépe než já. — You speak Czech better than me."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "než",
+          "en": "than",
+          "gender": null
+        },
+        {
+          "cz": "lepší",
+          "en": "better",
+          "gender": null
+        },
+        {
+          "cz": "horší",
+          "en": "worse",
+          "gender": null
+        },
+        {
+          "cz": "větší",
+          "en": "bigger",
+          "gender": null
+        },
+        {
+          "cz": "menší",
+          "en": "smaller",
+          "gender": null
+        },
+        {
+          "cz": "nejlepší",
+          "en": "best",
+          "gender": null
+        },
+        {
+          "cz": "nejhorší",
+          "en": "worst",
+          "gender": null
+        },
+        {
+          "cz": "stejný",
+          "en": "same",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Praha je větší než Brno.",
+        "To je nejlepší restaurace.",
+        "Je mnohem dražší.",
+        "Není to špatné."
+      ],
+      "common_mistakes": [
+        "'Jak' místo 'než' pro srovnání",
+        "Přílišné používání superlativů",
+        "Chápání 'není špatné' jako kritiky"
+      ],
+      "study_tip": "Porovnávejte věci kolem sebe: 'Můj pokoj je menší než tvůj.' 'Tato káva je lepší.'"
+    },
+    {
+      "unit_id": 22,
+      "title": "Complex Sentences",
+      "phase": "A2",
+      "description": "že, protože, když, až, jestli, aby, word order in subordinate clauses",
+      "grammar_rules": [
+        {
+          "id": "GR-210",
+          "name": "že — 'that' clauses",
+          "pattern": "Vím, že... Myslím, že... Řekl, že... + normal word order after že.",
+          "example": "Myslím, že máš pravdu. — I think that you're right."
+        },
+        {
+          "id": "GR-211",
+          "name": "Protože and když — cause and time clauses",
+          "pattern": "Protože + clause (because). Když + clause (when/whenever). Word order: standard SVO, auxiliary clitics in 2nd position.",
+          "example": "Nepřišel, protože byl nemocný. — He didn't come because he was sick."
+        },
+        {
+          "id": "GR-212",
+          "name": "Aby — purpose clauses",
+          "pattern": "Abych, abys, aby, abychom, abyste, aby + -l participle. Aby = 'so that / in order to'.",
+          "example": "Učím se česky, abych mohl pracovat v Praze. — I'm learning Czech so that I can work in Prague."
+        },
+        {
+          "id": "GR-213",
+          "name": "Word order in complex sentences",
+          "pattern": "Main clause: SVO. Subordinate clause after že/když/protože: SVO (normal). After aby/kdyby: S + conditional + -l particip",
+          "example": "Vím, že se učíš česky. — I know that you're studying Czech."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "protože",
+          "en": "because",
+          "gender": null
+        },
+        {
+          "cz": "když",
+          "en": "when",
+          "gender": null
+        },
+        {
+          "cz": "jestli",
+          "en": "if / whether",
+          "gender": null
+        },
+        {
+          "cz": "aby",
+          "en": "so that / in order to",
+          "gender": null
+        },
+        {
+          "cz": "ačkoli",
+          "en": "although",
+          "gender": null
+        },
+        {
+          "cz": "proto",
+          "en": "therefore",
+          "gender": null
+        },
+        {
+          "cz": "přesto",
+          "en": "nevertheless",
+          "gender": null
+        },
+        {
+          "cz": "dokonce",
+          "en": "even",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Řekl, že přijde.",
+        "Nevím, jestli to zvládnu.",
+        "Protože prší, zůstanu doma.",
+        "Až přijdeš, zavolej."
+      ],
+      "common_mistakes": [
+        "Mluvené tvary v psaném projevu",
+        "Záměna 'když' (stejný čas) a 'až' (budoucnost)",
+        "Anglický slovosled ve vedlejších větách"
+      ],
+      "study_tip": "Spojujte věty spojkami: 'Zůstal jsem doma, protože pršelo.' 'Nevím, jestli přijdu.'"
+    },
+    {
+      "unit_id": 23,
+      "title": "Modal Verbs & Permission",
+      "phase": "A2",
+      "description": "muset, moct, smět — obligation, ability, permission, prohibition",
+      "grammar_rules": [
+        {
+          "id": "GR-220",
+          "name": "muset — must / have to (obligation)",
+          "pattern": "muset + infinitive — expresses strong obligation or necessity",
+          "example": "Musím jít do práce. — I must go to work."
+        },
+        {
+          "id": "GR-221",
+          "name": "moct — can / be able to (ability)",
+          "pattern": "moct + infinitive — expresses ability or permission",
+          "example": "Můžu přijít zítra. — I can come tomorrow."
+        },
+        {
+          "id": "GR-222",
+          "name": "smět — be allowed to (permission)",
+          "pattern": "smět + infinitive — expresses permission or prohibition",
+          "example": "Smím vstoupit? — May I come in?"
+        },
+        {
+          "id": "GR-223",
+          "name": "Modal verb + infinitive construction",
+          "pattern": "Conjugated modal + infinitive of main verb — modal is conjugated, main verb stays in infinitive",
+          "example": "Musím pracovat. — I must work."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "muset",
+          "en": "must / have to",
+          "gender": null
+        },
+        {
+          "cz": "moct",
+          "en": "can / be able to",
+          "gender": null
+        },
+        {
+          "cz": "smět",
+          "en": "may / be allowed to",
+          "gender": null
+        },
+        {
+          "cz": "chtít",
+          "en": "to want",
+          "gender": null
+        },
+        {
+          "cz": "musím",
+          "en": "I must / I have to",
+          "gender": null
+        },
+        {
+          "cz": "můžeš",
+          "en": "you can",
+          "gender": null
+        },
+        {
+          "cz": "smí",
+          "en": "he/she may",
+          "gender": null
+        },
+        {
+          "cz": "chceme",
+          "en": "we want",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Musím jít do práce.",
+        "Můžu tady kouřit?",
+        "Nesmíš tady parkovat.",
+        "Měl bys víc sportovat."
+      ],
+      "common_mistakes": [
+        "Záměna 'nemusím' a 'nesmím'",
+        "'Moct' místo 'smět' pro povolení",
+        "Ignorování zákazových značek"
+      ],
+      "study_tip": "Všímejte si nápisů 'zákaz', 'povoleno', 'nutno'. Foťte si je a překládejte."
+    },
+    {
+      "unit_id": 24,
+      "title": "Health & Body",
+      "phase": "A2",
+      "description": "Body parts, doctor, pharmacy, symptoms, expressing pain",
+      "grammar_rules": [
+        {
+          "id": "GR-230",
+          "name": "Bolí mě — expressing pain with body parts",
+          "pattern": "bolí + accusative pronoun (mě, tě, ho, ji, nás, vás, je) + body part (nominative)",
+          "example": "Bolí mě hlava. — My head hurts. / I have a headache."
+        },
+        {
+          "id": "GR-231",
+          "name": "cítit se — feeling unwell and reflexive health verbs",
+          "pattern": "cítit se + adverb (dobře, špatně, unavený, nemocný)",
+          "example": "Cítím se špatně. — I feel unwell."
+        },
+        {
+          "id": "GR-232",
+          "name": "At the doctor — questions and medical phrases",
+          "pattern": "Common doctor-patient exchanges: Co vás trápí? / Boli mě... / Ukážete jazyk? / Vypijte tohle.",
+          "example": "Co vás trápí? — What's bothering you?"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "hlava",
+          "en": "head",
+          "gender": "feminine"
+        },
+        {
+          "cz": "ruka",
+          "en": "hand / arm",
+          "gender": "feminine"
+        },
+        {
+          "cz": "noha",
+          "en": "leg / foot",
+          "gender": "feminine"
+        },
+        {
+          "cz": "oko",
+          "en": "eye",
+          "gender": "neuter"
+        },
+        {
+          "cz": "ucho",
+          "en": "ear",
+          "gender": "neuter"
+        },
+        {
+          "cz": "ústa",
+          "en": "mouth",
+          "gender": "neuter"
+        },
+        {
+          "cz": "nos",
+          "en": "nose",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "zub",
+          "en": "tooth",
+          "gender": "masculine inanimate"
+        }
+      ],
+      "key_phrases": [
+        "Bolí mě hlava.",
+        "Mám teplotu.",
+        "Potřebuji lékaře.",
+        "Kde je lékárna?"
+      ],
+      "common_mistakes": [
+        "Hledání léků v drogerii",
+        "Očekávání lékaře bez objednání",
+        "Předpoklad, že všichni lékaři mluví anglicky"
+      ],
+      "study_tip": "Naučte se části těla a fráze pro návštěvu lékaře. Nacvičte si scénku 'U doktora'."
+    },
+    {
+      "unit_id": 25,
+      "title": "Work, Professions & Education",
+      "phase": "A2",
+      "description": "Professions, workplace, education, instrumental case for professions",
+      "grammar_rules": [
+        {
+          "id": "GR-240",
+          "name": "Profession with být + instrumental",
+          "pattern": "být (conjugated) + noun in instrumental case — jsem učitelem, je lékařem",
+          "example": "Jsem učitelem. — I am a teacher."
+        },
+        {
+          "id": "GR-241",
+          "name": "pracovat jako — describing one's job",
+          "pattern": "pracovat jako + nominative noun — Pracuji jako učitel. / Dělá co + accusative",
+          "example": "Pracuji jako programátor. — I work as a programmer."
+        },
+        {
+          "id": "GR-242",
+          "name": "Education vocabulary and school-related grammar",
+          "pattern": "učit se (learn), studovat (study), zkouška (exam), předmět (subject) — common school constructions",
+          "example": "Učím se česky. — I am learning Czech."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "učitel",
+          "en": "teacher",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "inženýr",
+          "en": "engineer",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "lékař",
+          "en": "doctor (profession)",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "právník",
+          "en": "lawyer",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "programátor",
+          "en": "programmer",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "kuchař",
+          "en": "cook / chef",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "řidič",
+          "en": "driver",
+          "gender": "masculine animate"
+        },
+        {
+          "cz": "prodavač",
+          "en": "shop assistant / salesman",
+          "gender": "masculine animate"
+        }
+      ],
+      "key_phrases": [
+        "Pracuji jako programátor.",
+        "Hledám práci.",
+        "Mám pohovor zítra.",
+        "Jaký je váš plat?"
+      ],
+      "common_mistakes": [
+        "Životopis bez fotografie a věku",
+        "Používání křestních jmen s kolegy",
+        "Ignorování akademických titulů"
+      ],
+      "study_tip": "Napište si český životopis. Hledejte pracovní inzeráty na jobs.cz a učte se slovíčka."
+    },
+    {
+      "unit_id": 26,
+      "title": "Housing & Home",
+      "phase": "A2",
+      "description": "Housing vocabulary, rooms, furniture, renting, locative + prepositions",
+      "grammar_rules": [
+        {
+          "id": "GR-250",
+          "name": "Housing vocabulary — rooms and furniture genders",
+          "pattern": "Room names by gender: byt (masc inan), kuchyně (fem), ložnice (fem), koupelna (fem); furniture: stůl (masc inan), židle ",
+          "example": "Mám nový byt. — I have a new apartment. (byt = masc inanimate)"
+        },
+        {
+          "id": "GR-251",
+          "name": "Prepositions of location in housing",
+          "pattern": "v/ve (in) + locative, na (on) + locative, u (by/at) + genitive — location in rooms",
+          "example": "Kniha je na stole. — The book is on the table."
+        },
+        {
+          "id": "GR-252",
+          "name": "Renting and buying — pronajmout si, koupit si",
+          "pattern": "pronajmout si (rent for oneself) + accusative, koupit si (buy for oneself) + accusative — reflexive possessive svůj for ",
+          "example": "Pronajmul jsem si byt v Praze. — I rented an apartment in Prague."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "byt",
+          "en": "apartment / flat",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "dům",
+          "en": "house",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "chata",
+          "en": "cottage / cabin",
+          "gender": "feminine"
+        },
+        {
+          "cz": "garsonka",
+          "en": "studio apartment",
+          "gender": "feminine"
+        },
+        {
+          "cz": "studio",
+          "en": "studio (apartment)",
+          "gender": "neuter"
+        },
+        {
+          "cz": "obývací pokoj",
+          "en": "living room",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "kuchyně",
+          "en": "kitchen",
+          "gender": "feminine"
+        },
+        {
+          "cz": "ložnice",
+          "en": "bedroom",
+          "gender": "feminine"
+        }
+      ],
+      "key_phrases": [
+        "Bydlím v paneláku.",
+        "Hledám byt k pronájmu.",
+        "Kolik je nájem?",
+        "Nábytek je už zařízený."
+      ],
+      "common_mistakes": [
+        "Neregistrace adresy na cizinecké policii",
+        "Předpoklad, že poplatky jsou v nájmu",
+        "Posuzování paneláků podle vzhledu"
+      ],
+      "study_tip": "Prohlížejte si inzeráty bytů na sreality.cz. Učte se slovní zásobu: nájem, kauce, zařízený."
+    },
+    {
+      "unit_id": 27,
+      "title": "Verbs of Motion",
+      "phase": "A2",
+      "description": "jít/jet vs chodit/jezdit, prefixed motion verbs, aspect pairs",
+      "grammar_rules": [
+        {
+          "id": "GR-260",
+          "name": "Motion verbs — jít vs jet vs chodit vs jezdit",
+          "pattern": "jít/jet = one-time motion (on foot/by vehicle), chodit/jezdit = habitual/repeated motion",
+          "example": "Jdu do obchodu. — I'm going to the store. (right now, on foot)"
+        },
+        {
+          "id": "GR-261",
+          "name": "Prefixed motion verbs — přijít, odejít, dojít, vyjít, projít",
+          "pattern": "prefix + jít/jet = directional specification of motion",
+          "example": "Přišel domů v pět hodin. — He arrived home at five o'clock."
+        },
+        {
+          "id": "GR-262",
+          "name": "Aspect pairs — systematic prefix patterns",
+          "pattern": "Imperfective (process) ↔ Perfective (result) — paired by prefixes: u-, na-, s-/z-, vy-, do-, při-, od-",
+          "example": "dělat (impf) → udělat (pf) — to do — process → to do — completed"
+        },
+        {
+          "id": "GR-263",
+          "name": "Direction adverbs — kam, odkud, tudy, tam, sem, ven",
+          "pattern": "kam (where to), odkud (where from), tudy (this way), tam (there), sem (here/to here), ven (outside/out)",
+          "example": "Kam jdeš? — Jdu do školy. — Where are you going? — I'm going to school."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "jít",
+          "en": "to go (on foot)",
+          "gender": null
+        },
+        {
+          "cz": "jet",
+          "en": "to go (by transport)",
+          "gender": null
+        },
+        {
+          "cz": "běžet",
+          "en": "to run",
+          "gender": null
+        },
+        {
+          "cz": "letět",
+          "en": "to fly",
+          "gender": null
+        },
+        {
+          "cz": "plavat",
+          "en": "to swim",
+          "gender": null
+        },
+        {
+          "cz": "lézt",
+          "en": "to crawl / climb",
+          "gender": null
+        },
+        {
+          "cz": "skákat",
+          "en": "to jump",
+          "gender": null
+        },
+        {
+          "cz": "přijít",
+          "en": "to arrive / come (on foot)",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Jdu do školy pěšky.",
+        "Jedeme autem do Brna.",
+        "Přijel jsem včera.",
+        "Vystupte na příští zastávce."
+      ],
+      "common_mistakes": [
+        "'Jít' pro cestu vozidlem",
+        "Záměna jednorázového a opakovaného pohybu",
+        "'Jet' místo 'chodit' pro pěší chůzi"
+      ],
+      "study_tip": "Procvičujte páry: jdu × chodím, jedu × jezdím. Ke každému přidejte typickou větu."
+    },
+    {
+      "unit_id": 28,
+      "title": "A1 Exam Preparation",
+      "phase": "A1",
+      "description": "Reading, listening, writing, speaking — A1 level practice",
+      "grammar_rules": [],
+      "core_vocabulary": [
+        {
+          "cz": "otázka",
+          "en": "question",
+          "gender": "feminine"
+        },
+        {
+          "cz": "odpověď",
+          "en": "answer",
+          "gender": "feminine"
+        },
+        {
+          "cz": "správně",
+          "en": "correctly",
+          "gender": null
+        },
+        {
+          "cz": "špatně",
+          "en": "wrongly / incorrectly",
+          "gender": null
+        },
+        {
+          "cz": "vyberte",
+          "en": "choose / select",
+          "gender": null
+        },
+        {
+          "cz": "doplňte",
+          "en": "fill in / complete",
+          "gender": null
+        },
+        {
+          "cz": "přečtěte",
+          "en": "read",
+          "gender": null
+        },
+        {
+          "cz": "poslouchejte",
+          "en": "listen",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Vyberte správnou odpověď.",
+        "Doplňte chybějící slovo.",
+        "Přečtěte text a odpovězte.",
+        "Napište krátký vzkaz."
+      ],
+      "common_mistakes": [
+        "Podcenění obtížnosti zkoušky A1",
+        "Nepřipravení vlastního představení",
+        "Zanedbání psaní (formuláře, vzkazy)"
+      ],
+      "study_tip": "Stáhněte si vzorové testy A1. Dělejte je na čas. Trénujte psaní krátkých vzkazů."
+    },
+    {
+      "unit_id": 29,
+      "title": "A2 Exam Preparation",
+      "phase": "A2",
+      "description": "Reading, listening, writing, speaking — A2 level practice",
+      "grammar_rules": [],
+      "core_vocabulary": [
+        {
+          "cz": "formální dopis",
+          "en": "formal letter",
+          "gender": "masculine inanimate"
+        },
+        {
+          "cz": "žádost",
+          "en": "application, request",
+          "gender": "feminine"
+        },
+        {
+          "cz": "stížnost",
+          "en": "complaint",
+          "gender": "feminine"
+        },
+        {
+          "cz": "oznámení",
+          "en": "announcement, notice",
+          "gender": "neuter"
+        },
+        {
+          "cz": "pozvánka",
+          "en": "invitation",
+          "gender": "feminine"
+        },
+        {
+          "cz": "potvrzení",
+          "en": "confirmation",
+          "gender": "neuter"
+        },
+        {
+          "cz": "vyjádření",
+          "en": "statement, expression",
+          "gender": "neuter"
+        },
+        {
+          "cz": "souhlas",
+          "en": "agreement, consent",
+          "gender": "masculine inanimate"
+        }
+      ],
+      "key_phrases": [
+        "Vážený pane, obracím se na Vás...",
+        "S pozdravem...",
+        "Popište obrázek.",
+        "Vyjádřete svůj názor."
+      ],
+      "common_mistakes": [
+        "Neformální jazyk ve formálních úkolech",
+        "Nedostatečné procvičování psaní",
+        "Příliš krátké odpovědi v mluvené části"
+      ],
+      "study_tip": "Pište formální emaily: žádosti, omluvy, stížnosti. Nechte je zkontrolovat učitelem."
+    },
+    {
+      "unit_id": 30,
+      "title": "A1 Review & Consolidation",
+      "phase": "A1",
+      "description": "Review all A1 grammar and vocabulary",
+      "grammar_rules": [
+        {
+          "id": "GR-290",
+          "name": "A1 grammar summary — case, tense, and agreement overview",
+          "pattern": "Consolidation: nominative + accusative, present tense, gender agreement, pronouns, basic word order",
+          "example": "Jsem student a bydlím v Praze. — I am a student and I live in Prague."
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "omluvte",
+          "en": "excuse (formal)",
+          "gender": null
+        },
+        {
+          "cz": "promiňte",
+          "en": "excuse me (formal)",
+          "gender": null
+        },
+        {
+          "cz": "nezlobte se",
+          "en": "don't be angry",
+          "gender": null
+        },
+        {
+          "cz": "tak jo",
+          "en": "alright / OK",
+          "gender": null
+        },
+        {
+          "cz": "no dobře",
+          "en": "well / okay then",
+          "gender": null
+        },
+        {
+          "cz": "vlastně",
+          "en": "actually / in fact",
+          "gender": null
+        },
+        {
+          "cz": "prostě",
+          "en": "simply / just",
+          "gender": null
+        },
+        {
+          "cz": "totiž",
+          "en": "you see / namely",
+          "gender": null
+        }
+      ],
+      "key_phrases": [
+        "Opakování je matka moudrosti.",
+        "Učte se každý den aspoň 15 minut.",
+        "Nebojte se dělat chyby.",
+        "Mluvte, i když to není perfektní."
+      ],
+      "common_mistakes": [
+        "Učení slovíček bez rodu",
+        "Zanedbání poslechu a mluvení",
+        "Spěch na A2 před zvládnutím A1"
+      ],
+      "study_tip": "Udělejte si test: dokážete vyčasovat 10 náhodných sloves? Dokážete vyjmenovat akuzativní koncovky?"
+    },
+    {
+      "unit_id": 31,
+      "title": "A2 Review & Consolidation",
+      "phase": "A2",
+      "description": "Review all A2 grammar and vocabulary",
+      "grammar_rules": [
+        {
+          "id": "GR-291",
+          "name": "A2 grammar summary — complete case system, aspect, tenses, complex sentences",
+          "pattern": "Consolidation: all 6 cases, present/past/future/conditional, aspect recognition, adjective comparison, complex sentences",
+          "example": "Kdybych měl čas, šel bych do kina. — If I had time, I would go to the cinema. (conditional + past)"
+        }
+      ],
+      "core_vocabulary": [
+        {
+          "cz": "zapomenout",
+          "en": "to forget",
+          "gender": "null"
+        },
+        {
+          "cz": "vzpomenout si",
+          "en": "to recall, remember",
+          "gender": "null"
+        },
+        {
+          "cz": "učit se",
+          "en": "to learn, study",
+          "gender": "null"
+        },
+        {
+          "cz": "naučit se",
+          "en": "to learn (completely), master",
+          "gender": "null"
+        },
+        {
+          "cz": "znát",
+          "en": "to know (a person, fact)",
+          "gender": "null"
+        },
+        {
+          "cz": "vědět",
+          "en": "to know (information)",
+          "gender": "null"
+        },
+        {
+          "cz": "mluvit",
+          "en": "to speak, talk",
+          "gender": "null"
+        },
+        {
+          "cz": "říkat",
+          "en": "to say (repeatedly)",
+          "gender": "null"
+        }
+      ],
+      "key_phrases": [
+        "Čtěte české noviny.",
+        "Sledujte české filmy s titulky.",
+        "Najděte si české kamarády.",
+        "Přepněte telefon do češtiny."
+      ],
+      "common_mistakes": [
+        "Zastavení studia po A2",
+        "Sledování médií s anglickými titulky",
+        "Učení jen z učebnic bez reálné komunikace"
+      ],
+      "study_tip": "Sledujte Českou televizi, poslouchejte Český rozhlas, čtěte iDNES. Ponořte se do jazyka."
+    }
+  ]
+}

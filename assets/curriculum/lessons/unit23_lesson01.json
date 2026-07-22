@@ -1,0 +1,215 @@
+{
+  "id": 2301,
+  "unit_id": 23,
+  "order_in_unit": 0,
+  "title": "Modal Verbs — muset, moct, smět",
+  "description": "Learn to conjugate the three Czech modal verbs — muset (must), moct (can/be able to), and smět (may/be allowed to) — and use them with infinitives in present-tense sentences.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 23001,
+      "lesson_id": 2301,
+      "type": "multiple_choice",
+      "prompt": "What is the 'já' (1st person singular) form of 'muset' (must)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaká je forma 'já' pro sloveso 'muset'?",
+        "question_en": "What is the 'já' (1st person singular) form of 'muset' (must)?",
+        "options": ["musím", "museš", "musí", "musíme"],
+        "correct_index": 0,
+        "explanation": "'Muset' is an -et class verb. The 1st person singular is 'musím'. Conjugation: musím, musíš, musí, musíme, musíte, musí."
+      },
+      "answer_key": "musím",
+      "grammar_rule_id": "GR-220",
+      "xp_reward": 10
+    },
+    {
+      "id": 23002,
+      "lesson_id": 2301,
+      "type": "multiple_choice",
+      "prompt": "What is the 'ty' (2nd person singular) form of 'moct' (can)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaká je forma 'ty' pro sloveso 'moct'?",
+        "question_en": "What is the 'ty' (2nd person singular) form of 'moct' (can)?",
+        "options": ["mohu", "můžeš", "může", "můžeme"],
+        "correct_index": 1,
+        "explanation": "'Moct' is irregular. The 2nd person singular is 'můžeš'. Full conjugation: mohu/můžu, můžeš, může, můžeme, můžete, mohou/můžou."
+      },
+      "answer_key": "můžeš",
+      "grammar_rule_id": "GR-221",
+      "xp_reward": 10
+    },
+    {
+      "id": 23003,
+      "lesson_id": 2301,
+      "type": "multiple_choice",
+      "prompt": "What is the 'oni' (3rd person plural) form of 'smět' (may/be allowed)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Jaká je forma 'oni' pro sloveso 'smět'?",
+        "question_en": "What is the 'oni' (3rd person plural) form of 'smět' (may/be allowed)?",
+        "options": ["smí", "smíme", "smějí", "smíte"],
+        "correct_index": 2,
+        "explanation": "'Smět' is an -et class verb. The 3rd person plural is 'smějí'. Conjugation: smím, smíš, smí, smíme, smíte, smějí."
+      },
+      "answer_key": "smějí",
+      "grammar_rule_id": "GR-222",
+      "xp_reward": 10
+    },
+    {
+      "id": 23004,
+      "lesson_id": 2301,
+      "type": "fill_blank",
+      "prompt": "Fill in the correct form of 'muset' for 'my' (we).",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "My ____ jít do školy.",
+        "blank_count": 1,
+        "accepted_answers": ["musíme"],
+        "explanation": "'My musíme jít do školy.' = We must go to school. The 1st person plural of 'muset' is 'musíme'. The modal verb is followed by the infinitive 'jít'."
+      },
+      "answer_key": "musíme",
+      "grammar_rule_id": "GR-220",
+      "xp_reward": 10
+    },
+    {
+      "id": 23005,
+      "lesson_id": 2301,
+      "type": "fill_blank",
+      "prompt": "Fill in the correct form of 'moct' for 'on' (he).",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "On ____ mluvit česky.",
+        "blank_count": 1,
+        "accepted_answers": ["může"],
+        "explanation": "'On může mluvit česky.' = He can speak Czech. The 3rd person singular of 'moct' is 'může'. Modal verbs take the infinitive 'mluvit' after them."
+      },
+      "answer_key": "může",
+      "grammar_rule_id": "GR-221",
+      "xp_reward": 10
+    },
+    {
+      "id": 23006,
+      "lesson_id": 2301,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I must work tomorrow.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I must work tomorrow.",
+        "accepted_answers": ["Musím zítra pracovat.", "Zítra musím pracovat.", "Musím pracovat zítra."],
+        "grammar_note": "'Musím' = I must (1st person singular of 'muset'). The infinitive 'pracovat' follows the modal. Word order is flexible: 'Musím zítra pracovat' or 'Zítra musím pracovat' are both correct."
+      },
+      "answer_key": "Musím zítra pracovat.",
+      "grammar_rule_id": "GR-223",
+      "xp_reward": 10
+    },
+    {
+      "id": 23007,
+      "lesson_id": 2301,
+      "type": "translation",
+      "prompt": "Translate to English: 'Ona smí jít ven.'",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "Ona smí jít ven.",
+        "accepted_answers": ["She may go out.", "She is allowed to go out.", "She can go out."],
+        "grammar_note": "'Smí' = may/is allowed to (3rd person singular of 'smět'). 'Jít ven' = to go out. 'Smět' specifically means permission, not ability."
+      },
+      "answer_key": "She may go out.",
+      "grammar_rule_id": "GR-222",
+      "xp_reward": 10
+    },
+    {
+      "id": 23008,
+      "lesson_id": 2301,
+      "type": "word_order",
+      "prompt": "Arrange the words to form: 'You can help us.'",
+      "data": {
+        "type": "word_order",
+        "words": ["nám", "můžeš", "Ty", "pomoci"],
+        "correct_order": [2, 1, 3, 0],
+        "explanation": "'Ty můžeš nám pomoci.' = You can help us. 'Můžeš' = you can (2nd person singular of 'moct'). 'Pomoci' = to help (infinitive). The modal verb 'můžeš' is followed by the infinitive 'pomoci'."
+      },
+      "answer_key": "Ty můžeš nám pomoci.",
+      "grammar_rule_id": "GR-223",
+      "xp_reward": 10
+    },
+    {
+      "id": 23009,
+      "lesson_id": 2301,
+      "type": "matching",
+      "prompt": "Match each modal verb to its English meaning.",
+      "data": {
+        "type": "matching",
+        "prompt_en": "Match each Czech modal verb to its English meaning.",
+        "pairs": [
+          {"left": "muset", "right": "must"},
+          {"left": "moct", "right": "can"},
+          {"left": "smět", "right": "may"}
+        ],
+        "explanation": "'Muset' = must (obligation), 'moct' = can (ability/possibility), 'smět' = may (permission). These are the three Czech modal verbs, each with a distinct meaning."
+      },
+      "answer_key": "muset→must, moct→can, smět→may",
+      "grammar_rule_id": "GR-220",
+      "xp_reward": 10
+    },
+    {
+      "id": 23010,
+      "lesson_id": 2301,
+      "type": "matching",
+      "prompt": "Match each conjugated form to the correct pronoun.",
+      "data": {
+        "type": "matching",
+        "prompt_en": "Match each conjugated form of 'moct' to the correct pronoun.",
+        "pairs": [
+          {"left": "mohu", "right": "já"},
+          {"left": "můžeš", "right": "ty"},
+          {"left": "může", "right": "on/ona"},
+          {"left": "můžeme", "right": "my"}
+        ],
+        "explanation": "'Moct' conjugation: já mohu/můžu, ty můžeš, on/ona může, my můžeme, vy můžete, oni mohou/můžou. Note the stem change from 'moh-' to 'můž-' in most forms."
+      },
+      "answer_key": "mohu→já, můžeš→ty, může→on/ona, můžeme→my",
+      "grammar_rule_id": "GR-221",
+      "xp_reward": 10
+    },
+    {
+      "id": 23011,
+      "lesson_id": 2301,
+      "type": "error_correction",
+      "prompt": "Find the mistake in this sentence.",
+      "data": {
+        "type": "error_correction",
+        "prompt_en": "Find the mistake in this sentence using modal verbs.",
+        "sentence_cz": "Ty musí jít domů.",
+        "correct_sentence_cz": "Ty musíš jít domů.",
+        "error_type": "modal_conjugation",
+        "explanation": "The 2nd person singular of 'muset' is 'musíš', not 'musí'. 'Musí' is the 3rd person singular (on/ona musí) and 3rd person plural (oni musí). 'Ty musíš jít domů.' = You must go home."
+      },
+      "answer_key": "Ty musíš jít domů.",
+      "grammar_rule_id": "GR-220",
+      "xp_reward": 10
+    },
+    {
+      "id": 23012,
+      "lesson_id": 2301,
+      "type": "error_correction",
+      "prompt": "Find the mistake in this sentence.",
+      "data": {
+        "type": "error_correction",
+        "prompt_en": "Find the mistake — wrong modal verb used.",
+        "sentence_cz": "Nesmíš jít, pokud nechceš.",
+        "correct_sentence_cz": "Nemusíš jít, pokud nechceš.",
+        "error_type": "modal_confusion",
+        "explanation": "'Nesmíš' means 'you must not' (prohibition), while 'nemusíš' means 'you don't have to' (no obligation). The correct sentence is 'Nemusíš jít, pokud nechceš.' = You don't have to go if you don't want to. This is a common confusion between 'muset' and 'smět'."
+      },
+      "answer_key": "Nemusíš jít, pokud nechceš.",
+      "grammar_rule_id": "GR-222",
+      "xp_reward": 10
+    }
+  ]
+}

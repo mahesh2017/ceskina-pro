@@ -76,12 +76,35 @@ class CurriculumScreen extends ConsumerWidget {
                     const SizedBox(width: 10),
                     Text('$unlockedA1 of ${a1Units.length} units',
                         style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: t.muted)),
                   ],
-                ),
-                const SizedBox(height: 16),
+                  ),
+                  const SizedBox(height: 16),
+                  // Quick reference links
+                  Row(
+                  children: [
+                    _ReferenceChip(
+                      icon: Icons.menu_book,
+                      label: 'Grammar',
+                      onTap: () => context.push('/grammar'),
+                    ),
+                    const SizedBox(width: 8),
+                    _ReferenceChip(
+                      icon: Icons.table_chart,
+                      label: 'Declensions',
+                      onTap: () => context.push('/reference/declension_tables'),
+                    ),
+                    const SizedBox(width: 8),
+                    _ReferenceChip(
+                      icon: Icons.format_list_bulleted,
+                      label: 'Cheat Sheets',
+                      onTap: () => context.push('/reference/cheat_sheets'),
+                    ),
+                  ],
+                  ),
+                  const SizedBox(height: 16),
                 ...a1Units.map((u) => Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: _UnitCard(unit: u, isUnlocked: unlockedIds.contains(u.id)),
@@ -94,7 +117,7 @@ class CurriculumScreen extends ConsumerWidget {
                       const SizedBox(width: 6),
                       Text('More A2 lessons are being added',
                           style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 14,
                               fontStyle: FontStyle.italic,
                               color: t.amber)),
                     ],
@@ -131,7 +154,7 @@ class _LevelChip extends StatelessWidget {
       ),
       child: Text(label,
           style: TextStyle(
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
             color: selected ? t.onFill : t.muted,
           )),
@@ -199,7 +222,7 @@ class _UnitCard extends ConsumerWidget {
           title: Text(
             'Unit ${unit.id} · ${unit.title}',
             style: TextStyle(
-              fontSize: 14.5,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: isUnlocked ? t.ink : t.muted,
             ),
@@ -212,7 +235,7 @@ class _UnitCard extends ConsumerWidget {
                 Text(unit.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12.5, color: t.muted, height: 1.4)),
+                    style: TextStyle(fontSize: 14, color: t.muted, height: 1.4)),
                 if (isUnlocked && lessons.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Row(
@@ -224,7 +247,7 @@ class _UnitCard extends ConsumerWidget {
                       const SizedBox(width: 8),
                       Text('$doneCount/${lessons.length}',
                           style: TextStyle(
-                              fontSize: 11.5,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600,
                               color: t.muted)),
                     ],
@@ -257,13 +280,26 @@ class _UnitCard extends ConsumerWidget {
                   ),
                 ];
               }
-              return ls
-                  .map((lesson) => _LessonTile(
-                        lesson: lesson,
-                        isUnlocked: isUnlocked,
-                        isCompleted: completedIds.contains(lesson.id),
-                      ))
-                  .toList();
+              return <Widget>[
+                ...ls.map((lesson) => _LessonTile(
+                      lesson: lesson,
+                      isUnlocked: isUnlocked,
+                      isCompleted: completedIds.contains(lesson.id),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: OutlinedButton.icon(
+                    onPressed: () => context.push(
+                      '/grammar?unit=${unit.id}',
+                    ),
+                    icon: const Icon(Icons.menu_book, size: 16),
+                    label: const Text('Grammar Rules'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 40),
+                    ),
+                  ),
+                ),
+              ];
             },
           ),
         ),
@@ -321,17 +357,58 @@ class _LessonTile extends StatelessWidget {
                 children: [
                   Text(lesson.title,
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 15.5,
                           fontWeight: FontWeight.w600,
                           color: isUnlocked ? t.ink : t.muted)),
                   Text('$typeLabel · ${lesson.durationMinutes} min',
-                      style: TextStyle(fontSize: 12, color: t.muted)),
+                      style: TextStyle(fontSize: 14, color: t.muted)),
                 ],
               ),
             ),
             Icon(isUnlocked ? Icons.chevron_right : Icons.lock_outline,
                 size: 15, color: t.faint),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class _ReferenceChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _ReferenceChip({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: t.chipBg,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, size: 20, color: t.pri),
+              const SizedBox(height: 4),
+              Text(label,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: t.ink)),
+            ],
+          ),
         ),
       ),
     );

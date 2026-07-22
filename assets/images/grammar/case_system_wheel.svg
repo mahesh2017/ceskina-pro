@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 820" width="800" height="820" font-family="'Helvetica Neue', Arial, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="820" fill="#FAFBFC"/>
+
+  <!-- Title -->
+  <text x="400" y="38" text-anchor="middle" font-size="26" font-weight="700" fill="#2C3E50">Czech Case System</text>
+  <text x="400" y="60" text-anchor="middle" font-size="14" fill="#7F8C8D" font-style="italic">Pády v češtině — 6 cases · transformations of "žena" (woman)</text>
+
+  <!-- Center hub -->
+  <circle cx="400" cy="440" r="78" fill="#2C3E50"/>
+  <circle cx="400" cy="440" r="72" fill="none" stroke="#fff" stroke-width="2" opacity="0.3"/>
+  <text x="400" y="432" text-anchor="middle" font-size="24" font-weight="700" fill="#fff">žena</text>
+  <text x="400" y="455" text-anchor="middle" font-size="12" fill="#BDC3C7" font-style="italic">"woman" · nom.</text>
+
+  <!-- Connector lines from hub to each card -->
+  <g stroke="#BDC3C7" stroke-width="1.5" stroke-dasharray="4 3" fill="none">
+    <line x1="400" y1="362" x2="400" y2="230"/>
+    <line x1="468" y1="400" x2="600" y2="335"/>
+    <line x1="468" y1="480" x2="600" y2="545"/>
+    <line x1="400" y1="518" x2="400" y2="650"/>
+    <line x1="332" y1="480" x2="200" y2="545"/>
+    <line x1="332" y1="400" x2="200" y2="335"/>
+  </g>
+
+  <!-- Card 1: Nominative (top) - Blue -->
+  <g transform="translate(305, 110)">
+    <rect width="190" height="120" rx="12" fill="#4A90D9"/>
+    <text x="14" y="28" font-size="26" font-weight="700" fill="#fff">1</text>
+    <text x="176" y="28" text-anchor="end" font-size="15" font-weight="700" fill="#fff">Nominative</text>
+    <text x="176" y="46" text-anchor="end" font-size="11" fill="#fff" opacity="0.9">1. pád · nominativ</text>
+    <line x1="14" y1="56" x2="176" y2="56" stroke="#fff" stroke-width="1" opacity="0.4"/>
+    <text x="14" y="74" font-size="11" fill="#fff" opacity="0.9" font-style="italic">subject — "who / what"</text>
+    <text x="14" y="98" font-size="22" font-weight="700" fill="#fff">žena</text>
+    <text x="14" y="113" font-size="10" fill="#fff" opacity="0.8">the woman (does something)</text>
+  </g>
+
+  <!-- Card 2: Genitive (top-right) - Purple -->
+  <g transform="translate(530, 275)">
+    <rect width="190" height="120" rx="12" fill="#8E44AD"/>
+    <text x="14" y="28" font-size="26" font-weight="700" fill="#fff">2</text>
+    <text x="176" y="28" text-anchor="end" font-size="15" font-weight="700" fill="#fff">Genitive</text>
+    <text x="176" y="46" text-anchor="end" font-size="11" fill="#fff" opacity="0.9">2. pád · genitiv</text>
+    <line x1="14" y1="56" x2="176" y2="56" stroke="#fff" stroke-width="1" opacity="0.4"/>
+    <text x="14" y="74" font-size="11" fill="#fff" opacity="0.9" font-style="italic">possession — "of whom"</text>
+    <text x="14" y="98" font-size="22" font-weight="700" fill="#fff">žen<span style="fill:#FFD700">y</span></text>
+    <text x="14" y="113" font-size="10" fill="#fff" opacity="0.8">of the woman</text>
+  </g>
+
+  <!-- Card 3: Dative (bottom-right) - Green -->
+  <g transform="translate(530, 490)">
+    <rect width="190" height="120" rx="12" fill="#27AE60"/>
+    <text x="14" y="28" font-size="26" font-weight="700" fill="#fff">3</text>
+    <text x="176" y="28" text-anchor="end" font-size="15" font-weight="700" fill="#fff">Dative</text>
+    <text x="176" y="46" text-anchor="end" font-size="11" fill="#fff" opacity="0.9">3. pád · dativ</text>
+    <line x1="14" y1="56" x2="176" y2="56" stroke="#fff" stroke-width="1" opacity="0.4"/>
+    <text x="14" y="74" font-size="11" fill="#fff" opacity="0.9" font-style="italic">indirect obj. — "to/for"</text>
+    <text x="14" y="98" font-size="22" font-weight="700" fill="#fff">žen<span style="fill:#FFD700">ě</span></text>
+    <text x="14" y="113" font-size="10" fill="#fff" opacity="0.8">to/for the woman</text>
+  </g>
+
+  <!-- Card 4: Accusative (bottom) - Red -->
+  <g transform="translate(305, 650)">
+    <rect width="190" height="120" rx="12" fill="#E74C3C"/>
+    <text x="14" y="28" font-size="26" font-weight="700" fill="#fff">4</text>
+    <text x="176" y="28" text-anchor="end" font-size="15" font-weight="700" fill="#fff">Accusative</text>
+    <text x="176" y="46" text-anchor="end" font-size="11" fill="#fff" opacity="0.9">4. pád · akuzativ</text>
+    <line x1="14" y1="56" x2="176" y2="56" stroke="#fff" stroke-width="1" opacity="0.4"/>
+    <text x="14" y="74" font-size="11" fill="#fff" opacity="0.9" font-style="italic">direct obj. — "whom/what"</text>
+    <text x="14" y="98" font-size="22" font-weight="700" fill="#fff">žen<span style="fill:#FFD700">u</span></text>
+    <text x="14" y="113" font-size="10" fill="#fff" opacity="0.8">I see the woman</text>
+  </g>
+
+  <!-- Card 5: Locative (bottom-left) - Orange -->
+  <g transform="translate(80, 490)">
+    <rect width="190" height="120" rx="12" fill="#E67E22"/>
+    <text x="14" y="28" font-size="26" font-weight="700" fill="#fff">5</text>
+    <text x="176" y="28" text-anchor="end" font-size="15" font-weight="700" fill="#fff">Locative</text>
+    <text x="176" y="46" text-anchor="end" font-size="11" fill="#fff" opacity="0.9">5. pád · lokál</text>
+    <line x1="14" y1="56" x2="176" y2="56" stroke="#fff" stroke-width="1" opacity="0.4"/>
+    <text x="14" y="74" font-size="11" fill="#fff" opacity="0.9" font-style="italic">location — "about/on/in"</text>
+    <text x="14" y="98" font-size="22" font-weight="700" fill="#fff">žen<span style="fill:#FFD700">ě</span></text>
+    <text x="14" y="113" font-size="10" fill="#fff" opacity="0.8">about the woman</text>
+  </g>
+
+  <!-- Card 6: Instrumental (top-left) - Teal -->
+  <g transform="translate(80, 275)">
+    <rect width="190" height="120" rx="12" fill="#16A085"/>
+    <text x="14" y="28" font-size="26" font-weight="700" fill="#fff">6</text>
+    <text x="176" y="28" text-anchor="end" font-size="15" font-weight="700" fill="#fff">Instrumental</text>
+    <text x="176" y="46" text-anchor="end" font-size="11" fill="#fff" opacity="0.9">6. pád · instrumentál</text>
+    <line x1="14" y1="56" x2="176" y2="56" stroke="#fff" stroke-width="1" opacity="0.4"/>
+    <text x="14" y="74" font-size="11" fill="#fff" opacity="0.9" font-style="italic">means / "with" — by whom</text>
+    <text x="14" y="98" font-size="22" font-weight="700" fill="#fff">žen<span style="fill:#FFD700">ou</span></text>
+    <text x="14" y="113" font-size="10" fill="#fff" opacity="0.8">with the woman</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="400" y="800" text-anchor="middle" font-size="11" fill="#95A5A6">Singular forms · endings shown in gold · each case answers a different question</text>
+</svg>

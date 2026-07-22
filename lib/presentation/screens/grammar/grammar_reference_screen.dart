@@ -1,180 +1,219 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/database_providers.dart';
-import '../../../data/database/database.dart' as db;
-import '../../widgets/lesson/exercise_widget.dart' show TtsButton;
-
-/// All seeded grammar rules, ordered by unit.
-final allGrammarRulesProvider =
-    FutureProvider<List<db.GrammarRule>>((ref) async {
-  return ref.read(databaseProvider).curriculumDao.getAllGrammarRules();
-});
-
-/// Browsable, searchable grammar reference built from the seeded rules.
-class GrammarReferenceScreen extends ConsumerStatefulWidget {
-  /// When set, the rule with this id is expanded on open (e.g. opened from
-  /// a lesson feedback card).
+import '../../../core/theme/app_tokens.dart';
+import '../../../domain/entities/unit.dart';
+import '../../providers/curriculum_providers.dart';
+/// Full-screen grammar reference browser.
+/// - No highlight: shows a unit-picker then rules per unit.
+/// - With highlightRuleId: scrolls to that specific rule.
+class GrammarReferenceScreen extends ConsumerWidget {
   final String? highlightRuleId;
 
-  const GrammarReferenceScreen({super.key, this.highlightRuleId});
+  const GrammarReferenceScreen({
+    super.key,
+    this.highlightRuleId,
+  });
 
   @override
-  ConsumerState<GrammarReferenceScreen> createState() =>
-      _GrammarReferenceScreenState();
-}
-
-class _GrammarReferenceScreenState
-    extends ConsumerState<GrammarReferenceScreen> {
-  String _query = '';
-
-  @override
-  Widget build(BuildContext context) {
-    final rulesAsync = ref.watch(allGrammarRulesProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final unitsAsync = ref.watch(allUnitsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Grammar Reference')),
-      body: rulesAsync.when(
+      appBar: AppBar(
+        title: Text(
+          highlightRuleId != null ? 'Grammar Rule' : 'Grammar Reference',
+        ),
+      ),
+      body: unitsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(child: Text('Failed to load: $err')),
-        data: (rules) {
-          final q = _query.trim().toLowerCase();
-          final filtered = q.isEmpty
-              ? rules
-              : rules
-                  .where((r) =>
-                      r.ruleName.toLowerCase().contains(q) ||
-                      r.pattern.toLowerCase().contains(q) ||
-                      r.explanation.toLowerCase().contains(q),)
-                  .toList();
-
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.search),
-                    hintText: 'Search grammar rules',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    isDense: true,
-                  ),
-                  onChanged: (v) => setState(() => _query = v),
-                ),
+        error: (_, __) => const Center(child: Text('Failed to load units')),
+        data: (allUnits) => ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            for (final unit in allUnits) ...[
+              _UnitGrammarSection(
+                unit: unit,
+                highlightRuleId: highlightRuleId,
               ),
-              if (filtered.isEmpty)
-                const Expanded(
-                  child: Center(child: Text('No matching rules.')),
-                )
-              else
-                Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    itemCount: filtered.length,
-                    itemBuilder: (context, i) => _RuleCard(
-                      rule: filtered[i],
-                      initiallyExpanded:
-                          filtered[i].id == widget.highlightRuleId,
-                    ),
-                  ),
-                ),
+              const SizedBox(height: 16),
             ],
-          );
-        },
+          ],
+        ),
       ),
     );
   }
 }
 
-class _RuleCard extends StatelessWidget {
-  final db.GrammarRule rule;
-  final bool initiallyExpanded;
+class _UnitGrammarSection extends ConsumerWidget {
+  final Unit unit;
+  final String? highlightRuleId;
 
-  const _RuleCard({required this.rule, this.initiallyExpanded = false});
-
-  List<Map<String, dynamic>> _examples() {
-    try {
-      final decoded = jsonDecode(rule.examples);
-      if (decoded is List) {
-        return decoded.whereType<Map<String, dynamic>>().toList();
-      }
-    } catch (_) {
-      // Malformed example JSON — just show none.
-    }
-    return const [];
-  }
+  const _UnitGrammarSection({
+    required this.unit,
+    this.highlightRuleId,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    final examples = _examples();
-    return Card(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final t = context.tokens;
+    final rulesAsync = ref.watch(grammarRulesByUnitProvider(unit.id));
+
+    return Container(
+      decoration: BoxDecoration(
+        color: t.card,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
       child: ExpansionTile(
-        initiallyExpanded: initiallyExpanded,
-        title: Text(rule.ruleName,
-            style: const TextStyle(fontWeight: FontWeight.w600),),
-        subtitle: Text(rule.pattern),
-        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-        expandedCrossAxisAlignment: CrossAxisAlignment.start,
+        initiallyExpanded: highlightRuleId != null,
+        title: Text(
+          'Unit ${unit.id}: ${unit.title}',
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 16,
+            color: t.ink,
+          ),
+        ),
+        subtitle: Text(
+          unit.grammarTags.join(', '),
+          style: TextStyle(fontSize: 13, color: t.muted),
+        ),
         children: [
-          if (rule.caseAffected != null) ...[
-            Chip(
-              label: Text('Case: ${rule.caseAffected}'),
-              visualDensity: VisualDensity.compact,
+          rulesAsync.when(
+            loading: () => const Padding(
+              padding: EdgeInsets.all(16),
+              child: Center(child: CircularProgressIndicator()),
             ),
-            const SizedBox(height: 8),
-          ],
-          Text(rule.explanation,
-              style: Theme.of(context).textTheme.bodyMedium,),
-          if (examples.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            Text('Examples',
-                style: Theme.of(context).textTheme.labelLarge,),
-            const SizedBox(height: 4),
-            ...examples.map((ex) {
-              final cz = ex['cz'] as String? ?? '';
-              final en = ex['en'] as String? ?? '';
-              final note = ex['note'] as String?;
+            error: (_, __) => Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text('Could not load grammar rules.',
+                  style: TextStyle(color: t.muted)),
+            ),
+            data: (rules) {
+              if (rules.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text('No grammar rules for this unit.',
+                      style: TextStyle(color: t.muted)),
+                );
+              }
               return Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (cz.isNotEmpty) TtsButton(text: cz, size: 18),
-                    Expanded(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Column(
+                  children: rules.map((rule) {
+                    final isHighlighted = highlightRuleId == rule.id;
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 12),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isHighlighted
+                            ? t.priSoft
+                            : Colors.grey.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                        border: isHighlighted
+                            ? Border.all(color: t.pri, width: 2)
+                            : null,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text.rich(TextSpan(children: [
-                            TextSpan(
-                              text: cz,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,),
-                            ),
-                            if (en.isNotEmpty)
-                              TextSpan(
-                                text: '  —  $en',
-                                style: TextStyle(
-                                    color: Colors.grey.shade600,),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: t.priFill,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  rule.id,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: t.onFill,
+                                  ),
+                                ),
                               ),
-                          ]),),
-                          if (note != null && note.isNotEmpty)
-                            Text(note,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(fontStyle: FontStyle.italic),),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  rule.ruleName,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: t.ink,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            rule.pattern,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: t.pri,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            rule.explanation,
+                            style: TextStyle(fontSize: 14, color: t.muted),
+                          ),
+                          // Examples
+                          ..._parseExamples(rule.examples, t),
                         ],
                       ),
-                    ),
-                  ],
+                    );
+                  }).toList(),
                 ),
               );
-            }),
-          ],
+            },
+          ),
         ],
       ),
     );
+  }
+
+  List<Widget> _parseExamples(String examplesJson, AppTokens t) {
+    try {
+      final examples = jsonDecode(examplesJson) as List<dynamic>;
+      return examples.take(2).map((ex) {
+        final exMap = ex as Map<String, dynamic>;
+        return Padding(
+          padding: const EdgeInsets.only(top: 6),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(Icons.arrow_right, size: 16, color: t.faint),
+              const SizedBox(width: 4),
+              Expanded(
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(fontSize: 14, color: t.ink),
+                    children: [
+                      TextSpan(
+                        text: '${exMap['cz']}',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      TextSpan(
+                        text: ' — ${exMap['en']}',
+                        style: TextStyle(color: t.muted),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList();
+    } catch (_) {
+      return [];
+    }
   }
 }

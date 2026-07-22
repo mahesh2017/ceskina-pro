@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../providers/review_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../../domain/entities/flashcard.dart';
-import '../../../domain/entities/fsrs_card.dart';
-import '../../../domain/engines/fsrs_scheduler.dart';
+import '../../../domain/entities/srs_card.dart';
+import '../../../domain/engines/srs_scheduler.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../widgets/common/soft_ui.dart';
 
@@ -125,7 +125,7 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
             // Rating buttons (only after flip)
             if (session.isFlipped)
               _RatingButtons(
-                intervals: _intervalLabels(card.fsrs),
+                intervals: _intervalLabels(card.srs),
                 onRate: (rating) {
                   ref.read(reviewSessionProvider.notifier).rateCard(rating);
                 },
@@ -150,8 +150,8 @@ class _SrsReviewScreenState extends ConsumerState<SrsReviewScreen>
   /// Honest interval hints computed from the real scheduler for the
   /// current card. "Again" re-appears within this session, so it shows
   /// "Soon" rather than a day count.
-  Map<Rating, String> _intervalLabels(FSRSCard card) {
-    final scheduler = FSRSScheduler();
+  Map<Rating, String> _intervalLabels(SrsCard card) {
+    final scheduler = SrsScheduler();
     final now = DateTime.now();
     String fmt(Rating r) {
       if (r == Rating.again) return 'Soon';
@@ -266,7 +266,7 @@ class _FlashcardView extends ConsumerWidget {
             ),
             child: Text(
               card.gender!,
-              style: const TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
             ),
           ),
         const SizedBox(height: 24),
@@ -304,7 +304,7 @@ class _FlashcardView extends ConsumerWidget {
               'Tap to reveal',
               style: TextStyle(
                 color: Colors.grey.shade400,
-                fontSize: 13,
+                fontSize: 15,
               ),
             ),
           ],
@@ -336,7 +336,7 @@ class _FlashcardView extends ConsumerWidget {
           ),
           child: const Text(
             'EN → CZ',
-            style: TextStyle(color: Colors.deepPurple, fontSize: 12),
+            style: TextStyle(color: Colors.deepPurple, fontSize: 14),
           ),
         ),
         const SizedBox(height: 24),
@@ -360,7 +360,7 @@ class _FlashcardView extends ConsumerWidget {
             const SizedBox(width: 8),
             Text(
               'Tap to reveal',
-              style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 15),
             ),
           ],
         ),
@@ -381,7 +381,7 @@ class _FlashcardView extends ConsumerWidget {
           ),
           child: const Text(
             'LISTENING',
-            style: TextStyle(color: Colors.teal, fontSize: 12),
+            style: TextStyle(color: Colors.teal, fontSize: 14),
           ),
         ),
         const SizedBox(height: 32),
@@ -413,7 +413,7 @@ class _FlashcardView extends ConsumerWidget {
             const SizedBox(width: 8),
             Text(
               'Tap to reveal',
-              style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 15),
             ),
           ],
         ),
@@ -472,7 +472,7 @@ class _FlashcardView extends ConsumerWidget {
                   textAlign: TextAlign.center,
                 ),
                 if (card.exampleEn != null) ...[
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   Text(
                     card.exampleEn!,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -601,9 +601,9 @@ class _RatingButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 20),
-          const SizedBox(height: 4),
-          Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          Text(subtitle, style: const TextStyle(fontSize: 10)),
+          const SizedBox(height: 6),
+          Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+          Text(subtitle, style: const TextStyle(fontSize: 12.5)),
         ],
       ),
     );
@@ -790,7 +790,7 @@ class _ReviewCompleteScreen extends StatelessWidget {
                             'These cards are rescheduled with spaced repetition — '
                             'we\'ll surface them again right on time.',
                             style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 color: t.priInk),
                           ),
@@ -808,7 +808,7 @@ class _ReviewCompleteScreen extends StatelessWidget {
                   PrimaryButton(
                       label: 'Back to home', icon: Icons.home_outlined,
                       onPressed: onExit),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 6),
                   TextButton(
                     onPressed: onRestart,
                     child: Text('Review again',
@@ -846,10 +846,10 @@ class _StatTile extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: color ?? t.ink,
               )),
-          const SizedBox(height: 2),
+          const SizedBox(height: 4),
           Text(label,
               style: TextStyle(
-                  fontSize: 12, fontWeight: FontWeight.w600, color: t.muted)),
+                  fontSize: 14, fontWeight: FontWeight.w600, color: t.muted)),
         ],
       ),
     );
@@ -895,7 +895,7 @@ class _RatingRow extends StatelessWidget {
           child: Text('$count',
               textAlign: TextAlign.right,
               style: TextStyle(
-                  fontSize: 13, fontWeight: FontWeight.w700, color: t.ink)),
+                  fontSize: 15, fontWeight: FontWeight.w700, color: t.ink)),
         ),
       ],
     );

@@ -1,0 +1,224 @@
+{
+  "id": 2502,
+  "unit_id": 25,
+  "order_in_unit": 1,
+  "title": "Education & School Life",
+  "description": "Learn vocabulary and grammar for talking about education, school subjects, and studying. Practice the verb 'učit se' (to learn) with the accusative, 'studovat' (to study) with 'na' + locative, and common school-related expressions.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 25013,
+      "lesson_id": 2502,
+      "type": "multiple_choice",
+      "prompt": "What does the reflexive verb 'učit se' mean in Czech?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Co znamená zvratné sloveso 'učit se'?",
+        "question_en": "What does the reflexive verb 'učit se' mean?",
+        "options": ["to teach", "to learn / to study", "to read", "to write"],
+        "correct_index": 1,
+        "explanation": "'Učit se' = to learn / to study (for oneself). Without 'se', 'učit' means 'to teach'. Example: 'Učím se česky.' = I am learning Czech. 'Učím češtinu.' = I teach Czech. The 'se' makes it reflexive — the action is directed at oneself."
+      },
+      "answer_key": "to learn / to study",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 10
+    },
+    {
+      "id": 25014,
+      "lesson_id": 2502,
+      "type": "multiple_choice",
+      "prompt": "Complete the sentence: 'Studuji ___ univerzitě.' (I study at the university.)",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Doplňte: 'Studuji ___ univerzitě.'",
+        "question_en": "Complete: 'I study at the university.'",
+        "options": ["v", "na", "do", "od"],
+        "correct_index": 1,
+        "explanation": "'Na' + locative is used for institutions like schools and universities: 'na univerzitě' (at the university), 'na škole' (at school), 'na gymnáziu' (at the grammar school). 'Studuji na univerzitě.' = I study at the university."
+      },
+      "answer_key": "na",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 10
+    },
+    {
+      "id": 25015,
+      "lesson_id": 2502,
+      "type": "fill_blank",
+      "prompt": "Fill in the accusative form of 'čeština' (Czech language): 'Učím se ___.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Učím se ___. (čeština — accusative)",
+        "blank_count": 1,
+        "accepted_answers": ["češtinu"],
+        "explanation": "'Učit se' takes the accusative case for the thing being learned: čeština → češtinu. 'Učím se češtinu.' = I am learning Czech. You can also say 'Učím se česky' (with the adverb 'česky' = in Czech)."
+      },
+      "answer_key": "češtinu",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 15
+    },
+    {
+      "id": 25016,
+      "lesson_id": 2502,
+      "type": "fill_blank",
+      "prompt": "Fill in the correct form of 'studovat' (to study) for 'ona': 'Ona ___ na gymnáziu.'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Ona ___ na gymnáziu. (studovat — 3rd person singular)",
+        "blank_count": 1,
+        "accepted_answers": ["studuje"],
+        "explanation": "'Studovat' is a regular -ovat verb. 3rd person singular: studuje. 'Ona studuje na gymnáziu.' = She studies at the grammar school. 'Na' + locative: gymnázium → gymnáziu."
+      },
+      "answer_key": "studuje",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 15
+    },
+    {
+      "id": 25017,
+      "lesson_id": 2502,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I am learning Czech.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I am learning Czech.",
+        "accepted_answers": ["Učím se češtinu.", "Učím se česky.", "Učím se český jazyk."],
+        "grammar_note": "'Učit se' + accusative: 'Učím se češtinu.' (čeština → češtinu). You can also use the adverb form: 'Učím se česky.' Both are common. 'Učím' = 1st person singular of 'učit se'."
+      },
+      "answer_key": "Učím se češtinu.",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 10
+    },
+    {
+      "id": 25018,
+      "lesson_id": 2502,
+      "type": "translation",
+      "prompt": "Translate to English: 'Máme zkoušku z matematiky.'",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "Máme zkoušku z matematiky.",
+        "accepted_answers": ["We have a math exam.", "We have a maths exam.", "We have an exam in mathematics.", "We have a math test."],
+        "grammar_note": "'Zkouška' = exam/test. 'Z' + genitive indicates the subject of the exam: 'z matematiky' = in math/mathematics. 'Máme' = we have (1st person plural of 'mít')."
+      },
+      "answer_key": "We have a math exam.",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 10
+    },
+    {
+      "id": 25019,
+      "lesson_id": 2502,
+      "type": "dialogue",
+      "prompt": "Complete the dialogue between two students talking about school.",
+      "data": {
+        "type": "dialogue",
+        "scenario": "Ve škole — At school. Two students discuss their subjects and an upcoming exam.",
+        "lines": [
+          {"speaker": "person_a", "text": "Jaké předměty máš dnes?"},
+          {"speaker": "person_b", "text": "Mám matematiku a fyziku. A ty?"},
+          {"speaker": "person_a", "text": "Já mám historii a angličtinu. Máme zítra zkoušku?"},
+          {"speaker": "person_b", "text": "Ano, máme zkoušku z matematiky. Musím se hodně učit."}
+        ],
+        "accepted_answers": ["Mám matematiku a fyziku.|Mám matematiku a fyziku. A ty?|Mám matematiku a fyziku. A co ty?"],
+        "explanation": "'Jaké předměty' = which subjects (předmět = subject). 'Mám matematiku a fyziku' = I have math and physics (accusative after 'mít'). 'Zkouška z matematiky' = exam in math (z + genitive). 'Musím se hodně učit' = I have to study a lot."
+      },
+      "answer_key": "Mám matematiku a fyziku. A ty?",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 25
+    },
+    {
+      "id": 25020,
+      "lesson_id": 2502,
+      "type": "matching",
+      "prompt": "Match each Czech school subject with its English translation.",
+      "data": {
+        "type": "matching",
+        "instructions_cz": "Spojte české školní předměty s anglickým překladem.",
+        "instructions_en": "Match each Czech school subject with its English translation.",
+        "pairs": [
+          {"cz": "matematika", "en": "mathematics"},
+          {"cz": "fyzika", "en": "physics"},
+          {"cz": "chemie", "en": "chemistry"},
+          {"cz": "historie", "en": "history"}
+        ],
+        "accepted_answers": ["matematika-mathematics|fyzika-physics|chemie-chemistry|historie-history"],
+        "explanation": "These are core school subjects in Czech. Other subjects: 'biologie' (biology), 'zeměpis' (geography), 'jazyk' (language), 'výtvarná výchova' (art), 'tělesná výchova' (PE)."
+      },
+      "answer_key": "matematika-mathematics|fyzika-physics|chemie-chemistry|historie-history",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 15
+    },
+    {
+      "id": 25021,
+      "lesson_id": 2502,
+      "type": "matching",
+      "prompt": "Match each Czech school item with its English translation.",
+      "data": {
+        "type": "matching",
+        "instructions_cz": "Spojte české školní potřeby s anglickým překladem.",
+        "instructions_en": "Match each Czech school item with its English translation.",
+        "pairs": [
+          {"cz": "učebnice", "en": "textbook"},
+          {"cz": "sešit", "en": "notebook"},
+          {"cz": "tužka", "en": "pencil"},
+          {"cz": "pravítko", "en": "ruler"}
+        ],
+        "accepted_answers": ["učebnice-textbook|sešit-notebook|tužka-pencil|pravítko-ruler"],
+        "explanation": "Common school supplies. Others: 'pero' (pen), 'guma' (eraser), 'batoh' (backpack), 'tabule' (blackboard), 'křída' (chalk)."
+      },
+      "answer_key": "učebnice-textbook|sešit-notebook|tužka-pencil|pravítko-ruler",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 15
+    },
+    {
+      "id": 25022,
+      "lesson_id": 2502,
+      "type": "error_correction",
+      "prompt": "Find and correct the error in this sentence.",
+      "data": {
+        "type": "error_correction",
+        "sentence_with_error": "Studuju na škola.",
+        "hint": "Think about which case 'na' requires for locations.",
+        "accepted_answers": ["Studuju na škole.", "Studuji na škole."],
+        "explanation": "'Na' + locative case for institutions/locations: škola → škole. 'Studuju na škole.' = I study at school. The error was using the nominative 'škola' instead of the locative 'škole'. Similarly: 'na univerzitě', 'na gymnáziu'."
+      },
+      "answer_key": "Studuju na škole.",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 15
+    },
+    {
+      "id": 25023,
+      "lesson_id": 2502,
+      "type": "dictation",
+      "prompt": "Listen and write what you hear.",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_25023",
+        "expected_text": "Učím se česky na univerzitě. Máme zkoušku z matematiky.",
+        "language": "cs-CZ",
+        "note": "Listen for 'učím se' (I learn), 'na univerzitě' (at the university — na + locative), 'zkoušku z matematiky' (exam in math — z + genitive)."
+      },
+      "answer_key": "Učím se česky na univerzitě. Máme zkoušku z matematiky.",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 20
+    },
+    {
+      "id": 25024,
+      "lesson_id": 2502,
+      "type": "pronunciation",
+      "prompt": "Pronounce the following sentence about school life.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Studuji na univerzitě a učím se česky.",
+        "target_audio_hash": "placeholder_25024",
+        "focus_sounds": ["Studuji", "univerzitě", "učím", "česky", "ě"],
+        "min_score": 0.6,
+        "translation_en": "I study at the university and I am learning Czech."
+      },
+      "answer_key": "Studuji na univerzitě a učím se česky.",
+      "grammar_rule_id": "GR-242",
+      "xp_reward": 15
+    }
+  ]
+}

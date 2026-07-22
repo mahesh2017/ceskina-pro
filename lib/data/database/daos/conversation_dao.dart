@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:uuid/uuid.dart';
 import '../database.dart';
 import '../tables/conversations.dart';
 import '../tables/chat_messages.dart';
@@ -14,7 +15,7 @@ class ConversationDao extends DatabaseAccessor<AppDatabase>
   // ── Conversations ──
 
   Future<String> createConversation(String scenario, String cefrLevel) async {
-    final id = 'conv_${DateTime.now().millisecondsSinceEpoch}';
+    final id = 'conv_${const Uuid().v4()}';
     await into(conversations).insert(ConversationsCompanion.insert(
       id: id,
       scenario: scenario,

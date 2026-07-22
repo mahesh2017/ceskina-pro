@@ -5791,6 +5791,41 @@ class $SyncQueueTable extends SyncQueue
     requiredDuringInsert: false,
     defaultValue: const Constant(0),
   );
+  static const VerificationMeta _nextAttemptAtMeta = const VerificationMeta(
+    'nextAttemptAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> nextAttemptAt =
+      GeneratedColumn<DateTime>(
+        'next_attempt_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _deadLetteredAtMeta = const VerificationMeta(
+    'deadLetteredAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deadLetteredAt =
+      GeneratedColumn<DateTime>(
+        'dead_lettered_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _lastErrorMeta = const VerificationMeta(
+    'lastError',
+  );
+  @override
+  late final GeneratedColumn<String> lastError = GeneratedColumn<String>(
+    'last_error',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -5801,6 +5836,9 @@ class $SyncQueueTable extends SyncQueue
     deviceId,
     updatedAt,
     attempts,
+    nextAttemptAt,
+    deadLetteredAt,
+    lastError,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -5864,6 +5902,30 @@ class $SyncQueueTable extends SyncQueue
         attempts.isAcceptableOrUnknown(data['attempts']!, _attemptsMeta),
       );
     }
+    if (data.containsKey('next_attempt_at')) {
+      context.handle(
+        _nextAttemptAtMeta,
+        nextAttemptAt.isAcceptableOrUnknown(
+          data['next_attempt_at']!,
+          _nextAttemptAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('dead_lettered_at')) {
+      context.handle(
+        _deadLetteredAtMeta,
+        deadLetteredAt.isAcceptableOrUnknown(
+          data['dead_lettered_at']!,
+          _deadLetteredAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_error')) {
+      context.handle(
+        _lastErrorMeta,
+        lastError.isAcceptableOrUnknown(data['last_error']!, _lastErrorMeta),
+      );
+    }
     return context;
   }
 
@@ -5905,6 +5967,18 @@ class $SyncQueueTable extends SyncQueue
         DriftSqlType.int,
         data['${effectivePrefix}attempts'],
       )!,
+      nextAttemptAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}next_attempt_at'],
+      ),
+      deadLetteredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}dead_lettered_at'],
+      ),
+      lastError: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_error'],
+      ),
     );
   }
 
@@ -5942,6 +6016,16 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
 
   /// Set when a push attempt fails, for backoff/inspection.
   final int attempts;
+
+  /// Earliest time this row may be retried after a transient failure.
+  final DateTime? nextAttemptAt;
+
+  /// Rows exceeding the retry budget remain inspectable but are no longer
+  /// selected for automatic delivery.
+  final DateTime? deadLetteredAt;
+
+  /// Sanitized diagnostic text for support and future recovery UI.
+  final String? lastError;
   const SyncQueueData({
     required this.id,
     required this.entity,
@@ -5951,6 +6035,9 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
     required this.deviceId,
     required this.updatedAt,
     required this.attempts,
+    this.nextAttemptAt,
+    this.deadLetteredAt,
+    this.lastError,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -5963,6 +6050,15 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
     map['device_id'] = Variable<String>(deviceId);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     map['attempts'] = Variable<int>(attempts);
+    if (!nullToAbsent || nextAttemptAt != null) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt);
+    }
+    if (!nullToAbsent || deadLetteredAt != null) {
+      map['dead_lettered_at'] = Variable<DateTime>(deadLetteredAt);
+    }
+    if (!nullToAbsent || lastError != null) {
+      map['last_error'] = Variable<String>(lastError);
+    }
     return map;
   }
 
@@ -5976,6 +6072,15 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
       deviceId: Value(deviceId),
       updatedAt: Value(updatedAt),
       attempts: Value(attempts),
+      nextAttemptAt: nextAttemptAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nextAttemptAt),
+      deadLetteredAt: deadLetteredAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deadLetteredAt),
+      lastError: lastError == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastError),
     );
   }
 
@@ -5993,6 +6098,9 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
       deviceId: serializer.fromJson<String>(json['deviceId']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       attempts: serializer.fromJson<int>(json['attempts']),
+      nextAttemptAt: serializer.fromJson<DateTime?>(json['nextAttemptAt']),
+      deadLetteredAt: serializer.fromJson<DateTime?>(json['deadLetteredAt']),
+      lastError: serializer.fromJson<String?>(json['lastError']),
     );
   }
   @override
@@ -6007,6 +6115,9 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
       'deviceId': serializer.toJson<String>(deviceId),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'attempts': serializer.toJson<int>(attempts),
+      'nextAttemptAt': serializer.toJson<DateTime?>(nextAttemptAt),
+      'deadLetteredAt': serializer.toJson<DateTime?>(deadLetteredAt),
+      'lastError': serializer.toJson<String?>(lastError),
     };
   }
 
@@ -6019,6 +6130,9 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
     String? deviceId,
     DateTime? updatedAt,
     int? attempts,
+    Value<DateTime?> nextAttemptAt = const Value.absent(),
+    Value<DateTime?> deadLetteredAt = const Value.absent(),
+    Value<String?> lastError = const Value.absent(),
   }) => SyncQueueData(
     id: id ?? this.id,
     entity: entity ?? this.entity,
@@ -6028,6 +6142,13 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
     deviceId: deviceId ?? this.deviceId,
     updatedAt: updatedAt ?? this.updatedAt,
     attempts: attempts ?? this.attempts,
+    nextAttemptAt: nextAttemptAt.present
+        ? nextAttemptAt.value
+        : this.nextAttemptAt,
+    deadLetteredAt: deadLetteredAt.present
+        ? deadLetteredAt.value
+        : this.deadLetteredAt,
+    lastError: lastError.present ? lastError.value : this.lastError,
   );
   SyncQueueData copyWithCompanion(SyncQueueCompanion data) {
     return SyncQueueData(
@@ -6039,6 +6160,13 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
       deviceId: data.deviceId.present ? data.deviceId.value : this.deviceId,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       attempts: data.attempts.present ? data.attempts.value : this.attempts,
+      nextAttemptAt: data.nextAttemptAt.present
+          ? data.nextAttemptAt.value
+          : this.nextAttemptAt,
+      deadLetteredAt: data.deadLetteredAt.present
+          ? data.deadLetteredAt.value
+          : this.deadLetteredAt,
+      lastError: data.lastError.present ? data.lastError.value : this.lastError,
     );
   }
 
@@ -6052,7 +6180,10 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
           ..write('payload: $payload, ')
           ..write('deviceId: $deviceId, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('attempts: $attempts')
+          ..write('attempts: $attempts, ')
+          ..write('nextAttemptAt: $nextAttemptAt, ')
+          ..write('deadLetteredAt: $deadLetteredAt, ')
+          ..write('lastError: $lastError')
           ..write(')'))
         .toString();
   }
@@ -6067,6 +6198,9 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
     deviceId,
     updatedAt,
     attempts,
+    nextAttemptAt,
+    deadLetteredAt,
+    lastError,
   );
   @override
   bool operator ==(Object other) =>
@@ -6079,7 +6213,10 @@ class SyncQueueData extends DataClass implements Insertable<SyncQueueData> {
           other.payload == this.payload &&
           other.deviceId == this.deviceId &&
           other.updatedAt == this.updatedAt &&
-          other.attempts == this.attempts);
+          other.attempts == this.attempts &&
+          other.nextAttemptAt == this.nextAttemptAt &&
+          other.deadLetteredAt == this.deadLetteredAt &&
+          other.lastError == this.lastError);
 }
 
 class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
@@ -6091,6 +6228,9 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
   final Value<String> deviceId;
   final Value<DateTime> updatedAt;
   final Value<int> attempts;
+  final Value<DateTime?> nextAttemptAt;
+  final Value<DateTime?> deadLetteredAt;
+  final Value<String?> lastError;
   const SyncQueueCompanion({
     this.id = const Value.absent(),
     this.entity = const Value.absent(),
@@ -6100,6 +6240,9 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
     this.deviceId = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.attempts = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
+    this.deadLetteredAt = const Value.absent(),
+    this.lastError = const Value.absent(),
   });
   SyncQueueCompanion.insert({
     this.id = const Value.absent(),
@@ -6110,6 +6253,9 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
     required String deviceId,
     this.updatedAt = const Value.absent(),
     this.attempts = const Value.absent(),
+    this.nextAttemptAt = const Value.absent(),
+    this.deadLetteredAt = const Value.absent(),
+    this.lastError = const Value.absent(),
   }) : entity = Value(entity),
        entityKey = Value(entityKey),
        payload = Value(payload),
@@ -6123,6 +6269,9 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
     Expression<String>? deviceId,
     Expression<DateTime>? updatedAt,
     Expression<int>? attempts,
+    Expression<DateTime>? nextAttemptAt,
+    Expression<DateTime>? deadLetteredAt,
+    Expression<String>? lastError,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -6133,6 +6282,9 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
       if (deviceId != null) 'device_id': deviceId,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (attempts != null) 'attempts': attempts,
+      if (nextAttemptAt != null) 'next_attempt_at': nextAttemptAt,
+      if (deadLetteredAt != null) 'dead_lettered_at': deadLetteredAt,
+      if (lastError != null) 'last_error': lastError,
     });
   }
 
@@ -6145,6 +6297,9 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
     Value<String>? deviceId,
     Value<DateTime>? updatedAt,
     Value<int>? attempts,
+    Value<DateTime?>? nextAttemptAt,
+    Value<DateTime?>? deadLetteredAt,
+    Value<String?>? lastError,
   }) {
     return SyncQueueCompanion(
       id: id ?? this.id,
@@ -6155,6 +6310,9 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
       deviceId: deviceId ?? this.deviceId,
       updatedAt: updatedAt ?? this.updatedAt,
       attempts: attempts ?? this.attempts,
+      nextAttemptAt: nextAttemptAt ?? this.nextAttemptAt,
+      deadLetteredAt: deadLetteredAt ?? this.deadLetteredAt,
+      lastError: lastError ?? this.lastError,
     );
   }
 
@@ -6185,6 +6343,15 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
     if (attempts.present) {
       map['attempts'] = Variable<int>(attempts.value);
     }
+    if (nextAttemptAt.present) {
+      map['next_attempt_at'] = Variable<DateTime>(nextAttemptAt.value);
+    }
+    if (deadLetteredAt.present) {
+      map['dead_lettered_at'] = Variable<DateTime>(deadLetteredAt.value);
+    }
+    if (lastError.present) {
+      map['last_error'] = Variable<String>(lastError.value);
+    }
     return map;
   }
 
@@ -6198,7 +6365,10 @@ class SyncQueueCompanion extends UpdateCompanion<SyncQueueData> {
           ..write('payload: $payload, ')
           ..write('deviceId: $deviceId, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('attempts: $attempts')
+          ..write('attempts: $attempts, ')
+          ..write('nextAttemptAt: $nextAttemptAt, ')
+          ..write('deadLetteredAt: $deadLetteredAt, ')
+          ..write('lastError: $lastError')
           ..write(')'))
         .toString();
   }
@@ -6412,6 +6582,895 @@ class SyncStateCompanion extends UpdateCompanion<SyncStateData> {
   }
 }
 
+class $GamificationStateTableTable extends GamificationStateTable
+    with TableInfo<$GamificationStateTableTable, GamificationStateTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GamificationStateTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+    'key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _heartsMeta = const VerificationMeta('hearts');
+  @override
+  late final GeneratedColumn<int> hearts = GeneratedColumn<int>(
+    'hearts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(5),
+  );
+  static const VerificationMeta _maxHeartsMeta = const VerificationMeta(
+    'maxHearts',
+  );
+  @override
+  late final GeneratedColumn<int> maxHearts = GeneratedColumn<int>(
+    'max_hearts',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(5),
+  );
+  static const VerificationMeta _currentStreakMeta = const VerificationMeta(
+    'currentStreak',
+  );
+  @override
+  late final GeneratedColumn<int> currentStreak = GeneratedColumn<int>(
+    'current_streak',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _longestStreakMeta = const VerificationMeta(
+    'longestStreak',
+  );
+  @override
+  late final GeneratedColumn<int> longestStreak = GeneratedColumn<int>(
+    'longest_streak',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _totalXpMeta = const VerificationMeta(
+    'totalXp',
+  );
+  @override
+  late final GeneratedColumn<int> totalXp = GeneratedColumn<int>(
+    'total_xp',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _dailyXpMeta = const VerificationMeta(
+    'dailyXp',
+  );
+  @override
+  late final GeneratedColumn<int> dailyXp = GeneratedColumn<int>(
+    'daily_xp',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _dailyGoalXpMeta = const VerificationMeta(
+    'dailyGoalXp',
+  );
+  @override
+  late final GeneratedColumn<int> dailyGoalXp = GeneratedColumn<int>(
+    'daily_goal_xp',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(50),
+  );
+  static const VerificationMeta _gemsMeta = const VerificationMeta('gems');
+  @override
+  late final GeneratedColumn<int> gems = GeneratedColumn<int>(
+    'gems',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _earnedBadgesMeta = const VerificationMeta(
+    'earnedBadges',
+  );
+  @override
+  late final GeneratedColumn<String> earnedBadges = GeneratedColumn<String>(
+    'earned_badges',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('[]'),
+  );
+  static const VerificationMeta _lastHeartRefillMeta = const VerificationMeta(
+    'lastHeartRefill',
+  );
+  @override
+  late final GeneratedColumn<DateTime> lastHeartRefill =
+      GeneratedColumn<DateTime>(
+        'last_heart_refill',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _streakFreezeAvailableMeta =
+      const VerificationMeta('streakFreezeAvailable');
+  @override
+  late final GeneratedColumn<bool> streakFreezeAvailable =
+      GeneratedColumn<bool>(
+        'streak_freeze_available',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("streak_freeze_available" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
+  static const VerificationMeta _lastOpenDateMeta = const VerificationMeta(
+    'lastOpenDate',
+  );
+  @override
+  late final GeneratedColumn<String> lastOpenDate = GeneratedColumn<String>(
+    'last_open_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _dailyXpResetDateMeta = const VerificationMeta(
+    'dailyXpResetDate',
+  );
+  @override
+  late final GeneratedColumn<String> dailyXpResetDate = GeneratedColumn<String>(
+    'daily_xp_reset_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: Constant(DateTime.now()),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    key,
+    hearts,
+    maxHearts,
+    currentStreak,
+    longestStreak,
+    totalXp,
+    dailyXp,
+    dailyGoalXp,
+    gems,
+    earnedBadges,
+    lastHeartRefill,
+    streakFreezeAvailable,
+    lastOpenDate,
+    dailyXpResetDate,
+    updatedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'gamification_state_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GamificationStateTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('key')) {
+      context.handle(
+        _keyMeta,
+        key.isAcceptableOrUnknown(data['key']!, _keyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('hearts')) {
+      context.handle(
+        _heartsMeta,
+        hearts.isAcceptableOrUnknown(data['hearts']!, _heartsMeta),
+      );
+    }
+    if (data.containsKey('max_hearts')) {
+      context.handle(
+        _maxHeartsMeta,
+        maxHearts.isAcceptableOrUnknown(data['max_hearts']!, _maxHeartsMeta),
+      );
+    }
+    if (data.containsKey('current_streak')) {
+      context.handle(
+        _currentStreakMeta,
+        currentStreak.isAcceptableOrUnknown(
+          data['current_streak']!,
+          _currentStreakMeta,
+        ),
+      );
+    }
+    if (data.containsKey('longest_streak')) {
+      context.handle(
+        _longestStreakMeta,
+        longestStreak.isAcceptableOrUnknown(
+          data['longest_streak']!,
+          _longestStreakMeta,
+        ),
+      );
+    }
+    if (data.containsKey('total_xp')) {
+      context.handle(
+        _totalXpMeta,
+        totalXp.isAcceptableOrUnknown(data['total_xp']!, _totalXpMeta),
+      );
+    }
+    if (data.containsKey('daily_xp')) {
+      context.handle(
+        _dailyXpMeta,
+        dailyXp.isAcceptableOrUnknown(data['daily_xp']!, _dailyXpMeta),
+      );
+    }
+    if (data.containsKey('daily_goal_xp')) {
+      context.handle(
+        _dailyGoalXpMeta,
+        dailyGoalXp.isAcceptableOrUnknown(
+          data['daily_goal_xp']!,
+          _dailyGoalXpMeta,
+        ),
+      );
+    }
+    if (data.containsKey('gems')) {
+      context.handle(
+        _gemsMeta,
+        gems.isAcceptableOrUnknown(data['gems']!, _gemsMeta),
+      );
+    }
+    if (data.containsKey('earned_badges')) {
+      context.handle(
+        _earnedBadgesMeta,
+        earnedBadges.isAcceptableOrUnknown(
+          data['earned_badges']!,
+          _earnedBadgesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_heart_refill')) {
+      context.handle(
+        _lastHeartRefillMeta,
+        lastHeartRefill.isAcceptableOrUnknown(
+          data['last_heart_refill']!,
+          _lastHeartRefillMeta,
+        ),
+      );
+    }
+    if (data.containsKey('streak_freeze_available')) {
+      context.handle(
+        _streakFreezeAvailableMeta,
+        streakFreezeAvailable.isAcceptableOrUnknown(
+          data['streak_freeze_available']!,
+          _streakFreezeAvailableMeta,
+        ),
+      );
+    }
+    if (data.containsKey('last_open_date')) {
+      context.handle(
+        _lastOpenDateMeta,
+        lastOpenDate.isAcceptableOrUnknown(
+          data['last_open_date']!,
+          _lastOpenDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('daily_xp_reset_date')) {
+      context.handle(
+        _dailyXpResetDateMeta,
+        dailyXpResetDate.isAcceptableOrUnknown(
+          data['daily_xp_reset_date']!,
+          _dailyXpResetDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {key};
+  @override
+  GamificationStateTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GamificationStateTableData(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      hearts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}hearts'],
+      )!,
+      maxHearts: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}max_hearts'],
+      )!,
+      currentStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}current_streak'],
+      )!,
+      longestStreak: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}longest_streak'],
+      )!,
+      totalXp: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_xp'],
+      )!,
+      dailyXp: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}daily_xp'],
+      )!,
+      dailyGoalXp: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}daily_goal_xp'],
+      )!,
+      gems: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}gems'],
+      )!,
+      earnedBadges: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}earned_badges'],
+      )!,
+      lastHeartRefill: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_heart_refill'],
+      ),
+      streakFreezeAvailable: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}streak_freeze_available'],
+      )!,
+      lastOpenDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}last_open_date'],
+      ),
+      dailyXpResetDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}daily_xp_reset_date'],
+      ),
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $GamificationStateTableTable createAlias(String alias) {
+    return $GamificationStateTableTable(attachedDatabase, alias);
+  }
+}
+
+class GamificationStateTableData extends DataClass
+    implements Insertable<GamificationStateTableData> {
+  final String key;
+  final int hearts;
+  final int maxHearts;
+  final int currentStreak;
+  final int longestStreak;
+  final int totalXp;
+  final int dailyXp;
+  final int dailyGoalXp;
+  final int gems;
+  final String earnedBadges;
+  final DateTime? lastHeartRefill;
+  final bool streakFreezeAvailable;
+  final String? lastOpenDate;
+  final String? dailyXpResetDate;
+  final DateTime updatedAt;
+  const GamificationStateTableData({
+    required this.key,
+    required this.hearts,
+    required this.maxHearts,
+    required this.currentStreak,
+    required this.longestStreak,
+    required this.totalXp,
+    required this.dailyXp,
+    required this.dailyGoalXp,
+    required this.gems,
+    required this.earnedBadges,
+    this.lastHeartRefill,
+    required this.streakFreezeAvailable,
+    this.lastOpenDate,
+    this.dailyXpResetDate,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['hearts'] = Variable<int>(hearts);
+    map['max_hearts'] = Variable<int>(maxHearts);
+    map['current_streak'] = Variable<int>(currentStreak);
+    map['longest_streak'] = Variable<int>(longestStreak);
+    map['total_xp'] = Variable<int>(totalXp);
+    map['daily_xp'] = Variable<int>(dailyXp);
+    map['daily_goal_xp'] = Variable<int>(dailyGoalXp);
+    map['gems'] = Variable<int>(gems);
+    map['earned_badges'] = Variable<String>(earnedBadges);
+    if (!nullToAbsent || lastHeartRefill != null) {
+      map['last_heart_refill'] = Variable<DateTime>(lastHeartRefill);
+    }
+    map['streak_freeze_available'] = Variable<bool>(streakFreezeAvailable);
+    if (!nullToAbsent || lastOpenDate != null) {
+      map['last_open_date'] = Variable<String>(lastOpenDate);
+    }
+    if (!nullToAbsent || dailyXpResetDate != null) {
+      map['daily_xp_reset_date'] = Variable<String>(dailyXpResetDate);
+    }
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  GamificationStateTableCompanion toCompanion(bool nullToAbsent) {
+    return GamificationStateTableCompanion(
+      key: Value(key),
+      hearts: Value(hearts),
+      maxHearts: Value(maxHearts),
+      currentStreak: Value(currentStreak),
+      longestStreak: Value(longestStreak),
+      totalXp: Value(totalXp),
+      dailyXp: Value(dailyXp),
+      dailyGoalXp: Value(dailyGoalXp),
+      gems: Value(gems),
+      earnedBadges: Value(earnedBadges),
+      lastHeartRefill: lastHeartRefill == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastHeartRefill),
+      streakFreezeAvailable: Value(streakFreezeAvailable),
+      lastOpenDate: lastOpenDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastOpenDate),
+      dailyXpResetDate: dailyXpResetDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dailyXpResetDate),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory GamificationStateTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GamificationStateTableData(
+      key: serializer.fromJson<String>(json['key']),
+      hearts: serializer.fromJson<int>(json['hearts']),
+      maxHearts: serializer.fromJson<int>(json['maxHearts']),
+      currentStreak: serializer.fromJson<int>(json['currentStreak']),
+      longestStreak: serializer.fromJson<int>(json['longestStreak']),
+      totalXp: serializer.fromJson<int>(json['totalXp']),
+      dailyXp: serializer.fromJson<int>(json['dailyXp']),
+      dailyGoalXp: serializer.fromJson<int>(json['dailyGoalXp']),
+      gems: serializer.fromJson<int>(json['gems']),
+      earnedBadges: serializer.fromJson<String>(json['earnedBadges']),
+      lastHeartRefill: serializer.fromJson<DateTime?>(json['lastHeartRefill']),
+      streakFreezeAvailable: serializer.fromJson<bool>(
+        json['streakFreezeAvailable'],
+      ),
+      lastOpenDate: serializer.fromJson<String?>(json['lastOpenDate']),
+      dailyXpResetDate: serializer.fromJson<String?>(json['dailyXpResetDate']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'hearts': serializer.toJson<int>(hearts),
+      'maxHearts': serializer.toJson<int>(maxHearts),
+      'currentStreak': serializer.toJson<int>(currentStreak),
+      'longestStreak': serializer.toJson<int>(longestStreak),
+      'totalXp': serializer.toJson<int>(totalXp),
+      'dailyXp': serializer.toJson<int>(dailyXp),
+      'dailyGoalXp': serializer.toJson<int>(dailyGoalXp),
+      'gems': serializer.toJson<int>(gems),
+      'earnedBadges': serializer.toJson<String>(earnedBadges),
+      'lastHeartRefill': serializer.toJson<DateTime?>(lastHeartRefill),
+      'streakFreezeAvailable': serializer.toJson<bool>(streakFreezeAvailable),
+      'lastOpenDate': serializer.toJson<String?>(lastOpenDate),
+      'dailyXpResetDate': serializer.toJson<String?>(dailyXpResetDate),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  GamificationStateTableData copyWith({
+    String? key,
+    int? hearts,
+    int? maxHearts,
+    int? currentStreak,
+    int? longestStreak,
+    int? totalXp,
+    int? dailyXp,
+    int? dailyGoalXp,
+    int? gems,
+    String? earnedBadges,
+    Value<DateTime?> lastHeartRefill = const Value.absent(),
+    bool? streakFreezeAvailable,
+    Value<String?> lastOpenDate = const Value.absent(),
+    Value<String?> dailyXpResetDate = const Value.absent(),
+    DateTime? updatedAt,
+  }) => GamificationStateTableData(
+    key: key ?? this.key,
+    hearts: hearts ?? this.hearts,
+    maxHearts: maxHearts ?? this.maxHearts,
+    currentStreak: currentStreak ?? this.currentStreak,
+    longestStreak: longestStreak ?? this.longestStreak,
+    totalXp: totalXp ?? this.totalXp,
+    dailyXp: dailyXp ?? this.dailyXp,
+    dailyGoalXp: dailyGoalXp ?? this.dailyGoalXp,
+    gems: gems ?? this.gems,
+    earnedBadges: earnedBadges ?? this.earnedBadges,
+    lastHeartRefill: lastHeartRefill.present
+        ? lastHeartRefill.value
+        : this.lastHeartRefill,
+    streakFreezeAvailable: streakFreezeAvailable ?? this.streakFreezeAvailable,
+    lastOpenDate: lastOpenDate.present ? lastOpenDate.value : this.lastOpenDate,
+    dailyXpResetDate: dailyXpResetDate.present
+        ? dailyXpResetDate.value
+        : this.dailyXpResetDate,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  GamificationStateTableData copyWithCompanion(
+    GamificationStateTableCompanion data,
+  ) {
+    return GamificationStateTableData(
+      key: data.key.present ? data.key.value : this.key,
+      hearts: data.hearts.present ? data.hearts.value : this.hearts,
+      maxHearts: data.maxHearts.present ? data.maxHearts.value : this.maxHearts,
+      currentStreak: data.currentStreak.present
+          ? data.currentStreak.value
+          : this.currentStreak,
+      longestStreak: data.longestStreak.present
+          ? data.longestStreak.value
+          : this.longestStreak,
+      totalXp: data.totalXp.present ? data.totalXp.value : this.totalXp,
+      dailyXp: data.dailyXp.present ? data.dailyXp.value : this.dailyXp,
+      dailyGoalXp: data.dailyGoalXp.present
+          ? data.dailyGoalXp.value
+          : this.dailyGoalXp,
+      gems: data.gems.present ? data.gems.value : this.gems,
+      earnedBadges: data.earnedBadges.present
+          ? data.earnedBadges.value
+          : this.earnedBadges,
+      lastHeartRefill: data.lastHeartRefill.present
+          ? data.lastHeartRefill.value
+          : this.lastHeartRefill,
+      streakFreezeAvailable: data.streakFreezeAvailable.present
+          ? data.streakFreezeAvailable.value
+          : this.streakFreezeAvailable,
+      lastOpenDate: data.lastOpenDate.present
+          ? data.lastOpenDate.value
+          : this.lastOpenDate,
+      dailyXpResetDate: data.dailyXpResetDate.present
+          ? data.dailyXpResetDate.value
+          : this.dailyXpResetDate,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GamificationStateTableData(')
+          ..write('key: $key, ')
+          ..write('hearts: $hearts, ')
+          ..write('maxHearts: $maxHearts, ')
+          ..write('currentStreak: $currentStreak, ')
+          ..write('longestStreak: $longestStreak, ')
+          ..write('totalXp: $totalXp, ')
+          ..write('dailyXp: $dailyXp, ')
+          ..write('dailyGoalXp: $dailyGoalXp, ')
+          ..write('gems: $gems, ')
+          ..write('earnedBadges: $earnedBadges, ')
+          ..write('lastHeartRefill: $lastHeartRefill, ')
+          ..write('streakFreezeAvailable: $streakFreezeAvailable, ')
+          ..write('lastOpenDate: $lastOpenDate, ')
+          ..write('dailyXpResetDate: $dailyXpResetDate, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    key,
+    hearts,
+    maxHearts,
+    currentStreak,
+    longestStreak,
+    totalXp,
+    dailyXp,
+    dailyGoalXp,
+    gems,
+    earnedBadges,
+    lastHeartRefill,
+    streakFreezeAvailable,
+    lastOpenDate,
+    dailyXpResetDate,
+    updatedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GamificationStateTableData &&
+          other.key == this.key &&
+          other.hearts == this.hearts &&
+          other.maxHearts == this.maxHearts &&
+          other.currentStreak == this.currentStreak &&
+          other.longestStreak == this.longestStreak &&
+          other.totalXp == this.totalXp &&
+          other.dailyXp == this.dailyXp &&
+          other.dailyGoalXp == this.dailyGoalXp &&
+          other.gems == this.gems &&
+          other.earnedBadges == this.earnedBadges &&
+          other.lastHeartRefill == this.lastHeartRefill &&
+          other.streakFreezeAvailable == this.streakFreezeAvailable &&
+          other.lastOpenDate == this.lastOpenDate &&
+          other.dailyXpResetDate == this.dailyXpResetDate &&
+          other.updatedAt == this.updatedAt);
+}
+
+class GamificationStateTableCompanion
+    extends UpdateCompanion<GamificationStateTableData> {
+  final Value<String> key;
+  final Value<int> hearts;
+  final Value<int> maxHearts;
+  final Value<int> currentStreak;
+  final Value<int> longestStreak;
+  final Value<int> totalXp;
+  final Value<int> dailyXp;
+  final Value<int> dailyGoalXp;
+  final Value<int> gems;
+  final Value<String> earnedBadges;
+  final Value<DateTime?> lastHeartRefill;
+  final Value<bool> streakFreezeAvailable;
+  final Value<String?> lastOpenDate;
+  final Value<String?> dailyXpResetDate;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const GamificationStateTableCompanion({
+    this.key = const Value.absent(),
+    this.hearts = const Value.absent(),
+    this.maxHearts = const Value.absent(),
+    this.currentStreak = const Value.absent(),
+    this.longestStreak = const Value.absent(),
+    this.totalXp = const Value.absent(),
+    this.dailyXp = const Value.absent(),
+    this.dailyGoalXp = const Value.absent(),
+    this.gems = const Value.absent(),
+    this.earnedBadges = const Value.absent(),
+    this.lastHeartRefill = const Value.absent(),
+    this.streakFreezeAvailable = const Value.absent(),
+    this.lastOpenDate = const Value.absent(),
+    this.dailyXpResetDate = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GamificationStateTableCompanion.insert({
+    required String key,
+    this.hearts = const Value.absent(),
+    this.maxHearts = const Value.absent(),
+    this.currentStreak = const Value.absent(),
+    this.longestStreak = const Value.absent(),
+    this.totalXp = const Value.absent(),
+    this.dailyXp = const Value.absent(),
+    this.dailyGoalXp = const Value.absent(),
+    this.gems = const Value.absent(),
+    this.earnedBadges = const Value.absent(),
+    this.lastHeartRefill = const Value.absent(),
+    this.streakFreezeAvailable = const Value.absent(),
+    this.lastOpenDate = const Value.absent(),
+    this.dailyXpResetDate = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : key = Value(key);
+  static Insertable<GamificationStateTableData> custom({
+    Expression<String>? key,
+    Expression<int>? hearts,
+    Expression<int>? maxHearts,
+    Expression<int>? currentStreak,
+    Expression<int>? longestStreak,
+    Expression<int>? totalXp,
+    Expression<int>? dailyXp,
+    Expression<int>? dailyGoalXp,
+    Expression<int>? gems,
+    Expression<String>? earnedBadges,
+    Expression<DateTime>? lastHeartRefill,
+    Expression<bool>? streakFreezeAvailable,
+    Expression<String>? lastOpenDate,
+    Expression<String>? dailyXpResetDate,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (hearts != null) 'hearts': hearts,
+      if (maxHearts != null) 'max_hearts': maxHearts,
+      if (currentStreak != null) 'current_streak': currentStreak,
+      if (longestStreak != null) 'longest_streak': longestStreak,
+      if (totalXp != null) 'total_xp': totalXp,
+      if (dailyXp != null) 'daily_xp': dailyXp,
+      if (dailyGoalXp != null) 'daily_goal_xp': dailyGoalXp,
+      if (gems != null) 'gems': gems,
+      if (earnedBadges != null) 'earned_badges': earnedBadges,
+      if (lastHeartRefill != null) 'last_heart_refill': lastHeartRefill,
+      if (streakFreezeAvailable != null)
+        'streak_freeze_available': streakFreezeAvailable,
+      if (lastOpenDate != null) 'last_open_date': lastOpenDate,
+      if (dailyXpResetDate != null) 'daily_xp_reset_date': dailyXpResetDate,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GamificationStateTableCompanion copyWith({
+    Value<String>? key,
+    Value<int>? hearts,
+    Value<int>? maxHearts,
+    Value<int>? currentStreak,
+    Value<int>? longestStreak,
+    Value<int>? totalXp,
+    Value<int>? dailyXp,
+    Value<int>? dailyGoalXp,
+    Value<int>? gems,
+    Value<String>? earnedBadges,
+    Value<DateTime?>? lastHeartRefill,
+    Value<bool>? streakFreezeAvailable,
+    Value<String?>? lastOpenDate,
+    Value<String?>? dailyXpResetDate,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return GamificationStateTableCompanion(
+      key: key ?? this.key,
+      hearts: hearts ?? this.hearts,
+      maxHearts: maxHearts ?? this.maxHearts,
+      currentStreak: currentStreak ?? this.currentStreak,
+      longestStreak: longestStreak ?? this.longestStreak,
+      totalXp: totalXp ?? this.totalXp,
+      dailyXp: dailyXp ?? this.dailyXp,
+      dailyGoalXp: dailyGoalXp ?? this.dailyGoalXp,
+      gems: gems ?? this.gems,
+      earnedBadges: earnedBadges ?? this.earnedBadges,
+      lastHeartRefill: lastHeartRefill ?? this.lastHeartRefill,
+      streakFreezeAvailable:
+          streakFreezeAvailable ?? this.streakFreezeAvailable,
+      lastOpenDate: lastOpenDate ?? this.lastOpenDate,
+      dailyXpResetDate: dailyXpResetDate ?? this.dailyXpResetDate,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (hearts.present) {
+      map['hearts'] = Variable<int>(hearts.value);
+    }
+    if (maxHearts.present) {
+      map['max_hearts'] = Variable<int>(maxHearts.value);
+    }
+    if (currentStreak.present) {
+      map['current_streak'] = Variable<int>(currentStreak.value);
+    }
+    if (longestStreak.present) {
+      map['longest_streak'] = Variable<int>(longestStreak.value);
+    }
+    if (totalXp.present) {
+      map['total_xp'] = Variable<int>(totalXp.value);
+    }
+    if (dailyXp.present) {
+      map['daily_xp'] = Variable<int>(dailyXp.value);
+    }
+    if (dailyGoalXp.present) {
+      map['daily_goal_xp'] = Variable<int>(dailyGoalXp.value);
+    }
+    if (gems.present) {
+      map['gems'] = Variable<int>(gems.value);
+    }
+    if (earnedBadges.present) {
+      map['earned_badges'] = Variable<String>(earnedBadges.value);
+    }
+    if (lastHeartRefill.present) {
+      map['last_heart_refill'] = Variable<DateTime>(lastHeartRefill.value);
+    }
+    if (streakFreezeAvailable.present) {
+      map['streak_freeze_available'] = Variable<bool>(
+        streakFreezeAvailable.value,
+      );
+    }
+    if (lastOpenDate.present) {
+      map['last_open_date'] = Variable<String>(lastOpenDate.value);
+    }
+    if (dailyXpResetDate.present) {
+      map['daily_xp_reset_date'] = Variable<String>(dailyXpResetDate.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GamificationStateTableCompanion(')
+          ..write('key: $key, ')
+          ..write('hearts: $hearts, ')
+          ..write('maxHearts: $maxHearts, ')
+          ..write('currentStreak: $currentStreak, ')
+          ..write('longestStreak: $longestStreak, ')
+          ..write('totalXp: $totalXp, ')
+          ..write('dailyXp: $dailyXp, ')
+          ..write('dailyGoalXp: $dailyGoalXp, ')
+          ..write('gems: $gems, ')
+          ..write('earnedBadges: $earnedBadges, ')
+          ..write('lastHeartRefill: $lastHeartRefill, ')
+          ..write('streakFreezeAvailable: $streakFreezeAvailable, ')
+          ..write('lastOpenDate: $lastOpenDate, ')
+          ..write('dailyXpResetDate: $dailyXpResetDate, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -6429,6 +7488,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $LessonProgressTable lessonProgress = $LessonProgressTable(this);
   late final $SyncQueueTable syncQueue = $SyncQueueTable(this);
   late final $SyncStateTable syncState = $SyncStateTable(this);
+  late final $GamificationStateTableTable gamificationStateTable =
+      $GamificationStateTableTable(this);
   late final CurriculumDao curriculumDao = CurriculumDao(this as AppDatabase);
   late final VocabularyDao vocabularyDao = VocabularyDao(this as AppDatabase);
   late final ConversationDao conversationDao = ConversationDao(
@@ -6436,6 +7497,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final ProgressDao progressDao = ProgressDao(this as AppDatabase);
   late final SyncDao syncDao = SyncDao(this as AppDatabase);
+  late final GamificationDao gamificationDao = GamificationDao(
+    this as AppDatabase,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6455,6 +7519,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     lessonProgress,
     syncQueue,
     syncState,
+    gamificationStateTable,
   ];
 }
 
@@ -10874,6 +11939,9 @@ typedef $$SyncQueueTableCreateCompanionBuilder =
       required String deviceId,
       Value<DateTime> updatedAt,
       Value<int> attempts,
+      Value<DateTime?> nextAttemptAt,
+      Value<DateTime?> deadLetteredAt,
+      Value<String?> lastError,
     });
 typedef $$SyncQueueTableUpdateCompanionBuilder =
     SyncQueueCompanion Function({
@@ -10885,6 +11953,9 @@ typedef $$SyncQueueTableUpdateCompanionBuilder =
       Value<String> deviceId,
       Value<DateTime> updatedAt,
       Value<int> attempts,
+      Value<DateTime?> nextAttemptAt,
+      Value<DateTime?> deadLetteredAt,
+      Value<String?> lastError,
     });
 
 class $$SyncQueueTableFilterComposer
@@ -10933,6 +12004,21 @@ class $$SyncQueueTableFilterComposer
 
   ColumnFilters<int> get attempts => $composableBuilder(
     column: $table.attempts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deadLetteredAt => $composableBuilder(
+    column: $table.deadLetteredAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastError => $composableBuilder(
+    column: $table.lastError,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -10985,6 +12071,21 @@ class $$SyncQueueTableOrderingComposer
     column: $table.attempts,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deadLetteredAt => $composableBuilder(
+    column: $table.deadLetteredAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastError => $composableBuilder(
+    column: $table.lastError,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SyncQueueTableAnnotationComposer
@@ -11019,6 +12120,19 @@ class $$SyncQueueTableAnnotationComposer
 
   GeneratedColumn<int> get attempts =>
       $composableBuilder(column: $table.attempts, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get nextAttemptAt => $composableBuilder(
+    column: $table.nextAttemptAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deadLetteredAt => $composableBuilder(
+    column: $table.deadLetteredAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get lastError =>
+      $composableBuilder(column: $table.lastError, builder: (column) => column);
 }
 
 class $$SyncQueueTableTableManager
@@ -11060,6 +12174,9 @@ class $$SyncQueueTableTableManager
                 Value<String> deviceId = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> attempts = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
+                Value<DateTime?> deadLetteredAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
               }) => SyncQueueCompanion(
                 id: id,
                 entity: entity,
@@ -11069,6 +12186,9 @@ class $$SyncQueueTableTableManager
                 deviceId: deviceId,
                 updatedAt: updatedAt,
                 attempts: attempts,
+                nextAttemptAt: nextAttemptAt,
+                deadLetteredAt: deadLetteredAt,
+                lastError: lastError,
               ),
           createCompanionCallback:
               ({
@@ -11080,6 +12200,9 @@ class $$SyncQueueTableTableManager
                 required String deviceId,
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<int> attempts = const Value.absent(),
+                Value<DateTime?> nextAttemptAt = const Value.absent(),
+                Value<DateTime?> deadLetteredAt = const Value.absent(),
+                Value<String?> lastError = const Value.absent(),
               }) => SyncQueueCompanion.insert(
                 id: id,
                 entity: entity,
@@ -11089,6 +12212,9 @@ class $$SyncQueueTableTableManager
                 deviceId: deviceId,
                 updatedAt: updatedAt,
                 attempts: attempts,
+                nextAttemptAt: nextAttemptAt,
+                deadLetteredAt: deadLetteredAt,
+                lastError: lastError,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -11254,6 +12380,431 @@ typedef $$SyncStateTableProcessedTableManager =
       SyncStateData,
       PrefetchHooks Function()
     >;
+typedef $$GamificationStateTableTableCreateCompanionBuilder =
+    GamificationStateTableCompanion Function({
+      required String key,
+      Value<int> hearts,
+      Value<int> maxHearts,
+      Value<int> currentStreak,
+      Value<int> longestStreak,
+      Value<int> totalXp,
+      Value<int> dailyXp,
+      Value<int> dailyGoalXp,
+      Value<int> gems,
+      Value<String> earnedBadges,
+      Value<DateTime?> lastHeartRefill,
+      Value<bool> streakFreezeAvailable,
+      Value<String?> lastOpenDate,
+      Value<String?> dailyXpResetDate,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+typedef $$GamificationStateTableTableUpdateCompanionBuilder =
+    GamificationStateTableCompanion Function({
+      Value<String> key,
+      Value<int> hearts,
+      Value<int> maxHearts,
+      Value<int> currentStreak,
+      Value<int> longestStreak,
+      Value<int> totalXp,
+      Value<int> dailyXp,
+      Value<int> dailyGoalXp,
+      Value<int> gems,
+      Value<String> earnedBadges,
+      Value<DateTime?> lastHeartRefill,
+      Value<bool> streakFreezeAvailable,
+      Value<String?> lastOpenDate,
+      Value<String?> dailyXpResetDate,
+      Value<DateTime> updatedAt,
+      Value<int> rowid,
+    });
+
+class $$GamificationStateTableTableFilterComposer
+    extends Composer<_$AppDatabase, $GamificationStateTableTable> {
+  $$GamificationStateTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get hearts => $composableBuilder(
+    column: $table.hearts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get maxHearts => $composableBuilder(
+    column: $table.maxHearts,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get currentStreak => $composableBuilder(
+    column: $table.currentStreak,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get longestStreak => $composableBuilder(
+    column: $table.longestStreak,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalXp => $composableBuilder(
+    column: $table.totalXp,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dailyXp => $composableBuilder(
+    column: $table.dailyXp,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get dailyGoalXp => $composableBuilder(
+    column: $table.dailyGoalXp,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get gems => $composableBuilder(
+    column: $table.gems,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get earnedBadges => $composableBuilder(
+    column: $table.earnedBadges,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get lastHeartRefill => $composableBuilder(
+    column: $table.lastHeartRefill,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get streakFreezeAvailable => $composableBuilder(
+    column: $table.streakFreezeAvailable,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get lastOpenDate => $composableBuilder(
+    column: $table.lastOpenDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get dailyXpResetDate => $composableBuilder(
+    column: $table.dailyXpResetDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GamificationStateTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $GamificationStateTableTable> {
+  $$GamificationStateTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get key => $composableBuilder(
+    column: $table.key,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get hearts => $composableBuilder(
+    column: $table.hearts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get maxHearts => $composableBuilder(
+    column: $table.maxHearts,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get currentStreak => $composableBuilder(
+    column: $table.currentStreak,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get longestStreak => $composableBuilder(
+    column: $table.longestStreak,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalXp => $composableBuilder(
+    column: $table.totalXp,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dailyXp => $composableBuilder(
+    column: $table.dailyXp,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get dailyGoalXp => $composableBuilder(
+    column: $table.dailyGoalXp,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get gems => $composableBuilder(
+    column: $table.gems,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get earnedBadges => $composableBuilder(
+    column: $table.earnedBadges,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get lastHeartRefill => $composableBuilder(
+    column: $table.lastHeartRefill,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get streakFreezeAvailable => $composableBuilder(
+    column: $table.streakFreezeAvailable,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get lastOpenDate => $composableBuilder(
+    column: $table.lastOpenDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get dailyXpResetDate => $composableBuilder(
+    column: $table.dailyXpResetDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GamificationStateTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GamificationStateTableTable> {
+  $$GamificationStateTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get key =>
+      $composableBuilder(column: $table.key, builder: (column) => column);
+
+  GeneratedColumn<int> get hearts =>
+      $composableBuilder(column: $table.hearts, builder: (column) => column);
+
+  GeneratedColumn<int> get maxHearts =>
+      $composableBuilder(column: $table.maxHearts, builder: (column) => column);
+
+  GeneratedColumn<int> get currentStreak => $composableBuilder(
+    column: $table.currentStreak,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get longestStreak => $composableBuilder(
+    column: $table.longestStreak,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalXp =>
+      $composableBuilder(column: $table.totalXp, builder: (column) => column);
+
+  GeneratedColumn<int> get dailyXp =>
+      $composableBuilder(column: $table.dailyXp, builder: (column) => column);
+
+  GeneratedColumn<int> get dailyGoalXp => $composableBuilder(
+    column: $table.dailyGoalXp,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get gems =>
+      $composableBuilder(column: $table.gems, builder: (column) => column);
+
+  GeneratedColumn<String> get earnedBadges => $composableBuilder(
+    column: $table.earnedBadges,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get lastHeartRefill => $composableBuilder(
+    column: $table.lastHeartRefill,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get streakFreezeAvailable => $composableBuilder(
+    column: $table.streakFreezeAvailable,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get lastOpenDate => $composableBuilder(
+    column: $table.lastOpenDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get dailyXpResetDate => $composableBuilder(
+    column: $table.dailyXpResetDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$GamificationStateTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GamificationStateTableTable,
+          GamificationStateTableData,
+          $$GamificationStateTableTableFilterComposer,
+          $$GamificationStateTableTableOrderingComposer,
+          $$GamificationStateTableTableAnnotationComposer,
+          $$GamificationStateTableTableCreateCompanionBuilder,
+          $$GamificationStateTableTableUpdateCompanionBuilder,
+          (
+            GamificationStateTableData,
+            BaseReferences<
+              _$AppDatabase,
+              $GamificationStateTableTable,
+              GamificationStateTableData
+            >,
+          ),
+          GamificationStateTableData,
+          PrefetchHooks Function()
+        > {
+  $$GamificationStateTableTableTableManager(
+    _$AppDatabase db,
+    $GamificationStateTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GamificationStateTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$GamificationStateTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$GamificationStateTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> key = const Value.absent(),
+                Value<int> hearts = const Value.absent(),
+                Value<int> maxHearts = const Value.absent(),
+                Value<int> currentStreak = const Value.absent(),
+                Value<int> longestStreak = const Value.absent(),
+                Value<int> totalXp = const Value.absent(),
+                Value<int> dailyXp = const Value.absent(),
+                Value<int> dailyGoalXp = const Value.absent(),
+                Value<int> gems = const Value.absent(),
+                Value<String> earnedBadges = const Value.absent(),
+                Value<DateTime?> lastHeartRefill = const Value.absent(),
+                Value<bool> streakFreezeAvailable = const Value.absent(),
+                Value<String?> lastOpenDate = const Value.absent(),
+                Value<String?> dailyXpResetDate = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GamificationStateTableCompanion(
+                key: key,
+                hearts: hearts,
+                maxHearts: maxHearts,
+                currentStreak: currentStreak,
+                longestStreak: longestStreak,
+                totalXp: totalXp,
+                dailyXp: dailyXp,
+                dailyGoalXp: dailyGoalXp,
+                gems: gems,
+                earnedBadges: earnedBadges,
+                lastHeartRefill: lastHeartRefill,
+                streakFreezeAvailable: streakFreezeAvailable,
+                lastOpenDate: lastOpenDate,
+                dailyXpResetDate: dailyXpResetDate,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String key,
+                Value<int> hearts = const Value.absent(),
+                Value<int> maxHearts = const Value.absent(),
+                Value<int> currentStreak = const Value.absent(),
+                Value<int> longestStreak = const Value.absent(),
+                Value<int> totalXp = const Value.absent(),
+                Value<int> dailyXp = const Value.absent(),
+                Value<int> dailyGoalXp = const Value.absent(),
+                Value<int> gems = const Value.absent(),
+                Value<String> earnedBadges = const Value.absent(),
+                Value<DateTime?> lastHeartRefill = const Value.absent(),
+                Value<bool> streakFreezeAvailable = const Value.absent(),
+                Value<String?> lastOpenDate = const Value.absent(),
+                Value<String?> dailyXpResetDate = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GamificationStateTableCompanion.insert(
+                key: key,
+                hearts: hearts,
+                maxHearts: maxHearts,
+                currentStreak: currentStreak,
+                longestStreak: longestStreak,
+                totalXp: totalXp,
+                dailyXp: dailyXp,
+                dailyGoalXp: dailyGoalXp,
+                gems: gems,
+                earnedBadges: earnedBadges,
+                lastHeartRefill: lastHeartRefill,
+                streakFreezeAvailable: streakFreezeAvailable,
+                lastOpenDate: lastOpenDate,
+                dailyXpResetDate: dailyXpResetDate,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GamificationStateTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GamificationStateTableTable,
+      GamificationStateTableData,
+      $$GamificationStateTableTableFilterComposer,
+      $$GamificationStateTableTableOrderingComposer,
+      $$GamificationStateTableTableAnnotationComposer,
+      $$GamificationStateTableTableCreateCompanionBuilder,
+      $$GamificationStateTableTableUpdateCompanionBuilder,
+      (
+        GamificationStateTableData,
+        BaseReferences<
+          _$AppDatabase,
+          $GamificationStateTableTable,
+          GamificationStateTableData
+        >,
+      ),
+      GamificationStateTableData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -11286,4 +12837,9 @@ class $AppDatabaseManager {
       $$SyncQueueTableTableManager(_db, _db.syncQueue);
   $$SyncStateTableTableManager get syncState =>
       $$SyncStateTableTableManager(_db, _db.syncState);
+  $$GamificationStateTableTableTableManager get gamificationStateTable =>
+      $$GamificationStateTableTableTableManager(
+        _db,
+        _db.gamificationStateTable,
+      );
 }

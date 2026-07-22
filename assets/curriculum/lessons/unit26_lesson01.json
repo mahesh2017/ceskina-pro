@@ -1,0 +1,218 @@
+{
+  "id": 2601,
+  "unit_id": 26,
+  "order_in_unit": 0,
+  "title": "Housing & Rooms",
+  "description": "Learn vocabulary for housing, rooms, and parts of a house in Czech. Practice the locative case with 'v/ve' (in) for describing where things are located in the home.",
+  "duration_min": 15,
+  "lesson_type": "introduction",
+  "is_review": false,
+  "exercises": [
+    {
+      "id": 26001,
+      "lesson_id": 2601,
+      "type": "matching",
+      "prompt": "Match each Czech room with its English translation.",
+      "data": {
+        "type": "matching",
+        "instructions_cz": "Spojte české názvy místností s anglickým překladem.",
+        "instructions_en": "Match each Czech room with its English translation.",
+        "pairs": [
+          {"cz": "ložnice", "en": "bedroom"},
+          {"cz": "kuchyně", "en": "kitchen"},
+          {"cz": "koupelna", "en": "bathroom"},
+          {"cz": "obývací pokoj", "en": "living room"}
+        ],
+        "accepted_answers": ["ložnice-bedroom|kuchyně-kitchen|koupelna-bathroom|obývací pokoj-living room"],
+        "explanation": "Common rooms in a Czech home. Others: 'jídelna' (dining room), 'pracovna' (study/office), 'dětský pokoj' (children's room), 'chodba' (hallway)."
+      },
+      "answer_key": "ložnice-bedroom|kuchyně-kitchen|koupelna-bathroom|obývací pokoj-living room",
+      "grammar_rule_id": "GR-250",
+      "xp_reward": 15
+    },
+    {
+      "id": 26002,
+      "lesson_id": 2601,
+      "type": "matching",
+      "prompt": "Match each Czech housing term with its English translation.",
+      "data": {
+        "type": "matching",
+        "instructions_cz": "Spojte české termíny pro bydlení s anglickým překladem.",
+        "instructions_en": "Match each Czech housing term with its English translation.",
+        "pairs": [
+          {"cz": "dům", "en": "house"},
+          {"cz": "byt", "en": "apartment"},
+          {"cz": "okno", "en": "window"},
+          {"cz": "zahrada", "en": "garden"}
+        ],
+        "accepted_answers": ["dům-house|byt-apartment|okno-window|zahrada-garden"],
+        "explanation": "Essential housing vocabulary. Others: 'střecha' (roof), 'dveře' (door), 'garáž' (garage), 'schodiště' (stairs), 'balkon' (balcony), 'podlaha' (floor)."
+      },
+      "answer_key": "dům-house|byt-apartment|okno-window|zahrada-garden",
+      "grammar_rule_id": "GR-250",
+      "xp_reward": 15
+    },
+    {
+      "id": 26003,
+      "lesson_id": 2601,
+      "type": "multiple_choice",
+      "prompt": "Complete the sentence with the locative form: 'Vaříme v ___ (kuchyně).'",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Doplňte lokál: 'Vaříme v ___ (kuchyně).'",
+        "question_en": "Complete with the locative form: 'We cook in the kitchen.'",
+        "options": ["kuchyně", "kuchyni", "kuchyň", "kuchyní"],
+        "correct_index": 1,
+        "explanation": "'V' + locative: kuchyně → kuchyni. 'Vaříme v kuchyni.' = We cook in the kitchen. Feminine nouns ending in -ě form the locative by changing -ě to -i: kuchyně → kuchyni, ložnice → ložnici."
+      },
+      "answer_key": "kuchyni",
+      "grammar_rule_id": "GR-251",
+      "xp_reward": 10
+    },
+    {
+      "id": 26004,
+      "lesson_id": 2601,
+      "type": "multiple_choice",
+      "prompt": "What does 'obývací pokoj' mean in Czech?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Co znamená 'obývací pokoj'?",
+        "question_en": "What does 'obývací pokoj' mean?",
+        "options": ["bedroom", "living room", "dining room", "office"],
+        "correct_index": 1,
+        "explanation": "'Obývací pokoj' = living room. 'Obývat' = to live in/inhabit, 'pokoj' = room. Literally 'the room one lives in'. This is the main social room in a Czech home, often where the TV and sofa are."
+      },
+      "answer_key": "living room",
+      "grammar_rule_id": "GR-250",
+      "xp_reward": 10
+    },
+    {
+      "id": 26005,
+      "lesson_id": 2601,
+      "type": "fill_blank",
+      "prompt": "Fill in the correct preposition and locative form: 'Spí ___ (v + ložnice).'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Spí ___ . (v + ložnice — locative)",
+        "blank_count": 1,
+        "accepted_answers": ["v ložnici"],
+        "explanation": "'V' + locative: ložnice → ložnici. 'Spí v ložnici.' = She/he sleeps in the bedroom. Feminine nouns in -ce or -ně change to -ci or -ni in the locative: ložnice → ložnici, koupelna → koupelně."
+      },
+      "answer_key": "v ložnici",
+      "grammar_rule_id": "GR-251",
+      "xp_reward": 15
+    },
+    {
+      "id": 26006,
+      "lesson_id": 2601,
+      "type": "fill_blank",
+      "prompt": "Fill in the correct locative form: 'Bydlíme v ___ (byt).'",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Bydlíme v ___ . (byt — locative)",
+        "blank_count": 1,
+        "accepted_answers": ["bytě"],
+        "explanation": "'V' + locative: byt → bytě. 'Bydlíme v bytě.' = We live in an apartment. Masculine inanimate nouns ending in a consonant add -ě in the locative: byt → bytě, dům → domě."
+      },
+      "answer_key": "bytě",
+      "grammar_rule_id": "GR-251",
+      "xp_reward": 15
+    },
+    {
+      "id": 26007,
+      "lesson_id": 2601,
+      "type": "translation",
+      "prompt": "Translate to Czech: 'I live in a big house.'",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I live in a big house.",
+        "accepted_answers": ["Bydlím ve velkém domě.", "Bydlím v velkém domě.", "Bydlím v velkém domě."],
+        "grammar_note": "'V' becomes 've' before words starting with 'v' for euphony: 've velkém domě' (not 'v velkém'). 'Dům' → locative 'domě'. 'Velký' → locative neuter/masc. 'velkém'. 'Bydlím' = 1st person singular of 'bydlet'."
+      },
+      "answer_key": "Bydlím ve velkém domě.",
+      "grammar_rule_id": "GR-251",
+      "xp_reward": 10
+    },
+    {
+      "id": 26008,
+      "lesson_id": 2601,
+      "type": "translation",
+      "prompt": "Translate to English: 'Koupelna je malá, ale ložnice je velká.'",
+      "data": {
+        "type": "translation",
+        "direction": "cz_to_en",
+        "source": "Koupelna je malá, ale ložnice je velká.",
+        "accepted_answers": ["The bathroom is small, but the bedroom is big.", "The bathroom is small, but the bedroom is large."],
+        "grammar_note": "'Koupelna' = bathroom, 'ložnice' = bedroom. 'Malá' = small, 'velká' = big/large. Both adjectives are feminine singular to agree with the feminine nouns. 'Ale' = but."
+      },
+      "answer_key": "The bathroom is small, but the bedroom is big.",
+      "grammar_rule_id": "GR-250",
+      "xp_reward": 10
+    },
+    {
+      "id": 26009,
+      "lesson_id": 2601,
+      "type": "error_correction",
+      "prompt": "Find and correct the error in this sentence.",
+      "data": {
+        "type": "error_correction",
+        "sentence_with_error": "Bydlím v byt.",
+        "hint": "Think about which case 'v' requires for locations.",
+        "accepted_answers": ["Bydlím v bytě.", "Bydlím v bytě."],
+        "explanation": "'V' + locative: byt → bytě. 'Bydlím v bytě.' = I live in an apartment. The error was using the nominative 'byt' instead of the locative 'bytě'. The locative of masculine inanimate nouns ending in a consonant adds -ě: byt → bytě, dům → domě."
+      },
+      "answer_key": "Bydlím v bytě.",
+      "grammar_rule_id": "GR-251",
+      "xp_reward": 15
+    },
+    {
+      "id": 26010,
+      "lesson_id": 2601,
+      "type": "word_order",
+      "prompt": "Arrange the words to form: 'I have a big apartment in Prague.'",
+      "data": {
+        "type": "word_order",
+        "scrambled": ["v", "byty", "Praze", "Mám", "velký"],
+        "correct_order": ["Mám", "velký", "byt", "v", "Praze"],
+        "explanation": "'Mám velký byt v Praze.' = I have a big apartment in Prague. 'V' + locative: Praha → Praze. 'Velký byt' = big apartment (masculine inanimate adjective + noun). Note: the scrambled word 'byty' should be 'byt' — singular accusative after 'mít'."
+      },
+      "answer_key": "Mám velký byt v Praze.",
+      "grammar_rule_id": "GR-251",
+      "xp_reward": 15
+    },
+    {
+      "id": 26011,
+      "lesson_id": 2601,
+      "type": "pronunciation",
+      "prompt": "Pronounce the following sentence about your home.",
+      "data": {
+        "type": "pronunciation",
+        "target_text": "Bydlím ve velkém bytě v Praze. Máme tři pokoje a kuchyni.",
+        "target_audio_hash": "placeholder_26011",
+        "focus_sounds": ["Bydlím", "velkém", "bytě", "Praze", "kuchyni", "ě"],
+        "min_score": 0.6,
+        "translation_en": "I live in a big apartment in Prague. We have three rooms and a kitchen."
+      },
+      "answer_key": "Bydlím ve velkém bytě v Praze. Máme tři pokoje a kuchyni.",
+      "grammar_rule_id": "GR-251",
+      "xp_reward": 15
+    },
+    {
+      "id": 26012,
+      "lesson_id": 2601,
+      "type": "dictation",
+      "prompt": "Listen and write what you hear.",
+      "data": {
+        "type": "dictation",
+        "audio_hash": "placeholder_26012",
+        "expected_text": "Náš dům má obývací pokoj, ložnici a koupelnu. Zahrada je hezká.",
+        "language": "cs-CZ",
+        "note": "Listen for housing vocabulary: 'dům' (house), 'obývací pokoj' (living room), 'ložnice → ložnici' (bedroom — accusative), 'koupelna → koupelnu' (bathroom — accusative), 'zahrada' (garden)."
+      },
+      "answer_key": "Náš dům má obývací pokoj, ložnici a koupelnu. Zahrada je hezká.",
+      "grammar_rule_id": "GR-250",
+      "xp_reward": 20
+    }
+  ]
+}

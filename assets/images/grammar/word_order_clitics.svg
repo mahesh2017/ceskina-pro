@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" font-family="'Helvetica Neue', Arial, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#FFFFFF"/>
+
+  <!-- Header -->
+  <text x="400" y="40" text-anchor="middle" font-size="26" font-weight="700" fill="#2C3E50">Czech Clitic Placement</text>
+  <text x="400" y="64" text-anchor="middle" font-size="14" fill="#7F8C8D">The 2nd Position Rule — clitics always go in slot 2</text>
+  <line x1="120" y1="78" x2="680" y2="78" stroke="#ECF0F1" stroke-width="2"/>
+
+  <!-- Rule banner -->
+  <rect x="80" y="92" width="640" height="50" rx="8" fill="#E8F4FB" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="400" y="118" text-anchor="middle" font-size="15" fill="#2C3E50">
+    <tspan font-weight="700" fill="#4A90D9">Rule:</tspan>
+    <tspan> Short forms (jsem, jsi, se, si, mi, ti, mu, ho…) sit in the </tspan>
+    <tspan font-weight="700" fill="#4A90D9">2nd position</tspan>
+    <tspan> of the clause.</tspan>
+  </text>
+
+  <!-- Example 1: Včera jsem šel do kina -->
+  <text x="80" y="175" font-size="13" font-weight="700" fill="#7F8C8D">EXAMPLE 1</text>
+  <g>
+    <!-- slot 1 -->
+    <rect x="80" y="185" width="130" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="145" y="210" text-anchor="middle" font-size="15" fill="#2C3E50">Včera</text>
+    <text x="145" y="228" text-anchor="middle" font-size="11" fill="#95A5A6">yesterday</text>
+    <text x="145" y="255" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">1</text>
+
+    <!-- slot 2 - clitic -->
+    <rect x="220" y="185" width="130" height="55" rx="6" fill="#FFF3E0" stroke="#E67E22" stroke-width="2.5"/>
+    <text x="285" y="210" text-anchor="middle" font-size="15" font-weight="700" fill="#E67E22">jsem</text>
+    <text x="285" y="228" text-anchor="middle" font-size="11" fill="#B9772E">clitic (am)</text>
+    <text x="285" y="255" text-anchor="middle" font-size="11" font-weight="700" fill="#E67E22">2</text>
+
+    <!-- slot 3 -->
+    <rect x="360" y="185" width="130" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="425" y="210" text-anchor="middle" font-size="15" fill="#2C3E50">šel</text>
+    <text x="425" y="228" text-anchor="middle" font-size="11" fill="#95A5A6">went</text>
+    <text x="425" y="255" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">3</text>
+
+    <!-- slot 4 -->
+    <rect x="500" y="185" width="100" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="550" y="210" text-anchor="middle" font-size="15" fill="#2C3E50">do kina</text>
+    <text x="550" y="228" text-anchor="middle" font-size="11" fill="#95A5A6">to cinema</text>
+    <text x="550" y="255" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">4</text>
+  </g>
+
+  <!-- arrow showing clitic is locked in slot 2 -->
+  <path d="M 285 165 L 285 175" stroke="#E67E22" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <defs>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#E67E22"/>
+    </marker>
+  </defs>
+
+  <!-- Example 2 -->
+  <text x="80" y="300" font-size="13" font-weight="700" fill="#7F8C8D">EXAMPLE 2 — first element changes, clitic stays in slot 2</text>
+  <g>
+    <rect x="80" y="310" width="130" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="145" y="335" text-anchor="middle" font-size="15" fill="#2C3E50">Petr</text>
+    <text x="145" y="353" text-anchor="middle" font-size="11" fill="#95A5A6">Peter</text>
+    <text x="145" y="380" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">1</text>
+
+    <rect x="220" y="310" width="130" height="55" rx="6" fill="#FFF3E0" stroke="#E67E22" stroke-width="2.5"/>
+    <text x="285" y="335" text-anchor="middle" font-size="15" font-weight="700" fill="#E67E22">jsem</text>
+    <text x="285" y="353" text-anchor="middle" font-size="11" fill="#B9772E">clitic</text>
+    <text x="285" y="380" text-anchor="middle" font-size="11" font-weight="700" fill="#E67E22">2</text>
+
+    <rect x="360" y="310" width="130" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="425" y="335" text-anchor="middle" font-size="15" fill="#2C3E50">ho</text>
+    <text x="425" y="353" text-anchor="middle" font-size="11" fill="#95A5A6">him</text>
+    <text x="425" y="380" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">3</text>
+
+    <rect x="500" y="310" width="100" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="550" y="335" text-anchor="middle" font-size="15" fill="#2C3E50">viděl</text>
+    <text x="550" y="353" text-anchor="middle" font-size="11" fill="#95A5A6">saw</text>
+    <text x="550" y="380" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">4</text>
+  </g>
+
+  <!-- Example 3 -->
+  <text x="80" y="420" font-size="13" font-weight="700" fill="#7F8C8D">EXAMPLE 3</text>
+  <g>
+    <rect x="80" y="430" width="130" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="145" y="455" text-anchor="middle" font-size="15" fill="#2C3E50">Dnes</text>
+    <text x="145" y="473" text-anchor="middle" font-size="11" fill="#95A5A6">today</text>
+    <text x="145" y="500" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">1</text>
+
+    <rect x="220" y="430" width="130" height="55" rx="6" fill="#FFF3E0" stroke="#E67E22" stroke-width="2.5"/>
+    <text x="285" y="455" text-anchor="middle" font-size="15" font-weight="700" fill="#E67E22">si</text>
+    <text x="285" y="473" text-anchor="middle" font-size="11" fill="#B9772E">clitic (self)</text>
+    <text x="285" y="500" text-anchor="middle" font-size="11" font-weight="700" fill="#E67E22">2</text>
+
+    <rect x="360" y="430" width="130" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="425" y="455" text-anchor="middle" font-size="15" fill="#2C3E50">koupím</text>
+    <text x="425" y="473" text-anchor="middle" font-size="11" fill="#95A5A6">will buy</text>
+    <text x="425" y="500" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">3</text>
+
+    <rect x="500" y="430" width="100" height="55" rx="6" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+    <text x="550" y="455" text-anchor="middle" font-size="15" fill="#2C3E50">kavárnu</text>
+    <text x="550" y="473" text-anchor="middle" font-size="11" fill="#95A5A6">coffee</text>
+    <text x="550" y="500" text-anchor="middle" font-size="11" font-weight="700" fill="#7F8C8D">4</text>
+  </g>
+
+  <!-- Legend -->
+  <rect x="80" y="525" width="640" height="55" rx="8" fill="#F8F9FA" stroke="#ECEFF1" stroke-width="1"/>
+  <rect x="100" y="540" width="18" height="18" rx="3" fill="#FFF3E0" stroke="#E67E22" stroke-width="2"/>
+  <text x="128" y="554" font-size="12" fill="#2C3E50" font-weight="600">Clitic — 2nd position</text>
+  <rect x="290" y="540" width="18" height="18" rx="3" fill="#FFFFFF" stroke="#BDC3C7" stroke-width="1.5"/>
+  <text x="318" y="554" font-size="12" fill="#2C3E50" font-weight="600">Other words</text>
+  <text x="430" y="554" font-size="11" fill="#7F8C8D">⬆ The clitic never moves from slot 2, no matter what fills slot 1.</text>
+  <text x="100" y="572" font-size="11" fill="#95A5A6" font-style="italic">Common clitics: jsem, jsi, se, si, mi, ti, mu, ho, ti, nám, vám</text>
+</svg>

@@ -1,5 +1,5 @@
 import '../../domain/entities/flashcard.dart' as entity;
-import '../../domain/entities/fsrs_card.dart';
+import '../../domain/entities/srs_card.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import 'package:drift/drift.dart';
 import '../database/database.dart' as db;
@@ -32,13 +32,13 @@ class DriftVocabularyRepository implements VocabularyRepository {
         if (flashcardMap.containsKey(srs.flashcardId))
           ReviewCard(
             flashcard: _toEntityFlashcard(flashcardMap[srs.flashcardId]!),
-            fsrs: _toFsrsCard(srs),
+            srs: _toSrsCard(srs),
           ),
     ];
   }
 
   @override
-  Future<void> updateCard(FSRSCard card, Rating rating, DateTime reviewedAt) async {
+  Future<void> updateCard(SrsCard card, Rating rating, DateTime reviewedAt) async {
     final cardId = int.tryParse(card.id);
     if (cardId == null) return;
 
@@ -107,8 +107,8 @@ class DriftVocabularyRepository implements VocabularyRepository {
     return true;
   }
 
-  FSRSCard _toFsrsCard(db.SrsCard row) {
-    return FSRSCard(
+  SrsCard _toSrsCard(db.SrsCard row) {
+    return SrsCard(
       id: row.id.toString(),
       cardType:
           row.cardType == 'grammar' ? CardType.grammar : CardType.vocabulary,

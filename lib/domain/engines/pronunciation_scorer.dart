@@ -13,7 +13,8 @@ class PronunciationScorer {
   ///
   /// Pipeline:
   /// 1. Normalize both texts (lowercase, strip punctuation)
-  /// 2. Word-level alignment (Levenshtein distance)
+  /// 2. Sequence-align words (Needleman-Wunsch) so insertions, deletions,
+  ///    and reordering are handled — not just positional comparison.
   /// 3. Phonetic comparison for Czech-specific sounds
   /// 4. Return per-word and overall scores
   PronunciationResult score({
@@ -23,47 +24,166 @@ class PronunciationScorer {
     final normalizedExpected = TextNormalizer.normalize(expectedText);
     final normalizedActual = TextNormalizer.normalize(actualTranscription);
 
-    // Word-level alignment
-    final wordResults = _alignWords(normalizedExpected, normalizedActual);
+    // Sequence-align words — handles extra, missing, and reordered words.
+    final alignment = _alignWords(normalizedExpected, normalizedActual);
 
     // Phonetic scoring for Czech problem sounds
-    final problemSounds = _scorePhonemes(wordResults);
+    final problemSounds = _scorePhonemes(alignment.wordScores);
 
     // Overall accuracy
-    final accuracy = _calculateAccuracy(wordResults);
+    final accuracy = _calculateAccuracy(
+      alignment.wordScores,
+      insertionCount: alignment.insertionCount,
+    );
 
     final feedback = _generateFeedback(problemSounds);
 
     return PronunciationResult(
       overallScore: accuracy,
-      wordScores: wordResults,
+      wordScores: alignment.wordScores,
       problemSounds: problemSounds,
       feedback: feedback,
     );
   }
 
-  /// Align words between expected and actual using simple matching.
-  List<WordScore> _alignWords(String expected, String actual) {
-    final expectedWords = expected.split(' ').where((w) => w.isNotEmpty).toList();
+  /// Align words between expected and actual using Needleman-Wunsch global
+  /// alignment. This handles:
+  /// - Extra words spoken (insertions in actual)
+  /// - Missing words (deletions — expected but not spoken)
+  /// - Reordered words (matched by best similarity, not position)
+  ///
+  /// A gap in the expected sequence means the user spoke an extra word;
+  /// a gap in the actual sequence means the user skipped a word.
+  _WordAlignment _alignWords(String expected, String actual) {
+    final expectedWords =
+        expected.split(' ').where((w) => w.isNotEmpty).toList();
     final actualWords = actual.split(' ').where((w) => w.isNotEmpty).toList();
 
-    final results = <WordScore>[];
+    if (expectedWords.isEmpty) {
+      return _WordAlignment(
+        wordScores: const [],
+        insertionCount: actualWords.length,
+      );
+    }
+    if (actualWords.isEmpty) {
+      // All expected words are missed.
+      return _WordAlignment(
+        wordScores: [
+          for (final w in expectedWords)
+            WordScore(word: w, isCorrect: false, score: 0.0),
+        ],
+        insertionCount: 0,
+      );
+    }
 
-    for (var i = 0; i < expectedWords.length; i++) {
-      if (i < actualWords.length) {
-        final isMatch = expectedWords[i].toLowerCase() == actualWords[i].toLowerCase();
-        final similarity = _wordSimilarity(expectedWords[i], actualWords[i]);
-        results.add(WordScore(
-          word: expectedWords[i],
-          isCorrect: isMatch,
-          score: similarity,
-        ),);
+    final alignment = _needlemanWunsch(expectedWords, actualWords);
+
+    // Build word scores from aligned pairs. Only emit scores for expected
+    // words — extra spoken words (gaps in expected) are tracked but don't
+    // inflate the score.
+    final results = <WordScore>[];
+    var insertionCount = 0;
+    for (final pair in alignment) {
+      if (pair.expected == null) {
+        // Extra word spoken — user said something not in the expected text.
+        // Keep per-word feedback tied to the expected phrase, but count the
+        // insertion in the overall-score denominator below.
+        insertionCount++;
+        continue;
+      }
+      if (pair.actual == null) {
+        // Expected word was skipped — score 0.
+        results.add(
+          WordScore(word: pair.expected!, isCorrect: false, score: 0.0),
+        );
       } else {
-        results.add(WordScore(word: expectedWords[i], isCorrect: false, score: 0.0));
+        final isMatch =
+            pair.expected!.toLowerCase() == pair.actual!.toLowerCase();
+        final similarity = _wordSimilarity(pair.expected!, pair.actual!);
+        results.add(
+          WordScore(
+            word: pair.expected!,
+            isCorrect: isMatch,
+            score: similarity,
+          ),
+        );
       }
     }
 
-    return results;
+    return _WordAlignment(wordScores: results, insertionCount: insertionCount);
+  }
+
+  /// Needleman-Wunsch global sequence alignment for word lists.
+  ///
+  /// Returns aligned pairs where either side may be null (gap).
+  /// Match score = word similarity (0.0–1.0), mismatch penalty = 0,
+  /// gap penalty = -0.1 (small, so near-matches are preferred over gaps).
+  List<_AlignPair> _needlemanWunsch(
+    List<String> expected,
+    List<String> actual,
+  ) {
+    final m = expected.length;
+    final n = actual.length;
+
+    // Score matrix.
+    final score = List.generate(m + 1, (i) => List<double>.filled(n + 1, 0));
+    // Traceback matrix: 0 = diagonal (match/mismatch), 1 = up (gap in actual),
+    // 2 = left (gap in expected).
+    final trace = List.generate(m + 1, (i) => List<int>.filled(n + 1, 0));
+
+    const gapPenalty = -0.1;
+
+    // Initialize first row/column.
+    for (var i = 1; i <= m; i++) {
+      score[i][0] = score[i - 1][0] + gapPenalty;
+      trace[i][0] = 1;
+    }
+    for (var j = 1; j <= n; j++) {
+      score[0][j] = score[0][j - 1] + gapPenalty;
+      trace[0][j] = 2;
+    }
+
+    // Fill matrix.
+    for (var i = 1; i <= m; i++) {
+      for (var j = 1; j <= n; j++) {
+        final matchScore =
+            score[i - 1][j - 1] +
+            _wordSimilarity(expected[i - 1], actual[j - 1]);
+        final upScore = score[i - 1][j] + gapPenalty;
+        final leftScore = score[i][j - 1] + gapPenalty;
+
+        if (matchScore >= upScore && matchScore >= leftScore) {
+          score[i][j] = matchScore;
+          trace[i][j] = 0;
+        } else if (upScore >= leftScore) {
+          score[i][j] = upScore;
+          trace[i][j] = 1;
+        } else {
+          score[i][j] = leftScore;
+          trace[i][j] = 2;
+        }
+      }
+    }
+
+    // Traceback.
+    final alignment = <_AlignPair>[];
+    var i = m;
+    var j = n;
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && trace[i][j] == 0) {
+        alignment.add(_AlignPair(expected[i - 1], actual[j - 1]));
+        i--;
+        j--;
+      } else if (i > 0 && (j == 0 || trace[i][j] == 1)) {
+        alignment.add(_AlignPair(expected[i - 1], null));
+        i--;
+      } else {
+        alignment.add(_AlignPair(null, actual[j - 1]));
+        j--;
+      }
+    }
+
+    return alignment.reversed.toList();
   }
 
   /// Calculate word similarity using character-level comparison.
@@ -77,30 +197,32 @@ class PronunciationScorer {
 
   /// Levenshtein distance between two strings.
   int _levenshtein(String s1, String s2) {
-    final matrix = List.generate(
-      s1.length + 1,
-      (i) => List.generate(s2.length + 1, (j) => 0),
-    );
+    // Use two rolling rows for O(min(m,n)) space instead of full matrix.
+    final short = s1.length <= s2.length ? s1 : s2;
+    final long = s1.length <= s2.length ? s2 : s1;
+    final m = short.length;
+    final n = long.length;
 
-    for (var i = 0; i <= s1.length; i++) {
-      matrix[i][0] = i;
-    }
-    for (var j = 0; j <= s2.length; j++) {
-      matrix[0][j] = j;
-    }
+    var prev = List<int>.generate(m + 1, (i) => i);
+    var curr = List<int>.filled(m + 1, 0);
 
-    for (var i = 1; i <= s1.length; i++) {
-      for (var j = 1; j <= s2.length; j++) {
-        final cost = s1[i - 1].toLowerCase() == s2[j - 1].toLowerCase() ? 0 : 1;
-        matrix[i][j] = [
-          matrix[i - 1][j] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j - 1] + cost,
+    for (var j = 1; j <= n; j++) {
+      curr[0] = j;
+      for (var i = 1; i <= m; i++) {
+        final cost =
+            short[i - 1].toLowerCase() == long[j - 1].toLowerCase() ? 0 : 1;
+        curr[i] = [
+          prev[i] + 1,
+          curr[i - 1] + 1,
+          prev[i - 1] + cost,
         ].reduce((a, b) => a < b ? a : b);
       }
+      final tmp = prev;
+      prev = curr;
+      curr = tmp;
     }
 
-    return matrix[s1.length][s2.length];
+    return prev[m];
   }
 
   /// Score Czech-specific phonemes.
@@ -112,11 +234,9 @@ class PronunciationScorer {
         // Check for Czech-specific problem sounds in the expected word
         final phonemes = _phonemeMapper.getProblemPhonemes(word.word);
         for (final phoneme in phonemes) {
-          problems.add(ProblemSound(
-            phoneme: phoneme,
-            word: word.word,
-            score: word.score,
-          ),);
+          problems.add(
+            ProblemSound(phoneme: phoneme, word: word.word, score: word.score),
+          );
         }
       }
     }
@@ -125,23 +245,49 @@ class PronunciationScorer {
   }
 
   /// Calculate overall accuracy from word scores.
-  double _calculateAccuracy(List<WordScore> wordScores) {
-    if (wordScores.isEmpty) return 0.0;
+  double _calculateAccuracy(
+    List<WordScore> wordScores, {
+    required int insertionCount,
+  }) {
+    final denominator = wordScores.length + insertionCount;
+    if (denominator == 0) return 0.0;
     final totalScore = wordScores.fold<double>(0.0, (sum, w) => sum + w.score);
-    return totalScore / wordScores.length;
+    return totalScore / denominator;
   }
 
   /// Generate feedback based on problem sounds.
   String _generateFeedback(List<ProblemSound> problems) {
     if (problems.isEmpty) return 'Skvělé! Výborná výslovnost.';
 
-    return problems.map((p) {
-      return switch (p.phoneme) {
-        'ř' => 'Practice the "ř" sound — roll the tongue slightly further back.',
-        'ě' => 'The "ě" softens the consonant before it (dě → d+ye).',
-        'long_vowel' => 'Czech distinguishes short and long vowels. Lengthen the vowel.',
-        _ => 'Check pronunciation of "${p.phoneme}" in "${p.word}".',
-      };
-    }).join('\n');
+    return problems
+        .map((p) {
+          return switch (p.phoneme) {
+            'ř' =>
+              'Practice the "ř" sound — roll the tongue slightly further back.',
+            'ě' => 'The "ě" softens the consonant before it (dě → d+ye).',
+            'long_vowel' =>
+              'Czech distinguishes short and long vowels. Lengthen the vowel.',
+            _ => 'Check pronunciation of "${p.phoneme}" in "${p.word}".',
+          };
+        })
+        .join('\n');
   }
+}
+
+/// A pair in a sequence alignment — either side may be null (gap).
+class _AlignPair {
+  final String? expected;
+  final String? actual;
+
+  const _AlignPair(this.expected, this.actual);
+}
+
+class _WordAlignment {
+  final List<WordScore> wordScores;
+  final int insertionCount;
+
+  const _WordAlignment({
+    required this.wordScores,
+    required this.insertionCount,
+  });
 }

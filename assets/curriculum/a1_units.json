@@ -6,7 +6,10 @@
       "description": "Czech alphabet, háček, čárka, first-syllable stress, problem sounds: ř, ě",
       "phase": "a1",
       "order_index": 1,
-      "grammar_tags": ["phonetics", "pronunciation"],
+      "grammar_tags": [
+        "phonetics",
+        "pronunciation"
+      ],
       "is_exam_prep": false
     },
     {
@@ -15,7 +18,10 @@
       "description": "Dobrý den, na shledanou, děkuji, prosím. Jmenuju se..., Jsem z...",
       "phase": "a1",
       "order_index": 2,
-      "grammar_tags": ["greetings", "introductions"],
+      "grammar_tags": [
+        "greetings",
+        "introductions"
+      ],
       "is_exam_prep": false
     },
     {
@@ -24,7 +30,11 @@
       "description": "Masculine, feminine, neuter nouns. To je... identification pattern. Profession pairs.",
       "phase": "a1",
       "order_index": 3,
-      "grammar_tags": ["gender", "nominative", "nouns"],
+      "grammar_tags": [
+        "gender",
+        "nominative",
+        "nouns"
+      ],
       "is_exam_prep": false
     },
     {
@@ -33,7 +43,13 @@
       "description": "Conjugation of být (to be) and mít (to have). Negation and question forms.",
       "phase": "a1",
       "order_index": 4,
-      "grammar_tags": ["verbs", "present_tense", "být", "mít", "negation"],
+      "grammar_tags": [
+        "verbs",
+        "present_tense",
+        "být",
+        "mít",
+        "negation"
+      ],
       "is_exam_prep": false
     },
     {
@@ -42,7 +58,11 @@
       "description": "Three conjugation classes: -át, -ít, -et/-ět. Daily activities, speaking, understanding.",
       "phase": "a1",
       "order_index": 5,
-      "grammar_tags": ["verbs", "conjugation", "present_tense"],
+      "grammar_tags": [
+        "verbs",
+        "conjugation",
+        "present_tense"
+      ],
       "is_exam_prep": false
     },
     {
@@ -51,7 +71,11 @@
       "description": "Direct objects: feminine -a→-u, masculine animate -a/-e, inanimate/neuter unchanged.",
       "phase": "a1",
       "order_index": 6,
-      "grammar_tags": ["accusative", "case", "nouns"],
+      "grammar_tags": [
+        "accusative",
+        "case",
+        "nouns"
+      ],
       "is_exam_prep": false
     },
     {
@@ -60,7 +84,11 @@
       "description": "Personal pronouns (já, ty, on...) and possessive adjectives (můj, tvůj, náš...). Gender agreement.",
       "phase": "a1",
       "order_index": 7,
-      "grammar_tags": ["pronouns", "possessives", "gender_agreement"],
+      "grammar_tags": [
+        "pronouns",
+        "possessives",
+        "gender_agreement"
+      ],
       "is_exam_prep": false
     },
     {
@@ -69,7 +97,12 @@
       "description": "Family vocabulary, adjective-noun gender agreement, describing people and things.",
       "phase": "a1",
       "order_index": 8,
-      "grammar_tags": ["family", "adjectives", "gender_agreement", "descriptions"],
+      "grammar_tags": [
+        "family",
+        "adjectives",
+        "gender_agreement",
+        "descriptions"
+      ],
       "is_exam_prep": false
     },
     {
@@ -78,7 +111,12 @@
       "description": "Čísla 0-100, Kolik je hodin?, days of the week, months, telling time. Dnes je...",
       "phase": "a1",
       "order_index": 9,
-      "grammar_tags": ["numbers", "time", "dates", "calendar"],
+      "grammar_tags": [
+        "numbers",
+        "time",
+        "dates",
+        "calendar"
+      ],
       "is_exam_prep": false
     },
     {
@@ -87,7 +125,11 @@
       "description": "Reflexive se/si, morning/evening routines, vstávám, sprchuju se. Telling the daily schedule.",
       "phase": "a1",
       "order_index": 10,
-      "grammar_tags": ["reflexive_verbs", "daily_routine", "adverbs_of_time"],
+      "grammar_tags": [
+        "reflexive_verbs",
+        "daily_routine",
+        "adverbs_of_time"
+      ],
       "is_exam_prep": false
     },
     {
@@ -96,7 +138,12 @@
       "description": "Ordering jídlo a pití, Czech cuisine vocab, accusative with jíst/pít. V restauraci.",
       "phase": "a1",
       "order_index": 11,
-      "grammar_tags": ["food", "restaurant", "accusative", "quantities"],
+      "grammar_tags": [
+        "food",
+        "restaurant",
+        "accusative",
+        "quantities"
+      ],
       "is_exam_prep": false
     },
     {
@@ -105,7 +152,12 @@
       "description": "Kolik to stojí? Prices, sizes, colors. Clothes shopping, accusative with chtít/kupovat.",
       "phase": "a1",
       "order_index": 12,
-      "grammar_tags": ["shopping", "prices", "clothes", "accusative"],
+      "grammar_tags": [
+        "shopping",
+        "prices",
+        "clothes",
+        "accusative"
+      ],
       "is_exam_prep": false
     },
     {
@@ -114,7 +166,12 @@
       "description": "Mít rád, rád + verb. Co rád děláš? Sports, music, reading. Adverbs of frequency.",
       "phase": "a1",
       "order_index": 13,
-      "grammar_tags": ["hobbies", "like_dislike", "adverbs", "free_time"],
+      "grammar_tags": [
+        "hobbies",
+        "like_dislike",
+        "adverbs",
+        "free_time"
+      ],
       "is_exam_prep": false
     },
     {
@@ -123,7 +180,12 @@
       "description": "Kde je...? Directions, places in town, transport. Locative intro: v Praze, na náměstí.",
       "phase": "a1",
       "order_index": 14,
-      "grammar_tags": ["directions", "places", "transport", "locative_intro"],
+      "grammar_tags": [
+        "directions",
+        "places",
+        "transport",
+        "locative_intro"
+      ],
       "is_exam_prep": false
     },
     {
@@ -132,7 +194,45 @@
       "description": "Počasí, roční období, travel basics. Bude pršet. Past tense intro: byl jsem v...",
       "phase": "a1",
       "order_index": 15,
-      "grammar_tags": ["weather", "seasons", "travel", "past_tense_intro", "future_intro"],
+      "grammar_tags": [
+        "weather",
+        "seasons",
+        "travel",
+        "past_tense_intro",
+        "future_intro"
+      ],
+      "is_exam_prep": false
+    },
+    {
+      "id": 28,
+      "title": "A1 Exam Preparation",
+      "description": "Practice with A1-level exam-format exercises: reading comprehension, listening comprehension, writing tasks (form filling, short messages), and speaking practice (Q&A, picture description). Modeled on the official Czech permanent residence A1 exam.",
+      "phase": "a1",
+      "order_index": 28,
+      "grammar_tags": [
+        "exam_prep",
+        "reading",
+        "listening",
+        "writing",
+        "speaking",
+        "A1"
+      ],
+      "is_exam_prep": true
+    },
+    {
+      "id": 30,
+      "title": "A1 Review & Consolidation",
+      "description": "Review and consolidate all A1 grammar and vocabulary: nominative and accusative cases, present tense, gender agreement, pronouns, basic sentence structure, and everyday survival expressions.",
+      "phase": "a1",
+      "order_index": 30,
+      "grammar_tags": [
+        "review",
+        "consolidation",
+        "A1",
+        "nominative",
+        "accusative",
+        "present_tense"
+      ],
       "is_exam_prep": false
     }
   ]

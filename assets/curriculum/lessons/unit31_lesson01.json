@@ -1,0 +1,385 @@
+{
+  "id": 3101,
+  "unit_id": 31,
+  "order_in_unit": 1,
+  "title": "A2 Review: Grammar Consolidation",
+  "description": "A2-level grammar consolidation review. Practice the case system (which case after which preposition), past/future/conditional forms, complex-sentence translations with protože, když, že, vocabulary matching (professions, health), common error correction (aspect choice, case after prepositions), a formal dialogue at an úřad, and clitic placement word order. Linked to grammar rule GR-291.",
+  "duration_min": 25,
+  "lesson_type": "review",
+  "is_review": true,
+  "exercises": [
+    {
+      "id": 31001,
+      "lesson_id": 3101,
+      "type": "multiple_choice",
+      "prompt": "Which case follows the preposition 'do' (to/into)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Který pád následuje po předložce 'do'?",
+        "question_en": "Which case follows the preposition 'do' (to/into)?",
+        "options": [
+          "nominative",
+          "genitive",
+          "dative",
+          "accusative"
+        ],
+        "correct_index": 1,
+        "explanation": "The preposition 'do' (to/into) requires the genitive case. Example: 'Jdu do školy.' = I'm going to school. 'Škola' → genitive 'školy'. 'Do' expresses movement into a place."
+      },
+      "answer_key": "genitive",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31002,
+      "lesson_id": 3101,
+      "type": "multiple_choice",
+      "prompt": "Which case follows the preposition 'na' when expressing location (on)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Který pád následuje po předložce 'na' při vyjádření místa?",
+        "question_en": "Which case follows 'na' when expressing location (where something is)?",
+        "options": [
+          "accusative",
+          "locative",
+          "genitive",
+          "instrumental"
+        ],
+        "correct_index": 1,
+        "explanation": "When 'na' expresses location (where something is), it takes the locative case. Example: 'Kniha je na stole.' = The book is on the table. 'Stůl' → locative 'stole'. When 'na' expresses direction (to where), it takes the accusative: 'Polož to na stůl.' = Put it on the table."
+      },
+      "answer_key": "locative",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31003,
+      "lesson_id": 3101,
+      "type": "multiple_choice",
+      "prompt": "Which case follows the preposition 's' (with)?",
+      "data": {
+        "type": "multiple_choice",
+        "question_cz": "Který pád následuje po předložce 's' (s kým/čím)?",
+        "question_en": "Which case follows the preposition 's' (with)?",
+        "options": [
+          "dative",
+          "accusative",
+          "instrumental",
+          "locative"
+        ],
+        "correct_index": 2,
+        "explanation": "The preposition 's' (with) requires the instrumental case. Example: 'Mluvím s kamarádem.' = I'm speaking with a friend. 'Kamarád' → instrumental 'kamarádem'. This is for accompaniment (with someone/something)."
+      },
+      "answer_key": "instrumental",
+      "xp_reward": 10,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31004,
+      "lesson_id": 3101,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct past tense form.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Včera jsem ___ do obchodu. (jít — to go, male speaker)",
+        "blank_count": 1,
+        "accepted_answers": [
+          "šel"
+        ],
+        "explanation": "'Včera jsem šel do obchodu.' = Yesterday I went to the shop (male speaker). 'Šel' is the masculine singular past participle of 'jít'. Female speaker would use 'šla'. The auxiliary 'jsem' is the 1st person singular."
+      },
+      "answer_key": "šel",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31005,
+      "lesson_id": 3101,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct future tense form.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Zítra ___ do kina. (já — jít, future of 'jít')",
+        "blank_count": 1,
+        "accepted_answers": [
+          "půj",
+          "půj já"
+        ],
+        "explanation": "'Zítra půj do kina.' = Tomorrow I'll go to the cinema. The future of 'jít' (to go) is irregular: půj (I), půjdeš (you sg.), půjde (he/she/it), půjdeme (we), půjdete (you pl.), půjdou (they). Don't confuse with 'budu jít' which is also possible but less natural for 'jít' itself."
+      },
+      "answer_key": "půj",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31006,
+      "lesson_id": 3101,
+      "type": "fill_blank",
+      "prompt": "Complete with the correct conditional form.",
+      "data": {
+        "type": "fill_blank",
+        "sentence": "Kdybych ___ čas, šel bych s tebou. (mít — to have, male speaker)",
+        "blank_count": 1,
+        "accepted_answers": [
+          "měl"
+        ],
+        "explanation": "'Kdybych měl čas, šel bych s tebou.' = If I had time, I would go with you (male speaker). After 'kdybych' (if I — conditional), we use the past participle 'měl' (masc. of 'mít'). The result clause uses 'šel bych' (past participle + conditional auxiliary 'bych'). Female speaker: 'měla' and 'šla bych'."
+      },
+      "answer_key": "měl",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31007,
+      "lesson_id": 3101,
+      "type": "translation",
+      "prompt": "Translate to Czech using 'protože' (because).",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I stayed home because I was tired.",
+        "accepted_answers": [
+          "Zůstal jsem doma, protože jsem byl unavený.",
+          "Zůstala jsem doma, protože jsem byla unavená."
+        ],
+        "grammar_note": "'Zůstal jsem doma, protože jsem byl unavený.' (male speaker) = I stayed home because I was tired. 'Zůstal' = past participle (masc.) of 'zůstat'. 'Protože' introduces the reason clause. 'Unavený' = tired (predicate adjective, masc. nominative). Female: 'zůstala', 'byla', 'unavená'."
+      },
+      "answer_key": "Zůstal jsem doma, protože jsem byl unavený.",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31008,
+      "lesson_id": 3101,
+      "type": "translation",
+      "prompt": "Translate to Czech using 'když' (when).",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "When I came home, I called my mom.",
+        "accepted_answers": [
+          "Když jsem přišel domů, zavolal jsem mamince.",
+          "Když jsem přišla domů, zavolala jsem mamince."
+        ],
+        "grammar_note": "'Když jsem přišel domů, zavolal jsem mamince.' (male speaker) = When I came home, I called my mom. 'Když' = when (for factual/recurring events, uses past tense for past events). 'Přišel' = past participle of 'přijít'. 'Zavolal' = past participle of 'zavolat'. 'Mamince' = to mom (dative case, feminine 'maminka' → dative 'mamince'). Female: 'přišla', 'zavolala'."
+      },
+      "answer_key": "Když jsem přišel domů, zavolal jsem mamince.",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31009,
+      "lesson_id": 3101,
+      "type": "translation",
+      "prompt": "Translate to Czech using 'že' (that).",
+      "data": {
+        "type": "translation",
+        "direction": "en_to_cz",
+        "source": "I think that this film is very interesting.",
+        "accepted_answers": [
+          "Myslím, že tento film je velmi zajímavý."
+        ],
+        "grammar_note": "'Myslím, že tento film je velmi zajímavý.' = I think that this film is very interesting. 'Myslím' = 1st person singular of 'myslet' (to think). 'Že' introduces the subordinate clause. 'Tento film' = this film (masc. inanimate nominative). 'Zajímavý' = interesting (masc. nom. adjective). Note the comma before 'že' — always required in Czech."
+      },
+      "answer_key": "Myslím, že tento film je velmi zajímavý.",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31010,
+      "lesson_id": 3101,
+      "type": "matching",
+      "prompt": "Match the Czech profession words to their English meanings.",
+      "data": {
+        "type": "matching",
+        "prompt_en": "Match each Czech profession to its English meaning.",
+        "pairs": [
+          {
+            "left": "lékař",
+            "right": "doctor"
+          },
+          {
+            "left": "učitel",
+            "right": "teacher"
+          },
+          {
+            "left": "inženýr",
+            "right": "engineer"
+          },
+          {
+            "left": "advokát",
+            "right": "lawyer"
+          },
+          {
+            "left": "zdravotní sestra",
+            "right": "nurse"
+          }
+        ],
+        "explanation": "A2 profession vocabulary: lékař (doctor, masc. animate), učitel (teacher, masc. animate), inženýr (engineer, masc. animate), advokát (lawyer, masc. animate), zdravotní sestra (nurse, fem.)."
+      },
+      "answer_key": "lékař→doctor, učitel→teacher, inženýr→engineer, advokát→lawyer, zdravotní sestra→nurse",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31011,
+      "lesson_id": 3101,
+      "type": "matching",
+      "prompt": "Match the Czech health words to their English meanings.",
+      "data": {
+        "type": "matching",
+        "prompt_en": "Match each Czech health word to its English meaning.",
+        "pairs": [
+          {
+            "left": "teplota",
+            "right": "fever/temperature"
+          },
+          {
+            "left": "bolest",
+            "right": "pain"
+          },
+          {
+            "left": "recept",
+            "right": "prescription"
+          },
+          {
+            "left": "lék",
+            "right": "medicine"
+          },
+          {
+            "left": "nemoc",
+            "right": "illness"
+          }
+        ],
+        "explanation": "A2 health vocabulary: teplota (fever/temperature, fem.), bolest (pain, fem.), recept (prescription, masc. inanimate), lék (medicine, masc. inanimate), nemoc (illness, fem.)."
+      },
+      "answer_key": "teplota→fever/temperature, bolest→pain, recept→prescription, lék→medicine, nemoc→illness",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31012,
+      "lesson_id": 3101,
+      "type": "error_correction",
+      "prompt": "Find and correct the verb aspect error.",
+      "data": {
+        "type": "error_correction",
+        "prompt_en": "Find and correct the verb aspect error.",
+        "sentence_cz": "Celý den jsem psal dopis, ale ještě jsem ho nedopsal.",
+        "correct_sentence_cz": "Celý den jsem psal dopis, ale ještě jsem ho nenapsal.",
+        "error_type": "aspect_choice",
+        "explanation": "The correct perfective form is 'nenapsal' (from 'napsat' — perfective to write). 'Nedopsal' is from 'dopsat' (to finish writing), which would mean 'I didn't finish writing it' — but the intended meaning here is 'I haven't written it yet' (haven't completed the act of writing). 'Napsat' is the standard perfective pair of 'psát' (imperfective to write). Actually both can work, but the more natural contrast with 'psal' (imperfective — was writing) is 'nenapsal' (perfective — haven't produced/completed it). 'Ještě jsem ho nenapsal' = I haven't written it yet."
+      },
+      "answer_key": "Celý den jsem psal dopis, ale ještě jsem ho nenapsal.",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31013,
+      "lesson_id": 3101,
+      "type": "error_correction",
+      "prompt": "Find and correct the case error after the preposition.",
+      "data": {
+        "type": "error_correction",
+        "prompt_en": "Find and correct the case error after the preposition.",
+        "sentence_cz": "Jdu do škola.",
+        "correct_sentence_cz": "Jdu do školy.",
+        "error_type": "case_after_preposition",
+        "explanation": "The preposition 'do' (to/into) requires the genitive case. 'Škola' (feminine) → genitive 'školy'. 'Jdu do školy.' = I'm going to school. Feminine nouns ending in -a change to -y in the genitive singular: škola → školy."
+      },
+      "answer_key": "Jdu do školy.",
+      "xp_reward": 15,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31014,
+      "lesson_id": 3101,
+      "type": "dialogue",
+      "prompt": "Complete the dialogue at the government office. What does the citizen reply?",
+      "data": {
+        "type": "dialogue",
+        "scenario": "Na úřadě — At the government office",
+        "lines": [
+          {
+            "speaker": "person_a",
+            "text": "Dobrý den, co byste potřebovali?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Dobrý den, potřeboval bych vyřídit nový občanský průkaz."
+          },
+          {
+            "speaker": "person_a",
+            "text": "Máte u sebe starý průkaz a fotografii?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ano, mám tady starý průkaz a dvě fotografie."
+          },
+          {
+            "speaker": "person_a",
+            "text": "Dobře. Nový průkaz bude hotový za dva týdny."
+          },
+          {
+            "speaker": "person_b",
+            "text": "Děkuji vám. Mám se ještě něčím podepsat?"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Ano, tady prosím, podepište se."
+          },
+          {
+            "speaker": "person_b",
+            "text": "Děkuji mnohokrát. Na shledanou!"
+          }
+        ],
+        "accepted_answers": [
+          "Dobrý den, potřeboval bych vyřídit nový občanský průkaz.|Potřeboval bych vyřídit nový občanský průkaz.|Dobrý den, potřeboval bych nový občanský průkaz."
+        ],
+        "explanation": "Formal dialogue at an úřad (government office) at A2 level. Key formal phrases: 'Dobrý den, co byste potřebovali?' (Hello, what do you need?), 'Potřeboval bych...' (I would need... — formal conditional, male speaker), 'Máte u sebe...?' (Do you have with you...?), 'bude hotový za...' (will be ready in...), 'Děkuji vám' (thank you — formal), 'Na shledanou!' (goodbye — formal)."
+      },
+      "answer_key": "Dobrý den, potřeboval bych vyřídit nový občanský průkaz.",
+      "xp_reward": 25,
+      "grammar_rule_id": "GR-291"
+    },
+    {
+      "id": 31015,
+      "lesson_id": 3101,
+      "type": "word_order",
+      "prompt": "Arrange the words to form a correct complex sentence.",
+      "data": {
+        "type": "word_order",
+        "scrambled": [
+          "ho",
+          "jsem",
+          "Včera",
+          "viděl",
+          "protože",
+          "byl",
+          "v",
+          "parku.",
+          "jsem",
+          "na",
+          "kavárně"
+        ],
+        "correct_order": [
+          "Včera",
+          "jsem",
+          "ho",
+          "viděl",
+          "protože",
+          "jsem",
+          "byl",
+          "na",
+          "kavárně",
+          "v",
+          "parku."
+        ],
+        "explanation": "'Včera jsem ho viděl, protože jsem byl na kavárně v parku.' = Yesterday I saw him because I was at the café in the park. Clitic placement: 'jsem' and 'ho' are clitics that go in the second position of their clause. 'Včera' (first) + 'jsem' (clitic) + 'ho' (clitic) + 'viděl' (verb). The protože-clause starts fresh: 'protože' (first) + 'jsem' (clitic) + 'byl' (verb). Czech clitics (jsem, se, si, mi, ti, ho, etc.) always occupy the second position in their clause."
+      },
+      "answer_key": "Včera jsem ho viděl, protože jsem byl na kavárně v parku.",
+      "xp_reward": 20,
+      "grammar_rule_id": "GR-291"
+    }
+  ]
+}

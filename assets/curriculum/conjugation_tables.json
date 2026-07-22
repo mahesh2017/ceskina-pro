@@ -1,0 +1,645 @@
+{
+  "title": "Czech Verb Conjugation Reference Tables",
+  "description": "Complete conjugation paradigms for all verb types and tenses",
+  "tables": [
+    {
+      "id": "conj_byt_present",
+      "verb": "být",
+      "meaning": "to be",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "jsem",
+        "ty": "jsi",
+        "on/ona/ono": "je",
+        "my": "jsme",
+        "vy": "jste",
+        "oni/ony": "jsou"
+      },
+      "notes": "Irregular. Subject pronoun usually omitted. Colloquially 'jsi' is often shortened to 'se' (ty se šikovný).",
+      "example": {"cz": "Jsem student.", "en": "I am a student."}
+    },
+    {
+      "id": "conj_mit_present",
+      "verb": "mít",
+      "meaning": "to have",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "mám",
+        "ty": "máš",
+        "on/ona/ono": "má",
+        "my": "máme",
+        "vy": "máte",
+        "oni/ony": "mají"
+      },
+      "notes": "Irregular. The 3rd person plural 'mají' is irregular (not 'májí').",
+      "example": {"cz": "Mám nové auto.", "en": "I have a new car."}
+    },
+    {
+      "id": "conj_delat_present",
+      "verb": "dělat",
+      "meaning": "to do, to make",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "dělám",
+        "ty": "děláš",
+        "on/ona/ono": "dělá",
+        "my": "děláme",
+        "vy": "děláte",
+        "oni/ony": "dělají"
+      },
+      "notes": "Class 1 (-át verbs). Stem dělá- + endings -m, -š, -, -me, -te, -jí.",
+      "example": {"cz": "Co děláš?", "en": "What are you doing?"}
+    },
+    {
+      "id": "conj_znat_present",
+      "verb": "znát",
+      "meaning": "to know (a person/place)",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "znám",
+        "ty": "znáš",
+        "on/ona/ono": "zná",
+        "my": "známe",
+        "vy": "znáte",
+        "oni/ony": "znají"
+      },
+      "notes": "Class 1 (-át). Conjugates like dělat. Distinguish from vědět (to know facts).",
+      "example": {"cz": "Znám Prahu dobře.", "en": "I know Prague well."}
+    },
+    {
+      "id": "conj_psat_present",
+      "verb": "psát",
+      "meaning": "to write",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "píšu",
+        "ty": "píšeš",
+        "on/ona/ono": "píše",
+        "my": "píšeme",
+        "vy": "píšete",
+        "oni/ony": "píšou"
+      },
+      "notes": "Class 1 (-át). Alternates á/í in stem. Literary forms: píši, píší; colloquial: píšu, píšou.",
+      "example": {"cz": "Píšu dopis.", "en": "I am writing a letter."}
+    },
+    {
+      "id": "conj_hrat_present",
+      "verb": "hrát",
+      "meaning": "to play",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "hraju",
+        "ty": "hraješ",
+        "on/ona/ono": "hraje",
+        "my": "hrajeme",
+        "vy": "hrajete",
+        "oni/ony": "hrají"
+      },
+      "notes": "Class 1 (-át). Alternates á/a in stem. Literary: hraji; colloquial: hraju.",
+      "example": {"cz": "Hraju fotbal.", "en": "I play football."}
+    },
+    {
+      "id": "conj_cekat_present",
+      "verb": "čekat",
+      "meaning": "to wait",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "čekám",
+        "ty": "čekáš",
+        "on/ona/ono": "čeká",
+        "my": "čekáme",
+        "vy": "čekáte",
+        "oni/ony": "čekají"
+      },
+      "notes": "Class 1 (-át). Regular -át conjugation like dělat.",
+      "example": {"cz": "Čekám na autobus.", "en": "I am waiting for the bus."}
+    },
+    {
+      "id": "conj_mluvit_present",
+      "verb": "mluvit",
+      "meaning": "to speak",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "mluvím",
+        "ty": "mluvíš",
+        "on/ona/ono": "mluví",
+        "my": "mluvíme",
+        "vy": "mluvíte",
+        "oni/ony": "mluví"
+      },
+      "notes": "Class 2 (-ít). Endings -ím, -íš, -í, -íme, -íte, -í. 3rd person plural same as 3rd singular.",
+      "example": {"cz": "Mluvím česky.", "en": "I speak Czech."}
+    },
+    {
+      "id": "conj_prosit_present",
+      "verb": "prosit",
+      "meaning": "to ask, to beg",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "prosím",
+        "ty": "prosíš",
+        "on/ona/ono": "prosí",
+        "my": "prosíme",
+        "vy": "prosíte",
+        "oni/ony": "prosí"
+      },
+      "notes": "Class 2 (-ít). Conjugates like mluvit. Common polite phrase: 'Prosím vás.'",
+      "example": {"cz": "Prosím tě, pomoz mi.", "en": "I ask you, help me."}
+    },
+    {
+      "id": "conj_bydlet_present",
+      "verb": "bydlet",
+      "meaning": "to live, to reside",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "bydlím",
+        "ty": "bydlíš",
+        "on/ona/ono": "bydlí",
+        "my": "bydlíme",
+        "vy": "bydlíte",
+        "oni/ony": "bydlí"
+      },
+      "notes": "Class 2 (-et). Conjugates like mluvit with -í endings.",
+      "example": {"cz": "Bydlím v Praze.", "en": "I live in Prague."}
+    },
+    {
+      "id": "conj_rozumet_present",
+      "verb": "rozumět",
+      "meaning": "to understand",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "rozumím",
+        "ty": "rozumíš",
+        "on/ona/ono": "rozumí",
+        "my": "rozumíme",
+        "vy": "rozumíte",
+        "oni/ony": "rozumí"
+      },
+      "notes": "Class 3 (-ět). Takes -í endings despite -ět infinitive. Conjugates like Class 2.",
+      "example": {"cz": "Rozumím česky.", "en": "I understand Czech."}
+    },
+    {
+      "id": "conj_slyset_present",
+      "verb": "slyšet",
+      "meaning": "to hear",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "slyším",
+        "ty": "slyšíš",
+        "on/ona/ono": "slyší",
+        "my": "slyšíme",
+        "vy": "slyšíte",
+        "oni/ony": "slyší"
+      },
+      "notes": "Class 3 (-ět). Takes -í endings. Conjugates like rozumět.",
+      "example": {"cz": "Slyším tě dobře.", "en": "I hear you well."}
+    },
+    {
+      "id": "conj_jist_present",
+      "verb": "jíst",
+      "meaning": "to eat",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "jím",
+        "ty": "jíš",
+        "on/ona/ono": "jí",
+        "my": "jíme",
+        "vy": "jíte",
+        "oni/ony": "jedí"
+      },
+      "notes": "Irregular. Stem alternates jí-/jed-. Literary 3rd plural: 'jedí'; colloquial: 'jí'.",
+      "example": {"cz": "Jím oběd.", "en": "I am eating lunch."}
+    },
+    {
+      "id": "conj_cist_present",
+      "verb": "číst",
+      "meaning": "to read",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "čtu",
+        "ty": "čteš",
+        "on/ona/ono": "čte",
+        "my": "čteme",
+        "vy": "čtete",
+        "oni/ony": "čtou"
+      },
+      "notes": "Irregular. Stem čt- with -e endings. Literary forms: čtu, čte; 3rd pl: čtou.",
+      "example": {"cz": "Čtu knihu.", "en": "I am reading a book."}
+    },
+    {
+      "id": "conj_vedet_present",
+      "verb": "vědět",
+      "meaning": "to know (facts)",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "vím",
+        "ty": "víš",
+        "on/ona/ono": "ví",
+        "my": "víme",
+        "vy": "víte",
+        "oni/ony": "vědí"
+      },
+      "notes": "Irregular. Stem alternates ví-/věd-. Distinguish from znát (to know a person).",
+      "example": {"cz": "Vím, kde je.", "en": "I know where it is."}
+    },
+    {
+      "id": "conj_chtit_present",
+      "verb": "chtít",
+      "meaning": "to want",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "chci",
+        "ty": "chceš",
+        "on/ona/ono": "chce",
+        "my": "chceme",
+        "vy": "chcete",
+        "oni/ony": "chtějí"
+      },
+      "notes": "Irregular. Stem alternates chc-/chtě-. 3rd plural: chtějí (irregular).",
+      "example": {"cz": "Chci kávu.", "en": "I want a coffee."}
+    },
+    {
+      "id": "conj_uci_present",
+      "verb": "učit se",
+      "meaning": "to learn, to study (reflexive)",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "učím se",
+        "ty": "učíš se",
+        "on/ona/ono": "učí se",
+        "my": "učíme se",
+        "vy": "učíte se",
+        "oni/ony": "učí se"
+      },
+      "notes": "Reflexive verb with 'se'. Without 'se' it means 'to teach'. Clitic 'se' goes after the first word in sentence.",
+      "example": {"cz": "Učím se česky.", "en": "I am learning Czech."}
+    },
+    {
+      "id": "conj_my_present",
+      "verb": "mýt se",
+      "meaning": "to wash oneself",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "myju se",
+        "ty": "myješ se",
+        "on/ona/ono": "myje se",
+        "my": "myjeme se",
+        "vy": "myjete se",
+        "oni/ony": "myjí se"
+      },
+      "notes": "Reflexive verb. Alternates ý/a in stem. Note: 'mýt' (to wash) vs 'mýt' (to demolish) vs 'mít' (to have).",
+      "example": {"cz": "Myju se teplou vodou.", "en": "I wash myself with warm water."}
+    },
+    {
+      "id": "conj_divat_present",
+      "verb": "dívat se",
+      "meaning": "to look, to watch (reflexive)",
+      "tense": "present",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "dívám se",
+        "ty": "díváš se",
+        "on/ona/ono": "dívá se",
+        "my": "díváme se",
+        "vy": "díváte se",
+        "oni/ony": "dívají se"
+      },
+      "notes": "Reflexive verb. Conjugates like dělat. Common phrase: 'dívat se na' (to look at).",
+      "example": {"cz": "Dívám se na televizi.", "en": "I am watching television."}
+    },
+    {
+      "id": "conj_delat_past",
+      "verb": "dělat",
+      "meaning": "to do, to make",
+      "tense": "past",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "dělal jsem",
+        "já (f)": "dělala jsem",
+        "ty (m)": "dělal jsi",
+        "ty (f)": "dělala jsi",
+        "on": "dělal",
+        "ona": "dělala",
+        "ono": "dělalo",
+        "my (m)": "dělali jsme",
+        "my (f)": "dělaly jsme",
+        "vy (m)": "dělali jste",
+        "vy (f)": "dělaly jste",
+        "oni (m animate)": "dělali",
+        "ony (f/inanimate)": "dělaly"
+      },
+      "notes": "Regular past tense. L-participle (děl- + -al/-ala/-alo/-ali/-aly) + auxiliary (jsem/jsi/jsme/jste). Auxiliary often dropped except 1st/2nd person.",
+      "example": {"cz": "Dělal jsem úkol.", "en": "I was doing my homework."}
+    },
+    {
+      "id": "conj_byt_past",
+      "verb": "být",
+      "meaning": "to be",
+      "tense": "past",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "byl jsem",
+        "já (f)": "byla jsem",
+        "ty (m)": "byl jsi",
+        "ty (f)": "byla jsi",
+        "on": "byl",
+        "ona": "byla",
+        "ono": "bylo",
+        "my (m)": "byli jsme",
+        "my (f)": "byly jsme",
+        "vy (m)": "byli jste",
+        "vy (f)": "byly jste",
+        "oni (m animate)": "byli",
+        "ony (f/inanimate)": "byly"
+      },
+      "notes": "Irregular L-participle: byl/byla/bylo/byli/byly. Auxiliary as with regular past.",
+      "example": {"cz": "Byl jsem včera doma.", "en": "I was at home yesterday."}
+    },
+    {
+      "id": "conj_jit_past",
+      "verb": "jít",
+      "meaning": "to go (on foot)",
+      "tense": "past",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "šel jsem",
+        "já (f)": "šla jsem",
+        "ty (m)": "šel jsi",
+        "ty (f)": "šla jsi",
+        "on": "šel",
+        "ona": "šla",
+        "ono": "šlo",
+        "my (m)": "šli jsme",
+        "my (f)": "šly jsme",
+        "vy (m)": "šli jste",
+        "vy (f)": "šly jste",
+        "oni (m animate)": "šli",
+        "ony (f/inanimate)": "šly"
+      },
+      "notes": "Irregular L-participle: šel/šla/šlo/šli/šly. Colloquial masc: 'šel' or 'šou'.",
+      "example": {"cz": "Šel jsem do školy.", "en": "I went to school (on foot)."}
+    },
+    {
+      "id": "conj_jet_past",
+      "verb": "jet",
+      "meaning": "to go (by vehicle)",
+      "tense": "past",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "jel jsem",
+        "já (f)": "jela jsem",
+        "ty (m)": "jel jsi",
+        "ty (f)": "jela jsi",
+        "on": "jel",
+        "ona": "jela",
+        "ono": "jelo",
+        "my (m)": "jeli jsme",
+        "my (f)": "jely jsme",
+        "vy (m)": "jeli jste",
+        "vy (f)": "jely jste",
+        "oni (m animate)": "jeli",
+        "ony (f/inanimate)": "jely"
+      },
+      "notes": "Regular L-participle: jel/jela/jelo/jeli/jely. Used for going by vehicle (car, train, bike).",
+      "example": {"cz": "Jeli jsme do Brna vlakem.", "en": "We went to Brno by train."}
+    },
+    {
+      "id": "conj_uci_past",
+      "verb": "učit se",
+      "meaning": "to learn, to study (reflexive)",
+      "tense": "past",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "učil jsem se",
+        "já (f)": "učila jsem se",
+        "ty (m)": "učil jsi se",
+        "ty (f)": "učila jsi se",
+        "on": "učil se",
+        "ona": "učila se",
+        "ono": "učilo se",
+        "my (m)": "učili jsme se",
+        "my (f)": "učily jsme se",
+        "vy (m)": "učili jste se",
+        "vy (f)": "učily jste se",
+        "oni (m animate)": "učili se",
+        "ony (f/inanimate)": "učily se"
+      },
+      "notes": "Reflexive past. 'se' is an enclitic — goes in second position: 'učil jsem se' (NOT 'učil se jsem').",
+      "example": {"cz": "Učil jsem se celý víkend.", "en": "I studied all weekend."}
+    },
+    {
+      "id": "conj_fut_imperfective",
+      "verb": "dělat (imperfective future)",
+      "meaning": "to do (future - imperfective)",
+      "tense": "future",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "budu dělat",
+        "ty": "budeš dělat",
+        "on/ona/ono": "bude dělat",
+        "my": "budeme dělat",
+        "vy": "budete dělat",
+        "oni/ony": "budou dělat"
+      },
+      "notes": "Imperfective future = budu/budeš/bude/budeme/budete/budou + infinitive. Used for ongoing or habitual future actions.",
+      "example": {"cz": "Budu dělat úkol zítra.", "en": "I will be doing my homework tomorrow."}
+    },
+    {
+      "id": "conj_fut_perfective",
+      "verb": "perfective verbs (future)",
+      "meaning": "to do (future - perfective, completed actions)",
+      "tense": "future",
+      "aspect": "perfective",
+      "conjugation": {
+        "napíšu (psát)": "já napíšu, ty napíšeš, on napíše, my napíšeme, vy napíšete, oni napíšou",
+        "řeknu (říct)": "já řeknu, ty řekneš, on řekne, my řekneme, vy řeknete, oni řeknou",
+        "udělám (udělat)": "já udělám, ty uděláš, on udělá, my uděláme, vy uděláte, oni udělají",
+        "koupím (koupit)": "já koupím, ty koupíš, on koupí, my koupíme, vy koupíte, oni koupí",
+        "uvidím (vidět)": "já uvidím, ty uvidíš, on uvidí, my uvidíme, vy uvidíte, oni uvidí"
+      },
+      "notes": "Perfective verbs have present-tense forms that MEAN future. No 'budu' needed. Used for completed, one-time future actions.",
+      "example": {"cz": "Napíšu ti zprávu.", "en": "I will write you a message."}
+    },
+    {
+      "id": "conj_byt_future",
+      "verb": "být (future)",
+      "meaning": "to be (future)",
+      "tense": "future",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já": "budu",
+        "ty": "budeš",
+        "on/ona/ono": "bude",
+        "my": "budeme",
+        "vy": "budete",
+        "oni/ony": "budou"
+      },
+      "notes": "Future of být = budu/budeš/bude/budeme/budete/budou. Same auxiliary used for imperfective future of other verbs.",
+      "example": {"cz": "Budu doma.", "en": "I will be at home."}
+    },
+    {
+      "id": "conj_cond_present",
+      "verb": "dělat (present conditional)",
+      "meaning": "to do (conditional - present)",
+      "tense": "conditional",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "dělal bych",
+        "já (f)": "dělala bych",
+        "ty (m)": "dělal bys",
+        "ty (f)": "dělala bys",
+        "on": "dělal by",
+        "ona": "dělala by",
+        "ono": "dělalo by",
+        "my (m)": "dělali bychom",
+        "my (f)": "dělaly bychom",
+        "vy (m)": "dělali byste",
+        "vy (f)": "dělaly byste",
+        "oni (m animate)": "dělali by",
+        "ony (f/inanimate)": "dělaly by"
+      },
+      "notes": "Conditional = L-participle + bych/bys/by/bychom/byste/by. Enclitic word order applies: 'dělal bych to' (I would do it).",
+      "example": {"cz": "Dělal bych to, kdybych měl čas.", "en": "I would do it if I had time."}
+    },
+    {
+      "id": "conj_cond_past",
+      "verb": "dělat (past conditional)",
+      "meaning": "to do (past conditional)",
+      "tense": "conditional",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "byl bych dělal",
+        "já (f)": "byla bych dělala",
+        "ty (m)": "byl jsi dělal",
+        "ty (f)": "byla jsi dělala",
+        "on": "byl by dělal",
+        "ona": "byla by dělala",
+        "ono": "bylo by dělalo",
+        "my (m)": "byli bychom dělali",
+        "my (f)": "byly bychom dělaly",
+        "vy (m)": "byli byste dělali",
+        "vy (f)": "byly byste dělaly",
+        "oni (m animate)": "byli by dělali",
+        "ony (f/inanimate)": "byly by dělaly"
+      },
+      "notes": "Past conditional = past tense of být (byl bych...) + L-participle of main verb. Rare in spoken Czech; used in literature and hypothetical past.",
+      "example": {"cz": "Byl bych dělal úkol, kdybych byl doma.", "en": "I would have done my homework if I had been at home."}
+    },
+    {
+      "id": "conj_byt_conditional",
+      "verb": "být (conditional)",
+      "meaning": "to be (conditional)",
+      "tense": "conditional",
+      "aspect": "imperfective",
+      "conjugation": {
+        "já (m)": "byl bych",
+        "já (f)": "byla bych",
+        "ty (m)": "byl bys",
+        "ty (f)": "byla bys",
+        "on": "byl by",
+        "ona": "byla by",
+        "ono": "bylo by",
+        "my (m)": "byli bychom",
+        "my (f)": "byly bychom",
+        "vy (m)": "byli byste",
+        "vy (f)": "byly byste",
+        "oni (m animate)": "byli by",
+        "ony (f/inanimate)": "byly by"
+      },
+      "notes": "Conditional of být = L-participle of být + conditional auxiliary (bych/bys/by/bychom/byste/by).",
+      "example": {"cz": "Byl bych raději doma.", "en": "I would rather be at home."}
+    },
+    {
+      "id": "conj_imperative_regular",
+      "verb": "regular imperatives",
+      "meaning": "imperative mood (commands)",
+      "tense": "imperative",
+      "aspect": "imperfective",
+      "conjugation": {
+        "dělat (ty)": "dělej!",
+        "dělat (vy)": "dělejte!",
+        "psát (ty)": "piš!",
+        "psát (vy)": "pište!",
+        "hrát (ty)": "hraj!",
+        "hrát (vy)": "hrajte!",
+        "mluvit (ty)": "mluv!",
+        "mluvit (vy)": "mluvte!",
+        "prosit (ty)": "pros!",
+        "prosit (vy)": "proste!",
+        "učit (ty)": "uč!",
+        "učit (vy)": "učte!",
+        "čekat (ty)": "čekej!",
+        "čekat (vy)": "čekejte!"
+      },
+      "notes": "Imperative endings: -ej/-ejte (after -át), -i/-ěte (after -ít/-et), -ej/-ejte (after consonant). 2nd person singular often has zero ending with consonant stems.",
+      "example": {"cz": "Mluv pomalu, prosím!", "en": "Speak slowly, please!"}
+    },
+    {
+      "id": "conj_imperative_irregular",
+      "verb": "irregular imperatives",
+      "meaning": "irregular imperative forms",
+      "tense": "imperative",
+      "aspect": "imperfective",
+      "conjugation": {
+        "být (ty)": "buď!",
+        "být (vy)": "buďte!",
+        "jít (ty)": "jdi!",
+        "jít (vy)": "jděte!",
+        "jíst (ty)": "jez!",
+        "jíst (vy)": "jezte!",
+        "vědět (ty)": "věz!",
+        "vědět (vy)": "vězte!",
+        "chtít (ty)": "chcej!",
+        "chtít (vy)": "chcejte!",
+        "číst (ty)": "čti!",
+        "číst (vy)": "čtěte!"
+      },
+      "notes": "Irregular imperative forms must be memorized. 'buď' from být, 'jdi' from jít, 'jez' from jíst, 'věz' from vědět.",
+      "example": {"cz": "Buď opatrný!", "en": "Be careful!"}
+    },
+    {
+      "id": "conj_aspect_pairs",
+      "verb": "imperfective/perfective pairs",
+      "meaning": "common verbal aspect pairs",
+      "tense": "aspect_pairs",
+      "aspect": "both",
+      "conjugation": {
+        "psát / napsat": "to write (imperfective) / to write to completion (perfective)",
+        "dělat / udělat": "to do (imperfective) / to do completely (perfective)",
+        "jíst / sníst": "to eat (imperfective) / to eat up (perfective)",
+        "pít / vypít": "to drink (imperfective) / to drink up (perfective)",
+        "vidět / uvidět": "to see (imperfective) / to catch sight of (perfective)",
+        "číst / přečíst": "to read (imperfective) / to read through (perfective)",
+        "učit se / naučit se": "to learn/study (imperfective) / to learn/master (perfective)",
+        "spát / usnout": "to sleep (imperfective) / to fall asleep (perfective)",
+        "mluvit / promluvit": "to speak (imperfective) / to speak/start speaking (perfective)",
+        "psát / opsat": "to write (imperfective) / to copy (perfective)",
+        "koupit / koupit": "to buy (perfective only, no imperfective pair commonly used)",
+        "říct / říct": "to say (perfective; imperfective: říkat)",
+        "dívat se / podívat se": "to look/watch (imperfective) / to look at briefly (perfective)",
+        "přijít / přijít": "to come (perfective; imperfective: přicházet)",
+        "dělat / zdělat": "to do (imperfective) / to finish doing (perfective, colloquial)"
+      },
+      "notes": "Imperfective = ongoing, repeated, habitual. Perfective = completed, one-time, result. Most verbs come in pairs. Perfective present forms express future meaning.",
+      "example": {"cz": "Čtu knihu (imperfective) / Přečtu knihu (perfective future).", "en": "I am reading a book / I will read (through) a book."}
+    }
+  ]
+}

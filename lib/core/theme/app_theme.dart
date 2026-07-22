@@ -143,7 +143,7 @@ ThemeData _build(Brightness brightness, AppTokens t) {
       labelTextStyle: WidgetStateProperty.resolveWith(
         (states) => TextStyle(
           fontFamily: AppFonts.body,
-          fontSize: 11,
+          fontSize: 12.5,
           fontWeight: states.contains(WidgetState.selected)
               ? FontWeight.w700
               : FontWeight.w600,
