@@ -1115,16 +1115,229 @@
 
 ## Unit 28: A1 Exam Preparation (A1)
 
-*No vocabulary data for this unit.*
+| Word (CZ) | English | IPA | Gender | Example CZ | Example EN |
+|---|---|---|---|---|---|
+| otázka | question | ˈotaːzka | feminine | Tato otázka je těžká. | This question is difficult. |
+| odpověď | answer | ˈodpovɛɟ | feminine | Správná odpověď je 'B'. | The correct answer is 'B'. |
+| správně | correctly | ˈspravɲɛ | — | Odpověděl jste správně. | You answered correctly. |
+| špatně | wrongly / incorrectly | ˈʃpatɲɛ | — | Odpověděl jste špatně. | You answered incorrectly. |
+| vyberte | choose / select | ˈvɪbɛrtɛ | — | Vyberte správnou odpověď. | Choose the correct answer. |
+| doplňte | fill in / complete | ˈdoplɲtɛ | — | Doplňte chybějící slovo. | Fill in the missing word. |
+| přečtěte | read | ˈpr̝ɛt͡ʃtɛ | — | Přečtěte text a odpovězte. | Read the text and answer. |
+| poslouchejte | listen | ˈposlouxajtɛ | — | Poslouchejte nahrávku. | Listen to the recording. |
+| napište | write | ˈnapɪʃtɛ | — | Napište krátký email. | Write a short email. |
+| řekněte | say / tell | ˈr̝ɛkɲɛ | — | Řekněte něco o sobě. | Say something about yourself. |
+| spojte | match / connect | ˈspojtɛ | — | Spojte otázky s odpověďmi. | Match questions with answers. |
+| označte | mark / indicate | ˈoznat͡ʃtɛ | — | Označte správnou možnost. | Mark the correct option. |
+| správná odpověď | correct answer | ˈspravnaː ˈodpovɛɟ | feminine | Správná odpověď je číslo 3. | The correct answer is number 3. |
+| čtyři možnosti | four options | ˈt͡ʃtɪṛi ˈmoʒnostɪ | — | Jsou čtyři možnosti, vyberte jednu. | There are four options, choose one. |
+| text | text | tɛkst | masculine inanimate | Přečtěte text pozorně. | Read the text carefully. |
+| úkol | task | ˈuːkol | masculine inanimate | Máte tři úkoly. | You have three tasks. |
+| část | part / section | tʃaːst | feminine | První část je poslech. | The first part is listening. |
+| bod | point (score) | pot | masculine inanimate | Dostal jsem 80 bodů ze 100. | I got 80 points out of 100. |
+| hodnocení | evaluation / grading | ˈhodnot͡sɛɲiː | neuter | Hodnocení zkoušky je velmi přísné. | The exam grading is very strict. |
+| zkouška | exam / test | ˈskouʃka | feminine | Zítra mám zkoušku z češtiny. | Tomorrow I have a Czech exam. |
+| test | test | tɛst | masculine inanimate | Test má 20 otázek. | The test has 20 questions. |
+| přijímací zkouška | entrance exam | ˈpr̝ijɪmat͡sɪː ˈskouʃka | feminine | Složil jsem přijímací zkoušku. | I passed the entrance exam. |
+| složit zkoušku | to take/pass an exam | ˈsloʒɪt ˈskouʃku | — | Musím složit zkoušku A2. | I must pass the A2 exam. |
+| propadnout | to fail (exam) | ˈpropatnout | — | Nechci propadnout u zkoušky. | I don't want to fail the exam. |
+| úspěšný | successful | ˈuːspɛʃniː | — | Byl jsem úspěšný u zkoušky. | I was successful in the exam. |
+| neúspěšný | unsuccessful | ˈnɛuːspɛʃniː | — | Byl neúspěšný u zkoušky. | He was unsuccessful in the exam. |
+| požadavek | requirement | ˈpoʒadavɛk | masculine inanimate | Požadavek na A2 je těžký. | The A2 requirement is hard. |
+| splnit | to fulfill / meet | ˈsplɲɪt | — | Musím splnit všechny požadavky. | I must meet all requirements. |
+| nahrávka | recording | ˈnaɦraːfka | feminine | Poslouchejte nahrávku dvakrát. | Listen to the recording twice. |
+| formulář | form | ˈformulaːr̝ | masculine inanimate | Vyplňte tento formulář. | Fill in this form. |
+| vyplnit | to fill in | ˈvɪplɲɪt | — | Vyplňte prosím formulář. | Please fill in the form. |
+| poslech | listening | ˈposlɛx | masculine inanimate | Poslech byl nejtěžší část. | Listening was the hardest part. |
+| čtení | reading | ˈt͡ʃtɛɲiː | neuter | Čtení mi dělá potíže. | Reading gives me trouble. |
+| psaní | writing | ˈpsaɲiː | neuter | Psaní je moje silná stránka. | Writing is my strength. |
+| mluvení | speaking | ˈmluvenɪ | neuter | Mluvení je pro mě těžké. | Speaking is hard for me. |
+| slovní zásoba | vocabulary | ˈslovɲiː ˈzaːsoba | feminine | Musím se učit více slovní zásoby. | I must learn more vocabulary. |
+| gramatika | grammar | ˈgramatɪka | feminine | Gramatika je nejtěžší část češtiny. | Grammar is the hardest part of Czech. |
+| vysvětlení | explanation | ˈvɪsvɛtlɛɲiː | neuter | Potřebuji vysvětlení tohoto pravidla. | I need an explanation of this rule. |
+| příklad | example | ˈpr̝iːklaːd | masculine inanimate | Dejte mi příklad. | Give me an example. |
+| cvičení | exercise | ˈt͡ʃvɪt͡ʃɛɲiː | neuter | Máme tři cvičení na doma. | We have three exercises for homework. |
+
+*40 words in this unit.*
 
 ## Unit 29: A2 Exam Preparation (A2)
 
-*No vocabulary data for this unit.*
+| Word (CZ) | English | IPA | Gender | Example CZ | Example EN |
+|---|---|---|---|---|---|
+| formální dopis | formal letter | formalniː dopɪs | masculine inanimate | Musím napsat formální dopis řediteli. | I have to write a formal letter to the director. |
+| žádost | application, request | ʒaːdost | feminine | Podal jsem žádost o stipendium. | I submitted an application for a scholarship. |
+| stížnost | complaint | stiːʒnost | feminine | Napsal jsem stížnost na službu. | I wrote a complaint about the service. |
+| oznámení | announcement, notice | oznaːmɛɲiː | neuter | Dostal jsem oficiální oznámení. | I received an official announcement. |
+| pozvánka | invitation | pozvaːnka | feminine | Dostal jsem pozvánku na svatbu. | I received a wedding invitation. |
+| potvrzení | confirmation | potvr̝tsɛɲiː | neuter | Čekám na potvrzení rezervace. | I'm waiting for confirmation of the reservation. |
+| vyjádření | statement, expression | vɪjaːdr̝ɛɲiː | neuter | Vážím si vašeho vyjádření. | I appreciate your statement. |
+| souhlas | agreement, consent | sou̯las | masculine inanimate | Dávám svůj souhlas s návrhem. | I give my consent to the proposal. |
+| nesouhlas | disagreement, dissent | nɛsou̯las | masculine inanimate | Vyjádřil jsem nesouhlas. | I expressed my disagreement. |
+| navrhovat | to propose, suggest | navrhoʊvaʊt | — | Chci navrhovat nové řešení. | I want to propose a new solution. |
+| doporučovat | to recommend | doporou̯t͡ʃovaʊt | — | Doporučuji vám tuto knihu. | I recommend this book to you. |
+| žádat | to request, apply for | ʒaːdɛt | — | Žádám o informace o kurzu. | I am requesting information about the course. |
+| informovat | to inform | ɪnformaʊt | — | Informujeme vás o změně programu. | We are informing you about a program change. |
+| oznamovat | to announce, notify | oznamovaʊt | — | Oznamujeme vám termín zkoušky. | We are announcing the exam date. |
+| omlouvat se | to apologize | omloʊvaʊt sɛ | — | Omlouvám se za zpoždění. | I apologize for the delay. |
+| děkovat | to thank | dɲɛkovaʊt | — | Děkuji vám za pomoc. | I thank you for your help. |
+| blahopřát | to wish, congratulate | blahopr̝aːt | — | Blahopřji vám k narozeninám! | I wish you a happy birthday! |
+| gratulovat | to congratulate | gratulovaʊt | — | Gratuluji ti k promo! | I congratulate you on your graduation! |
+| v současné době | at present, currently | v sou̯t͡ʃasnɛː dobɲɛ | feminine | V současné době pracujeme na projektu. | At present we are working on a project. |
+| v nedávné době | recently | v nɛdaːvnɛː dobɲɛ | feminine | V nedávné době se přestěhovali. | They moved recently. |
+| pokud jde o | as regards, concerning | pokʊd jɪdɛ o | — | Pokud jde o platbu, ještě nezaplatil. | As regards the payment, he hasn't paid yet. |
+| co se týče | as regards, concerning | tso sɛ tiːt͡ʃɛ | — | Co se týče času, není problém. | As regards time, there is no problem. |
+| na jedné straně | on one hand | na jɛdnɛː stranɲɛ | feminine | Na jedné straně je to výhoda. | On one hand it's an advantage. |
+| na druhé straně | on the other hand | na druɦɛː stranɲɛ | feminine | Na druhé straně to má i nevýhody. | On the other hand it also has disadvantages. |
+| z toho důvodu | for that reason | z toɦo duːvodu | masculine inanimate | Z toho důvodu nemohl přijít. | For that reason he couldn't come. |
+| z tohoto hlediska | from this point of view | z toɦoto hlɛdɪska | neuter | Z tohoto hlediska je to dobré. | From this point of view it's good. |
+| je nutno podotknout | it should be noted | jɛ nutno podotknout | — | Je nutno podotknout, že podmínky se změnily. | It should be noted that the conditions have changed. |
+| je třeba zdůraznit | it should be emphasized | jɛ tr̝ɛba zduːrasɲɪt | — | Je třeba zdůraznit důležitost termínu. | It should be emphasized that the deadline is important. |
+| vzhledem k tomu | given that, in view of | vzhlɛdɛm k tomu | — | Vzhledem k tomu, že prší, zůstaneme doma. | Given that it's raining, we'll stay home. |
+| s ohledem na | with regard to, considering | s ohlɛdɛm na | — | S ohledem na situaci to uděláme jinak. | With regard to the situation we'll do it differently. |
+| navzdory tomu | despite that, nevertheless | navzdorɪ tomu | — | Navzdory tomu šel ven. | Despite that he went out. |
+| kromě toho | besides, in addition | kromɲɛ toɦo | — | Kromě toho mám ještě jiný úkol. | Besides, I have another task. |
+| kromě již zmíněného | besides the already mentioned | kromɲɛ jiː zmiːɲɛɲiːɦo | neuter | Kromě již zmíněného chci dodat jednu věc. | Besides what was already mentioned, I want to add one thing. |
+| v neposlední řadě | last but not least | v nɛposlɛdniː r̝aːdɲɛ | feminine | V neposlední řadě děkuji rodině. | Last but not least I thank my family. |
+| na závěr | in conclusion, finally | na zaviːr | masculine inanimate | Na závěr bych chtěl říci jedno slovo. | In conclusion I'd like to say one word. |
+| naopak | on the contrary | naopak | — | Naopak, mám toho dost. | On the contrary, I have enough. |
+| zatímco | while, whereas | zatiːmtso | — | Zatímco on pracuje, ona se učí. | While he works, she studies. |
+| přesto | nevertheless, still | pr̝ɛsto | — | Pršelo, přesto jsme šli ven. | It was raining, nevertheless we went out. |
+| nicméně | however, nevertheless | nɪt͡smɲɛɲɛ | — | Nicméně se musíme rozhodnout. | However, we must decide. |
+| avšak | however, but | avʃak | — | Chtěl jsem přijít, avšak nemohl jsem. | I wanted to come, however I couldn't. |
+| ovšem | of course, however | ovʃɛm | — | Ovšem, to je pravda. | Of course, that's true. |
+| totež | the same, likewise | totɛʃ | — | Platí totež jako včera. | The same applies as yesterday. |
+| stejně tak | just as, similarly | stɛjnɲɛ tak | — | Stejně tak jako ty, já si to myslím. | Just like you, I think so too. |
+| podobně | similarly | podobɲɛ | — | Podobně to vidím i já. | I see it similarly. |
+| na rozdíl od | in contrast to, unlike | na rozdiːl od | — | Na rozdíl od tebe já mám rád zimu. | Unlike you I like winter. |
+| v porovnání s | in comparison with | v porovnaːɲiː s | — | V porovnání s loňskem je o něco tepleji. | In comparison with last year it's a bit warmer. |
+| dále | furthermore, next | daːlɛ | — | Dále bych rád podotkl důležitost spolupráce. | Furthermore I'd like to note the importance of cooperation. |
+| poté | afterwards, then | potɛ | — | Poté jsme šli do kina. | Afterwards we went to the cinema. |
+| následně | subsequently | naːslɛdɲɛ | — | Následně se přesunuli do jiné místnosti. | Subsequently they moved to another room. |
+| nejprve | first, first of all | nɛjprvɛ | — | Nejprve musíme vyřešit problém. | First we must solve the problem. |
+| především | above all, primarily | pr̝ɛdɛvʃiːm | — | Především je důležitá bezpečnost. | Above all, safety is important. |
+| hlavně | mainly, especially | hlavɲɛ | — | Hlavně musíme být opatrní. | Mainly we must be careful. |
+| zvláště | especially, particularly | zvlaːʃt͡ʃɛ | — | Zvláště v létě je horko nesnesitelné. | Especially in summer the heat is unbearable. |
+| speciálně | specifically, specially | spɛtsɪaːlɲɛ | — | Speciálně pro vás jsme to připravili. | We prepared it specially for you. |
+| předně | firstly, first of all | pr̝ɛdɲɛ | — | Předně bych chtěl poděkovat. | Firstly I'd like to thank you. |
+| naposled | for the last time, lastly | naposlɛt | — | Naposed jsme se setkali včera. | We met for the last time yesterday. |
+| konečně | finally, at last | konɛt͡ʃɲɛ | — | Konečně jsme to dokázali. | Finally we made it. |
+| v první řadě | in the first place, firstly | f pr̃vniː r̝aːdɲɛ | feminine | V první řadě bych chtěl poděkovat. | In the first place I'd like to thank you. |
+| jak již bylo řečeno | as already mentioned | jak jiːʒ bɪlo r̝ɛt͡ʃɛno | neuter | Jak již bylo řečeno, termín se blíží. | As already mentioned, the deadline is approaching. |
+| ve zkratce | in short, briefly | vɛ zkratsɛ | feminine | Ve zkratce: musíme se rozhodnout. | In short: we must decide. |
+
+*60 words in this unit.*
 
 ## Unit 30: A1 Review & Consolidation (A1)
 
-*No vocabulary data for this unit.*
+| Word (CZ) | English | IPA | Gender | Example CZ | Example EN |
+|---|---|---|---|---|---|
+| omluvte | excuse (formal) | ˈomluptɛ | — | Omlouvám se, ale musím jít. | I apologize, but I must go. |
+| promiňte | excuse me (formal) | ˈpromiɲtɛ | — | Promiňte, kde je nádraží? | Excuse me, where is the station? |
+| nezlobte se | don't be angry | ˈnɛzlobtɛ sɛ | — | Nezlobte se, ale nemám čas. | Don't be angry, but I don't have time. |
+| tak jo | alright / OK | tak jo | — | Tak jo, půjdeme. | Alright, let's go. |
+| no dobře | well / okay then | no ˈdobr̝ɛ | — | No dobře, máš pravdu. | Well, you're right. |
+| vlastně | actually / in fact | ˈvlastɲɛ | — | Vlastně to není špatný nápad. | Actually it's not a bad idea. |
+| prostě | simply / just | ˈprostɛ | — | Prostě to udělej. | Just do it. |
+| totiž | you see / namely | ˈtotiːz | — | Nemůžu přijít, totiž mám práci. | I can't come, you see I have work. |
+| přece | after all / come on | ˈpr̝ɛtsɛ | — | Přece to víš! | Come on, you know that! |
+| už | already / anymore | uːz | — | Už jsem to udělal. | I already did it. |
+| ještě | still / yet | ˈjɛʃtɛ | — | Ještě jsem neskončil. | I haven't finished yet. |
+| znovu | again | ˈznovu | — | Zkusím to znovu. | I'll try again. |
+| zpět | back | zpɛt | — | Vrať se zpět! | Come back! |
+| pryč | away / gone | pr̝ɪt͡s | — | Jdi pryč! | Go away! |
+| domů | home (direction) | ˈdomuː | — | Jdu domů. | I'm going home. |
+| ven | outside (direction) | vɛn | — | Jděte ven! | Go outside! |
+| dovnitř | inside (direction) | ˈdovɲiːr̝ | — | Pojď dovnitř. | Come inside. |
+| nahoru | up / upwards | ˈnaxoru | — | Pojď nahoru. | Come upstairs. |
+| dolů | down / downwards | ˈdoluː | — | Pojď dolů. | Come down. |
+| blízko | near / close | ˈbliːzko | — | Je to blízko odtud. | It's near from here. |
+| daleko | far | ˈdalɛko | — | Je to daleko. | It's far. |
+| tady | here | ˈtadi | — | Tady je hezky. | It's nice here. |
+| tam | there | tam | — | Tam je obchod. | There is the shop. |
+| někde | somewhere | ˈɲɛɡdɛ | — | Někde to ztratil. | He lost it somewhere. |
+| nikde | nowhere | ˈnɪɡdɛ | — | Nikde to nemůžu najít. | I can't find it anywhere. |
+| všude | everywhere | ˈfʃudɛ | — | Všude jsou lidé. | There are people everywhere. |
+| jinam | elsewhere | ˈjɪnam | — | Musím jít jinam. | I must go elsewhere. |
+| sem | here (direction) | sɛm | — | Pojď sem. | Come here. |
+| tamtam | there (direction) | ˈtamtam | — | Jdi tam. | Go there. |
+| vně | outside (location) | vnɛ | — | Je vně hezky. | It's nice outside. |
+| uvnitř | inside (location) | ˈuːvɲiːr̝ | — | Je uvnitř teplo. | It's warm inside. |
+| nahoře | above / upstairs | ˈnahoːr̝ɛ | — | Nahoře spí děti. | Upstairs the children sleep. |
+| dole | below / downstairs | ˈdolɛ | — | Dole je kuchyně. | Downstairs is the kitchen. |
+| vedle | next to / beside | ˈvɛdlɛ | — | Vedle školy je park. | Next to the school is a park. |
+| naproti | opposite / across | ˈnaprot͡sɪ | — | Naproti banky je pošta. | Opposite the bank is a post office. |
+| kolem | past / around | ˈkolɛm | — | Šel kolem mě. | He walked past me. |
+| skrz | through | skrz | — | Šel skrz park. | He walked through the park. |
+| podél | along | ˈpodɛːl | — | Šli podél řeky. | They walked along the river. |
+| uprostřed | in the middle | ˈuprostřɛd | — | Uprostřed náměstí je socha. | In the middle of the square is a statue. |
+| zhruba | approximately / roughly | ˈzɦruba | — | Zhruba dvacet lidí přišlo. | Approximately twenty people came. |
+| asi tak | about / approximately | ˈasɪ tak | — | Je to asi tak deset minut. | It's about ten minutes. |
+
+*41 words in this unit.*
 
 ## Unit 31: A2 Review & Consolidation (A2)
 
-*No vocabulary data for this unit.*
+| Word (CZ) | English | IPA | Gender | Example CZ | Example EN |
+|---|---|---|---|---|---|
+| zapomenout | to forget | zapomnɛnout | — | Zapomněl jsem klíče doma. | I forgot my keys at home. |
+| vzpomenout si | to recall, remember | vspomnɛnout sɪ | — | Vzpomněl jsem si na jeho jméno. | I remembered his name. |
+| učit se | to learn, study | uʊt͡ʃɪt sɛ | — | Učím se česky dva roky. | I've been learning Czech for two years. |
+| naučit se | to learn (completely), master | nauʊt͡ʃɪt sɛ | — | Naučil se česky za rok. | He learned Czech in a year. |
+| znát | to know (a person, fact) | znaːt | — | Znám toho člověka. | I know that person. |
+| vědět | to know (information) | vɲɛdɲɛt | — | Nevím, kde je. | I don't know where he is. |
+| mluvit | to speak, talk | mluʋɪt | — | Mluvíme česky doma. | We speak Czech at home. |
+| říkat | to say (repeatedly) | riːkat | — | Co říkáš? | What are you saying? |
+| říct | to say (once, perfective) | riːt͡st | — | Řekl mi, že přijde. | He told me he would come. |
+| vidět | to see | vɪdɲɛt | — | Vidím tě dobře. | I can see you well. |
+| podívat se | to look at | podiːvat sɛ | — | Podívej se na tohle! | Look at this! |
+| slyšet | to hear | slɪʃɛt | — | Slyším něco venku. | I hear something outside. |
+| poslouchat | to listen | poslou̯xat | — | Poslouchám rádio každé ráno. | I listen to the radio every morning. |
+| hledat | to search, look for | hlɛdat | — | Hledám klíče. | I'm looking for my keys. |
+| najít | to find | najiːt | — | Našel jsem klíče pod stolem. | I found the keys under the table. |
+| myslet | to think, have an opinion | mɪslɛt | — | Co si myslíš o tom filmu? | What do you think about that film? |
+| přemýšlet | to think, ponder | pr̝ɛmiːslɛt | — | Přemýšlím o změně práce. | I'm thinking about changing jobs. |
+| začít | to begin, start (once) | zat͡ʃiːt | — | Začali jsme v devět hodin. | We started at nine o'clock. |
+| začínat | to begin, start (ongoing) | zat͡ʃiːnat | — | Film začíná v osm. | The film starts at eight. |
+| skončit | to finish, end (once) | skont͡ʃɪt | — | Přijímačky skončily v poledne. | The entrance exams finished at noon. |
+| končit | to end, finish (ongoing) | kont͡ʃɪt | — | Přednáška končí za pět minut. | The lecture ends in five minutes. |
+| otevřít | to open (once) | otɛvr̝iːt | — | Otevřel jsem dveře. | I opened the door. |
+| otevírat | to open (ongoing) | otɛviːrat | — | Obchod otvírá v deset. | The shop opens at ten. |
+| zavřít | to close (once) | zavr̝iːt | — | Zavřete okno, prosím. | Close the window, please. |
+| zavírat | to close (ongoing) | zaviːrat | — | Knihovna zavírá v šest. | The library closes at six. |
+| koupit | to buy (once) | kou̯pɪt | — | Koupil jsem si nové boty. | I bought new shoes. |
+| kupovat | to buy (ongoing, habitual) | kupovaʊt | — | Kupujeme chléb každý den. | We buy bread every day. |
+| prodat | to sell (once) | prodat | — | Prodal jsem staré auto. | I sold the old car. |
+| prodávat | to sell (ongoing, habitual) | prodaːvaʊt | — | Prodávají zeleninu na trhu. | They sell vegetables at the market. |
+| přijmout | to accept, receive (once) | pr̝ɪjmout | — | Přijal jsem pozvánku. | I accepted the invitation. |
+| přijímat | to accept, receive (ongoing) | pr̝ɪjiːmat | — | Přijímáme platby kartou. | We accept card payments. |
+| opustit | to leave, abandon (once) | opustɪt | — | Opustil místnost potichu. | He left the room quietly. |
+| opouštět | to leave, abandon (ongoing) | opouʃt͡ʃɛt | — | Lidé opouštějí město kvůli válce. | People are leaving the city because of the war. |
+| vrátit se | to return (once) | vraːtɪt sɛ | — | Vrátil se domů pozdě. | He returned home late. |
+| vracet se | to return (ongoing, habitual) | vrat͡sɛt sɛ | — | Vrací se domů každý večer. | He returns home every evening. |
+| setkat se | to meet (once) | sɛtkat sɛ | — | Setkali jsme se na náměstí. | We met in the square. |
+| setkávat se | to meet (ongoing, habitual) | sɛtkaːvat sɛ | — | Setkáváme se každý týden. | We meet every week. |
+| rozhodnout | to decide (once) | rozhoʊdnout | — | Rozhodli jsme se prodražit. | We decided to travel. |
+| rozhodovat | to decide (ongoing) | rozhodovaʊt | — | Teď se rozhoduje o budoucnosti firmy. | The future of the company is being decided now. |
+| zjistit | to find out, discover (once) | zjɪstɪt | — | Zjistil jsem, že mám pravdu. | I found out that I was right. |
+| zjišťovat | to find out (ongoing) | zjɪʃt͡ʃovaʊt | — | Zjišťujeme fakta o případu. | We are finding out facts about the case. |
+| dokázat | to prove, demonstrate (once) | dokaːzat | — | Dokázal, že má pravdu. | He proved that he was right. |
+| dokazovat | to prove (ongoing) | dokazovaʊt | — | Dokazuje se, že systém funguje. | It's being proven that the system works. |
+| vyhrát | to win (once) | vɪɦr̝aːt | — | Vyhráli jsme zápas. | We won the match. |
+| vyhrávat | to win (ongoing, habitual) | vɪɦr̝aːvaʊt | — | Náš tým vyhrává většinu zápasů. | Our team wins most matches. |
+| prohrát | to lose (a game, once) | proɦr̝aːt | — | Prohrál jsem sázku. | I lost the bet. |
+| prohrávat | to lose (a game, ongoing) | proɦr̝aːvaʊt | — | Prohráváme celý zápas. | We are losing the whole match. |
+| splnit | to fulfill, complete (once) | splɲɪt | — | Splnil jsem všechny podmínky. | I fulfilled all the conditions. |
+| splňovat | to fulfill, meet (ongoing) | splɲovaʊt | — | Závodník splňuje požadavky. | The athlete meets the requirements. |
+| dosáhnout | to achieve, reach (once) | dosaːhnout | — | Dosáhli jsme cíle. | We achieved the goal. |
+| dosahovat | to achieve, reach (ongoing) | dosahovaʊt | — | Firma dosahuje dobrých výsledků. | The company is achieving good results. |
+| pochopit | to understand (once) | poxopɪt | — | Pochopil jsem, co chce. | I understood what he wants. |
+| chápat | to understand (ongoing) | xaːpat | — | Chápu tvou situaci. | I understand your situation. |
+| vysvětlit | to explain (once) | vɪsvɲɛtlɪt | — | Učitel nám vysvětlil gramatiku. | The teacher explained the grammar to us. |
+| vysvětlovat | to explain (ongoing) | vɪsvɲɛtloʊvaʊt | — | Vysvětluje dětem, jak to funguje. | He explains to children how it works. |
+| připravit | to prepare (once) | pr̝ɪpravɪt | — | Připravila jsem večeři. | I prepared dinner. |
+| připravovat | to prepare (ongoing) | pr̝ɪpravovaʊt | — | Připravujeme se na zkoušku. | We are preparing for the exam. |
+| vybrat | to choose, select (once) | vɪbrat | — | Vybral si červené tričko. | He chose a red t-shirt. |
+| vybírat | to choose, select (ongoing) | vɪbiːrat | — | Dlouho jsem vybíral dárek. | I spent a long time choosing a gift. |
+| zapamatovat si | to memorize, commit to memory | zapamatoʊvat sɪ | — | Musím si zapamatovat nová slovíčka. | I need to memorize new vocabulary. |
+
+*60 words in this unit.*

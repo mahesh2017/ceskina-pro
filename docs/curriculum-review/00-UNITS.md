@@ -1,5 +1,11 @@
 # Curriculum — All Units
 
+> **Associated docs:**
+> - [01-VOCABULARY.md](01-VOCABULARY.md) — Full vocabulary tables per unit
+> - [02-GRAMMAR.md](02-GRAMMAR.md) — 110 grammar rules (GR-000 → GR-291)
+> - [03-LESSONS.md](03-LESSONS.md) — 60 lessons with exercise mixes
+> - [04-VISUALS.md](04-VISUALS.md) — 56 image prompts (heroes, onboarding, badges, icons, empty states) + 17 grammar SVGs
+
 | Unit ID | Title | Phase | Grammar Tags | Special | Description |
 |---|---|---|---|---|---|
 | 1 | Sounds & Pronunciation | a1 | phonetics, pronunciation | — | Czech alphabet, háček, čárka, first-syllable stress, problem sounds: ř, ě |
