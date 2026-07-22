@@ -10,6 +10,12 @@ import 'exercises/dictation_view.dart';
 import 'exercises/pronunciation_view.dart';
 import 'exercises/dialogue_view.dart';
 import 'exercises/declension_table_view.dart';
+import 'exercises/matching_view.dart';
+import 'exercises/error_correction_view.dart';
+import 'exercises/reading_comprehension_view.dart';
+import 'exercises/listening_comprehension_view.dart';
+import 'exercises/writing_task_view.dart';
+import 'exercises/speaking_task_view.dart';
 
 // Re-export shared helpers and types so existing imports of this file
 // (e.g. `show TtsButton`) keep resolving without changes.
@@ -81,6 +87,30 @@ class ExerciseWidget extends StatelessWidget {
         onAnswered: onAnswered,
       ),
       ExerciseType.listening => DictationView(
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
+      ExerciseType.matching => MatchingView(
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
+      ExerciseType.errorCorrection => ErrorCorrectionView(
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
+      ExerciseType.readingComprehension => ReadingComprehensionView(
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
+      ExerciseType.listeningComprehension => ListeningComprehensionView(
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
+      ExerciseType.writingTask => WritingTaskView(
+        exercise: exercise,
+        onAnswered: onAnswered,
+      ),
+      ExerciseType.speakingTask => SpeakingTaskView(
         exercise: exercise,
         onAnswered: onAnswered,
       ),

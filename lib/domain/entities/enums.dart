@@ -24,6 +24,12 @@ enum ExerciseType {
   prepositionCase,
   listening,
   dialogue,
+  matching,
+  errorCorrection,
+  readingComprehension,
+  listeningComprehension,
+  writingTask,
+  speakingTask,
 }
 
 /// Lesson types.

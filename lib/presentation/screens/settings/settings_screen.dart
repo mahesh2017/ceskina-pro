@@ -440,7 +440,6 @@ class _Row extends StatelessWidget {
   final Color fg;
   final String title;
   final String subtitle;
-  final Color? subtitleColor;
   final Widget? trailing;
   final VoidCallback? onTap;
 
@@ -450,7 +449,6 @@ class _Row extends StatelessWidget {
     required this.fg,
     required this.title,
     required this.subtitle,
-    this.subtitleColor,
     this.trailing,
     this.onTap,
   });
@@ -489,11 +487,8 @@ class _Row extends StatelessWidget {
                     subtitle,
                     style: TextStyle(
                       fontSize: 14,
-                      color: subtitleColor ?? t.muted,
-                      fontWeight:
-                          subtitleColor != null
-                              ? FontWeight.w600
-                              : FontWeight.normal,
+                      color: t.muted,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ],
