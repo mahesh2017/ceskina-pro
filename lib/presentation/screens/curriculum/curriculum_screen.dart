@@ -80,8 +80,31 @@ class CurriculumScreen extends ConsumerWidget {
                             fontWeight: FontWeight.w600,
                             color: t.muted)),
                   ],
-                ),
-                const SizedBox(height: 16),
+                  ),
+                  const SizedBox(height: 16),
+                  // Quick reference links
+                  Row(
+                  children: [
+                    _ReferenceChip(
+                      icon: Icons.menu_book,
+                      label: 'Grammar',
+                      onTap: () => context.push('/grammar'),
+                    ),
+                    const SizedBox(width: 8),
+                    _ReferenceChip(
+                      icon: Icons.table_chart,
+                      label: 'Declensions',
+                      onTap: () => context.push('/reference/declension_tables'),
+                    ),
+                    const SizedBox(width: 8),
+                    _ReferenceChip(
+                      icon: Icons.format_list_bulleted,
+                      label: 'Cheat Sheets',
+                      onTap: () => context.push('/reference/cheat_sheets'),
+                    ),
+                  ],
+                  ),
+                  const SizedBox(height: 16),
                 ...a1Units.map((u) => Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: _UnitCard(unit: u, isUnlocked: unlockedIds.contains(u.id)),
@@ -257,13 +280,26 @@ class _UnitCard extends ConsumerWidget {
                   ),
                 ];
               }
-              return ls
-                  .map((lesson) => _LessonTile(
-                        lesson: lesson,
-                        isUnlocked: isUnlocked,
-                        isCompleted: completedIds.contains(lesson.id),
-                      ))
-                  .toList();
+              return <Widget>[
+                ...ls.map((lesson) => _LessonTile(
+                      lesson: lesson,
+                      isUnlocked: isUnlocked,
+                      isCompleted: completedIds.contains(lesson.id),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: OutlinedButton.icon(
+                    onPressed: () => context.push(
+                      '/grammar?unit=${unit.id}',
+                    ),
+                    icon: const Icon(Icons.menu_book, size: 16),
+                    label: const Text('Grammar Rules'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 40),
+                    ),
+                  ),
+                ),
+              ];
             },
           ),
         ),
@@ -332,6 +368,47 @@ class _LessonTile extends StatelessWidget {
             Icon(isUnlocked ? Icons.chevron_right : Icons.lock_outline,
                 size: 15, color: t.faint),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class _ReferenceChip extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _ReferenceChip({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+            color: t.chipBg,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, size: 20, color: t.pri),
+              const SizedBox(height: 4),
+              Text(label,
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: t.ink)),
+            ],
+          ),
         ),
       ),
     );

@@ -76,8 +76,14 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
       );
     }
 
-    // Lesson complete screen
+    // Lesson complete screen — show exam results or normal completion.
     if (session.isComplete) {
+      if (session.isExamMode) {
+        return _ExamCompleteScreen(
+          session: session,
+          onExit: () => context.go('/curriculum'),
+        );
+      }
       return _LessonCompleteScreen(
         session: session,
         onExit: () => context.go('/curriculum'),
@@ -115,6 +121,43 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
         ),
         title: Row(
           children: [
+            // Mode badge (exam / review)
+            if (session.isExamMode)
+              Container(
+                margin: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade600,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Text(
+                  'EXAM',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1,
+                  ),
+                ),
+              )
+            else if (session.lesson?.isReview == true)
+              Container(
+                margin: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade600,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Text(
+                  'REVIEW',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ),
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
@@ -127,22 +170,25 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
               ),
             ),
             const SizedBox(width: 12),
-            // Hearts
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.favorite,
-                    color: session.hearts > 0
-                        ? Colors.red
-                        : Colors.grey.shade400,
-                    size: 20,),
-                const SizedBox(width: 2),
-                Text(
-                  '${session.hearts}',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-              ],
-            ),
+            // Exam timer or hearts
+            if (session.isExamMode)
+              _ExamTimer(initialSeconds: session.remainingSeconds)
+            else
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.favorite,
+                      color: session.hearts > 0
+                          ? Colors.red
+                          : Colors.grey.shade400,
+                      size: 20,),
+                  const SizedBox(width: 2),
+                  Text(
+                    '${session.hearts}',
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ],
+              ),
           ],
         ),
       ),
@@ -257,12 +303,14 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                 },
                 icon: const Icon(Icons.arrow_forward),
                 label: Text(
-                  session.currentIndex + 1 < session.totalExercises
-                      ? 'Continue'
-                      : (session.mistakeQueue.isNotEmpty &&
-                              !session.mistakesAppended)
-                          ? 'Review Mistakes'
-                          : 'Finish Lesson',
+                  session.isExamMode
+                      ? 'Next Question'
+                      : session.currentIndex + 1 < session.totalExercises
+                          ? 'Continue'
+                          : (session.mistakeQueue.isNotEmpty &&
+                                  !session.mistakesAppended)
+                              ? 'Review Mistakes'
+                              : 'Finish Lesson',
                 ),
               ),
             ],
@@ -596,6 +644,243 @@ class _LessonCompleteScreen extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Countdown timer widget for exam mode.
+class _ExamTimer extends StatefulWidget {
+  final int initialSeconds;
+
+  const _ExamTimer({required this.initialSeconds});
+
+  @override
+  State<_ExamTimer> createState() => _ExamTimerState();
+}
+
+class _ExamTimerState extends State<_ExamTimer> {
+  late int _remaining;
+  bool _expired = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _remaining = widget.initialSeconds;
+    _startTimer();
+  }
+
+  void _startTimer() {
+    Future.delayed(const Duration(seconds: 1), () {
+      if (!mounted) return;
+      setState(() {
+        if (_remaining > 0) {
+          _remaining--;
+          _startTimer();
+        } else {
+          _expired = true;
+        }
+      });
+    });
+  }
+
+  String get _formatted {
+    final min = _remaining ~/ 60;
+    final sec = _remaining % 60;
+    return '${min.toString().padLeft(2, '0')}:${sec.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isLow = _remaining < 60;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          _expired ? Icons.timer_off : Icons.timer,
+          size: 18,
+          color: _expired
+              ? Colors.red
+              : isLow
+                  ? Colors.orange.shade600
+                  : Colors.grey.shade600,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          _expired ? 'TIME' : _formatted,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            color: _expired
+                ? Colors.red
+                : isLow
+                    ? Colors.orange.shade700
+                    : null,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Screen shown when an exam-prep lesson is completed.
+class _ExamCompleteScreen extends ConsumerWidget {
+  final LessonSessionState session;
+  final VoidCallback onExit;
+
+  const _ExamCompleteScreen({
+    required this.session,
+    required this.onExit,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accuracy = (session.accuracy * 100).round();
+    final passed = accuracy >= 60;
+    final theme = Theme.of(context);
+
+    // Derive CEFR level from the exam lesson's unit context.
+    // Unit 28 = A1 exam, Unit 29 = A2 exam.
+    final unitId = session.lesson?.unitId ?? 0;
+    final cefrLevel = unitId == 29 ? 'A2' : 'A1';
+
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Result icon
+                Icon(
+                  passed ? Icons.check_circle : Icons.error_outline,
+                  size: 80,
+                  color: passed ? Colors.green : Colors.red.shade400,
+                ),
+                const SizedBox(height: 16),
+
+                // Exam result title
+                Text(
+                  passed ? 'Exam Passed!' : 'Exam Attempt',
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'CEFR Level: $cefrLevel',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: theme.colorScheme.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Score card
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        // Overall score
+                        Text(
+                          '$accuracy%',
+                          style: theme.textTheme.displayLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: passed ? Colors.green : Colors.red.shade400,
+                          ),
+                        ),
+                        Text(
+                          passed ? 'PASS' : 'FAIL',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: passed ? Colors.green : Colors.red.shade400,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                        const Divider(height: 24),
+
+                        // Section breakdown
+                        _ExamSection(
+                          icon: Icons.book,
+                          label: 'Reading',
+                          score: accuracy,
+                          total: 100,
+                        ),
+                        const SizedBox(height: 8),
+                        _ExamSection(
+                          icon: Icons.headphones,
+                          label: 'Listening',
+                          score: accuracy,
+                          total: 100,
+                        ),
+                        const SizedBox(height: 8),
+                        _ExamSection(
+                          icon: Icons.edit,
+                          label: 'Writing',
+                          score: accuracy,
+                          total: 100,
+                        ),
+                        const SizedBox(height: 8),
+                        _ExamSection(
+                          icon: Icons.mic,
+                          label: 'Speaking',
+                          score: accuracy,
+                          total: 100,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                FilledButton.icon(
+                  onPressed: onExit,
+                  icon: const Icon(Icons.school),
+                  label: Text(passed ? 'Continue' : 'Back to Curriculum'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A single section row in the exam results.
+class _ExamSection extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final int score;
+  final int total;
+
+  const _ExamSection({
+    required this.icon,
+    required this.label,
+    required this.score,
+    required this.total,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final pct = total > 0 ? (score / total * 100).round() : 0;
+    return Row(
+      children: [
+        Icon(icon, size: 18, color: Colors.grey.shade600),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(label, style: const TextStyle(fontSize: 15)),
+        ),
+        Text(
+          '$pct%',
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: pct >= 60 ? Colors.green : Colors.red.shade400,
+          ),
+        ),
+      ],
     );
   }
 }

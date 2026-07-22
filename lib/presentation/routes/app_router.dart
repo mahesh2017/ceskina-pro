@@ -11,6 +11,7 @@ import '../screens/stats/stats_screen.dart';
 import '../screens/settings/settings_screen.dart';
 import '../screens/settings/account_screen.dart';
 import '../screens/grammar/grammar_reference_screen.dart';
+import '../screens/grammar/quick_reference_screen.dart';
 import '../screens/onboarding/onboarding_screen.dart';
 import '../providers/settings_providers.dart';
 import 'app_scaffold.dart';
@@ -92,6 +93,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder:
             (context, state) => GrammarReferenceScreen(
               highlightRuleId: state.uri.queryParameters['rule'],
+            ),
+      ),
+      GoRoute(
+        path: '/reference/:type',
+        builder:
+            (context, state) => QuickReferenceScreen(
+              type: state.pathParameters['type']!,
             ),
       ),
       GoRoute(

@@ -45,6 +45,12 @@ class LessonSessionState {
   /// True while the learner is browsing the new words, before practicing.
   final bool isTeaching;
 
+  /// True when this lesson is part of an exam-prep unit.
+  final bool isExamMode;
+
+  /// Remaining seconds on the exam countdown timer.
+  final int remainingSeconds;
+
   const LessonSessionState({
     this.lesson,
     this.exercises = const [],
@@ -65,6 +71,8 @@ class LessonSessionState {
     this.originalCount = 0,
     this.teachCards = const [],
     this.isTeaching = false,
+    this.isExamMode = false,
+    this.remainingSeconds = 0,
   });
 
   LessonSessionState copyWith({
@@ -87,6 +95,8 @@ class LessonSessionState {
     int? originalCount,
     List<Flashcard>? teachCards,
     bool? isTeaching,
+    bool? isExamMode,
+    int? remainingSeconds,
   }) {
     return LessonSessionState(
       lesson: lesson ?? this.lesson,
@@ -108,6 +118,8 @@ class LessonSessionState {
       originalCount: originalCount ?? this.originalCount,
       teachCards: teachCards ?? this.teachCards,
       isTeaching: isTeaching ?? this.isTeaching,
+      isExamMode: isExamMode ?? this.isExamMode,
+      remainingSeconds: remainingSeconds ?? this.remainingSeconds,
     );
   }
 
@@ -143,32 +155,40 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
     final gamification = ref.read(gamificationProvider.notifier);
     await gamification.refreshHearts();
     final hearts = ref.read(gamificationProvider).hearts;
-
     final heartsEnabled = ref.read(settingsProvider).heartsEnabled;
 
     final repo = ref.read(curriculumRepositoryProvider);
     final lesson = await repo.getLesson(lessonId);
+    final unit = await repo.getUnit(lesson.unitId);
     final exercises = await repo.getExercises(lessonId);
+
+    final isExamMode = unit.isExamPrep;
+    final isReview = lesson.isReview;
 
     // Teach before testing: load the vocabulary this lesson introduces so
     // the player can present it before the first exercise.
+    // Skip for review lessons — no new vocabulary.
     List<Flashcard> teachCards = const [];
-    try {
-      teachCards = await ref
-          .read(vocabularyRepositoryProvider)
-          .getCardsForLesson(lessonId);
-    } catch (_) {
-      // No vocab mapping — go straight to exercises.
+    if (!isReview) {
+      try {
+        teachCards = await ref
+            .read(vocabularyRepositoryProvider)
+            .getCardsForLesson(lessonId);
+      } catch (_) {
+        // No vocab mapping — go straight to exercises.
+      }
     }
 
     state = LessonSessionState(
       lesson: lesson,
       exercises: exercises,
-      hearts: hearts,
-      isGameOver: heartsEnabled && hearts <= 0,
+      hearts: isExamMode ? 999 : hearts,
+      isGameOver: !isExamMode && heartsEnabled && hearts <= 0,
       originalCount: exercises.length,
       teachCards: teachCards,
-      isTeaching: teachCards.isNotEmpty,
+      isTeaching: !isReview && teachCards.isNotEmpty,
+      isExamMode: isExamMode,
+      remainingSeconds: isExamMode ? lesson.durationMinutes * 60 : 0,
     );
   }
 
@@ -219,9 +239,10 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
 
   /// Advance to the next exercise or complete the lesson.
   void nextExercise() {
-    // Check game over FIRST — even if this is the last question
+    // Check game over FIRST — even if the last question.
+    // Skip in exam mode (no hearts).
     final heartsEnabled = ref.read(settingsProvider).heartsEnabled;
-    if (heartsEnabled && state.hearts <= 0) {
+    if (!state.isExamMode && heartsEnabled && state.hearts <= 0) {
       state = state.copyWith(isGameOver: true);
       return;
     }
@@ -229,9 +250,11 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
     final nextIndex = state.currentIndex + 1;
 
     if (nextIndex >= state.exercises.length) {
-      // End of the current list. If the learner missed anything on the
-      // main pass, re-ask those once before finishing.
-      if (!state.mistakesAppended && state.mistakeQueue.isNotEmpty) {
+      // End of the current list. In exam mode, finish immediately.
+      // Otherwise, re-ask mistakes once before finishing.
+      if (!state.isExamMode &&
+          !state.mistakesAppended &&
+          state.mistakeQueue.isNotEmpty) {
         state = state.copyWith(
           exercises: [...state.exercises, ...state.mistakeQueue],
           currentIndex: nextIndex,

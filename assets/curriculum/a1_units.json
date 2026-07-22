@@ -207,7 +207,7 @@
       "id": 28,
       "title": "A1 Exam Preparation",
       "description": "Practice with A1-level exam-format exercises: reading comprehension, listening comprehension, writing tasks (form filling, short messages), and speaking practice (Q&A, picture description). Modeled on the official Czech permanent residence A1 exam.",
-      "phase": "A1",
+      "phase": "a1",
       "order_index": 28,
       "grammar_tags": [
         "exam_prep",
@@ -223,7 +223,7 @@
       "id": 30,
       "title": "A1 Review & Consolidation",
       "description": "Review and consolidate all A1 grammar and vocabulary: nominative and accusative cases, present tense, gender agreement, pronouns, basic sentence structure, and everyday survival expressions.",
-      "phase": "A1",
+      "phase": "a1",
       "order_index": 30,
       "grammar_tags": [
         "review",

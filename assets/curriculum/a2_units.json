@@ -95,7 +95,7 @@
       "id": 23,
       "title": "Modal Verbs & Permission",
       "description": "Learn modal verbs muset (must), moct (can), and smět (be allowed to) for expressing obligation, ability, permission, and prohibition in everyday situations.",
-      "phase": "A2",
+      "phase": "a2",
       "order_index": 23,
       "grammar_tags": [
         "modal_verbs",
@@ -112,7 +112,7 @@
       "id": 24,
       "title": "Health & Body",
       "description": "Learn body parts, health vocabulary, and how to communicate at the doctor and pharmacy. Practice expressing pain, symptoms, and medical needs.",
-      "phase": "A2",
+      "phase": "a2",
       "order_index": 24,
       "grammar_tags": [
         "health",
@@ -128,7 +128,7 @@
       "id": 25,
       "title": "Work, Professions & Education",
       "description": "Learn professions, workplace vocabulary, and education terminology. Practice describing jobs, studying, and workplace communication using instrumental and accusative cases.",
-      "phase": "A2",
+      "phase": "a2",
       "order_index": 25,
       "grammar_tags": [
         "professions",
@@ -143,7 +143,7 @@
       "id": 26,
       "title": "Housing & Home",
       "description": "Learn housing vocabulary, rooms, furniture, and household activities. Practice describing where things are using locative and prepositions of location.",
-      "phase": "A2",
+      "phase": "a2",
       "order_index": 26,
       "grammar_tags": [
         "housing",
@@ -159,7 +159,7 @@
       "id": 27,
       "title": "Verbs of Motion & Prefixed Verbs",
       "description": "Learn Czech motion verbs (jít, jet, chodit, jezdit) and their prefixed forms. Practice the imperfective/perfective aspect distinction through directional movement.",
-      "phase": "A2",
+      "phase": "a2",
       "order_index": 27,
       "grammar_tags": [
         "motion_verbs",
@@ -175,7 +175,7 @@
       "id": 29,
       "title": "A2 Exam Preparation",
       "description": "Practice with A2-level exam-format exercises: reading comprehension (5 tasks), listening comprehension (5 recordings), writing tasks (emails, diary, excuses, invitations), and speaking practice (monologue, role-play, picture discussion). Modeled on the official Czech permanent residence A2 exam (new format April 2026).",
-      "phase": "A2",
+      "phase": "a2",
       "order_index": 29,
       "grammar_tags": [
         "exam_prep",
@@ -191,7 +191,7 @@
       "id": 31,
       "title": "A2 Review & Consolidation",
       "description": "Review and consolidate all A2 grammar and vocabulary: complete case system, past/future/conditional tenses, verbal aspect, adjective comparison, modal verbs, complex sentences, and formal communication vocabulary.",
-      "phase": "A2",
+      "phase": "a2",
       "order_index": 31,
       "grammar_tags": [
         "review",

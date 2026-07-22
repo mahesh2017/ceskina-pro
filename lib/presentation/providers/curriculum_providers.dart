@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/database/database.dart' as db;
 import '../../domain/entities/unit.dart';
 import '../../domain/entities/lesson.dart';
 import '../../domain/entities/enums.dart';
@@ -114,4 +115,11 @@ final nextLessonProvider = FutureProvider<NextLessonInfo?>((ref) async {
     }
   }
   return null;
+});
+
+/// Provider for grammar rules for a specific unit.
+final grammarRulesByUnitProvider =
+    FutureProvider.family<List<db.GrammarRule>, int>((ref, unitId) {
+  final database = ref.read(databaseProvider);
+  return database.curriculumDao.getGrammarRulesByUnit(unitId);
 });
