@@ -1,0 +1,385 @@
+{
+  "level": "a1",
+  "exams": [
+    {
+      "id": "a1-practice-1",
+      "title": "Practice Exam 1",
+      "total_time_minutes": 120,
+      "sections": [
+        {
+          "type": "reading",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "passage": "Ahoj! Jmenuji se Tomáš Novák a bydlím v Praze. Je mi dvacet pět let. Pracuji v restauraci v centru města. Jsem kuchař. Každý den vstávám v šest hodin ráno. Mám rád českou kuchyni – vařím svíčkovou, guláš a bramborový salát. V pondělí a v úterý mám volno. V ty dny chodím s přáteli do kina nebo se projedu na kole. Mluvím česky, anglicky a trochu německy.",
+              "prompt": "What does Tomáš do for a living?",
+              "options": ["He is a waiter", "He is a cook", "He is a teacher", "He is a driver"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Ahoj! Jmenuji se Tomáš Novák a bydlím v Praze. Je mi dvacet pět let. Pracuji v restauraci v centru města. Jsem kuchař. Každý den vstávám v šest hodin ráno. Mám rád českou kuchyni – vařím svíčkovou, guláš a bramborový salát. V pondělí a v úterý mám volno. V ty dny chodím s přáteli do kina nebo se projedu na kole. Mluvím česky, anglicky a trochu německy.",
+              "prompt": "What time does Tomáš get up every day?",
+              "options": ["At 5:00 AM", "At 6:00 AM", "At 7:00 AM", "At 8:00 AM"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Ahoj! Jmenuji se Tomáš Novák a bydlím v Praze. Je mi dvacet pět let. Pracuji v restauraci v centru města. Jsem kuchař. Každý den vstávám v šest hodin ráno. Mám rád českou kuchyni – vařím svíčkovou, guláš a bramborový salát. V pondělí a v úterý mám volno. V ty dny chodím s přáteli do kina nebo se projedu na kole. Mluvím česky, anglicky a trochu německy.",
+              "prompt": "What does Tomáš do on his days off?",
+              "options": ["He cooks at home", "He goes to the cinema or rides a bike", "He visits his parents", "He studies German"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Restaurace U Zlaté hvězdy – Otevírací doba: Po–Pá: 11:00–22:00, So–Ne: 12:00–23:00. Adresa: Náměstí Míru 10, Praha 2. Telefon: 224 556 778. Polední menu: 11:00–15:00, cena 149 Kč. Dětský koutek zdarma. Rezervace telefonicky nebo e-mailem: rezervace@uzlatehvezdy.cz. Parkování je možné v ulici za restaurací.",
+              "prompt": "When is the restaurant open on weekends?",
+              "options": ["11:00–22:00", "12:00–23:00", "10:00–21:00", "12:00–22:00"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Restaurace U Zlaté hvězdy – Otevírací doba: Po–Pá: 11:00–22:00, So–Ne: 12:00–23:00. Adresa: Náměstí Míru 10, Praha 2. Telefon: 224 556 778. Polední menu: 11:00–15:00, cena 149 Kč. Dětský koutek zdarma. Rezervace telefonicky nebo e-mailem: rezervace@uzlatehvezdy.cz. Parkování je možné v ulici za restaurací.",
+              "prompt": "How much does the lunch menu cost?",
+              "options": ["100 Kč", "129 Kč", "149 Kč", "199 Kč"],
+              "correct_answer": 2,
+              "points": 5
+            }
+          ]
+        },
+        {
+          "type": "writing",
+          "time_limit_minutes": 25,
+          "max_score": 20,
+          "questions": [
+            {
+              "prompt": "Write about yourself: your name, age, where you live, what you do, and what you like to do in your free time. Write at least 30 words in Czech.",
+              "min_words": 30,
+              "points": 20
+            }
+          ]
+        },
+        {
+          "type": "listening",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "audio_text": "Dobrý den, rád bych si objednal pizzu. Jmenuji se Pavel Horák, adresa je Dlouhá ulice číslo patnáct, Praha jedna. Telefonní číslo je sedm set třicet dva, čtyři stě dvacet jedna, osm set padesát šest. Pizzu chci s šunkou a sýrem. Děkuji.",
+              "prompt": "What is Pavel's address?",
+              "options": ["Dlouhá 15, Praha 1", "Krátká 15, Praha 1", "Dlouhá 5, Praha 2", "Nová 15, Praha 1"],
+              "correct_answer": 0,
+              "points": 5
+            },
+            {
+              "audio_text": "Dobrý den, rád bych si objednal pizzu. Jmenuji se Pavel Horák, adresa je Dlouhá ulice číslo patnáct, Praha jedna. Telefonní číslo je sedm set třicet dva, čtyři stě dvacet jedna, osm set padesát šest. Pizzu chci s šunkou a sýrem. Děkuji.",
+              "prompt": "What toppings does Pavel want on his pizza?",
+              "options": ["Mushroom and cheese", "Ham and cheese", "Ham and mushroom", "Salami and cheese"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "audio_text": "Vlak do Brna odjíždí z nástupiště tři v patnáct hodin dvacet. Cesta trvá dvě hodiny a čtyřicet minut. Přestup je ve stanici Pardubice. Vlak přijíždí do Brna v osmnáct hodin nula. Děkuji za cestování.",
+              "prompt": "Which platform does the train to Brno depart from?",
+              "options": ["Platform 1", "Platform 2", "Platform 3", "Platform 4"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "audio_text": "Vlak do Brna odjíždí z nástupiště tři v patnáct hodin dvacet. Cesta trvá dvě hodiny a čtyřicet minut. Přestup je ve stanici Pardubice. Vlak přijíždí do Brna v osmnáct hodin nula. Děkuji za cestování.",
+              "prompt": "Where is the transfer?",
+              "options": ["In Brno", "In Prague", "In Pardubice", "No transfer needed"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "audio_text": "Dnes bude oblačno, občas bude pršet. Teplota dosáhne maximálně osmnáct stupňů. Večer se ochladí na dvanáct stupňů. Zítra bude slunečno a teplo, teplota až dvacet dva stupňů. Vítr bude mírný, ze západu. Doporučujeme si vzít deštník.",
+              "prompt": "What will the weather be like tomorrow?",
+              "options": ["Rainy and cold", "Sunny and warm", "Cloudy and windy", "Snowy and cold"],
+              "correct_answer": 1,
+              "points": 5
+            }
+          ]
+        },
+        {
+          "type": "speaking",
+          "time_limit_minutes": 15,
+          "max_score": 40,
+          "questions": [
+            {
+              "prompt": "Read the following Czech text aloud clearly:",
+              "target_text": "Dobrý den, jmenuji se Eva Soukupová. Bydlím v Brně a pracuji v nemocnici. Mám dvě děti – syna a dceru. V neděli chodíme s rodinou na procházku do parku. Ráda čtu knihy a poslouchám hudbu.",
+              "points": 20
+            },
+            {
+              "prompt": "Introduce yourself in Czech. Say your name, where you are from, where you live, what you do, and one thing you like.",
+              "expected_phrases": ["jmenuji", "bydlím", "rád", "ráda"],
+              "points": 20
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a1-practice-2",
+      "title": "Practice Exam 2",
+      "total_time_minutes": 120,
+      "sections": [
+        {
+          "type": "reading",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "passage": "Víkend v Karlštejně: Přijíždíme v sobotu dopoledne. Cesta vlakem trvá čtyřicet minut z Prahy. Prohlídka hradu začíná ve tři hodiny odpoledne. Vstupné pro dospělé je tři sta korun, pro děti sto padesát korun. Po prohlídce jdeme do restaurace na oběd. V neděli ráno jdeme na procházku a odpoledne se vracíme domů.",
+              "prompt": "How long is the train ride from Prague to Karlštejn?",
+              "options": ["30 minutes", "40 minutes", "50 minutes", "1 hour"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Víkend v Karlštejně: Přijíždíme v sobotu dopoledne. Cesta vlakem trvá čtyřicet minut z Prahy. Prohlídka hradu začíná ve tři hodiny odpoledne. Vstupné pro dospělé je tři sta korun, pro děti sto padesát korun. Po prohlídce jdeme do restaurace na oběd. V neděli ráno jdeme na procházku a odpoledne se vracíme domů.",
+              "prompt": "How much is the castle entry fee for adults?",
+              "options": ["150 Kč", "200 Kč", "300 Kč", "350 Kč"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "passage": "Víkend v Karlštejně: Přijíždíme v sobotu dopoledne. Cesta vlakem trvá čtyřicet minut z Prahy. Prohlídka hradu začíná ve tři hodiny odpoledne. Vstupné pro dospělé je tři sta korun, pro děti sto padesát korun. Po prohlídce jdeme do restaurace na oběd. V neděli ráno jdeme na procházku a odpoledne se vracíme domů.",
+              "prompt": "What do they do on Sunday morning?",
+              "options": ["Visit the castle", "Go for a walk", "Have lunch", "Take the train home"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Fitness centrum Zdraví – Nábřežní 25, Praha 5. Otevřeno: Po–Pá 6:00–22:00, So–Ne 8:00–20:00. Měsíční permanentka: 990 Kč, roční permanentka: 9 900 Kč. První lekce zdarma. Skupinové lekce: jóga, pilates, spinning, HIIT. K dispozici je bazén, sauna a prostor na parkování.",
+              "prompt": "What is offered free of charge?",
+              "options": ["Sauna access", "Parking", "First lesson", "Monthly membership"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "passage": "Fitness centrum Zdraví – Nábřežní 25, Praha 5. Otevřeno: Po–Pá 6:00–22:00, So–Ne 8:00–20:00. Měsíční permanentka: 990 Kč, roční permanentka: 9 900 Kč. První lekce zdarma. Skupinové lekce: jóga, pilates, spinning, HIIT. K dispozici je bazén, sauna a prostor na parkování.",
+              "prompt": "What facilities are available at the fitness center?",
+              "options": ["Pool and sauna", "Pool and tennis court", "Sauna and solarium", "Pool, sauna and solarium"],
+              "correct_answer": 0,
+              "points": 5
+            }
+          ]
+        },
+        {
+          "type": "writing",
+          "time_limit_minutes": 25,
+          "max_score": 20,
+          "questions": [
+            {
+              "prompt": "You are writing an email to your Czech friend. Tell them what you did last weekend (at least 30 words in Czech). Use past tense.",
+              "min_words": 30,
+              "points": 10
+            },
+            {
+              "prompt": "Write a short message to a restaurant to reserve a table for 4 people on Friday at 7 PM. Include your name and phone number. Write at least 20 words in Czech.",
+              "min_words": 20,
+              "points": 10
+            }
+          ]
+        },
+        {
+          "type": "listening",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "audio_text": "Dobrý den, potřebovala bych lékařský olej, něco proti bolesti hlavy a vitamíny. Mám alergii, takže žádné léky s penicilinem. A ještě bych chtěla teploměr. Děkuji.",
+              "prompt": "What does the customer NOT want?",
+              "options": ["Vitamins", "A thermometer", "Medicines with penicillin", "Headache medicine"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "audio_text": "Dobrý den, potřebovala bych lékařský olej, něco proti bolesti hlavy a vitamíny. Mám alergii, takže žádné léky s penicilinem. A ještě bych chtěla teploměr. Děkuji.",
+              "prompt": "What does the customer want to buy for headache?",
+              "options": ["Vitamins", "Something for headache", "A thermometer", "Medical oil"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "audio_text": "Informace o autobusu: Autobus číslo sto třicet pět jede z Hlavního nádraží na Letiště. Jede každých patnáct minut. Cesta trvá přibližně třicet pět minut. Poslední spoj je ve tři hodiny padesát ráno. Jízdenka stojí třicet šest korun, přestupní jízdenka šedesát korun.",
+              "prompt": "How often does bus 135 run?",
+              "options": ["Every 10 minutes", "Every 15 minutes", "Every 20 minutes", "Every 30 minutes"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "audio_text": "Informace o autobusu: Autobus číslo sto třicet pět jede z Hlavního nádraží na Letiště. Jede každých patnáct minut. Cesta trvá přibližně třicet pět minut. Poslední spoj je ve tři hodiny padesát ráno. Jízdenka stojí třicet šest korun, přestupní jízdenka šedesát korun.",
+              "prompt": "How much does a transfer ticket cost?",
+              "options": ["36 Kč", "46 Kč", "60 Kč", "90 Kč"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "audio_text": "V obchodním domě je dnes akce. Slevy až padesát procent na oblečení a obuv. Dámské kabáty stojí devět set devadesát devět korun, pánské boty za tisíc dvě stě korun. Akce platí jen dnes do osmnácti hodin. V prvním patře najdete dětské oblečení slevněné o třicet procent.",
+              "prompt": "What is on sale today?",
+              "options": ["Food and drinks", "Clothing and shoes", "Electronics", "Books"],
+              "correct_answer": 1,
+              "points": 5
+            }
+          ]
+        },
+        {
+          "type": "speaking",
+          "time_limit_minutes": 15,
+          "max_score": 40,
+          "questions": [
+            {
+              "prompt": "Read the following Czech text aloud clearly:",
+              "target_text": "Minulý víkend jsem byl v Plzni. Navštívil jsem tamní zoo a viděl jsem mnoho zvířat. Po obědě jsem šel do muzea a večer jsem se setkal s kamarády v hospodě. Bylo to moc hezké.",
+              "points": 15
+            },
+            {
+              "prompt": "Describe your typical day. Say what time you get up, what you eat for breakfast, where you go, and what you do in the evening.",
+              "expected_phrases": ["vstávám", "snídám", "večer"],
+              "points": 15
+            },
+            {
+              "prompt": "You are at a shop. The shop assistant asks 'Můžu vám pomoci?' (Can I help you?). Respond in Czech: say you are looking for a jacket, ask where it is, and ask about the price.",
+              "expected_phrases": ["hledám", "kde", "kolik"],
+              "points": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a1-practice-3",
+      "title": "Practice Exam 3",
+      "total_time_minutes": 120,
+      "sections": [
+        {
+          "type": "reading",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "passage": "Když prší, vodík dopis. Zima, horko, vítr – nic mu nevadí. On zná každou ulici, každý dům. Má padesát osm let a celý život pracoval jako listonoš. Dnes nosí dopisy v centru Prahy. Za den odejde třicet až čtyřicet dopisů. V létě je horko a v zimě mráz, ale on říká: „Mám rád svou práci. Každý den jsem venku, potkávám lidi, procházím se. To je život!\"",
+              "prompt": "How old is the postman?",
+              "options": ["48 years", "58 years", "68 years", "50 years"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Když prší, vodík dopis. Zima, horko, vítr – nic mu nevadí. On zná každou ulici, každý dům. Má padesát osm let a celý život pracoval jako listonoš. Dnes nosí dopisy v centru Prahy. Za den odejde třicet až čtyřicet dopisů. V létě je horko a v zimě mráz, ale on říká: „Mám rád svou práci. Každý den jsem venku, potkávám lidi, procházím se. To je život!\"",
+              "prompt": "How many letters does he deliver per day?",
+              "options": ["10–20", "20–30", "30–40", "40–50"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "passage": "Když prší, vodík dopis. Zima, horko, vítr – nic mu nevadí. On zná každou ulici, každý dům. Má padesát osm let a celý život pracoval jako listonoš. Dnes nosí dopisy v centru Prahy. Za den odejde třicet až čtyřicet dopisů. V líté horko a v zimě mráz, ale on říká: „Mám rád svou práci. Každý den jsem venku, potkávám lidi, procházím se. To je život!\"",
+              "prompt": "Why does the postman like his job?",
+              "options": ["Because it pays well", "Because he is outside and meets people", "Because it is easy", "Because he works in an office"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "passage": "Městská knihovna Praha – Pobřežní 1, Praha 8. Otevřeno: Po, St, Čt: 10:00–19:00, Út: 10:00–18:00, Pá: 10:00–16:00, So: 9:00–13:00. Z registrační karty lze půjčit maximálně 10 knih na 1 měsíc. Poplatek za registraci: 200 Kč/rok, studenti 100 Kč/rok. Přístup k internetu zdarma. Také nabízíme lekce češtiny pro cizince každé úterý od 17:00.",
+              "prompt": "How many books can you borrow at a time?",
+              "options": ["5 books", "8 books", "10 books", "15 books"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "passage": "Městská knihovna Praha – Pobřežní 1, Praha 8. Otevřeno: Po, St, Čt: 10:00–19:00, Út: 10:00–18:00, Pá: 10:00–16:00, So: 9:00–13:00. Z registrační karty lze půjčit maximálně 10 knih na 1 měsíc. Poplatek za registraci: 200 Kč/rok, studenti 100 Kč/rok. Přístup k internetu zdarma. Také nabízíme lekce češtiny pro cizince každé úterý od 17:00.",
+              "prompt": "What does the library offer for foreigners?",
+              "options": ["Free books", "Internet access", "Czech language lessons every Tuesday", "Free registration"],
+              "correct_answer": 2,
+              "points": 5
+            }
+          ]
+        },
+        {
+          "type": "writing",
+          "time_limit_minutes": 25,
+          "max_score": 20,
+          "questions": [
+            {
+              "prompt": "Write a short text about your family. Describe who is in your family, where they live, and what they do. Write at least 40 words in Czech.",
+              "min_words": 40,
+              "points": 10
+            },
+            {
+              "prompt": "You want to buy a phone. Write a message to a shop asking about: the price, available colors, and warranty. Write at least 25 words in Czech.",
+              "min_words": 25,
+              "points": 10
+            }
+          ]
+        },
+        {
+          "type": "listening",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "audio_text": "Dobrý den, volám ohledně inzerátu na byt. Mám zájem o ten dvoupokojový byt v Novém Městě. Kolik je nájem? A je balkon? Děkuji, Jana Svobodová.",
+              "prompt": "What is Jana calling about?",
+              "options": ["A job advertisement", "An apartment advertisement", "A car advertisement", "A furniture advertisement"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "audio_text": "Dobrý den, volám ohledně inzerátu na byt. Mám zájem o ten dvoupokojový byt v Novém Městě. Kolik je nájem? A je balkon? Děkuji, Jana Svobodová.",
+              "prompt": "What does Jana ask about at the end?",
+              "options": ["The price", "The location", "Whether there is a balcony", "The number of rooms"],
+              "correct_answer": 2,
+              "points": 5
+            },
+            {
+              "audio_text": "Vítejte v muzeu. Prohlídka začíná u vchodu ve druhém patře. Nejdřív uvidíte staré obrazy z osmnáctého století. Poté půjdeme do třetího patra na dobu Karla IV. Fotografování je povoleno, ale bez blesku. Prohlídka trvá hodinu a půl.",
+              "prompt": "Where does the museum tour start?",
+              "options": ["At the entrance on the ground floor", "At the entrance on the second floor", "In the third floor", "At the ticket office"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "audio_text": "Vítejte v muzeu. Prohlídka začíná u vchodu ve druhém patře. Nejdřív uvidíte staré obrazy z osmnáctého století. Poté půjdeme do třetího patra na dobu Karla IV. Fotografování je povoleno, ale bez blesku. Prohlídka trvá hodinu a půl.",
+              "prompt": "What is not allowed during the tour?",
+              "options": ["Taking photos", "Taking photos with flash", "Talking", "Touching paintings"],
+              "correct_answer": 1,
+              "points": 5
+            },
+            {
+              "audio_text": "Plán na zítřek: Ráno v osm hodin jdeme na trh koupit zeleninu a ovoce. V deset hodin máme schůzku s panem Dvořákem v kavárně. Po obědě jdeme do kina na český film. Večer v sedm hodin jdeme na večeři do restaurace U Medvídků.",
+              "prompt": "What are they doing at 10 AM?",
+              "options": ["Going to the market", "Meeting Mr. Dvořák in a café", "Going to the cinema", "Having dinner"],
+              "correct_answer": 1,
+              "points": 5
+            }
+          ]
+        },
+        {
+          "type": "speaking",
+          "time_limit_minutes": 15,
+          "max_score": 40,
+          "questions": [
+            {
+              "prompt": "Read the following Czech text aloud clearly:",
+              "target_text": "Naše rodina bydlí v rodinném domě na okraji města. Máme zahradu, kde pěstujeme rajčata, okurky a jablka. V létě grilujeme s přáteli. V zimě sedíme u krbu a pijeme horký čaj. Mám rád náš dům, je tu vždy příjemně a klidno.",
+              "points": 15
+            },
+            {
+              "prompt": "Describe the weather in your country. Talk about summer, winter, and your favorite season. Give reasons why.",
+              "expected_phrases": ["v létě", "v zimě", "mám rád", "mám ráda", "roční období"],
+              "points": 15
+            },
+            {
+              "prompt": "You are at the train station. Buy a ticket to Brno. Ask about: the departure time, the platform, and the price. Respond in Czech.",
+              "expected_phrases": ["jeden lístek", "kolik", "odjíždí", "nástupiště"],
+              "points": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

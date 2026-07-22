@@ -1,0 +1,767 @@
+{
+  "level": "a2",
+  "exam_type": "CCE",
+  "description": "CCE A2 Exam Bank — 3 full practice exams matching the real CCE A2 format (permanent residence, new format since April 2026).",
+  "format": {
+    "total_points": 110,
+    "written_points": 70,
+    "speaking_points": 40,
+    "pass_threshold_written": 42,
+    "pass_threshold_speaking": 24,
+    "sections": {
+      "reading": { "time_minutes": 40, "max_points": 25, "questions": 5 },
+      "writing": { "time_minutes": 25, "max_points": 20 },
+      "listening": { "time_minutes": 40, "max_points": 25, "questions": 5 },
+      "speaking": { "time_minutes": 15, "max_points": 40 }
+    }
+  },
+  "exams": [
+    {
+      "id": "a2-practice-1",
+      "title": "CCE A2 Practice Exam 1",
+      "level": "a2",
+      "total_time_minutes": 120,
+      "sections": [
+        {
+          "type": "reading",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "passage_id": "r1_p1",
+              "passage_title": "Hledáme nového kolegu",
+              "passage": "Hledáme nového kolegu pro naši kancelář v Praze. Pracujeme v mezinárodní firmě, která se zabývá prodejem elektroniky. Nabízíme flexibilní pracovní dobu, možnost home office dvakrát týdně a jazykové kurzy. Požadujeme znalost angličtiny na úrovni B1 a českého jazyka na úrovni A2. Zkušenosti v obchodu jsou výhodou. Plat začíná na 35 000 Kč měsíčně. Pokud vás práce zajímá, pošlete životopis na e-mail: personalni@firma.cz do 15. března.",
+              "prompt": "Jaké je minimum jazykových znalostí češtiny, které firma požaduje?",
+              "prompt_en": "What is the minimum Czech language level the company requires?",
+              "options": [
+                "A1",
+                "A2",
+                "B1",
+                "B2"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Firma požaduje český jazyk na úrovni A2."
+            },
+            {
+              "passage_id": "r1_p1",
+              "passage_title": "Hledáme nového kolegu",
+              "passage": "Hledáme nového kolegu pro naši kancelář v Praze. Pracujeme v mezinárodní firmě, která se zabývá prodejem elektroniky. Nabízíme flexibilní pracovní dobu, možnost home office dvakrát týdně a jazykové kurzy. Požadujeme znalost angličtiny na úrovni B1 a českého jazyka na úrovni A2. Zkušenosti v obchodu jsou výhodou. Plat začíná na 35 000 Kč měsíčně. Pokud vás práce zajímá, pošlete životopis na e-mail: personalni@firma.cz do 15. března.",
+              "prompt": "Kolik dní v týdnu je možné pracovat z domova?",
+              "prompt_en": "How many days per week can you work from home?",
+              "options": [
+                "Jeden den",
+                "Dva dny",
+                "Tři dny",
+                "Každý den"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Home office je možný dvakrát týdně."
+            },
+            {
+              "passage_id": "r1_p1",
+              "passage_title": "Hledáme nového kolegu",
+              "passage": "Hledáme nového kolegu pro naši kancelář v Praze. Pracujeme v mezinárodní firmě, která se zabývá prodejem elektroniky. Nabízíme flexibilní pracovní dobu, možnost home office dvakrát týdně a jazykové kurzy. Požadujeme znalost angličtiny na úrovni B1 a českého jazyka na úrovni A2. Zkušenosti v obchodu jsou výhodou. Plat začíná na 35 000 Kč měsíčně. Pokud vás práce zajímá, pošlete životopis na e-mail: personalni@firma.cz do 15. března.",
+              "prompt": "Co je výhodou pro uchazeče?",
+              "prompt_en": "What is an advantage for the applicant?",
+              "options": [
+                "Znalost němčiny",
+                "Řidičský průkaz",
+                "Zkušenosti v obchodu",
+                "Vlastní auto"
+              ],
+              "correct_answer": 2,
+              "points": 5,
+              "explanation": "Zkušenosti v obchodu jsou výhodou."
+            },
+            {
+              "passage_id": "r1_p2",
+              "passage_title": "Lékařská ordinace — informace pro pacienty",
+              "passage": "Vážení pacienti, od 1. dubna měníme otevírací dobu naší ordinace. Nová otevírací doba bude pondělí až pátek od 7:30 do 16:00 hodin. V sobotu a v neděli je ordinace zavřená. Ordinace je také zavřená každý den mezi 12:00 a 13:00, protože v této době lékař navštěvuje pacienty v nemocnici. Objednejte se prosím předem telefonicky na čísle 222 333 444. V případě akutních potíží volejte záchranku na číslo 155.",
+              "prompt": "Kdy je ordinace zavřená během pracovního dne?",
+              "prompt_en": "When is the office closed during a workday?",
+              "options": [
+                "Mezi 10:00 a 11:00",
+                "Mezi 11:00 a 12:00",
+                "Mezi 12:00 a 13:00",
+                "Mezi 13:00 a 14:00"
+              ],
+              "correct_answer": 2,
+              "points": 5,
+              "explanation": "Ordinace je zavřená mezi 12:00 a 13:00, protože lékař je v nemocnici."
+            },
+            {
+              "passage_id": "r1_p2",
+              "passage_title": "Lékařská ordinace — informace pro pacienty",
+              "passage": "Vážení pacienti, od 1. dubna měníme otevírací dobu naší ordinace. Nová otevírací doba bude pondělí až pátek od 7:30 do 16:00 hodin. V sobotu a v neděli je ordinace zavřená. Ordinace je také zavřená každý den mezi 12:00 a 13:00, protože v této době lékař navštěvuje pacienty v nemocnici. Objednejte se prosím předem telefonicky na čísle 222 333 444. V případě akutních potíží volejte záchranku na číslo 155.",
+              "prompt": "Co by měl pacient udělat v případě akutních potíží?",
+              "prompt_en": "What should a patient do in case of acute problems?",
+              "options": [
+                "Přijít do ordinace",
+                "Zavolat na číslo ordinace",
+                "Zavolat záchranku na 155",
+                "Počkat do dalšího dne"
+              ],
+              "correct_answer": 2,
+              "points": 5,
+              "explanation": "V případě akutních potíží by měl pacient zavolat záchranku na 155."
+            }
+          ]
+        },
+        {
+          "type": "writing",
+          "time_limit_minutes": 25,
+          "max_score": 20,
+          "questions": [
+            {
+              "prompt": "Napište e-mail svému nadřízenému (šéfovi/šéfové), ve kterém se omluvíte za to, že nemůžete přijít do práce. Uveďte důvod (např. nemoc, rodinný problém), řekněte, jak dlouho budete chybět, a navrhněte, jak nahradíte zmeškanou práci. (60–80 slov)",
+              "prompt_en": "Write an email to your boss apologizing for not being able to come to work. State the reason, how long you'll be absent, and how you'll make up the missed work. (60-80 words)",
+              "min_words": 60,
+              "max_words": 80,
+              "points": 12,
+              "evaluation_criteria": [
+                "Formální styl oslovení",
+                "Jasné uvedení důvodu",
+                "Gramatická správnost (pádová shoda, slovesné časy)",
+                "Použití vhodných spojek a vazeb"
+              ]
+            },
+            {
+              "prompt": "Popište svůj byt nebo dům. Napište, kde bydlíte, kolik máte pokojů, co se vám na vašem bydlení líbí a co byste chtěli změnit. (50–70 slov)",
+              "prompt_en": "Describe your apartment or house. Write where you live, how many rooms you have, what you like about your home, and what you'd like to change. (50-70 words)",
+              "min_words": 50,
+              "max_words": 70,
+              "points": 8,
+              "evaluation_criteria": [
+                "Použití lokálu a instrumentálu",
+                "Popis prostor a vybavení",
+                "Vyjádření názoru (líbí se mi / nelíbí se mi)",
+                "Gramatická správnost"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listening",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "audio_text": "Dobrý den, já jsem Eva a volám kvůli bytu, který jste inzeroval na internetu. Chtěla bych se zeptat, jestli je byt ještě volný. Také mě zajímá, kolik stojí nájem a jestli jsou v ceně už i služby. Děkuji.",
+              "prompt": "Proč volá Eva?",
+              "prompt_en": "Why is Eva calling?",
+              "options": [
+                "Chce si stěžovat na byt",
+                "Zajímá se o byt z inzerátu",
+                "Chce pronajmout svůj byt",
+                "Volá kvůli práci"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Eva volá kvůli bytu, který byl inzerovaný na internetu."
+            },
+            {
+              "audio_text": "Vážení cestující, vlak z Prahy do Brna s odjezdem v 14:35 má zpoždění přibližně 20 minut. Důvodem je výluka na trati mezi Pardubicemi a Brnem. Omlouváme se za nepříjemnosti. Vlaky se vrátí k normálnímu jízdnímu řádu zítra ráno.",
+              "prompt": "Jaké zpoždění má vlak z Prahy do Brna?",
+              "prompt_en": "How long is the delay for the Prague-Brno train?",
+              "options": [
+                "10 minut",
+                "20 minut",
+                "30 minut",
+                "45 minut"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Vlak má zpoždění přibližně 20 minut."
+            },
+            {
+              "audio_text": "Ahoj Tomáši, tady je Martin. Potřebuji od tebe pomoct. Zítra odpoledne musím jít k lékaři a nemám s kým nechat dítě. Nešlo by, abys na něj koukal asi dvě hodiny? Zkus mi zavolat zpátky, jakmile budeš moci. Díky.",
+              "prompt": "Co potřebuje Martin od Tomáše?",
+              "prompt_en": "What does Martin need from Tomáš?",
+              "options": [
+                "Aby mu půjčil auto",
+                "Aby pohlídal dítě",
+                "Aby mu pomohl s PC",
+                "Aby ho odvezl k lékaři"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Martin potřebuje, aby Tomáš pohlídal dítě asi na dvě hodiny."
+            },
+            {
+              "audio_text": "Dobrý den, tady je recepce hotelu Europa. Potvrzuji vaši rezervaci dvoulůžkového pokoje na dvě noci od pátku 12. května. V ceně je zahrnutá i snídaně. Polední check-in je od 14:00 hodin. Přejeme vám příjemný pobyt.",
+              "prompt": "Kolik nocí si host zarezervoval?",
+              "prompt_en": "How many nights did the guest reserve?",
+              "options": [
+                "Jednu noc",
+                "Dvě noci",
+                "Tři noci",
+                "Čtyři noci"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Rezervace je na dvě noci od pátku 12. května."
+            },
+            {
+              "audio_text": "Tak co, jak se ti líbil ten film včera večer? Já jsem si myslel, že byl docela zajímavý, i když byl trochu dlouhý. Hlavní herec byl opravdu dobrý. Co ty na to? Chceš jít zas na další film příští týden?",
+              "prompt": "Jaký je názor mluvčího na film?",
+              "prompt_en": "What is the speaker's opinion of the film?",
+              "options": [
+                "Film se mu vůbec nelíbil",
+                "Film byl nudný a krátký",
+                "Film byl zajímavý, ale trochu dlouhý",
+                "Film byl perfektní a krátký"
+              ],
+              "correct_answer": 2,
+              "points": 5,
+              "explanation": "Mluvčí řekl, že film byl docela zajímavý, i když byl trochu dlouhý."
+            }
+          ]
+        },
+        {
+          "type": "speaking",
+          "time_limit_minutes": 15,
+          "max_score": 40,
+          "questions": [
+            {
+              "prompt": "Podívejte se na obrázek a popište, co vidíte. Mluvte o tom, kde se lidé nacházejí, co dělají a jaké je počasí. (1–2 minuty)",
+              "prompt_en": "Look at the picture and describe what you see. Talk about where the people are, what they are doing, and what the weather is like. (1-2 minutes)",
+              "task_type": "picture_description",
+              "points": 15,
+              "target_text": "Na obrázku je park. Lidé sedí na lavičce a čtou si. V pozadí jsou vidět stromy a květiny. Svítí slunce a lidé vypadají spokojeně.",
+              "evaluation_criteria": [
+                "Použití lokálu a instrumentálu pro popis místa",
+                "Přítomný čas a popis děje",
+                "Slovní zásoba související s přírodou a volným časem",
+                "Plynulost a výslovnost"
+              ]
+            },
+            {
+              "prompt": "Odpovězte na následující otázky: 1) Co jste dělali minulý víkend? 2) Kam byste chtěli jet na dovolenou a proč? 3) Jaké je vaše oblíbené jídlo a jak ho připravujete?",
+              "prompt_en": "Answer the following questions: 1) What did you do last weekend? 2) Where would you like to go on vacation and why? 3) What is your favorite food and how do you prepare it?",
+              "task_type": "questions_and_answers",
+              "points": 15,
+              "evaluation_criteria": [
+                "Použití minulého času pro otázku 1",
+                "Použití podmiňovacího způsobu pro otázku 2",
+                "Použití instrumentálu a genitivu pro otázku 3",
+                "Gramatická správnost a plynulost"
+              ]
+            },
+            {
+              "prompt": "Reagujte na následující situace: 1) Jste v restauraci a chcete si objednat jídlo, ale nemáte jídelní lístek. Zeptejte se číšníka. 2) Kolega vás zve na oslavu narozenin, ale vy nemůžete přijít. Odmítněte zdvořile a vysvětlete proč. 3) Potřebujete si půjčit peníze od kamaráda. Požádejte ho o to.",
+              "prompt_en": "Respond to the following situations: 1) You're at a restaurant and want to order food but don't have a menu. Ask the waiter. 2) A colleague invites you to a birthday party but you can't come. Politely decline and explain why. 3) You need to borrow money from a friend. Ask them.",
+              "task_type": "role_play",
+              "points": 10,
+              "evaluation_criteria": [
+                "Zdvořilé formy (podmiňovací způsob, oslovení)",
+                "Použití modálních sloves (chtěl bych, mohl byste)",
+                "Přirozenost a přiměřenost situaci",
+                "Gramatická správnost"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a2-practice-2",
+      "title": "CCE A2 Practice Exam 2",
+      "level": "a2",
+      "total_time_minutes": 120,
+      "sections": [
+        {
+          "type": "reading",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "passage_id": "r2_p1",
+              "passage_title": "Pronájem bytu v Brně",
+              "passage": "Nabízíme k pronájmu útulný dvoupokojový byt v Brně, ve čtvrti Veveří. Byt se nachází ve třetím patře domu s výtahem. Má kuchyň, ložnici, koupelnu a balkon. V blízkosti je tramvajová zastávka, obchod s potravinami a škola. Nájem činí 18 000 Kč měsíčně plus poplatky za energie, které jsou přibližně 3 500 Kč. Kauce je 36 000 Kč. Byt je volný od 1. května. Zájemci mohou byt prohlédnout po předchozí domluvě telefonicky.",
+              "prompt": "Kolik pokojů má byt?",
+              "prompt_en": "How many rooms does the apartment have?",
+              "options": [
+                "Jeden pokoj",
+                "Dva pokoje",
+                "Tři pokoje",
+                "Čtyři pokoje"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Byt je dvoupokojový."
+            },
+            {
+              "passage_id": "r2_p1",
+              "passage_title": "Pronájem bytu v Brně",
+              "passage": "Nabízíme k pronájmu útulný dvoupokojový byt v Brně, ve čtvrti Veveří. Byt se nachází ve třetím patře domu s výtahem. Má kuchyň, ložnici, koupelnu a balkon. V blízkosti je tramvajová zastávka, obchod s potravinami a škola. Nájem činí 18 000 Kč měsíčně plus poplatky za energie, které jsou přibližně 3 500 Kč. Kauce je 36 000 Kč. Byt je volný od 1. května. Zájemci mohou byt prohlédnout po předchozí domluvě telefonicky.",
+              "prompt": "Kdy je byt volný?",
+              "prompt_en": "When is the apartment available?",
+              "options": [
+                "Od 1. dubna",
+                "Od 1. května",
+                "Od 1. června",
+                "Od 1. července"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Byt je volný od 1. května."
+            },
+            {
+              "passage_id": "r2_p1",
+              "passage_title": "Pronájem bytu v Brně",
+              "passage": "Nabízíme k pronájmu útulný dvoupokojový byt v Brně, ve čtvrti Veveří. Byt se nachází ve třetím patře domu s výtahem. Má kuchyň, ložnici, koupelnu a balkon. V blízkosti je tramvajová zastávka, obchod s potravinami a škola. Nájem činí 18 000 Kč měsíčně plus poplatky za energie, které jsou přibližně 3 500 Kč. Kauce je 36 000 Kč. Byt je volný od 1. května. Zájemci mohou byt prohlédnout po předchozí domluvě telefonicky.",
+              "prompt": "Kolik činí kauce za byt?",
+              "prompt_en": "How much is the deposit for the apartment?",
+              "options": [
+                "18 000 Kč",
+                "21 500 Kč",
+                "36 000 Kč",
+                "54 500 Kč"
+              ],
+              "correct_answer": 2,
+              "points": 5,
+              "explanation": "Kauce je 36 000 Kč."
+            },
+            {
+              "passage_id": "r2_p2",
+              "passage_title": "Jazykový kurz češtiny pro cizince",
+              "passage": "Naše jazyková škola pořádá nový kurz češtiny pro cizince na úrovni A2. Kurz začíná 15. září a končí 20. prosince. Hodiny se konají dvakrát týdně, v úterý a ve čtvrtek od 18:00 do 19:30. Cena kurzu je 4 500 Kč a zahrnuje všechny studijní materiály. Vyučování probíhá v centru Prahy, nedaleko stanice metra Můstek. Kurz je určen pro osoby, které už mluví česky na úrovni A1 a chtějí se zlepšit. Zkušební lekce je zdarma.",
+              "prompt": "Kdy probíhají hodiny?",
+              "prompt_en": "When do the lessons take place?",
+              "options": [
+                "V pondělí a ve středu",
+                "V úterý a ve čtvrtek",
+                "Ve středu a v pátek",
+                "V sobotu a v neděli"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Hodiny se konají v úterý a ve čtvrtek od 18:00 do 19:30."
+            },
+            {
+              "passage_id": "r2_p2",
+              "passage_title": "Jazykový kurz češtiny pro cizince",
+              "passage": "Naše jazyková škola pořádá nový kurz češtiny pro cizince na úrovni A2. Kurz začíná 15. září a končí 20. prosince. Hodiny se konají dvakrát týdně, v úterý a ve čtvrtek od 18:00 do 19:30. Cena kurzu je 4 500 Kč a zahrnuje všechny studijní materiály. Vyučování probíhá v centru Prahy, nedaleko stanice metra Můstek. Kurz je určen pro osoby, které už mluví česky na úrovni A1 a chtějí se zlepšit. Zkušební lekce je zdarma.",
+              "prompt": "Co je zahrnuto v ceně kurzu?",
+              "prompt_en": "What is included in the course price?",
+              "options": [
+                "Pouze učebnice",
+                "Všechny studijní materiály",
+                "Jen CD s nahrávkami",
+                "Nic, materiály se kupují zvlášť"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Cena kurzu 4 500 Kč zahrnuje všechny studijní materiály."
+            }
+          ]
+        },
+        {
+          "type": "writing",
+          "time_limit_minutes": 25,
+          "max_score": 20,
+          "questions": [
+            {
+              "prompt": "Napište e-mail příteli nebo přítelkyni, ve kterém je pozvete na oslavu narozenin. Napište, kdy a kde se oslava koná, co byste chtěli dostat jako dárek (nebo že dárky nechcete), a co se bude na oslavě dělat. (60–80 slov)",
+              "prompt_en": "Write an email to a friend inviting them to your birthday party. Write when and where the party is, what you'd like as a gift (or that you don't want gifts), and what will happen at the party. (60-80 words)",
+              "min_words": 60,
+              "max_words": 80,
+              "points": 12,
+              "evaluation_criteria": [
+                "Použití dat a času (akuzativ, lokál)",
+                "Zdvořilé pozvání a oslovení",
+                "Popis plánů (budoucí čas, podmiňovací způsob)",
+                "Gramatická správnost"
+              ]
+            },
+            {
+              "prompt": "Napište svůj názor na to, zda je lepší bydlet ve městě nebo na vesnici. Uveďte výhody a nevýhody obou možností a řekněte, kde byste chtěli bydlet v budoucnu. (50–70 slov)",
+              "prompt_en": "Write your opinion on whether it's better to live in a city or in the countryside. Give advantages and disadvantages of both and say where you'd like to live in the future. (50-70 words)",
+              "min_words": 50,
+              "max_words": 70,
+              "points": 8,
+              "evaluation_criteria": [
+                "Vyjádření názoru (myslím si, podle mě)",
+                "Použití podmiňovacího způsobu pro budoucnost",
+                "Porovnání (na rozdíl od, zatímco)",
+                "Gramatická správnost"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listening",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "audio_text": "Dobrý den, tady je pošťár. Mám pro vás balík, ale nebyl jste doma. Balík jsem vám nechal na poště. Můžete si ho vyzvednout v otevírací době, to je pondělí až pátek od 8:00 do 17:00. Nezapomeňte si vzít občanský průkaz.",
+              "prompt": "Kde si může adresát vyzvednout balík?",
+              "prompt_en": "Where can the recipient pick up the package?",
+              "options": [
+                "Doma",
+                "Na poště",
+                "V bance",
+                "V obchodě"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Balík byl ponechán na poště."
+            },
+            {
+              "audio_text": "Tak, holky, já už konečně mám novou práci! Začínám příští pondělí v jedné softwarové firmě. Budu pracovat jako asistentka ředitele. Je to blízko mého bytu, takže nebudu muset dojíždět. Moc se těším, i když jsem trochu nervózní.",
+              "prompt": "Jakou pozici získala mluvčí?",
+              "prompt_en": "What position did the speaker get?",
+              "options": [
+                "Ředitelka firmy",
+                "Asistentka ředitele",
+                "Programátorka",
+                "Recepční"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Mluvčí bude pracovat jako asistentka ředitele."
+            },
+            {
+              "audio_text": "Dámy a pánové, letení spoj OK 1234 do Frankfurtu se zpožďuje o 45 minut z provozních důvodů. Nový čas odletu je 16:20. Cestující mohou využít čekárnu číslo 5, kde je k dispozici bezplatné občerstvení. Děkujeme za pochopení.",
+              "prompt": "Jaké je nové čas odletu letu do Frankfurtu?",
+              "prompt_en": "What is the new departure time for the Frankfurt flight?",
+              "options": [
+                "15:35",
+                "16:20",
+                "17:05",
+                "17:50"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Nový čas odletu je 16:20."
+            },
+            {
+              "audio_text": "Dobrý den, paní Nováková? Tady je učitelka vašeho syna, paní Dvořáková. Chtěla jsem vám říct, že Tomáš udělal velký pokrok v matematice. Na posledním testu měl jedničku. Ale měl by si více číst doma, protože v češtině se trochu zhoršil. Chtěla jsem vás poprosit, jestli byste s ním mohli číst každý večer.",
+              "prompt": "Co by měl Tomáš dělat podle učitelky?",
+              "prompt_en": "What should Tomáš do according to the teacher?",
+              "options": [
+                "Více se učit matematiku",
+                "Více číst doma",
+                "Chodit dříve spát",
+                "Zapsat se do kroužku"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Učitelka doporučuje, aby Tomáš četl každý večer."
+            },
+            {
+              "audio_text": "Promiňte, můžete mi poradit? Jsem tady poprvé a nevím, kde je nejbližší lékárna. Potřebuji si koupit léky proti bolesti hlavy. Také bych potřebovala něco na nachlazení. Víte, jestli je lékárna ještě otevřená? Je už skoro šest hodin.",
+              "prompt": "Co žena hledá?",
+              "prompt_en": "What is the woman looking for?",
+              "options": [
+                "Lékaře",
+                "Lékárnu",
+                "Nemocnici",
+                "Potraviny"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Žena hledá nejbližší lékárnu, kde si může koupit léky."
+            }
+          ]
+        },
+        {
+          "type": "speaking",
+          "time_limit_minutes": 15,
+          "max_score": 40,
+          "questions": [
+            {
+              "prompt": "Podívejte se na obrázek a popište, co se na něm děje. Mluvte o lidech, jejich činnostech a o tom, jaké roční období na obrázku vidíte. (1–2 minuty)",
+              "prompt_en": "Look at the picture and describe what is happening. Talk about the people, their activities, and what season you see in the picture. (1-2 minutes)",
+              "task_type": "picture_description",
+              "points": 15,
+              "target_text": "Na obrázku je zimní scenérie. Lidé sáňkují na kopci a staví sněhuláka. Děti se smějí a hrají si na sněhu. V pozadí jsou zasněžené stromy a hory. Lidé mají na sobě teplé oblečení.",
+              "evaluation_criteria": [
+                "Použití sloves v přítomném čase",
+                "Slovní zásoba týkající se zimního počasí",
+                "Popis činností a emocí",
+                "Plynulost a výslovnost"
+              ]
+            },
+            {
+              "prompt": "Odpovězte na následující otázky: 1) Jak jste se učili česky? 2) Co byste dělali, kdybyste měli více volného času? 3) Popište svého nejlepšího kamaráda nebo kamarádku.",
+              "prompt_en": "Answer the following questions: 1) How did you learn Czech? 2) What would you do if you had more free time? 3) Describe your best friend.",
+              "task_type": "questions_and_answers",
+              "points": 15,
+              "evaluation_criteria": [
+                "Použití minulého času pro otázku 1",
+                "Použití podmiňovacího způsobu pro otázku 2",
+                "Použití instrumentálu a genitivu pro otázku 3",
+                "Gramatická správnost a plynulost"
+              ]
+            },
+            {
+              "prompt": "Reagujte na následující situace: 1) Jste na poště a chcete poslat balík. Vysvětlete, co potřebujete. 2) Vrátil jste se z obchodu a zjistil jste, že jste dostal špatné zboží. Zavolejte do obchodu a stěžujte si. 3) Potřebujete se zeptat kolegy, jestli by vám nepomohl s projektem. Požádejte ho o to.",
+              "prompt_en": "Respond to the following situations: 1) You're at the post office and want to send a package. Explain what you need. 2) You returned from a store and found you received the wrong goods. Call the store and complain. 3) You need to ask a colleague if they could help you with a project. Ask them.",
+              "task_type": "role_play",
+              "points": 10,
+              "evaluation_criteria": [
+                "Použití formálního oslovení",
+                "Vyjádření žádosti a stížnosti (chtěl bych, mohl byste)",
+                "Použití pádových koncovek (genitiv, dativ)",
+                "Přiměřenost situaci a gramatická správnost"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a2-practice-3",
+      "title": "CCE A2 Practice Exam 3",
+      "level": "a2",
+      "total_time_minutes": 120,
+      "sections": [
+        {
+          "type": "reading",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "passage_id": "r3_p1",
+              "passage_title": "Dovolená u moře v Chorvatsku",
+              "passage": "Letos v létě jsme jeli na dovolenou do Chorvatska. Bydleli jsme v malém penzionu nedaleko moře, který jsme si našli na internetu. Pokoj byl prostorný a čistý, měl vlastní koupelnu a malou terasu. Snídaně byla v ceně a výběr byl pestrý — čerstvé pečivo, sýry, šunky, ovoce a zelenina. Majitelé penzionu byli velmi milí a ochotní. Moře bylo teplé a čisté. Každý den jsme se koupali a odpočívali na pláži. Večer jsme chodili do místních restaurací a ochutnávali mořské plody. Byla to nejlepší dovolená, jakou jsme kdy měli.",
+              "prompt": "Jak bydleli na dovolené?",
+              "prompt_en": "Where did they stay on vacation?",
+              "options": [
+                "V hotelu",
+                "V penzionu",
+                "V kempu",
+                "U přátel"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Bydleli v malém penzionu nedaleko moře."
+            },
+            {
+              "passage_id": "r3_p1",
+              "passage_title": "Dovolená u moře v Chorvatsku",
+              "passage": "Letos v létě jsme jeli na dovolenou do Chorvatska. Bydleli jsme v malém penzionu nedaleko moře, který jsme si našli na internetu. Pokoj byl prostorný a čistý, měl vlastní koupelnu a malou terasu. Snídaně byla v ceně a výběr byl pestrý — čerstvé pečivo, sýry, šunky, ovoce a zelenina. Majitelé penzionu byli velmi milí a ochotní. Moře bylo teplé a čisté. Každý den jsme se koupali a odpočívali na pláži. Večer jsme chodili do místních restaurací a ochutnávali mořské plody. Byla to nejlepší dovolená, jakou jsme kdy měli.",
+              "prompt": "Co bylo součástí snídaně?",
+              "prompt_en": "What was part of the breakfast?",
+              "options": [
+                "Pouze pečivo",
+                "Pečivo, sýry, šunky, ovoce a zelenina",
+                "Jen ovoce",
+                "Teplá jídla"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Snídaně měla pestrý výběr: čerstvé pečivo, sýry, šunky, ovoce a zelenina."
+            },
+            {
+              "passage_id": "r3_p1",
+              "passage_title": "Dovolená u moře v Chorvatsku",
+              "passage": "Letos v létě jsme jeli na dovolenou do Chorvatska. Bydleli jsme v malém penzionu nedaleko moře, který jsme si našli na internetu. Pokoj byl prostorný a čistý, měl vlastní koupelnu a malou terasu. Snídaně byla v ceně a výběr byl pestrý — čerstvé pečivo, sýry, šunky, ovoce a zelenina. Majitelé penzionu byli velmi milí a ochotní. Moře bylo teplé a čisté. Každý den jsme se koupali a odpočívali na pláži. Večer jsme chodili do místních restaurací a ochutnávali mořské plody. Byla to nejlepší dovolená, jakou jsme kdy měli.",
+              "prompt": "Jak hodnotí autoři textu dovolenou?",
+              "prompt_en": "How do the authors evaluate their vacation?",
+              "options": [
+                "Byla špatná",
+                "Byla průměrná",
+                "Byla nejlepší, jakou kdy měli",
+                "Byla zklamáním"
+              ],
+              "correct_answer": 2,
+              "points": 5,
+              "explanation": "Byla to nejlepší dovolená, jakou kdy měli."
+            },
+            {
+              "passage_id": "r3_p2",
+              "passage_title": "Pravidla pro cestující v MHD",
+              "passage": "Vážení cestující, připomínáme vám základní pravidla pro cestování v městské hromadné dopravě. Jízdenku si musíte zakoupit před nástupem nebo přímo ve vozidle, pokud je to možné. Jízdenku je nutné označit ihned po nástupu. Pokud cestujete se psem, musíte mít na něj vodítko a náhubek. Děti do šesti let cestují zdarma. Studenti se mohou využít slevy 75 %, pokud mají platný studentský průkaz. Jízdenku si musíte uchovat až do konce cesty a ukázat revizorovi, pokud o to požádá.",
+              "prompt": "Co musí cestující udělat s jízdenkou po nástupu?",
+              "prompt_en": "What must passengers do with their ticket after boarding?",
+              "options": [
+                "Uchovat ji v kapse",
+                "Označit ji ihned",
+                "Zahodit ji",
+                "Ukázat řidiči"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Jízdenku je nutné označit ihned po nástupu."
+            },
+            {
+              "passage_id": "r3_p2",
+              "passage_title": "Pravidla pro cestující v MHD",
+              "passage": "Vážení cestující, připomínáme vám základní pravidla pro cestování v městské hromadné dopravě. Jízdenku si musíte zakoupit před nástupem nebo přímo ve vozidle, pokud je to možné. Jízdenku je nutné označit ihned po nástupu. Pokud cestujete se psem, musíte mít na něj vodítko a náhubek. Děti do šesti let cestují zdarma. Studenti se mohou využít slevy 75 %, pokud mají platný studentský průkaz. Jízdenku si musíte uchovat až do konce cesty a ukázat revizorovi, pokud o to požádá.",
+              "prompt": "Kdo cestuje v MHD zdarma?",
+              "prompt_en": "Who travels on public transport for free?",
+              "options": [
+                "Studenti",
+                "Důchodci",
+                "Děti do šesti let",
+                "Všichni"
+              ],
+              "correct_answer": 2,
+              "points": 5,
+              "explanation": "Děti do šesti let cestují zdarma."
+            }
+          ]
+        },
+        {
+          "type": "writing",
+          "time_limit_minutes": 25,
+          "max_score": 20,
+          "questions": [
+            {
+              "prompt": "Napište stížnost do restaurace, ve které jste byli nespokojeni s jídlem nebo službou. Popište, co se stalo, kdy se to stalo a co byste chtěli, aby restaurace udělala. (60–80 slov)",
+              "prompt_en": "Write a complaint to a restaurant where you were dissatisfied with the food or service. Describe what happened, when it happened, and what you'd like the restaurant to do. (60-80 words)",
+              "min_words": 60,
+              "max_words": 80,
+              "points": 12,
+              "evaluation_criteria": [
+                "Formální styl a oslovení",
+                "Popis situace v minulém čase",
+                "Vyjádření nespokojenosti a požadavku",
+                "Gramatická správnost"
+              ]
+            },
+            {
+              "prompt": "Napište krátký článek o svém městě nebo vesnici. Popište, co se tam nachází, co je zajímavého a proč by turisté měli vaše město navštívit. (50–70 slov)",
+              "prompt_en": "Write a short article about your city or village. Describe what's there, what's interesting, and why tourists should visit your city. (50-70 words)",
+              "min_words": 50,
+              "max_words": 70,
+              "points": 8,
+              "evaluation_criteria": [
+                "Použití lokálu pro popis místa",
+                "Popis pamětihodností a zajímavostí",
+                "Vyjádření doporučení (měli byste, stojí za to)",
+                "Gramatická správnost"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "listening",
+          "time_limit_minutes": 40,
+          "max_score": 25,
+          "questions": [
+            {
+              "audio_text": "Dobrý den, volám z firmy AutoServis. Vaše auto je hotové. Oprava trvala déle, než jsme čekali, protože musíme objednat náhradní díl z Německa. Můžete si auto vyzvednout zítra odpoledne po 14:00. Celková cena opravy je 8 500 korun. Máte nějaké dotazy?",
+              "prompt": "Kdy si může klient vyzvednout auto?",
+              "prompt_en": "When can the client pick up the car?",
+              "options": [
+                "Dnes odpoledne",
+                "Zítra po 14:00",
+                "Pozítří ráno",
+                "Za týden"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Auto lze vyzvednout zítra odpoledne po 14:00."
+            },
+            {
+              "audio_text": "Ahoj, potkala jsem včera na ulici starou spolužačku ze školy. Neviděly jsme se asi deset let. Byla jsem překvapená, jak se změnila — má teď krátké vlasy a nosí brýle. Vzala jsem od ní telefonní číslo a domluvily jsme si, že se sejdeme na kafe příští týden.",
+              "prompt": "Koho potkala mluvčí na ulici?",
+              "prompt_en": "Who did the speaker meet on the street?",
+              "options": [
+                "Sousedku",
+                "Starou spolužačku",
+                "Příbuznou",
+                "Kolegyni z práce"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Potkala starou spolužačku ze školy, kterou neviděla asi deset let."
+            },
+            {
+              "audio_text": "Dámy a pánové, nashledanou v kinosálu. Dnešní film začíná v 19:30. Prosíme, vypněte si mobilní telefony během promítání. V sále je zakázáno kouřit a konzumovat vlastní jídlo. Vstup do sálu je možný pouze s platnou vstupenkou. Přejeme vám příjemný zážitek.",
+              "prompt": "Co je zakázáno v kině?",
+              "prompt_en": "What is forbidden in the cinema?",
+              "options": [
+                "Mluvit se sousedem",
+                "Kouřit a konzumovat vlastní jídlo",
+                "Sedět na zadních sedadlech",
+                "Přinést si deku"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "V sále je zakázáno kouřit a konzumovat vlastní jídlo."
+            },
+            {
+              "audio_text": "Dobrý den, já jsem nový nájemce bytu v prvním patře. Přistěhoval jsem se včera a chtěl jsem se seznámit se sousedy. Také jsem chtěl poprosit — mám ještě hodně krabic a nevejde se mi to do bytu. Nešlo by mi dohodnout nějaké místo v sklepě na krabice? Byl bych velmi vděčný.",
+              "prompt": "O co nový nájemce prosí?",
+              "prompt_en": "What does the new tenant ask for?",
+              "options": [
+                "Pomoc s stěhováním",
+                "Místo v sklepě na krabice",
+                "Půjčení nářadí",
+                "Seznámení se sousedy"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Nový nájemce prosí o místo v sklepě pro své krabice."
+            },
+            {
+              "audio_text": "Tak já jsem konečně dodělala ten kurz vaření, co jsem ti o tom vyprávěla. Naučila jsem se vařit italská jídla — pizzu, pastu, rizoto. Bylo to super, i když to bylo docela drahé. Ale myslím, že se to vyplatilo. Příští měsíc bych chtěla zapsat kurz francouzské kuchyně.",
+              "prompt": "Co se naučila mluvčí vařit?",
+              "prompt_en": "What did the speaker learn to cook?",
+              "options": [
+                "Česká jídla",
+                "Italská jídla",
+                "Francouzská jídla",
+                "Asijská jídla"
+              ],
+              "correct_answer": 1,
+              "points": 5,
+              "explanation": "Naučila se vařit italská jídla — pizzu, pastu a rizoto."
+            }
+          ]
+        },
+        {
+          "type": "speaking",
+          "time_limit_minutes": 15,
+          "max_score": 40,
+          "questions": [
+            {
+              "prompt": "Podívejte se na obrázek a popište, co vidíte. Mluvte o lidech, o prostředí a o tom, co si myslíte, že se stane dál. (1–2 minuty)",
+              "prompt_en": "Look at the picture and describe what you see. Talk about the people, the environment, and what you think will happen next. (1-2 minutes)",
+              "task_type": "picture_description",
+              "points": 15,
+              "target_text": "Na obrázku je restaurace. Číšník nese tác s jídlem ke stolu, u kterého sedí rodina. Rodina čeká na objednávku. Na stále jsou sklenice a příbory. V pozadí jsou vidět další hosté.",
+              "evaluation_criteria": [
+                "Použití přítomného času pro popis",
+                "Slovní zásoba týkající se restaurace a jídla",
+                "Vyjádření předpokladu (myslím si, že)",
+                "Plynulost a výslovnost"
+              ]
+            },
+            {
+              "prompt": "Odpovězte na následující otázky: 1) Popište svůj poslední nákup. Co jste si koupili a proč? 2) Kdybyste vyhráli velkou sumu peněz, co byste s nimi udělali? 3) Jaké jsou výhody a nevýhody bydlení v cizině?",
+              "prompt_en": "Answer the following questions: 1) Describe your last purchase. What did you buy and why? 2) If you won a large sum of money, what would you do with it? 3) What are the advantages and disadvantages of living abroad?",
+              "task_type": "questions_and_answers",
+              "points": 15,
+              "evaluation_criteria": [
+                "Použití minulého času a genitivu pro otázku 1",
+                "Použití podmiňovacího způsobu pro otázku 2",
+                "Vyjádření výhod a nevýhod pro otázku 3",
+                "Gramatická správnost a plynulost"
+              ]
+            },
+            {
+              "prompt": "Reagujte na následující situace: 1) Váš kolega přijde do práce s nachlazením. Doporučte mu, co by měl udělat. 2) Jste v lékárně a potřebujete léky na alergii. Vysvětlete lékárníkovi, co potřebujete. 3) Potřebujete zrušit rezervaci v hotelu. Zavolejte a vysvětlete, proč musíte rezervaci zrušit.",
+              "prompt_en": "Respond to the following situations: 1) Your colleague comes to work with a cold. Recommend what they should do. 2) You're at a pharmacy and need allergy medicine. Explain to the pharmacist what you need. 3) You need to cancel a hotel reservation. Call and explain why you must cancel.",
+              "task_type": "role_play",
+              "points": 10,
+              "evaluation_criteria": [
+                "Použití modálních sloves a podmiňovacího způsobu",
+                "Vyjádření doporučení a omluvy",
+                "Použití pádových koncovek (dativ, genitiv)",
+                "Přiměřenost situaci a gramatická správnost"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
