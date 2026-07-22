@@ -163,7 +163,8 @@ class _ListeningQuestionsState extends State<_ListeningQuestions> {
     return raw.cast<Map<String, dynamic>>();
   }
 
-  bool get _allAnswered => _selectedAnswers.every((a) => a != null);
+  bool get _allAnswered =>
+      _questions.isNotEmpty && _selectedAnswers.every((a) => a != null);
 
   int get _correctCount {
     int c = 0;
@@ -174,9 +175,19 @@ class _ListeningQuestionsState extends State<_ListeningQuestions> {
     return c;
   }
 
-  bool get _allCorrect => _correctCount == _questions.length;
+  bool get _allCorrect =>
+      _questions.isNotEmpty && _correctCount == _questions.length;
 
   void _submit() {
+    if (_questions.isEmpty) {
+      setState(() => submitted = true);
+      widget.onComplete(
+        false,
+        'No questions available for this exercise.',
+        null,
+      );
+      return;
+    }
     setState(() => submitted = true);
     widget.onComplete(
       _allCorrect,
@@ -191,9 +202,58 @@ class _ListeningQuestionsState extends State<_ListeningQuestions> {
     );
   }
 
+  void _retry() {
+    setState(() {
+      for (int i = 0; i < _selectedAnswers.length; i++) {
+        _selectedAnswers[i] = null;
+      }
+      submitted = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    // Empty-questions error state
+    if (_questions.isEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.red.shade50,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.red.shade200),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.error_outline, color: Colors.red.shade700, size: 24),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'This exercise has no questions configured.',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: Colors.red.shade900,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (submitted)
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: OutlinedButton.icon(
+                onPressed: _retry,
+                icon: const Icon(Icons.refresh, size: 18),
+                label: const Text('Retry'),
+              ),
+            ),
+        ],
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -210,7 +270,7 @@ class _ListeningQuestionsState extends State<_ListeningQuestions> {
               child: const Text('Check Answers'),
             ),
           ),
-        if (submitted)
+        if (submitted) ...[
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Row(
@@ -221,16 +281,25 @@ class _ListeningQuestionsState extends State<_ListeningQuestions> {
                   size: 20,
                 ),
                 const SizedBox(width: 8),
-                Text(
-                  _allCorrect ? 'All correct!' : '$_correctCount/${_questions.length} correct',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: _allCorrect ? Colors.green.shade700 : Colors.red.shade700,
+                Expanded(
+                  child: Text(
+                    _allCorrect ? 'All correct!' : '$_correctCount/${_questions.length} correct',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: _allCorrect ? Colors.green.shade700 : Colors.red.shade700,
+                    ),
                   ),
                 ),
+                if (!_allCorrect)
+                  OutlinedButton.icon(
+                    onPressed: _retry,
+                    icon: const Icon(Icons.refresh, size: 18),
+                    label: const Text('Retry'),
+                  ),
               ],
             ),
           ),
+        ],
       ],
     );
   }

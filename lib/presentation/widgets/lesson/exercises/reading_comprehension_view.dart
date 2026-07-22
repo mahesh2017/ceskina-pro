@@ -50,15 +50,22 @@ class _ReadingComprehensionViewState
   void _submit() {
     setState(() => answered = true);
 
+    // Determine correctness per-question to avoid indexOf miscounting
+    // when multiple questions share the same selected answer index.
+    final List<bool> perQuestionCorrect = [];
+    for (int i = 0; i < _questions.length; i++) {
+      final correctIdx = (_questions[i]['correct_index'] as num).toInt();
+      perQuestionCorrect.add(_selectedAnswers[i] == correctIdx);
+    }
+    final allCorrect = perQuestionCorrect.every((c) => c);
+    final correctCount = perQuestionCorrect.where((c) => c).length;
+
     widget.onAnswered(
       ExerciseResult(
-        isCorrect: _allCorrect,
-        explanation: _allCorrect
+        isCorrect: allCorrect,
+        explanation: allCorrect
             ? 'All questions answered correctly!'
-            : '${_selectedAnswers.where((a) {
-                  final i = _selectedAnswers.indexOf(a);
-                  return a == (_questions[i]['correct_index'] as num).toInt();
-                }).length}/${_questions.length} correct.',
+            : '$correctCount/${_questions.length} correct.',
         correctAnswer: _questions
             .map((q) => (q['options'] as List<dynamic>)[
                   (q['correct_index'] as num).toInt()]

@@ -23,9 +23,16 @@ class SpeakingTaskView extends ConsumerStatefulWidget {
 class _SpeakingTaskViewState extends ConsumerState<SpeakingTaskView> {
   bool isRecording = false;
   bool hasRecorded = false;
-  bool isProcessing = false;
   String? transcription;
   String? feedback;
+
+  /// Guards against the stale [Future.delayed] callback when the user
+  /// taps re-record during the 2-second auto-submit delay.
+  bool _autoSubmitPending = false;
+
+  /// Cancellation flag — when true, the current recognition session is
+  /// abandoned (stopped) and its results should be discarded.
+  bool _sessionCancelled = false;
 
   String get _prompt {
     return (widget.exercise.data['prompt_en'] ??
@@ -42,13 +49,23 @@ class _SpeakingTaskViewState extends ConsumerState<SpeakingTaskView> {
   }
 
   Future<void> _toggleRecording() async {
-    if (isProcessing) return;
-
+    // If recording, stop and process the result.
     if (isRecording) {
-      setState(() => isRecording = false);
+      final stt = ref.read(sttServiceProvider) as NativeSttService;
+      await stt.stop();
+      // listenFor()'s completer will resolve on stop — the awaiting code
+      // below continues normally.
       return;
     }
 
+    // If a previous result is showing and we're not in the auto-submit
+    // delay, this is a re-record. Cancel any pending auto-submit first.
+    if (_autoSubmitPending) {
+      _autoSubmitPending = false;
+    }
+
+    // Start a fresh session.
+    _sessionCancelled = false;
     setState(() {
       isRecording = true;
       hasRecorded = false;
@@ -61,6 +78,11 @@ class _SpeakingTaskViewState extends ConsumerState<SpeakingTaskView> {
       final recorded = (await stt.listenFor(
         timeout: const Duration(seconds: 15),
       )).trim();
+
+      // If the user cancelled (re-recorded or stopped without processing),
+      // discard the result entirely.
+      if (_sessionCancelled) return;
+
       var score = 0.0;
 
       // Compare against expected phrases
@@ -84,32 +106,35 @@ class _SpeakingTaskViewState extends ConsumerState<SpeakingTaskView> {
         if (score > 1.0) score = 1.0;
       }
 
+      final currentFeedback = score >= 0.5
+          ? 'Good! You said the right things.'
+          : 'Try again. Expected phrases include: ${_expectedPhrases.join(", ")}';
+
       setState(() {
         hasRecorded = true;
         isRecording = false;
-        isProcessing = false;
         transcription = recorded;
-        feedback = score >= 0.5
-            ? 'Good! You said the right things.'
-            : 'Try again. Expected phrases include: ${_expectedPhrases.join(", ")}';
+        feedback = currentFeedback;
       });
 
       // Auto-submit after a short delay so the user can see their result.
+      // Guard with a flag so a re-record tap cancels this stale callback.
+      _autoSubmitPending = true;
       Future.delayed(const Duration(seconds: 2), () {
-        if (mounted) {
-          widget.onAnswered(
-            ExerciseResult(
-              isCorrect: score >= 0.5,
-              explanation: feedback,
-              correctAnswer: _expectedPhrases.join('; '),
-            ),
-          );
-        }
+        if (!_autoSubmitPending || !mounted) return;
+        _autoSubmitPending = false;
+        widget.onAnswered(
+          ExerciseResult(
+            isCorrect: score >= 0.5,
+            explanation: currentFeedback,
+            correctAnswer: _expectedPhrases.join('; '),
+          ),
+        );
       });
     } catch (e) {
+      if (_sessionCancelled) return;
       setState(() {
         isRecording = false;
-        isProcessing = false;
         feedback = 'Recording failed. Please try again.';
       });
     }

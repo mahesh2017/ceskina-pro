@@ -29,6 +29,7 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
   int? _selectedWordIdx;
   int? _selectedOptionIdx;
   bool _errorRevealed = false;
+  bool _wasCorrect = false;
 
   String get _incorrectSentence {
     return (widget.exercise.data['sentence_cz'] ??
@@ -82,9 +83,28 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
   void _submitWithOption() {
     if (_selectedWordIdx == null) return;
 
-    final isCorrect = _wordIsDifferentAt(_selectedWordIdx!);
+    bool isCorrect;
+    final options = _options;
+    if (options != null && _selectedOptionIdx != null) {
+      // Option mode: correct if selected option matches the correct word.
+      final correctWord = _correctSentence.isNotEmpty
+          ? _correctSentence.split(' ')[_selectedWordIdx!]
+          : null;
+      if (correctWord != null) {
+        isCorrect = normalizeAnswer(options[_selectedOptionIdx!]) ==
+            normalizeAnswer(correctWord);
+      } else {
+        isCorrect = _wordIsDifferentAt(_selectedWordIdx!);
+      }
+    } else {
+      // Word-only mode: correct if the tapped word is the wrong one.
+      isCorrect = _wordIsDifferentAt(_selectedWordIdx!);
+    }
 
-    setState(() => answered = true);
+    setState(() {
+      answered = true;
+      _wasCorrect = isCorrect;
+    });
 
     widget.onAnswered(
       ExerciseResult(
@@ -100,12 +120,16 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
   void _submitTyped(String userInput) {
     final accepted = _acceptedAnswers;
     final match = accepted != null ? matchAnswer(accepted, userInput) : AnswerMatch.none;
+    final isCorrect = match != AnswerMatch.none;
 
-    setState(() => answered = true);
+    setState(() {
+      answered = true;
+      _wasCorrect = isCorrect;
+    });
 
     widget.onAnswered(
       ExerciseResult(
-        isCorrect: match != AnswerMatch.none,
+        isCorrect: isCorrect,
         explanation: _explanation,
         correctAnswer: accepted?.first ?? _correctSentence,
       ),
@@ -238,7 +262,7 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
             Padding(
               padding: const EdgeInsets.only(top: 12),
               child: GrammarTipCard(
-                isCorrect: _selectedWordIdx != null && _wordIsDifferentAt(_selectedWordIdx!),
+                isCorrect: _wasCorrect,
                 explanation: _explanation,
                 correctAnswer: _correctSentence.isNotEmpty
                     ? _correctSentence

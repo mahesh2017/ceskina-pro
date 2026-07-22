@@ -30,7 +30,7 @@ class _MatchingViewState extends State<MatchingView> {
   void initState() {
     super.initState();
     final data = widget.exercise.data;
-    final rawPairs = data['pairs'] as List<dynamic>;
+    final rawPairs = data['pairs'] as List<dynamic>? ?? [];
 
     // Normalise: support both {left, right} and {cz, en} key shapes.
     final pairs = rawPairs.map((p) {
@@ -62,6 +62,9 @@ class _MatchingViewState extends State<MatchingView> {
 
   bool get _allMatched =>
       _leftItems.every((i) => i.matched) && _rightItems.every((i) => i.matched);
+
+  bool get _isCorrect =>
+      _leftItems.every((i) => i.pairIdx == _rightItems[i.matchedTo].pairIdx);
 
   int get _matchedCount =>
       _leftItems.where((i) => i.matched).length;
@@ -118,6 +121,21 @@ class _MatchingViewState extends State<MatchingView> {
         correctAnswer: answerKey,
       ),
     );
+  }
+
+  void _tryAgain() {
+    setState(() {
+      answered = false;
+      _selectedLeftIdx = null;
+      for (final item in _leftItems) {
+        item.matched = false;
+        item.matchedTo = -1;
+      }
+      for (final item in _rightItems) {
+        item.matched = false;
+        item.matchedTo = -1;
+      }
+    });
   }
 
   Color _pairColor(int pairIdx) {
@@ -204,20 +222,28 @@ class _MatchingViewState extends State<MatchingView> {
                     child: const Text('Check'),
                   ),
                 if (answered)
-                  Text(
-                    _leftItems.every(
-                      (i) => i.pairIdx == _rightItems[i.matchedTo].pairIdx,
-                    )
-                        ? '✓ All correct!'
-                        : '✗ Some pairs are wrong — try again',
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      color: _leftItems.every(
-                        (i) => i.pairIdx == _rightItems[i.matchedTo].pairIdx,
-                      )
-                          ? Colors.green.shade700
-                          : Colors.red.shade700,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        _isCorrect
+                            ? '✓ All correct!'
+                            : '✗ Some pairs are wrong — try again',
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          color: _isCorrect
+                              ? Colors.green.shade700
+                              : Colors.red.shade700,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (!_isCorrect) ...[
+                        const SizedBox(width: 12),
+                        FilledButton.tonal(
+                          onPressed: _tryAgain,
+                          child: const Text('Try Again'),
+                        ),
+                      ],
+                    ],
                   ),
               ],
             ),
