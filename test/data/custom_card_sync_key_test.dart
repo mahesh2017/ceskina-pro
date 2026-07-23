@@ -51,6 +51,79 @@ void main() {
     expect(await srsContentKey(), isNot(card.id.toString()));
   });
 
+  test('creating a manual card enqueues its definition to custom_cards',
+      () async {
+    final repo = DriftVocabularyRepository(db);
+    expect(await repo.addManualCard(cz: 'strom', en: 'tree', ipa: 'strom'), isTrue);
+
+    final card = await db.select(db.flashcards).getSingle();
+    final defRow = await (db.select(db.syncQueue)
+          ..where((q) => q.entity.equals('custom_cards')))
+        .getSingle();
+    final payload = jsonDecode(defRow.payload) as Map<String, dynamic>;
+    expect(defRow.entityKey, card.contentUid);
+    expect(payload['content_uid'], card.contentUid);
+    expect(payload['word_cz'], 'strom');
+    expect(payload['word_en'], 'tree');
+  });
+
+  test('a second device materializes the card, then attaches its SRS state',
+      () async {
+    // Device A creates the card and reads what it would sync.
+    final deviceA = db;
+    final repo = DriftVocabularyRepository(deviceA);
+    await repo.addManualCard(cz: 'strom', en: 'tree', ipa: 'strom');
+    final aCard = await deviceA.select(deviceA.flashcards).getSingle();
+    final uid = aCard.contentUid!;
+
+    // Device B starts empty (no such flashcard).
+    final deviceB = AppDatabase.forTesting(NativeDatabase.memory());
+    addTearDown(deviceB.close);
+    expect(await deviceB.select(deviceB.flashcards).get(), isEmpty);
+
+    // Pull order guarantees custom_cards merges before srs_cards.
+    await deviceB.vocabularyDao.mergeCustomCard(
+      contentUid: uid,
+      wordCz: 'strom',
+      wordEn: 'tree',
+      ipa: 'strom',
+    );
+    await deviceB.vocabularyDao.mergeSrsCard(
+      cardType: 'vocabulary',
+      contentKey: uid, // UUID, not a numeric id
+      stability: 1,
+      difficulty: 2,
+      due: DateTime.utc(2026, 7, 24),
+      reps: 3,
+      state: 'review',
+      lastReviewed: DateTime.utc(2026, 7, 23),
+    );
+
+    final bCard = await deviceB.select(deviceB.flashcards).getSingle();
+    expect(bCard.contentUid, uid);
+    expect(bCard.wordCz, 'strom');
+
+    final srs = await deviceB.select(deviceB.srsCards).getSingle();
+    expect(srs.flashcardId, bCard.id); // attached to the materialized card
+    expect(srs.reps, 3);
+  });
+
+  test('an SRS row whose custom definition is absent is safely ignored',
+      () async {
+    // No mergeCustomCard first — the referenced UUID has no local flashcard.
+    await db.vocabularyDao.mergeSrsCard(
+      cardType: 'vocabulary',
+      contentKey: 'missing-uuid-1234',
+      stability: 1,
+      difficulty: 2,
+      due: DateTime.utc(2026, 7, 24),
+      reps: 3,
+      state: 'review',
+      lastReviewed: DateTime.utc(2026, 7, 23),
+    );
+    expect(await db.select(db.srsCards).get(), isEmpty); // dropped, not mis-attached
+  });
+
   test('managed (seeded) card still syncs by its deterministic id', () async {
     await db.into(db.flashcards).insert(
           FlashcardsCompanion.insert(id: const Value(42), wordCz: 'kniha', wordEn: 'book'),

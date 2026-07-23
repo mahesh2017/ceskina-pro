@@ -119,6 +119,9 @@ class DriftVocabularyRepository implements VocabularyRepository {
         contentUid: Value(const Uuid().v4()),
       ),
     ]);
+    // Sync the definition so other devices can materialize the word before its
+    // dependent SRS scheduling row arrives.
+    await _db.vocabularyDao.enqueueCustomCard(id);
     await _db.vocabularyDao.upsertSrsCard(
       db.SrsCardsCompanion.insert(
         cardType: 'vocabulary',

@@ -108,11 +108,15 @@ class SyncService {
   Future<void>? _activeRun;
   bool _accountTransition = false;
 
-  /// Conflict target (composite natural key) for each backend table.
+  /// Conflict target (composite natural key) for each backend table. Order
+  /// matters for pull: `custom_cards` precedes `srs_cards` so a manual card's
+  /// definition is materialized locally before its SRS scheduling row (which
+  /// references it by content_uid) is merged.
   static const _conflictKeys = <String, String>{
     'lesson_progress': 'user_id,lesson_id',
     'earned_badges': 'user_id,badge_id',
     'user_progress': 'user_id,key',
+    'custom_cards': 'user_id,content_uid',
     'srs_cards': 'user_id,card_type,content_key',
     'gamification_state': 'user_id,key',
   };
@@ -253,6 +257,14 @@ class SyncService {
         await _db.progressDao.mergeUserProgress(
           r['key'] as String,
           _decodeKvValue(r['value']),
+        );
+        break;
+      case 'custom_cards':
+        await _db.vocabularyDao.mergeCustomCard(
+          contentUid: r['content_uid'] as String,
+          wordCz: r['word_cz'] as String,
+          wordEn: r['word_en'] as String,
+          ipa: r['ipa'] as String?,
         );
         break;
       case 'srs_cards':

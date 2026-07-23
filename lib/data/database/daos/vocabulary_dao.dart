@@ -309,8 +309,22 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
     DateTime? lastReviewed,
   }) async {
     final isGrammar = cardType == 'grammar';
-    final flashcardId = isGrammar ? null : int.tryParse(contentKey);
-    if (!isGrammar && flashcardId == null) return; // malformed key
+    int? flashcardId;
+    if (!isGrammar) {
+      // A numeric key is a managed/seeded card (deterministic id on every
+      // device). A non-numeric key is a manual card's stable content_uid,
+      // resolved to whatever local flashcard row holds that UUID. If the
+      // definition has not been materialized yet (custom_cards merges first,
+      // but be defensive), skip rather than mis-attach.
+      flashcardId = int.tryParse(contentKey);
+      if (flashcardId == null) {
+        final card =
+            await (select(flashcards)
+              ..where((f) => f.contentUid.equals(contentKey))).getSingleOrNull();
+        if (card == null) return;
+        flashcardId = card.id;
+      }
+    }
 
     final existing =
         await (select(srsCards)..where(
@@ -353,6 +367,62 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
         reps: Value(reps),
         state: Value(state),
         lastReviewed: Value(lastReviewed),
+      ),
+    );
+  }
+
+  /// Append a manual card's definition to the sync outbox, keyed by its stable
+  /// [Flashcards.contentUid]. Enqueued at creation so it precedes (FIFO) any
+  /// later SRS review row that references it — the definition therefore syncs
+  /// before the dependent scheduling row.
+  Future<void> enqueueCustomCard(int flashcardId) async {
+    final card =
+        await (select(flashcards)
+          ..where((f) => f.id.equals(flashcardId))).getSingleOrNull();
+    if (card?.contentUid == null) return; // not a manual card
+    await attachedDatabase.syncDao.enqueue(
+      entity: 'custom_cards',
+      entityKey: card!.contentUid!,
+      payload: {
+        'content_uid': card.contentUid,
+        'word_cz': card.wordCz,
+        'word_en': card.wordEn,
+        'ipa': card.ipa,
+      },
+    );
+  }
+
+  /// Merge a remote manual-card definition (pull). Materializes a local
+  /// flashcard keyed by [contentUid] if absent so the matching SRS row can
+  /// attach; otherwise updates the word fields. Writes directly, bypassing the
+  /// outbox so pulls do not echo back.
+  Future<void> mergeCustomCard({
+    required String contentUid,
+    required String wordCz,
+    required String wordEn,
+    String? ipa,
+  }) async {
+    final existing =
+        await (select(flashcards)
+          ..where((f) => f.contentUid.equals(contentUid))).getSingleOrNull();
+    if (existing != null) {
+      await (update(flashcards)..where((f) => f.id.equals(existing.id))).write(
+        FlashcardsCompanion(
+          wordCz: Value(wordCz),
+          wordEn: Value(wordEn),
+          ipa: Value(ipa),
+        ),
+      );
+      return;
+    }
+    final id = await nextFlashcardId();
+    await into(flashcards).insert(
+      FlashcardsCompanion.insert(
+        id: Value(id),
+        wordCz: wordCz,
+        wordEn: wordEn,
+        ipa: Value(ipa),
+        contentUid: Value(contentUid),
       ),
     );
   }
