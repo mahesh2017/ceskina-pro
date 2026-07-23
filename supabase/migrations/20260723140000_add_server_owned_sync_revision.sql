@@ -47,10 +47,18 @@ begin
     execute format(
       'alter table public.%I add column if not exists revision bigint', t);
 
-    -- 3. backfill existing rows (near-empty tables; monotonic + unique)
+    -- 3. backfill existing rows (near-empty tables; monotonic + unique).
+    --    The existing `keep_newest_sync_row` last-write-wins trigger returns
+    --    OLD for any UPDATE that is not strictly newer, which would silently
+    --    skip this backfill (identical updated_at/device_id) and leave
+    --    revision NULL. Disable it for the backfill only, then re-enable.
+    execute format(
+      'alter table public.%I disable trigger keep_newest_sync_row', t);
     execute format(
       'update public.%I set revision = nextval(''public.%I_revision_seq'')
          where revision is null', t, t);
+    execute format(
+      'alter table public.%I enable trigger keep_newest_sync_row', t);
 
     -- 4. stamp on every future insert or update
     execute format(
