@@ -35,8 +35,8 @@ class _SpeakingTaskViewState extends ConsumerState<SpeakingTaskView> {
   bool _sessionCancelled = false;
 
   String get _prompt {
-    return (widget.exercise.data['prompt_en'] ??
-        widget.exercise.prompt) as String;
+    return (widget.exercise.data['prompt_en'] ?? widget.exercise.prompt)
+        as String;
   }
 
   String? get _promptCz => widget.exercise.data['prompt_cz'] as String?;
@@ -177,17 +177,25 @@ class _SpeakingTaskViewState extends ConsumerState<SpeakingTaskView> {
               ),
             ),
             const SizedBox(height: 4),
-            ..._expectedPhrases.map((p) => Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Row(
-                children: [
-                  Icon(Icons.record_voice_over, size: 16,
-                      color: theme.colorScheme.primary),
-                  const SizedBox(width: 8),
-                  Text(p, style: const TextStyle(fontSize: 15)),
-                ],
+            ..._expectedPhrases.map(
+              (p) => Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.record_voice_over,
+                      size: 16,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(p, style: const TextStyle(fontSize: 15)),
+                    ),
+                  ],
+                ),
               ),
-            )),
+            ),
             const SizedBox(height: 20),
           ],
 
@@ -227,8 +235,8 @@ class _SpeakingTaskViewState extends ConsumerState<SpeakingTaskView> {
                   isRecording
                       ? 'Recording... tap to stop'
                       : hasRecorded
-                          ? 'Tap to re-record'
-                          : 'Tap to speak',
+                      ? 'Tap to re-record'
+                      : 'Tap to speak',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),

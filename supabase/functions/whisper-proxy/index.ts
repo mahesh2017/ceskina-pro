@@ -1,9 +1,8 @@
-// @ts-nocheck
 // Whisper proxy Edge Function — transcribes audio via OpenAI Whisper API.
 // The OpenAI API key is stored as a Supabase secret; the client never sees it.
 // Returns verbose_json with word-level timestamps and confidence scores.
 
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { isRecord, parseTranscriptionInput } from "./request_policy.ts";
 
 const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
 const MODEL = "whisper-1";
@@ -18,18 +17,15 @@ export default async (req: Request): Promise<Response> => {
   }
 
   try {
-    const body = await req.json();
-    const audioBase64 = body.audio_base64 as string;
-    const language = (body.language as string) || "cs";
-    const prompt = (body.prompt as string) | undefined;
-
-    if (!audioBase64) {
-      return json({ error: "Missing audio_base64" }, 400);
+    const input = parseTranscriptionInput(await req.json());
+    if (!input) {
+      return json({ error: "Invalid transcription request" }, 400);
     }
 
     // Decode base64 audio to bytes
-    const audioBytes = Uint8Array.from(atob(audioBase64), (c) =>
-      c.charCodeAt(0)
+    const audioBytes = Uint8Array.from(
+      atob(input.audioBase64),
+      (c) => c.charCodeAt(0),
     );
 
     // Build multipart form data for OpenAI
@@ -37,12 +33,12 @@ export default async (req: Request): Promise<Response> => {
     const blob = new Blob([audioBytes], { type: "audio/wav" });
     formData.append("file", blob, "audio.wav");
     formData.append("model", MODEL);
-    formData.append("language", language);
+    formData.append("language", input.language);
     formData.append("response_format", "verbose_json");
 
     // Optional: pass reference text as prompt to improve accuracy
-    if (prompt) {
-      formData.append("prompt", prompt);
+    if (input.prompt) {
+      formData.append("prompt", input.prompt);
     }
 
     const response = await fetch(
@@ -51,15 +47,20 @@ export default async (req: Request): Promise<Response> => {
         method: "POST",
         headers: { Authorization: `Bearer ${OPENAI_API_KEY}` },
         body: formData,
-      }
+      },
     );
 
     if (!response.ok) {
-      const errorText = await response.text();
-      return json({ error: `Whisper API error: ${response.status}`, detail: errorText }, 502);
+      return json({
+        error: `Whisper API error: ${response.status}`,
+      }, 502);
     }
 
-    const result = await response.json();
+    const decoded: unknown = await response.json();
+    if (!isRecord(decoded)) {
+      return json({ error: "Invalid transcription response" }, 502);
+    }
+    const result = decoded;
 
     // Extract word-level data for pronunciation scoring
     const words: Array<{
@@ -71,13 +72,16 @@ export default async (req: Request): Promise<Response> => {
 
     if (result.segments && Array.isArray(result.segments)) {
       for (const seg of result.segments) {
-        if (seg.words && Array.isArray(seg.words)) {
+        if (isRecord(seg) && seg.words && Array.isArray(seg.words)) {
           for (const w of seg.words) {
+            if (!isRecord(w)) continue;
             words.push({
-              word: w.word?.trim() ?? "",
-              start: w.start ?? 0,
-              end: w.end ?? 0,
-              probability: w.probability ?? 0,
+              word: typeof w.word === "string" ? w.word.trim() : "",
+              start: typeof w.start === "number" ? w.start : 0,
+              end: typeof w.end === "number" ? w.end : 0,
+              probability: typeof w.probability === "number"
+                ? w.probability
+                : 0,
             });
           }
         }
@@ -85,20 +89,26 @@ export default async (req: Request): Promise<Response> => {
     }
 
     return json({
-      text: result.text ?? "",
-      language: result.language ?? language,
-      duration: result.duration ?? 0,
+      text: typeof result.text === "string" ? result.text : "",
+      language: typeof result.language === "string"
+        ? result.language
+        : input.language,
+      duration: typeof result.duration === "number" ? result.duration : 0,
       words,
-      segments: (result.segments ?? []).map((s: any) => ({
-        id: s.id,
-        start: s.start,
-        end: s.end,
-        text: s.text?.trim() ?? "",
-        confidence: s.avg_logprob ?? 0,
-      })),
+      segments: Array.isArray(result.segments)
+        ? result.segments.filter(isRecord).map((segment) => ({
+          id: segment.id,
+          start: segment.start,
+          end: segment.end,
+          text: typeof segment.text === "string" ? segment.text.trim() : "",
+          confidence: typeof segment.avg_logprob === "number"
+            ? segment.avg_logprob
+            : 0,
+        }))
+        : [],
     }, 200);
-  } catch (error) {
-    return json({ error: "Internal error", detail: error.message }, 500);
+  } catch (_) {
+    return json({ error: "Internal error" }, 500);
   }
 };
 

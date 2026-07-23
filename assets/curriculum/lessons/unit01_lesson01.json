@@ -154,8 +154,10 @@
         "type": "fill_blank",
         "sentence": "M_sto means 'city' in Czech. The missing letter has a háček.",
         "blank_count": 1,
-        "accepted_answers": ["ě"],
-        "explanation": "město — the ě after m softens it. mě sounds like 'mňe'. First-syllable stress: MĚ-sto."
+        "explanation": "město — the ě after m softens it. mě sounds like 'mňe'. First-syllable stress: MĚ-sto.",
+        "blank_answers": [
+          ["ě"]
+        ]
       },
       "answer_key": "ě",
       "grammar_rule_id": "GR-002",

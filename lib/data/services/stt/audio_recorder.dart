@@ -5,12 +5,14 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import '../../../domain/repositories/speech_ports.dart';
+
 /// Records audio to a temporary .wav file for Whisper transcription.
 ///
 /// Uses the `record` package which provides raw PCM/WAV output — unlike
 /// `speech_to_text` which only gives text, this gives us the actual audio
 /// bytes needed to send to Whisper.
-class AudioRecorderService {
+class AudioRecorderService implements AudioRecorderPort {
   AudioRecorderService({Logger? log}) : _log = log ?? Logger('AudioRecorderService');
 
   final Logger _log;
@@ -19,10 +21,12 @@ class AudioRecorderService {
   bool _isRecording = false;
   String? _currentPath;
 
+  @override
   bool get isRecording => _isRecording;
 
   /// Start recording to a temporary WAV file.
   /// Returns the file path where audio will be saved.
+  @override
   Future<String> start() async {
     if (_isRecording) {
       throw StateError('Already recording');
@@ -56,6 +60,7 @@ class AudioRecorderService {
   }
 
   /// Stop recording and return the path to the recorded WAV file.
+  @override
   Future<String> stop() async {
     if (!_isRecording) {
       throw StateError('Not recording');
@@ -84,6 +89,7 @@ class AudioRecorderService {
   }
 
   /// Clean up the last recording file.
+  @override
   Future<void> cleanup() async {
     if (_currentPath != null) {
       try {

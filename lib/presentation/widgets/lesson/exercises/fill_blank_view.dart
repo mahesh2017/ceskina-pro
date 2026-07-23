@@ -43,24 +43,22 @@ class _FillBlankViewState extends State<FillBlankView> {
 
   void _checkAnswer() {
     final data = widget.exercise.data;
-    final accepted = (data['accepted_answers'] as List<dynamic>).cast<String>();
+    final accepted = (data['blank_answers'] as List<dynamic>)
+        .map((answers) => (answers as List<dynamic>).cast<String>())
+        .toList();
 
-    // Collect per-blank answers in order; multi-blank joins with |
-    // to match the accepted_answers format.
     final blankIndices = _controllers.keys.toList()..sort();
-    final userParts =
-        blankIndices
-            .map((idx) => normalizeAnswer(_controllers[idx]!.text))
-            .toList();
+    final userParts = blankIndices
+        .map((idx) => normalizeAnswer(_controllers[idx]!.text))
+        .toList();
 
-    final correct = accepted.any((a) {
-      final parts = a.split('|').map(normalizeAnswer).toList();
-      if (parts.length != userParts.length) return false;
-      for (var i = 0; i < parts.length; i++) {
-        if (parts[i] != userParts[i]) return false;
-      }
-      return true;
-    });
+    final correct =
+        accepted.length == userParts.length &&
+        List.generate(
+          userParts.length,
+          (index) =>
+              accepted[index].map(normalizeAnswer).contains(userParts[index]),
+        ).every((matches) => matches);
 
     setState(() {
       answered = true;
@@ -78,8 +76,9 @@ class _FillBlankViewState extends State<FillBlankView> {
 
   /// First accepted answer, with | separators made readable.
   String _displayAnswer(Map<String, dynamic> data) {
-    final first = (data['accepted_answers'] as List<dynamic>).first as String;
-    return first.replaceAll('|', ', ');
+    return (data['blank_answers'] as List<dynamic>)
+        .map((answers) => (answers as List<dynamic>).first as String)
+        .join(', ');
   }
 
   @override

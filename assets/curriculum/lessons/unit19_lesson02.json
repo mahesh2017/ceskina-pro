@@ -33,8 +33,10 @@
         "type": "fill_blank",
         "sentence": "___ jsem celou knihu. (přečíst — I read the whole book, completed action)",
         "blank_count": 1,
-        "accepted_answers": ["Přečetl"],
-        "explanation": "'Přečetl jsem' = I read (and finished). 'Přečíst' is the perfective pair of 'číst'. Perfective expresses a completed action: 'přečetl jsem celou knihu' = I read the whole book (finished it). Imperfective 'četl jsem knihu' = I was reading a book (no completion)."
+        "explanation": "'Přečetl jsem' = I read (and finished). 'Přečíst' is the perfective pair of 'číst'. Perfective expresses a completed action: 'přečetl jsem celou knihu' = I read the whole book (finished it). Imperfective 'četl jsem knihu' = I was reading a book (no completion).",
+        "blank_answers": [
+          ["Přečetl"]
+        ]
       },
       "answer_key": "Přečetl",
       "grammar_rule_id": "GR-182",
@@ -88,8 +90,10 @@
         "type": "fill_blank",
         "sentence": "Zítra to ___ . (přečíst — I'll read it, complete action)",
         "blank_count": 1,
-        "accepted_answers": ["přečtu"],
-        "explanation": "'Přečtu' is the perfective present form of 'přečíst' and it expresses future: 'Zítra to přečtu.' = I'll read it tomorrow (and finish it). Pattern: perfective present = future. Compare: 'čtu' (imperfective present) = I am reading, 'přečtu' (perfective present) = I will read."
+        "explanation": "'Přečtu' is the perfective present form of 'přečíst' and it expresses future: 'Zítra to přečtu.' = I'll read it tomorrow (and finish it). Pattern: perfective present = future. Compare: 'čtu' (imperfective present) = I am reading, 'přečtu' (perfective present) = I will read.",
+        "blank_answers": [
+          ["přečtu"]
+        ]
       },
       "answer_key": "přečtu",
       "grammar_rule_id": "GR-183",
@@ -154,8 +158,10 @@
         "type": "fill_blank",
         "sentence": "___ jsem chleba, když jsem potkal kamaráda. (kupovat/koupit — I was buying bread when I met a friend)",
         "blank_count": 1,
-        "accepted_answers": ["Kupoval"],
-        "explanation": "Use imperfective 'kupoval' here because it describes an ongoing background action. The perfective 'koupil' would mean the buying was completed before meeting the friend. Typical pattern: imperfective (ongoing) + když + perfective (interruption)."
+        "explanation": "Use imperfective 'kupoval' here because it describes an ongoing background action. The perfective 'koupil' would mean the buying was completed before meeting the friend. Typical pattern: imperfective (ongoing) + když + perfective (interruption).",
+        "blank_answers": [
+          ["Kupoval"]
+        ]
       },
       "answer_key": "Kupoval",
       "grammar_rule_id": "GR-182",
@@ -208,13 +214,27 @@
         "type": "dialogue",
         "scenario": "Doma — At home",
         "lines": [
-          {"speaker": "person_a", "text": "Co jsi dělal včera večer?"},
-          {"speaker": "person_b", "text": "Psal jsem úkol. Ale už jsem ho napsal."},
-          {"speaker": "person_a", "text": "A přečetl jsi tu knihu?"},
-          {"speaker": "person_b", "text": "Ještě ne. Přečtu ji zítra."}
+          {
+            "speaker": "person_a",
+            "text": "Co jsi dělal včera večer?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "A přečetl jsi tu knihu?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ještě ne. Přečtu ji zítra."
+          }
         ],
-        "accepted_answers": ["Psal jsem úkol. Ale už jsem ho napsal.|Psal jsem úkol, ale už jsem ho napsal.|Psal jsem úkol. Už jsem ho napsal."],
-        "explanation": "Person B uses both aspects: 'Psal jsem úkol' (imperfective — was writing, process) then 'už jsem ho napsal' (perfective — finished it). Then 'Přečtu ji zítra' (perfective present = future: I'll read it). Key pattern: process (impf.) → completion (pf.); future intention (pf. present)."
+        "explanation": "Person B uses both aspects: 'Psal jsem úkol' (imperfective — was writing, process) then 'už jsem ho napsal' (perfective — finished it). Then 'Přečtu ji zítra' (perfective present = future: I'll read it). Key pattern: process (impf.) → completion (pf.); future intention (pf. present).",
+        "blank_answers": [
+          ["Psal jsem úkol. Ale už jsem ho napsal.", "Psal jsem úkol, ale už jsem ho napsal.", "Psal jsem úkol. Už jsem ho napsal."]
+        ]
       },
       "answer_key": "Psal jsem úkol. Ale už jsem ho napsal.",
       "grammar_rule_id": "GR-183",

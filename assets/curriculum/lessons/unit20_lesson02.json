@@ -51,8 +51,10 @@
         "type": "fill_blank",
         "sentence": "___ bych kávu? (moci — could I have a coffee?)",
         "blank_count": 1,
-        "accepted_answers": ["Mohl", "Mohla"],
-        "explanation": "'Mohl bych kávu?' = Could I have a coffee? (male speaker). 'Mohla bych kávu?' (female speaker). The past participle of 'moci' is 'mohl' (masc) / 'mohla' (fem). 'Mohl bych' = I could. This is an extremely common polite phrase."
+        "explanation": "'Mohl bych kávu?' = Could I have a coffee? (male speaker). 'Mohla bych kávu?' (female speaker). The past participle of 'moci' is 'mohl' (masc) / 'mohla' (fem). 'Mohl bych' = I could. This is an extremely common polite phrase.",
+        "blank_answers": [
+          ["Mohl", "Mohla"]
+        ]
       },
       "answer_key": "Mohl",
       "grammar_rule_id": "GR-192",
@@ -100,8 +102,10 @@
         "type": "fill_blank",
         "sentence": "___ bys jít do kina? (chtít — would you like)",
         "blank_count": 1,
-        "accepted_answers": ["Chtěl", "Chtěla"],
-        "explanation": "'Chtěl bys jít do kina?' (to a male) / 'Chtěla bys jít do kina?' (to a female). The past participle matches the subject's gender: 'chtěl' (masc), 'chtěla' (fem). 'Bys' is the auxiliary for 'ty'. 'Jít' = to go (on foot/by walking)."
+        "explanation": "'Chtěl bys jít do kina?' (to a male) / 'Chtěla bys jít do kina?' (to a female). The past participle matches the subject's gender: 'chtěl' (masc), 'chtěla' (fem). 'Bys' is the auxiliary for 'ty'. 'Jít' = to go (on foot/by walking).",
+        "blank_answers": [
+          ["Chtěl", "Chtěla"]
+        ]
       },
       "answer_key": "Chtěl",
       "grammar_rule_id": "GR-192",
@@ -133,8 +137,10 @@
         "type": "fill_blank",
         "sentence": "___ bych jít domů. (mít — I should go home, male)",
         "blank_count": 1,
-        "accepted_answers": ["Měl"],
-        "explanation": "'Měl bych jít domů.' = I should go home (masc). 'Měla bych jít domů.' (fem). 'Měl bych / měla bych' + infinitive = I should / I ought to. This is the standard way to express obligation or advice softly. Compare: 'Musím jít domů.' = I must go home (strong obligation)."
+        "explanation": "'Měl bych jít domů.' = I should go home (masc). 'Měla bych jít domů.' (fem). 'Měl bych / měla bych' + infinitive = I should / I ought to. This is the standard way to express obligation or advice softly. Compare: 'Musím jít domů.' = I must go home (strong obligation).",
+        "blank_answers": [
+          ["Měl"]
+        ]
       },
       "answer_key": "Měl",
       "grammar_rule_id": "GR-192",
@@ -182,8 +188,10 @@
         "type": "fill_blank",
         "sentence": "Co ___ dělal na mém místě? (ty — what would you do?)",
         "blank_count": 1,
-        "accepted_answers": ["bys"],
-        "explanation": "'Co bys dělal na mém místě?' (to a male) / 'Co bys dělala na mém místě?' (to a female) = What would you do in my place? 'Bys' is the conditional auxiliary for 'ty'. 'Na mém místě' = in my place (locative). This is a common hypothetical question pattern."
+        "explanation": "'Co bys dělal na mém místě?' (to a male) / 'Co bys dělala na mém místě?' (to a female) = What would you do in my place? 'Bys' is the conditional auxiliary for 'ty'. 'Na mém místě' = in my place (locative). This is a common hypothetical question pattern.",
+        "blank_answers": [
+          ["bys"]
+        ]
       },
       "answer_key": "bys",
       "grammar_rule_id": "GR-192",
@@ -198,13 +206,28 @@
         "type": "dialogue",
         "scenario": "V kavárně — At a café",
         "lines": [
-          {"speaker": "číšník", "text": "Dobrý den. Co si dáte?"},
-          {"speaker": "host", "text": "___ (I would like a coffee, please.)"},
-          {"speaker": "číšník", "text": "S mlékem, nebo bez mléka?"},
-          {"speaker": "host", "text": "___ (I would have it with milk. / With milk, please.)"}
+          {
+            "speaker": "číšník",
+            "text": "Dobrý den. Co si dáte?"
+          },
+          {
+            "speaker": "host",
+            "text": "___ (I would like a coffee, please.)"
+          },
+          {
+            "speaker": "číšník",
+            "text": "S mlékem, nebo bez mléka?"
+          },
+          {
+            "speaker": "host",
+            "text": "___ (I would have it with milk. / With milk, please.)"
+          }
         ],
-        "accepted_answers": ["Chtěl bych kávu, prosím|S mlékem, prosím", "Chtěla bych kávu, prosím|S mlékem, prosím", "Dal bych si kávu, prosím|S mlékem, prosím", "Dala bych si kávu, prosím|S mlékem, prosím"],
-        "explanation": "'Co si dáte?' = What will you have? (formal 'vy'). Polite response uses conditional: 'Chtěl/Chtěla bych...' or 'Dal/Dala bych si...'. 'S mlékem' = with milk, 'bez mléka' = without milk. 'Prosím' = please — always polite to add it when ordering."
+        "explanation": "'Co si dáte?' = What will you have? (formal 'vy'). Polite response uses conditional: 'Chtěl/Chtěla bych...' or 'Dal/Dala bych si...'. 'S mlékem' = with milk, 'bez mléka' = without milk. 'Prosím' = please — always polite to add it when ordering.",
+        "blank_answers": [
+          ["Chtěl bych kávu, prosím", "Chtěla bych kávu, prosím", "Dal bych si kávu, prosím", "Dala bych si kávu, prosím"],
+          ["S mlékem, prosím"]
+        ]
       },
       "answer_key": "Chtěl bych kávu, prosím|S mlékem, prosím",
       "grammar_rule_id": "GR-192",

@@ -168,10 +168,16 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide.none,
             ),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 18,
+              vertical: 16,
+            ),
           ),
-          style: TextStyle(fontSize: 17, color: t.ink, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontSize: 17,
+            color: t.ink,
+            fontWeight: FontWeight.w600,
+          ),
           onSubmitted: (_) => _next(),
         ),
         const SizedBox(height: 12),
@@ -222,7 +228,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ('📚', 'Interactive lessons with spaced repetition'),
       ('🎤', 'Pronunciation practice with speech recognition'),
       ('💬', 'AI conversation tutor with role-play scenarios'),
-      ('📝', 'Mock CCE exams with AI evaluation'),
+      ('📝', 'Informal exam-style practice with guided feedback'),
       ('🔊', 'Czech text-to-speech on every word'),
     ];
     return Column(
@@ -409,10 +415,7 @@ class _ChoiceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(
-                  subtitle,
-                  style: TextStyle(fontSize: 14, color: t.muted),
-                ),
+                Text(subtitle, style: TextStyle(fontSize: 14, color: t.muted)),
               ],
             ),
           ),

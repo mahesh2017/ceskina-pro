@@ -87,8 +87,8 @@ select public.has_table(
 );
 
 select public.ok(
-  not has_table_privilege('anon', 'private.ai_burst_usage', 'SELECT')
-  and not has_table_privilege('authenticated', 'private.ai_burst_usage', 'SELECT'),
+  not has_schema_privilege('anon', 'private', 'USAGE')
+  and not has_schema_privilege('authenticated', 'private', 'USAGE'),
   'client roles cannot inspect AI burst counters'
 );
 
@@ -110,6 +110,8 @@ select public.ok(
   ),
   'AI burst function is service-role only'
 );
+
+set local role service_role;
 
 select public.is(
   public.consume_ai_burst_quota(

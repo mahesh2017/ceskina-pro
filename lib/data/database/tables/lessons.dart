@@ -9,8 +9,10 @@ class Lessons extends Table {
   TextColumn get title => text()();
   TextColumn get description => text()();
   IntColumn get durationMinutes => integer().withDefault(const Constant(10))();
-  TextColumn get lessonType => text().withDefault(const Constant('introduction'))();
+  TextColumn get lessonType =>
+      text().withDefault(const Constant('introduction'))();
   BoolColumn get isReview => boolean().withDefault(const Constant(false))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
 
   @override
   Set<Column> get primaryKey => {id};

@@ -148,22 +148,12 @@
       "prompt": "Arrange these words into a sentence",
       "data": {
         "type": "word_order",
-        "words": [
-          "Řeka",
-          "teče",
-          "přes",
-          "most"
-        ],
-        "correct_order": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "explanation": "Standard SVO (Subject-Verb-Object) order in Czech. 'přes' is a preposition meaning 'over/across'.",
-        "translation_en": "The river flows over the bridge"
+        "words": ["Řeka", "teče", "pod", "mostem."],
+        "correct_order": [0, 1, 2, 3],
+        "explanation": "'Řeka teče pod mostem.' = The river flows under the bridge. The location preposition 'pod' takes the instrumental here: most → mostem.",
+        "translation_en": "The river flows under the bridge."
       },
-      "answer_key": "0,1,2,3",
+      "answer_key": "Řeka teče pod mostem.",
       "xp_reward": 10
     },
     {

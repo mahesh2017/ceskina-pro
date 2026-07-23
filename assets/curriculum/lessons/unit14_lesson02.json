@@ -39,8 +39,10 @@
         "type": "fill_blank",
         "sentence": "Já ___ do školy pěšky.",
         "blank_count": 1,
-        "accepted_answers": ["jdu"],
-        "explanation": "jít → jdu (I go/walk). pěšky = on foot. Use jít because walking is involved."
+        "explanation": "jít → jdu (I go/walk). pěšky = on foot. Use jít because walking is involved.",
+        "blank_answers": [
+          ["jdu"]
+        ]
       },
       "answer_key": "jdu",
       "grammar_rule_id": "GR-130",
@@ -55,8 +57,10 @@
         "type": "fill_blank",
         "sentence": "On ___ do Prahy vlakem.",
         "blank_count": 1,
-        "accepted_answers": ["jede"],
-        "explanation": "jet → jede (he goes by vehicle). vlakem = by train (instrumental). do Prahy = to Prague (genitive after 'do')."
+        "explanation": "jet → jede (he goes by vehicle). vlakem = by train (instrumental). do Prahy = to Prague (genitive after 'do').",
+        "blank_answers": [
+          ["jede"]
+        ]
       },
       "answer_key": "jede",
       "grammar_rule_id": "GR-130",
@@ -126,8 +130,11 @@
         "type": "fill_blank",
         "sentence": "Jdu ___ školy. (to school — motion) × Jsem ___ škole. (at school — location)",
         "blank_count": 2,
-        "accepted_answers": ["do", "ve"],
-        "explanation": "do + genitive = to (motion toward). v/ve + locative = in/at (location). 'Jdu do školy.' = I'm going to school. 'Jsem ve škole.' = I'm at school."
+        "explanation": "do + genitive = to (motion toward). v/ve + locative = in/at (location). 'Jdu do školy.' = I'm going to school. 'Jsem ve škole.' = I'm at school.",
+        "blank_answers": [
+          ["do"],
+          ["ve"]
+        ]
       },
       "answer_key": "do ve",
       "grammar_rule_id": "GR-133",
@@ -190,13 +197,27 @@
         "type": "dialogue",
         "scenario": "Na ulici — On the street",
         "lines": [
-          {"speaker": "person_a", "text": "Promiňte, jak se dostanu na nádraží?"},
-          {"speaker": "person_b", "text": "Jděte rovně a pak doprava. Nádraží je naproti parku."},
-          {"speaker": "person_a", "text": "Je to daleko?"},
-          {"speaker": "person_b", "text": "Ne, je to blízko. Asi pět minut pěšky."}
+          {
+            "speaker": "person_a",
+            "text": "Promiňte, jak se dostanu na nádraží?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Je to daleko?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ne, je to blízko. Asi pět minut pěšky."
+          }
         ],
-        "accepted_answers": ["Jděte rovně a pak doprava. Nádraží je naproti parku.|Rovně a doprava.|Jděte rovně, pak doprava."],
-        "explanation": "'Jak se dostanu na nádraží?' = 'How do I get to the station?' The response gives directions: go straight, then right. 'Asi pět minut pěšky' = about five minutes on foot."
+        "explanation": "'Jak se dostanu na nádraží?' = 'How do I get to the station?' The response gives directions: go straight, then right. 'Asi pět minut pěšky' = about five minutes on foot.",
+        "blank_answers": [
+          ["Jděte rovně a pak doprava. Nádraží je naproti parku.", "Rovně a doprava.", "Jděte rovně, pak doprava."]
+        ]
       },
       "answer_key": "Jděte rovně a pak doprava. Nádraží je naproti parku.",
       "grammar_rule_id": "GR-132",

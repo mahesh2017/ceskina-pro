@@ -95,8 +95,10 @@
         "type": "fill_blank",
         "sentence": "Spí ___ . (v + ložnice — locative)",
         "blank_count": 1,
-        "accepted_answers": ["v ložnici"],
-        "explanation": "'V' + locative: ložnice → ložnici. 'Spí v ložnici.' = She/he sleeps in the bedroom. Feminine nouns in -ce or -ně change to -ci or -ni in the locative: ložnice → ložnici, koupelna → koupelně."
+        "explanation": "'V' + locative: ložnice → ložnici. 'Spí v ložnici.' = She/he sleeps in the bedroom. Feminine nouns in -ce or -ně change to -ci or -ni in the locative: ložnice → ložnici, koupelna → koupelně.",
+        "blank_answers": [
+          ["v ložnici"]
+        ]
       },
       "answer_key": "v ložnici",
       "grammar_rule_id": "GR-251",
@@ -111,8 +113,10 @@
         "type": "fill_blank",
         "sentence": "Bydlíme v ___ . (byt — locative)",
         "blank_count": 1,
-        "accepted_answers": ["bytě"],
-        "explanation": "'V' + locative: byt → bytě. 'Bydlíme v bytě.' = We live in an apartment. Masculine inanimate nouns ending in a consonant add -ě in the locative: byt → bytě, dům → domě."
+        "explanation": "'V' + locative: byt → bytě. 'Bydlíme v bytě.' = We live in an apartment. Masculine inanimate nouns ending in a consonant add -ě in the locative: byt → bytě, dům → domě.",
+        "blank_answers": [
+          ["bytě"]
+        ]
       },
       "answer_key": "bytě",
       "grammar_rule_id": "GR-251",
@@ -160,7 +164,8 @@
         "sentence_with_error": "Bydlím v byt.",
         "hint": "Think about which case 'v' requires for locations.",
         "accepted_answers": ["Bydlím v bytě.", "Bydlím v bytě."],
-        "explanation": "'V' + locative: byt → bytě. 'Bydlím v bytě.' = I live in an apartment. The error was using the nominative 'byt' instead of the locative 'bytě'. The locative of masculine inanimate nouns ending in a consonant adds -ě: byt → bytě, dům → domě."
+        "explanation": "'V' + locative: byt → bytě. 'Bydlím v bytě.' = I live in an apartment. The error was using the nominative 'byt' instead of the locative 'bytě'. The locative of masculine inanimate nouns ending in a consonant adds -ě: byt → bytě, dům → domě.",
+        "correct_sentence_cz": "Bydlím v bytě."
       },
       "answer_key": "Bydlím v bytě.",
       "grammar_rule_id": "GR-251",
@@ -173,9 +178,9 @@
       "prompt": "Arrange the words to form: 'I have a big apartment in Prague.'",
       "data": {
         "type": "word_order",
-        "scrambled": ["v", "byty", "Praze", "Mám", "velký"],
-        "correct_order": ["Mám", "velký", "byt", "v", "Praze"],
-        "explanation": "'Mám velký byt v Praze.' = I have a big apartment in Prague. 'V' + locative: Praha → Praze. 'Velký byt' = big apartment (masculine inanimate adjective + noun). Note: the scrambled word 'byty' should be 'byt' — singular accusative after 'mít'."
+        "correct_order": [3, 4, 1, 0, 2],
+        "explanation": "'Mám velký byt v Praze.' = I have a big apartment in Prague. 'V' + locative: Praha → Praze. 'Velký byt' is masculine inanimate in the accusative.",
+        "words": ["v", "byt", "Praze", "Mám", "velký"]
       },
       "answer_key": "Mám velký byt v Praze.",
       "grammar_rule_id": "GR-251",

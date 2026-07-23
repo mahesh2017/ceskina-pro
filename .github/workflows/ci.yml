@@ -23,4 +23,124 @@ jobs:
         run: flutter analyze --fatal-infos
 
       - name: Run tests
-        run: flutter test
+        run: flutter test --coverage
+
+      - name: Enforce changed-line coverage
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          python -m pip install diff-cover
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          diff-cover coverage/lcov.info \
+            --compare-branch="origin/${{ github.base_ref }}" \
+            --fail-under=80
+
+      - name: Capture dependency evidence
+        run: |
+          mkdir -p build/quality
+          flutter pub deps --json > build/quality/dependency-graph.json
+          flutter pub outdated > build/quality/outdated-dependencies.txt || true
+          flutter test \
+            test/data/curriculum_contract_validator_test.dart \
+            --reporter json \
+            > build/quality/content-publication-tests.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: flutter-quality-evidence
+          path: |
+            coverage/lcov.info
+            build/quality/
+
+  dependency-review:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          license-check: true
+          deny-licenses: GPL-3.0, AGPL-3.0
+
+  edge-functions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Format, lint, and type-check Edge Functions
+        run: |
+          deno fmt --check supabase/functions
+          deno lint supabase/functions
+          deno check \
+            supabase/functions/account-data/index.ts \
+            supabase/functions/deepseek-proxy/index.ts \
+            supabase/functions/whisper-proxy/index.ts
+
+      - name: Run Edge Function policy tests
+        run: deno test --allow-env supabase/functions
+
+      - name: Smoke deployed JWT gates
+        if: ${{ vars.SUPABASE_PROJECT_REF != '' }}
+        run: tool/smoke_edge_functions.sh "${{ vars.SUPABASE_PROJECT_REF }}"
+
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start local Supabase and apply every migration
+        run: supabase start
+
+      - name: Prove a clean database reset
+        run: supabase db reset
+
+      - name: Run pgTAP security, RLS, sync, and release tests
+        run: supabase test db
+
+      - name: Lint the resulting database
+        run: supabase db lint --level warning
+
+  build-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: apk
+          - os: macos-latest
+            target: ios
+          - os: macos-latest
+            target: macos
+          - os: windows-latest
+            target: windows
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build ${{ matrix.target }}
+        shell: bash
+        run: |
+          if [ "${{ matrix.target }}" = "ios" ]; then
+            flutter build ios --debug --no-codesign
+          else
+            flutter build "${{ matrix.target }}" --debug
+          fi

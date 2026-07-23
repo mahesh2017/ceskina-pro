@@ -33,8 +33,11 @@
         "type": "fill_blank",
         "sentence": "Ráno ___ v sedm hodin, pak se sprchuju a ___.",
         "blank_count": 2,
-        "accepted_answers": ["vstávám, snídám", "vstávám, posnídám"],
-        "explanation": "'Ráno vstávám v sedm hodin' (I get up at seven), 'pak se sprchuju' (then I shower), 'a snídám' (and I eat breakfast)."
+        "explanation": "'Ráno vstávám v sedm hodin' (I get up at seven), 'pak se sprchuju' (then I shower), 'a snídám' (and I eat breakfast).",
+        "blank_answers": [
+          ["vstávám"],
+          ["snídám", "posnídám"]
+        ]
       },
       "answer_key": "vstávám, snídám",
       "grammar_rule_id": "GR-092",
@@ -65,8 +68,12 @@
         "type": "fill_blank",
         "sentence": "___ pracuju v kanceláři. ___ večeřím doma s rodinou. ___ jdu spát.",
         "blank_count": 3,
-        "accepted_answers": ["dopoledne, večer, v noci", "odpoledne, večer, v noci"],
-        "explanation": "'Dopoledne' or 'odpoledne' (during the day) I work, 'večer' (in the evening) I eat dinner, 'v noci' (at night) I go to sleep."
+        "explanation": "'Dopoledne' or 'odpoledne' (during the day) I work, 'večer' (in the evening) I eat dinner, 'v noci' (at night) I go to sleep.",
+        "blank_answers": [
+          ["dopoledne", "odpoledne"],
+          ["večer"],
+          ["v noci"]
+        ]
       },
       "answer_key": "odpoledne, večer, v noci",
       "grammar_rule_id": "GR-093",
@@ -79,8 +86,8 @@
       "prompt": "Arrange words to form: 'In the evening I return home and have dinner.'",
       "data": {
         "type": "word_order",
-        "words": ["domů", "a", "večer", "Večer", "vracím", "večeřím", "se", "—", "In", "the", "evening", "I", "return", "home", "and", "have", "dinner"],
-        "correct_order": [3, 5, 4, 0, 1, 6],
+        "words": ["domů", "a", "večer", "Večer", "vracím", "večeřím", "se"],
+        "correct_order": [3, 6, 4, 0, 1, 5],
         "explanation": "Czech: 'Večer se vracím domů a večeřím.' — 'Večer' (in the evening), 'se vracím' (I return), 'domů' (home), 'a večeřím' (and I have dinner)."
       },
       "answer_key": "Večer se vracím domů a večeřím",
@@ -113,11 +120,19 @@
         "type": "dialogue",
         "scenario": "Two friends talking about their morning routines",
         "lines": [
-          {"speaker": "A", "text": "Kdy vstáváš?"},
-          {"speaker": "B", "text": "___ (I get up at seven)."}
+          {
+            "speaker": "A",
+            "text": "Kdy vstáváš?"
+          },
+          {
+            "speaker": "B",
+            "text": "___ (I get up at seven)."
+          }
         ],
-        "accepted_answers": ["vstávám v sedm", "vstávám v sedm hodin", "v sedm hodin", "v sedm"],
-        "explanation": "'Kdy vstáváš?' means 'When do you get up?'. Answer with 'Vstávám v sedm (hodin)' — 'I get up at seven (o'clock)'."
+        "explanation": "'Kdy vstáváš?' means 'When do you get up?'. Answer with 'Vstávám v sedm (hodin)' — 'I get up at seven (o'clock)'.",
+        "blank_answers": [
+          ["vstávám v sedm", "vstávám v sedm hodin", "v sedm hodin", "v sedm"]
+        ]
       },
       "answer_key": "Vstávám v sedm hodin",
       "grammar_rule_id": "GR-092",
@@ -148,8 +163,11 @@
         "type": "fill_blank",
         "sentence": "Večer se ___ a pak se ___.",
         "blank_count": 2,
-        "accepted_answers": ["sprchuju, oblékám", "myju, oblékám", "sprchuju, převlékám"],
-        "explanation": "Evening routine: 'Večer se sprchuju' (I shower in the evening) 'a pak se oblékám' (and then I get dressed). Both use reflexive 'se'."
+        "explanation": "Evening routine: 'Večer se sprchuju' (I shower in the evening) 'a pak se oblékám' (and then I get dressed). Both use reflexive 'se'.",
+        "blank_answers": [
+          ["sprchuju", "myju"],
+          ["oblékám", "převlékám"]
+        ]
       },
       "answer_key": "sprchuju, oblékám",
       "grammar_rule_id": "GR-092",
@@ -197,11 +215,19 @@
         "type": "dialogue",
         "scenario": "Coworkers discussing their day",
         "lines": [
-          {"speaker": "A", "text": "Co děláš odpoledne?"},
-          {"speaker": "B", "text": "___ (I return home and relax)."}
+          {
+            "speaker": "A",
+            "text": "Co děláš odpoledne?"
+          },
+          {
+            "speaker": "B",
+            "text": "___ (I return home and relax)."
+          }
         ],
-        "accepted_answers": ["vracím se domů a odpočívám", "vracím se domů a relaxuju", "jdu domů a odpočívám", "vracím se domů a odpočívám."],
-        "explanation": "'Co děláš odpoledne?' means 'What do you do in the afternoon?'. Answer: 'Vracím se domů a odpočívám' — 'I return home and relax'."
+        "explanation": "'Co děláš odpoledne?' means 'What do you do in the afternoon?'. Answer: 'Vracím se domů a odpočívám' — 'I return home and relax'.",
+        "blank_answers": [
+          ["vracím se domů a odpočívám", "vracím se domů a relaxuju", "jdu domů a odpočívám", "vracím se domů a odpočívám."]
+        ]
       },
       "answer_key": "Vracím se domů a odpočívám",
       "grammar_rule_id": "GR-092",

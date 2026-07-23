@@ -50,8 +50,10 @@
         "type": "fill_blank",
         "sentence": "Učím se česky, ___ mohl mluvit s kamarády.",
         "blank_count": 1,
-        "accepted_answers": ["abych"],
-        "explanation": "'Učím se česky, abych mohl mluvit s kamarády.' = I'm learning Czech so that I can speak with friends. 'Abych' is the 1st person singular form. The verb after 'abych' is 'mohl' (past participle of 'moci/to be able', masc.) followed by the infinitive 'mluvit'. Aby + past participle + (optionally) infinitive."
+        "explanation": "'Učím se česky, abych mohl mluvit s kamarády.' = I'm learning Czech so that I can speak with friends. 'Abych' is the 1st person singular form. The verb after 'abych' is 'mohl' (past participle of 'moci/to be able', masc.) followed by the infinitive 'mluvit'. Aby + past participle + (optionally) infinitive.",
+        "blank_answers": [
+          ["abych"]
+        ]
       },
       "answer_key": "abych",
       "grammar_rule_id": "GR-212",
@@ -66,8 +68,11 @@
         "type": "fill_blank",
         "sentence": "Řekl jsem mu to, ___ to ___. (on — vědět)",
         "blank_count": 2,
-        "accepted_answers": ["aby|věděl", "aby, věděl"],
-        "explanation": "'Řekl jsem mu to, aby to věděl.' = I told him so that he would know. 'Aby' = 3rd person singular (he). 'Věděl' = past participle of 'vědět' (masculine, agreeing with 'on'). The aby-clause uses past-tense forms regardless of when the action happens — this is a grammatical requirement, not a time reference."
+        "explanation": "'Řekl jsem mu to, aby to věděl.' = I told him so that he would know. 'Aby' = 3rd person singular (he). 'Věděl' = past participle of 'vědět' (masculine, agreeing with 'on'). The aby-clause uses past-tense forms regardless of when the action happens — this is a grammatical requirement, not a time reference.",
+        "blank_answers": [
+          ["aby"],
+          ["věděl"]
+        ]
       },
       "answer_key": "aby, věděl",
       "grammar_rule_id": "GR-212",
@@ -104,8 +109,10 @@
         "type": "fill_blank",
         "sentence": "___ měl víc peněz, koupil bych si nové auto.",
         "blank_count": 1,
-        "accepted_answers": ["Kdybych", "kdybych"],
-        "explanation": "'Kdybych měl víc peněz, koupil bych si nové auto.' = If I had more money, I would buy a new car. Kdyby conjugation: kdybych (I), kdybys (you sg.), kdyby (he/she/it), kdybychom (we), kdybyste (you pl.), kdyby (they). The result clause uses conditional 'koupil bych' (I would buy). Both verbs use past participle + gender agreement."
+        "explanation": "'Kdybych měl víc peněz, koupil bych si nové auto.' = If I had more money, I would buy a new car. Kdyby conjugation: kdybych (I), kdybys (you sg.), kdyby (he/she/it), kdybychom (we), kdybyste (you pl.), kdyby (they). The result clause uses conditional 'koupil bych' (I would buy). Both verbs use past participle + gender agreement.",
+        "blank_answers": [
+          ["Kdybych", "kdybych"]
+        ]
       },
       "answer_key": "Kdybych",
       "grammar_rule_id": "GR-213",
@@ -120,8 +127,11 @@
         "type": "fill_blank",
         "sentence": "___ ___ pravdu, byl by naštvaný. (on — vědět)",
         "blank_count": 2,
-        "accepted_answers": ["Kdyby|věděl", "kdyby|věděl", "Kdyby, věděl", "kdyby, věděl"],
-        "explanation": "'Kdyby věděl pravdu, byl by naštvaný.' = If he knew the truth, he would be angry. Structure: kdyby + past participle (věděl) → main clause: past participle (byl) + conditional particle (by). Both parts use the -l participle! This is a classic contrary-to-fact conditional."
+        "explanation": "'Kdyby věděl pravdu, byl by naštvaný.' = If he knew the truth, he would be angry. Structure: kdyby + past participle (věděl) → main clause: past participle (byl) + conditional particle (by). Both parts use the -l participle! This is a classic contrary-to-fact conditional.",
+        "blank_answers": [
+          ["Kdyby", "kdyby"],
+          ["věděl"]
+        ]
       },
       "answer_key": "Kdyby věděl",
       "grammar_rule_id": "GR-213",
@@ -176,9 +186,9 @@
       "prompt": "Arrange the words: 'If you (sg.) helped me, I would finish it today.'",
       "data": {
         "type": "word_order",
-        "scrambled": ["mi", "bych", "Kdybys", "dnes.", "to", "dokončil", "pomohl,"],
-        "correct_order": ["Kdybys", "mi", "pomohl,", "dokončil", "bych", "to", "dnes."],
-        "explanation": "'Kdybys mi pomohl, dokončil bych to dnes.' = If you helped me, I would finish it today. Two-part conditional: (1) Kdybys + past participle 'pomohl' (you helped), (2) past participle 'dokončil' + conditional 'bych' (I would finish). Note the subject shift — the helper is 'ty' (you) but the finisher is 'já' (I), so two different conditional forms: kdybys and bych."
+        "correct_order": [2, 0, 6, 5, 1, 4, 3],
+        "explanation": "'Kdybys mi pomohl, dokončil bych to dnes.' = If you helped me, I would finish it today. Two-part conditional: (1) Kdybys + past participle 'pomohl' (you helped), (2) past participle 'dokončil' + conditional 'bych' (I would finish). Note the subject shift — the helper is 'ty' (you) but the finisher is 'já' (I), so two different conditional forms: kdybys and bych.",
+        "words": ["mi", "bych", "Kdybys", "dnes.", "to", "dokončil", "pomohl,"]
       },
       "answer_key": "Kdybys mi pomohl, dokončil bych to dnes.",
       "grammar_rule_id": "GR-213",
@@ -193,8 +203,11 @@
         "type": "fill_blank",
         "sentence": "Říkám ti to, ___ to ___ . (ty — chápat)",
         "blank_count": 2,
-        "accepted_answers": ["abys|chápal", "abys, chápal", "abys chápal"],
-        "explanation": "'Říkám ti to, abys to chápal.' = I'm telling you this so that you understand. 'Abys' = 2nd person singular (you), 'chápal' = past participle of 'chápat' (masc.). This is a purpose clause — we want the person to understand. Compare with kdyby: 'Kdybys to chápal, neptal by ses.' = If you understood it, you wouldn't ask."
+        "explanation": "'Říkám ti to, abys to chápal.' = I'm telling you this so that you understand. 'Abys' = 2nd person singular (you), 'chápal' = past participle of 'chápat' (masc.). This is a purpose clause — we want the person to understand. Compare with kdyby: 'Kdybys to chápal, neptal by ses.' = If you understood it, you wouldn't ask.",
+        "blank_answers": [
+          ["abys"],
+          ["chápal"]
+        ]
       },
       "answer_key": "abys, chápal",
       "grammar_rule_id": "GR-212",

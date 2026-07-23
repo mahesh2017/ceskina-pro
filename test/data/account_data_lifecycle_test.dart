@@ -42,6 +42,10 @@ void main() {
 
     expect(export['format_version'], 1);
     expect((export['lesson_progress'] as List), hasLength(1));
+    expect(export['lesson_attempts'], isA<List>());
+    expect(export['reward_ledger'], isA<List>());
+    expect(export['exercise_attempts'], isA<List>());
+    expect(export['review_attempts'], isA<List>());
     expect((export['earned_badges'] as List), hasLength(1));
     expect((export['user_progress'] as List), hasLength(1));
     expect((export['gamification_state'] as List), hasLength(1));
@@ -75,10 +79,19 @@ void main() {
     await db.clearLearnerData();
 
     expect(await db.select(db.userProgress).get(), isEmpty);
+    expect(await db.select(db.lessonAttempts).get(), isEmpty);
+    expect(await db.select(db.rewardLedger).get(), isEmpty);
+    expect(await db.select(db.exerciseAttempts).get(), isEmpty);
+    expect(await db.select(db.reviewAttempts).get(), isEmpty);
     expect(await db.select(db.earnedBadges).get(), isEmpty);
     expect(await db.select(db.gamificationStateTable).get(), isEmpty);
     final cards = await db.select(db.flashcards).get();
     expect(cards.map((card) => card.id), [1]);
+    final resetReviews = await db.select(db.srsCards).get();
+    expect(resetReviews, hasLength(1));
+    expect(resetReviews.single.flashcardId, 1);
+    expect(resetReviews.single.state, 'newCard');
+    expect(resetReviews.single.reps, 0);
     expect(await db.select(db.units).get(), hasLength(1));
   });
 }

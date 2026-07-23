@@ -38,8 +38,10 @@
         "type": "fill_blank",
         "sentence": "Auto ___ je nové.",
         "blank_count": 1,
-        "accepted_answers": ["otce"],
-        "explanation": "'Auto otce' = father's car. Otec (father, masculine animate) → otce (genitive singular). The possessor follows the thing possessed and takes the genitive ending."
+        "explanation": "'Auto otce' = father's car. Otec (father, masculine animate) → otce (genitive singular). The possessor follows the thing possessed and takes the genitive ending.",
+        "blank_answers": [
+          ["otce"]
+        ]
       },
       "answer_key": "otce",
       "grammar_rule_id": "GR-150",
@@ -92,8 +94,10 @@
         "type": "fill_blank",
         "sentence": "Jsem ___ Prahy.",
         "blank_count": 1,
-        "accepted_answers": ["z"],
-        "explanation": "'Jsem z Prahy' = I am from Prague. 'Z' (from) requires the genitive: Praha → Prahy (genitive singular feminine). Use 'ze' instead of 'z' before words starting with z-, s-, ž-, š-, or certain consonant clusters."
+        "explanation": "'Jsem z Prahy' = I am from Prague. 'Z' (from) requires the genitive: Praha → Prahy (genitive singular feminine). Use 'ze' instead of 'z' before words starting with z-, s-, ž-, š-, or certain consonant clusters.",
+        "blank_answers": [
+          ["z"]
+        ]
       },
       "answer_key": "z",
       "grammar_rule_id": "GR-151",
@@ -146,8 +150,10 @@
         "type": "fill_blank",
         "sentence": "Dárek ___ matky.",
         "blank_count": 1,
-        "accepted_answers": ["od"],
-        "explanation": "'Dárek od matky' = a gift from mother. 'Od' (from — indicating origin/source from a person) requires the genitive: matka → matky (genitive singular feminine). Use 'od' when something comes from a person; use 'z' when from a place."
+        "explanation": "'Dárek od matky' = a gift from mother. 'Od' (from — indicating origin/source from a person) requires the genitive: matka → matky (genitive singular feminine). Use 'od' when something comes from a person; use 'z' when from a place.",
+        "blank_answers": [
+          ["od"]
+        ]
       },
       "answer_key": "od",
       "grammar_rule_id": "GR-151",
@@ -160,20 +166,7 @@
       "prompt": "Arrange the words to form a correct sentence: 'I go to school every day.'",
       "data": {
         "type": "word_order",
-        "words": [
-          "Jdu",
-          "do",
-          "školy",
-          "každý",
-          "den",
-          "—",
-          "I",
-          "go",
-          "to",
-          "school",
-          "every",
-          "day"
-        ],
+        "words": ["Jdu", "do", "školy", "každý", "den"],
         "correct_order": [0, 1, 2, 3, 4],
         "explanation": "'Jdu do školy každý den.' = I go to school every day. Czech word order: verb (Jdu) + prepositional phrase (do školy) + time expression (každý den). 'Do' + genitive: škola → školy."
       },
@@ -223,13 +216,28 @@
         "type": "dialogue",
         "scenario": "V kavárně — At a café",
         "lines": [
-          {"speaker": "person_a", "text": "Ahoj! Odkud jsi?"},
-          {"speaker": "person_b", "text": "___ (I'm from Brno. And you?)"},
-          {"speaker": "person_a", "text": "Jsem z Prahy. Kam jdeš?"},
-          {"speaker": "person_b", "text": "___ (I'm going to school.)"}
+          {
+            "speaker": "person_a",
+            "text": "Ahoj! Odkud jsi?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (I'm from Brno. And you?)"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Jsem z Prahy. Kam jdeš?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (I'm going to school.)"
+          }
         ],
-        "accepted_answers": ["Jsem z Brna. A ty?|Jdu do školy.", "Jsem z Brna, a ty?|Jdu do školy."],
-        "explanation": "'Odkud jsi?' = Where are you from? (literally 'from where are you?'). 'Z Brna' = from Brno (genitive: Brno → Brna). 'A ty?' = And you? 'Kam jdeš?' = Where are you going? 'Jdu do školy.' = I'm going to school (genitive: škola → školy)."
+        "explanation": "'Odkud jsi?' = Where are you from? (literally 'from where are you?'). 'Z Brna' = from Brno (genitive: Brno → Brna). 'A ty?' = And you? 'Kam jdeš?' = Where are you going? 'Jdu do školy.' = I'm going to school (genitive: škola → školy).",
+        "blank_answers": [
+          ["Jsem z Brna. A ty?", "Jsem z Brna, a ty?"],
+          ["Jdu do školy."]
+        ]
       },
       "answer_key": "Jsem z Brna. A ty?|Jdu do školy.",
       "grammar_rule_id": "GR-151",

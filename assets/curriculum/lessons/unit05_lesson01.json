@@ -51,8 +51,10 @@
         "type": "fill_blank",
         "sentence": "Já ____ v Praze.",
         "blank_count": 1,
-        "accepted_answers": ["bydlím"],
-        "explanation": "'Bydlet' conjugates with -í endings like the -ít class. 1st person singular: bydlím. 'Já bydlím v Praze.' = 'I live in Prague.'"
+        "explanation": "'Bydlet' conjugates with -í endings like the -ít class. 1st person singular: bydlím. 'Já bydlím v Praze.' = 'I live in Prague.'",
+        "blank_answers": [
+          ["bydlím"]
+        ]
       },
       "answer_key": "bydlím",
       "grammar_rule_id": "GR-041",
@@ -67,8 +69,10 @@
         "type": "fill_blank",
         "sentence": "Ona ____ česky.",
         "blank_count": 1,
-        "accepted_answers": ["mluví"],
-        "explanation": "The -ít class has the same ending for 3rd person singular and plural: mluví. 'Ona mluví česky.' = 'She speaks Czech.'"
+        "explanation": "The -ít class has the same ending for 3rd person singular and plural: mluví. 'Ona mluví česky.' = 'She speaks Czech.'",
+        "blank_answers": [
+          ["mluví"]
+        ]
       },
       "answer_key": "mluví",
       "grammar_rule_id": "GR-041",
@@ -147,8 +151,10 @@
         "type": "fill_blank",
         "sentence": "Ty ____ česky?",
         "blank_count": 1,
-        "accepted_answers": ["rozumíš"],
-        "explanation": "'Rozumět' belongs to the -et/-ět class. 2nd person singular: rozumíš. 'Ty rozumíš česky?' = 'Do you understand Czech?'"
+        "explanation": "'Rozumět' belongs to the -et/-ět class. 2nd person singular: rozumíš. 'Ty rozumíš česky?' = 'Do you understand Czech?'",
+        "blank_answers": [
+          ["rozumíš"]
+        ]
       },
       "answer_key": "rozumíš",
       "grammar_rule_id": "GR-042",

@@ -183,26 +183,12 @@
       "prompt": "Arrange: 'On je lékař. Ona je lékařka.'",
       "data": {
         "type": "word_order",
-        "words": [
-          "On",
-          "je",
-          "lékař.",
-          "Ona",
-          "je",
-          "lékařka."
-        ],
-        "correct_order": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
+        "words": ["On", "je", "lékař.", "Ona", "je", "lékařka."],
+        "correct_order": [0, 1, 2, 3, 4, 5],
         "explanation": "Gendered profession forms: lékař (male doctor) vs lékařka (female doctor). Both mean 'doctor'.",
         "translation_en": "He is a doctor. She is a doctor."
       },
-      "answer_key": "0,1,2,3,4,5",
+      "answer_key": "On je lékař. Ona je lékařka.",
       "grammar_rule_id": "GR-024",
       "xp_reward": 15
     },
@@ -215,10 +201,10 @@
         "type": "fill_blank",
         "sentence": "Můj otec je ___. (teacher, male form)",
         "blank_count": 1,
-        "accepted_answers": [
-          "učitel"
-        ],
-        "explanation": "učitel = male teacher. 'Můj otec' (my father) is masculine, so use the masculine form."
+        "explanation": "učitel = male teacher. 'Můj otec' (my father) is masculine, so use the masculine form.",
+        "blank_answers": [
+          ["učitel"]
+        ]
       },
       "answer_key": "učitel",
       "grammar_rule_id": "GR-024",
@@ -233,10 +219,10 @@
         "type": "fill_blank",
         "sentence": "Moje matka je ___. (doctor, female form)",
         "blank_count": 1,
-        "accepted_answers": [
-          "lékařka"
-        ],
-        "explanation": "lékařka = female doctor. 'Moje matka' (my mother) is feminine, so use the feminine form with -ka."
+        "explanation": "lékařka = female doctor. 'Moje matka' (my mother) is feminine, so use the feminine form with -ka.",
+        "blank_answers": [
+          ["lékařka"]
+        ]
       },
       "answer_key": "lékařka",
       "grammar_rule_id": "GR-024",
@@ -306,10 +292,11 @@
             "text": "___ (That is a car.)"
           }
         ],
-        "accepted_answers": [
-          "To je kniha.|To je auto."
-        ],
-        "explanation": "Co to je? = What is that? Response: To je + noun (nominative). kniha (feminine), auto (neuter)."
+        "explanation": "Co to je? = What is that? Response: To je + noun (nominative). kniha (feminine), auto (neuter).",
+        "blank_answers": [
+          ["To je kniha."],
+          ["To je auto."]
+        ]
       },
       "answer_key": "To je kniha.|To je auto.",
       "grammar_rule_id": "GR-023",

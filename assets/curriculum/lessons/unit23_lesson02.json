@@ -51,8 +51,10 @@
         "type": "fill_blank",
         "sentence": "____ si sednout tady?",
         "blank_count": 1,
-        "accepted_answers": ["Smím", "Můžu", "Mohu"],
-        "explanation": "'Smím si sednout tady?' = May I sit here? 'Smět' is used to ask for permission. 'Můžu/Mohu' (can) is also acceptable in informal contexts, but 'smět' is more precise for permission."
+        "explanation": "'Smím si sednout tady?' = May I sit here? 'Smět' is used to ask for permission. 'Můžu/Mohu' (can) is also acceptable in informal contexts, but 'smět' is more precise for permission.",
+        "blank_answers": [
+          ["Smím", "Můžu", "Mohu"]
+        ]
       },
       "answer_key": "Smím",
       "grammar_rule_id": "GR-224",
@@ -67,8 +69,10 @@
         "type": "fill_blank",
         "sentence": "Děti ____ běhat v chodbě.",
         "blank_count": 1,
-        "accepted_answers": ["nesmějí"],
-        "explanation": "'Děti nesmějí běhat v chodbě.' = Children must not run in the corridor. 'Nesmějí' = they must not (3rd person plural of 'nesmět'). This is a prohibition — 'nesmět' is used, not 'nemuset'."
+        "explanation": "'Děti nesmějí běhat v chodbě.' = Children must not run in the corridor. 'Nesmějí' = they must not (3rd person plural of 'nesmět'). This is a prohibition — 'nesmět' is used, not 'nemuset'.",
+        "blank_answers": [
+          ["nesmějí"]
+        ]
       },
       "answer_key": "nesmějí",
       "grammar_rule_id": "GR-224",
@@ -113,14 +117,34 @@
       "prompt": "Complete the dialogue at a restaurant.",
       "data": {
         "type": "dialogue",
-        "context_en": "A customer asks the waiter if they can sit outside.",
         "lines": [
-          {"speaker": "customer", "text_cz": "Dobrý den, ____ si sednout na terase?", "text_en": "Hello, may we sit on the terrace?", "blank": true, "accepted_answers": ["můžeme", "smíme"]},
-          {"speaker": "waiter", "text_cz": "Ano, samozřejmě. Můžete si vybrat stůl.", "text_en": "Yes, of course. You can choose a table.", "blank": false},
-          {"speaker": "customer", "text_cz": "Děkujeme. A ____ kouřit na terase?", "text_en": "Thank you. And may we smoke on the terrace?", "blank": true, "accepted_answers": ["můžeme", "smíme"]},
-          {"speaker": "waiter", "text_cz": "Bohužel, tady kouřit nesmíte.", "text_en": "Unfortunately, you must not smoke here.", "blank": false}
+          {
+            "speaker": "customer",
+            "text_en": "Hello, may we sit on the terrace?",
+            "text": "Dobrý den, ___ si sednout na terase?"
+          },
+          {
+            "speaker": "waiter",
+            "text_en": "Yes, of course. You can choose a table.",
+            "text": "Ano, samozřejmě. Můžete si vybrat stůl."
+          },
+          {
+            "speaker": "customer",
+            "text_en": "Thank you. And may we smoke on the terrace?",
+            "text": "Děkujeme. A ___ kouřit na terase?"
+          },
+          {
+            "speaker": "waiter",
+            "text_en": "Unfortunately, you must not smoke here.",
+            "text": "Bohužel, tady kouřit nesmíte."
+          }
         ],
-        "explanation": "In this dialogue, 'můžeme/smíme' ask for permission. The waiter uses 'nesmíte' to express a prohibition — smoking is not allowed. Note the formal 'vy' form (můžete, nesmíte) used in service interactions."
+        "explanation": "In this dialogue, 'můžeme/smíme' ask for permission. The waiter uses 'nesmíte' to express a prohibition — smoking is not allowed. Note the formal 'vy' form (můžete, nesmíte) used in service interactions.",
+        "blank_answers": [
+          ["můžeme", "smíme"],
+          ["můžeme", "smíme"]
+        ],
+        "scenario": "A customer asks the waiter if they can sit outside."
       },
       "answer_key": "můžeme/smíme, mohou/smí, nesmíte",
       "grammar_rule_id": "GR-224",

@@ -67,8 +67,10 @@
         "type": "fill_blank",
         "sentence": "To je ___ auto.",
         "blank_count": 1,
-        "accepted_answers": ["naše"],
-        "explanation": "For neuter singular nouns like auto, use naše (our). náš is for masculine singular (náš pes), while naše is for feminine and neuter singular (naše kniha, naše auto)."
+        "explanation": "For neuter singular nouns like auto, use naše (our). náš is for masculine singular (náš pes), while naše is for feminine and neuter singular (naše kniha, naše auto).",
+        "blank_answers": [
+          ["naše"]
+        ]
       },
       "answer_key": "naše",
       "grammar_rule_id": "GR-062",
@@ -131,8 +133,10 @@
         "type": "fill_blank",
         "sentence": "___ jsme studenti.",
         "blank_count": 1,
-        "accepted_answers": ["My", "my"],
-        "explanation": "my = we. However, in everyday Czech the pronoun is usually dropped: 'Jsme studenti.' is more natural and equally correct."
+        "explanation": "my = we. However, in everyday Czech the pronoun is usually dropped: 'Jsme studenti.' is more natural and equally correct.",
+        "blank_answers": [
+          ["My", "my"]
+        ]
       },
       "answer_key": "my",
       "grammar_rule_id": "GR-063",

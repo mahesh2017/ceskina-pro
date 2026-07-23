@@ -66,8 +66,10 @@
         "type": "fill_blank",
         "sentence": "Kde je obchod? Je ___ kostela. (next to the church)",
         "blank_count": 1,
-        "accepted_answers": ["vedle"],
-        "explanation": "vedle + genitive = next to. 'Vedle kostela' = next to the church. naproti = opposite."
+        "explanation": "vedle + genitive = next to. 'Vedle kostela' = next to the church. naproti = opposite.",
+        "blank_answers": [
+          ["vedle"]
+        ]
       },
       "answer_key": "vedle",
       "grammar_rule_id": "GR-131",
@@ -82,8 +84,10 @@
         "type": "fill_blank",
         "sentence": "Pošta je ___ nádraží. (opposite the station)",
         "blank_count": 1,
-        "accepted_answers": ["naproti"],
-        "explanation": "naproti + dative = opposite. 'Naproti nádraží' = opposite the station. blízko = near."
+        "explanation": "naproti + dative = opposite. 'Naproti nádraží' = opposite the station. blízko = near.",
+        "blank_answers": [
+          ["naproti"]
+        ]
       },
       "answer_key": "naproti",
       "grammar_rule_id": "GR-131",
@@ -179,8 +183,13 @@
         "type": "fill_blank",
         "sentence": "Bydlím ___ ___ (in Prague) a pracuji ___ ___ (on the square).",
         "blank_count": 4,
-        "accepted_answers": ["v", "Praze", "na", "náměstí"],
-        "explanation": "v + locative for cities: v Praze (locative of Praha → Praze). na + locative for open spaces: na náměstí (náměstí is neuter, locative = náměstí)."
+        "explanation": "v + locative for cities: v Praze (locative of Praha → Praze). na + locative for open spaces: na náměstí (náměstí is neuter, locative = náměstí).",
+        "blank_answers": [
+          ["v"],
+          ["Praze"],
+          ["na"],
+          ["náměstí"]
+        ]
       },
       "answer_key": "v Praze na náměstí",
       "grammar_rule_id": "GR-133",

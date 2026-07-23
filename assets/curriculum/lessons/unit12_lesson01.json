@@ -67,8 +67,11 @@
         "type": "fill_blank",
         "sentence": "Ten ___ (modrý) svetr je hezký, ale ta ___ (modrý) sukně je lepší.",
         "blank_count": 2,
-        "accepted_answers": ["modrý", "modrá"],
-        "explanation": "svetr is masculine → modrý. sukně is feminine → modrá. Colors change endings based on the gender of the noun they describe."
+        "explanation": "svetr is masculine → modrý. sukně is feminine → modrá. Colors change endings based on the gender of the noun they describe.",
+        "blank_answers": [
+          ["modrý"],
+          ["modrá"]
+        ]
       },
       "answer_key": "modrý modrá",
       "grammar_rule_id": "GR-110",
@@ -116,8 +119,11 @@
         "type": "fill_blank",
         "sentence": "Ten svetr je ___ (big), ale ta bunda je ___ (small).",
         "blank_count": 2,
-        "accepted_answers": ["velký", "malá"],
-        "explanation": "svetr is masculine → velký. bunda is feminine → malá. Size adjectives follow the same gender agreement rules as colors."
+        "explanation": "svetr is masculine → velký. bunda is feminine → malá. Size adjectives follow the same gender agreement rules as colors.",
+        "blank_answers": [
+          ["velký"],
+          ["malá"]
+        ]
       },
       "answer_key": "velký malá",
       "grammar_rule_id": "GR-113",
@@ -180,13 +186,28 @@
         "type": "dialogue",
         "scenario": "You are in a Czech shop and want to know the price of a sweater.",
         "lines": [
-          {"speaker": "person_a", "text": "Dobrý den, můžu vám pomoct?"},
-          {"speaker": "person_b", "text": "Ano, kolik stojí ten svetr?"},
-          {"speaker": "person_a", "text": "Ten svetr stojí pět set korun."},
-          {"speaker": "person_b", "text": "Dobře, vezmu si ho. Děkuju."}
+          {
+            "speaker": "person_a",
+            "text": "Dobrý den, můžu vám pomoct?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Ten svetr stojí pět set korun."
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          }
         ],
-        "accepted_answers": ["Ano, kolik stojí ten svetr?|Ano, kolik stojí ten svetr", "Dobře, vezmu si ho. Děkuju.|Dobře, vezmu si ho. Děkuju.|Dobře, vezmu si ho|Děkuju, vezmu si ho"],
-        "explanation": "'Dobrý den, můžu vám pomoct?' = 'Hello, can I help you?' — 'Kolik stojí ten svetr?' = 'How much does the sweater cost?' — 'Stojí pět set korun' = 'It costs 500 crowns.' — 'Vezmu si ho' = 'I'll take it.'"
+        "explanation": "'Dobrý den, můžu vám pomoct?' = 'Hello, can I help you?' — 'Kolik stojí ten svetr?' = 'How much does the sweater cost?' — 'Stojí pět set korun' = 'It costs 500 crowns.' — 'Vezmu si ho' = 'I'll take it.'",
+        "blank_answers": [
+          ["Ano, kolik stojí ten svetr?", "Ano, kolik stojí ten svetr"],
+          ["Dobře, vezmu si ho. Děkuju.", "Dobře, vezmu si ho. Děkuju.", "Dobře, vezmu si ho", "Děkuju, vezmu si ho"]
+        ]
       },
       "answer_key": "Ano, kolik stojí ten svetr?|Dobře, vezmu si ho. Děkuju.",
       "grammar_rule_id": "GR-112",

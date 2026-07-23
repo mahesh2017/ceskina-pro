@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
 import 'flashcards.dart';
 
-/// SRS cards table — FSRS scheduling state for each flashcard or grammar pattern.
+/// Simplified SM-2 scheduling state for each flashcard or grammar pattern.
 class SrsCards extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get cardType => text()(); // 'vocabulary' or 'grammar'

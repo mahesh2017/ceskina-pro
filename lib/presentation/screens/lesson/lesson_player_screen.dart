@@ -3,23 +3,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../domain/entities/flashcard.dart';
+import '../../../domain/engines/learning_loop_engine.dart';
 import '../../providers/lesson_providers.dart';
 import '../../providers/gamification_providers.dart';
+import '../../providers/curriculum_providers.dart';
 import '../../widgets/lesson/exercise_widget.dart';
+import '../../widgets/lesson/lesson_exercise_viewport.dart';
 import '../../widgets/common/grammar_tip_card.dart';
 import '../../widgets/common/soft_ui.dart';
 import '../../widgets/common/stat_row.dart';
 
 /// Maps a flashcard `gender` string to a short pill label + token colors.
-({String label, Color bg, Color fg}) _genderPill(BuildContext context, String g) {
+({String label, Color bg, Color fg}) _genderPill(
+  BuildContext context,
+  String g,
+) {
   final t = context.tokens;
   final v = g.toLowerCase();
   if (v.startsWith('fem')) return (label: 'fem', bg: t.redSoft, fg: t.red);
-  if (v.startsWith('neut')) return (label: 'neut', bg: t.amberSoft, fg: t.amber);
+  if (v.startsWith('neut')) {
+    return (label: 'neut', bg: t.amberSoft, fg: t.amber);
+  }
   if (v.contains('inanimate')) {
     return (label: 'masc inan', bg: t.violetSoft, fg: t.violet);
   }
-  if (v.startsWith('masc')) return (label: 'masc anim', bg: t.priSoft, fg: t.priInk);
+  if (v.startsWith('masc')) {
+    return (label: 'masc anim', bg: t.priSoft, fg: t.priInk);
+  }
   return (label: g, bg: t.chipBg, fg: t.muted);
 }
 
@@ -31,18 +41,30 @@ class LessonPlayerScreen extends ConsumerStatefulWidget {
   const LessonPlayerScreen({super.key, required this.lessonId});
 
   @override
-  ConsumerState<LessonPlayerScreen> createState() =>
-      _LessonPlayerScreenState();
+  ConsumerState<LessonPlayerScreen> createState() => _LessonPlayerScreenState();
 }
 
 class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
   bool _loaded = false;
+  bool _locked = false;
 
   @override
   void initState() {
     super.initState();
     // Load lesson data on first build
     Future.microtask(() async {
+      final unlocked = await ref.read(
+        lessonUnlockedProvider(widget.lessonId).future,
+      );
+      if (!unlocked) {
+        if (mounted) {
+          setState(() {
+            _locked = true;
+            _loaded = true;
+          });
+        }
+        return;
+      }
       await ref
           .read(lessonSessionProvider.notifier)
           .loadLesson(widget.lessonId);
@@ -63,6 +85,38 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
           ),
         ),
         body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_locked) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () => context.pop(),
+          ),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.lock_outline, size: 40),
+                const SizedBox(height: 12),
+                const Text(
+                  'Complete the prerequisite lessons first.',
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                FilledButton(
+                  onPressed: () => context.go('/curriculum'),
+                  child: const Text('Back to curriculum'),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
 
@@ -177,11 +231,12 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.favorite,
-                      color: session.hearts > 0
-                          ? Colors.red
-                          : Colors.grey.shade400,
-                      size: 20,),
+                  Icon(
+                    Icons.favorite,
+                    color:
+                        session.hearts > 0 ? Colors.red : Colors.grey.shade400,
+                    size: 20,
+                  ),
                   const SizedBox(width: 2),
                   Text(
                     '${session.hearts}',
@@ -206,20 +261,23 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                         ? 'Reviewing missed questions'
                         : 'Question ${session.currentIndex + 1} of ${session.totalExercises}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: session.inMistakeReview
+                      color:
+                          session.inMistakeReview
                               ? Colors.orange.shade700
                               : Colors.grey,
-                          fontWeight: session.inMistakeReview
-                              ? FontWeight.bold
-                              : null,
-                        ),
+                      fontWeight:
+                          session.inMistakeReview ? FontWeight.bold : null,
+                    ),
                   ),
                   if (session.totalXp > 0)
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.star,
-                            color: Colors.amber.shade600, size: 16,),
+                        Icon(
+                          Icons.star,
+                          color: Colors.amber.shade600,
+                          size: 16,
+                        ),
                         const SizedBox(width: 2),
                         Text(
                           '+${session.totalXp} XP',
@@ -239,24 +297,23 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
             // so the learner can study their answer at their own pace —
             // no timed auto-advance.
             Expanded(
-              child: SingleChildScrollView(
-                child: ExerciseWidget(
-                  // Key by position so widget state (selected answers) resets
-                  // for each exercise, including mistake re-asks of the same
-                  // exercise id.
-                  key: ValueKey(session.currentIndex),
-                  exercise: exercise,
-                  onAnswered: (result) {
-                    ref
-                        .read(lessonSessionProvider.notifier)
-                        .onExerciseAnswered(
-                          isCorrect: result.isCorrect,
-                          explanation: result.explanation,
-                          correctAnswer: result.correctAnswer,
-                          xpEarned: exercise.xpReward,
-                        );
-                  },
-                ),
+              child: LessonExerciseViewport(
+                // Key by position so widget state (selected answers) resets
+                // for each exercise, including mistake re-asks of the same
+                // exercise id.
+                key: ValueKey(session.currentIndex),
+                exercise: exercise,
+                onAnswered: (result) {
+                  ref
+                      .read(lessonSessionProvider.notifier)
+                      .onExerciseAnswered(
+                        outcome: result.outcome,
+                        explanation: result.explanation,
+                        correctAnswer: result.correctAnswer,
+                        supports: result.supports,
+                        xpEarned: exercise.xpReward,
+                      );
+                },
               ),
             ),
 
@@ -269,7 +326,9 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
   }
 
   Widget _buildFeedbackBanner(
-      BuildContext context, LessonSessionState session,) {
+    BuildContext context,
+    LessonSessionState session,
+  ) {
     return Material(
       elevation: 8,
       color: Theme.of(context).colorScheme.surface,
@@ -288,29 +347,63 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
                   maxHeight: MediaQuery.sizeOf(context).height * 0.35,
                 ),
                 child: SingleChildScrollView(
-                  child: GrammarTipCard(
-                    isCorrect: session.lastWasCorrect,
-                    explanation: session.lastExplanation,
-                    correctAnswer: session.lastCorrectAnswer,
-                    grammarRuleId: session.lastGrammarRuleId,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (session.feedbackStep case final step?) ...[
+                        Text(
+                          _feedbackPrompt(step),
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                      GrammarTipCard(
+                        isCorrect: session.lastWasCorrect,
+                        isSkipped: session.lastWasSkipped,
+                        explanation: session.lastExplanation,
+                        correctAnswer: session.lastCorrectAnswer,
+                        grammarRuleId: session.lastGrammarRuleId,
+                      ),
+                    ],
                   ),
                 ),
               ),
               const SizedBox(height: 12),
+              if (session.completionError != null) ...[
+                Text(
+                  session.completionError!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+              ],
               FilledButton.icon(
-                onPressed: () {
-                  ref.read(lessonSessionProvider.notifier).nextExercise();
-                },
-                icon: const Icon(Icons.arrow_forward),
+                onPressed:
+                    session.isCompleting
+                        ? null
+                        : () async {
+                          await ref
+                              .read(lessonSessionProvider.notifier)
+                              .nextExercise();
+                        },
+                icon:
+                    session.isCompleting
+                        ? const SizedBox.square(
+                          dimension: 18,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                        : const Icon(Icons.arrow_forward),
                 label: Text(
-                  session.isExamMode
+                  session.isCompleting
+                      ? 'Saving…'
+                      : session.isExamMode
                       ? 'Next Question'
                       : session.currentIndex + 1 < session.totalExercises
-                          ? 'Continue'
-                          : (session.mistakeQueue.isNotEmpty &&
-                                  !session.mistakesAppended)
-                              ? 'Review Mistakes'
-                              : 'Finish Lesson',
+                      ? 'Continue'
+                      : (session.mistakeQueue.isNotEmpty &&
+                          !session.mistakesAppended)
+                      ? 'Review Mistakes'
+                      : 'Finish Lesson',
                 ),
               ),
             ],
@@ -323,24 +416,26 @@ class _LessonPlayerScreenState extends ConsumerState<LessonPlayerScreen> {
   void _showExitConfirm(BuildContext context) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Leave lesson?'),
-        content: const Text(
-            'Your progress in this lesson will be lost. Are you sure?',),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Stay'),
+      builder:
+          (ctx) => AlertDialog(
+            title: const Text('Leave lesson?'),
+            content: const Text(
+              'Your progress in this lesson will be lost. Are you sure?',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Stay'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  context.pop();
+                },
+                child: const Text('Leave'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              context.pop();
-            },
-            child: const Text('Leave'),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -378,8 +473,10 @@ class _TeachPhaseScreen extends ConsumerWidget {
                     child: Container(
                       width: 36,
                       height: 36,
-                      decoration:
-                          BoxDecoration(color: t.chipBg, shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                        color: t.chipBg,
+                        shape: BoxShape.circle,
+                      ),
                       child: Icon(Icons.close, size: 18, color: t.ink),
                     ),
                   ),
@@ -388,13 +485,18 @@ class _TeachPhaseScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(session.lesson?.title ?? 'New words',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: t.ink)),
-                        Text('${cards.length} new words · tap to hear',
-                            style: TextStyle(fontSize: 14, color: t.muted)),
+                        Text(
+                          session.lesson?.title ?? 'New words',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: t.ink,
+                          ),
+                        ),
+                        Text(
+                          '${cards.length} new words · tap to hear',
+                          style: TextStyle(fontSize: 14, color: t.muted),
+                        ),
                       ],
                     ),
                   ),
@@ -432,7 +534,8 @@ class _TeachWordCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.tokens;
-    final pill = card.gender == null ? null : _genderPill(context, card.gender!);
+    final pill =
+        card.gender == null ? null : _genderPill(context, card.gender!);
     return SoftCard(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
       child: Row(
@@ -457,8 +560,12 @@ class _TeachWordCard extends ConsumerWidget {
                     ),
                     if (pill != null) ...[
                       const SizedBox(width: 8),
-                      PillChip(label: pill.label, bg: pill.bg, fg: pill.fg,
-                          fontSize: 15),
+                      PillChip(
+                        label: pill.label,
+                        bg: pill.bg,
+                        fg: pill.fg,
+                        fontSize: 15,
+                      ),
                     ],
                   ],
                 ),
@@ -466,16 +573,20 @@ class _TeachWordCard extends ConsumerWidget {
                 Text(
                   card.wordEn,
                   style: TextStyle(
-                      fontSize: 15.5, fontWeight: FontWeight.w600, color: t.pri),
+                    fontSize: 15.5,
+                    fontWeight: FontWeight.w600,
+                    color: t.pri,
+                  ),
                 ),
                 if (card.exampleCz != null) ...[
                   const SizedBox(height: 7),
                   Text(
                     card.exampleCz!,
                     style: TextStyle(
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                        color: t.muted),
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      color: t.muted,
+                    ),
                   ),
                 ],
               ],
@@ -508,8 +619,7 @@ class _GameOverScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.heart_broken,
-                  size: 80, color: Colors.red.shade300,),
+              Icon(Icons.heart_broken, size: 80, color: Colors.red.shade300),
               const SizedBox(height: 24),
               Text(
                 'Out of hearts!',
@@ -595,7 +705,8 @@ class _LessonCompleteScreen extends ConsumerWidget {
                       StatRow(
                         icon: Icons.check,
                         label: 'Correct',
-                        value: '${session.correctCount}/${session.totalExercises}',
+                        value:
+                            '${session.correctCount}/${session.totalExercises}',
                         color: Colors.green,
                       ),
                       const Divider(),
@@ -603,9 +714,10 @@ class _LessonCompleteScreen extends ConsumerWidget {
                         icon: Icons.percent,
                         label: 'Accuracy',
                         value: '$accuracy%',
-                        color: accuracy >= 80
-                            ? Colors.green
-                            : accuracy >= 60
+                        color:
+                            accuracy >= 80
+                                ? Colors.green
+                                : accuracy >= 60
                                 ? Colors.orange
                                 : Colors.red,
                       ),
@@ -620,8 +732,7 @@ class _LessonCompleteScreen extends ConsumerWidget {
                       StatRow(
                         icon: Icons.favorite,
                         label: 'Hearts Remaining',
-                        value:
-                            '${session.hearts}/${gamification.maxHearts}',
+                        value: '${session.hearts}/${gamification.maxHearts}',
                         color: Colors.red,
                       ),
                     ],
@@ -648,7 +759,20 @@ class _LessonCompleteScreen extends ConsumerWidget {
   }
 }
 
-/// Countdown timer widget for exam mode.
+String _feedbackPrompt(FeedbackStep step) => switch (step) {
+  FeedbackStep.signal => 'Something needs attention. Try to notice what.',
+  FeedbackStep.selfRepair => 'Try again before asking for more help.',
+  FeedbackStep.cue => 'Use the explanation as a cue, then repair your answer.',
+  FeedbackStep.explanation => 'Study the answer, then retrieve it once more.',
+  FeedbackStep.immediateVariant => 'Now apply the same idea to a variation.',
+  FeedbackStep.spacedAnalogue => 'A related task will return later.',
+  FeedbackStep.novelTask => 'Use what you remember in this new situation.',
+};
+
+/// A suggested pace target for exam practice.
+///
+/// This deliberately does not end or submit the practice attempt. The label
+/// and semantics make that non-enforcement explicit to learners.
 class _ExamTimer extends StatefulWidget {
   final int initialSeconds;
 
@@ -692,32 +816,41 @@ class _ExamTimerState extends State<_ExamTimer> {
   @override
   Widget build(BuildContext context) {
     final isLow = _remaining < 60;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          _expired ? Icons.timer_off : Icons.timer,
-          size: 18,
-          color: _expired
-              ? Colors.red
-              : isLow
-                  ? Colors.orange.shade600
-                  : Colors.grey.shade600,
+    final status = _expired ? 'Over pace target' : 'Pace target $_formatted';
+    return Semantics(
+      label: '$status. Practice continues after the target time.',
+      child: Tooltip(
+        message: 'Suggested pace only — practice continues when time runs out',
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              _expired ? Icons.timer_off : Icons.timer,
+              size: 18,
+              color:
+                  _expired
+                      ? Colors.orange.shade800
+                      : isLow
+                      ? Colors.orange.shade600
+                      : Colors.grey.shade600,
+            ),
+            const SizedBox(width: 4),
+            Text(
+              status,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color:
+                    _expired
+                        ? Colors.orange.shade800
+                        : isLow
+                        ? Colors.orange.shade700
+                        : null,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 4),
-        Text(
-          _expired ? 'TIME' : _formatted,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color: _expired
-                ? Colors.red
-                : isLow
-                    ? Colors.orange.shade700
-                    : null,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -727,10 +860,7 @@ class _ExamCompleteScreen extends ConsumerWidget {
   final LessonSessionState session;
   final VoidCallback onExit;
 
-  const _ExamCompleteScreen({
-    required this.session,
-    required this.onExit,
-  });
+  const _ExamCompleteScreen({required this.session, required this.onExit});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -738,8 +868,7 @@ class _ExamCompleteScreen extends ConsumerWidget {
     final passed = accuracy >= 60;
     final theme = Theme.of(context);
 
-    // Derive CEFR level from the exam lesson's unit context.
-    // Unit 28 = A1 exam, Unit 29 = A2 exam.
+    // Unit context labels the course track, not an attained CEFR level.
     final unitId = session.lesson?.unitId ?? 0;
     final cefrLevel = unitId == 29 ? 'A2' : 'A1';
 
@@ -761,14 +890,14 @@ class _ExamCompleteScreen extends ConsumerWidget {
 
                 // Exam result title
                 Text(
-                  passed ? 'Exam Passed!' : 'Exam Attempt',
+                  passed ? 'Practice Target Met' : 'Practice Complete',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'CEFR Level: $cefrLevel',
+                  'Course track: $cefrLevel',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: theme.colorScheme.primary,
                     fontWeight: FontWeight.w600,
@@ -791,42 +920,19 @@ class _ExamCompleteScreen extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          passed ? 'PASS' : 'FAIL',
+                          passed ? 'TARGET MET' : 'KEEP PRACTICING',
                           style: theme.textTheme.titleMedium?.copyWith(
                             color: passed ? Colors.green : Colors.red.shade400,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 2,
                           ),
                         ),
-                        const Divider(height: 24),
-
-                        // Section breakdown
-                        _ExamSection(
-                          icon: Icons.book,
-                          label: 'Reading',
-                          score: accuracy,
-                          total: 100,
-                        ),
                         const SizedBox(height: 8),
-                        _ExamSection(
-                          icon: Icons.headphones,
-                          label: 'Listening',
-                          score: accuracy,
-                          total: 100,
-                        ),
-                        const SizedBox(height: 8),
-                        _ExamSection(
-                          icon: Icons.edit,
-                          label: 'Writing',
-                          score: accuracy,
-                          total: 100,
-                        ),
-                        const SizedBox(height: 8),
-                        _ExamSection(
-                          icon: Icons.mic,
-                          label: 'Speaking',
-                          score: accuracy,
-                          total: 100,
+                        Text(
+                          'Lesson exercise accuracy only. This is not an '
+                          'official exam result or CEFR certification.',
+                          textAlign: TextAlign.center,
+                          style: theme.textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -847,41 +953,3 @@ class _ExamCompleteScreen extends ConsumerWidget {
     );
   }
 }
-
-/// A single section row in the exam results.
-class _ExamSection extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final int score;
-  final int total;
-
-  const _ExamSection({
-    required this.icon,
-    required this.label,
-    required this.score,
-    required this.total,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final pct = total > 0 ? (score / total * 100).round() : 0;
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: Colors.grey.shade600),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(label, style: const TextStyle(fontSize: 15)),
-        ),
-        Text(
-          '$pct%',
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: pct >= 60 ? Colors.green : Colors.red.shade400,
-          ),
-        ),
-      ],
-    );
-  }
-}
-

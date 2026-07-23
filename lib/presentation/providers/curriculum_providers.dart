@@ -3,11 +3,13 @@ import '../../data/database/database.dart' as db;
 import '../../domain/entities/unit.dart';
 import '../../domain/entities/lesson.dart';
 import '../../domain/entities/enums.dart';
+import '../../domain/engines/curriculum_access_policy.dart';
+import '../../domain/engines/learning_router.dart';
+import '../../domain/entities/learning_evidence.dart';
 import 'database_providers.dart';
 
 /// Provider for all units in a phase (A1 or A2).
-final unitsProvider =
-    FutureProvider.family<List<Unit>, Phase>((ref, phase) {
+final unitsProvider = FutureProvider.family<List<Unit>, Phase>((ref, phase) {
   final repo = ref.read(curriculumRepositoryProvider);
   return repo.getUnits(phase);
 });
@@ -21,30 +23,32 @@ final allUnitsProvider = FutureProvider<List<Unit>>((ref) async {
 });
 
 /// Provider for lessons in a specific unit.
-final unitLessonsProvider =
-    FutureProvider.family<List<Lesson>, int>((ref, unitId) {
+final unitLessonsProvider = FutureProvider.family<List<Lesson>, int>((
+  ref,
+  unitId,
+) {
   final repo = ref.read(curriculumRepositoryProvider);
   return repo.getLessons(unitId);
 });
 
 /// Provider for a single unit.
-final unitProvider =
-    FutureProvider.family<Unit, int>((ref, unitId) {
+final unitProvider = FutureProvider.family<Unit, int>((ref, unitId) {
   final repo = ref.read(curriculumRepositoryProvider);
   return repo.getUnit(unitId);
 });
 
 /// Provider for a single lesson.
-final lessonProvider =
-    FutureProvider.family<Lesson, int>((ref, lessonId) {
+final lessonProvider = FutureProvider.family<Lesson, int>((ref, lessonId) {
   final repo = ref.read(curriculumRepositoryProvider);
   return repo.getLesson(lessonId);
 });
 
 /// Provider for the number of lessons per unit.
 /// Used by the curriculum screen to show lesson counts.
-final unitLessonCountProvider =
-    FutureProvider.family<int, int>((ref, unitId) async {
+final unitLessonCountProvider = FutureProvider.family<int, int>((
+  ref,
+  unitId,
+) async {
   final lessons = await ref.read(unitLessonsProvider(unitId).future);
   return lessons.length;
 });
@@ -57,69 +61,132 @@ final completedLessonIdsProvider = FutureProvider<Set<int>>((ref) async {
   return progressRepo.getCompletedLessonIds();
 });
 
-/// Provider for unlocked unit IDs based on progress.
-/// A unit is unlocked if:
-/// - It's the first unit (always unlocked)
-/// - The previous unit is unlocked and ALL of its lessons are completed
-final unlockedUnitIdsProvider = FutureProvider<Set<int>>((ref) async {
-  final allUnits = await ref.watch(allUnitsProvider.future);
-  final completedLessonIds =
-      await ref.watch(completedLessonIdsProvider.future);
-
-  final unlocked = <int>{};
-  for (var i = 0; i < allUnits.length; i++) {
-    if (i == 0) {
-      unlocked.add(allUnits[i].id);
-      continue;
-    }
-
-    final prevUnit = allUnits[i - 1];
-    // Once the chain breaks, everything after stays locked.
-    if (!unlocked.contains(prevUnit.id)) break;
-
-    final prevLessons =
-        await ref.watch(unitLessonsProvider(prevUnit.id).future);
-    final prevComplete = prevLessons.isNotEmpty &&
-        prevLessons.every((l) => completedLessonIds.contains(l.id));
-    if (prevComplete) {
-      unlocked.add(allUnits[i].id);
-    }
-  }
-
-  return unlocked;
+final placementProfileProvider = FutureProvider<db.PlacementProfile?>((ref) {
+  final database = ref.read(databaseProvider);
+  return database.select(database.placementProfiles).getSingleOrNull();
 });
+
+/// One explicit access graph for units, lessons, review introduction, direct
+/// lesson entry, and continue-learning. XP is intentionally not an input.
+final curriculumAccessProvider = FutureProvider<CurriculumAccess>((ref) async {
+  final allUnits = await ref.watch(allUnitsProvider.future);
+  final completedLessonIds = await ref.watch(completedLessonIdsProvider.future);
+  final placement = await ref.watch(placementProfileProvider.future);
+  final lessonsByUnit = <int, List<Lesson>>{};
+  for (final unit in allUnits) {
+    lessonsByUnit[unit.id] = await ref.watch(
+      unitLessonsProvider(unit.id).future,
+    );
+  }
+  return const CurriculumAccessPolicy().evaluate(
+    orderedUnits: allUnits,
+    lessonsByUnit: lessonsByUnit,
+    completedLessonIds: completedLessonIds,
+    provisionalThroughUnitId: placement?.provisionalUnit,
+  );
+});
+
+final unlockedUnitIdsProvider = FutureProvider<Set<int>>(
+  (ref) async =>
+      (await ref.watch(curriculumAccessProvider.future)).unlockedUnitIds,
+);
+
+final unlockedLessonIdsProvider = FutureProvider<Set<int>>(
+  (ref) async =>
+      (await ref.watch(curriculumAccessProvider.future)).unlockedLessonIds,
+);
+
+final lessonUnlockedProvider = FutureProvider.family<bool, int>(
+  (ref, lessonId) async => (await ref.watch(
+    curriculumAccessProvider.future,
+  )).unlockedLessonIds.contains(lessonId),
+);
 
 /// The next lesson the learner should continue with, plus its unit title.
 class NextLessonInfo {
   final Lesson lesson;
   final String unitTitle;
+  final String reason;
 
-  const NextLessonInfo({required this.lesson, required this.unitTitle});
+  const NextLessonInfo({
+    required this.lesson,
+    required this.unitTitle,
+    this.reason = 'Continue with new accessible work',
+  });
 }
 
-/// Provider for the next uncompleted lesson in the first unlocked unit
-/// that still has work left. Null when everything unlocked is completed.
+final learningEvidenceProvider = FutureProvider<List<LearningEvidence>>(
+  (ref) => ref.read(databaseProvider).progressDao.getLearningEvidence(),
+);
+
+/// Evidence-driven next work. Delayed transfer and support dependence can
+/// route a learner back to a completed lesson; XP is not an input.
 final nextLessonProvider = FutureProvider<NextLessonInfo?>((ref) async {
   final allUnits = await ref.watch(allUnitsProvider.future);
-  final unlockedIds = await ref.watch(unlockedUnitIdsProvider.future);
-  final completedLessonIds =
-      await ref.watch(completedLessonIdsProvider.future);
+  final unlockedLessonIds = await ref.watch(unlockedLessonIdsProvider.future);
+  final completedLessonIds = await ref.watch(completedLessonIdsProvider.future);
+  final evidence = await ref.watch(learningEvidenceProvider.future);
+  final candidates = <LearningCandidate>[];
+  final lessonById = <int, (Lesson, String)>{};
+  var order = 0;
 
   for (final unit in allUnits) {
-    if (!unlockedIds.contains(unit.id)) continue;
     final lessons = await ref.watch(unitLessonsProvider(unit.id).future);
     for (final lesson in lessons) {
-      if (!completedLessonIds.contains(lesson.id)) {
-        return NextLessonInfo(lesson: lesson, unitTitle: unit.title);
-      }
+      order++;
+      if (!unlockedLessonIds.contains(lesson.id)) continue;
+      final exercises = await ref
+          .read(curriculumRepositoryProvider)
+          .getExercises(lesson.id);
+      final concepts = <String>{
+        for (final exercise in exercises)
+          if (exercise.grammarRuleId case final key?) key,
+        for (final exercise in exercises)
+          ...?((exercise.data['concept_tags'] as List?)?.whereType<String>()),
+      };
+      candidates.add(
+        LearningCandidate(
+          lessonId: lesson.id,
+          order: order,
+          completed: completedLessonIds.contains(lesson.id),
+          skills: exercises.map((exercise) => _skillFor(exercise.type)).toSet(),
+          conceptKeys: concepts,
+        ),
+      );
+      lessonById[lesson.id] = (lesson, unit.title);
     }
   }
-  return null;
+  final route = const LearningRouter().select(
+    candidates: candidates,
+    accessibleLessonIds: unlockedLessonIds,
+    evidence: evidence,
+  );
+  if (route == null) return null;
+  final selected = lessonById[route.lessonId];
+  if (selected == null) return null;
+  return NextLessonInfo(
+    lesson: selected.$1,
+    unitTitle: selected.$2,
+    reason: route.reason,
+  );
 });
+
+LearningSkill _skillFor(ExerciseType type) => switch (type) {
+  ExerciseType.readingComprehension => LearningSkill.reading,
+  ExerciseType.listening ||
+  ExerciseType.listeningComprehension ||
+  ExerciseType.dictation => LearningSkill.listening,
+  ExerciseType.writingTask || ExerciseType.translation => LearningSkill.writing,
+  ExerciseType.speakingTask ||
+  ExerciseType.pronunciation ||
+  ExerciseType.dialogue => LearningSkill.speaking,
+  ExerciseType.matching => LearningSkill.vocabulary,
+  _ => LearningSkill.grammar,
+};
 
 /// Provider for grammar rules for a specific unit.
 final grammarRulesByUnitProvider =
     FutureProvider.family<List<db.GrammarRule>, int>((ref, unitId) {
-  final database = ref.read(databaseProvider);
-  return database.curriculumDao.getGrammarRulesByUnit(unitId);
-});
+      final database = ref.read(databaseProvider);
+      return database.curriculumDao.getGrammarRulesByUnit(unitId);
+    });

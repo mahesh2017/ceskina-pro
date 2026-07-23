@@ -1,8 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:uuid/uuid.dart';
 import '../../domain/entities/exercise.dart';
+import '../../domain/entities/enums.dart';
+import '../../domain/entities/exercise_outcome.dart';
+import '../../domain/entities/exercise_attempt_evidence.dart';
 import '../../domain/entities/flashcard.dart';
 import '../../domain/entities/lesson.dart';
+import '../../domain/entities/learning_evidence.dart';
+import '../../domain/engines/learning_loop_engine.dart';
 import 'curriculum_providers.dart';
 import 'database_providers.dart';
 import 'gamification_providers.dart';
@@ -18,15 +24,19 @@ class LessonSessionState {
   final int currentIndex;
   final int correctCount;
   final int wrongCount;
+  final int skippedCount;
   final int hearts;
   final int totalXp;
   final bool isComplete;
+  final bool isCompleting;
+  final String? completionError;
   final bool isGameOver;
   final String? lastExplanation;
   final String? lastCorrectAnswer;
   final String? lastGrammarRuleId;
-  final bool lastWasCorrect;
+  final ExerciseOutcome? lastOutcome;
   final bool showFeedback;
+  final FeedbackStep? feedbackStep;
 
   /// Exercises answered wrong during the main pass, re-asked at the end.
   final List<Exercise> mistakeQueue;
@@ -57,15 +67,19 @@ class LessonSessionState {
     this.currentIndex = 0,
     this.correctCount = 0,
     this.wrongCount = 0,
+    this.skippedCount = 0,
     this.hearts = 5,
     this.totalXp = 0,
     this.isComplete = false,
+    this.isCompleting = false,
+    this.completionError,
     this.isGameOver = false,
     this.lastExplanation,
     this.lastCorrectAnswer,
     this.lastGrammarRuleId,
-    this.lastWasCorrect = false,
+    this.lastOutcome,
     this.showFeedback = false,
+    this.feedbackStep,
     this.mistakeQueue = const [],
     this.mistakesAppended = false,
     this.originalCount = 0,
@@ -81,15 +95,21 @@ class LessonSessionState {
     int? currentIndex,
     int? correctCount,
     int? wrongCount,
+    int? skippedCount,
     int? hearts,
     int? totalXp,
     bool? isComplete,
+    bool? isCompleting,
+    String? completionError,
+    bool clearCompletionError = false,
     bool? isGameOver,
     String? lastExplanation,
     String? lastCorrectAnswer,
     String? lastGrammarRuleId,
-    bool? lastWasCorrect,
+    ExerciseOutcome? lastOutcome,
+    bool clearFeedback = false,
     bool? showFeedback,
+    FeedbackStep? feedbackStep,
     List<Exercise>? mistakeQueue,
     bool? mistakesAppended,
     int? originalCount,
@@ -104,15 +124,23 @@ class LessonSessionState {
       currentIndex: currentIndex ?? this.currentIndex,
       correctCount: correctCount ?? this.correctCount,
       wrongCount: wrongCount ?? this.wrongCount,
+      skippedCount: skippedCount ?? this.skippedCount,
       hearts: hearts ?? this.hearts,
       totalXp: totalXp ?? this.totalXp,
       isComplete: isComplete ?? this.isComplete,
+      isCompleting: isCompleting ?? this.isCompleting,
+      completionError:
+          clearCompletionError ? null : completionError ?? this.completionError,
       isGameOver: isGameOver ?? this.isGameOver,
-      lastExplanation: lastExplanation ?? this.lastExplanation,
-      lastCorrectAnswer: lastCorrectAnswer ?? this.lastCorrectAnswer,
-      lastGrammarRuleId: lastGrammarRuleId ?? this.lastGrammarRuleId,
-      lastWasCorrect: lastWasCorrect ?? this.lastWasCorrect,
+      lastExplanation:
+          clearFeedback ? null : lastExplanation ?? this.lastExplanation,
+      lastCorrectAnswer:
+          clearFeedback ? null : lastCorrectAnswer ?? this.lastCorrectAnswer,
+      lastGrammarRuleId:
+          clearFeedback ? null : lastGrammarRuleId ?? this.lastGrammarRuleId,
+      lastOutcome: clearFeedback ? null : lastOutcome ?? this.lastOutcome,
       showFeedback: showFeedback ?? this.showFeedback,
+      feedbackStep: clearFeedback ? null : feedbackStep ?? this.feedbackStep,
       mistakeQueue: mistakeQueue ?? this.mistakeQueue,
       mistakesAppended: mistakesAppended ?? this.mistakesAppended,
       originalCount: originalCount ?? this.originalCount,
@@ -124,8 +152,7 @@ class LessonSessionState {
   }
 
   /// True when the learner is re-answering the questions they missed.
-  bool get inMistakeReview =>
-      mistakesAppended && currentIndex >= originalCount;
+  bool get inMistakeReview => mistakesAppended && currentIndex >= originalCount;
 
   Exercise? get currentExercise =>
       currentIndex < exercises.length ? exercises[currentIndex] : null;
@@ -140,10 +167,22 @@ class LessonSessionState {
   }
 
   int get totalExercises => exercises.length;
+
+  bool get lastWasCorrect => lastOutcome == ExerciseOutcome.correct;
+  bool get lastWasSkipped => lastOutcome == ExerciseOutcome.skipped;
 }
 
 /// Provider that manages a lesson session.
 class LessonSessionNotifier extends Notifier<LessonSessionState> {
+  static const _uuid = Uuid();
+  int? _answerInFlightIndex;
+  String? _attemptId;
+  DateTime? _attemptStartedAt;
+  String? _presentationId;
+  DateTime? _presentationStartedAt;
+  final List<ExerciseAttemptEvidence> _exerciseEvidence = [];
+  final Map<int, int> _unsuccessfulAttempts = {};
+
   @override
   LessonSessionState build() => const LessonSessionState();
 
@@ -151,6 +190,13 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
   /// Hearts come from the global gamification state (regen applied first),
   /// so losses persist across lessons and refill over time.
   Future<void> loadLesson(int lessonId) async {
+    _answerInFlightIndex = null;
+    _attemptId = _uuid.v4();
+    _attemptStartedAt = DateTime.now();
+    _presentationId = _uuid.v4();
+    _presentationStartedAt = DateTime.now();
+    _exerciseEvidence.clear();
+    _unsuccessfulAttempts.clear();
     state = const LessonSessionState();
     final gamification = ref.read(gamificationProvider.notifier);
     await gamification.refreshHearts();
@@ -199,46 +245,142 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
 
   /// Called when the current exercise is answered.
   Future<void> onExerciseAnswered({
-    required bool isCorrect,
+    required ExerciseOutcome outcome,
     String? explanation,
     String? correctAnswer,
     int xpEarned = 10,
+    Set<SupportKind> supports = const {},
   }) async {
     final exercise = state.currentExercise;
     if (exercise == null) return;
+    final answerIndex = state.currentIndex;
+    if (state.showFeedback || _answerInFlightIndex == answerIndex) return;
+    _answerInFlightIndex = answerIndex;
+    final isCorrect = outcome == ExerciseOutcome.correct;
+    final isIncorrect = outcome == ExerciseOutcome.incorrect;
+    final isSkipped = outcome == ExerciseOutcome.skipped;
+    final presentationId = _presentationId ??= _uuid.v4();
 
     var newHearts = state.hearts;
     final heartsEnabled = ref.read(settingsProvider).heartsEnabled;
-    if (!isCorrect && heartsEnabled) {
+    if (isIncorrect &&
+        heartsEnabled &&
+        !state.isExamMode &&
+        !state.inMistakeReview) {
       // Deduct from the global hearts pool so the loss persists.
-      newHearts =
-          await ref.read(gamificationProvider.notifier).onWrongAnswer();
+      newHearts = await ref.read(gamificationProvider.notifier).onWrongAnswer();
     }
 
     // During the main pass, remember wrong exercises so we can re-ask
     // them once at the end (only if there are hearts left to continue).
     var mistakeQueue = state.mistakeQueue;
-    if (!isCorrect && !state.mistakesAppended) {
+    var exercises = state.exercises;
+    FeedbackStep? feedbackStep;
+    if (isIncorrect) {
+      final priorFailures = _unsuccessfulAttempts[exercise.id] ?? 0;
+      final loopState = const LearningLoopEngine().advance(
+        LearningLoopState(
+          phase:
+              state.inMistakeReview
+                  ? LearningPhase.repair
+                  : LearningPhase.retrieve,
+          unsuccessfulAttempts: priorFailures,
+        ),
+        correct: false,
+        independent: supports.isEmpty,
+        now: DateTime.now(),
+      );
+      _unsuccessfulAttempts[exercise.id] = loopState.unsuccessfulAttempts;
+      feedbackStep = loopState.feedbackStep;
+    }
+    if (isIncorrect && !state.mistakesAppended) {
       mistakeQueue = [...state.mistakeQueue, exercise];
+    } else if (isIncorrect &&
+        state.inMistakeReview &&
+        (_unsuccessfulAttempts[exercise.id] ?? 0) < 4) {
+      exercises = [...state.exercises, exercise];
+    }
+
+    _exerciseEvidence.add(
+      ExerciseAttemptEvidence(
+        presentationId: presentationId,
+        exerciseId: exercise.id,
+        phase:
+            state.inMistakeReview
+                ? ExerciseEvidencePhase.immediateRepair
+                : ExerciseEvidencePhase.initial,
+        outcome: outcome,
+        answeredAt: DateTime.now(),
+      ),
+    );
+    final answeredAt = DateTime.now();
+    try {
+      if (ref.exists(databaseProvider)) {
+        await ref
+            .read(databaseProvider)
+            .progressDao
+            .recordLearningEvidence(
+              LearningEvidence(
+                evidenceId: 'lesson:$presentationId',
+                lessonId: state.lesson?.id ?? exercise.lessonId,
+                exerciseId: exercise.id,
+                skill: _learningSkillFor(exercise.type),
+                phase:
+                    state.inMistakeReview
+                        ? LearningPhase.repair
+                        : LearningPhase.retrieve,
+                correct: isCorrect,
+                novelTask: false,
+                supports: supports,
+                conceptKeys: {
+                  if (exercise.grammarRuleId case final key?) key,
+                  ...?((exercise.data['concept_tags'] as List?)
+                      ?.whereType<String>()),
+                },
+                responseLatency: answeredAt.difference(
+                  _presentationStartedAt ?? answeredAt,
+                ),
+                observedAt: answeredAt,
+              ),
+            );
+        ref.invalidate(learningEvidenceProvider);
+      }
+    } catch (error, stackTrace) {
+      _log.fine(
+        'Learning evidence will be recovered from lesson commit',
+        error,
+        stackTrace,
+      );
     }
 
     // Show feedback card
     state = state.copyWith(
       correctCount: state.correctCount + (isCorrect ? 1 : 0),
-      wrongCount: state.wrongCount + (isCorrect ? 0 : 1),
+      wrongCount: state.wrongCount + (isIncorrect ? 1 : 0),
+      skippedCount: state.skippedCount + (isSkipped ? 1 : 0),
       hearts: newHearts,
       totalXp: state.totalXp + (isCorrect ? xpEarned : 0),
-      lastExplanation: explanation,
-      lastCorrectAnswer: correctAnswer,
+      lastExplanation:
+          !isIncorrect || (_unsuccessfulAttempts[exercise.id] ?? 0) >= 3
+              ? explanation
+              : null,
+      lastCorrectAnswer:
+          !isIncorrect || (_unsuccessfulAttempts[exercise.id] ?? 0) >= 4
+              ? correctAnswer
+              : null,
       lastGrammarRuleId: exercise.grammarRuleId,
-      lastWasCorrect: isCorrect,
+      lastOutcome: outcome,
       showFeedback: true,
+      feedbackStep: feedbackStep,
       mistakeQueue: mistakeQueue,
+      exercises: exercises,
     );
   }
 
   /// Advance to the next exercise or complete the lesson.
-  void nextExercise() {
+  Future<void> nextExercise() async {
+    if (state.isCompleting) return;
+    _answerInFlightIndex = null;
     // Check game over FIRST — even if the last question.
     // Skip in exam mode (no hearts).
     final heartsEnabled = ref.read(settingsProvider).heartsEnabled;
@@ -259,23 +401,25 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
           exercises: [...state.exercises, ...state.mistakeQueue],
           currentIndex: nextIndex,
           showFeedback: false,
-          lastExplanation: null,
-          lastCorrectAnswer: null,
+          clearFeedback: true,
           mistakesAppended: true,
         );
+        _presentationId = _uuid.v4();
+        _presentationStartedAt = DateTime.now();
         return;
       }
       // Lesson complete
-      _onLessonComplete();
+      await _onLessonComplete();
       return;
     }
 
     state = state.copyWith(
       currentIndex: nextIndex,
       showFeedback: false,
-      lastExplanation: null,
-      lastCorrectAnswer: null,
+      clearFeedback: true,
     );
+    _presentationId = _uuid.v4();
+    _presentationStartedAt = DateTime.now();
   }
 
   /// Retry the lesson from the beginning.
@@ -284,60 +428,86 @@ class LessonSessionNotifier extends Notifier<LessonSessionState> {
     final gamification = ref.read(gamificationProvider.notifier);
     await gamification.refreshHearts();
     final hearts = ref.read(gamificationProvider).hearts;
+    _attemptId = _uuid.v4();
+    _attemptStartedAt = DateTime.now();
+    _presentationId = _uuid.v4();
+    _presentationStartedAt = DateTime.now();
+    _exerciseEvidence.clear();
+    _unsuccessfulAttempts.clear();
 
     // Restore the original exercise list (drop any appended mistake re-asks).
-    final baseExercises = state.originalCount > 0 &&
-            state.originalCount <= state.exercises.length
-        ? state.exercises.sublist(0, state.originalCount)
-        : state.exercises;
+    final baseExercises =
+        state.originalCount > 0 && state.originalCount <= state.exercises.length
+            ? state.exercises.sublist(0, state.originalCount)
+            : state.exercises;
 
     state = LessonSessionState(
       lesson: state.lesson,
       exercises: baseExercises,
       hearts: hearts,
-      isGameOver:
-          ref.read(settingsProvider).heartsEnabled && hearts <= 0,
+      isGameOver: ref.read(settingsProvider).heartsEnabled && hearts <= 0,
       originalCount: baseExercises.length,
     );
   }
 
-  /// Handle lesson completion — save progress + award XP.
-  void _onLessonComplete() {
+  /// Persist the attempt before showing success or awarding completion XP.
+  Future<void> _onLessonComplete() async {
     final lesson = state.lesson;
-    if (lesson != null) {
-      // Save progress to database (fire-and-forget with error logging)
-      final progressRepo = ref.read(progressRepositoryProvider);
-      final accuracy = state.accuracy;
-      progressRepo.recordCompletion(
-        lesson.unitId,
-        lesson.id,
-        accuracy,
-      ).then((_) {
-        // Refresh completion-derived state (unit unlocks, next lesson)
-        // now that the new completion is stored, then re-check badges
-        // against the updated snapshot.
-        ref.invalidate(completedLessonIdsProvider);
-        // Completing a lesson can unlock its words for review.
-        ref.invalidate(dueCardCountProvider);
-        return ref
-            .read(gamificationProvider.notifier)
-            .onLessonCompleted(accuracy: accuracy);
-      }).catchError((Object e, StackTrace s) {
-        // Lesson still shows as complete in the UI; progress will be
-        // re-recorded next time the lesson is finished.
-        _log.warning('Failed to record lesson completion', e, s);
-        return ref
-            .read(gamificationProvider.notifier)
-            .onLessonCompleted(accuracy: accuracy);
-      });
-    }
+    final attemptId = _attemptId;
+    final startedAt = _attemptStartedAt;
+    if (lesson == null || attemptId == null || startedAt == null) return;
 
-    state = state.copyWith(isComplete: true);
+    state = state.copyWith(isCompleting: true, clearCompletionError: true);
+    final accuracy = state.accuracy;
+    try {
+      final gamification = ref.read(gamificationProvider.notifier);
+      final activityXp = gamification.lessonCompletionXp(accuracy: accuracy);
+      final committed = await ref
+          .read(progressRepositoryProvider)
+          .recordCompletion(
+            attemptId: attemptId,
+            unitId: lesson.unitId,
+            lessonId: lesson.id,
+            score: accuracy,
+            correctCount: state.correctCount,
+            incorrectCount: state.wrongCount,
+            skippedCount: state.skippedCount,
+            startedAt: startedAt,
+            activityXp: activityXp,
+            exerciseEvidence: List.unmodifiable(_exerciseEvidence),
+          );
+
+      if (committed) {
+        await gamification.refreshAfterCommittedLesson();
+      }
+      ref.invalidate(completedLessonIdsProvider);
+      ref.invalidate(dueCardCountProvider);
+      state = state.copyWith(isCompleting: false, isComplete: true);
+    } catch (error, stackTrace) {
+      _log.warning('Failed to commit lesson completion', error, stackTrace);
+      state = state.copyWith(
+        isCompleting: false,
+        completionError: 'Couldn’t save this attempt. Please try again.',
+      );
+    }
   }
 }
 
 /// Provider for the lesson session.
 final lessonSessionProvider =
     NotifierProvider<LessonSessionNotifier, LessonSessionState>(
-  LessonSessionNotifier.new,
-);
+      LessonSessionNotifier.new,
+    );
+
+LearningSkill _learningSkillFor(ExerciseType type) => switch (type) {
+  ExerciseType.readingComprehension => LearningSkill.reading,
+  ExerciseType.listening ||
+  ExerciseType.listeningComprehension ||
+  ExerciseType.dictation => LearningSkill.listening,
+  ExerciseType.writingTask || ExerciseType.translation => LearningSkill.writing,
+  ExerciseType.speakingTask ||
+  ExerciseType.pronunciation ||
+  ExerciseType.dialogue => LearningSkill.speaking,
+  ExerciseType.matching => LearningSkill.vocabulary,
+  _ => LearningSkill.grammar,
+};

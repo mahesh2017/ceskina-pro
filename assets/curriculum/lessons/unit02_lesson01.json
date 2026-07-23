@@ -139,10 +139,11 @@
         "type": "fill_blank",
         "sentence": "_____ den, pane Novák. Jak se _____? — Dobrý den. Mám se dobře, děkuji.",
         "blank_count": 2,
-        "accepted_answers": [
-          "Dobrý|máte"
-        ],
-        "explanation": "Dobrý den (formal greeting) + Jak se máte? (formal 'how are you'). With a stranger/Mr. Novák, always use formal."
+        "explanation": "Dobrý den (formal greeting) + Jak se máte? (formal 'how are you'). With a stranger/Mr. Novák, always use formal.",
+        "blank_answers": [
+          ["Dobrý"],
+          ["máte"]
+        ]
       },
       "answer_key": "Dobrý|máte",
       "grammar_rule_id": "GR-010",
@@ -155,22 +156,12 @@
       "prompt": "Arrange: 'Ahoj, jak se máš?' (informal 'Hi, how are you?')",
       "data": {
         "type": "word_order",
-        "words": [
-          "Ahoj",
-          "jak",
-          "se",
-          "máš"
-        ],
-        "correct_order": [
-          0,
-          1,
-          2,
-          3
-        ],
+        "words": ["Ahoj,", "jak", "se", "máš?"],
+        "correct_order": [0, 1, 2, 3],
         "explanation": "Informal version: Ahoj + ty form (máš). This is for friends and people your age.",
         "translation_en": "Hi how are you?"
       },
-      "answer_key": "0,1,2,3",
+      "answer_key": "Ahoj, jak se máš?",
       "grammar_rule_id": "GR-010",
       "xp_reward": 10
     },

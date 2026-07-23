@@ -83,8 +83,10 @@
         "type": "fill_blank",
         "sentence": "Včera jsem ___ v kině. (být — I was, female speaker)",
         "blank_count": 1,
-        "accepted_answers": ["byla"],
-        "explanation": "Female speaker: 'byla jsem'. Past tense uses -l for masculine, -la for feminine, -lo for neuter: byl/byla/bylo."
+        "explanation": "Female speaker: 'byla jsem'. Past tense uses -l for masculine, -la for feminine, -lo for neuter: byl/byla/bylo.",
+        "blank_answers": [
+          ["byla"]
+        ]
       },
       "answer_key": "byla",
       "grammar_rule_id": "GR-143",
@@ -99,8 +101,10 @@
         "type": "fill_blank",
         "sentence": "Příští týden ___ cestovat do Brna. (I will)",
         "blank_count": 1,
-        "accepted_answers": ["budu"],
-        "explanation": "'Budu cestovat' = I will travel. Future tense = budu/budeš/bude/budeme/budete/budou + infinitive."
+        "explanation": "'Budu cestovat' = I will travel. Future tense = budu/budeš/bude/budeme/budete/budou + infinitive.",
+        "blank_answers": [
+          ["budu"]
+        ]
       },
       "answer_key": "budu",
       "grammar_rule_id": "GR-142",
@@ -177,7 +181,7 @@
       "prompt": "Arrange the words to form the sentence",
       "data": {
         "type": "word_order",
-        "words": ["Příští", "týden", "budu", "v", "hotelu", "—", "Next", "week", "I", "will", "be", "in", "a", "hotel"],
+        "words": ["Příští", "týden", "budu", "v", "hotelu"],
         "correct_order": [0, 1, 2, 3, 4],
         "explanation": "'Příští týden budu v hotelu.' = Next week I will be in a hotel. Subject 'já' is dropped (pro-drop). 'V hotelu' is locative."
       },
@@ -194,13 +198,28 @@
         "type": "dialogue",
         "scenario": "A friend asks about your recent trip to Prague.",
         "lines": [
-          {"speaker": "person_a", "text": "Kde jsi byl minulý týden?"},
-          {"speaker": "person_b", "text": "___ (I was in Prague.)"},
-          {"speaker": "person_a", "text": "Jaké to bylo?"},
-          {"speaker": "person_b", "text": "___ (It was great! I had a good time.)"}
+          {
+            "speaker": "person_a",
+            "text": "Kde jsi byl minulý týden?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (I was in Prague.)"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Jaké to bylo?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (It was great! I had a good time.)"
+          }
         ],
-        "accepted_answers": ["Byl jsem v Praze|Bylo to skvělé! Měl jsem se dobře", "Byla jsem v Praze|Bylo to skvělé! Měla jsem se dobře"],
-        "explanation": "'Kde jsi byl?' = Where were you? (masc). Answer: 'Byl jsem v Praze.' (masc) or 'Byla jsem v Praze.' (fem). 'Jaké to bylo?' = How was it? 'Bylo to skvělé!' = It was great!"
+        "explanation": "'Kde jsi byl?' = Where were you? (masc). Answer: 'Byl jsem v Praze.' (masc) or 'Byla jsem v Praze.' (fem). 'Jaké to bylo?' = How was it? 'Bylo to skvělé!' = It was great!",
+        "blank_answers": [
+          ["Byl jsem v Praze", "Byla jsem v Praze"],
+          ["Bylo to skvělé! Měl jsem se dobře", "Bylo to skvělé! Měla jsem se dobře"]
+        ]
       },
       "answer_key": "Byl jsem v Praze|Bylo to skvělé! Měl jsem se dobře",
       "grammar_rule_id": "GR-143",

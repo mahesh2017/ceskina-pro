@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'core/theme/app_theme.dart';
+import 'core/diagnostics/safe_diagnostics.dart';
 import 'presentation/routes/app_router.dart';
 import 'presentation/providers/database_providers.dart';
 import 'presentation/providers/settings_providers.dart';
@@ -27,14 +28,14 @@ void main() {
   // silently when launched from the home screen.
   FlutterError.onError = (details) {
     FlutterError.presentError(details);
-    Logger('FlutterError').severe(
-      details.exceptionAsString(),
+    SafeDiagnostics.error(
+      'flutter_framework',
       details.exception,
-      details.stack,
+      details.stack ?? StackTrace.current,
     );
   };
   PlatformDispatcher.instance.onError = (error, stack) {
-    Logger('PlatformDispatcher').warning('Unhandled async error', error, stack);
+    SafeDiagnostics.error('unhandled_async', error, stack);
     return true; // Suppress — the app stays alive.
   };
 

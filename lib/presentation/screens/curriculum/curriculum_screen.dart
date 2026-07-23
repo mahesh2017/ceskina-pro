@@ -24,25 +24,28 @@ class CurriculumScreen extends ConsumerWidget {
         bottom: false,
         child: unitsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (err, _) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.error_outline, size: 48, color: t.red),
-                  const SizedBox(height: 16),
-                  Text('Failed to load curriculum: $err',
-                      textAlign: TextAlign.center),
-                  const SizedBox(height: 16),
-                  FilledButton(
-                    onPressed: () => ref.invalidate(allUnitsProvider),
-                    child: const Text('Retry'),
+          error:
+              (err, _) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.error_outline, size: 48, color: t.red),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Failed to load curriculum: $err',
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      FilledButton(
+                        onPressed: () => ref.invalidate(allUnitsProvider),
+                        child: const Text('Retry'),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
           data: (units) {
             final a1Units = units.where((u) => u.phase == Phase.a1).toList();
             final a2Units = units.where((u) => u.phase == Phase.a2).toList();
@@ -70,20 +73,24 @@ class CurriculumScreen extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: SoftProgressBar(
-                        value: a1Units.isEmpty ? 0 : unlockedA1 / a1Units.length,
+                        value:
+                            a1Units.isEmpty ? 0 : unlockedA1 / a1Units.length,
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('$unlockedA1 of ${a1Units.length} units',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: t.muted)),
+                    Text(
+                      '$unlockedA1 of ${a1Units.length} units',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: t.muted,
+                      ),
+                    ),
                   ],
-                  ),
-                  const SizedBox(height: 16),
-                  // Quick reference links
-                  Row(
+                ),
+                const SizedBox(height: 16),
+                // Quick reference links
+                Row(
                   children: [
                     _ReferenceChip(
                       icon: Icons.menu_book,
@@ -103,31 +110,43 @@ class CurriculumScreen extends ConsumerWidget {
                       onTap: () => context.push('/reference/cheat_sheets'),
                     ),
                   ],
+                ),
+                const SizedBox(height: 16),
+                ...a1Units.map(
+                  (u) => Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _UnitCard(
+                      unit: u,
+                      isUnlocked: unlockedIds.contains(u.id),
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                ...a1Units.map((u) => Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: _UnitCard(unit: u, isUnlocked: unlockedIds.contains(u.id)),
-                    )),
+                ),
                 if (a2Units.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Icon(Icons.construction, size: 14, color: t.amber),
                       const SizedBox(width: 6),
-                      Text('More A2 lessons are being added',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontStyle: FontStyle.italic,
-                              color: t.amber)),
+                      Text(
+                        'More A2 lessons are being added',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontStyle: FontStyle.italic,
+                          color: t.amber,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 12),
-                  ...a2Units.map((u) => Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child:
-                            _UnitCard(unit: u, isUnlocked: unlockedIds.contains(u.id)),
-                      )),
+                  ...a2Units.map(
+                    (u) => Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: _UnitCard(
+                        unit: u,
+                        isUnlocked: unlockedIds.contains(u.id),
+                      ),
+                    ),
+                  ),
                 ],
               ],
             );
@@ -152,12 +171,14 @@ class _LevelChip extends StatelessWidget {
         color: selected ? t.priFill : t.chipBg,
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Text(label,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
-            color: selected ? t.onFill : t.muted,
-          )),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+          color: selected ? t.onFill : t.muted,
+        ),
+      ),
     );
   }
 }
@@ -171,23 +192,27 @@ class _UnitCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.tokens;
     final lessonsAsync = ref.watch(unitLessonsProvider(unit.id));
-    final completedIds = ref.watch(completedLessonIdsProvider).maybeWhen(
-          data: (ids) => ids,
-          orElse: () => const <int>{},
-        );
+    final completedIds = ref
+        .watch(completedLessonIdsProvider)
+        .maybeWhen(data: (ids) => ids, orElse: () => const <int>{});
+    final unlockedLessonIds = ref
+        .watch(unlockedLessonIdsProvider)
+        .maybeWhen(data: (ids) => ids, orElse: () => const <int>{});
     final lessons = lessonsAsync.value ?? const [];
     final doneCount = lessons.where((l) => completedIds.contains(l.id)).length;
     final allDone = lessons.isNotEmpty && doneCount == lessons.length;
     final inProgress = isUnlocked && !allDone;
 
-    final statusColor = !isUnlocked
-        ? t.faint
-        : allDone
+    final statusColor =
+        !isUnlocked
+            ? t.faint
+            : allDone
             ? t.green
             : t.pri;
-    final statusIcon = !isUnlocked
-        ? Icons.lock_outline
-        : allDone
+    final statusIcon =
+        !isUnlocked
+            ? Icons.lock_outline
+            : allDone
             ? Icons.check_circle
             : Icons.play_arrow_rounded;
 
@@ -203,8 +228,8 @@ class _UnitCard extends ConsumerWidget {
         data: Theme.of(context).copyWith(
           dividerColor: Colors.transparent,
           listTileTheme: Theme.of(context).listTileTheme.copyWith(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 18),
-              ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 18),
+          ),
         ),
         child: ExpansionTile(
           initiallyExpanded: inProgress,
@@ -232,24 +257,31 @@ class _UnitCard extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(unit.description,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, color: t.muted, height: 1.4)),
+                Text(
+                  unit.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 14, color: t.muted, height: 1.4),
+                ),
                 if (isUnlocked && lessons.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Row(
                     children: [
                       Expanded(
                         child: SoftProgressBar(
-                            value: doneCount / lessons.length, height: 5),
+                          value: doneCount / lessons.length,
+                          height: 5,
+                        ),
                       ),
                       const SizedBox(width: 8),
-                      Text('$doneCount/${lessons.length}',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: t.muted)),
+                      Text(
+                        '$doneCount/${lessons.length}',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: t.muted,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -257,41 +289,47 @@ class _UnitCard extends ConsumerWidget {
             ),
           ),
           children: lessonsAsync.when(
-            loading: () => const [
-              Padding(
-                padding: EdgeInsets.all(16),
-                child: Center(child: CircularProgressIndicator()),
-              ),
-            ],
-            error: (_, __) => [
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text('No lessons available yet',
-                    style: TextStyle(color: t.muted)),
-              ),
-            ],
+            loading:
+                () => const [
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                ],
+            error:
+                (_, __) => [
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(
+                      'No lessons available yet',
+                      style: TextStyle(color: t.muted),
+                    ),
+                  ),
+                ],
             data: (ls) {
               if (ls.isEmpty) {
                 return [
                   Padding(
                     padding: const EdgeInsets.all(12),
-                    child: Text('No lessons available yet',
-                        style: TextStyle(color: t.muted)),
+                    child: Text(
+                      'No lessons available yet',
+                      style: TextStyle(color: t.muted),
+                    ),
                   ),
                 ];
               }
               return <Widget>[
-                ...ls.map((lesson) => _LessonTile(
-                      lesson: lesson,
-                      isUnlocked: isUnlocked,
-                      isCompleted: completedIds.contains(lesson.id),
-                    )),
+                ...ls.map(
+                  (lesson) => _LessonTile(
+                    lesson: lesson,
+                    isUnlocked: unlockedLessonIds.contains(lesson.id),
+                    isCompleted: completedIds.contains(lesson.id),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: OutlinedButton.icon(
-                    onPressed: () => context.push(
-                      '/grammar?unit=${unit.id}',
-                    ),
+                    onPressed: () => context.push('/grammar?unit=${unit.id}'),
                     icon: const Icon(Icons.menu_book, size: 16),
                     label: const Text('Grammar Rules'),
                     style: OutlinedButton.styleFrom(
@@ -355,25 +393,32 @@ class _LessonTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(lesson.title,
-                      style: TextStyle(
-                          fontSize: 15.5,
-                          fontWeight: FontWeight.w600,
-                          color: isUnlocked ? t.ink : t.muted)),
-                  Text('$typeLabel · ${lesson.durationMinutes} min',
-                      style: TextStyle(fontSize: 14, color: t.muted)),
+                  Text(
+                    lesson.title,
+                    style: TextStyle(
+                      fontSize: 15.5,
+                      fontWeight: FontWeight.w600,
+                      color: isUnlocked ? t.ink : t.muted,
+                    ),
+                  ),
+                  Text(
+                    '$typeLabel · ${lesson.durationMinutes} min',
+                    style: TextStyle(fontSize: 14, color: t.muted),
+                  ),
                 ],
               ),
             ),
-            Icon(isUnlocked ? Icons.chevron_right : Icons.lock_outline,
-                size: 15, color: t.faint),
+            Icon(
+              isUnlocked ? Icons.chevron_right : Icons.lock_outline,
+              size: 15,
+              color: t.faint,
+            ),
           ],
         ),
       ),
     );
   }
 }
-
 
 class _ReferenceChip extends StatelessWidget {
   final IconData icon;
@@ -402,11 +447,14 @@ class _ReferenceChip extends StatelessWidget {
             children: [
               Icon(icon, size: 20, color: t.pri),
               const SizedBox(height: 4),
-              Text(label,
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: t.ink)),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: t.ink,
+                ),
+              ),
             ],
           ),
         ),

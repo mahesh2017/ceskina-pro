@@ -51,8 +51,12 @@
         "type": "fill_blank",
         "sentence": "Jedu do práce ___ (autem). Bratr jezdí ___ (vlakem). Sestra chodí ___ (pěšky).",
         "blank_count": 3,
-        "accepted_answers": ["autem", "vlakem", "pěšky"],
-        "explanation": "'Autem' = by car, 'vlakem' = by train (both instrumental). 'Pěšky' = on foot (adverb, not instrumental — an exception!). Transport expressions use instrumental for vehicles: letadlem (by plane), metrem (by metro), autobusem (by bus)."
+        "explanation": "'Autem' = by car, 'vlakem' = by train (both instrumental). 'Pěšky' = on foot (adverb, not instrumental — an exception!). Transport expressions use instrumental for vehicles: letadlem (by plane), metrem (by metro), autobusem (by bus).",
+        "blank_answers": [
+          ["autem"],
+          ["vlakem"],
+          ["pěšky"]
+        ]
       },
       "answer_key": "autem, vlakem, pěšky",
       "grammar_rule_id": "GR-171",
@@ -105,8 +109,12 @@
         "type": "fill_blank",
         "sentence": "Jdu s ___ (kamarád). Mluvím s ___ (bratr). Jedu s ___ (učitel).",
         "blank_count": 3,
-        "accepted_answers": ["kamarádem", "bratrem", "učitelem"],
-        "explanation": "Masculine instrumental ending: -em. 'Kamarád → kamarádem', 'bratr → bratrem' (note the fleeting -e-), 'učitel → učitelem'. Soft-stem masculine nouns take -em as well: 'muž → mužem', 'stroj → strojem'."
+        "explanation": "Masculine instrumental ending: -em. 'Kamarád → kamarádem', 'bratr → bratrem' (note the fleeting -e-), 'učitel → učitelem'. Soft-stem masculine nouns take -em as well: 'muž → mužem', 'stroj → strojem'.",
+        "blank_answers": [
+          ["kamarádem"],
+          ["bratrem"],
+          ["učitelem"]
+        ]
       },
       "answer_key": "kamarádem, bratrem, učitelem",
       "grammar_rule_id": "GR-171",
@@ -121,8 +129,12 @@
         "type": "fill_blank",
         "sentence": "Jdu s ___ (kamarádka). Mluvím s ___ (učitelka). Cestuju s ___ (máma).",
         "blank_count": 3,
-        "accepted_answers": ["kamarádkou", "učitelkou", "mámou"],
-        "explanation": "Feminine instrumental ending: -ou. 'Kamarádka → kamarádkou', 'učitelka → učitelkou', 'máma → mámou'. Soft-stem feminine nouns take -í: 'ulice → ulicí'. This is one of the most distinctive Czech case endings."
+        "explanation": "Feminine instrumental ending: -ou. 'Kamarádka → kamarádkou', 'učitelka → učitelkou', 'máma → mámou'. Soft-stem feminine nouns take -í: 'ulice → ulicí'. This is one of the most distinctive Czech case endings.",
+        "blank_answers": [
+          ["kamarádkou"],
+          ["učitelkou"],
+          ["mámou"]
+        ]
       },
       "answer_key": "kamarádkou, učitelkou, mámou",
       "grammar_rule_id": "GR-171",
@@ -170,8 +182,12 @@
         "type": "fill_blank",
         "sentence": "Před ___ (rok) jsem byl v Praze. Před ___ (týden) jsem mluvil s Janou. Před ___ (měsíc) jsem začal novou práci.",
         "blank_count": 3,
-        "accepted_answers": ["rokem", "týdnem", "měsícem"],
-        "explanation": "'Před' + instrumental for time expressions: 'před rokem' (a year ago), 'před týdnem' (a week ago), 'před měsícem' (a month ago). All use the instrumental ending -em for masculine nouns."
+        "explanation": "'Před' + instrumental for time expressions: 'před rokem' (a year ago), 'před týdnem' (a week ago), 'před měsícem' (a month ago). All use the instrumental ending -em for masculine nouns.",
+        "blank_answers": [
+          ["rokem"],
+          ["týdnem"],
+          ["měsícem"]
+        ]
       },
       "answer_key": "rokem, týdnem, měsícem",
       "grammar_rule_id": "GR-173",
@@ -184,7 +200,7 @@
       "prompt": "Arrange the words to form: 'I go to work by car.'",
       "data": {
         "type": "word_order",
-        "words": ["Jedu", "do", "práce", "autem", "—", "I", "go", "to", "work", "by", "car"],
+        "words": ["Jedu", "do", "práce", "autem"],
         "correct_order": [0, 1, 2, 3],
         "explanation": "'Jedu do práce autem.' = I go to work by car. Word order: verb (jedu) + destination (do práce) + means (autem). 'Autem' is instrumental of 'auto'."
       },

@@ -17,13 +17,27 @@
         "type": "dialogue",
         "scenario": "Pronajímatel a nájemník — A landlord and prospective tenant discuss an apartment for rent.",
         "lines": [
-          {"speaker": "person_a", "text": "Dobrý den, mám zájem o ten byt. Kolik stojí nájemné?"},
-          {"speaker": "person_b", "text": "Nájemné je patnáct tisíc korun za měsíc. Kauce je dvě měsíční nájemné."},
-          {"speaker": "person_a", "text": "Je byt s nábytkem nebo bez nábytku?"},
-          {"speaker": "person_b", "text": "Byt je s nábytkem. Musíte podepsat nájemní smlouvu."}
+          {
+            "speaker": "person_a",
+            "text": "Dobrý den, mám zájem o ten byt. Kolik stojí nájemné?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Je byt s nábytkem nebo bez nábytku?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Byt je s nábytkem. Musíte podepsat nájemní smlouvu."
+          }
         ],
-        "accepted_answers": ["Nájemné je patnáct tisíc korun za měsíc. Kauce je dvě měsíční nájemné.|Nájemné je patnáct tisíc korun za měsíc.|Kauce je dvě měsíční nájemné."],
-        "explanation": "'Nájemné' = rent (payment). 'Kauce' = deposit. 'Za měsíc' = per month. 'S nábytkem' = furnished (s + instrumental). 'Bez nábytku' = unfurnished (bez + genitive). 'Nájemní smlouva' = rental contract. 'Mám zájem o' = I'm interested in (o + accusative)."
+        "explanation": "'Nájemné' = rent (payment). 'Kauce' = deposit. 'Za měsíc' = per month. 'S nábytkem' = furnished (s + instrumental). 'Bez nábytku' = unfurnished (bez + genitive). 'Nájemní smlouva' = rental contract. 'Mám zájem o' = I'm interested in (o + accusative).",
+        "blank_answers": [
+          ["Nájemné je patnáct tisíc korun za měsíc. Kauce je dvě měsíční nájemné.", "Nájemné je patnáct tisíc korun za měsíc.", "Kauce je dvě měsíční nájemné."]
+        ]
       },
       "answer_key": "Nájemné je patnáct tisíc korun za měsíc. Kauce je dvě měsíční nájemné.",
       "grammar_rule_id": "GR-252",
@@ -72,8 +86,10 @@
         "type": "fill_blank",
         "sentence": "Byt je ___ nábytkem. (with furniture)",
         "blank_count": 1,
-        "accepted_answers": ["s"],
-        "explanation": "'S' + instrumental = with. 'Byt je s nábytkem.' = The apartment is furnished (literally 'with furniture'). 'Nábytek' → instrumental 'nábytkem'. The opposite is 'bez nábytku' = unfurnished (bez + genitive)."
+        "explanation": "'S' + instrumental = with. 'Byt je s nábytkem.' = The apartment is furnished (literally 'with furniture'). 'Nábytek' → instrumental 'nábytkem'. The opposite is 'bez nábytku' = unfurnished (bez + genitive).",
+        "blank_answers": [
+          ["s"]
+        ]
       },
       "answer_key": "s",
       "grammar_rule_id": "GR-251",
@@ -88,8 +104,10 @@
         "type": "fill_blank",
         "sentence": "Stěhuji se ___ nového bytu. (to a new apartment)",
         "blank_count": 1,
-        "accepted_answers": ["do"],
-        "explanation": "'Do' + genitive = to/into (direction). 'Stěhuji se do nového bytu.' = I am moving to a new apartment. 'Nový byt' → genitive 'nového bytu'. 'Stěhovat se' = to move (reflexive). Note: 'se' is required — 'stěhuji se' not just 'stěhuji'."
+        "explanation": "'Do' + genitive = to/into (direction). 'Stěhuji se do nového bytu.' = I am moving to a new apartment. 'Nový byt' → genitive 'nového bytu'. 'Stěhovat se' = to move (reflexive). Note: 'se' is required — 'stěhuji se' not just 'stěhuji'.",
+        "blank_answers": [
+          ["do"]
+        ]
       },
       "answer_key": "do",
       "grammar_rule_id": "GR-252",
@@ -159,7 +177,8 @@
         "sentence_with_error": "Byt je s nábytek.",
         "hint": "Think about which case 's' (with) requires.",
         "accepted_answers": ["Byt je s nábytkem.", "Byt je s nábytkem."],
-        "explanation": "'S' (with) + instrumental case: nábytek → nábytkem. 'Byt je s nábytkem.' = The apartment is furnished. The error was using the accusative/nominative 'nábytek' instead of the instrumental 'nábytkem'. Masculine inanimate nouns add -em in the instrumental: nábytek → nábytkem."
+        "explanation": "'S' (with) + instrumental case: nábytek → nábytkem. 'Byt je s nábytkem.' = The apartment is furnished. The error was using the accusative/nominative 'nábytek' instead of the instrumental 'nábytkem'. Masculine inanimate nouns add -em in the instrumental: nábytek → nábytkem.",
+        "correct_sentence_cz": "Byt je s nábytkem."
       },
       "answer_key": "Byt je s nábytkem.",
       "grammar_rule_id": "GR-251",
@@ -189,9 +208,9 @@
       "prompt": "Arrange the words to form: 'I have to sign the rental contract.'",
       "data": {
         "type": "word_order",
-        "scrambled": ["smlouvu", "Musím", "nájemní", "podepsat"],
-        "correct_order": ["Musím", "podepsat", "nájemní", "smlouvu"],
-        "explanation": "'Musím podepsat nájemní smlouvu.' = I have to sign the rental contract. Word order: modal verb (musím) + infinitive (podepsat) + adjective (nájemní) + noun accusative (smlouvu). 'Smlouva' → accusative 'smlouvu' as the object of 'podepsat'."
+        "correct_order": [1, 3, 2, 0],
+        "explanation": "'Musím podepsat nájemní smlouvu.' = I have to sign the rental contract. Word order: modal verb (musím) + infinitive (podepsat) + adjective (nájemní) + noun accusative (smlouvu). 'Smlouva' → accusative 'smlouvu' as the object of 'podepsat'.",
+        "words": ["smlouvu", "Musím", "nájemní", "podepsat"]
       },
       "answer_key": "Musím podepsat nájemní smlouvu.",
       "grammar_rule_id": "GR-252",

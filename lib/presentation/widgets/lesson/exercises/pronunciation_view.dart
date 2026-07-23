@@ -29,6 +29,32 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
   String? feedback;
   bool hasRecorded = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _scopeTargetToExercise();
+  }
+
+  @override
+  void didUpdateWidget(covariant PronunciationView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.exercise.id != widget.exercise.id) {
+      score = null;
+      feedback = null;
+      hasRecorded = false;
+      _scopeTargetToExercise();
+    }
+  }
+
+  void _scopeTargetToExercise() {
+    final exerciseId = widget.exercise.id;
+    final targetText = widget.exercise.data['target_text'] as String;
+    Future.microtask(() {
+      if (!mounted || widget.exercise.id != exerciseId) return;
+      ref.read(pronunciationProvider.notifier).setExpectedText(targetText);
+    });
+  }
+
   Future<void> _toggleRecording() async {
     if (ref.read(pronunciationProvider).isProcessing) return;
 
@@ -47,7 +73,9 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
       hasRecorded = false;
     });
 
-    await notifier.startRecording();
+    await notifier.startRecording(
+      expectedText: widget.exercise.data['target_text'] as String,
+    );
   }
 
   void _submitResult() {
@@ -58,7 +86,8 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
     widget.onAnswered(
       ExerciseResult(
         isCorrect: passed,
-        explanation: data['note'] as String? ??
+        explanation:
+            data['note'] as String? ??
             (passed
                 ? 'Good pronunciation!'
                 : 'Try again — focus on the highlighted sounds.'),
@@ -113,9 +142,9 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
                     const SizedBox(height: 8),
                     Text(
                       translation,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey,
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -181,10 +210,10 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
             isRecording
                 ? 'Listening... tap to stop'
                 : isProcessing
-                    ? 'Analyzing...'
-                    : hasRecorded
-                        ? 'Recorded! Tap to try again'
-                        : 'Tap to record',
+                ? 'Analyzing...'
+                : hasRecorded
+                ? 'Recorded! Tap to try again'
+                : 'Tap to record',
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
@@ -207,9 +236,9 @@ class _PronunciationViewState extends ConsumerState<PronunciationView> {
           if (!isProcessing)
             TextButton(
               onPressed: () => widget.onAnswered(
-                ExerciseResult(
-                  isCorrect: true,
-                  explanation: 'Skipped — keep practising this one aloud with '
+                ExerciseResult.skipped(
+                  explanation:
+                      'Skipped — keep practising this one aloud with '
                       'the 🔊 button.',
                   correctAnswer: targetText,
                 ),

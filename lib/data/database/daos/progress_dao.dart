@@ -4,27 +4,333 @@ import '../database.dart';
 import '../tables/lesson_progress.dart';
 import '../tables/earned_badges.dart';
 import '../tables/user_progress.dart';
+import '../tables/lesson_attempts.dart';
+import '../tables/reward_ledger.dart';
+import '../tables/gamification_state.dart';
+import '../tables/exercise_attempts.dart';
+import '../tables/learning_evidence_events.dart';
+import '../tables/placement_profiles.dart';
+import '../tables/delayed_transfer_assignments.dart';
+import '../../../domain/entities/exercise_attempt_evidence.dart';
+import '../../../domain/entities/exercise_outcome.dart';
+import '../../../domain/entities/learning_evidence.dart';
+import '../../../domain/engines/placement_engine.dart';
 
 part 'progress_dao.g.dart';
 
 /// Data access object for progress, badges, and lesson completion.
-@DriftAccessor(tables: [LessonProgress, EarnedBadges, UserProgress])
+@DriftAccessor(
+  tables: [
+    LessonProgress,
+    EarnedBadges,
+    UserProgress,
+    LessonAttempts,
+    RewardLedger,
+    GamificationStateTable,
+    ExerciseAttempts,
+    LearningEvidenceEvents,
+    PlacementProfiles,
+    DelayedTransferAssignments,
+  ],
+)
 class ProgressDao extends DatabaseAccessor<AppDatabase>
     with _$ProgressDaoMixin {
   ProgressDao(super.db);
 
+  Future<bool> recordLearningEvidence(LearningEvidence evidence) =>
+      attachedDatabase.transaction(() async {
+        final duplicate =
+            await (select(learningEvidenceEvents)..where(
+              (row) => row.evidenceId.equals(evidence.evidenceId),
+            )).getSingleOrNull();
+        if (duplicate != null) return false;
+        await into(learningEvidenceEvents).insert(
+          LearningEvidenceEventsCompanion.insert(
+            evidenceId: evidence.evidenceId,
+            lessonId: evidence.lessonId,
+            exerciseId: Value(evidence.exerciseId),
+            skill: evidence.skill.name,
+            phase: evidence.phase.name,
+            correct: evidence.correct,
+            novelTask: evidence.novelTask,
+            supportsJson: Value(
+              jsonEncode(evidence.supports.map((value) => value.name).toList()),
+            ),
+            conceptKeysJson: Value(jsonEncode(evidence.conceptKeys.toList())),
+            responseLatencyMs: evidence.responseLatency.inMilliseconds,
+            observedAt: evidence.observedAt,
+          ),
+        );
+        return true;
+      });
+
+  Future<List<LearningEvidence>> getLearningEvidence() async {
+    final rows =
+        await (select(learningEvidenceEvents)
+          ..orderBy([(row) => OrderingTerm.asc(row.observedAt)])).get();
+    return rows
+        .map(
+          (row) => LearningEvidence(
+            evidenceId: row.evidenceId,
+            lessonId: row.lessonId,
+            exerciseId: row.exerciseId,
+            skill:
+                LearningSkill.values.asNameMap()[row.skill] ??
+                LearningSkill.grammar,
+            phase:
+                LearningPhase.values.asNameMap()[row.phase] ??
+                LearningPhase.retrieve,
+            correct: row.correct,
+            novelTask: row.novelTask,
+            supports:
+                (jsonDecode(row.supportsJson) as List)
+                    .whereType<String>()
+                    .map((name) => SupportKind.values.asNameMap()[name])
+                    .whereType<SupportKind>()
+                    .toSet(),
+            conceptKeys:
+                (jsonDecode(row.conceptKeysJson) as List)
+                    .whereType<String>()
+                    .toSet(),
+            responseLatency: Duration(milliseconds: row.responseLatencyMs),
+            observedAt: row.observedAt,
+          ),
+        )
+        .toList();
+  }
+
+  Future<void> savePlacement(
+    PlacementResult result, {
+    int? learnerOverrideUnit,
+  }) => into(placementProfiles).insertOnConflictUpdate(
+    PlacementProfilesCompanion.insert(
+      key: const Value('primary'),
+      provisionalUnit: result.provisionalUnit,
+      learnerOverrideUnit: Value(learnerOverrideUnit),
+      estimatesJson: jsonEncode({
+        for (final entry in result.estimates.entries)
+          entry.key.name: entry.value,
+      }),
+      sampleSize: result.sampleSize,
+      updatedAt: DateTime.now(),
+    ),
+  );
+
+  Future<List<DelayedTransferAssignment>> getDueTransfers(DateTime asOf) {
+    return (select(delayedTransferAssignments)
+          ..where(
+            (row) =>
+                row.status.equals('pending') &
+                row.dueAt.isSmallerOrEqualValue(asOf),
+          )
+          ..orderBy([(row) => OrderingTerm.asc(row.dueAt)]))
+        .get();
+  }
+
+  Future<bool> completeTransfer({
+    required String assignmentId,
+    required LearningEvidence evidence,
+  }) => attachedDatabase.transaction(() async {
+    final assignment =
+        await (select(delayedTransferAssignments)..where(
+          (row) => row.assignmentId.equals(assignmentId),
+        )).getSingleOrNull();
+    if (assignment == null || assignment.status != 'pending') return false;
+    if (!evidence.isDelayedTransfer ||
+        evidence.lessonId != assignment.lessonId ||
+        evidence.exerciseId == assignment.sourceExerciseId ||
+        evidence.observedAt.isBefore(assignment.dueAt)) {
+      throw ArgumentError(
+        'Transfer evidence must be due and use a novel task for the source lesson',
+      );
+    }
+    final inserted = await recordLearningEvidence(evidence);
+    if (!inserted) return false;
+    await _reestimatePlacementFrom(evidence);
+    await (update(delayedTransferAssignments)
+      ..where((row) => row.assignmentId.equals(assignmentId))).write(
+      DelayedTransferAssignmentsCompanion(
+        status: const Value('completed'),
+        completedEvidenceId: Value(evidence.evidenceId),
+        completedAt: Value(evidence.observedAt),
+      ),
+    );
+    return true;
+  });
+
+  Future<void> _reestimatePlacementFrom(LearningEvidence evidence) async {
+    final profile =
+        await (select(placementProfiles)
+          ..where((row) => row.key.equals('primary'))).getSingleOrNull();
+    if (profile == null) return;
+
+    final decoded = jsonDecode(profile.estimatesJson);
+    if (decoded is! Map<String, dynamic>) return;
+    final estimates = <String, double>{
+      for (final entry in decoded.entries)
+        if (entry.value is num) entry.key: (entry.value as num).toDouble(),
+    };
+    final key = evidence.skill.name;
+    final current = estimates[key];
+    if (current == null) return;
+    final adjustment =
+        evidence.correct && evidence.independent
+            ? 0.05
+            : evidence.correct
+            ? -0.03
+            : -0.12;
+    estimates[key] = (current + adjustment).clamp(0.0, 1.0);
+    final required =
+        PlacementEngine.requiredSkills
+            .map((skill) => estimates[skill.name])
+            .whereType<double>()
+            .toList();
+    if (required.isEmpty) return;
+    final conservative = required.reduce((a, b) => a < b ? a : b);
+    final inferredUnit = switch (conservative) {
+      < 0.35 => 1,
+      < 0.5 => 6,
+      < 0.65 => 12,
+      < 0.78 => 18,
+      _ => 24,
+    };
+    await (update(placementProfiles)
+      ..where((row) => row.key.equals('primary'))).write(
+      PlacementProfilesCompanion(
+        provisionalUnit: Value(profile.learnerOverrideUnit ?? inferredUnit),
+        estimatesJson: Value(jsonEncode(estimates)),
+        updatedAt: Value(evidence.observedAt),
+      ),
+    );
+  }
+
   // ── Lesson Progress ──
 
-  Future<void> recordLessonCompletion({
+  /// Atomically records immutable attempt evidence and updates the aggregate.
+  ///
+  /// Returns false when [attemptId] was already committed. This makes delayed
+  /// callbacks and explicit persistence retries safe.
+  Future<bool> recordLessonCompletion({
+    required String attemptId,
     required int lessonId,
     required int unitId,
     required double score,
+    required int correctCount,
+    required int incorrectCount,
+    required int skippedCount,
+    required DateTime startedAt,
+    required int activityXp,
+    required List<ExerciseAttemptEvidence> exerciseEvidence,
+    String phase = 'initial',
   }) => attachedDatabase.transaction(() async {
+    final duplicate =
+        await (select(lessonAttempts)
+          ..where((row) => row.attemptId.equals(attemptId))).getSingleOrNull();
+    if (duplicate != null) return false;
+
+    final now = DateTime.now();
+    await into(lessonAttempts).insert(
+      LessonAttemptsCompanion.insert(
+        attemptId: attemptId,
+        lessonId: lessonId,
+        unitId: unitId,
+        phase: phase,
+        score: score,
+        correctCount: correctCount,
+        incorrectCount: incorrectCount,
+        skippedCount: skippedCount,
+        startedAt: startedAt,
+        committedAt: now,
+      ),
+    );
+
+    if (exerciseEvidence.isNotEmpty) {
+      await batch((batch) {
+        batch.insertAll(
+          exerciseAttempts,
+          exerciseEvidence
+              .map(
+                (evidence) => ExerciseAttemptsCompanion.insert(
+                  presentationId: evidence.presentationId,
+                  lessonAttemptId: attemptId,
+                  exerciseId: evidence.exerciseId,
+                  phase: evidence.phase.storageValue,
+                  outcome: evidence.outcome.name,
+                  answeredAt: evidence.answeredAt,
+                ),
+              )
+              .toList(),
+        );
+      });
+      final transferDue = now.add(const Duration(days: 7));
+      final transferSources = exerciseEvidence.where(
+        (evidence) =>
+            evidence.phase == ExerciseEvidencePhase.initial &&
+            evidence.outcome == ExerciseOutcome.incorrect,
+      );
+      for (final evidence in transferSources) {
+        await into(delayedTransferAssignments).insert(
+          DelayedTransferAssignmentsCompanion.insert(
+            assignmentId: 'transfer:$attemptId:${evidence.exerciseId}',
+            sourceAttemptId: attemptId,
+            lessonId: lessonId,
+            sourceExerciseId: evidence.exerciseId,
+            dueAt: transferDue,
+            createdAt: now,
+          ),
+          mode: InsertMode.insertOrIgnore,
+        );
+      }
+    }
+
+    await into(rewardLedger).insert(
+      RewardLedgerCompanion.insert(
+        rewardId: 'lesson:$attemptId',
+        sourceId: attemptId,
+        rewardType: 'lesson_completion',
+        xp: activityXp,
+        awardedAt: now,
+      ),
+    );
+
+    final gamification =
+        await (select(gamificationStateTable)
+          ..where((row) => row.key.equals('primary'))).getSingleOrNull();
+    final today = DateTime(now.year, now.month, now.day).toIso8601String();
+    final priorDailyXp =
+        gamification?.dailyXpResetDate == today
+            ? gamification?.dailyXp ?? 0
+            : 0;
+    final totalXp = (gamification?.totalXp ?? 0) + activityXp;
+    final dailyXp = priorDailyXp + activityXp;
+    final earnedBadges = gamification?.earnedBadges ?? '[]';
+
+    await into(gamificationStateTable).insertOnConflictUpdate(
+      GamificationStateTableCompanion.insert(
+        key: 'primary',
+        hearts: Value(gamification?.hearts ?? 5),
+        maxHearts: Value(gamification?.maxHearts ?? 5),
+        currentStreak: Value(gamification?.currentStreak ?? 0),
+        longestStreak: Value(gamification?.longestStreak ?? 0),
+        totalXp: Value(totalXp),
+        dailyXp: Value(dailyXp),
+        dailyGoalXp: Value(gamification?.dailyGoalXp ?? 50),
+        gems: Value(gamification?.gems ?? 0),
+        earnedBadges: Value(earnedBadges),
+        lastHeartRefill: Value(gamification?.lastHeartRefill),
+        streakFreezeAvailable: Value(
+          gamification?.streakFreezeAvailable ?? true,
+        ),
+        lastOpenDate: Value(gamification?.lastOpenDate),
+        dailyXpResetDate: Value(today),
+        updatedAt: Value(now),
+      ),
+    );
+
     final existing =
         await (select(lessonProgress)
           ..where((l) => l.lessonId.equals(lessonId))).getSingleOrNull();
 
-    final now = DateTime.now();
     final bestScore =
         existing == null
             ? score
@@ -66,6 +372,28 @@ class ProgressDao extends DatabaseAccessor<AppDatabase>
         'last_attempted': now.toUtc().toIso8601String(),
       },
     );
+    await attachedDatabase.syncDao.enqueue(
+      entity: 'gamification_state',
+      entityKey: 'primary',
+      payload: {
+        'key': 'primary',
+        'hearts': gamification?.hearts ?? 5,
+        'max_hearts': gamification?.maxHearts ?? 5,
+        'current_streak': gamification?.currentStreak ?? 0,
+        'longest_streak': gamification?.longestStreak ?? 0,
+        'total_xp': totalXp,
+        'daily_xp': dailyXp,
+        'daily_goal_xp': gamification?.dailyGoalXp ?? 50,
+        'gems': gamification?.gems ?? 0,
+        'earned_badges': jsonDecode(earnedBadges),
+        'last_heart_refill':
+            gamification?.lastHeartRefill?.toUtc().toIso8601String(),
+        'streak_freeze_available': gamification?.streakFreezeAvailable ?? true,
+        'last_open_date': gamification?.lastOpenDate,
+        'daily_xp_reset_date': today,
+      },
+    );
+    return true;
   });
 
   Future<List<LessonProgressData>> getCompletedLessons() {

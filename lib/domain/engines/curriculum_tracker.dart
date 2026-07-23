@@ -35,10 +35,29 @@ class CurriculumProgressTracker {
     required Set<int> phaseUnitIds,
   }) {
     if (phaseUnitIds.isEmpty) return 0.0;
-    final mastered = phaseUnitIds
-        .where((id) => (unitScores[id] ?? 0.0) >= masteryThreshold)
-        .length;
+    final mastered =
+        phaseUnitIds
+            .where((id) => (unitScores[id] ?? 0.0) >= masteryThreshold)
+            .length;
     return mastered / phaseUnitIds.length;
+  }
+
+  /// Fraction of required lessons completed across the whole phase.
+  double phaseLessonCoverage({
+    required Map<int, int> completedLessonsByUnit,
+    required Map<int, int> totalLessonsByUnit,
+    required Set<int> phaseUnitIds,
+  }) {
+    final required = phaseUnitIds.fold<int>(
+      0,
+      (sum, id) => sum + (totalLessonsByUnit[id] ?? 0),
+    );
+    if (required == 0) return 0;
+    final completed = phaseUnitIds.fold<int>(
+      0,
+      (sum, id) => sum + (completedLessonsByUnit[id] ?? 0),
+    );
+    return (completed / required).clamp(0.0, 1.0);
   }
 
   /// Determine CEFR level estimate from phase completion + passed exams.

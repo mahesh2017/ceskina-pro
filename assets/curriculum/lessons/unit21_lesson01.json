@@ -50,8 +50,10 @@
         "type": "fill_blank",
         "sentence": "Dnes je ___ než včera. (teplý — today is warmer than yesterday)",
         "blank_count": 1,
-        "accepted_answers": ["teplejší"],
-        "explanation": "'teplý' → 'teplejší' (warmer). Most -ý adjectives form the comparative by replacing -ý with -ější: teplý → teplejší, chladný → chladnější, zajímavý → zajímavější."
+        "explanation": "'teplý' → 'teplejší' (warmer). Most -ý adjectives form the comparative by replacing -ý with -ější: teplý → teplejší, chladný → chladnější, zajímavý → zajímavější.",
+        "blank_answers": [
+          ["teplejší"]
+        ]
       },
       "answer_key": "teplejší",
       "grammar_rule_id": "GR-200",
@@ -100,8 +102,10 @@
         "type": "fill_blank",
         "sentence": "Praha je ___ než Brno. (velký)",
         "blank_count": 1,
-        "accepted_answers": ["větší"],
-        "explanation": "'velký' → 'větší' (bigger). This is an irregular comparative — note the stem change from 'velk-' to 'vět-'. 'Praha je větší než Brno.' = Prague is bigger than Brno."
+        "explanation": "'velký' → 'větší' (bigger). This is an irregular comparative — note the stem change from 'velk-' to 'vět-'. 'Praha je větší než Brno.' = Prague is bigger than Brno.",
+        "blank_answers": [
+          ["větší"]
+        ]
       },
       "answer_key": "větší",
       "grammar_rule_id": "GR-201",
@@ -116,8 +120,10 @@
         "type": "fill_blank",
         "sentence": "Můj byt je ___ než tvůj. (malý — smaller than yours)",
         "blank_count": 1,
-        "accepted_answers": ["menší"],
-        "explanation": "'malý' → 'menší' (smaller). Another irregular comparative with a stem change. The four irregulars form the core of everyday comparisons: lepší, horší, větší, menší."
+        "explanation": "'malý' → 'menší' (smaller). Another irregular comparative with a stem change. The four irregulars form the core of everyday comparisons: lepší, horší, větší, menší.",
+        "blank_answers": [
+          ["menší"]
+        ]
       },
       "answer_key": "menší",
       "grammar_rule_id": "GR-201",
@@ -165,8 +171,10 @@
         "type": "fill_blank",
         "sentence": "Káva je ___ než čaj.",
         "blank_count": 1,
-        "accepted_answers": ["lepší"],
-        "explanation": "'lepší' = better (irregular comparative of 'dobrý'). 'Káva je lepší než čaj.' = Coffee is better than tea. The structure is always: comparative + 'než' + the item being compared."
+        "explanation": "'lepší' = better (irregular comparative of 'dobrý'). 'Káva je lepší než čaj.' = Coffee is better than tea. The structure is always: comparative + 'než' + the item being compared.",
+        "blank_answers": [
+          ["lepší"]
+        ]
       },
       "answer_key": "lepší",
       "grammar_rule_id": "GR-202",

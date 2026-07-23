@@ -18,6 +18,15 @@ import 'tables/earned_badges.dart';
 import 'tables/lesson_progress.dart';
 import 'tables/sync_queue.dart';
 import 'tables/gamification_state.dart';
+import 'tables/lesson_attempts.dart';
+import 'tables/reward_ledger.dart';
+import 'tables/exercise_attempts.dart';
+import 'tables/review_attempts.dart';
+import 'tables/content_release_installations.dart';
+import 'tables/content_release_packs.dart';
+import 'tables/learning_evidence_events.dart';
+import 'tables/placement_profiles.dart';
+import 'tables/delayed_transfer_assignments.dart';
 import 'daos/curriculum_dao.dart';
 import 'daos/vocabulary_dao.dart';
 import 'daos/conversation_dao.dart';
@@ -45,8 +54,24 @@ part 'database.g.dart';
     SyncQueue,
     SyncState,
     GamificationStateTable,
+    LessonAttempts,
+    RewardLedger,
+    ExerciseAttempts,
+    ReviewAttempts,
+    ContentReleaseInstallations,
+    ContentReleasePacks,
+    LearningEvidenceEvents,
+    PlacementProfiles,
+    DelayedTransferAssignments,
   ],
-  daos: [CurriculumDao, VocabularyDao, ConversationDao, ProgressDao, SyncDao, GamificationDao],
+  daos: [
+    CurriculumDao,
+    VocabularyDao,
+    ConversationDao,
+    ProgressDao,
+    SyncDao,
+    GamificationDao,
+  ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
@@ -55,7 +80,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 17;
 
   /// Portable snapshot of learner-created state. Bundled curriculum rows are
   /// intentionally excluded because they are app content, not user data.
@@ -64,6 +89,32 @@ class AppDatabase extends _$AppDatabase {
     'exported_at': DateTime.now().toUtc().toIso8601String(),
     'lesson_progress':
         (await select(lessonProgress).get())
+            .map((row) => row.toJson())
+            .toList(),
+    'lesson_attempts':
+        (await select(lessonAttempts).get())
+            .map((row) => row.toJson())
+            .toList(),
+    'reward_ledger':
+        (await select(rewardLedger).get()).map((row) => row.toJson()).toList(),
+    'exercise_attempts':
+        (await select(exerciseAttempts).get())
+            .map((row) => row.toJson())
+            .toList(),
+    'review_attempts':
+        (await select(reviewAttempts).get())
+            .map((row) => row.toJson())
+            .toList(),
+    'learning_evidence':
+        (await select(learningEvidenceEvents).get())
+            .map((row) => row.toJson())
+            .toList(),
+    'placement_profiles':
+        (await select(placementProfiles).get())
+            .map((row) => row.toJson())
+            .toList(),
+    'delayed_transfer_assignments':
+        (await select(delayedTransferAssignments).get())
             .map((row) => row.toJson())
             .toList(),
     'earned_badges':
@@ -91,10 +142,23 @@ class AppDatabase extends _$AppDatabase {
 
   /// Removes learner-created state before an account switch or after account
   /// deletion. Bundled curriculum/grammar/vocabulary remain available offline.
-  Future<void> clearLearnerData() => transaction(() async {
+  Future<void> clearLearnerData() => transaction(clearLearnerDataRows);
+
+  /// Clears learner-owned rows in the caller's current transaction.
+  ///
+  /// Account switching uses this inside a larger transaction so a failed
+  /// remote install restores the previous account's complete local state.
+  Future<void> clearLearnerDataRows() async {
     await delete(chatMessages).go();
     await delete(conversations).go();
     await delete(examResults).go();
+    await delete(lessonAttempts).go();
+    await delete(rewardLedger).go();
+    await delete(exerciseAttempts).go();
+    await delete(reviewAttempts).go();
+    await delete(learningEvidenceEvents).go();
+    await delete(placementProfiles).go();
+    await delete(delayedTransferAssignments).go();
     await delete(lessonProgress).go();
     await delete(earnedBadges).go();
     await delete(userProgress).go();
@@ -104,12 +168,40 @@ class AppDatabase extends _$AppDatabase {
     await delete(syncQueue).go();
     await delete(syncState).go();
     await delete(gamificationStateTable).go();
-  });
+
+    // Reset bundled vocabulary to usable new-card state immediately. Waiting
+    // for a future app restart/seeder pass would leave the review deck empty
+    // after account deletion or switching.
+    final bundledIds =
+        await (select(flashcards)..where(
+          (row) =>
+              row.id.isSmallerOrEqualValue(900000) & row.isActive.equals(true),
+        )).map((row) => row.id).get();
+    if (bundledIds.isNotEmpty) {
+      final now = DateTime.now();
+      await batch((batch) {
+        batch.insertAll(
+          srsCards,
+          bundledIds
+              .map(
+                (id) => SrsCardsCompanion.insert(
+                  cardType: 'vocabulary',
+                  flashcardId: Value(id),
+                  due: Value(now),
+                ),
+              )
+              .toList(),
+        );
+      });
+    }
+  }
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
       await m.createAll();
+      await _createSrsNaturalKeyIndexes();
+      await _createContentReleaseStateIndexes();
     },
     onUpgrade: (m, from, to) async {
       // v2: per-lesson gating — flashcards learn which lesson taught
@@ -137,11 +229,123 @@ class AppDatabase extends _$AppDatabase {
       if (from < 6) {
         await m.createTable(gamificationStateTable);
       }
+      // v7: immutable, caller-keyed lesson attempt evidence.
+      if (from < 7) {
+        await m.createTable(lessonAttempts);
+      }
+      // v8: append-only, deterministic activity rewards.
+      if (from < 8) {
+        await m.createTable(rewardLedger);
+      }
+      // v9: immutable per-presentation exercise evidence.
+      if (from < 9) {
+        await m.createTable(exerciseAttempts);
+      }
+      // v10: one scheduling row per vocabulary card or grammar pattern.
+      if (from < 10) {
+        await customStatement('''
+          DELETE FROM srs_cards
+          WHERE card_type = 'vocabulary'
+            AND flashcard_id IS NOT NULL
+            AND id NOT IN (
+              SELECT MAX(id) FROM srs_cards
+              WHERE card_type = 'vocabulary' AND flashcard_id IS NOT NULL
+              GROUP BY flashcard_id
+            )
+        ''');
+        await customStatement('''
+          DELETE FROM srs_cards
+          WHERE card_type = 'grammar'
+            AND grammar_pattern_key IS NOT NULL
+            AND id NOT IN (
+              SELECT MAX(id) FROM srs_cards
+              WHERE card_type = 'grammar'
+                AND grammar_pattern_key IS NOT NULL
+              GROUP BY grammar_pattern_key
+            )
+        ''');
+        await _createSrsNaturalKeyIndexes();
+      }
+      // v11: immutable, idempotent committed review evidence.
+      if (from < 11) {
+        await m.createTable(reviewAttempts);
+      }
+      // v12: verified active/previous content releases for offline rollback.
+      if (from < 12) {
+        await m.createTable(contentReleaseInstallations);
+        await m.createTable(contentReleasePacks);
+        await _createContentReleaseStateIndexes();
+      }
+      // v13: reversible retirement for release-managed curriculum rows.
+      if (from < 13) {
+        await m.addColumn(units, units.isActive);
+        await m.addColumn(lessons, lessons.isActive);
+        await m.addColumn(exercises, exercises.isActive);
+        await m.addColumn(flashcards, flashcards.isActive);
+        await m.addColumn(grammarRules, grammarRules.isActive);
+      }
+      // v14: durable, support-aware learning evidence and provisional
+      // placement. These are local-first learner records, not curriculum.
+      if (from < 14) {
+        await m.createTable(learningEvidenceEvents);
+        await m.createTable(placementProfiles);
+      }
+      // v15: restart-safe seven-day transfer work generated from independent
+      // first-pass errors.
+      if (from < 15) {
+        await m.createTable(delayedTransferAssignments);
+      }
+      // v16: canonical lexical identity and provenance. Existing bundled
+      // rows are backfilled by the content seeder on the same launch.
+      if (from < 16) {
+        await m.addColumn(flashcards, flashcards.lemma);
+        await m.addColumn(flashcards, flashcards.senseKey);
+        await m.addColumn(flashcards, flashcards.partOfSpeech);
+        await m.addColumn(flashcards, flashcards.morphologyJson);
+        await m.addColumn(flashcards, flashcards.registerLabel);
+        await m.addColumn(flashcards, flashcards.pronunciationSource);
+      }
+      // v17: stable UUID identity for user-created cards, so two devices'
+      // manual cards cannot collide on the same sync content_key. Existing
+      // manual cards (local id >= 900000, no unit) are backfilled with a UUID.
+      if (from < 17) {
+        await m.addColumn(flashcards, flashcards.contentUid);
+        await customStatement('''
+          UPDATE flashcards SET content_uid = lower(hex(randomblob(16)))
+          WHERE content_uid IS NULL AND id >= 900000
+        ''');
+      }
     },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
     },
   );
+
+  Future<void> _createSrsNaturalKeyIndexes() async {
+    await customStatement('''
+      CREATE UNIQUE INDEX IF NOT EXISTS srs_cards_vocabulary_key
+      ON srs_cards(flashcard_id)
+      WHERE card_type = 'vocabulary' AND flashcard_id IS NOT NULL
+    ''');
+    await customStatement('''
+      CREATE UNIQUE INDEX IF NOT EXISTS srs_cards_grammar_key
+      ON srs_cards(grammar_pattern_key)
+      WHERE card_type = 'grammar' AND grammar_pattern_key IS NOT NULL
+    ''');
+  }
+
+  Future<void> _createContentReleaseStateIndexes() async {
+    await customStatement('''
+      CREATE UNIQUE INDEX IF NOT EXISTS content_release_single_active
+      ON content_release_installations(is_active)
+      WHERE is_active = 1
+    ''');
+    await customStatement('''
+      CREATE UNIQUE INDEX IF NOT EXISTS content_release_single_previous
+      ON content_release_installations(is_previous)
+      WHERE is_previous = 1
+    ''');
+  }
 }
 
 LazyDatabase _openConnection() {

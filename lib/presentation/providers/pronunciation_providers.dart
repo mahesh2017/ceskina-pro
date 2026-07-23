@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/pronunciation_result.dart';
 import 'stt_providers.dart';
-import 'gamification_providers.dart';
 
 /// State of a pronunciation practice session.
 class PronunciationState {
@@ -12,6 +11,7 @@ class PronunciationState {
   final bool isProcessing;
   final String? error;
   final bool usedWhisper;
+  final int attemptId;
 
   const PronunciationState({
     required this.expectedText,
@@ -21,6 +21,7 @@ class PronunciationState {
     this.isProcessing = false,
     this.error,
     this.usedWhisper = false,
+    this.attemptId = 0,
   });
 
   PronunciationState copyWith({
@@ -31,6 +32,7 @@ class PronunciationState {
     bool? isProcessing,
     String? error,
     bool? usedWhisper,
+    int? attemptId,
   }) {
     return PronunciationState(
       expectedText: expectedText ?? this.expectedText,
@@ -40,6 +42,7 @@ class PronunciationState {
       isProcessing: isProcessing ?? this.isProcessing,
       error: error,
       usedWhisper: usedWhisper ?? this.usedWhisper,
+      attemptId: attemptId ?? this.attemptId,
     );
   }
 }
@@ -50,25 +53,37 @@ class PronunciationState {
 /// transcription with word-level confidence) and falls back to OS-native
 /// STT when the backend is unavailable.
 class PronunciationNotifier extends Notifier<PronunciationState> {
+  var _attemptSequence = 0;
+
   @override
   PronunciationState build() => const PronunciationState(expectedText: '');
 
   /// Set the expected text to practice.
   void setExpectedText(String text) {
-    state = PronunciationState(expectedText: text);
+    if (text == state.expectedText &&
+        !state.isRecording &&
+        !state.isProcessing) {
+      return;
+    }
+    _attemptSequence++;
+    state = PronunciationState(expectedText: text, attemptId: _attemptSequence);
   }
 
   /// Start recording and assess pronunciation.
-  Future<void> startRecording() async {
+  Future<void> startRecording({required String expectedText}) async {
     if (state.isRecording || state.isProcessing) return;
 
-    state = state.copyWith(isRecording: true, error: null, result: null);
+    final attemptId = ++_attemptSequence;
+    state = PronunciationState(
+      expectedText: expectedText,
+      isRecording: true,
+      attemptId: attemptId,
+    );
 
     try {
       final assessor = ref.read(pronunciationAssessmentProvider);
-      final assessment = await assessor.assess(
-        expectedText: state.expectedText,
-      );
+      final assessment = await assessor.assess(expectedText: expectedText);
+      if (!ref.mounted || state.attemptId != attemptId) return;
 
       state = state.copyWith(
         isRecording: false,
@@ -77,11 +92,8 @@ class PronunciationNotifier extends Notifier<PronunciationState> {
         result: assessment.result,
         usedWhisper: assessment.usedWhisper,
       );
-
-      // Award XP for pronunciation practice
-      final gamification = ref.read(gamificationProvider.notifier);
-      gamification.onPronunciationDrill(accuracy: assessment.result.overallScore);
     } catch (e) {
+      if (!ref.mounted || state.attemptId != attemptId) return;
       state = state.copyWith(
         isRecording: false,
         isProcessing: false,
@@ -92,18 +104,38 @@ class PronunciationNotifier extends Notifier<PronunciationState> {
 
   /// Stop recording (if in progress).
   Future<void> stopRecording() async {
+    final expectedText = state.expectedText;
+    final attemptId = ++_attemptSequence;
+    state = PronunciationState(
+      expectedText: expectedText,
+      isProcessing: true,
+      attemptId: attemptId,
+    );
     final assessor = ref.read(pronunciationAssessmentProvider);
-    await assessor.stop();
-    state = state.copyWith(isRecording: false);
+    try {
+      await assessor.stop();
+    } finally {
+      if (ref.mounted && state.attemptId == attemptId) {
+        state = PronunciationState(
+          expectedText: expectedText,
+          attemptId: attemptId,
+        );
+      }
+    }
   }
 
   /// Reset for a new attempt.
   void reset() {
-    state = PronunciationState(expectedText: state.expectedText);
+    _attemptSequence++;
+    state = PronunciationState(
+      expectedText: state.expectedText,
+      attemptId: _attemptSequence,
+    );
   }
 }
 
 /// Provider for the pronunciation state.
 final pronunciationProvider =
     NotifierProvider<PronunciationNotifier, PronunciationState>(
-        PronunciationNotifier.new,);
+      PronunciationNotifier.new,
+    );

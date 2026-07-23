@@ -49,11 +49,19 @@
         "type": "dialogue",
         "scenario": "Ordering at a Czech restaurant",
         "lines": [
-          {"speaker": "Číšník", "text": "Dobrý den, co si dáte?"},
-          {"speaker": "Host", "text": "___ (I'll have the goulash)"}
+          {
+            "speaker": "Číšník",
+            "text": "Dobrý den, co si dáte?"
+          },
+          {
+            "speaker": "Host",
+            "text": "___ (I'll have the goulash)"
+          }
         ],
-        "accepted_answers": ["Dám si guláš", "Dám si guláš.", "Dal bych si guláš", "Chtěl bych guláš"],
-        "explanation": "Dám si guláš = I'll have the goulash. Co si dáte? = What will you have? (formal/plural)"
+        "explanation": "Dám si guláš = I'll have the goulash. Co si dáte? = What will you have? (formal/plural)",
+        "blank_answers": [
+          ["Dám si guláš", "Dám si guláš.", "Dal bych si guláš", "Chtěl bych guláš"]
+        ]
       },
       "answer_key": "Dám si guláš",
       "grammar_rule_id": "GR-103",
@@ -68,8 +76,12 @@
         "type": "fill_blank",
         "sentence": "___ (I would like) ___ (svíčková) s ___ (knedlíky).",
         "blank_count": 3,
-        "accepted_answers": ["Chtěl bych", "svíčkovou", "knedlíky"],
-        "explanation": "Chtěl bych = I would like (male speaker). svíčková → accusative svíčkovou. knedlíky stay the same (plural accusative = nominative)."
+        "explanation": "Chtěl bych = I would like (male speaker). svíčková → accusative svíčkovou. knedlíky stay the same (plural accusative = nominative).",
+        "blank_answers": [
+          ["Chtěl bych"],
+          ["svíčkovou"],
+          ["knedlíky"]
+        ]
       },
       "answer_key": "Chtěl bych svíčkovou knedlíky",
       "grammar_rule_id": "GR-103",
@@ -117,11 +129,19 @@
         "type": "dialogue",
         "scenario": "After finishing the main course",
         "lines": [
-          {"speaker": "Číšník", "text": "Ještě něco?"},
-          {"speaker": "Host", "text": "___ (No thanks, the bill please)"}
+          {
+            "speaker": "Číšník",
+            "text": "Ještě něco?"
+          },
+          {
+            "speaker": "Host",
+            "text": "___ (No thanks, the bill please)"
+          }
         ],
-        "accepted_answers": ["Ne, děkuji, platit, prosím", "Ne, díky, zaplatím", "Ne děkuji, účet prosím", "Ne, děkuji, zaplatím, prosím"],
-        "explanation": "Ještě něco? = Anything else? Common response: Ne, děkuji, platit prosím = No thanks, the bill please."
+        "explanation": "Ještě něco? = Anything else? Common response: Ne, děkuji, platit prosím = No thanks, the bill please.",
+        "blank_answers": [
+          ["Ne, děkuji, platit, prosím", "Ne, díky, zaplatím", "Ne děkuji, účet prosím", "Ne, děkuji, zaplatím, prosím"]
+        ]
       },
       "answer_key": "Ne, děkuji, platit, prosím",
       "grammar_rule_id": "GR-103",
@@ -185,8 +205,13 @@
         "type": "fill_blank",
         "sentence": "Číšník: Co ___ (you will have)? Host: ___ (I'll have) ___ (fried cheese) a ___ (beer).",
         "blank_count": 4,
-        "accepted_answers": ["si dáte", "Dám si", "smažený sýr", "pivo"],
-        "explanation": "Co si dáte? = What will you have? (formal). Dám si smažený sýr = I'll have fried cheese."
+        "explanation": "Co si dáte? = What will you have? (formal). Dám si smažený sýr = I'll have fried cheese.",
+        "blank_answers": [
+          ["si dáte"],
+          ["Dám si"],
+          ["smažený sýr"],
+          ["pivo"]
+        ]
       },
       "answer_key": "si dáte Dám si smažený sýr pivo",
       "grammar_rule_id": "GR-103",
@@ -201,13 +226,28 @@
         "type": "dialogue",
         "scenario": "Ordering a full meal at a Czech restaurant",
         "lines": [
-          {"speaker": "Číšník", "text": "Dobrý večer, co si dáte?"},
-          {"speaker": "Host", "text": "Dám si ___ (svíčková with dumplings) a jedno pivo, prosím."},
-          {"speaker": "Číšník", "text": "Ještě něco?"},
-          {"speaker": "Host", "text": "Ne, ___ (that's all), děkuji."}
+          {
+            "speaker": "Číšník",
+            "text": "Dobrý večer, co si dáte?"
+          },
+          {
+            "speaker": "Host",
+            "text": "Dám si ___ (svíčková with dumplings) a jedno pivo, prosím."
+          },
+          {
+            "speaker": "Číšník",
+            "text": "Ještě něco?"
+          },
+          {
+            "speaker": "Host",
+            "text": "Ne, ___ (that's all), děkuji."
+          }
         ],
-        "accepted_answers": ["svíčkovou s knedlíkem", "to je všechno"],
-        "explanation": "svíčková → accusative svíčkovou. 'To je všechno' = that's all/everything."
+        "explanation": "svíčková → accusative svíčkovou. 'To je všechno' = that's all/everything.",
+        "blank_answers": [
+          ["svíčkovou s knedlíkem"],
+          ["to je všechno"]
+        ]
       },
       "answer_key": "svíčkovou s knedlíkem to je všechno",
       "grammar_rule_id": "GR-103",

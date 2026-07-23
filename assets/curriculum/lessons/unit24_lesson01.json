@@ -91,8 +91,10 @@
         "type": "fill_blank",
         "sentence": "Bolí mě ____.",
         "blank_count": 1,
-        "accepted_answers": ["hlava"],
-        "explanation": "'Bolí mě hlava.' = My head hurts. 'Hlava' = head. The structure 'bolí mě + [body part in nominative]' is the standard way to express pain in Czech."
+        "explanation": "'Bolí mě hlava.' = My head hurts. 'Hlava' = head. The structure 'bolí mě + [body part in nominative]' is the standard way to express pain in Czech.",
+        "blank_answers": [
+          ["hlava"]
+        ]
       },
       "answer_key": "hlava",
       "grammar_rule_id": "GR-231",
@@ -107,8 +109,10 @@
         "type": "fill_blank",
         "sentence": "Jsem ____.",
         "blank_count": 1,
-        "accepted_answers": ["nemocný", "nemocná"],
-        "explanation": "'Jsem nemocný.' = I am sick (masculine). 'Jsem nemocná.' = I am sick (feminine). The adjective 'nemocný/nemocná' agrees with the speaker's gender. 'Nemoc' is the noun (illness), 'nemocný' is the adjective (sick/ill)."
+        "explanation": "'Jsem nemocný.' = I am sick (masculine). 'Jsem nemocná.' = I am sick (feminine). The adjective 'nemocný/nemocná' agrees with the speaker's gender. 'Nemoc' is the noun (illness), 'nemocný' is the adjective (sick/ill).",
+        "blank_answers": [
+          ["nemocný", "nemocná"]
+        ]
       },
       "answer_key": "nemocný",
       "grammar_rule_id": "GR-231",
@@ -187,7 +191,7 @@
       "data": {
         "type": "word_order",
         "words": ["horečku", "Mám", "teplotu"],
-        "correct_order": [1, 0, -1],
+        "correct_order": [1, 0],
         "explanation": "'Mám horečku.' = I have a fever. The correct sentence uses 'Mám' (I have) + 'horečku' (fever - accusative). 'Teplotu' (temperature) is a distractor — the more specific word for fever is 'horečka'. Alternative: 'Mám teplotu' (I have a temperature) is also valid."
       },
       "answer_key": "Mám horečku.",

@@ -22,8 +22,7 @@ class PronunciationScreen extends ConsumerStatefulWidget {
       _PronunciationScreenState();
 }
 
-class _PronunciationScreenState
-    extends ConsumerState<PronunciationScreen> {
+class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
   @override
   void initState() {
     super.initState();
@@ -53,23 +52,24 @@ class _PronunciationScreenState
                   children: [
                     Text(
                       'Say this:',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: Colors.grey,
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelMedium?.copyWith(color: Colors.grey),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       pronState.expectedText,
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
                     // TTS button to hear correct pronunciation
                     IconButton(
                       onPressed: () {
-                        ref.read(czechTtsProvider).speak(pronState.expectedText);
+                        ref
+                            .read(czechTtsProvider)
+                            .speak(pronState.expectedText);
                       },
                       icon: const Icon(Icons.volume_up, size: 28),
                       color: Theme.of(context).colorScheme.primary,
@@ -111,7 +111,9 @@ class _PronunciationScreenState
                 if (pronState.isRecording) {
                   ref.read(pronunciationProvider.notifier).stopRecording();
                 } else {
-                  ref.read(pronunciationProvider.notifier).startRecording();
+                  ref
+                      .read(pronunciationProvider.notifier)
+                      .startRecording(expectedText: pronState.expectedText);
                 }
               },
             ),
@@ -179,10 +181,7 @@ class _RecordingIndicatorState extends State<_RecordingIndicator>
         const SizedBox(height: 16),
         const Text(
           'Listening...',
-          style: TextStyle(
-            color: Colors.red,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -234,13 +233,7 @@ class _ScoreDisplay extends StatelessWidget {
                           color: color,
                         ),
                       ),
-                      Text(
-                        label,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: color,
-                        ),
-                      ),
+                      Text(label, style: TextStyle(fontSize: 14, color: color)),
                     ],
                   ),
                 ),
@@ -262,16 +255,18 @@ class _ScoreDisplay extends StatelessWidget {
               decoration: BoxDecoration(
                 color: wordColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: wordColor.withValues(alpha: 0.3),
-                ),
+                border: Border.all(color: wordColor.withValues(alpha: 0.3)),
               ),
               child: Text(
                 ws.word,
                 style: TextStyle(
                   color: wordColor,
-                  fontWeight: ws.isCorrect ? FontWeight.bold : FontWeight.normal,
-                  decoration: ws.isCorrect ? TextDecoration.none : TextDecoration.none,
+                  fontWeight: ws.isCorrect
+                      ? FontWeight.bold
+                      : FontWeight.normal,
+                  decoration: ws.isCorrect
+                      ? TextDecoration.none
+                      : TextDecoration.none,
                 ),
               ),
             );
@@ -290,7 +285,11 @@ class _ScoreDisplay extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.warning_amber, color: Colors.orange.shade700, size: 20),
+                      Icon(
+                        Icons.warning_amber,
+                        color: Colors.orange.shade700,
+                        size: 20,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         'Sounds to practice:',
@@ -308,7 +307,10 @@ class _ScoreDisplay extends StatelessWidget {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.orange.shade100,
                               borderRadius: BorderRadius.circular(4),

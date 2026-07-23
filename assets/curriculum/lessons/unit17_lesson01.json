@@ -50,8 +50,10 @@
         "type": "fill_blank",
         "sentence": "Jedeme k ___ . (město — to the city)",
         "blank_count": 1,
-        "accepted_answers": ["městu"],
-        "explanation": "Neuter nouns take -u in dative: město → městu. Nouns ending in -e/-ě or -í take -i: moře → moři, náměstí → náměstí."
+        "explanation": "Neuter nouns take -u in dative: město → městu. Nouns ending in -e/-ě or -í take -i: moře → moři, náměstí → náměstí.",
+        "blank_answers": [
+          ["městu"]
+        ]
       },
       "answer_key": "městu",
       "grammar_rule_id": "GR-160",
@@ -66,8 +68,10 @@
         "type": "fill_blank",
         "sentence": "Dávám dárek ___ . (Pavel)",
         "blank_count": 1,
-        "accepted_answers": ["Pavlovi"],
-        "explanation": "Animate masculine names take -ovi in dative: Pavel → Pavlovi. Likewise: Petr → Petrovi, Tomáš → Tomášovi. 'Dávat' = to give, requires dative for the recipient."
+        "explanation": "Animate masculine names take -ovi in dative: Pavel → Pavlovi. Likewise: Petr → Petrovi, Tomáš → Tomášovi. 'Dávat' = to give, requires dative for the recipient.",
+        "blank_answers": [
+          ["Pavlovi"]
+        ]
       },
       "answer_key": "Pavlovi",
       "grammar_rule_id": "GR-160",
@@ -120,8 +124,10 @@
         "type": "fill_blank",
         "sentence": "Kupuju ___ květiny. (maminka)",
         "blank_count": 1,
-        "accepted_answers": ["mamince"],
-        "explanation": "'Maminka' → dative 'mamince'. Feminine nouns in -ka change k → c before -e (the ě softens): maminka → mamince. 'Kupuju mamince květiny.' = I'm buying flowers for mom."
+        "explanation": "'Maminka' → dative 'mamince'. Feminine nouns in -ka change k → c before -e (the ě softens): maminka → mamince. 'Kupuju mamince květiny.' = I'm buying flowers for mom.",
+        "blank_answers": [
+          ["mamince"]
+        ]
       },
       "answer_key": "mamince",
       "grammar_rule_id": "GR-162",
@@ -185,8 +191,10 @@
         "type": "fill_blank",
         "sentence": "Dávám ___ bonbón. (dítě — to the child)",
         "blank_count": 1,
-        "accepted_answers": ["dítěti"],
-        "explanation": "'Dítě' is an irregular neuter noun. Its dative form is 'dítěti' (not 'dítu'). Many irregular nouns have special dative forms: člověk → člověku, přítel → příteli."
+        "explanation": "'Dítě' is an irregular neuter noun. Its dative form is 'dítěti' (not 'dítu'). Many irregular nouns have special dative forms: člověk → člověku, přítel → příteli.",
+        "blank_answers": [
+          ["dítěti"]
+        ]
       },
       "answer_key": "dítěti",
       "grammar_rule_id": "GR-160",

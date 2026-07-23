@@ -12,6 +12,7 @@ class ExamScores {
   final int speaking; // 0-100
   final int total; // 0-100
   final bool passed;
+  final bool fullyScored;
 
   /// Raw points earned per section (CCE format: reading 25, writing 20,
   /// listening 25, speaking 40).
@@ -35,6 +36,7 @@ class ExamScores {
     required this.speaking,
     required this.total,
     required this.passed,
+    required this.fullyScored,
     this.readingPoints = 0,
     this.listeningPoints = 0,
     this.writingPoints = 0,
@@ -89,7 +91,10 @@ class ExamGrader {
           readingPoints = _gradeChoiceSection(section, answers[s] ?? const {});
         case ExamSectionType.listening:
           listeningMax = section.maxScore;
-          listeningPoints = _gradeChoiceSection(section, answers[s] ?? const {});
+          listeningPoints = _gradeChoiceSection(
+            section,
+            answers[s] ?? const {},
+          );
         case ExamSectionType.writing:
           writingMax = section.maxScore;
           break; // scored externally
@@ -100,6 +105,9 @@ class ExamGrader {
     }
 
     // External scores come in as 0-100 percentages; convert to raw points.
+    final fullyScored =
+        (writingMax == 0 || writingScore != null) &&
+        (speakingMax == 0 || speakingScore != null);
     final writingPct = (writingScore ?? 0).clamp(0, 100);
     final speakingPct = (speakingScore ?? 0).clamp(0, 100);
     final writingPts = ((writingPct / 100) * writingMax).round();
@@ -115,7 +123,8 @@ class ExamGrader {
     final writing = writingPct;
     final speaking = speakingPct;
 
-    final totalPoints = readingPoints + writingPts + listeningPoints + speakingPts;
+    final totalPoints =
+        readingPoints + writingPts + listeningPoints + speakingPts;
     final totalMax = readingMax + writingMax + listeningMax + speakingMax;
 
     // Dual pass threshold: ≥60% in written parts AND ≥60% in speaking.
@@ -127,7 +136,9 @@ class ExamGrader {
     final speakingPctCalculated = speakingMax > 0
         ? (speakingPts / speakingMax * 100).round()
         : 0;
-    final passed = writtenPct >= passThreshold &&
+    final passed =
+        fullyScored &&
+        writtenPct >= passThreshold &&
         speakingPctCalculated >= passThreshold;
 
     // Total as overall percentage.
@@ -142,6 +153,7 @@ class ExamGrader {
       speaking: speaking,
       total: total,
       passed: passed,
+      fullyScored: fullyScored,
       readingPoints: readingPoints,
       listeningPoints: listeningPoints,
       writingPoints: writingPts,
@@ -157,7 +169,9 @@ class ExamGrader {
 
   /// Grade a multiple-choice section and return raw points earned.
   int _gradeChoiceSection(
-      MockExamSection section, Map<int, dynamic> sectionAnswers,) {
+    MockExamSection section,
+    Map<int, dynamic> sectionAnswers,
+  ) {
     if (section.questions.isEmpty) return 0;
 
     var earnedPoints = 0;
@@ -169,7 +183,8 @@ class ExamGrader {
       final userAnswer = sectionAnswers[q];
       if (userAnswer != null && userAnswer == correctAnswer) {
         // Each question's point value, defaulting to evenly divided points.
-        final points = section.questions[q]['points'] as int? ??
+        final points =
+            section.questions[q]['points'] as int? ??
             (section.maxScore ~/ section.questions.length);
         earnedPoints += points;
       }

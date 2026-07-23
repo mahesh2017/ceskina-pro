@@ -10,6 +10,7 @@ class FakeSyncBackend implements SyncBackend {
   final rows = <String, List<Map<String, dynamic>>>{};
   final sentKeys = <String>[];
   final failingKeys = <String>{};
+  final failingPullEntities = <String>{};
   Completer<void>? sendGate;
   int activeSends = 0;
   int maxActiveSends = 0;
@@ -44,15 +45,16 @@ class FakeSyncBackend implements SyncBackend {
     required PullCursor? cursor,
     required int limit,
   }) async {
+    if (failingPullEntities.contains(entity)) {
+      throw StateError('pull rejected for $entity');
+    }
     final source = rows[entity] ?? const [];
-    return source
+    final ordered = [...source]
+      ..sort((a, b) => (a['revision'] as num).compareTo(b['revision'] as num));
+    return ordered
         .where((row) {
           if (cursor == null) return true;
-          final timestamp = DateTime.parse(row['updated_at'] as String);
-          final id = (row['sync_id'] as num).toInt();
-          return timestamp.isAfter(cursor.updatedAt) ||
-              (timestamp.isAtSameMomentAs(cursor.updatedAt) &&
-                  id > cursor.syncId);
+          return (row['revision'] as num).toInt() > cursor.revision;
         })
         .take(limit)
         .toList();
@@ -123,12 +125,12 @@ void main() {
     },
   );
 
-  test('composite cursor pulls every row sharing the same timestamp', () async {
+  test('revision cursor paginates every row across pages', () async {
     final timestamp = DateTime.utc(2026, 7, 20, 12).toIso8601String();
     backend.rows['lesson_progress'] = List.generate(205, (index) {
       final id = index + 1;
       return {
-        'sync_id': id,
+        'revision': id,
         'updated_at': timestamp,
         'device_id': 'remote-device',
         'lesson_id': id,
@@ -147,9 +149,51 @@ void main() {
       hasLength(205),
     );
     final cursor = await database.syncDao.pullCursor('lesson_progress');
-    expect(cursor?.updatedAt.toUtc(), DateTime.parse(timestamp));
-    expect(cursor?.syncId, 205);
+    expect(cursor?.revision, 205);
   });
+
+  test(
+    'a lower updated_at but higher revision is never stranded (clock skew)',
+    () async {
+      // First pull sees one row at revision 10.
+      backend.rows['lesson_progress'] = [
+        {
+          'revision': 10,
+          'updated_at': DateTime.utc(2026, 7, 20, 12).toIso8601String(),
+          'device_id': 'remote-device',
+          'lesson_id': 1,
+          'unit_id': 1,
+          'is_completed': true,
+          'best_score': 80.0,
+          'attempts': 1,
+          'last_attempted': DateTime.utc(2026, 7, 20, 12).toIso8601String(),
+        },
+      ];
+      await service.pull();
+      expect(await database.syncDao.pullCursor('lesson_progress'), isNotNull);
+
+      // A second device (lagging clock) writes an EARLIER updated_at but the
+      // server stamps a HIGHER revision. Under the old (updated_at, sync_id)
+      // cursor this row was stranded; under revision it must still be pulled.
+      backend.rows['lesson_progress']!.add({
+        'revision': 11,
+        'updated_at': DateTime.utc(2026, 7, 20, 9).toIso8601String(),
+        'device_id': 'remote-device',
+        'lesson_id': 2,
+        'unit_id': 1,
+        'is_completed': true,
+        'best_score': 90.0,
+        'attempts': 1,
+        'last_attempted': DateTime.utc(2026, 7, 20, 9).toIso8601String(),
+      });
+
+      await service.pull();
+
+      final rows = await database.select(database.lessonProgress).get();
+      expect(rows.map((r) => r.lessonId), containsAll(<int>[1, 2]));
+      expect((await database.syncDao.pullCursor('lesson_progress'))?.revision, 11);
+    },
+  );
 
   test(
     'gamification state is pulled without echoing into the outbox',
@@ -157,7 +201,7 @@ void main() {
       final timestamp = DateTime.utc(2026, 7, 20, 13).toIso8601String();
       backend.rows['gamification_state'] = [
         {
-          'sync_id': 1,
+          'revision': 1,
           'updated_at': timestamp,
           'device_id': 'remote-device',
           'key': 'primary',
@@ -184,6 +228,49 @@ void main() {
       expect(state?.totalXp, 240);
       expect(state?.earnedBadges, '["first","streak_7"]');
       expect(await database.syncDao.pendingCount(), 0);
+    },
+  );
+
+  test(
+    'strict account install rolls local data back when pull fails',
+    () async {
+      await database.customStatement(
+        "INSERT INTO user_progress (key,value) VALUES ('streak','9')",
+      );
+      backend.failingPullEntities.add('lesson_progress');
+      await service.beginAccountTransition();
+
+      try {
+        await expectLater(
+          database.transaction(() async {
+            await database.clearLearnerDataRows();
+            await service.pullForAccountInstall();
+          }),
+          throwsStateError,
+        );
+      } finally {
+        service.endAccountTransition();
+      }
+
+      final rows = await database.select(database.userProgress).get();
+      expect(rows, hasLength(1));
+      expect(rows.single.key, 'streak');
+      expect(rows.single.value, '9');
+    },
+  );
+
+  test(
+    'ordinary sync cannot push while an account transition is paused',
+    () async {
+      await enqueue('old-account-row');
+      await service.beginAccountTransition();
+      try {
+        await service.sync();
+        expect(backend.sentKeys, isEmpty);
+        expect(await database.syncDao.pendingCount(), 1);
+      } finally {
+        service.endAccountTransition();
+      }
     },
   );
 }

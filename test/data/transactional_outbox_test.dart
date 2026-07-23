@@ -26,15 +26,29 @@ void main() {
 
     await expectLater(
       database.progressDao.recordLessonCompletion(
+        attemptId: 'attempt-outbox-failure',
         lessonId: 101,
         unitId: 1,
         score: 0.8,
+        correctCount: 4,
+        incorrectCount: 1,
+        skippedCount: 0,
+        startedAt: DateTime.utc(2026, 7, 23),
+        activityXp: 20,
+        exerciseEvidence: const [],
       ),
       throwsA(anything),
     );
 
     final rows = await database.select(database.lessonProgress).get();
     expect(rows, isEmpty);
+    expect(await database.select(database.lessonAttempts).get(), isEmpty);
+    expect(await database.select(database.rewardLedger).get(), isEmpty);
+    expect(await database.select(database.exerciseAttempts).get(), isEmpty);
+    expect(
+      await database.select(database.gamificationStateTable).get(),
+      isEmpty,
+    );
   });
 
   test('badge and KV progress roll back when outbox writes fail', () async {

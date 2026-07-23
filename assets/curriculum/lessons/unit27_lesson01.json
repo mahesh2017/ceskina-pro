@@ -68,8 +68,10 @@
         "type": "fill_blank",
         "sentence": "Každé ráno ___ do školy pěšky.",
         "blank_count": 1,
-        "accepted_answers": ["chodím"],
-        "explanation": "'Každé ráno chodím do školy pěšky.' = Every morning I go to school on foot. 'Každé ráno' (every morning) signals a habitual/repeated action, so we use 'chodit' → 'chodím' (1st person singular). 'Pěšky' (on foot) confirms walking. Use 'chodit' for regular, repeated trips on foot."
+        "explanation": "'Každé ráno chodím do školy pěšky.' = Every morning I go to school on foot. 'Každé ráno' (every morning) signals a habitual/repeated action, so we use 'chodit' → 'chodím' (1st person singular). 'Pěšky' (on foot) confirms walking. Use 'chodit' for regular, repeated trips on foot.",
+        "blank_answers": [
+          ["chodím"]
+        ]
       },
       "answer_key": "chodím",
       "grammar_rule_id": "GR-260",
@@ -84,8 +86,10 @@
         "type": "fill_blank",
         "sentence": "Právě teď ___ do Brna autem.",
         "blank_count": 1,
-        "accepted_answers": ["jedeme"],
-        "explanation": "'Právě teď jedeme do Brna autem.' = Right now we are going to Brno by car. 'Právě teď' (right now) signals a one-time action, so we use 'jet' → 'jedeme' (1st person plural). 'Autem' (by car) confirms vehicle travel. Use 'jet' for a single, specific trip by vehicle happening now."
+        "explanation": "'Právě teď jedeme do Brna autem.' = Right now we are going to Brno by car. 'Právě teď' (right now) signals a one-time action, so we use 'jet' → 'jedeme' (1st person plural). 'Autem' (by car) confirms vehicle travel. Use 'jet' for a single, specific trip by vehicle happening now.",
+        "blank_answers": [
+          ["jedeme"]
+        ]
       },
       "answer_key": "jedeme",
       "grammar_rule_id": "GR-260",

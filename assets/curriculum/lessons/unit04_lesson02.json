@@ -83,8 +83,10 @@
         "type": "fill_blank",
         "sentence": "___ je to? (Who is it?)",
         "blank_count": 1,
-        "accepted_answers": ["Kdo"],
-        "explanation": "'Kdo' = who. 'Kdo je to?' = Who is it? Used with 3rd person singular 'je'."
+        "explanation": "'Kdo' = who. 'Kdo je to?' = Who is it? Used with 3rd person singular 'je'.",
+        "blank_answers": [
+          ["Kdo"]
+        ]
       },
       "answer_key": "Kdo",
       "grammar_rule_id": "GR-033",
@@ -99,8 +101,10 @@
         "type": "fill_blank",
         "sentence": "___ máš? (What do you have?)",
         "blank_count": 1,
-        "accepted_answers": ["Co"],
-        "explanation": "'Co' = what. 'Co máš?' = What do you have? Used with 2nd person singular 'máš'."
+        "explanation": "'Co' = what. 'Co máš?' = What do you have? Used with 2nd person singular 'máš'.",
+        "blank_answers": [
+          ["Co"]
+        ]
       },
       "answer_key": "Co",
       "grammar_rule_id": "GR-033",
@@ -194,13 +198,27 @@
         "type": "dialogue",
         "scenario": "Meeting a new classmate — ask where they are from and if they have a car",
         "lines": [
-          {"speaker": "person_a", "text": "Ahoj! Jsem Tomáš. Jsi student?"},
-          {"speaker": "person_b", "text": "Ano, jsem student. A ty?"},
-          {"speaker": "person_a", "text": "Také jsem student. Odkud jsi?"},
-          {"speaker": "person_b", "text": "___"}
+          {
+            "speaker": "person_a",
+            "text": "Ahoj! Jsem Tomáš. Jsi student?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ano, jsem student. A ty?"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Také jsem student. Odkud jsi?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          }
         ],
-        "accepted_answers": ["Jsem z Prahy", "Jsem z Brna", "Jsem z Ostravy", "Jsem z Plzně", "Jsem z Česka"],
-        "explanation": "When asked 'Odkud jsi?' (Where are you from?), answer with 'Jsem z + [genitive of city]'. Examples: Praha→Prahy, Brno→Brna, Ostrava→Ostravy, Plzeň→Plzně, Česko→Česka."
+        "explanation": "When asked 'Odkud jsi?' (Where are you from?), answer with 'Jsem z + [genitive of city]'. Examples: Praha→Prahy, Brno→Brna, Ostrava→Ostravy, Plzeň→Plzně, Česko→Česka.",
+        "blank_answers": [
+          ["Jsem z Prahy", "Jsem z Brna", "Jsem z Ostravy", "Jsem z Plzně", "Jsem z Česka"]
+        ]
       },
       "answer_key": "Jsem z Prahy|Jsem z Brna|Jsem z Ostravy|Jsem z Plzně|Jsem z Česka",
       "grammar_rule_id": "GR-033",

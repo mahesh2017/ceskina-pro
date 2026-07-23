@@ -17,13 +17,15 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
 
   Future<List<Unit>> getUnitsByPhase(String phase) {
     return (select(units)
-          ..where((u) => u.phase.equals(phase))
+          ..where((u) => u.phase.equals(phase) & u.isActive.equals(true))
           ..orderBy([(u) => OrderingTerm.asc(u.orderIndex)]))
         .get();
   }
 
   Future<Unit?> getUnit(int unitId) {
-    return (select(units)..where((u) => u.id.equals(unitId))).getSingleOrNull();
+    return (select(units)..where(
+      (u) => u.id.equals(unitId) & u.isActive.equals(true),
+    )).getSingleOrNull();
   }
 
   Future<int> insertUnit(UnitsCompanion unit) => into(units).insert(unit);
@@ -36,14 +38,15 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
 
   Future<List<Lesson>> getLessonsByUnit(int unitId) {
     return (select(lessons)
-          ..where((l) => l.unitId.equals(unitId))
+          ..where((l) => l.unitId.equals(unitId) & l.isActive.equals(true))
           ..orderBy([(l) => OrderingTerm.asc(l.orderInUnit)]))
         .get();
   }
 
   Future<Lesson?> getLesson(int lessonId) {
-    return (select(lessons)..where((l) => l.id.equals(lessonId)))
-        .getSingleOrNull();
+    return (select(lessons)..where(
+      (l) => l.id.equals(lessonId) & l.isActive.equals(true),
+    )).getSingleOrNull();
   }
 
   Future<void> insertLessons(List<LessonsCompanion> lessonList) =>
@@ -52,9 +55,9 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
   // ── Exercises ──
 
   Future<List<Exercise>> getExercisesByLesson(int lessonId) {
-    return (select(exercises)
-          ..where((e) => e.lessonId.equals(lessonId)))
-        .get();
+    return (select(exercises)..where(
+      (e) => e.lessonId.equals(lessonId) & e.isActive.equals(true),
+    )).get();
   }
 
   Future<void> insertExercises(List<ExercisesCompanion> exerciseList) =>
@@ -64,12 +67,12 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
 
   Future<List<GrammarRule>> getGrammarRulesByUnit(int unitId) {
     return (select(grammarRules)
-          ..where((g) => g.unitId.equals(unitId)))
-        .get();
+      ..where((g) => g.unitId.equals(unitId) & g.isActive.equals(true))).get();
   }
 
   Future<List<GrammarRule>> getAllGrammarRules() {
     return (select(grammarRules)
+          ..where((g) => g.isActive.equals(true))
           ..orderBy([
             (g) => OrderingTerm.asc(g.unitId),
             (g) => OrderingTerm.asc(g.id),
@@ -78,8 +81,9 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
   }
 
   Future<GrammarRule?> getGrammarRuleById(String id) {
-    return (select(grammarRules)..where((g) => g.id.equals(id)))
-        .getSingleOrNull();
+    return (select(grammarRules)..where(
+      (g) => g.id.equals(id) & g.isActive.equals(true),
+    )).getSingleOrNull();
   }
 
   Future<void> insertGrammarRules(List<GrammarRulesCompanion> ruleList) =>
@@ -88,7 +92,10 @@ class CurriculumDao extends DatabaseAccessor<AppDatabase>
   // ── Seed check ──
 
   Future<bool> isSeeded() async {
-    final result = await customSelect('SELECT COUNT(*) AS c FROM units').getSingle();
+    final result =
+        await customSelect(
+          'SELECT COUNT(*) AS c FROM units WHERE is_active = 1',
+        ).getSingle();
     return result.read<int>('c') > 0;
   }
 }

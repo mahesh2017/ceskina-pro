@@ -4,12 +4,19 @@ class Flashcard {
   final String wordCz;
   final String wordEn;
   final String? ipa;
-  final String? gender; // masculine animate, masculine inanimate, feminine, neuter
+  final String?
+  gender; // masculine animate, masculine inanimate, feminine, neuter
   final String? caseInfo;
   final String? audioHash;
   final String? imagePath;
   final String? exampleCz;
   final String? exampleEn;
+  final String? lemma;
+  final String? senseKey;
+  final String? partOfSpeech;
+  final String? morphologyJson;
+  final String? registerLabel;
+  final String? pronunciationSource;
   final int? unitId;
   final int? lessonId;
 
@@ -24,6 +31,12 @@ class Flashcard {
     this.imagePath,
     this.exampleCz,
     this.exampleEn,
+    this.lemma,
+    this.senseKey,
+    this.partOfSpeech,
+    this.morphologyJson,
+    this.registerLabel,
+    this.pronunciationSource,
     this.unitId,
     this.lessonId,
   });
@@ -40,6 +53,12 @@ class Flashcard {
       imagePath: json['image_path'] as String?,
       exampleCz: json['example_cz'] as String?,
       exampleEn: json['example_en'] as String?,
+      lemma: json['lemma'] as String?,
+      senseKey: json['sense_key'] as String?,
+      partOfSpeech: json['part_of_speech'] as String?,
+      morphologyJson: json['morphology_json'] as String?,
+      registerLabel: json['register_label'] as String?,
+      pronunciationSource: json['pronunciation_source'] as String?,
       unitId: json['unit_id'] as int?,
       lessonId: json['lesson_id'] as int?,
     );

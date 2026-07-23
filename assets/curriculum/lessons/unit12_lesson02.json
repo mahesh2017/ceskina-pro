@@ -50,8 +50,11 @@
         "type": "fill_blank",
         "sentence": "Kupuju ___ (ta modrá košile) a ___ (ty černé boty).",
         "blank_count": 2,
-        "accepted_answers": ["tu modrou košili", "ty černé boty"],
-        "explanation": "kupovat + accusative. ta modrá košile (fem.) → tu modrou košili. ty černé boty (fem. pl., inanimate) stay the same in accusative."
+        "explanation": "kupovat + accusative. ta modrá košile (fem.) → tu modrou košili. ty černé boty (fem. pl., inanimate) stay the same in accusative.",
+        "blank_answers": [
+          ["tu modrou košili"],
+          ["ty černé boty"]
+        ]
       },
       "answer_key": "tu modrou košili ty černé boty",
       "grammar_rule_id": "GR-111",
@@ -99,8 +102,11 @@
         "type": "fill_blank",
         "sentence": "Tato bunda je ___ (levný) než tamta, ale ta je ___ (hezký).",
         "blank_count": 2,
-        "accepted_answers": ["levnější", "hezčí"],
-        "explanation": "Comparative forms: levný → levnější (cheaper), hezký → hezčí (nicer/prettier). The pattern for many adjectives: drop -ý and add -ější or -čí."
+        "explanation": "Comparative forms: levný → levnější (cheaper), hezký → hezčí (nicer/prettier). The pattern for many adjectives: drop -ý and add -ější or -čí.",
+        "blank_answers": [
+          ["levnější"],
+          ["hezčí"]
+        ]
       },
       "answer_key": "levnější hezčí",
       "grammar_rule_id": "GR-113",
@@ -164,15 +170,37 @@
         "type": "dialogue",
         "scenario": "You are in a Czech clothing store and want to try on a jacket and then buy it.",
         "lines": [
-          {"speaker": "person_a", "text": "Dobrý den, přejete si?"},
-          {"speaker": "person_b", "text": "Ano, líbí se mi ta černá bunda. Můžu si ji vyzkoušet?"},
-          {"speaker": "person_a", "text": "Samozřejmě, kabinky jsou támhle."},
-          {"speaker": "person_b", "text": "Je perfektní. Vezmu si ji. Kolik stojí?"},
-          {"speaker": "person_a", "text": "Stojí osm set korun."},
-          {"speaker": "person_b", "text": "Dobře, platím kartou."}
+          {
+            "speaker": "person_a",
+            "text": "Dobrý den, přejete si?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Samozřejmě, kabinky jsou támhle."
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Stojí osm set korun."
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          }
         ],
-        "accepted_answers": ["Ano, líbí se mi ta černá bunda. Můžu si ji vyzkoušet?|Líbí se mi ta černá bunda. Můžu si ji vyzkoušet?", "Je perfektní. Vezmu si ji. Kolik stojí?|Je perfektní, vezmu si ji. Kolik stojí?|Perfektní, vezmu si ji. Kolik stojí?", "Dobře, platím kartou.|Dobře, platím kartou|Platím kartou"],
-        "explanation": "'Přejete si?' = 'What would you like?' — 'Líbí se mi ta černá bunda' = 'I like that black jacket' — 'Můžu si ji vyzkoušet?' = 'Can I try it on?' — 'Kabinky jsou támhle' = 'The fitting rooms are over there' — 'Vezmu si ji' = 'I'll take it' — 'Platím kartou' = 'I'm paying by card.'"
+        "explanation": "'Přejete si?' = 'What would you like?' — 'Líbí se mi ta černá bunda' = 'I like that black jacket' — 'Můžu si ji vyzkoušet?' = 'Can I try it on?' — 'Kabinky jsou támhle' = 'The fitting rooms are over there' — 'Vezmu si ji' = 'I'll take it' — 'Platím kartou' = 'I'm paying by card.'",
+        "blank_answers": [
+          ["Ano, líbí se mi ta černá bunda. Můžu si ji vyzkoušet?", "Líbí se mi ta černá bunda. Můžu si ji vyzkoušet?"],
+          ["Je perfektní. Vezmu si ji. Kolik stojí?", "Je perfektní, vezmu si ji. Kolik stojí?", "Perfektní, vezmu si ji. Kolik stojí?"],
+          ["Dobře, platím kartou.", "Dobře, platím kartou", "Platím kartou"]
+        ]
       },
       "answer_key": "Ano, líbí se mi ta černá bunda. Můžu si ji vyzkoušet?|Je perfektní. Vezmu si ji. Kolik stojí?|Dobře, platím kartou.",
       "grammar_rule_id": "GR-112",

@@ -11,6 +11,7 @@ class Exercises extends Table {
   TextColumn get answerKey => text().nullable()();
   TextColumn get grammarRuleId => text().nullable()();
   IntColumn get xpReward => integer().withDefault(const Constant(10))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
 
   @override
   Set<Column> get primaryKey => {id};

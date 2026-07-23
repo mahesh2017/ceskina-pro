@@ -2,36 +2,53 @@ import 'package:drift/drift.dart';
 import '../database.dart';
 import '../tables/flashcards.dart';
 import '../tables/srs_cards.dart';
+import '../tables/review_attempts.dart';
+import '../tables/reward_ledger.dart';
+import '../tables/gamification_state.dart';
 
 part 'vocabulary_dao.g.dart';
 
 /// Data access object for vocabulary + SRS card queries.
-@DriftAccessor(tables: [Flashcards, SrsCards])
+@DriftAccessor(
+  tables: [
+    Flashcards,
+    SrsCards,
+    ReviewAttempts,
+    RewardLedger,
+    GamificationStateTable,
+  ],
+)
 class VocabularyDao extends DatabaseAccessor<AppDatabase>
     with _$VocabularyDaoMixin {
   VocabularyDao(super.db);
 
   // ── Flashcards ──
 
-  Future<List<Flashcard>> getAllFlashcards() => select(flashcards).get();
+  Future<List<Flashcard>> getAllFlashcards() =>
+      (select(flashcards)..where((f) => f.isActive.equals(true))).get();
 
   Future<List<Flashcard>> getFlashcardsByUnit(int unitId) {
-    return (select(flashcards)..where((f) => f.unitId.equals(unitId))).get();
+    return (select(flashcards)
+      ..where((f) => f.unitId.equals(unitId) & f.isActive.equals(true))).get();
   }
 
   Future<List<Flashcard>> getFlashcardsByLesson(int lessonId) {
-    return (select(flashcards)
-      ..where((f) => f.lessonId.equals(lessonId))).get();
+    return (select(flashcards)..where(
+      (f) => f.lessonId.equals(lessonId) & f.isActive.equals(true),
+    )).get();
   }
 
   Future<List<Flashcard>> getFlashcardsByIds(List<int> ids) {
     if (ids.isEmpty) return Future.value([]);
-    return (select(flashcards)..where((f) => f.id.isIn(ids))).get();
+    return (select(flashcards)
+      ..where((f) => f.id.isIn(ids) & f.isActive.equals(true))).get();
   }
 
   Future<List<Flashcard>> searchFlashcards(String query) {
     return (select(flashcards)..where(
-      (f) => f.wordCz.like('%$query%') | f.wordEn.like('%$query%'),
+      (f) =>
+          (f.wordCz.like('%$query%') | f.wordEn.like('%$query%')) &
+          f.isActive.equals(true),
     )).get();
   }
 
@@ -54,8 +71,11 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
 
   Future<Flashcard?> findByWordCz(String wordCz) async {
     final rows =
-        await (select(flashcards)
-          ..where((f) => f.wordCz.lower().equals(wordCz.toLowerCase()))).get();
+        await (select(flashcards)..where(
+          (f) =>
+              f.wordCz.lower().equals(wordCz.toLowerCase()) &
+              f.isActive.equals(true),
+        )).get();
     return rows.isEmpty ? null : rows.first;
   }
 
@@ -65,7 +85,7 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
         await customSelect(
           'SELECT f.id AS id FROM flashcards f '
           'LEFT JOIN srs_cards s ON s.flashcard_id = f.id '
-          'WHERE s.id IS NULL',
+          'WHERE s.id IS NULL AND f.is_active = 1',
         ).get();
     return rows.map((r) => r.read<int>('id')).toList();
   }
@@ -82,14 +102,43 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
   Future<int> getDueCount(DateTime asOf) async {
     final result =
         await customSelect(
-          'SELECT COUNT(*) AS c FROM srs_cards WHERE due <= ?',
+          'SELECT COUNT(*) AS c FROM srs_cards s '
+          'JOIN flashcards f ON f.id = s.flashcard_id '
+          'WHERE s.due <= ? AND f.is_active = 1',
           variables: [Variable.withDateTime(asOf)],
         ).getSingle();
     return result.read<int>('c');
   }
 
+  /// Atomic upsert by the card's domain identity, never its local row ID.
   Future<void> upsertSrsCard(SrsCardsCompanion card) =>
-      into(srsCards).insertOnConflictUpdate(card);
+      attachedDatabase.transaction(() async {
+        final cardType = card.cardType.value;
+        final flashcardId =
+            card.flashcardId.present ? card.flashcardId.value : null;
+        final grammarKey =
+            card.grammarPatternKey.present
+                ? card.grammarPatternKey.value
+                : null;
+
+        final existing =
+            await (select(srsCards)..where(
+              (row) =>
+                  cardType == 'grammar'
+                      ? (row.cardType.equals('grammar') &
+                          row.grammarPatternKey.equals(grammarKey ?? ''))
+                      : (row.cardType.equals('vocabulary') &
+                          row.flashcardId.equals(flashcardId ?? -1)),
+            )).getSingleOrNull();
+
+        if (existing == null) {
+          await into(srsCards).insert(card);
+          return;
+        }
+        await (update(srsCards)..where(
+          (row) => row.id.equals(existing.id),
+        )).write(card.copyWith(id: Value(existing.id)));
+      });
 
   Future<int> srsCardCount() async {
     final result =
@@ -104,6 +153,105 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
         await _enqueueSrsCard(id);
       });
 
+  /// Commits one idempotent rating together with its scheduled card state.
+  Future<bool> commitSrsReview({
+    required String reviewId,
+    required SrsCardsCompanion card,
+    required String rating,
+    required DateTime reviewedAt,
+    required bool introducedNewCard,
+  }) => attachedDatabase.transaction(() async {
+    final duplicate =
+        await (select(reviewAttempts)
+          ..where((row) => row.reviewId.equals(reviewId))).getSingleOrNull();
+    if (duplicate != null) return false;
+
+    final id = card.id.value;
+    final changed = await (update(srsCards)
+      ..where((row) => row.id.equals(id))).write(card);
+    if (changed != 1) {
+      throw StateError('SRS card $id no longer exists');
+    }
+    await into(reviewAttempts).insert(
+      ReviewAttemptsCompanion.insert(
+        reviewId: reviewId,
+        srsCardId: id,
+        rating: rating,
+        reviewedAt: reviewedAt,
+        introducedNewCard: Value(introducedNewCard),
+      ),
+    );
+
+    // The immutable review and its reward are one commit. A retry with the
+    // same review id returns above, so delayed taps or redelivery cannot
+    // award XP twice.
+    final activityXp = switch (rating) {
+      'hard' => 1,
+      'good' => 2,
+      'easy' => 3,
+      _ => 0,
+    };
+    await into(rewardLedger).insert(
+      RewardLedgerCompanion.insert(
+        rewardId: 'review:$reviewId',
+        sourceId: reviewId,
+        rewardType: 'review_rating',
+        xp: activityXp,
+        awardedAt: reviewedAt,
+      ),
+    );
+
+    final gamification =
+        await (select(gamificationStateTable)
+          ..where((row) => row.key.equals('primary'))).getSingleOrNull();
+    final day =
+        DateTime(
+          reviewedAt.year,
+          reviewedAt.month,
+          reviewedAt.day,
+        ).toIso8601String();
+    final priorDailyXp =
+        gamification?.dailyXpResetDate == day ? gamification?.dailyXp ?? 0 : 0;
+    await into(gamificationStateTable).insertOnConflictUpdate(
+      GamificationStateTableCompanion.insert(
+        key: 'primary',
+        hearts: Value(gamification?.hearts ?? 5),
+        maxHearts: Value(gamification?.maxHearts ?? 5),
+        currentStreak: Value(gamification?.currentStreak ?? 0),
+        longestStreak: Value(gamification?.longestStreak ?? 0),
+        totalXp: Value((gamification?.totalXp ?? 0) + activityXp),
+        dailyXp: Value(priorDailyXp + activityXp),
+        dailyGoalXp: Value(gamification?.dailyGoalXp ?? 50),
+        gems: Value(gamification?.gems ?? 0),
+        earnedBadges: Value(gamification?.earnedBadges ?? '[]'),
+        lastHeartRefill: Value(gamification?.lastHeartRefill),
+        streakFreezeAvailable: Value(
+          gamification?.streakFreezeAvailable ?? true,
+        ),
+        lastOpenDate: Value(gamification?.lastOpenDate),
+        dailyXpResetDate: Value(day),
+        updatedAt: Value(reviewedAt),
+      ),
+    );
+    await _enqueueSrsCard(id);
+    return true;
+  });
+
+  Future<int> introducedCardCountForDay(DateTime day) async {
+    final start = DateTime(day.year, day.month, day.day);
+    final end = start.add(const Duration(days: 1));
+    final count = reviewAttempts.reviewId.count();
+    final query =
+        selectOnly(reviewAttempts)
+          ..addColumns([count])
+          ..where(
+            reviewAttempts.introducedNewCard.equals(true) &
+                reviewAttempts.reviewedAt.isBiggerOrEqualValue(start) &
+                reviewAttempts.reviewedAt.isSmallerThanValue(end),
+          );
+    return (await query.getSingle()).read(count) ?? 0;
+  }
+
   /// Append the current SRS state of card [id] to the sync outbox, keyed by
   /// content (flashcard id or grammar pattern key) so it stays stable across
   /// devices — never the local autoincrement id.
@@ -115,7 +263,7 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
     final contentKey =
         row.cardType == 'grammar'
             ? row.grammarPatternKey
-            : row.flashcardId?.toString();
+            : await _vocabularyContentKey(row.flashcardId);
     if (contentKey == null) return; // malformed card; nothing stable to key on
     await attachedDatabase.syncDao.enqueue(
       entity: 'srs_cards',
@@ -131,6 +279,20 @@ class VocabularyDao extends DatabaseAccessor<AppDatabase>
         'last_reviewed': row.lastReviewed?.toUtc().toIso8601String(),
       },
     );
+  }
+
+  /// Stable cross-device content key for a vocabulary SRS card. Manual cards
+  /// carry a UUID [Flashcards.contentUid] that is identical on every device;
+  /// managed/seeded cards have none and use their deterministic seeded id.
+  /// Never the local autoincrement id for a manual card — that collides across
+  /// devices (each allocates from MAX(id)+1).
+  Future<String?> _vocabularyContentKey(int? flashcardId) async {
+    if (flashcardId == null) return null;
+    final card =
+        await (select(flashcards)
+          ..where((f) => f.id.equals(flashcardId))).getSingleOrNull();
+    if (card == null) return null;
+    return card.contentUid ?? flashcardId.toString();
   }
 
   /// Merge remote SRS state for one card (pull). Keyed by content, not local

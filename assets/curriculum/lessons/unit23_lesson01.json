@@ -68,8 +68,10 @@
         "type": "fill_blank",
         "sentence": "My ____ jít do školy.",
         "blank_count": 1,
-        "accepted_answers": ["musíme"],
-        "explanation": "'My musíme jít do školy.' = We must go to school. The 1st person plural of 'muset' is 'musíme'. The modal verb is followed by the infinitive 'jít'."
+        "explanation": "'My musíme jít do školy.' = We must go to school. The 1st person plural of 'muset' is 'musíme'. The modal verb is followed by the infinitive 'jít'.",
+        "blank_answers": [
+          ["musíme"]
+        ]
       },
       "answer_key": "musíme",
       "grammar_rule_id": "GR-220",
@@ -84,8 +86,10 @@
         "type": "fill_blank",
         "sentence": "On ____ mluvit česky.",
         "blank_count": 1,
-        "accepted_answers": ["může"],
-        "explanation": "'On může mluvit česky.' = He can speak Czech. The 3rd person singular of 'moct' is 'může'. Modal verbs take the infinitive 'mluvit' after them."
+        "explanation": "'On může mluvit česky.' = He can speak Czech. The 3rd person singular of 'moct' is 'může'. Modal verbs take the infinitive 'mluvit' after them.",
+        "blank_answers": [
+          ["může"]
+        ]
       },
       "answer_key": "může",
       "grammar_rule_id": "GR-221",
@@ -131,7 +135,7 @@
       "data": {
         "type": "word_order",
         "words": ["nám", "můžeš", "Ty", "pomoci"],
-        "correct_order": [2, 1, 3, 0],
+        "correct_order": [2, 1, 0, 3],
         "explanation": "'Ty můžeš nám pomoci.' = You can help us. 'Můžeš' = you can (2nd person singular of 'moct'). 'Pomoci' = to help (infinitive). The modal verb 'můžeš' is followed by the infinitive 'pomoci'."
       },
       "answer_key": "Ty můžeš nám pomoci.",

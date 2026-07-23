@@ -7,6 +7,7 @@ import '../../data/services/stt/whisper_service.dart';
 import 'sync_providers.dart';
 import '../../domain/entities/pronunciation_result.dart';
 import '../../domain/engines/pronunciation_scorer.dart';
+import '../../domain/repositories/speech_ports.dart';
 import '../../domain/repositories/stt_service.dart';
 
 /// Provider for the audio recorder.
@@ -70,22 +71,23 @@ class PronunciationAssessment {
 /// to the OS-native `speech_to_text` package for live recognition.
 class PronunciationAssessor {
   PronunciationAssessor({
-    required AudioRecorderService recorder,
-    required WhisperService? whisper,
-    required NativeSttService fallbackStt,
+    required AudioRecorderPort recorder,
+    required CloudTranscriber? whisper,
+    required LiveTranscriber fallbackStt,
     required Logger log,
   })  : _recorder = recorder,
         _whisper = whisper,
         _fallbackStt = fallbackStt,
         _log = log;
 
-  final AudioRecorderService _recorder;
-  final WhisperService? _whisper;
-  final NativeSttService _fallbackStt;
+  final AudioRecorderPort _recorder;
+  final CloudTranscriber? _whisper;
+  final LiveTranscriber _fallbackStt;
   final Logger _log;
   final _scorer = PronunciationScorer();
 
-  /// Whether Whisper is available for high-quality transcription.
+  /// Whether Whisper is available for high-quality transcription. Reactive to
+  /// authenticated backend capability, not merely a configured client object.
   bool get hasWhisper => _whisper?.isAvailable ?? false;
 
   /// Record audio for [maxDuration] and assess pronunciation against
@@ -99,7 +101,20 @@ class PronunciationAssessor {
     Duration maxDuration = const Duration(seconds: 10),
   }) async {
     if (hasWhisper) {
-      return _assessWithWhisper(expectedText, maxDuration);
+      try {
+        return await _assessWithWhisper(expectedText, maxDuration);
+      } catch (e, st) {
+        // A linked backend without the `whisper-proxy` function deployed (or a
+        // transient network/function error) must never hard-fail the exercise.
+        // Degrade to on-device recognition and mark the result accordingly.
+        _log.warning(
+          'Cloud speech unavailable at runtime; degrading to native STT.',
+          e,
+          st,
+        );
+        await _recorder.cleanup();
+        return _assessWithNativeStt(expectedText, maxDuration);
+      }
     }
     return _assessWithNativeStt(expectedText, maxDuration);
   }
@@ -257,7 +272,7 @@ final sttServiceProvider = Provider<SttService>((ref) {
 });
 
 /// Native on-device STT implementation using speech_to_text package.
-class NativeSttService implements SttService {
+class NativeSttService implements SttService, LiveTranscriber {
   final SpeechToText _speech = SpeechToText();
   bool _initialized = false;
   String? _czechLocaleId;
@@ -314,6 +329,7 @@ class NativeSttService implements SttService {
 
   /// Start live listening and return the recognized text.
   /// This is the primary method used for pronunciation practice.
+  @override
   Future<String> listenFor({
     Duration timeout = const Duration(seconds: 10),
   }) async {
@@ -351,6 +367,7 @@ class NativeSttService implements SttService {
   }
 
   /// Stop listening.
+  @override
   Future<void> stop() async {
     await _speech.stop();
   }

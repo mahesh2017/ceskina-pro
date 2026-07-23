@@ -45,10 +45,11 @@ class ContentSeeder {
     final row =
         await _db.customSelect('''
       SELECT
-        (SELECT COUNT(*) FROM units WHERE id BETWEEN 1 AND 31) AS unit_count,
-        (SELECT COUNT(*) FROM lessons) AS lesson_count,
-        (SELECT COUNT(*) FROM exercises) AS exercise_count,
-        (SELECT COUNT(*) FROM flashcards) AS flashcard_count
+        (SELECT COUNT(*) FROM units
+          WHERE id BETWEEN 1 AND 31 AND is_active = 1) AS unit_count,
+        (SELECT COUNT(*) FROM lessons WHERE is_active = 1) AS lesson_count,
+        (SELECT COUNT(*) FROM exercises WHERE is_active = 1) AS exercise_count,
+        (SELECT COUNT(*) FROM flashcards WHERE is_active = 1) AS flashcard_count
     ''').getSingle();
     return row.read<int>('unit_count') == 31 &&
         row.read<int>('lesson_count') >= _lessonFilePaths.length &&
@@ -67,7 +68,71 @@ class ContentSeeder {
   /// failures are intentionally handled by the background caller.
   Future<void> refreshFromRemote() async {
     await _source.refreshRemote(requiredPackPaths);
-    await _installCurrentSnapshot('remote');
+    await installVerifiedRelease();
+  }
+
+  /// Install the release currently held by [CurriculumPackSource]. Exposed for
+  /// controlled recovery and integration tests; the source verifies it first.
+  Future<void> installVerifiedRelease() async {
+    try {
+      await _installCurrentSnapshot('verified release');
+    } catch (_) {
+      await _restoreActiveSource();
+      rethrow;
+    }
+  }
+
+  /// Reinstall the immediately previous verified release without a network
+  /// request. Returns false when no rollback target is retained.
+  Future<bool> rollbackToPreviousRelease() async {
+    final previous =
+        await (_db.select(_db.contentReleaseInstallations)
+          ..where((row) => row.isPrevious.equals(true))).getSingleOrNull();
+    if (previous == null) return false;
+    await _loadStoredRelease(previous);
+    await _installCurrentSnapshot('rollback');
+    return true;
+  }
+
+  Future<void> _restoreActiveSource() async {
+    final active =
+        await (_db.select(_db.contentReleaseInstallations)
+          ..where((row) => row.isActive.equals(true))).getSingleOrNull();
+    if (active != null) await _loadStoredRelease(active);
+  }
+
+  Future<void> _loadStoredRelease(db.ContentReleaseInstallation stored) async {
+    final rows =
+        await (_db.select(_db.contentReleasePacks)
+          ..where((row) => row.releaseId.equals(stored.releaseId))).get();
+    final packs = <String, VerifiedContentPack>{
+      for (final row in rows)
+        row.packKey: (
+          version: row.packVersion,
+          checksum: row.checksum,
+          content: jsonDecode(row.content),
+        ),
+    };
+    _source.loadCachedRelease(
+      release: ContentRelease(
+        releaseId: stored.releaseId,
+        version: stored.version,
+        contentChecksum: stored.contentChecksum,
+        packRefs:
+            rows
+                .map(
+                  (row) => PackRef(
+                    packKey: row.packKey,
+                    version: row.packVersion,
+                    checksum: row.checksum,
+                  ),
+                )
+                .toList(),
+        notes: stored.notes,
+      ),
+      requiredPackKeys: requiredPackPaths,
+      packs: packs,
+    );
   }
 
   /// Install the selected source snapshot as one database commit. All packs
@@ -78,13 +143,104 @@ class ContentSeeder {
     _validLessonIds.clear();
     await Future<void>.delayed(Duration.zero);
     await _db.transaction(() async {
+      await _retireManagedContent();
       await _seedUnits();
       await _seedGrammarRules();
       await _seedLessons();
       await _seedVocabulary();
       await _createMissingSrsCards();
+      await _recordInstalledRelease();
     });
     _log.info('$sourceName curriculum snapshot installed.');
+  }
+
+  Future<void> _retireManagedContent() async {
+    await _db
+        .update(_db.exercises)
+        .write(const db.ExercisesCompanion(isActive: Value(false)));
+    await _db
+        .update(_db.lessons)
+        .write(const db.LessonsCompanion(isActive: Value(false)));
+    await _db
+        .update(_db.grammarRules)
+        .write(const db.GrammarRulesCompanion(isActive: Value(false)));
+    await (_db.update(_db.flashcards)..where(
+      (row) => row.id.isSmallerOrEqualValue(900000),
+    )).write(const db.FlashcardsCompanion(isActive: Value(false)));
+    await _db
+        .update(_db.units)
+        .write(const db.UnitsCompanion(isActive: Value(false)));
+  }
+
+  Future<void> _recordInstalledRelease() async {
+    final release = _source.currentRelease;
+    if (release == null) return;
+    final packs = _source.verifiedPacks;
+    if (packs.length != requiredPackPaths.length) {
+      throw StateError('Cannot activate an incomplete release cache.');
+    }
+
+    final current =
+        await (_db.select(_db.contentReleaseInstallations)
+          ..where((row) => row.isActive.equals(true))).getSingleOrNull();
+    await _db
+        .update(_db.contentReleaseInstallations)
+        .write(
+          const db.ContentReleaseInstallationsCompanion(
+            isActive: Value(false),
+            isPrevious: Value(false),
+          ),
+        );
+    if (current != null && current.releaseId != release.releaseId) {
+      await (_db.update(_db.contentReleaseInstallations)
+        ..where((row) => row.releaseId.equals(current.releaseId))).write(
+        const db.ContentReleaseInstallationsCompanion(isPrevious: Value(true)),
+      );
+    }
+    await _db
+        .into(_db.contentReleaseInstallations)
+        .insertOnConflictUpdate(
+          db.ContentReleaseInstallationsCompanion.insert(
+            releaseId: release.releaseId,
+            version: release.version,
+            contentChecksum: release.contentChecksum,
+            notes: Value(release.notes),
+            isActive: const Value(true),
+            isPrevious: const Value(false),
+            installedAt: DateTime.now().toUtc(),
+          ),
+        );
+    await (_db.delete(_db.contentReleasePacks)
+      ..where((row) => row.releaseId.equals(release.releaseId))).go();
+    await _db.batch((batch) {
+      batch.insertAll(
+        _db.contentReleasePacks,
+        packs.entries
+            .map(
+              (entry) => db.ContentReleasePacksCompanion.insert(
+                releaseId: release.releaseId,
+                packKey: entry.key,
+                packVersion: entry.value.version,
+                checksum: entry.value.checksum,
+                content: jsonEncode(entry.value.content),
+              ),
+            )
+            .toList(),
+      );
+    });
+    final retainedIds =
+        await (_db.selectOnly(_db.contentReleaseInstallations)
+              ..addColumns([_db.contentReleaseInstallations.releaseId])
+              ..where(
+                _db.contentReleaseInstallations.isActive.equals(true) |
+                    _db.contentReleaseInstallations.isPrevious.equals(true),
+              ))
+            .map((row) => row.read(_db.contentReleaseInstallations.releaseId)!)
+            .get();
+    await (_db.delete(_db.contentReleasePacks)
+      ..where((row) => row.releaseId.isNotIn(retainedIds))).go();
+    await (_db.delete(_db.contentReleaseInstallations)
+      ..where((row) => row.releaseId.isNotIn(retainedIds))).go();
   }
 
   /// Coerce a JSON value into a nullable String for a text column.
@@ -116,6 +272,7 @@ class ContentSeeder {
         orderIndex: u['order_index'] as int,
         grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
         isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
+        isActive: const Value(true),
       ),
     );
 
@@ -137,6 +294,7 @@ class ContentSeeder {
         orderIndex: u['order_index'] as int,
         grammarTags: Value((u['grammar_tags'] as List<dynamic>).join(',')),
         isExamPrep: Value(u['is_exam_prep'] as bool? ?? false),
+        isActive: const Value(true),
       ),
     );
 
@@ -165,6 +323,7 @@ class ContentSeeder {
               lessonData['lesson_type'] as String? ?? 'introduction',
             ),
             isReview: Value(lessonData['is_review'] as bool? ?? false),
+            isActive: const Value(true),
           ),
         ]);
 
@@ -182,6 +341,7 @@ class ContentSeeder {
                     answerKey: Value(_asNullableString(e['answer_key'])),
                     grammarRuleId: Value(e['grammar_rule_id'] as String?),
                     xpReward: Value(e['xp_reward'] as int? ?? 10),
+                    isActive: const Value(true),
                   ),
                 )
                 .toList(),
@@ -324,6 +484,7 @@ class ContentSeeder {
                 unitId: Value(
                   _validatedUnitId(r['unit_id'], 'Grammar rule ${r['id']}'),
                 ),
+                isActive: const Value(true),
               ),
             )
             .toList(),
@@ -356,6 +517,22 @@ class ContentSeeder {
                     imagePath: Value(w['image_path'] as String?),
                     exampleCz: Value(w['example_cz'] as String?),
                     exampleEn: Value(w['example_en'] as String?),
+                    lemma: Value(w['word_cz'] as String),
+                    senseKey: Value(
+                      '${(w['word_cz'] as String).trim().toLowerCase()}|'
+                      '${(w['word_en'] as String).trim().toLowerCase()}',
+                    ),
+                    partOfSpeech: const Value('unspecified'),
+                    morphologyJson: Value(
+                      jsonEncode({
+                        if (w['gender'] != null) 'gender': w['gender'],
+                        if (w['case_info'] != null) 'case': w['case_info'],
+                      }),
+                    ),
+                    registerLabel: const Value('unspecified'),
+                    pronunciationSource: Value(
+                      w['ipa'] == null ? 'missing' : 'bundled_unreviewed',
+                    ),
                     unitId: Value(
                       _validatedUnitId(
                         w['unit_id'],
@@ -368,6 +545,7 @@ class ContentSeeder {
                         "Flashcard ${w['id']} '${w['word_cz']}'",
                       ),
                     ),
+                    isActive: const Value(true),
                   ),
                 )
                 .toList();

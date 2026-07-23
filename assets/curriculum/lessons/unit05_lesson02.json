@@ -65,8 +65,10 @@
         "type": "fill_blank",
         "sentence": "Já ____ česky. (negative)",
         "blank_count": 1,
-        "accepted_answers": ["nemluvím"],
-        "explanation": "Czech negation: add the prefix 'ne-' to the verb. 'Mluvím' → 'nemluvím'. 'Já nemluvím česky.' = 'I don't speak Czech.'"
+        "explanation": "Czech negation: add the prefix 'ne-' to the verb. 'Mluvím' → 'nemluvím'. 'Já nemluvím česky.' = 'I don't speak Czech.'",
+        "blank_answers": [
+          ["nemluvím"]
+        ]
       },
       "answer_key": "nemluvím",
       "grammar_rule_id": "GR-043",
@@ -114,8 +116,10 @@
         "type": "fill_blank",
         "sentence": "Oni ____ česky.",
         "blank_count": 1,
-        "accepted_answers": ["mluví"],
-        "explanation": "The -ít class 3rd person plural is the same as 3rd person singular: mluví. 'Oni mluví česky.' = 'They speak Czech.'"
+        "explanation": "The -ít class 3rd person plural is the same as 3rd person singular: mluví. 'Oni mluví česky.' = 'They speak Czech.'",
+        "blank_answers": [
+          ["mluví"]
+        ]
       },
       "answer_key": "mluví",
       "grammar_rule_id": "GR-041",
@@ -163,13 +167,27 @@
         "type": "dialogue",
         "scenario": "V třídě — In the classroom",
         "lines": [
-          {"speaker": "person_a", "text": "Co děláš?"},
-          {"speaker": "person_b", "text": "Mluvím česky. A ty?"},
-          {"speaker": "person_a", "text": "Já také mluvím česky. Rozumíš?"},
-          {"speaker": "person_b", "text": "Ano, rozumím dobře."}
+          {
+            "speaker": "person_a",
+            "text": "Co děláš?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Mluvím česky. A ty?"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Já také mluvím česky. Rozumíš?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          }
         ],
-        "accepted_answers": ["Ano, rozumím.|Rozumím.|Ano, rozumím dobře."],
-        "explanation": "'Co děláš?' = 'What are you doing?' Respond with what you're doing. 'Rozumíš?' = 'Do you understand?' Respond with 'Ano, rozumím' = 'Yes, I understand.'"
+        "explanation": "'Co děláš?' = 'What are you doing?' Respond with what you're doing. 'Rozumíš?' = 'Do you understand?' Respond with 'Ano, rozumím' = 'Yes, I understand.'",
+        "blank_answers": [
+          ["Ano, rozumím.", "Rozumím.", "Ano, rozumím dobře."]
+        ]
       },
       "answer_key": "Ano, rozumím.",
       "grammar_rule_id": "GR-041",

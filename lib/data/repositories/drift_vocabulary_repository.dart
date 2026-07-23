@@ -2,6 +2,7 @@ import '../../domain/entities/flashcard.dart' as entity;
 import '../../domain/entities/srs_card.dart';
 import '../../domain/repositories/vocabulary_repository.dart';
 import 'package:drift/drift.dart';
+import 'package:uuid/uuid.dart';
 import '../database/database.dart' as db;
 
 /// Concrete implementation of [VocabularyRepository] using Drift.
@@ -16,15 +17,16 @@ class DriftVocabularyRepository implements VocabularyRepository {
     final dueSrsCards = await _db.vocabularyDao.getDueCards(now);
     if (dueSrsCards.isEmpty) return [];
 
-    final vocabSrsCards = dueSrsCards
-        .where((s) => s.cardType == 'vocabulary' && s.flashcardId != null)
-        .toList();
+    final vocabSrsCards =
+        dueSrsCards
+            .where((s) => s.cardType == 'vocabulary' && s.flashcardId != null)
+            .toList();
 
     if (vocabSrsCards.isEmpty) return [];
 
-    final flashcards = await _db.vocabularyDao.getFlashcardsByIds(
-      [for (final s in vocabSrsCards) s.flashcardId!],
-    );
+    final flashcards = await _db.vocabularyDao.getFlashcardsByIds([
+      for (final s in vocabSrsCards) s.flashcardId!,
+    ]);
     final flashcardMap = {for (var f in flashcards) f.id: f};
 
     return [
@@ -38,19 +40,39 @@ class DriftVocabularyRepository implements VocabularyRepository {
   }
 
   @override
-  Future<void> updateCard(SrsCard card, Rating rating, DateTime reviewedAt) async {
+  Future<SrsCard> updateCard(
+    SrsCard card,
+    Rating rating,
+    DateTime reviewedAt, {
+    required String reviewId,
+    required bool introducedNewCard,
+  }) async {
     final cardId = int.tryParse(card.id);
-    if (cardId == null) return;
+    if (cardId == null) {
+      throw ArgumentError.value(card.id, 'card.id', 'must be a local row ID');
+    }
 
-    await _db.vocabularyDao.updateSrsCard(db.SrsCardsCompanion(
-      id: Value(cardId),
-      stability: Value(card.stability),
-      difficulty: Value(card.difficulty),
-      due: Value(card.due),
-      reps: Value(card.reps),
-      state: Value(card.state.name),
-      lastReviewed: Value(reviewedAt),
-    ),);
+    await _db.vocabularyDao.commitSrsReview(
+      reviewId: reviewId,
+      card: db.SrsCardsCompanion(
+        id: Value(cardId),
+        stability: Value(card.stability),
+        difficulty: Value(card.difficulty),
+        due: Value(card.due),
+        reps: Value(card.reps),
+        state: Value(card.state.name),
+        lastReviewed: Value(reviewedAt),
+      ),
+      rating: rating.name,
+      reviewedAt: reviewedAt,
+      introducedNewCard: introducedNewCard,
+    );
+    return card;
+  }
+
+  @override
+  Future<int> introducedCardCountForDay(DateTime day) {
+    return _db.vocabularyDao.introducedCardCountForDay(day);
   }
 
   @override
@@ -93,17 +115,21 @@ class DriftVocabularyRepository implements VocabularyRepository {
         wordCz: cz,
         wordEn: en,
         ipa: Value(ipa),
+        // Stable cross-device identity for this user-created card.
+        contentUid: Value(const Uuid().v4()),
       ),
     ]);
-    await _db.vocabularyDao.upsertSrsCard(db.SrsCardsCompanion.insert(
-      cardType: 'vocabulary',
-      flashcardId: Value(id),
-      stability: const Value(0.0),
-      difficulty: const Value(0.0),
-      due: Value(DateTime.now()),
-      reps: const Value(0),
-      state: const Value('newCard'),
-    ),);
+    await _db.vocabularyDao.upsertSrsCard(
+      db.SrsCardsCompanion.insert(
+        cardType: 'vocabulary',
+        flashcardId: Value(id),
+        stability: const Value(0.0),
+        difficulty: const Value(0.0),
+        due: Value(DateTime.now()),
+        reps: const Value(0),
+        state: const Value('newCard'),
+      ),
+    );
     return true;
   }
 
@@ -133,6 +159,12 @@ class DriftVocabularyRepository implements VocabularyRepository {
       imagePath: row.imagePath,
       exampleCz: row.exampleCz,
       exampleEn: row.exampleEn,
+      lemma: row.lemma,
+      senseKey: row.senseKey,
+      partOfSpeech: row.partOfSpeech,
+      morphologyJson: row.morphologyJson,
+      registerLabel: row.registerLabel,
+      pronunciationSource: row.pronunciationSource,
       unitId: row.unitId,
       lessonId: row.lessonId,
     );

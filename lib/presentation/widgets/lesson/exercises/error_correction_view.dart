@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../domain/entities/exercise.dart';
 import '../../common/grammar_tip_card.dart';
 import 'exercise_shared.dart';
+import '../../../../domain/entities/learning_evidence.dart';
 
 /// Error correction exercise — spot the mistake in a Czech sentence and
 /// select the correct form.
@@ -33,8 +34,9 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
 
   String get _incorrectSentence {
     return (widget.exercise.data['sentence_cz'] ??
-        widget.exercise.data['sentence_with_error'] ??
-        '') as String;
+            widget.exercise.data['sentence_with_error'] ??
+            '')
+        as String;
   }
 
   String get _correctSentence {
@@ -87,11 +89,13 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
     final options = _options;
     if (options != null && _selectedOptionIdx != null) {
       // Option mode: correct if selected option matches the correct word.
-      final correctWord = _correctSentence.isNotEmpty
-          ? _correctSentence.split(' ')[_selectedWordIdx!]
-          : null;
+      final correctWord =
+          _correctSentence.isNotEmpty
+              ? _correctSentence.split(' ')[_selectedWordIdx!]
+              : null;
       if (correctWord != null) {
-        isCorrect = normalizeAnswer(options[_selectedOptionIdx!]) ==
+        isCorrect =
+            normalizeAnswer(options[_selectedOptionIdx!]) ==
             normalizeAnswer(correctWord);
       } else {
         isCorrect = _wordIsDifferentAt(_selectedWordIdx!);
@@ -110,16 +114,18 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
       ExerciseResult(
         isCorrect: isCorrect,
         explanation: _explanation,
-        correctAnswer: _correctSentence.isNotEmpty
-            ? _correctSentence
-            : widget.exercise.answerKey,
+        correctAnswer:
+            _correctSentence.isNotEmpty
+                ? _correctSentence
+                : widget.exercise.answerKey,
       ),
     );
   }
 
   void _submitTyped(String userInput) {
     final accepted = _acceptedAnswers;
-    final match = accepted != null ? matchAnswer(accepted, userInput) : AnswerMatch.none;
+    final match =
+        accepted != null ? matchAnswer(accepted, userInput) : AnswerMatch.none;
     final isCorrect = match != AnswerMatch.none;
 
     setState(() {
@@ -132,6 +138,7 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
         isCorrect: isCorrect,
         explanation: _explanation,
         correctAnswer: accepted?.first ?? _correctSentence,
+        supports: _errorRevealed ? const {SupportKind.hint} : const {},
       ),
     );
   }
@@ -159,16 +166,6 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          if (_hint != null && !_errorRevealed) ...[
-            const SizedBox(height: 8),
-            Text(
-              _hint!,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ],
           const SizedBox(height: 20),
 
           // Sentence with tappable words
@@ -221,15 +218,18 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8),
                           child: OutlinedButton(
-                            onPressed: () => setState(() => _selectedOptionIdx = i),
+                            onPressed:
+                                () => setState(() => _selectedOptionIdx = i),
                             style: OutlinedButton.styleFrom(
-                              backgroundColor: _selectedOptionIdx == i
-                                  ? theme.colorScheme.primaryContainer
-                                  : null,
+                              backgroundColor:
+                                  _selectedOptionIdx == i
+                                      ? theme.colorScheme.primaryContainer
+                                      : null,
                               side: BorderSide(
-                                color: _selectedOptionIdx == i
-                                    ? theme.colorScheme.primary
-                                    : Colors.grey.shade300,
+                                color:
+                                    _selectedOptionIdx == i
+                                        ? theme.colorScheme.primary
+                                        : Colors.grey.shade300,
                               ),
                             ),
                             child: Text(_options![i]),
@@ -264,9 +264,10 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
               child: GrammarTipCard(
                 isCorrect: _wasCorrect,
                 explanation: _explanation,
-                correctAnswer: _correctSentence.isNotEmpty
-                    ? _correctSentence
-                    : widget.exercise.answerKey,
+                correctAnswer:
+                    _correctSentence.isNotEmpty
+                        ? _correctSentence
+                        : widget.exercise.answerKey,
                 grammarRuleId: widget.exercise.grammarRuleId,
               ),
             ),
@@ -329,23 +330,22 @@ class _ErrorCorrectionViewState extends State<ErrorCorrectionView> {
         decoration: BoxDecoration(
           color: bg,
           borderRadius: BorderRadius.circular(8),
-          border: border != null
-              ? Border.all(color: border, width: 2)
-              : null,
+          border: border != null ? Border.all(color: border, width: 2) : null,
         ),
         child: Text(
           word,
           style: TextStyle(
             fontSize: 18,
-            fontWeight: isSelected || _errorRevealed && isDifferent
-                ? FontWeight.w600
-                : FontWeight.normal,
-            decoration: _errorRevealed && isDifferent
-                ? TextDecoration.lineThrough
-                : null,
-            color: _errorRevealed && isDifferent
-                ? Colors.orange.shade800
-                : null,
+            fontWeight:
+                isSelected || _errorRevealed && isDifferent
+                    ? FontWeight.w600
+                    : FontWeight.normal,
+            decoration:
+                _errorRevealed && isDifferent
+                    ? TextDecoration.lineThrough
+                    : null,
+            color:
+                _errorRevealed && isDifferent ? Colors.orange.shade800 : null,
           ),
         ),
       ),
@@ -358,10 +358,7 @@ class _TextInputCorrection extends StatefulWidget {
   final void Function(String) onSubmit;
   final bool enabled;
 
-  const _TextInputCorrection({
-    required this.onSubmit,
-    this.enabled = true,
-  });
+  const _TextInputCorrection({required this.onSubmit, this.enabled = true});
 
   @override
   State<_TextInputCorrection> createState() => _TextInputCorrectionState();
@@ -383,9 +380,9 @@ class _TextInputCorrectionState extends State<_TextInputCorrection> {
       children: [
         Text(
           'Type the correct sentence:',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w500,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         TextField(
@@ -403,9 +400,8 @@ class _TextInputCorrectionState extends State<_TextInputCorrection> {
         CzechCharBar(controller: _controller, enabled: widget.enabled),
         const SizedBox(height: 12),
         FilledButton(
-          onPressed: widget.enabled
-              ? () => widget.onSubmit(_controller.text)
-              : null,
+          onPressed:
+              widget.enabled ? () => widget.onSubmit(_controller.text) : null,
           child: const Text('Check'),
         ),
       ],

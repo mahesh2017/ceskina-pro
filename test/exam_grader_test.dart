@@ -56,26 +56,34 @@ void main() {
   group('ExamGrader', () {
     final grader = ExamGrader();
 
-    test('sections are graded independently (regression: shared answer map)',
-        () {
-      final exam = _cceFormatExam();
-      // Reading answered perfectly; listening answered with reading's
-      // answers — must NOT be counted as listening being correct.
-      final scores = grader.grade(
-        exam: exam,
-        answers: {
-          0: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}, // reading: all correct
-          1: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}, // listening: all wrong (correct are 4,3,2,1,0)
-        },
-      );
+    test(
+      'sections are graded independently (regression: shared answer map)',
+      () {
+        final exam = _cceFormatExam();
+        // Reading answered perfectly; listening answered with reading's
+        // answers — must NOT be counted as listening being correct.
+        final scores = grader.grade(
+          exam: exam,
+          answers: {
+            0: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}, // reading: all correct
+            1: {
+              0: 0,
+              1: 1,
+              2: 2,
+              3: 3,
+              4: 4,
+            }, // listening: all wrong (correct are 4,3,2,1,0)
+          },
+        );
 
-      expect(scores.reading, 100);
-      expect(scores.readingPoints, 25);
-      // Listening: user answered 0,1,2,3,4 but correct is 4,3,2,1,0
-      // Only question 2 (correct=2, user=2) matches → 5 points → 20%
-      expect(scores.listeningPoints, 5);
-      expect(scores.listening, 20);
-    });
+        expect(scores.reading, 100);
+        expect(scores.readingPoints, 25);
+        // Listening: user answered 0,1,2,3,4 but correct is 4,3,2,1,0
+        // Only question 2 (correct=2, user=2) matches → 5 points → 20%
+        expect(scores.listeningPoints, 5);
+        expect(scores.listening, 20);
+      },
+    );
 
     test('unanswered questions never count as correct (null == null)', () {
       final exam = _cceFormatExam();
@@ -122,6 +130,21 @@ void main() {
 
       expect(scores.writing, 100);
       expect(scores.speaking, 0);
+    });
+
+    test('missing productive-task evaluation can never produce a pass', () {
+      final scores = grader.grade(
+        exam: _cceFormatExam(),
+        answers: {
+          0: {0: 1},
+          2: {0: 0},
+        },
+        writingScore: null,
+        speakingScore: null,
+      );
+
+      expect(scores.fullyScored, isFalse);
+      expect(scores.passed, isFalse);
     });
 
     test('partial credit returns raw points', () {

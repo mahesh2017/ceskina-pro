@@ -50,8 +50,10 @@
         "type": "fill_blank",
         "sentence": "Je to ___ kniha?",
         "blank_count": 1,
-        "accepted_answers": ["tvoje", "vaše"],
-        "explanation": "kniha is feminine, so we use tvoje (your, singular) or vaše (your, plural/formal). The informal singular form is tvoje: Je to tvoje kniha? = Is this your book?"
+        "explanation": "kniha is feminine, so we use tvoje (your, singular) or vaše (your, plural/formal). The informal singular form is tvoje: Je to tvoje kniha? = Is this your book?",
+        "blank_answers": [
+          ["tvoje", "vaše"]
+        ]
       },
       "answer_key": "tvoje",
       "grammar_rule_id": "GR-062",
@@ -114,8 +116,10 @@
         "type": "fill_blank",
         "sentence": "___ jsou z Prahy.",
         "blank_count": 1,
-        "accepted_answers": ["Oni", "oni", "Ony", "ony"],
-        "explanation": "Oni (they, for masculine animate / mixed groups) or Ony (they, for feminine or inanimate groups). Oni jsou z Prahy. = They are from Prague. The pronoun can also be dropped: 'Jsou z Prahy.'"
+        "explanation": "Oni (they, for masculine animate / mixed groups) or Ony (they, for feminine or inanimate groups). Oni jsou z Prahy. = They are from Prague. The pronoun can also be dropped: 'Jsou z Prahy.'",
+        "blank_answers": [
+          ["Oni", "oni", "Ony", "ony"]
+        ]
       },
       "answer_key": "Oni",
       "grammar_rule_id": "GR-060",
@@ -179,18 +183,36 @@
         "type": "dialogue",
         "scenario": "Meeting someone at a party — asking about belongings",
         "lines": [
-          {"speaker": "person_a", "text": "Ahoj! Jsem Petr. A ty?"},
-          {"speaker": "person_b", "text": "Ahoj! Jsem Marie."},
-          {"speaker": "person_a", "text": "To je tvoje kniha?"},
-          {"speaker": "person_b", "text": "Ano, to je moje kniha."},
-          {"speaker": "person_a", "text": "A to je tvůj pes?"},
-          {"speaker": "person_b", "text": "Ne, to není můj pes. To je pes moje kamarádka."}
+          {
+            "speaker": "person_a",
+            "text": "Ahoj! Jsem Petr. A ty?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ahoj! Jsem Marie."
+          },
+          {
+            "speaker": "person_a",
+            "text": "To je tvoje kniha?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "A to je tvůj pes?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          }
         ],
-        "accepted_answers": [
-          "Ano, to je moje kniha.|Ano, to je moja kniha.",
-          "Ne, to není můj pes.|Ne, to nie je můj pes."
-        ],
-        "explanation": "In this dialogue, person_b answers possessive questions. 'Je to tvoje kniha?' → 'Ano, to je moje kniha.' (Yes, it's my book — feminine form). 'Je to tvůj pes?' → 'Ne, to není můj pes.' (No, it's not my dog — masculine form)."
+        "explanation": "In this dialogue, person_b answers possessive questions. 'Je to tvoje kniha?' → 'Ano, to je moje kniha.' (Yes, it's my book — feminine form). 'Je to tvůj pes?' → 'Ne, to není můj pes.' (No, it's not my dog — masculine form).",
+        "blank_answers": [
+          ["Ano, to je moje kniha.", "Ano, to je moja kniha."],
+          ["Ne, to není můj pes.", "Ne, to nie je můj pes."]
+        ]
       },
       "answer_key": "Ano, to je moje kniha. Ne, to není můj pes.",
       "grammar_rule_id": "GR-061",

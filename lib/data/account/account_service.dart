@@ -3,15 +3,24 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../database/database.dart';
 import '../sync/backend_service.dart';
+import '../sync/sync_service.dart';
 
 class AccountService {
-  AccountService(this._backend, this._db);
+  AccountService(
+    this._backend,
+    this._db,
+    this._sync, {
+    this.onLocalDataChanged,
+  });
 
   final BackendService _backend;
   final AppDatabase _db;
+  final SyncService _sync;
+  final void Function()? onLocalDataChanged;
 
   Future<void> linkEmail(String email) => _backend.requestEmailLink(email);
 
@@ -28,12 +37,32 @@ class AccountService {
       email: email,
       password: password,
     );
-    await _db.clearLearnerData();
-    await _backend.installSession(session);
+    final previousSession = _backend.currentSession;
+    await _sync.beginAccountTransition();
+    try {
+      await _backend.installSession(session);
+      await _db.transaction(() async {
+        await _db.clearLearnerDataRows();
+        await _sync.pullForAccountInstall();
+        if (_backend.userId != session.user.id) {
+          throw StateError('Target account session changed during install.');
+        }
+      });
+      await _clearAccountScopedArtifacts();
+      onLocalDataChanged?.call();
+    } catch (_) {
+      if (previousSession != null) {
+        await _backend.installSession(previousSession);
+      }
+      rethrow;
+    } finally {
+      _sync.endAccountTransition();
+    }
   }
 
   Future<File> createExportFile() async {
     final local = await _db.exportLearnerData();
+    final preferences = await _exportLocalPreferences();
     Map<String, dynamic>? cloud;
     if (_backend.isSignedIn) cloud = await _backend.exportCloudData();
     final payload = {
@@ -41,6 +70,7 @@ class AccountService {
       'format_version': 1,
       'exported_at': DateTime.now().toUtc().toIso8601String(),
       'local_data': local,
+      'local_preferences': preferences,
       'cloud_export': cloud,
     };
     final directory = await getTemporaryDirectory();
@@ -71,6 +101,41 @@ class AccountService {
   Future<void> deleteAccountAndLocalData() async {
     if (_backend.isSignedIn) await _backend.deleteCloudAccount();
     await _db.clearLearnerData();
+    await _clearAccountScopedArtifacts();
     await _backend.ensureAnonymousSession();
+    onLocalDataChanged?.call();
+  }
+
+  Future<Map<String, Object?>> _exportLocalPreferences() async {
+    final preferences = await SharedPreferences.getInstance();
+    return {for (final key in preferences.getKeys()) key: preferences.get(key)};
+  }
+
+  Future<void> _clearAccountScopedArtifacts() async {
+    final preferences = await SharedPreferences.getInstance();
+    for (final key in const {
+      'settings_learner_name',
+      'settings_starting_level',
+      'settings_onboarding_done',
+      'srs_new_cards_today',
+      'srs_new_cards_date',
+    }) {
+      await preferences.remove(key);
+    }
+
+    final temporary = await getTemporaryDirectory();
+    if (!await temporary.exists()) return;
+    await for (final entity in temporary.list()) {
+      if (entity is! File) continue;
+      final name = entity.uri.pathSegments.last;
+      if (name.startsWith('pronunciation_') && name.endsWith('.wav') ||
+          name.startsWith('czechify-export-') && name.endsWith('.json')) {
+        try {
+          await entity.delete();
+        } catch (_) {
+          // Best effort for files held open by the platform audio/share layer.
+        }
+      }
+    }
   }
 }

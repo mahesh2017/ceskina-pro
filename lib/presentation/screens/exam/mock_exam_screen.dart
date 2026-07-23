@@ -5,9 +5,9 @@ import '../../../domain/engines/exam_grader.dart';
 import '../../../domain/engines/pronunciation_scorer.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/entities/exam_result.dart';
+import '../../../domain/entities/exam_speaking_task.dart';
 import '../../../domain/repositories/exam_repository.dart';
 import '../../providers/database_providers.dart';
-import '../../providers/gamification_providers.dart';
 import '../../providers/stt_providers.dart';
 import '../../providers/writing_providers.dart';
 import '../../widgets/lesson/exercise_widget.dart' show TtsButton;
@@ -37,14 +37,21 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   bool _examComplete = false;
   bool _finishing = false;
   ExamResult? _result;
+  bool _resultFullyScored = false;
 
   /// Externally produced section scores (0-100).
-  int? _writingScore;
-  int? _speakingScore;
+  final Map<({int section, int question}), int> _writingScores = {};
+  final Map<({int section, int question}), WritingEvaluation>
+  _writingEvaluations = {};
+  final Map<({int section, int question}), String> _writingErrors = {};
+  final Set<({int section, int question})> _writingEvaluating = {};
+  final Map<({int section, int question}), TextEditingController>
+  _writingControllers = {};
+  final Map<({int section, int question}), int> _speakingScores = {};
 
   // Speaking section state
   bool _isRecordingSpeaking = false;
-  String? _speakingTranscription;
+  final Map<({int section, int question}), String> _speakingTranscriptions = {};
 
   @override
   void initState() {
@@ -55,12 +62,16 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   @override
   void dispose() {
     _timer?.cancel();
+    for (final controller in _writingControllers.values) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
   Future<void> _loadExam() async {
-    final exam =
-        await ref.read(examRepositoryProvider).getMockExam(widget.level);
+    final exam = await ref
+        .read(examRepositoryProvider)
+        .getMockExam(widget.level);
     if (mounted) setState(() => _exam = exam);
   }
 
@@ -72,11 +83,19 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
       _currentSection = 0;
       _currentQuestion = 0;
       _answers.clear();
-      _writingScore = null;
-      _speakingScore = null;
-      _speakingTranscription = null;
+      _writingScores.clear();
+      _writingEvaluations.clear();
+      _writingErrors.clear();
+      _writingEvaluating.clear();
+      for (final controller in _writingControllers.values) {
+        controller.dispose();
+      }
+      _writingControllers.clear();
+      _speakingScores.clear();
+      _speakingTranscriptions.clear();
       _examComplete = false;
       _result = null;
+      _resultFullyScored = false;
     });
     _startSectionTimer();
   }
@@ -133,27 +152,19 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     _finishing = true;
     _timer?.cancel();
 
-    // Evaluate writing now if the learner wrote something but never
-    // pressed "Evaluate with AI" before time ran out.
-    if (_writingScore == null) {
-      final writingText = _writingSectionText();
-      if (writingText != null && writingText.trim().isNotEmpty) {
-        setState(() {}); // show the "evaluating" spinner state
-        final eval = await ref.read(writingEvalProvider.notifier).evaluate(
-              level:
-                  widget.level == ExamLevel.a1 ? CEFRLevel.a1 : CEFRLevel.a2,
-              taskDescription: _writingSectionPrompt() ?? '',
-              learnerText: writingText,
-            );
-        _writingScore = eval?.overall;
-      }
-    }
+    await _evaluatePendingWritingTasks();
 
     final scores = ExamGrader().grade(
       exam: _exam!,
       answers: _answers,
-      writingScore: _writingScore,
-      speakingScore: _speakingScore,
+      writingScore: _externalSectionScore(
+        ExamSectionType.writing,
+        _writingScores,
+      ),
+      speakingScore: _externalSectionScore(
+        ExamSectionType.speaking,
+        _speakingScores,
+      ),
     );
 
     final result = ExamResult(
@@ -168,7 +179,9 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
       passed: scores.passed,
     );
 
-    // Persist the attempt, award XP, record the pass. None of these
+    // Persist the attempt and record a pass only when every productive task
+    // was actually scored. Neither completion nor an unavailable evaluator
+    // grants an automatic passing result or XP.
     // should block showing the result screen.
     ExamResult persisted = result;
     try {
@@ -178,8 +191,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content:
-                Text('Could not save this result to your exam history.'),
+            content: Text('Could not save this result to your exam history.'),
           ),
         );
       }
@@ -191,33 +203,98 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
             .recordExamPassed(widget.level.name);
       } catch (_) {}
     }
-    unawaited(
-        ref.read(gamificationProvider.notifier).onMockExamCompleted(),);
-
     if (!mounted) return;
     setState(() {
       _examComplete = true;
       _result = persisted;
+      _resultFullyScored = scores.fullyScored;
       _finishing = false;
     });
   }
 
-  String? _writingSectionText() {
-    for (var s = 0; s < _exam!.sections.length; s++) {
-      if (_exam!.sections[s].type == ExamSectionType.writing) {
-        return _answers[s]?[0] as String?;
+  ({int section, int question}) get _currentResponseKey =>
+      (section: _currentSection, question: _currentQuestion);
+
+  int? _externalSectionScore(
+    ExamSectionType type,
+    Map<({int section, int question}), int> scores,
+  ) {
+    for (
+      var sectionIndex = 0;
+      sectionIndex < _exam!.sections.length;
+      sectionIndex++
+    ) {
+      final section = _exam!.sections[sectionIndex];
+      if (section.type != type) continue;
+      var earned = 0.0;
+      var possible = 0;
+      for (
+        var questionIndex = 0;
+        questionIndex < section.questions.length;
+        questionIndex++
+      ) {
+        final score = scores[(section: sectionIndex, question: questionIndex)];
+        if (score == null) return null;
+        final points = section.questions[questionIndex]['points'] as int;
+        earned += score * points / 100;
+        possible += points;
       }
+      return possible == 0 ? null : (earned / possible * 100).round();
     }
     return null;
   }
 
-  String? _writingSectionPrompt() {
-    for (final section in _exam!.sections) {
-      if (section.type == ExamSectionType.writing) {
-        return section.questions.first['prompt'] as String?;
+  Future<void> _evaluatePendingWritingTasks() async {
+    for (
+      var sectionIndex = 0;
+      sectionIndex < _exam!.sections.length;
+      sectionIndex++
+    ) {
+      final section = _exam!.sections[sectionIndex];
+      if (section.type != ExamSectionType.writing) continue;
+      for (
+        var questionIndex = 0;
+        questionIndex < section.questions.length;
+        questionIndex++
+      ) {
+        final key = (section: sectionIndex, question: questionIndex);
+        if (_writingScores.containsKey(key)) continue;
+        final text = _answers[sectionIndex]?[questionIndex] as String?;
+        if (text == null || text.trim().isEmpty) continue;
+        await _evaluateWritingTask(key, section.questions[questionIndex], text);
       }
     }
-    return null;
+  }
+
+  Future<void> _evaluateWritingTask(
+    ({int section, int question}) key,
+    Map<String, dynamic> question,
+    String text,
+  ) async {
+    if (_writingEvaluating.contains(key)) return;
+    setState(() {
+      _writingEvaluating.add(key);
+      _writingErrors.remove(key);
+    });
+    final evaluation = await ref
+        .read(writingEvalProvider.notifier)
+        .evaluate(
+          level: widget.level == ExamLevel.a1 ? CEFRLevel.a1 : CEFRLevel.a2,
+          taskDescription: question['prompt'] as String,
+          learnerText: text,
+        );
+    if (!mounted) return;
+    setState(() {
+      _writingEvaluating.remove(key);
+      if (evaluation == null) {
+        _writingErrors[key] =
+            ref.read(writingEvalProvider).error ??
+            'This response could not be scored.';
+      } else {
+        _writingEvaluations[key] = evaluation;
+        _writingScores[key] = evaluation.overall;
+      }
+    });
   }
 
   @override
@@ -234,7 +311,8 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   Widget _buildIntroScreen() {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Mock Exam — ${widget.level.name.toUpperCase()}'),),
+        title: Text('Mock Exam — ${widget.level.name.toUpperCase()}'),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
@@ -252,8 +330,9 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 'This exam has 4 timed sections:\n\n'
                 '📖 Reading — comprehension questions\n'
                 '🎧 Listening — audio + questions\n'
-                '✍️ Writing — short text (AI evaluated)\n'
-                '🎤 Speaking — read aloud, scored by speech recognition\n\n'
+                '✍️ Writing — practice feedback when available\n'
+                '🎤 Speaking — transcript-based practice evidence\n\n'
+                'This is informal practice, not an official exam result.\n\n'
                 'You can answer questions in order. The timer runs per section.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey),
@@ -311,76 +390,75 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         if (leave && mounted) Navigator.of(context).pop();
       },
       child: Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () async {
-            final leave = await _confirmExit();
-            if (leave && mounted) Navigator.of(context).pop();
-          },
-        ),
-        title: Text(
-            '${section.type.name[0].toUpperCase()}${section.type.name.substring(1)} — $minutes:${seconds.toString().padLeft(2, '0')}',),
-        actions: [
-          Center(
-            child: Text(
-              'Q${_currentQuestion + 1}/$totalQuestions',
-              style: const TextStyle(fontSize: 14),
-            ),
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () async {
+              final leave = await _confirmExit();
+              if (leave && mounted) Navigator.of(context).pop();
+            },
           ),
-          const SizedBox(width: 16),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Timer bar
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: LinearProgressIndicator(
-                value: _secondsLeft / (section.timeLimitMinutes * 60),
-                minHeight: 4,
-                backgroundColor: Colors.red.withValues(alpha: 0.15),
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  _secondsLeft < 60 ? Colors.red : Colors.blue,
-                ),
+          title: Text(
+            '${section.type.name[0].toUpperCase()}${section.type.name.substring(1)} — $minutes:${seconds.toString().padLeft(2, '0')}',
+          ),
+          actions: [
+            Center(
+              child: Text(
+                'Q${_currentQuestion + 1}/$totalQuestions',
+                style: const TextStyle(fontSize: 14),
               ),
             ),
-            const SizedBox(height: 24),
-
-            // Question
-            Expanded(
-              child: _buildQuestion(section.type, question),
-            ),
-
-            // Navigation
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (_currentQuestion > 0)
-                  TextButton(
-                    onPressed: () => setState(() => _currentQuestion--),
-                    child: const Text('Previous'),
-                  )
-                else
-                  const SizedBox(width: 80),
-                FilledButton(
-                  onPressed: _nextQuestion,
-                  child: Text(
-                    _currentQuestion < totalQuestions - 1
-                        ? 'Next'
-                        : _currentSection < _exam!.sections.length - 1
-                            ? 'Next Section'
-                            : 'Finish Exam',
-                  ),
-                ),
-              ],
-            ),
+            const SizedBox(width: 16),
           ],
         ),
-      ),
+        body: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Timer bar
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: _secondsLeft / (section.timeLimitMinutes * 60),
+                  minHeight: 4,
+                  backgroundColor: Colors.red.withValues(alpha: 0.15),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    _secondsLeft < 60 ? Colors.red : Colors.blue,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Question
+              Expanded(child: _buildQuestion(section.type, question)),
+
+              // Navigation
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (_currentQuestion > 0)
+                    TextButton(
+                      onPressed: () => setState(() => _currentQuestion--),
+                      child: const Text('Previous'),
+                    )
+                  else
+                    const SizedBox(width: 80),
+                  FilledButton(
+                    onPressed: _nextQuestion,
+                    child: Text(
+                      _currentQuestion < totalQuestions - 1
+                          ? 'Next'
+                          : _currentSection < _exam!.sections.length - 1
+                          ? 'Next Section'
+                          : 'Finish Exam',
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -392,7 +470,8 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
       builder: (ctx) => AlertDialog(
         title: const Text('Leave exam?'),
         content: const Text(
-            'Your exam is in progress and will not be scored if you leave now.',),
+          'Your exam is in progress and will not be scored if you leave now.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
@@ -442,10 +521,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
             ),
             const SizedBox(height: 16),
           ],
-          Text(
-            prompt,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          Text(prompt, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 16),
           ...options.asMap().entries.map((entry) {
             final idx = entry.key;
@@ -465,8 +541,10 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                   title: Text(option),
                   onTap: () => _answer(idx),
                   trailing: isSelected
-                      ? Icon(Icons.check_circle,
-                          color: Theme.of(context).colorScheme.primary,)
+                      ? Icon(
+                          Icons.check_circle,
+                          color: Theme.of(context).colorScheme.primary,
+                        )
                       : null,
                 ),
               ),
@@ -513,10 +591,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          prompt,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        Text(prompt, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 16),
         ...options.asMap().entries.map((entry) {
           final idx = entry.key;
@@ -536,8 +611,10 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 title: Text(option),
                 onTap: () => _answer(idx),
                 trailing: isSelected
-                    ? Icon(Icons.check_circle,
-                        color: Theme.of(context).colorScheme.primary,)
+                    ? Icon(
+                        Icons.check_circle,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
                     : null,
               ),
             ),
@@ -548,8 +625,15 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   }
 
   Widget _buildWritingQuestion(Map<String, dynamic> question) {
-    final writingState = ref.watch(writingEvalProvider);
+    final key = _currentResponseKey;
     final learnerText = _currentAnswer as String? ?? '';
+    final controller = _writingControllers.putIfAbsent(
+      key,
+      () => TextEditingController(text: learnerText),
+    );
+    final isEvaluating = _writingEvaluating.contains(key);
+    final evaluation = _writingEvaluations[key];
+    final error = _writingErrors[key];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -566,10 +650,11 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         const SizedBox(height: 16),
         Expanded(
           child: TextField(
+            controller: controller,
             maxLines: null,
             expands: true,
             textAlignVertical: TextAlignVertical.top,
-            enabled: !writingState.isEvaluating,
+            enabled: !isEvaluating,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Napište svou odpověď v češtině...',
@@ -578,7 +663,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
           ),
         ),
         // AI evaluation feedback
-        if (writingState.isEvaluating) ...[
+        if (isEvaluating) ...[
           const SizedBox(height: 12),
           const Row(
             children: [
@@ -592,7 +677,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
             ],
           ),
         ],
-        if (writingState.evaluation != null) ...[
+        if (evaluation != null) ...[
           const SizedBox(height: 12),
           Card(
             color: Theme.of(context).colorScheme.secondaryContainer,
@@ -602,22 +687,22 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'AI Feedback — Score: ${writingState.evaluation!.overall}/100',
+                    'Practice feedback — Score: ${evaluation.overall}/100',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
+                  _MiniScoreRow(label: 'Grammar', score: evaluation.grammar),
                   _MiniScoreRow(
-                      label: 'Grammar',
-                      score: writingState.evaluation!.grammar,),
+                    label: 'Vocabulary',
+                    score: evaluation.vocabulary,
+                  ),
                   _MiniScoreRow(
-                      label: 'Vocabulary',
-                      score: writingState.evaluation!.vocabulary,),
-                  _MiniScoreRow(
-                      label: 'Coherence',
-                      score: writingState.evaluation!.coherence,),
+                    label: 'Coherence',
+                    score: evaluation.coherence,
+                  ),
                   const SizedBox(height: 8),
                   Text(
-                    writingState.evaluation!.feedback,
+                    evaluation.feedback,
                     style: const TextStyle(fontSize: 15),
                   ),
                 ],
@@ -625,33 +710,21 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
             ),
           ),
         ],
-        if (writingState.error != null) ...[
+        if (error != null) ...[
           const SizedBox(height: 12),
           Text(
-            writingState.error!,
+            error,
             style: TextStyle(color: Theme.of(context).colorScheme.error),
           ),
         ],
-        if (!writingState.isEvaluating &&
-            writingState.evaluation == null &&
-            learnerText.isNotEmpty) ...[
+        if (!isEvaluating && evaluation == null && learnerText.isNotEmpty) ...[
           const SizedBox(height: 12),
           OutlinedButton.icon(
             onPressed: () async {
-              final eval =
-                  await ref.read(writingEvalProvider.notifier).evaluate(
-                        level: widget.level == ExamLevel.a1
-                            ? CEFRLevel.a1
-                            : CEFRLevel.a2,
-                        taskDescription: question['prompt'] as String,
-                        learnerText: learnerText,
-                      );
-              if (eval != null) {
-                setState(() => _writingScore = eval.overall);
-              }
+              await _evaluateWritingTask(key, question, learnerText);
             },
             icon: const Icon(Icons.rate_review),
-            label: const Text('Evaluate with AI'),
+            label: const Text('Request practice feedback'),
           ),
         ],
       ],
@@ -659,7 +732,9 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   }
 
   Widget _buildSpeakingQuestion(Map<String, dynamic> question) {
-    final targetText = question['target_text'] as String;
+    final task = ExamSpeakingTask.fromJson(question);
+    final score = _speakingScores[_currentResponseKey];
+    final transcription = _speakingTranscriptions[_currentResponseKey];
 
     return SingleChildScrollView(
       child: Column(
@@ -675,28 +750,66 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Text(
-                    targetText,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  TtsButton(text: targetText, size: 20),
+                  switch (task) {
+                    ExamReadAloudTask(:final targetText) => Column(
+                      children: [
+                        Text(
+                          targetText,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+                        TtsButton(text: targetText, size: 20),
+                      ],
+                    ),
+                    ExamPromptedResponseTask(:final expectedPhrases) => Column(
+                      children: [
+                        const Text(
+                          'Include ideas such as:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          expectedPhrases.join(' • '),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    ExamOpenResponseTask(:final evaluationCriteria) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Human-review criteria:',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        ...evaluationCriteria.map(
+                          (criterion) => Text('• $criterion'),
+                        ),
+                      ],
+                    ),
+                  },
                 ],
               ),
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Tap the microphone and read the text aloud. Speech recognition '
-            'scores your pronunciation.',
-            style: TextStyle(color: Colors.grey, fontSize: 15),
+          Text(
+            task is ExamReadAloudTask
+                ? 'Read the text aloud. This practice score compares the '
+                      'device transcript with the displayed text.'
+                : task is ExamPromptedResponseTask
+                ? 'Respond freely in Czech. This practice score reports '
+                      'coverage of the suggested phrases in the device transcript.'
+                : 'Respond freely in Czech. The transcript is saved for '
+                      'review, but this task is not automatically scored.',
+            style: const TextStyle(color: Colors.grey, fontSize: 15),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
           Center(
             child: GestureDetector(
-              onTap: _isRecordingSpeaking ? null : () => _recordSpeaking(targetText),
+              onTap: _isRecordingSpeaking ? null : () => _recordSpeaking(task),
               child: Container(
                 width: 72,
                 height: 72,
@@ -718,68 +831,98 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
           Text(
             _isRecordingSpeaking
                 ? 'Listening...'
-                : _speakingScore != null
-                    ? 'Scored! Tap the mic to try again.'
-                    : 'Tap to record',
+                : score != null
+                ? 'Scored! Tap the mic to try again.'
+                : 'Tap to record',
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),
-          if (_speakingScore != null) ...[
+          if (score != null) ...[
             const SizedBox(height: 16),
             Text(
-              '$_speakingScore / 100',
+              '$score / 100',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: _speakingScore! >= 60 ? Colors.green : Colors.orange,
+                color: score >= 60 ? Colors.green : Colors.orange,
               ),
             ),
-            if (_speakingTranscription != null &&
-                _speakingTranscription!.isNotEmpty)
+            if (transcription != null && transcription.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Heard: "$_speakingTranscription"',
+                  'Heard: "$transcription"',
                   textAlign: TextAlign.center,
                   style: const TextStyle(color: Colors.grey, fontSize: 14),
                 ),
               ),
+          ] else if (transcription != null && transcription.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            const Text(
+              'Recorded — unscored practice',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                'Heard: "$transcription"',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.grey, fontSize: 14),
+              ),
+            ),
           ],
         ],
       ),
     );
   }
 
-  Future<void> _recordSpeaking(String targetText) async {
+  Future<void> _recordSpeaking(ExamSpeakingTask task) async {
+    final responseKey = _currentResponseKey;
     setState(() => _isRecordingSpeaking = true);
     try {
       final stt = ref.read(sttServiceProvider) as NativeSttService;
-      final transcription =
-          await stt.listenFor(timeout: const Duration(seconds: 12));
-
-      final result = PronunciationScorer().score(
-        expectedText: targetText,
-        actualTranscription: transcription,
+      final transcription = await stt.listenFor(
+        timeout: const Duration(seconds: 12),
       );
 
-      if (!mounted) return;
+      final int? score = switch (task) {
+        ExamReadAloudTask(:final targetText) =>
+          (PronunciationScorer()
+                      .score(
+                        expectedText: targetText,
+                        actualTranscription: transcription,
+                      )
+                      .overallScore *
+                  100)
+              .round(),
+        ExamPromptedResponseTask() =>
+          (task.transcriptCoverage(transcription) * 100).round(),
+        ExamOpenResponseTask() => null,
+      };
+
+      if (!mounted || responseKey != _currentResponseKey) return;
       setState(() {
         _isRecordingSpeaking = false;
-        _speakingTranscription = transcription;
-        _speakingScore = (result.overallScore * 100).round();
+        _speakingTranscriptions[responseKey] = transcription;
+        if (score != null) _speakingScores[responseKey] = score;
       });
-      _answer(_speakingScore); // mark the question as answered
+      _answer(score ?? transcription);
     } catch (_) {
       if (!mounted) return;
       setState(() {
         _isRecordingSpeaking = false;
-        _speakingTranscription = null;
+        _speakingTranscriptions.remove(responseKey);
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-              'Speech recognition failed. Check microphone permissions.',),
+            'Speech recognition failed. Check microphone permissions.',
+          ),
         ),
       );
     }
@@ -787,7 +930,11 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
 
   Widget _buildResultScreen() {
     final passed = _result!.passed;
-    final color = passed ? Colors.green : Colors.red;
+    final color = !_resultFullyScored
+        ? Colors.orange
+        : passed
+        ? Colors.green
+        : Colors.red;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Exam Results')),
@@ -798,13 +945,21 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                passed ? Icons.emoji_events : Icons.cancel,
+                !_resultFullyScored
+                    ? Icons.pending_actions
+                    : passed
+                    ? Icons.emoji_events
+                    : Icons.cancel,
                 size: 80,
                 color: color,
               ),
               const SizedBox(height: 24),
               Text(
-                passed ? 'Gratulujeme! Passed!' : 'Neprošli jste. Not passed.',
+                !_resultFullyScored
+                    ? 'Practice completed — some tasks are unscored'
+                    : passed
+                    ? 'Practice threshold met'
+                    : 'Practice threshold not met',
                 style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
@@ -814,20 +969,14 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      _ScoreRow(
-                        label: 'Reading',
-                        score: _result!.readingScore,
-                      ),
+                      _ScoreRow(label: 'Reading', score: _result!.readingScore),
                       const Divider(),
                       _ScoreRow(
                         label: 'Listening',
                         score: _result!.listeningScore,
                       ),
                       const Divider(),
-                      _ScoreRow(
-                        label: 'Writing',
-                        score: _result!.writingScore,
-                      ),
+                      _ScoreRow(label: 'Writing', score: _result!.writingScore),
                       const Divider(),
                       _ScoreRow(
                         label: 'Speaking',
@@ -872,26 +1021,24 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         continue;
       }
 
-      entries.add(Padding(
-        padding: const EdgeInsets.only(top: 12, bottom: 4),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            section.type == ExamSectionType.reading
-                ? 'Reading'
-                : 'Listening',
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall
-                ?.copyWith(fontWeight: FontWeight.bold),
+      entries.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 12, bottom: 4),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              section.type == ExamSectionType.reading ? 'Reading' : 'Listening',
+              style: Theme.of(
+                context,
+              ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
         ),
-      ),);
+      );
 
       for (var q = 0; q < section.questions.length; q++) {
         final question = section.questions[q];
-        final options =
-            (question['options'] as List<dynamic>?)?.cast<String>();
+        final options = (question['options'] as List<dynamic>?)?.cast<String>();
         final correctIdx = question['correct_answer'];
         if (options == null || correctIdx is! int) continue;
 
@@ -899,53 +1046,57 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         final isCorrect = userIdx == correctIdx;
         final audioText = question['audio_text'] as String?;
 
-        entries.add(Card(
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      isCorrect ? Icons.check_circle : Icons.cancel,
-                      color: isCorrect ? Colors.green : Colors.red,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        question['prompt'] as String? ?? '',
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+        entries.add(
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        isCorrect ? Icons.check_circle : Icons.cancel,
+                        color: isCorrect ? Colors.green : Colors.red,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          question['prompt'] as String? ?? '',
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (audioText != null) ...[
+                    const SizedBox(height: 6),
+                    Text(
+                      'Audio said: "$audioText"',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontStyle: FontStyle.italic,
                       ),
                     ),
                   ],
-                ),
-                if (audioText != null) ...[
                   const SizedBox(height: 6),
+                  if (!isCorrect)
+                    Text(
+                      userIdx is int && userIdx < options.length
+                          ? 'Your answer: ${options[userIdx]}'
+                          : 'Not answered',
+                      style: const TextStyle(color: Colors.red, fontSize: 15),
+                    ),
                   Text(
-                    'Audio said: "$audioText"',
-                    style: const TextStyle(
-                        fontSize: 14, fontStyle: FontStyle.italic,),
+                    'Correct: ${options[correctIdx]}',
+                    style: const TextStyle(color: Colors.green, fontSize: 15),
                   ),
                 ],
-                const SizedBox(height: 6),
-                if (!isCorrect)
-                  Text(
-                    userIdx is int && userIdx < options.length
-                        ? 'Your answer: ${options[userIdx]}'
-                        : 'Not answered',
-                    style: const TextStyle(color: Colors.red, fontSize: 15),
-                  ),
-                Text(
-                  'Correct: ${options[correctIdx]}',
-                  style: const TextStyle(color: Colors.green, fontSize: 15),
-                ),
-              ],
+              ),
             ),
           ),
-        ),);
+        );
       }
     }
 
@@ -983,8 +1134,8 @@ class _ScoreRow extends StatelessWidget {
     final color = score >= 80
         ? Colors.green
         : score >= 60
-            ? Colors.orange
-            : Colors.red;
+        ? Colors.orange
+        : Colors.red;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -1024,22 +1175,24 @@ class _MiniScoreRow extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-              width: 80,
-              child: Text(label, style: const TextStyle(fontSize: 14)),),
+            width: 80,
+            child: Text(label, style: const TextStyle(fontSize: 14)),
+          ),
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(3),
               child: LinearProgressIndicator(
                 value: score / 100,
                 minHeight: 6,
-                backgroundColor:
-                    Theme.of(context).colorScheme.surfaceContainerHighest,
+                backgroundColor: Theme.of(
+                  context,
+                ).colorScheme.surfaceContainerHighest,
                 valueColor: AlwaysStoppedAnimation<Color>(
                   score >= 80
                       ? Colors.green
                       : score >= 60
-                          ? Colors.orange
-                          : Colors.red,
+                      ? Colors.orange
+                      : Colors.red,
                 ),
               ),
             ),

@@ -67,7 +67,7 @@
         "correct_order": [0, 1, 2, 3, 4, 5, 6, 7],
         "explanation": "Standard self-introduction order: Name → Origin → Pleasure. This is the A1 introduction pattern."
       },
-      "answer_key": "0,1,2,3,4,5,6,7",
+      "answer_key": "Jmenuju se Anna. Jsem z Prahy. Těší mě.",
       "grammar_rule_id": "GR-011",
       "xp_reward": 15
     },
@@ -80,8 +80,11 @@
         "type": "fill_blank",
         "sentence": "_____ se Tom. Jsem _____ Brna.",
         "blank_count": 2,
-        "accepted_answers": ["Jmenuju|z"],
-        "explanation": "Jmenuju se Tom (My name is Tom). Jsem z Brna (I'm from Brno). Note: 'z' + genitive — Brna is genitive of Brno."
+        "explanation": "Jmenuju se Tom (My name is Tom). Jsem z Brna (I'm from Brno). Note: 'z' + genitive — Brna is genitive of Brno.",
+        "blank_answers": [
+          ["Jmenuju"],
+          ["z"]
+        ]
       },
       "answer_key": "Jmenuju|z",
       "grammar_rule_id": "GR-011",
@@ -175,12 +178,23 @@
         "type": "dialogue",
         "scenario": "Meeting someone new at a party",
         "lines": [
-          {"speaker": "stranger", "text": "Ahoj, já jsem Petra. Jak se jmenuješ ty?"},
-          {"speaker": "you", "text": "_____ (My name is Petr.)"},
-          {"speaker": "stranger", "text": "Těší mě, Petr!"}
+          {
+            "speaker": "stranger",
+            "text": "Ahoj, já jsem Petra. Jak se jmenuješ ty?"
+          },
+          {
+            "speaker": "you",
+            "text": "___ (My name is Petr.)"
+          },
+          {
+            "speaker": "stranger",
+            "text": "Těší mě, Petr!"
+          }
         ],
-        "accepted_answers": ["Jmenuju se Petr.", "Já se jmenuju Petr.", "Jmenuji se Petr."],
-        "explanation": "Informal context (ahoj, jmenuješ), so use Jmenuju se (colloquial)."
+        "explanation": "Informal context (ahoj, jmenuješ), so use Jmenuju se (colloquial).",
+        "blank_answers": [
+          ["Jmenuju se Petr.", "Já se jmenuju Petr.", "Jmenuji se Petr."]
+        ]
       },
       "answer_key": "Jmenuju se Petr.",
       "grammar_rule_id": "GR-011",

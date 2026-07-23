@@ -15,14 +15,34 @@
       "prompt": "Complete the dialogue at the doctor's office.",
       "data": {
         "type": "dialogue",
-        "context_en": "A patient describes their symptoms to the doctor.",
         "lines": [
-          {"speaker": "doctor", "text_cz": "Dobrý den. Co vám ____?", "text_en": "Hello. What's bothering you?", "blank": true, "accepted_answers": ["bolí", "je"]},
-          {"speaker": "patient", "text_cz": "Bolí mě krk a mám horečku.", "text_en": "My throat hurts and I have a fever.", "blank": false},
-          {"speaker": "doctor", "text_cz": "Jak dlouho už jste ____?", "text_en": "How long have you been sick?", "blank": true, "accepted_answers": ["nemocný", "nemocná"]},
-          {"speaker": "patient", "text_cz": "Už tři dny.", "text_en": "For three days already.", "blank": false}
+          {
+            "speaker": "doctor",
+            "text_en": "Hello. What's bothering you?",
+            "text": "Dobrý den. Co vám ___?"
+          },
+          {
+            "speaker": "patient",
+            "text_en": "My throat hurts and I have a fever.",
+            "text": "Bolí mě krk a mám horečku."
+          },
+          {
+            "speaker": "doctor",
+            "text_en": "How long have you been sick?",
+            "text": "Jak dlouho už jste ___?"
+          },
+          {
+            "speaker": "patient",
+            "text_en": "For three days already.",
+            "text": "Už tři dny."
+          }
         ],
-        "explanation": "In this dialogue, the doctor asks 'Co vám bolí?' (What hurts you?) or 'Co vám je?' (What's wrong with you?). 'Horečka' = fever. 'Jak dlouho' = how long. Note the formal 'vy' form used between doctor and patient."
+        "explanation": "In this dialogue, the doctor asks 'Co vám bolí?' (What hurts you?) or 'Co vám je?' (What's wrong with you?). 'Horečka' = fever. 'Jak dlouho' = how long. Note the formal 'vy' form used between doctor and patient.",
+        "blank_answers": [
+          ["bolí", "je"],
+          ["nemocný", "nemocná"]
+        ],
+        "scenario": "A patient describes their symptoms to the doctor."
       },
       "answer_key": "bolí, nemocný",
       "grammar_rule_id": "GR-232",
@@ -71,8 +91,10 @@
         "type": "fill_blank",
         "sentence": "Mám bolest ____.",
         "blank_count": 1,
-        "accepted_answers": ["hlavy", "hlava"],
-        "explanation": "'Mám bolest hlavy.' = I have a headache. 'Bolest' = pain, 'hlavy' = of the head (genitive case). The structure 'mám bolest + [genitive]' is an alternative to 'bolí mě hlava'. Both are common."
+        "explanation": "'Mám bolest hlavy.' = I have a headache. 'Bolest' = pain, 'hlavy' = of the head (genitive case). The structure 'mám bolest + [genitive]' is an alternative to 'bolí mě hlava'. Both are common.",
+        "blank_answers": [
+          ["hlavy", "hlava"]
+        ]
       },
       "answer_key": "hlavy",
       "grammar_rule_id": "GR-230",
@@ -87,8 +109,10 @@
         "type": "fill_blank",
         "sentence": "Vezměte si tento ____.",
         "blank_count": 1,
-        "accepted_answers": ["lék", "medikament"],
-        "explanation": "'Vezměte si tento lék.' = Take this medicine. 'Lék' = medicine/drug (masculine). 'Vezměte si' = take (imperative, formal/plural). The doctor uses the formal imperative form."
+        "explanation": "'Vezměte si tento lék.' = Take this medicine. 'Lék' = medicine/drug (masculine). 'Vezměte si' = take (imperative, formal/plural). The doctor uses the formal imperative form.",
+        "blank_answers": [
+          ["lék", "medikament"]
+        ]
       },
       "answer_key": "lék",
       "grammar_rule_id": "GR-232",
@@ -188,7 +212,7 @@
       "data": {
         "type": "word_order",
         "words": ["Mám", "bolest", "břicho", "žaludku"],
-        "correct_order": [0, 1, 3, -1],
+        "correct_order": [0, 1, 3],
         "explanation": "'Mám bolest žaludku.' = I have a stomachache. 'Bolest' = pain (accusative), 'žaludku' = stomach (genitive). 'Břicho' is a distractor here — the formal expression uses 'bolest žaludku'. Alternatively, 'Bolí mě břicho' is the colloquial version."
       },
       "answer_key": "Mám bolest žaludku.",

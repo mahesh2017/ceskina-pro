@@ -50,8 +50,10 @@
         "type": "fill_blank",
         "sentence": "Zítra ___ ten dopis. (napsat)",
         "blank_count": 1,
-        "accepted_answers": ["napíšu"],
-        "explanation": "'Napsat' (perfective) → 'napíšu' = I will write. The perfective present form is used for future. 'Zítra' (tomorrow) makes it clear this is future. The complete sentence: 'Zítra napíšu ten dopis.' = Tomorrow I will write the letter."
+        "explanation": "'Napsat' (perfective) → 'napíšu' = I will write. The perfective present form is used for future. 'Zítra' (tomorrow) makes it clear this is future. The complete sentence: 'Zítra napíšu ten dopis.' = Tomorrow I will write the letter.",
+        "blank_answers": [
+          ["napíšu"]
+        ]
       },
       "answer_key": "napíšu",
       "grammar_rule_id": "GR-190",
@@ -99,8 +101,10 @@
         "type": "fill_blank",
         "sentence": "Příští týden ___ česky. (mluvit — I will be speaking)",
         "blank_count": 1,
-        "accepted_answers": ["budu mluvit"],
-        "explanation": "'Mluvit' is imperfective, so it cannot use present for future. We use 'budu' + infinitive: 'budu mluvit' = I will be speaking / I will speak. Future of být: budu, budeš, bude, budeme, budete, budou. 'Příští týden' = next week."
+        "explanation": "'Mluvit' is imperfective, so it cannot use present for future. We use 'budu' + infinitive: 'budu mluvit' = I will be speaking / I will speak. Future of být: budu, budeš, bude, budeme, budete, budou. 'Příští týden' = next week.",
+        "blank_answers": [
+          ["budu mluvit"]
+        ]
       },
       "answer_key": "budu mluvit",
       "grammar_rule_id": "GR-191",
@@ -132,8 +136,10 @@
         "type": "fill_blank",
         "sentence": "Každý den ___ hodinu. (číst — I will be reading)",
         "blank_count": 1,
-        "accepted_answers": ["budu číst"],
-        "explanation": "Use imperfective future (budu číst) for ongoing/repeated actions. Use perfective (přečtu) for one-time, completed actions. 'Každý den' (every day) signals a habitual action → imperfective. 'Budu číst hodinu' = I will be reading for an hour / I will read for an hour (regularly)."
+        "explanation": "Use imperfective future (budu číst) for ongoing/repeated actions. Use perfective (přečtu) for one-time, completed actions. 'Každý den' (every day) signals a habitual action → imperfective. 'Budu číst hodinu' = I will be reading for an hour / I will read for an hour (regularly).",
+        "blank_answers": [
+          ["budu číst"]
+        ]
       },
       "answer_key": "budu číst",
       "grammar_rule_id": "GR-191",
@@ -186,8 +192,10 @@
         "type": "fill_blank",
         "sentence": "V poledne se ___. (naobědvat se)",
         "blank_count": 1,
-        "accepted_answers": ["naobědvám"],
-        "explanation": "'Naobědvat se' (perfective) → 'naobědvám se' = I will have/eat lunch. For a specific, one-time meal: use perfective. For habitual eating: 'budu obědvat'. Compare: 'V poledne se naobědvám.' (I will eat lunch at noon — one time) vs 'Každý den budu obědvat ve dvanáct.' (Every day I will eat lunch at twelve — habitual)."
+        "explanation": "'Naobědvat se' (perfective) → 'naobědvám se' = I will have/eat lunch. For a specific, one-time meal: use perfective. For habitual eating: 'budu obědvat'. Compare: 'V poledne se naobědvám.' (I will eat lunch at noon — one time) vs 'Každý den budu obědvat ve dvanáct.' (Every day I will eat lunch at twelve — habitual).",
+        "blank_answers": [
+          ["naobědvám"]
+        ]
       },
       "answer_key": "naobědvám",
       "grammar_rule_id": "GR-190",

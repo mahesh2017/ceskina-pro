@@ -14,7 +14,14 @@ class ReviewCard {
 /// Abstract interface for vocabulary + SRS data access.
 abstract class VocabularyRepository {
   Future<List<ReviewCard>> getDueCards({DateTime? asOf});
-  Future<void> updateCard(SrsCard card, Rating rating, DateTime reviewedAt);
+  Future<SrsCard> updateCard(
+    SrsCard card,
+    Rating rating,
+    DateTime reviewedAt, {
+    required String reviewId,
+    required bool introducedNewCard,
+  });
+  Future<int> introducedCardCountForDay(DateTime day);
   Future<List<Flashcard>> searchCards(String query);
   Future<List<Flashcard>> getCardsForUnit(int unitId);
 

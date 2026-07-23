@@ -82,8 +82,12 @@
         "type": "fill_blank",
         "sentence": "Já ___ (jíst) ___ (chléb) a ___ (sýr).",
         "blank_count": 3,
-        "accepted_answers": ["jím", "chléb", "sýr"],
-        "explanation": "jíst (to eat) → jím (I eat). chléb (bread) and sýr (cheese) are masculine inanimate, accusative = nominative."
+        "explanation": "jíst (to eat) → jím (I eat). chléb (bread) and sýr (cheese) are masculine inanimate, accusative = nominative.",
+        "blank_answers": [
+          ["jím"],
+          ["chléb"],
+          ["sýr"]
+        ]
       },
       "answer_key": "jím chléb sýr",
       "grammar_rule_id": "GR-102",
@@ -98,8 +102,12 @@
         "type": "fill_blank",
         "sentence": "Ona ___ (pít) ___ (voda) a ___ (džus).",
         "blank_count": 3,
-        "accepted_answers": ["pije", "vodu", "džus"],
-        "explanation": "pít (to drink) → pije (she drinks). voda (water) feminine accusative → vodu. džus (juice) masculine inanimate, accusative = džus."
+        "explanation": "pít (to drink) → pije (she drinks). voda (water) feminine accusative → vodu. džus (juice) masculine inanimate, accusative = džus.",
+        "blank_answers": [
+          ["pije"],
+          ["vodu"],
+          ["džus"]
+        ]
       },
       "answer_key": "pije vodu džus",
       "grammar_rule_id": "GR-102",
@@ -179,8 +187,12 @@
         "type": "fill_blank",
         "sentence": "K snídani jím ___ (bread), ___ (butter) a ___ (egg).",
         "blank_count": 3,
-        "accepted_answers": ["chléb", "máslo", "vejce"],
-        "explanation": "chléb (masc. inan.) and máslo (neuter) same in accusative. vejce (neuter) same in accusative."
+        "explanation": "chléb (masc. inan.) and máslo (neuter) same in accusative. vejce (neuter) same in accusative.",
+        "blank_answers": [
+          ["chléb"],
+          ["máslo"],
+          ["vejce"]
+        ]
       },
       "answer_key": "chléb máslo vejce",
       "grammar_rule_id": "GR-102",

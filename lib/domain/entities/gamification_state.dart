@@ -1,3 +1,6 @@
+import 'practice_evidence.dart';
+import 'concept_error_evidence.dart';
+
 /// Gamification state.
 class GamificationState {
   final int hearts;
@@ -50,7 +53,8 @@ class GamificationState {
       gems: gems ?? this.gems,
       earnedBadges: earnedBadges ?? this.earnedBadges,
       lastHeartRefill: lastHeartRefill ?? this.lastHeartRefill,
-      streakFreezeAvailable: streakFreezeAvailable ?? this.streakFreezeAvailable,
+      streakFreezeAvailable:
+          streakFreezeAvailable ?? this.streakFreezeAvailable,
     );
   }
 
@@ -119,16 +123,16 @@ class Badge {
     ),
     Badge(
       id: 'mock_a1_pass',
-      name: 'A1 Certified',
-      description: 'Pass CCE-A1 mock exam',
+      name: 'A1 Practice Milestone',
+      description: 'Meet the target in an A1 practice set',
       icon: '🎓',
       xpReward: 50,
       criteria: BadgeCriteria(examPassed: 'a1'),
     ),
     Badge(
       id: 'mock_a2_pass',
-      name: 'A2 Certified',
-      description: 'Pass CCE-A2 mock exam',
+      name: 'A2 Practice Milestone',
+      description: 'Meet the target in an A2 practice set',
       icon: '🎓',
       xpReward: 100,
       criteria: BadgeCriteria(examPassed: 'a2'),
@@ -173,7 +177,10 @@ class BadgeCriteria {
     }
     // If only customKey/minValue is set and no other criteria matched, it's not met
     // unless the custom value is present
-    if (customKey == null && unitId == null && minStreak == null && examPassed == null) {
+    if (customKey == null &&
+        unitId == null &&
+        minStreak == null &&
+        examPassed == null) {
       return false; // No criteria = not met (safety)
     }
     return true;
@@ -183,6 +190,11 @@ class BadgeCriteria {
 /// A snapshot of learner progress for badge evaluation.
 class ProgressSnapshot {
   final Map<int, double> unitScores;
+  final Map<int, int> completedLessonsByUnit;
+  final Map<int, int> totalLessonsByUnit;
+  final DateTime? evidenceUpdatedAt;
+  final Map<String, PracticeEvidence> componentEvidence;
+  final Map<String, ConceptErrorEvidence> conceptErrors;
   final int longestStreak;
   final Set<String> examsPassed;
   final Set<String> earnedBadges;
@@ -192,6 +204,11 @@ class ProgressSnapshot {
 
   const ProgressSnapshot({
     this.unitScores = const {},
+    this.completedLessonsByUnit = const {},
+    this.totalLessonsByUnit = const {},
+    this.evidenceUpdatedAt,
+    this.componentEvidence = const {},
+    this.conceptErrors = const {},
     this.longestStreak = 0,
     this.examsPassed = const {},
     this.earnedBadges = const {},

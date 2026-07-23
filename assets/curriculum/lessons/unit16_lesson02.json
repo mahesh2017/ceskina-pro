@@ -39,8 +39,10 @@
         "type": "fill_blank",
         "sentence": "Mám hodně ___.",
         "blank_count": 1,
-        "accepted_answers": ["práce"],
-        "explanation": "'Mám hodně práce.' = I have a lot of work. Práce (work, feminine) → práce (genitive singular). Note that 'práce' looks the same in nominative and genitive — this is typical for feminine nouns ending in -e/ě."
+        "explanation": "'Mám hodně práce.' = I have a lot of work. Práce (work, feminine) → práce (genitive singular). Note that 'práce' looks the same in nominative and genitive — this is typical for feminine nouns ending in -e/ě.",
+        "blank_answers": [
+          ["práce"]
+        ]
       },
       "answer_key": "práce",
       "grammar_rule_id": "GR-152",
@@ -93,8 +95,10 @@
         "type": "fill_blank",
         "sentence": "Promiň, nemám ___.",
         "blank_count": 1,
-        "accepted_answers": ["čas", "času"],
-        "explanation": "'Nemám čas.' or 'Nemám času.' = I don't have time. In negation, the accusative object of 'mít' can shift to genitive (času), though the accusative form (čas) is also common in everyday speech. For A2, both are accepted; the genitive času is the formal pattern."
+        "explanation": "'Nemám čas.' or 'Nemám času.' = I don't have time. In negation, the accusative object of 'mít' can shift to genitive (času), though the accusative form (čas) is also common in everyday speech. For A2, both are accepted; the genitive času is the formal pattern.",
+        "blank_answers": [
+          ["čas", "času"]
+        ]
       },
       "answer_key": "čas",
       "grammar_rule_id": "GR-153",
@@ -147,8 +151,10 @@
         "type": "fill_blank",
         "sentence": "Koupil jsem kilo ___.",
         "blank_count": 1,
-        "accepted_answers": ["jablek"],
-        "explanation": "'Koupil jsem kilo jablek.' = I bought a kilo of apples. Jablko (neuter) → jablka (nominative plural) → jablek (genitive plural). Note the vowel change: 'a' becomes 'e' in genitive plural — this is a common pattern for neuter nouns."
+        "explanation": "'Koupil jsem kilo jablek.' = I bought a kilo of apples. Jablko (neuter) → jablka (nominative plural) → jablek (genitive plural). Note the vowel change: 'a' becomes 'e' in genitive plural — this is a common pattern for neuter nouns.",
+        "blank_answers": [
+          ["jablek"]
+        ]
       },
       "answer_key": "jablek",
       "grammar_rule_id": "GR-152",
@@ -161,18 +167,7 @@
       "prompt": "Arrange the words to form a correct sentence: 'I need a liter of milk.'",
       "data": {
         "type": "word_order",
-        "words": [
-          "Potřebuju",
-          "litr",
-          "mléka",
-          "—",
-          "I",
-          "need",
-          "a",
-          "liter",
-          "of",
-          "milk"
-        ],
+        "words": ["Potřebuju", "litr", "mléka"],
         "correct_order": [0, 1, 2],
         "explanation": "'Potřebuju litr mléka.' = I need a liter of milk. Mléko (neuter) → mléka (genitive singular — mass nouns stay singular after units). 'Potřebovat' = to need."
       },
@@ -222,13 +217,28 @@
         "type": "dialogue",
         "scenario": "V obchodě — At the shop",
         "lines": [
-          {"speaker": "prodavač", "text": "Dobrý den! Co si dáte?"},
-          {"speaker": "zákazník", "text": "___ (I'd like a kilo of apples and a little bread.)"},
-          {"speaker": "prodavač", "text": "Ještě něco?"},
-          {"speaker": "zákazník", "text": "___ (No, thank you. I don't have more money.)"}
+          {
+            "speaker": "prodavač",
+            "text": "Dobrý den! Co si dáte?"
+          },
+          {
+            "speaker": "zákazník",
+            "text": "___ (I'd like a kilo of apples and a little bread.)"
+          },
+          {
+            "speaker": "prodavač",
+            "text": "Ještě něco?"
+          },
+          {
+            "speaker": "zákazník",
+            "text": "___ (No, thank you. I don't have more money.)"
+          }
         ],
-        "accepted_answers": ["Chtěl bych kilo jablek a trochu chleba.|Ne, děkuju. Nemám víc peněz.", "Chtěla bych kilo jablek a trochu chleba.|Ne, děkuju. Nemám víc peněz."],
-        "explanation": "'Co si dáte?' = What would you like? (formal). 'Chtěl bych' = I would like (male); 'Chtěla bych' (female). 'Kilo jablek' = a kilo of apples (gen pl). 'Trochu chleba' = a little bread (gen sg). 'Nemám víc peněz.' = I don't have more money (negation → genitive)."
+        "explanation": "'Co si dáte?' = What would you like? (formal). 'Chtěl bych' = I would like (male); 'Chtěla bych' (female). 'Kilo jablek' = a kilo of apples (gen pl). 'Trochu chleba' = a little bread (gen sg). 'Nemám víc peněz.' = I don't have more money (negation → genitive).",
+        "blank_answers": [
+          ["Chtěl bych kilo jablek a trochu chleba.", "Chtěla bych kilo jablek a trochu chleba."],
+          ["Ne, děkuju. Nemám víc peněz."]
+        ]
       },
       "answer_key": "Chtěl bych kilo jablek a trochu chleba.|Ne, děkuju. Nemám víc peněz.",
       "grammar_rule_id": "GR-153",

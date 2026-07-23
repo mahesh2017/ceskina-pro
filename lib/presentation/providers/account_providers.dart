@@ -2,13 +2,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../data/account/account_service.dart';
+import 'chat_providers.dart';
+import 'curriculum_providers.dart';
 import 'database_providers.dart';
+import 'gamification_providers.dart';
+import 'lesson_providers.dart';
+import 'pronunciation_providers.dart';
+import 'review_providers.dart';
+import 'settings_providers.dart';
 import 'sync_providers.dart';
+import 'writing_providers.dart';
 
 final accountServiceProvider = Provider<AccountService>((ref) {
   return AccountService(
     ref.watch(backendServiceProvider),
     ref.watch(databaseProvider),
+    ref.watch(syncServiceProvider),
+    onLocalDataChanged: () {
+      ref.invalidate(gamificationProvider);
+      ref.invalidate(lessonSessionProvider);
+      ref.invalidate(reviewSessionProvider);
+      ref.invalidate(dueCardCountProvider);
+      ref.invalidate(completedLessonIdsProvider);
+      ref.invalidate(chatProvider);
+      ref.invalidate(pronunciationProvider);
+      ref.invalidate(writingEvalProvider);
+      ref.invalidate(settingsProvider);
+    },
   );
 });
 

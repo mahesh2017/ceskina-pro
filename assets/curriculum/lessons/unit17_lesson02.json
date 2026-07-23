@@ -33,8 +33,10 @@
         "type": "fill_blank",
         "sentence": "Pomáhám ___ . (maminka)",
         "blank_count": 1,
-        "accepted_answers": ["mamince"],
-        "explanation": "'Maminka' → dative 'mamince'. 'Pomáhat' always takes dative for the person being helped. Note the k→c consonant change: maminka → mamince."
+        "explanation": "'Maminka' → dative 'mamince'. 'Pomáhat' always takes dative for the person being helped. Note the k→c consonant change: maminka → mamince.",
+        "blank_answers": [
+          ["mamince"]
+        ]
       },
       "answer_key": "mamince",
       "grammar_rule_id": "GR-161",
@@ -103,8 +105,10 @@
         "type": "fill_blank",
         "sentence": "Nevěří ___ . (jí — to her)",
         "blank_count": 1,
-        "accepted_answers": ["jí"],
-        "explanation": "'Jí' is the dative form of 'ona' (she). Věřit + dative: věřím ti (I believe you), věřím mu (I believe him), věřím jí (I believe her). The short form 'jí' stays 'jí' in dative."
+        "explanation": "'Jí' is the dative form of 'ona' (she). Věřit + dative: věřím ti (I believe you), věřím mu (I believe him), věřím jí (I believe her). The short form 'jí' stays 'jí' in dative.",
+        "blank_answers": [
+          ["jí"]
+        ]
       },
       "answer_key": "jí",
       "grammar_rule_id": "GR-161",
@@ -157,8 +161,10 @@
         "type": "fill_blank",
         "sentence": "Polévka ___ chutná. (mi — to me)",
         "blank_count": 1,
-        "accepted_answers": ["mi"],
-        "explanation": "'Chutnat' (to taste) works like 'líbit se': dative for who experiences the taste + nominative for the thing. 'Polévka mi chutná.' = The soup tastes good to me / I like the soup."
+        "explanation": "'Chutnat' (to taste) works like 'líbit se': dative for who experiences the taste + nominative for the thing. 'Polévka mi chutná.' = The soup tastes good to me / I like the soup.",
+        "blank_answers": [
+          ["mi"]
+        ]
       },
       "answer_key": "mi",
       "grammar_rule_id": "GR-162",
@@ -190,8 +196,10 @@
         "type": "fill_blank",
         "sentence": "Je ___ špatně. (mu — to him)",
         "blank_count": 1,
-        "accepted_answers": ["mu"],
-        "explanation": "'Je mu špatně.' = He feels sick / nauseous. The dative pronoun carries the person: je mi (I), je ti (you), je mu (he), je jí (she), je nám (we), je vám (you pl.), je jim (they)."
+        "explanation": "'Je mu špatně.' = He feels sick / nauseous. The dative pronoun carries the person: je mi (I), je ti (you), je mu (he), je jí (she), je nám (we), je vám (you pl.), je jim (they).",
+        "blank_answers": [
+          ["mu"]
+        ]
       },
       "answer_key": "mu",
       "grammar_rule_id": "GR-163",

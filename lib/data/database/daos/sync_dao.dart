@@ -5,11 +5,14 @@ import '../tables/sync_queue.dart';
 
 part 'sync_dao.g.dart';
 
+/// Keyset cursor over a table's server-owned monotonic `revision` column.
+///
+/// `revision` is stamped by a Postgres trigger on every insert AND update, so
+/// it is immune to client clock skew. Pull orders by `revision` alone.
 class PullCursor {
-  const PullCursor({required this.updatedAt, required this.syncId});
+  const PullCursor({required this.revision});
 
-  final DateTime updatedAt;
-  final int syncId;
+  final int revision;
 }
 
 /// Data access for the sync outbox. Repositories call [enqueue] alongside
@@ -20,8 +23,11 @@ class SyncDao extends DatabaseAccessor<AppDatabase> with _$SyncDaoMixin {
 
   // ── Pull cursors (local-only) ──
 
-  /// Composite keyset cursor. Legacy timestamp-only values are accepted with
-  /// a zero tie-breaker so existing installations upgrade without data loss.
+  /// Revision keyset cursor. Legacy timestamp/sync_id cursors from before the
+  /// server-owned-revision migration are not comparable to `revision`, so they
+  /// are treated as absent — the next pull restarts from the beginning. This is
+  /// safe because remote merges are domain-monotonic and idempotent, so a full
+  /// re-pull cannot regress or duplicate local state.
   Future<PullCursor?> pullCursor(String entity) async {
     final row =
         await (select(syncState)
@@ -29,17 +35,10 @@ class SyncDao extends DatabaseAccessor<AppDatabase> with _$SyncDaoMixin {
     if (row == null) return null;
     try {
       final value = jsonDecode(row.value) as Map<String, dynamic>;
-      final timestamp = DateTime.tryParse(value['updated_at'] as String);
-      if (timestamp == null) return null;
-      return PullCursor(
-        updatedAt: timestamp,
-        syncId: (value['sync_id'] as num?)?.toInt() ?? 0,
-      );
+      final revision = (value['revision'] as num?)?.toInt();
+      return revision == null ? null : PullCursor(revision: revision);
     } catch (_) {
-      final timestamp = DateTime.tryParse(row.value);
-      return timestamp == null
-          ? null
-          : PullCursor(updatedAt: timestamp, syncId: 0);
+      return null;
     }
   }
 
@@ -47,10 +46,7 @@ class SyncDao extends DatabaseAccessor<AppDatabase> with _$SyncDaoMixin {
     return into(syncState).insertOnConflictUpdate(
       SyncStateCompanion.insert(
         key: 'pull:$entity',
-        value: jsonEncode({
-          'updated_at': value.updatedAt.toUtc().toIso8601String(),
-          'sync_id': value.syncId,
-        }),
+        value: jsonEncode({'revision': value.revision}),
       ),
     );
   }

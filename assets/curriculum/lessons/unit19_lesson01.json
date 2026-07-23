@@ -50,8 +50,10 @@
         "type": "fill_blank",
         "sentence": "To auto ___ dobře. (dělat — The car worked well.)",
         "blank_count": 1,
-        "accepted_answers": ["dělalo"],
-        "explanation": "Neuter singular → -lo ending: dělalo. 'To auto dělalo dobře.' = The car worked/did well. Past participle gender agreement: masculine -l, feminine -la, neuter -lo."
+        "explanation": "Neuter singular → -lo ending: dělalo. 'To auto dělalo dobře.' = The car worked/did well. Past participle gender agreement: masculine -l, feminine -la, neuter -lo.",
+        "blank_answers": [
+          ["dělalo"]
+        ]
       },
       "answer_key": "dělalo",
       "grammar_rule_id": "GR-180",
@@ -83,8 +85,10 @@
         "type": "fill_blank",
         "sentence": "Ženy ___ celý den. (dělat — The women worked all day.)",
         "blank_count": 1,
-        "accepted_answers": ["dělaly"],
-        "explanation": "Feminine plural (ony) → -ly ending: dělaly. 'Ženy dělaly celý den.' = The women worked all day. Note: oni (masc. animate) = dělali, ony (fem.) = dělaly, ona (neuter) = dělala."
+        "explanation": "Feminine plural (ony) → -ly ending: dělaly. 'Ženy dělaly celý den.' = The women worked all day. Note: oni (masc. animate) = dělali, ony (fem.) = dělaly, ona (neuter) = dělala.",
+        "blank_answers": [
+          ["dělaly"]
+        ]
       },
       "answer_key": "dělaly",
       "grammar_rule_id": "GR-180",
@@ -132,8 +136,10 @@
         "type": "fill_blank",
         "sentence": "Oni ___ domů. (jít — They went home.)",
         "blank_count": 1,
-        "accepted_answers": ["šli"],
-        "explanation": "Masculine animate plural → šli. 'Oni šli domů.' = They went home. The irregular motion verb pattern: šel, šla, šlo, šli, šly, šla. Other similar verbs: jet → jel/jela/jelo/jeli/jely/jela (to go by vehicle)."
+        "explanation": "Masculine animate plural → šli. 'Oni šli domů.' = They went home. The irregular motion verb pattern: šel, šla, šlo, šli, šly, šla. Other similar verbs: jet → jel/jela/jelo/jeli/jely/jela (to go by vehicle).",
+        "blank_answers": [
+          ["šli"]
+        ]
       },
       "answer_key": "šli",
       "grammar_rule_id": "GR-181",
@@ -181,8 +187,10 @@
         "type": "fill_blank",
         "sentence": "Bydlela tady ___ . (před rokem — a year ago)",
         "blank_count": 1,
-        "accepted_answers": ["před rokem"],
-        "explanation": "'Před rokem' = a year ago (literally 'before a year'). Other similar constructions: 'před týdnem' = a week ago, 'před měsícem' = a month ago, 'před dvěma lety' = two years ago. The preposition 'před' + instrumental signals past time."
+        "explanation": "'Před rokem' = a year ago (literally 'before a year'). Other similar constructions: 'před týdnem' = a week ago, 'před měsícem' = a month ago, 'před dvěma lety' = two years ago. The preposition 'před' + instrumental signals past time.",
+        "blank_answers": [
+          ["před rokem"]
+        ]
       },
       "answer_key": "před rokem",
       "grammar_rule_id": "GR-181",
@@ -197,13 +205,27 @@
         "type": "dialogue",
         "scenario": "V kavárně — At a café",
         "lines": [
-          {"speaker": "person_a", "text": "Co jsi dělala včera?"},
-          {"speaker": "person_b", "text": "Včera jsem byla v kině. Dívala jsem se na nový film."},
-          {"speaker": "person_a", "text": "A líbil se ti?"},
-          {"speaker": "person_b", "text": "Ano, byl moc hezký. A co ty? Co jsi dělal?"}
+          {
+            "speaker": "person_a",
+            "text": "Co jsi dělala včera?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "A líbil se ti?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ano, byl moc hezký. A co ty? Co jsi dělal?"
+          }
         ],
-        "accepted_answers": ["Včera jsem byla v kině. Dívala jsem se na nový film.|Byla jsem v kině.|Dívala jsem se na film.|Byla jsem v kině a dívala se na film."],
-        "explanation": "'Co jsi dělala včera?' = What did you do yesterday? (addressing a female). 'Byla jsem' = I was (f.). 'Dívala jsem se' = I watched (f.). Note the feminine -a endings throughout: dělala, byla, dívala. The auxiliary 'jsem' is placed after the participle in questions."
+        "explanation": "'Co jsi dělala včera?' = What did you do yesterday? (addressing a female). 'Byla jsem' = I was (f.). 'Dívala jsem se' = I watched (f.). Note the feminine -a endings throughout: dělala, byla, dívala. The auxiliary 'jsem' is placed after the participle in questions.",
+        "blank_answers": [
+          ["Včera jsem byla v kině. Dívala jsem se na nový film.", "Byla jsem v kině.", "Dívala jsem se na film.", "Byla jsem v kině a dívala se na film."]
+        ]
       },
       "answer_key": "Včera jsem byla v kině. Dívala jsem se na nový film.",
       "grammar_rule_id": "GR-180",

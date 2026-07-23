@@ -150,8 +150,10 @@
         "type": "fill_blank",
         "sentence": "Máme ___ psa. (big)",
         "blank_count": 1,
-        "accepted_answers": ["velkého"],
-        "explanation": "'Pes' (dog) is masculine animate. In the accusative case (object of 'mít'), the adjective ending for masculine animate becomes '-ého': velkého psa. This is accusative singular masculine animate."
+        "explanation": "'Pes' (dog) is masculine animate. In the accusative case (object of 'mít'), the adjective ending for masculine animate becomes '-ého': velkého psa. This is accusative singular masculine animate.",
+        "blank_answers": [
+          ["velkého"]
+        ]
       },
       "answer_key": "velkého",
       "grammar_rule_id": "GR-071",
@@ -214,13 +216,28 @@
         "type": "dialogue",
         "scenario": "Meeting a friend who asks about your family. You introduce your brother and describe him.",
         "lines": [
-          {"speaker": "person_a", "text": "Kdo je to?"},
-          {"speaker": "person_b", "text": "To je můj bratr."},
-          {"speaker": "person_a", "text": "Jaký je?"},
-          {"speaker": "person_b", "text": "Je velký a dobrý."}
+          {
+            "speaker": "person_a",
+            "text": "Kdo je to?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "Jaký je?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          }
         ],
-        "accepted_answers": ["To je můj bratr|To je můj bratr.", "Je velký a dobrý|Je velký a dobrý.|Je velký|Je dobrý a velký"],
-        "explanation": "'Kdo je to?' = 'Who is that?' — 'To je můj bratr.' = 'That is my brother.' 'Jaký je?' = 'What is he like?' — 'Je velký a dobrý.' = 'He is big and good.' Note the masculine adjective endings '-ý'."
+        "explanation": "'Kdo je to?' = 'Who is that?' — 'To je můj bratr.' = 'That is my brother.' 'Jaký je?' = 'What is he like?' — 'Je velký a dobrý.' = 'He is big and good.' Note the masculine adjective endings '-ý'.",
+        "blank_answers": [
+          ["To je můj bratr", "To je můj bratr."],
+          ["Je velký a dobrý", "Je velký a dobrý.", "Je velký", "Je dobrý a velký"]
+        ]
       },
       "answer_key": "To je můj bratr|Je velký a dobrý",
       "grammar_rule_id": "GR-073",

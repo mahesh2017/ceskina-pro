@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 import '../../domain/entities/flashcard.dart';
 import '../../domain/entities/srs_card.dart';
 import '../../domain/engines/srs_scheduler.dart';
@@ -10,13 +10,10 @@ import 'gamification_providers.dart';
 
 /// Max brand-new cards introduced per calendar day. Prevents the whole
 /// deck (200+ words) from becoming "due" at once on first launch.
-const kDailyNewCardLimit = 15;
+const kDailyNewCardLimit = 8;
 
 /// Max cards shown in a single review session (new + due-for-review).
-const kMaxSessionCards = 30;
-
-const _kNewCardsToday = 'srs_new_cards_today';
-const _kNewCardsDate = 'srs_new_cards_date';
+const kMaxSessionCards = 20;
 
 /// The set of unit ids the learner has reached, used as the fallback gate
 /// for words not mapped to a specific lesson.
@@ -36,21 +33,6 @@ Future<Set<int>> _completedLessons(Ref ref) async {
   } catch (_) {
     return const {};
   }
-}
-
-/// New cards already introduced today (resets at midnight).
-int _introducedToday(SharedPreferences prefs) {
-  final now = DateTime.now();
-  final today = '${now.year}-${now.month}-${now.day}';
-  if (prefs.getString(_kNewCardsDate) != today) return 0;
-  return prefs.getInt(_kNewCardsToday) ?? 0;
-}
-
-Future<void> _recordIntroduced(SharedPreferences prefs, int count) async {
-  final now = DateTime.now();
-  final today = '${now.year}-${now.month}-${now.day}';
-  await prefs.setString(_kNewCardsDate, today);
-  await prefs.setInt(_kNewCardsToday, count);
 }
 
 /// Which side of the card is shown first.
@@ -133,20 +115,22 @@ SessionPlan planReviewSession({
     }
   }
 
-  final newBudget =
-      (kDailyNewCardLimit - introducedToday).clamp(0, kDailyNewCardLimit);
+  final newBudget = (kDailyNewCardLimit - introducedToday).clamp(
+    0,
+    kDailyNewCardLimit,
+  );
 
   final session = <ReviewCard>[...reviewCards.take(kMaxSessionCards)];
-  final remainingSlots =
-      (kMaxSessionCards - session.length).clamp(0, kMaxSessionCards);
-  final newToShow =
-      newCards.take(remainingSlots.clamp(0, newBudget)).toList();
+  final remainingSlots = (kMaxSessionCards - session.length).clamp(
+    0,
+    kMaxSessionCards,
+  );
+  final newToShow = newCards.take(remainingSlots.clamp(0, newBudget)).toList();
   session.addAll(newToShow);
 
-  return SessionPlan(
-    [for (final c in session) SessionCard(c, directionFor(c))],
-    newToShow.length,
-  );
+  return SessionPlan([
+    for (final c in session) SessionCard(c, directionFor(c)),
+  ], newToShow.length);
 }
 
 /// State of an SRS review session.
@@ -162,6 +146,8 @@ class ReviewSessionState {
   final int totalXp;
   final bool isComplete;
   final bool isLoading;
+  final bool isCommitting;
+  final String? commitError;
 
   /// True when finishing this session restored a heart.
   final bool heartEarned;
@@ -178,6 +164,8 @@ class ReviewSessionState {
     this.totalXp = 0,
     this.isComplete = false,
     this.isLoading = true,
+    this.isCommitting = false,
+    this.commitError,
     this.heartEarned = false,
   });
 
@@ -193,6 +181,9 @@ class ReviewSessionState {
     int? totalXp,
     bool? isComplete,
     bool? isLoading,
+    bool? isCommitting,
+    String? commitError,
+    bool clearCommitError = false,
     bool? heartEarned,
   }) {
     return ReviewSessionState(
@@ -207,6 +198,8 @@ class ReviewSessionState {
       totalXp: totalXp ?? this.totalXp,
       isComplete: isComplete ?? this.isComplete,
       isLoading: isLoading ?? this.isLoading,
+      isCommitting: isCommitting ?? this.isCommitting,
+      commitError: clearCommitError ? null : commitError ?? this.commitError,
       heartEarned: heartEarned ?? this.heartEarned,
     );
   }
@@ -217,8 +210,7 @@ class ReviewSessionState {
   int get totalCards => dueCards.length;
   int get remainingCards => dueCards.length - currentIndex;
 
-  double get progress =>
-      totalCards == 0 ? 0.0 : currentIndex / totalCards;
+  double get progress => totalCards == 0 ? 0.0 : currentIndex / totalCards;
 
   double get accuracy {
     final total = reviewedCount;
@@ -229,7 +221,9 @@ class ReviewSessionState {
 
 /// Provider that manages an SRS review session.
 class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
+  static const _uuid = Uuid();
   final _scheduler = SrsScheduler();
+  String? _reviewId;
 
   @override
   ReviewSessionState build() => const ReviewSessionState();
@@ -243,9 +237,9 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     final allDue = await repo.getDueCards();
     final unlockedUnits = await _unlockedUnits(ref);
     final completedLessons = await _completedLessons(ref);
-
-    final prefs = await SharedPreferences.getInstance();
-    final introducedToday = _introducedToday(prefs);
+    final introducedToday = await repo.introducedCardCountForDay(
+      DateTime.now(),
+    );
 
     final plan = planReviewSession(
       allDue: allDue,
@@ -254,11 +248,7 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
       introducedToday: introducedToday,
     );
 
-    // Record how many new cards we introduced so tomorrow starts fresh.
-    if (plan.newCount > 0) {
-      await _recordIntroduced(prefs, introducedToday + plan.newCount);
-    }
-
+    _reviewId = _uuid.v4();
     state = ReviewSessionState(
       dueCards: plan.cards,
       isLoading: false,
@@ -272,7 +262,8 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
   }
 
   /// Rate the current card and advance to the next.
-  void rateCard(Rating rating) {
+  Future<void> rateCard(Rating rating) async {
+    if (state.isCommitting) return;
     final card = state.currentCard;
     if (card == null) return;
 
@@ -281,12 +272,27 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     // Schedule from the card's stored SRS state so intervals and ease
     // accumulate across reviews, then persist the scheduled result.
     final result = _scheduler.schedule(card.srs, rating, now);
+    final reviewId = _reviewId ??= _uuid.v4();
 
+    state = state.copyWith(isCommitting: true, clearCommitError: true);
     final repo = ref.read(vocabularyRepositoryProvider);
-    repo.updateCard(result.card, rating, now).whenComplete(() {
-      // Refresh the home-screen due count once the new due date is stored.
-      ref.invalidate(dueCardCountProvider);
-    });
+    late final SrsCard committedCard;
+    try {
+      committedCard = await repo.updateCard(
+        result.card,
+        rating,
+        now,
+        reviewId: reviewId,
+        introducedNewCard: card.srs.state == CardState.newCard,
+      );
+    } catch (_) {
+      state = state.copyWith(
+        isCommitting: false,
+        commitError: 'Couldn’t save this review. Please try again.',
+      );
+      return;
+    }
+    ref.invalidate(dueCardCountProvider);
 
     // Update counts
     final newAgain = state.againCount + (rating == Rating.again ? 1 : 0);
@@ -298,8 +304,17 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     // Relapse: a card rated "Again" comes back later in the SAME session
     // (Anki-style learning queue) so the learner actually re-encounters it
     // before the session ends, not a day later.
+    final committedReview = ReviewCard(
+      flashcard: card.flashcard,
+      srs: committedCard,
+    );
     final newDue =
-        rating == Rating.again ? [...state.dueCards, card] : state.dueCards;
+        rating == Rating.again
+            ? [
+              ...state.dueCards,
+              SessionCard(committedReview, directionFor(committedReview)),
+            ]
+            : state.dueCards;
 
     final nextIndex = state.currentIndex + 1;
     final isComplete = nextIndex >= newDue.length;
@@ -315,15 +330,16 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
       easyCount: newEasy,
       totalXp: newXp,
       isComplete: isComplete,
+      isCommitting: false,
+      clearCommitError: true,
     );
+    _reviewId = _uuid.v4();
 
-    // Award XP via gamification: a block of 5 as the session progresses,
-    // plus whatever remainder is left when the session completes.
-    final gamification = ref.read(gamificationProvider.notifier);
-    if (state.reviewedCount % 5 == 0) {
-      gamification.onReviewSessionCompleted(5);
-    } else if (isComplete) {
-      gamification.onReviewSessionCompleted(state.reviewedCount % 5);
+    // XP was committed atomically with the immutable review attempt. Reload
+    // an already-visible projection so every surface reflects the durable
+    // ledger. If it is not mounted yet, its first read will load the database.
+    if (ref.exists(gamificationProvider)) {
+      await ref.read(gamificationProvider.notifier).reload();
     }
 
     // Reviewing is the productive way back from an empty hearts pool:
@@ -331,7 +347,7 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
     if (isComplete && state.reviewedCount >= 5) {
       final g = ref.read(gamificationProvider);
       if (g.hearts < g.maxHearts) {
-        gamification.refillHeart();
+        await ref.read(gamificationProvider.notifier).refillHeart();
         state = state.copyWith(heartEarned: true);
       }
     }
@@ -355,8 +371,8 @@ class ReviewSessionNotifier extends Notifier<ReviewSessionState> {
 /// Provider for the SRS review session.
 final reviewSessionProvider =
     NotifierProvider<ReviewSessionNotifier, ReviewSessionState>(
-  ReviewSessionNotifier.new,
-);
+      ReviewSessionNotifier.new,
+    );
 
 /// Provider for the due card count (for the home screen badge). Reflects the
 /// cards the next session would actually show — gated by unlocked units and
@@ -366,12 +382,12 @@ final dueCardCountProvider = FutureProvider<int>((ref) async {
   final allDue = await repo.getDueCards();
   final unlockedUnits = await _unlockedUnits(ref);
   final completedLessons = await _completedLessons(ref);
-  final prefs = await SharedPreferences.getInstance();
+  final introducedToday = await repo.introducedCardCountForDay(DateTime.now());
   final plan = planReviewSession(
     allDue: allDue,
     unlockedUnits: unlockedUnits,
     completedLessons: completedLessons,
-    introducedToday: _introducedToday(prefs),
+    introducedToday: introducedToday,
   );
   return plan.cards.length;
 });

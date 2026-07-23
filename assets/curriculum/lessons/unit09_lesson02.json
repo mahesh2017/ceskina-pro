@@ -166,8 +166,10 @@
         "type": "fill_blank",
         "sentence": "Sejdeme se ___ pět hodin. (at five o'clock)",
         "blank_count": 1,
-        "accepted_answers": ["v"],
-        "explanation": "V pět hodin — use 'v' before the time to mean 'at'. V kolik hodin? = At what time?"
+        "explanation": "V pět hodin — use 'v' before the time to mean 'at'. V kolik hodin? = At what time?",
+        "blank_answers": [
+          ["v"]
+        ]
       },
       "answer_key": "v",
       "grammar_rule_id": "GR-082",
@@ -180,10 +182,12 @@
       "prompt": "Complete the sentence with the correct day.",
       "data": {
         "type": "fill_blank",
-        "sentence": "Dnes je pondělí, zítra bude ___. (Today is Monday, tomorrow will be ___)",
+        "sentence": "Dnes je pondělí, zítra bude ___. (Today is Monday; name tomorrow.)",
         "blank_count": 1,
-        "accepted_answers": ["úterý"],
-        "explanation": "Úterý = Tuesday. The week: pondělí, úterý, středa, čtvrtek, pátek, sobota, neděle."
+        "explanation": "Úterý = Tuesday. The week: pondělí, úterý, středa, čtvrtek, pátek, sobota, neděle.",
+        "blank_answers": [
+          ["úterý"]
+        ]
       },
       "answer_key": "úterý",
       "grammar_rule_id": "GR-083",
@@ -198,12 +202,23 @@
         "type": "dialogue",
         "scenario": "You are making plans with a Czech friend.",
         "lines": [
-          {"speaker": "person_a", "text": "Ahoj! Máš čas zítra?"},
-          {"speaker": "person_b", "text": "Ano, mám. V kolik hodin?"},
-          {"speaker": "person_a", "text": "___ (At four o'clock?)"}
+          {
+            "speaker": "person_a",
+            "text": "Ahoj! Máš čas zítra?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ano, mám. V kolik hodin?"
+          },
+          {
+            "speaker": "person_a",
+            "text": "___ (At four o'clock?)"
+          }
         ],
-        "accepted_answers": ["Ve čtyři hodiny?|Ve čtyři?|V čtyři hodiny?"],
-        "explanation": "Ve čtyři (hodiny) = at four (o'clock). After 'v', the number 'čtyři' becomes 'čtyři'; 've' is used with certain numbers for easier pronunciation. V pět, v šest, ve dvě, ve tři, ve čtyři."
+        "explanation": "Ve čtyři (hodiny) = at four (o'clock). After 'v', the number 'čtyři' becomes 'čtyři'; 've' is used with certain numbers for easier pronunciation. V pět, v šest, ve dvě, ve tři, ve čtyři.",
+        "blank_answers": [
+          ["Ve čtyři hodiny?", "Ve čtyři?", "V čtyři hodiny?"]
+        ]
       },
       "answer_key": "Ve čtyři hodiny?",
       "grammar_rule_id": "GR-082",

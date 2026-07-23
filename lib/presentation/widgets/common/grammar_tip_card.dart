@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 /// positive feedback on correct ones.
 class GrammarTipCard extends StatelessWidget {
   final bool isCorrect;
+  final bool isSkipped;
   final String? explanation;
   final String? correctAnswer;
 
@@ -14,6 +15,7 @@ class GrammarTipCard extends StatelessWidget {
   const GrammarTipCard({
     super.key,
     required this.isCorrect,
+    this.isSkipped = false,
     this.explanation,
     this.correctAnswer,
     this.grammarRuleId,
@@ -21,6 +23,38 @@ class GrammarTipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isSkipped) {
+      return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(Icons.skip_next),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Skipped — no score or heart change',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  if (explanation != null) ...[
+                    const SizedBox(height: 4),
+                    Text(explanation!),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
     if (isCorrect && explanation == null) {
       // Just positive feedback
       return Container(
@@ -146,8 +180,7 @@ class GrammarTipCard extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton.icon(
-                onPressed: () =>
-                    context.push('/grammar?rule=$grammarRuleId'),
+                onPressed: () => context.push('/grammar?rule=$grammarRuleId'),
                 icon: const Icon(Icons.menu_book, size: 18),
                 label: const Text('View grammar rule'),
                 style: TextButton.styleFrom(

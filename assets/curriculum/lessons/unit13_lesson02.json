@@ -50,8 +50,11 @@
         "type": "fill_blank",
         "sentence": "Já ___ (play) ___ (na + guitar).",
         "blank_count": 2,
-        "accepted_answers": ["hraju", "na kytaru"],
-        "explanation": "hrát na + accusative = to play (an instrument). já hraju/hraji = I play. kytara (guitar) → accusative kytaru. So: Hraju na kytaru = I play guitar."
+        "explanation": "hrát na + accusative = to play (an instrument). já hraju/hraji = I play. kytara (guitar) → accusative kytaru. So: Hraju na kytaru = I play guitar.",
+        "blank_answers": [
+          ["hraju"],
+          ["na kytaru"]
+        ]
       },
       "answer_key": "hraju na kytaru",
       "grammar_rule_id": "GR-121",
@@ -82,8 +85,11 @@
         "type": "fill_blank",
         "sentence": "Rád se ___ (watch) ___ (na + television).",
         "blank_count": 2,
-        "accepted_answers": ["dívám", "na televizi"],
-        "explanation": "dívat se na + accusative = to watch. já → dívám se. televize (TV, feminine) → accusative televizi. Rád se dívám na televizi = I like watching TV (male speaker)."
+        "explanation": "dívat se na + accusative = to watch. já → dívám se. televize (TV, feminine) → accusative televizi. Rád se dívám na televizi = I like watching TV (male speaker).",
+        "blank_answers": [
+          ["dívám"],
+          ["na televizi"]
+        ]
       },
       "answer_key": "dívám na televizi",
       "grammar_rule_id": "GR-121",
@@ -115,8 +121,11 @@
         "type": "fill_blank",
         "sentence": "___ (often) chodím do kina, ale ___ (never) do divadla.",
         "blank_count": 2,
-        "accepted_answers": ["Často", "nikdy"],
-        "explanation": "Často = often. nikdy = never. Notice the word order: frequency adverb first, then the verb. 'Chodím do kina' = I go to the cinema. 'do divadla' = to the theatre."
+        "explanation": "Často = often. nikdy = never. Notice the word order: frequency adverb first, then the verb. 'Chodím do kina' = I go to the cinema. 'do divadla' = to the theatre.",
+        "blank_answers": [
+          ["Často"],
+          ["nikdy"]
+        ]
       },
       "answer_key": "Často nikdy",
       "grammar_rule_id": "GR-122",
@@ -147,12 +156,26 @@
         "type": "dialogue",
         "scenario": "Two friends discussing weekend plans",
         "lines": [
-          {"speaker": "Tomáš", "text": "Co děláš ___ (this weekend)?"},
-          {"speaker": "Eva", "text": "V sobotu ___ (I'm going to the cinema) a v neděli ___ (I'm playing tennis)."},
-          {"speaker": "Tomáš", "text": "Super! ___ (I like tennis too). Můžu jít s tebou?"}
+          {
+            "speaker": "Tomáš",
+            "text": "Co děláš ___ (this weekend)?"
+          },
+          {
+            "speaker": "Eva",
+            "text": "V sobotu ___ (I'm going to the cinema) a v neděli ___ (I'm playing tennis)."
+          },
+          {
+            "speaker": "Tomáš",
+            "text": "Super! ___ (I like tennis too). Můžu jít s tebou?"
+          }
         ],
-        "accepted_answers": ["o víkendu", "jdu do kina", "hraju tenis", "Taky rád hraju tenis"],
-        "explanation": "o víkendu = this weekend / on the weekend. jdu do kina = I'm going to the cinema. Hraju tenis = I'm playing tennis (present for near future). Taky rád hraju tenis = I like playing tennis too."
+        "explanation": "o víkendu = this weekend / on the weekend. jdu do kina = I'm going to the cinema. Hraju tenis = I'm playing tennis (present for near future). Taky rád hraju tenis = I like playing tennis too.",
+        "blank_answers": [
+          ["o víkendu"],
+          ["jdu do kina"],
+          ["hraju tenis"],
+          ["Taky rád hraju tenis"]
+        ]
       },
       "answer_key": "o víkendu jdu do kina hraju tenis Taky rád hraju tenis",
       "grammar_rule_id": "GR-123",
@@ -165,10 +188,9 @@
       "prompt": "Arrange to form: 'On Sundays I always go for a walk.'",
       "data": {
         "type": "word_order",
-        "shuffled": ["vždycky", "chodím", "procházku.", "V", "neděli", "na"],
-        "correct_order": ["V", "neděli", "vždycky", "chodím", "na", "procházku."],
-        "_correct_sentence": "V neděli vždycky chodím na procházku.",
-        "explanation": "V neděli = On Sunday(s). vždycky = always. chodím na procházku = I go for a walk. Czech word order: time expression first, then frequency, then verb."
+        "correct_order": [3, 4, 0, 1, 5, 2],
+        "explanation": "V neděli = On Sunday(s). vždycky = always. chodím na procházku = I go for a walk. Czech word order: time expression first, then frequency, then verb.",
+        "words": ["vždycky", "chodím", "procházku.", "V", "neděli", "na"]
       },
       "answer_key": "V neděli vždycky chodím na procházku.",
       "grammar_rule_id": "GR-122",
@@ -199,13 +221,32 @@
         "type": "dialogue",
         "scenario": "Getting to know someone's hobbies",
         "lines": [
-          {"speaker": "Anna", "text": "Jaké máš ___ (hobbies)?"},
-          {"speaker": "Martin", "text": "___ (I like sports). Hraju ___ (football) a ___ (sometimes) plavu."},
-          {"speaker": "Anna", "text": "A ___ (do you play) na nějaký nástroj?"},
-          {"speaker": "Martin", "text": "Ano, ___ (I play guitar). A ty?"}
+          {
+            "speaker": "Anna",
+            "text": "Jaké máš ___ (hobbies)?"
+          },
+          {
+            "speaker": "Martin",
+            "text": "___ (I like sports). Hraju ___ (football) a ___ (sometimes) plavu."
+          },
+          {
+            "speaker": "Anna",
+            "text": "A ___ (do you play) na nějaký nástroj?"
+          },
+          {
+            "speaker": "Martin",
+            "text": "Ano, ___ (I play guitar). A ty?"
+          }
         ],
-        "accepted_answers": ["koníčky", "Mám rád sport", "fotbal", "někdy", "hraješ", "hraju na kytaru"],
-        "explanation": "Jaké máš koníčky? = What hobbies do you have? Mám rád sport = I like sports. hraješ = do you play (2nd person). hraju na kytaru = I play guitar. nástroj = instrument."
+        "explanation": "Jaké máš koníčky? = What hobbies do you have? Mám rád sport = I like sports. hraješ = do you play (2nd person). hraju na kytaru = I play guitar. nástroj = instrument.",
+        "blank_answers": [
+          ["koníčky"],
+          ["Mám rád sport"],
+          ["fotbal"],
+          ["někdy"],
+          ["hraješ"],
+          ["hraju na kytaru"]
+        ]
       },
       "answer_key": "koníčky Mám rád sport fotbal někdy hraješ hraju na kytaru",
       "grammar_rule_id": "GR-123",

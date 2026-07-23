@@ -50,8 +50,11 @@
         "type": "fill_blank",
         "sentence": "Já ___ (mít rád — male speaker) ___ (čokoláda).",
         "blank_count": 2,
-        "accepted_answers": ["mám rád", "čokoládu"],
-        "explanation": "mít rád → mám rád (I like). čokoláda (feminine) → accusative čokoládu. After mít rád, the object takes the accusative case."
+        "explanation": "mít rád → mám rád (I like). čokoláda (feminine) → accusative čokoládu. After mít rád, the object takes the accusative case.",
+        "blank_answers": [
+          ["mám rád"],
+          ["čokoládu"]
+        ]
       },
       "answer_key": "mám rád čokoládu",
       "grammar_rule_id": "GR-120",
@@ -99,8 +102,11 @@
         "type": "fill_blank",
         "sentence": "Ona ___ (rád + female) ___ (vařit — she cooks).",
         "blank_count": 2,
-        "accepted_answers": ["ráda", "vaří"],
-        "explanation": "Female speaker → ráda. vařit (to cook) → ona vaří (she cooks). So: Ona ráda vaří = She likes cooking."
+        "explanation": "Female speaker → ráda. vařit (to cook) → ona vaří (she cooks). So: Ona ráda vaří = She likes cooking.",
+        "blank_answers": [
+          ["ráda"],
+          ["vaří"]
+        ]
       },
       "answer_key": "ráda vaří",
       "grammar_rule_id": "GR-121",
@@ -131,8 +137,11 @@
         "type": "fill_blank",
         "sentence": "Já ___ (nerad — male) ___ (běhat — to run).",
         "blank_count": 2,
-        "accepted_answers": ["nerad", "běhám"],
-        "explanation": "Negation of rád + verb: nerad (male) / nerada (female). běhat → já běhám. So: Já nerad běhám = I don't like running."
+        "explanation": "Negation of rád + verb: nerad (male) / nerada (female). běhat → já běhám. So: Já nerad běhám = I don't like running.",
+        "blank_answers": [
+          ["nerad"],
+          ["běhám"]
+        ]
       },
       "answer_key": "nerad běhám",
       "grammar_rule_id": "GR-122",
@@ -164,11 +173,20 @@
         "type": "dialogue",
         "scenario": "Two friends talking about what they like",
         "lines": [
-          {"speaker": "Petr", "text": "___ (Do you like coffee)? Já mám rád kávu."},
-          {"speaker": "Jana", "text": "Ne, ___ (I don't like coffee). Mám ráda čaj."}
+          {
+            "speaker": "Petr",
+            "text": "___ (Do you like coffee)? Já mám rád kávu."
+          },
+          {
+            "speaker": "Jana",
+            "text": "Ne, ___ (I don't like coffee). Mám ráda čaj."
+          }
         ],
-        "accepted_answers": ["Máš rád kávu", "nemám ráda kávu"],
-        "explanation": "Petr (male): Máš rád kávu? = Do you like coffee? (asking a male). Jana (female): Nemám ráda kávu = I don't like coffee. Gender agreement matters for both speakers."
+        "explanation": "Petr (male): Máš rád kávu? = Do you like coffee? (asking a male). Jana (female): Nemám ráda kávu = I don't like coffee. Gender agreement matters for both speakers.",
+        "blank_answers": [
+          ["Máš rád kávu"],
+          ["nemám ráda kávu"]
+        ]
       },
       "answer_key": "Máš rád kávu nemám ráda kávu",
       "grammar_rule_id": "GR-123",
@@ -197,12 +215,11 @@
       "prompt": "Arrange the words to form: 'Do you like watching films?'",
       "data": {
         "type": "word_order",
-        "shuffled": ["Máš", "rád", "dívat", "se", "na", "filmy?"],
-        "correct_order": ["Máš", "rád", "dívat", "se", "na", "filmy?"],
-        "_correct_sentence": "Máš rád dívat se na filmy?",
-        "explanation": "Máš rád... = Do you like... dívat se na + accusative = to watch (something). filmy (masc. inanimate plural, accusative = filmy)."
+        "correct_order": [1, 4, 0, 3, 2],
+        "explanation": "'Díváš se rád na filmy?' = Do you like watching films? The reflexive pronoun 'se' follows the finite verb here; 'dívat se na' takes the accusative.",
+        "words": ["rád", "Díváš", "filmy?", "na", "se"]
       },
-      "answer_key": "Máš rád dívat se na filmy?",
+      "answer_key": "Díváš se rád na filmy?",
       "grammar_rule_id": "GR-120",
       "xp_reward": 20
     }

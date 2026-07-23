@@ -67,8 +67,10 @@
         "type": "fill_blank",
         "sentence": "On ___ učitel. (he is a teacher)",
         "blank_count": 1,
-        "accepted_answers": ["je"],
-        "explanation": "on → je. The 3rd person singular of být is 'je'."
+        "explanation": "on → je. The 3rd person singular of být is 'je'.",
+        "blank_answers": [
+          ["je"]
+        ]
       },
       "answer_key": "je",
       "grammar_rule_id": "GR-030",
@@ -116,8 +118,10 @@
         "type": "fill_blank",
         "sentence": "My ___ dva psy. (we have two dogs)",
         "blank_count": 1,
-        "accepted_answers": ["máme"],
-        "explanation": "my → máme. The 1st person plural of mít is 'máme'."
+        "explanation": "my → máme. The 1st person plural of mít is 'máme'.",
+        "blank_answers": [
+          ["máme"]
+        ]
       },
       "answer_key": "máme",
       "grammar_rule_id": "GR-031",
@@ -163,8 +167,10 @@
         "type": "fill_blank",
         "sentence": "___ čas. (I don't have time.)",
         "blank_count": 1,
-        "accepted_answers": ["Nemám"],
-        "explanation": "Negation of mám → nemám. Add prefix 'ne-': mám → nemám."
+        "explanation": "Negation of mám → nemám. Add prefix 'ne-': mám → nemám.",
+        "blank_answers": [
+          ["Nemám"]
+        ]
       },
       "answer_key": "Nemám",
       "grammar_rule_id": "GR-032",

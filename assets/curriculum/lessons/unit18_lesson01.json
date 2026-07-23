@@ -50,8 +50,11 @@
         "type": "fill_blank",
         "sentence": "Bydlím ___ Praze a pracuji ___ univerzitě.",
         "blank_count": 2,
-        "accepted_answers": ["v", "na"],
-        "explanation": "'v Praze' = in Prague (cities use 'v' + locative). 'na univerzitě' = at the university ('univerzita' uses 'na' + locative, like many institutions)."
+        "explanation": "'v Praze' = in Prague (cities use 'v' + locative). 'na univerzitě' = at the university ('univerzita' uses 'na' + locative, like many institutions).",
+        "blank_answers": [
+          ["v"],
+          ["na"]
+        ]
       },
       "answer_key": "v, na",
       "grammar_rule_id": "GR-170",
@@ -102,10 +105,13 @@
       "prompt": "Complete the locative form of these masculine nouns.",
       "data": {
         "type": "fill_blank",
-        "sentence": "v ___ (hotel) → v hotel___. na ___ (hrad) → na hrad___.",
+        "sentence": "v ___ (hotel) → v hotelu. na ___ (hrad) → na hradě.",
         "blank_count": 2,
-        "accepted_answers": ["hotelu", "hradě"],
-        "explanation": "Masculine inanimate locative endings: most end in -u (v hotelu, v obchodě) or -e/-ě (na hradě). The -u ending is common for hard-stem masculine nouns. Some soft-stem nouns take -i."
+        "explanation": "Masculine inanimate locative endings: most end in -u (v hotelu, v obchodě) or -e/-ě (na hradě). The -u ending is common for hard-stem masculine nouns. Some soft-stem nouns take -i.",
+        "blank_answers": [
+          ["hotelu"],
+          ["hradě"]
+        ]
       },
       "answer_key": "hotelu, hradě",
       "grammar_rule_id": "GR-170",
@@ -118,10 +124,14 @@
       "prompt": "Complete the locative form of these feminine nouns.",
       "data": {
         "type": "fill_blank",
-        "sentence": "v ___ (škola) → ve škol___. na ___ (ulice) → na ulic___. o ___ (práce) → o prác___. ",
+        "sentence": "v ___ (škola) → ve škole. na ___ (ulice) → na ulici. o ___ (práce) → o práci.",
         "blank_count": 3,
-        "accepted_answers": ["škole", "ulici", "práci"],
-        "explanation": "Feminine locative endings: -a stems → -e (škola → ve škole), -e stems → -i (ulice → na ulici). The 've' form is used before certain consonant clusters for easier pronunciation."
+        "explanation": "Feminine locative endings: -a stems → -e (škola → ve škole), -e stems → -i (ulice → na ulici). The 've' form is used before certain consonant clusters for easier pronunciation.",
+        "blank_answers": [
+          ["škole"],
+          ["ulici"],
+          ["práci"]
+        ]
       },
       "answer_key": "škole, ulici, práci",
       "grammar_rule_id": "GR-170",
@@ -169,8 +179,11 @@
         "type": "fill_blank",
         "sentence": "Přemýšlím o ___ (dovolená). Přemýšlíš o ___ (budoucnost)?",
         "blank_count": 2,
-        "accepted_answers": ["dovolené", "budoucnosti"],
-        "explanation": "'Přemýšlet o' = to think about, always followed by locative. 'Dovolená' → 'o dovolené' (fem -á → -é). 'Budoucnost' → 'o budoucnosti' (fem -ost → -osti). Key verb for abstract topics."
+        "explanation": "'Přemýšlet o' = to think about, always followed by locative. 'Dovolená' → 'o dovolené' (fem -á → -é). 'Budoucnost' → 'o budoucnosti' (fem -ost → -osti). Key verb for abstract topics.",
+        "blank_answers": [
+          ["dovolené"],
+          ["budoucnosti"]
+        ]
       },
       "answer_key": "dovolené, budoucnosti",
       "grammar_rule_id": "GR-172",
@@ -185,13 +198,28 @@
         "type": "dialogue",
         "scenario": "V kavárně — At a café",
         "lines": [
-          {"speaker": "person_a", "text": "O čem mluvíte s kamarádem?"},
-          {"speaker": "person_b", "text": "___ (We're talking about work and vacation.)"},
-          {"speaker": "person_a", "text": "A o čem přemýšlíš?"},
-          {"speaker": "person_b", "text": "___ (I'm thinking about the future.)"}
+          {
+            "speaker": "person_a",
+            "text": "O čem mluvíte s kamarádem?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (We're talking about work and vacation.)"
+          },
+          {
+            "speaker": "person_a",
+            "text": "A o čem přemýšlíš?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___ (I'm thinking about the future.)"
+          }
         ],
-        "accepted_answers": ["Mluvíme o práci a o dovolené|Přemýšlím o budoucnosti", "Mluvíme o práci a dovolené|Přemýšlím o budoucnosti"],
-        "explanation": "'O čem mluvíte?' = What are you talking about? Answer: 'Mluvíme o práci a o dovolené.' = We're talking about work and vacation. 'O čem přemýšlíš?' = What are you thinking about? 'Přemýšlím o budoucnosti.' = I'm thinking about the future. Both verbs take o + locative."
+        "explanation": "'O čem mluvíte?' = What are you talking about? Answer: 'Mluvíme o práci a o dovolené.' = We're talking about work and vacation. 'O čem přemýšlíš?' = What are you thinking about? 'Přemýšlím o budoucnosti.' = I'm thinking about the future. Both verbs take o + locative.",
+        "blank_answers": [
+          ["Mluvíme o práci a o dovolené", "Mluvíme o práci a dovolené"],
+          ["Přemýšlím o budoucnosti"]
+        ]
       },
       "answer_key": "Mluvíme o práci a o dovolené|Přemýšlím o budoucnosti",
       "grammar_rule_id": "GR-172",

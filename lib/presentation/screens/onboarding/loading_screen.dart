@@ -20,41 +20,48 @@ class LoadingScreen extends StatelessWidget {
         body: Center(
           child:
               error != null
-                  ? Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.cloud_off_rounded,
-                          size: 64,
-                          color: AppColors.heartsRed,
+                  ? SafeArea(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(32),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: MediaQuery.sizeOf(context).height - 64,
                         ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Course couldn’t load',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Bricolage Grotesque',
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.cloud_off_rounded,
+                              size: 64,
+                              color: AppColors.heartsRed,
+                            ),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'Course couldn’t load',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Bricolage Grotesque',
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              error!,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(height: 1.45),
+                            ),
+                            if (onRetry != null) ...[
+                              const SizedBox(height: 24),
+                              FilledButton.icon(
+                                onPressed: onRetry,
+                                icon: const Icon(Icons.refresh_rounded),
+                                label: const Text('Try again'),
+                              ),
+                            ],
+                          ],
                         ),
-                        const SizedBox(height: 10),
-                        Text(
-                          error!,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(height: 1.45),
-                        ),
-                        if (onRetry != null) ...[
-                          const SizedBox(height: 24),
-                          FilledButton.icon(
-                            onPressed: onRetry,
-                            icon: const Icon(Icons.refresh_rounded),
-                            label: const Text('Try again'),
-                          ),
-                        ],
-                      ],
+                      ),
                     ),
                   )
                   : Column(

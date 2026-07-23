@@ -133,8 +133,10 @@
         "type": "fill_blank",
         "sentence": "Můj ___ dům je hezký. (old)",
         "blank_count": 1,
-        "accepted_answers": ["starý"],
-        "explanation": "'Dům' (house) is masculine inanimate. The adjective 'starý' (old) takes the masculine ending '-ý': starý dům."
+        "explanation": "'Dům' (house) is masculine inanimate. The adjective 'starý' (old) takes the masculine ending '-ý': starý dům.",
+        "blank_answers": [
+          ["starý"]
+        ]
       },
       "answer_key": "starý",
       "grammar_rule_id": "GR-073",
@@ -149,8 +151,10 @@
         "type": "fill_blank",
         "sentence": "Moje ___ kniha je zajímavá. (new)",
         "blank_count": 1,
-        "accepted_answers": ["nová"],
-        "explanation": "'Kniha' (book) is feminine. The adjective 'nový' (new) takes the feminine ending '-á': nová kniha. 'Moje' is used with feminine and neuter nouns."
+        "explanation": "'Kniha' (book) is feminine. The adjective 'nový' (new) takes the feminine ending '-á': nová kniha. 'Moje' is used with feminine and neuter nouns.",
+        "blank_answers": [
+          ["nová"]
+        ]
       },
       "answer_key": "nová",
       "grammar_rule_id": "GR-073",

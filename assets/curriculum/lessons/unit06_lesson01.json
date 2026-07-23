@@ -32,10 +32,13 @@
       "prompt": "Review the declension pattern for a feminine noun",
       "data": {
         "type": "declension_table",
-        "noun": "žena",
-        "nominative": "žena",
-        "accusative": "ženu",
+        "word": "žena",
         "gender": "feminine",
+        "cases": ["nominative", "accusative"],
+        "answer_key": {
+          "nominative": "žena",
+          "accusative": "ženu"
+        },
         "explanation": "Feminine nouns ending in -a change the ending to -u in the accusative singular. Žena (nominative) becomes ženu (accusative) when it is the direct object: Vidím ženu. (I see a woman.)"
       },
       "answer_key": "ženu",
@@ -67,8 +70,10 @@
         "type": "fill_blank",
         "sentence": "Piju ___ (voda).",
         "blank_count": 1,
-        "accepted_answers": ["vodu"],
-        "explanation": "Voda (feminine, -a) → vodu in accusative. Piju vodu = I drink water."
+        "explanation": "Voda (feminine, -a) → vodu in accusative. Piju vodu = I drink water.",
+        "blank_answers": [
+          ["vodu"]
+        ]
       },
       "answer_key": ["vodu"],
       "grammar_rule_id": "GR-050",
@@ -81,10 +86,13 @@
       "prompt": "Review the declension pattern for a masculine animate noun",
       "data": {
         "type": "declension_table",
-        "noun": "pes",
-        "nominative": "pes",
-        "accusative": "psa",
+        "word": "pes",
         "gender": "masculine_animate",
+        "cases": ["nominative", "accusative"],
+        "answer_key": {
+          "nominative": "pes",
+          "accusative": "psa"
+        },
         "explanation": "Masculine animate nouns ending in a hard consonant take -a in the accusative singular. Pes (nominative) becomes psa (accusative): Vidím psa. (I see a dog.) Note: the stem vowel -e- drops: pes → ps-a."
       },
       "answer_key": "psa",
@@ -115,10 +123,13 @@
       "prompt": "Review the declension pattern for a masculine inanimate noun",
       "data": {
         "type": "declension_table",
-        "noun": "hrad",
-        "nominative": "hrad",
-        "accusative": "hrad",
+        "word": "hrad",
         "gender": "masculine_inanimate",
+        "cases": ["nominative", "accusative"],
+        "answer_key": {
+          "nominative": "hrad",
+          "accusative": "hrad"
+        },
         "explanation": "Masculine inanimate nouns do NOT change in the accusative singular. Hrad is the same in both nominative and accusative: Vidím hrad. (I see a castle.)"
       },
       "answer_key": "hrad",
@@ -134,8 +145,10 @@
         "type": "fill_blank",
         "sentence": "Vidím ___ (dům).",
         "blank_count": 1,
-        "accepted_answers": ["dům"],
-        "explanation": "Dům is masculine inanimate. Masculine inanimate nouns do not change in the accusative: dům → dům. Vidím dům = I see a house."
+        "explanation": "Dům is masculine inanimate. Masculine inanimate nouns do not change in the accusative: dům → dům. Vidím dům = I see a house.",
+        "blank_answers": [
+          ["dům"]
+        ]
       },
       "answer_key": ["dům"],
       "grammar_rule_id": "GR-052",
@@ -148,10 +161,13 @@
       "prompt": "Review the declension pattern for a neuter noun",
       "data": {
         "type": "declension_table",
-        "noun": "město",
-        "nominative": "město",
-        "accusative": "město",
+        "word": "město",
         "gender": "neuter",
+        "cases": ["nominative", "accusative"],
+        "answer_key": {
+          "nominative": "město",
+          "accusative": "město"
+        },
         "explanation": "Neuter nouns do NOT change in the accusative singular. Město is the same in both nominative and accusative: Vidím město. (I see a city.)"
       },
       "answer_key": "město",

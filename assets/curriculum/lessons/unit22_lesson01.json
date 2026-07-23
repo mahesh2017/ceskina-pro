@@ -33,8 +33,10 @@
         "type": "fill_blank",
         "sentence": "Vím, ___ máš pravdu.",
         "blank_count": 1,
-        "accepted_answers": ["že"],
-        "explanation": "'Vím, že máš pravdu.' = I know that you are right. The conjunction 'že' introduces the subordinate clause. Note the comma before 'že' — Czech always uses a comma before že, protože, když, jestli, and other subordinating conjunctions."
+        "explanation": "'Vím, že máš pravdu.' = I know that you are right. The conjunction 'že' introduces the subordinate clause. Note the comma before 'že' — Czech always uses a comma before že, protože, když, jestli, and other subordinating conjunctions.",
+        "blank_answers": [
+          ["že"]
+        ]
       },
       "answer_key": "že",
       "grammar_rule_id": "GR-210",
@@ -66,8 +68,10 @@
         "type": "fill_blank",
         "sentence": "Zůstal doma, ___ byl nemocný.",
         "blank_count": 1,
-        "accepted_answers": ["protože"],
-        "explanation": "'Zůstal doma, protože byl nemocný.' = He stayed home because he was sick. 'Protože' always introduces the reason. Word order: main clause + comma + protože + subordinate clause. The subordinate clause keeps normal subject-verb order."
+        "explanation": "'Zůstal doma, protože byl nemocný.' = He stayed home because he was sick. 'Protože' always introduces the reason. Word order: main clause + comma + protože + subordinate clause. The subordinate clause keeps normal subject-verb order.",
+        "blank_answers": [
+          ["protože"]
+        ]
       },
       "answer_key": "protože",
       "grammar_rule_id": "GR-210",
@@ -104,8 +108,10 @@
         "type": "fill_blank",
         "sentence": "___ svítí slunce, chodíme ven.",
         "blank_count": 1,
-        "accepted_answers": ["Když", "když"],
-        "explanation": "'Když svítí slunce, chodíme ven.' = When the sun shines, we go outside (a recurring/general situation). 'Když' is used for factual 'when' — things that happen regularly or are generally true. The když-clause can start the sentence (with comma) or follow the main clause."
+        "explanation": "'Když svítí slunce, chodíme ven.' = When the sun shines, we go outside (a recurring/general situation). 'Když' is used for factual 'when' — things that happen regularly or are generally true. The když-clause can start the sentence (with comma) or follow the main clause.",
+        "blank_answers": [
+          ["Když", "když"]
+        ]
       },
       "answer_key": "Když",
       "grammar_rule_id": "GR-211",
@@ -137,8 +143,10 @@
         "type": "fill_blank",
         "sentence": "Zeptám se, ___ má čas.",
         "blank_count": 1,
-        "accepted_answers": ["jestli"],
-        "explanation": "'Zeptám se, jestli má čas.' = I will ask if/whether he has time. 'Jestli' introduces indirect yes/no questions. The clause after 'jestli' uses normal indicative word order, not question word order. This is different from direct questions."
+        "explanation": "'Zeptám se, jestli má čas.' = I will ask if/whether he has time. 'Jestli' introduces indirect yes/no questions. The clause after 'jestli' uses normal indicative word order, not question word order. This is different from direct questions.",
+        "blank_answers": [
+          ["jestli"]
+        ]
       },
       "answer_key": "jestli",
       "grammar_rule_id": "GR-210",
@@ -151,9 +159,9 @@
       "prompt": "Arrange the words into a correct sentence: 'I think that this film is good.'",
       "data": {
         "type": "word_order",
-        "scrambled": ["dobrý", "že", "Myslím,", "je", "ten", "film"],
-        "correct_order": ["Myslím,", "že", "ten", "film", "je", "dobrý"],
-        "explanation": "'Myslím, že ten film je dobrý.' = I think that this film is good. After 'že', the subordinate clause keeps normal word order (subject–verb–complement). Czech always uses a comma before 'že'. The main clause 'Myslím' comes first."
+        "correct_order": [2, 1, 4, 5, 3, 0],
+        "explanation": "'Myslím, že ten film je dobrý.' = I think that this film is good. After 'že', the subordinate clause keeps normal word order (subject–verb–complement). Czech always uses a comma before 'že'. The main clause 'Myslím' comes first.",
+        "words": ["dobrý", "že", "Myslím,", "je", "ten", "film"]
       },
       "answer_key": "Myslím, že ten film je dobrý.",
       "grammar_rule_id": "GR-210",
@@ -184,8 +192,12 @@
         "type": "fill_blank",
         "sentence": "Nepřišel do práce, ___ byl nemocný. Vím, ___ to není pravda. Nevím, ___ zítra přijde.",
         "blank_count": 3,
-        "accepted_answers": ["protože|že|jestli", "protože, že, jestli"],
-        "explanation": "The three sentences use three different conjunctions: 1) 'protože' (because — giving a reason), 2) 'že' (that — reporting what you know), 3) 'jestli' (if/whether — expressing uncertainty). 'Nepřišel do práce, protože byl nemocný. Vím, že to není pravda. Nevím, jestli zítra přijde.'"
+        "explanation": "The three sentences use three different conjunctions: 1) 'protože' (because — giving a reason), 2) 'že' (that — reporting what you know), 3) 'jestli' (if/whether — expressing uncertainty). 'Nepřišel do práce, protože byl nemocný. Vím, že to není pravda. Nevím, jestli zítra přijde.'",
+        "blank_answers": [
+          ["protože"],
+          ["že"],
+          ["jestli"]
+        ]
       },
       "answer_key": "protože, že, jestli",
       "grammar_rule_id": "GR-210",

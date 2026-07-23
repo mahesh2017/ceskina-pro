@@ -66,8 +66,10 @@
         "type": "fill_blank",
         "sentence": "___ slunce.",
         "blank_count": 1,
-        "accepted_answers": ["Svítí"],
-        "explanation": "'Svítí slunce' = the sun is shining. 'Svítí' = it shines (3rd person singular of 'svítit'). This is a verb-first weather expression — unlike 'Je...' patterns."
+        "explanation": "'Svítí slunce' = the sun is shining. 'Svítí' = it shines (3rd person singular of 'svítit'). This is a verb-first weather expression — unlike 'Je...' patterns.",
+        "blank_answers": [
+          ["Svítí"]
+        ]
       },
       "answer_key": "Svítí",
       "grammar_rule_id": "GR-140",
@@ -115,8 +117,10 @@
         "type": "fill_blank",
         "sentence": "___ jaře kvetou květiny.",
         "blank_count": 1,
-        "accepted_answers": ["Na"],
-        "explanation": "'Na jaře' = in spring. Jaro uses 'na' + locative (na jaře), NOT 'v'. Compare: 'v létě' (in summer) uses 'v', but 'na podzim' (in autumn) and 'na jaře' both use 'na'."
+        "explanation": "'Na jaře' = in spring. Jaro uses 'na' + locative (na jaře), NOT 'v'. Compare: 'v létě' (in summer) uses 'v', but 'na podzim' (in autumn) and 'na jaře' both use 'na'.",
+        "blank_answers": [
+          ["Na"]
+        ]
       },
       "answer_key": "Na",
       "grammar_rule_id": "GR-141",
@@ -131,8 +135,10 @@
         "type": "fill_blank",
         "sentence": "___ zimě je zima a sněží.",
         "blank_count": 1,
-        "accepted_answers": ["V"],
-        "explanation": "'V zimě' = in winter. Zima uses 'v' + locative (v zimě). This is the same pattern as 'v létě' (in summer). The four patterns are: na jaře, v létě, na podzim, v zimě."
+        "explanation": "'V zimě' = in winter. Zima uses 'v' + locative (v zimě). This is the same pattern as 'v létě' (in summer). The four patterns are: na jaře, v létě, na podzim, v zimě.",
+        "blank_answers": [
+          ["V"]
+        ]
       },
       "answer_key": "V",
       "grammar_rule_id": "GR-141",
@@ -169,13 +175,27 @@
         "type": "dialogue",
         "scenario": "Na ulici — On the street",
         "lines": [
-          {"speaker": "person_a", "text": "Ahoj! Jaké je dnes počasí?"},
-          {"speaker": "person_b", "text": "Je hezky. Svítí slunce a je teplo."},
-          {"speaker": "person_a", "text": "To je dobře! A co zítra?"},
-          {"speaker": "person_b", "text": "Zítra bude pršet. Bude ošklivo."}
+          {
+            "speaker": "person_a",
+            "text": "Ahoj! Jaké je dnes počasí?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "To je dobře! A co zítra?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Zítra bude pršet. Bude ošklivo."
+          }
         ],
-        "accepted_answers": ["Je hezky. Svítí slunce a je teplo.|Hezky, svítí slunce.|Je hezky a teplo.|Svítí slunce."],
-        "explanation": "'Jaké je dnes počasí?' = 'What's the weather like today?' Standard response uses 'Je' + weather word. 'Je hezky' = it's nice. 'Svítí slunce' = the sun is shining. 'Bude pršet' = it will rain (future). 'Bude ošklivo' = it will be bad weather."
+        "explanation": "'Jaké je dnes počasí?' = 'What's the weather like today?' Standard response uses 'Je' + weather word. 'Je hezky' = it's nice. 'Svítí slunce' = the sun is shining. 'Bude pršet' = it will rain (future). 'Bude ošklivo' = it will be bad weather.",
+        "blank_answers": [
+          ["Je hezky. Svítí slunce a je teplo.", "Hezky, svítí slunce.", "Je hezky a teplo.", "Svítí slunce."]
+        ]
       },
       "answer_key": "Je hezky. Svítí slunce a je teplo.",
       "grammar_rule_id": "GR-140",

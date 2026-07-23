@@ -8,6 +8,7 @@ import '../../providers/review_providers.dart';
 import '../../providers/settings_providers.dart';
 import '../../widgets/common/soft_ui.dart';
 import '../../widgets/common/learning_tip_card.dart';
+import '../lesson/delayed_transfer_screen.dart';
 
 /// Home dashboard — greeting, daily goal hero, continue learning, quick
 /// actions and shortcuts. Redesigned per the "Calm & premium" handoff.
@@ -20,17 +21,18 @@ class HomeScreen extends ConsumerWidget {
     final g = ref.watch(gamificationProvider);
     final settings = ref.watch(settingsProvider);
     final dueCount = ref.watch(dueCardCountProvider).value ?? 0;
+    final dueTransfers = ref.watch(dueTransferProvider).value ?? const [];
 
     // Time-aware greeting + personalized name.
     final hour = DateTime.now().hour;
-    final greeting = hour < 12
-        ? 'Dobré ráno'
-        : hour < 18
+    final greeting =
+        hour < 12
+            ? 'Dobré ráno'
+            : hour < 18
             ? 'Dobré odpoledne'
             : 'Dobrý večer';
-    final name = settings.learnerName.isNotEmpty
-        ? ', ${settings.learnerName}'
-        : '';
+    final name =
+        settings.learnerName.isNotEmpty ? ', ${settings.learnerName}' : '';
 
     return Scaffold(
       backgroundColor: t.bg,
@@ -47,8 +49,10 @@ class HomeScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('$greeting$name 👋',
-                          style: TextStyle(fontSize: 15, color: t.muted)),
+                      Text(
+                        '$greeting$name 👋',
+                        style: TextStyle(fontSize: 15, color: t.muted),
+                      ),
                       const SizedBox(height: 6),
                       const DisplayText('Czechify', size: 26),
                     ],
@@ -74,8 +78,15 @@ class HomeScreen extends ConsumerWidget {
                   child: Container(
                     width: 44,
                     height: 44,
-                    decoration: BoxDecoration(color: t.chipBg, shape: BoxShape.circle),
-                    child: Icon(Icons.settings_outlined, size: 22, color: t.muted),
+                    decoration: BoxDecoration(
+                      color: t.chipBg,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.settings_outlined,
+                      size: 22,
+                      color: t.muted,
+                    ),
                   ),
                 ),
               ],
@@ -92,6 +103,22 @@ class HomeScreen extends ConsumerWidget {
 
             const _ContinueLearningCard(),
             const SizedBox(height: 14),
+            if (dueTransfers.isNotEmpty) ...[
+              _ShortcutRow(
+                icon: Icons.update,
+                tint: t.amberSoft,
+                fg: t.amber,
+                title: 'Check what stayed',
+                subtitle:
+                    '${dueTransfers.length} delayed transfer '
+                    '${dueTransfers.length == 1 ? 'task' : 'tasks'} due',
+                onTap:
+                    () => context.push(
+                      '/transfer/${Uri.encodeComponent(dueTransfers.first.assignmentId)}',
+                    ),
+              ),
+              const SizedBox(height: 14),
+            ],
 
             // Daily learning tip — evidence-based strategies.
             const LearningTipCard(),
@@ -137,11 +164,20 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 14),
 
             _ShortcutRow(
+              icon: Icons.route_outlined,
+              tint: t.violetSoft,
+              fg: t.violet,
+              title: 'Find my starting point',
+              subtitle: 'Short multiskill diagnostic · learner adjustable',
+              onTap: () => context.push('/placement'),
+            ),
+            const SizedBox(height: 10),
+            _ShortcutRow(
               icon: Icons.assignment_outlined,
               tint: t.redSoft,
               fg: t.red,
               title: 'Mock exam',
-              subtitle: 'Timed CCE practice · A1',
+              subtitle: 'Timed informal practice · A1 track',
               onTap: () => _showExamLevelPicker(context),
             ),
             const SizedBox(height: 10),
@@ -159,7 +195,7 @@ class HomeScreen extends ConsumerWidget {
               tint: t.priSoft,
               fg: t.pri,
               title: 'Your progress',
-              subtitle: 'CEFR level, badges, streak stats',
+              subtitle: 'Course evidence, badges, streak stats',
               onTap: () => context.go('/stats'),
             ),
           ],
@@ -174,35 +210,41 @@ void _showExamLevelPicker(BuildContext context) {
   final t = context.tokens;
   showModalBottomSheet<void>(
     context: context,
-    builder: (sheetContext) => SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(20),
-            child: DisplayText('Choose exam level', size: 20),
-          ),
-          for (final level in const [
-            ('A1', 'CCE A1 — Beginner', 'a1'),
-            ('A2', 'CCE A2 — Elementary', 'a2'),
-          ])
-            ListTile(
-              leading: CircleAvatar(
-                backgroundColor: t.priSoft,
-                child: Text(level.$1,
-                    style: TextStyle(color: t.priInk, fontWeight: FontWeight.w700)),
+    builder:
+        (sheetContext) => SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(20),
+                child: DisplayText('Choose exam level', size: 20),
               ),
-              title: Text(level.$2),
-              subtitle: const Text('Reading, listening, writing, speaking'),
-              onTap: () {
-                Navigator.pop(sheetContext);
-                context.push('/exam/${level.$3}');
-              },
-            ),
-          const SizedBox(height: 12),
-        ],
-      ),
-    ),
+              for (final level in const [
+                ('A1', 'A1-style informal practice', 'a1'),
+                ('A2', 'A2-style informal practice', 'a2'),
+              ])
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: t.priSoft,
+                    child: Text(
+                      level.$1,
+                      style: TextStyle(
+                        color: t.priInk,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  title: Text(level.$2),
+                  subtitle: const Text('Reading, listening, writing, speaking'),
+                  onTap: () {
+                    Navigator.pop(sheetContext);
+                    context.push('/exam/${level.$3}');
+                  },
+                ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        ),
   );
 }
 
@@ -223,7 +265,8 @@ class _DailyGoalHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.tokens;
-    final progress = dailyGoalXp > 0 ? (dailyXp / dailyGoalXp).clamp(0.0, 1.0) : 0.0;
+    final progress =
+        dailyGoalXp > 0 ? (dailyXp / dailyGoalXp).clamp(0.0, 1.0) : 0.0;
     const white = Colors.white;
 
     return Container(
@@ -237,42 +280,47 @@ class _DailyGoalHero extends StatelessWidget {
           const Positioned(
             right: -40,
             top: -30,
-            child: Opacity(
-              opacity: 0.14,
-              child: _ConcentricRings(),
-            ),
+            child: Opacity(opacity: 0.14, child: _ConcentricRings()),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('DAILY GOAL',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.9,
-                      color: white.withValues(alpha: 0.7),
-                    )),
+                Text(
+                  'DAILY GOAL',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.9,
+                    color: white.withValues(alpha: 0.7),
+                  ),
+                ),
                 const SizedBox(height: 8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
-                    Text('$dailyXp',
-                        style: const TextStyle(
-                          fontFamily: AppFonts.display,
-                          fontSize: 40,
-                          fontWeight: FontWeight.w700,
-                          height: 1,
-                          color: white,
-                        )),
+                    Text(
+                      '$dailyXp',
+                      style: const TextStyle(
+                        fontFamily: AppFonts.display,
+                        fontSize: 40,
+                        fontWeight: FontWeight.w700,
+                        height: 1,
+                        color: white,
+                      ),
+                    ),
                     const SizedBox(width: 8),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 5),
-                      child: Text('/ $dailyGoalXp XP today',
-                          style: TextStyle(
-                              fontSize: 15, color: white.withValues(alpha: 0.75))),
+                      child: Text(
+                        '/ $dailyGoalXp XP today',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: white.withValues(alpha: 0.75),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -289,13 +337,21 @@ class _DailyGoalHero extends StatelessWidget {
                 const SizedBox(height: 14),
                 Row(
                   children: [
-                    Text('🔥 $streak day streak',
-                        style: TextStyle(
-                            fontSize: 15, color: white.withValues(alpha: 0.85))),
+                    Text(
+                      '🔥 $streak day streak',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: white.withValues(alpha: 0.85),
+                      ),
+                    ),
                     const SizedBox(width: 14),
-                    Text('⭐ $totalXp total XP',
-                        style: TextStyle(
-                            fontSize: 15, color: white.withValues(alpha: 0.85))),
+                    Text(
+                      '⭐ $totalXp total XP',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: white.withValues(alpha: 0.85),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -323,10 +379,11 @@ class _RingsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
-    final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.8;
+    final paint =
+        Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.8;
     for (final r in [86.0, 61.0, 36.0]) {
       canvas.drawCircle(center, r, paint);
     }
@@ -346,26 +403,29 @@ class _ContinueLearningCard extends ConsumerWidget {
     final nextAsync = ref.watch(nextLessonProvider);
 
     return nextAsync.when(
-      loading: () => SoftCard(
-        child: Row(
-          children: [
-            const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(strokeWidth: 2)),
-            const SizedBox(width: 14),
-            Text('Loading…', style: TextStyle(color: t.muted)),
-          ],
-        ),
-      ),
-      error: (_, __) => _ShortcutRow(
-        icon: Icons.school_outlined,
-        tint: t.priSoft,
-        fg: t.pri,
-        title: 'Browse curriculum',
-        subtitle: 'Start your first lesson',
-        onTap: () => context.go('/curriculum'),
-      ),
+      loading:
+          () => SoftCard(
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 22,
+                  height: 22,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+                const SizedBox(width: 14),
+                Text('Loading…', style: TextStyle(color: t.muted)),
+              ],
+            ),
+          ),
+      error:
+          (_, __) => _ShortcutRow(
+            icon: Icons.school_outlined,
+            tint: t.priSoft,
+            fg: t.pri,
+            title: 'Browse curriculum',
+            subtitle: 'Start your first lesson',
+            onTap: () => context.go('/curriculum'),
+          ),
       data: (next) {
         if (next == null) {
           return _ShortcutRow(
@@ -382,21 +442,41 @@ class _ContinueLearningCard extends ConsumerWidget {
           onTap: () => context.push('/lesson/${next.lesson.id}'),
           child: Row(
             children: [
-              IconTile(icon: Icons.play_arrow_rounded, tint: t.priSoft, fg: t.pri,
-                  size: 46, radius: 16, iconSize: 22),
+              IconTile(
+                icon: Icons.play_arrow_rounded,
+                tint: t.priSoft,
+                fg: t.pri,
+                size: 46,
+                radius: 16,
+                iconSize: 22,
+              ),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Continue learning',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700, color: t.ink)),
+                    Text(
+                      'Continue learning',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: t.ink,
+                      ),
+                    ),
                     const SizedBox(height: 6),
-                    Text('${next.unitTitle} · ${next.lesson.title}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 15, color: t.muted)),
+                    Text(
+                      '${next.unitTitle} · ${next.lesson.title}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 15, color: t.muted),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      next.reason,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 13, color: t.faint),
+                    ),
                   ],
                 ),
               ),
@@ -437,11 +517,23 @@ class _QuickAction extends StatelessWidget {
       onTap: onTap,
       child: Column(
         children: [
-          IconTile(icon: icon, tint: tint, fg: fg, size: 38, radius: 13, iconSize: 17),
+          IconTile(
+            icon: icon,
+            tint: tint,
+            fg: fg,
+            size: 38,
+            radius: 13,
+            iconSize: 17,
+          ),
           const SizedBox(height: 8),
-          Text(label,
-              style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.w600, color: t.ink)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: t.ink,
+            ),
+          ),
           const SizedBox(height: 6),
           Text(sub, style: TextStyle(fontSize: 14, color: t.muted)),
         ],
@@ -476,15 +568,27 @@ class _ShortcutRow extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          IconTile(icon: icon, tint: tint, fg: fg, size: 40, radius: 14, iconSize: 17),
+          IconTile(
+            icon: icon,
+            tint: tint,
+            fg: fg,
+            size: 40,
+            radius: 14,
+            iconSize: 17,
+          ),
           const SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title,
-                    style: TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w700, color: t.ink)),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: t.ink,
+                  ),
+                ),
                 const SizedBox(height: 5),
                 Text(subtitle, style: TextStyle(fontSize: 14, color: t.muted)),
               ],

@@ -13,6 +13,8 @@ import '../screens/settings/account_screen.dart';
 import '../screens/grammar/grammar_reference_screen.dart';
 import '../screens/grammar/quick_reference_screen.dart';
 import '../screens/onboarding/onboarding_screen.dart';
+import '../screens/placement/placement_screen.dart';
+import '../screens/lesson/delayed_transfer_screen.dart';
 import '../providers/settings_providers.dart';
 import 'app_scaffold.dart';
 import '../../domain/entities/enums.dart';
@@ -98,13 +100,23 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/reference/:type',
         builder:
-            (context, state) => QuickReferenceScreen(
-              type: state.pathParameters['type']!,
-            ),
+            (context, state) =>
+                QuickReferenceScreen(type: state.pathParameters['type']!),
       ),
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => const OnboardingScreen(),
+      ),
+      GoRoute(
+        path: '/placement',
+        builder: (context, state) => const PlacementScreen(),
+      ),
+      GoRoute(
+        path: '/transfer/:id',
+        builder:
+            (context, state) => DelayedTransferScreen(
+              assignmentId: state.pathParameters['id']!,
+            ),
       ),
     ],
   );

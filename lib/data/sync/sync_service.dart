@@ -52,13 +52,9 @@ class SupabaseSyncBackend implements SyncBackend {
         .select()
         .eq('user_id', owner);
     if (cursor != null) {
-      final timestamp = cursor.updatedAt.toUtc().toIso8601String();
-      query = query.or(
-        'updated_at.gt.$timestamp,'
-        'and(updated_at.eq.$timestamp,sync_id.gt.${cursor.syncId})',
-      );
+      query = query.gt('revision', cursor.revision);
     }
-    final rows = await query.order('updated_at').order('sync_id').limit(limit);
+    final rows = await query.order('revision').limit(limit);
     return rows.cast<Map<String, dynamic>>();
   }
 
@@ -110,6 +106,7 @@ class SyncService {
   final DateTime Function() _clock;
   final Logger _log;
   Future<void>? _activeRun;
+  bool _accountTransition = false;
 
   /// Conflict target (composite natural key) for each backend table.
   static const _conflictKeys = <String, String>{
@@ -149,15 +146,37 @@ class SyncService {
   /// Full sync cycle: push local changes, then pull remote ones.
   Future<void> sync() => _serialized(() async {
     await _push();
-    await _pull();
+    await _pull(strict: false);
   });
 
   /// Pull remote changes since the last cursor and merge them into Drift.
   /// Merges are domain-aware/monotonic (see the DAO merge methods), so this is
   /// safe to run repeatedly and in any order relative to local edits.
-  Future<void> pull() => _serialized(_pull);
+  Future<void> pull({bool strict = false}) =>
+      _serialized(() => _pull(strict: strict));
 
-  Future<void> _pull() async {
+  /// Pauses background sync after any active run completes. While paused,
+  /// ordinary sync triggers are harmless no-ops so old-account outbox rows
+  /// cannot be pushed under a newly installed session.
+  Future<void> beginAccountTransition() async {
+    final active = _activeRun;
+    if (active != null) await active;
+    _accountTransition = true;
+  }
+
+  void endAccountTransition() {
+    _accountTransition = false;
+  }
+
+  /// Strict pull reserved for a paused account transition.
+  Future<void> pullForAccountInstall() {
+    if (!_accountTransition) {
+      throw StateError('Account install pull requires an account transition.');
+    }
+    return _pull(strict: true);
+  }
+
+  Future<void> _pull({required bool strict}) async {
     if (!_backend.isReady) return;
     final deviceId = await _backend.deviceId();
     for (final entity in _conflictKeys.keys) {
@@ -174,23 +193,24 @@ class SyncService {
           }
           if (rows.isEmpty) break;
           final last = rows.last;
-          final timestamp = _ts(last['updated_at']);
-          final syncId = (last['sync_id'] as num?)?.toInt();
-          if (timestamp == null || syncId == null) {
+          final revision = (last['revision'] as num?)?.toInt();
+          if (revision == null) {
             throw StateError('$entity returned an invalid sync cursor.');
           }
-          final nextCursor = PullCursor(updatedAt: timestamp, syncId: syncId);
+          final nextCursor = PullCursor(revision: revision);
           await _db.syncDao.setPullCursor(entity, nextCursor);
           cursor = nextCursor;
           if (rows.length < 100) break;
         }
       } catch (e) {
         _log.warning('Pull failed for $entity', e);
+        if (strict) rethrow;
       }
     }
   }
 
   Future<void> _serialized(Future<void> Function() action) {
+    if (_accountTransition) return Future.value();
     final active = _activeRun;
     if (active != null) return active;
     final completer = Completer<void>();

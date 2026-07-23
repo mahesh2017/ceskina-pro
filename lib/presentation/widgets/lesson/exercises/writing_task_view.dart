@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../domain/entities/exercise.dart';
+import '../../../../domain/entities/learning_evidence.dart';
 import 'exercise_shared.dart';
 
 /// Writing task exercise — write a short text in Czech based on a prompt.
@@ -26,6 +27,9 @@ class _WritingTaskViewState extends State<WritingTaskView> {
   int _wordCount = 0;
   bool _meetsMinWords = false;
   String _feedbackText = '';
+  String _firstDraft = '';
+  bool _revisionStage = false;
+  bool _showKeyVocab = false;
 
   @override
   void dispose() {
@@ -34,8 +38,8 @@ class _WritingTaskViewState extends State<WritingTaskView> {
   }
 
   String get _prompt {
-    return (widget.exercise.data['prompt_en'] ??
-        widget.exercise.prompt) as String;
+    return (widget.exercise.data['prompt_en'] ?? widget.exercise.prompt)
+        as String;
   }
 
   String? get _promptCz => widget.exercise.data['prompt_cz'] as String?;
@@ -56,9 +60,10 @@ class _WritingTaskViewState extends State<WritingTaskView> {
 
   void _submit() {
     final text = _controller.text.trim();
-    final acceptedAnswers = widget.exercise.answerKey != null
-        ? [widget.exercise.answerKey!]
-        : <String>[];
+    final acceptedAnswers =
+        widget.exercise.answerKey != null
+            ? [widget.exercise.answerKey!]
+            : <String>[];
 
     // Simple keyword-based checking
     final wordCount = text.isEmpty ? 0 : text.split(RegExp(r'\s+')).length;
@@ -70,8 +75,7 @@ class _WritingTaskViewState extends State<WritingTaskView> {
     if (acceptedAnswers.isNotEmpty && hasContent) {
       final userWords = text.toLowerCase().split(RegExp(r'\s+')).toSet();
       for (final answer in acceptedAnswers) {
-        final answerWords =
-            answer.toLowerCase().split(RegExp(r'\s+')).toSet();
+        final answerWords = answer.toLowerCase().split(RegExp(r'\s+')).toSet();
         final overlap = userWords.intersection(answerWords);
         if (overlap.length / answerWords.length >= 0.5) {
           keywordMatched = true;
@@ -80,19 +84,32 @@ class _WritingTaskViewState extends State<WritingTaskView> {
       }
     }
 
-    final isCorrect = hasContent && meetsMinWords && keywordMatched ||
-        (acceptedAnswers.isEmpty && hasContent && meetsMinWords);
+    final isScored = acceptedAnswers.isNotEmpty;
+    final isCorrect = isScored && hasContent && meetsMinWords && keywordMatched;
 
     final feedback = StringBuffer();
     feedback.write('You wrote $wordCount words. ');
     if (_minWords != null) {
       feedback.write(
-          meetsMinWords ? '✓ Meets the $_minWords-word minimum. ' : '✗ Needs at least $_minWords words. ');
+        meetsMinWords
+            ? '✓ Meets the $_minWords-word minimum. '
+            : '✗ Needs at least $_minWords words. ',
+      );
     }
     if (acceptedAnswers.isNotEmpty) {
-      feedback.write(keywordMatched
-          ? 'Good keyword coverage. '
-          : 'Key phrases not detected. ');
+      feedback.write(
+        keywordMatched
+            ? 'Good keyword coverage. '
+            : 'Key phrases not detected. ',
+      );
+    } else {
+      feedback.write(
+        'Completed as unscored writing practice; no automatic proficiency '
+        'claim is made. ',
+      );
+    }
+    if (_revisionStage && text != _firstDraft) {
+      feedback.write('✓ You revised the first draft. ');
     }
 
     setState(() {
@@ -103,13 +120,31 @@ class _WritingTaskViewState extends State<WritingTaskView> {
       _feedbackText = feedback.toString().trim();
     });
 
+    final supports =
+        _showKeyVocab ? const {SupportKind.hint} : const <SupportKind>{};
     widget.onAnswered(
-      ExerciseResult(
-        isCorrect: isCorrect,
-        explanation: _feedbackText,
-        correctAnswer: _sampleAnswer ?? acceptedAnswers.firstOrNull,
-      ),
+      isScored
+          ? ExerciseResult(
+            isCorrect: isCorrect,
+            explanation: _feedbackText,
+            correctAnswer: _sampleAnswer ?? acceptedAnswers.firstOrNull,
+            supports: supports,
+          )
+          : ExerciseResult.skipped(
+            explanation: _feedbackText,
+            correctAnswer: _sampleAnswer,
+            supports: supports,
+          ),
     );
+  }
+
+  void _reviewDraft() {
+    final text = _controller.text.trim();
+    if (text.isEmpty) return;
+    setState(() {
+      _firstDraft = text;
+      _revisionStage = true;
+    });
   }
 
   void _retry() {
@@ -119,6 +154,8 @@ class _WritingTaskViewState extends State<WritingTaskView> {
       _wordCount = 0;
       _meetsMinWords = false;
       _feedbackText = '';
+      _firstDraft = '';
+      _revisionStage = false;
     });
   }
 
@@ -158,8 +195,22 @@ class _WritingTaskViewState extends State<WritingTaskView> {
           ],
           const SizedBox(height: 20),
 
-          // Key vocab hint
-          if (_keyVocab != null && _keyVocab!.isNotEmpty) ...[
+          // Optional vocabulary support is hidden until requested so its use
+          // remains observable rather than silently inflating performance.
+          if (_keyVocab != null &&
+              _keyVocab!.isNotEmpty &&
+              !_showKeyVocab &&
+              !answered) ...[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () => setState(() => _showKeyVocab = true),
+                icon: const Icon(Icons.lightbulb_outline),
+                label: const Text('Show vocabulary support'),
+              ),
+            ),
+          ],
+          if (_keyVocab != null && _keyVocab!.isNotEmpty && _showKeyVocab) ...[
             Row(
               children: [
                 Text(
@@ -172,14 +223,39 @@ class _WritingTaskViewState extends State<WritingTaskView> {
                   child: Wrap(
                     spacing: 6,
                     runSpacing: 4,
-                    children: _keyVocab!.map((v) => Chip(
-                      label: Text(v, style: const TextStyle(fontSize: 13)),
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      visualDensity: VisualDensity.compact,
-                    )).toList(),
+                    children:
+                        _keyVocab!
+                            .map(
+                              (v) => Chip(
+                                label: Text(
+                                  v,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                visualDensity: VisualDensity.compact,
+                              ),
+                            )
+                            .toList(),
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 12),
+          ],
+
+          if (_revisionStage && !answered) ...[
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: const Text(
+                'Revise: check the communicative goal, verb forms, case '
+                'endings, word order, and register. Improve the message, not '
+                'only its length.',
+              ),
             ),
             const SizedBox(height: 12),
           ],
@@ -208,8 +284,10 @@ class _WritingTaskViewState extends State<WritingTaskView> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: FilledButton(
-                onPressed: _submit,
-                child: const Text('Submit'),
+                onPressed: _revisionStage ? _submit : _reviewDraft,
+                child: Text(
+                  _revisionStage ? 'Submit revision' : 'Review draft',
+                ),
               ),
             ),
 
@@ -234,9 +312,8 @@ class _WritingTaskViewState extends State<WritingTaskView> {
                 color: _isCorrect ? correctTint : wrongTint,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: _isCorrect
-                      ? Colors.green.shade300
-                      : Colors.red.shade300,
+                  color:
+                      _isCorrect ? Colors.green.shade300 : Colors.red.shade300,
                 ),
               ),
               child: Column(
@@ -246,28 +323,31 @@ class _WritingTaskViewState extends State<WritingTaskView> {
                     children: [
                       Icon(
                         _isCorrect ? Icons.check_circle : Icons.cancel,
-                        color: _isCorrect
-                            ? Colors.green.shade700
-                            : Colors.red.shade700,
+                        color:
+                            _isCorrect
+                                ? Colors.green.shade700
+                                : Colors.red.shade700,
                         size: 22,
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        _isCorrect ? 'Good!' : 'Needs improvement',
+                        widget.exercise.answerKey == null
+                            ? 'Writing cycle complete'
+                            : _isCorrect
+                            ? 'Good!'
+                            : 'Needs improvement',
                         style: theme.textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w600,
-                          color: _isCorrect
-                              ? Colors.green.shade800
-                              : Colors.red.shade800,
+                          color:
+                              _isCorrect
+                                  ? Colors.green.shade800
+                                  : Colors.red.shade800,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    _feedbackText,
-                    style: theme.textTheme.bodyMedium,
-                  ),
+                  Text(_feedbackText, style: theme.textTheme.bodyMedium),
                   if (_minWords != null) ...[
                     const SizedBox(height: 4),
                     Text(
@@ -296,8 +376,11 @@ class _WritingTaskViewState extends State<WritingTaskView> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lightbulb_outline,
-                            size: 18, color: theme.colorScheme.primary),
+                        Icon(
+                          Icons.lightbulb_outline,
+                          size: 18,
+                          color: theme.colorScheme.primary,
+                        ),
                         const SizedBox(width: 6),
                         Text(
                           'Reference answer',

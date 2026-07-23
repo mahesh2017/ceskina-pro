@@ -8,6 +8,10 @@ mixin _$VocabularyDaoMixin on DatabaseAccessor<AppDatabase> {
   $LessonsTable get lessons => attachedDatabase.lessons;
   $FlashcardsTable get flashcards => attachedDatabase.flashcards;
   $SrsCardsTable get srsCards => attachedDatabase.srsCards;
+  $ReviewAttemptsTable get reviewAttempts => attachedDatabase.reviewAttempts;
+  $RewardLedgerTable get rewardLedger => attachedDatabase.rewardLedger;
+  $GamificationStateTableTable get gamificationStateTable =>
+      attachedDatabase.gamificationStateTable;
   VocabularyDaoManager get managers => VocabularyDaoManager(this);
 }
 
@@ -22,4 +26,16 @@ class VocabularyDaoManager {
       $$FlashcardsTableTableManager(_db.attachedDatabase, _db.flashcards);
   $$SrsCardsTableTableManager get srsCards =>
       $$SrsCardsTableTableManager(_db.attachedDatabase, _db.srsCards);
+  $$ReviewAttemptsTableTableManager get reviewAttempts =>
+      $$ReviewAttemptsTableTableManager(
+        _db.attachedDatabase,
+        _db.reviewAttempts,
+      );
+  $$RewardLedgerTableTableManager get rewardLedger =>
+      $$RewardLedgerTableTableManager(_db.attachedDatabase, _db.rewardLedger);
+  $$GamificationStateTableTableTableManager get gamificationStateTable =>
+      $$GamificationStateTableTableTableManager(
+        _db.attachedDatabase,
+        _db.gamificationStateTable,
+      );
 }

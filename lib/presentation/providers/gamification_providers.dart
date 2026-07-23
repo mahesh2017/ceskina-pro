@@ -31,9 +31,9 @@ class GamificationNotifier extends Notifier<GamificationState> {
     _readyFuture = _initAsync().catchError((Object e, StackTrace st) {
       // Never let gamification init crash the app — fall back to defaults.
       // The error is logged but swallowed so the learner can still use the app.
-      Logger('GamificationNotifier').warning(
-        'Gamification init failed; using defaults.', e, st,
-      );
+      Logger(
+        'GamificationNotifier',
+      ).warning('Gamification init failed; using defaults.', e, st);
     });
     return const GamificationState();
   }
@@ -262,6 +262,21 @@ class GamificationNotifier extends Notifier<GamificationState> {
 
   // ── Public API ──
 
+  int lessonCompletionXp({required double accuracy}) {
+    return _engine.calculateXp(
+      actionType: XpActionType.lessonCompleted,
+      accuracy: accuracy,
+    );
+  }
+
+  /// Reconciles in-memory state after progress and XP commit together.
+  Future<void> refreshAfterCommittedLesson() async {
+    await _ensureReady();
+    await _loadState();
+    await _maybeIncrementStreak();
+    await checkProgressBadges();
+  }
+
   /// Called when a lesson is completed.
   Future<void> onLessonCompleted({required double accuracy}) async {
     await _ensureReady();
@@ -271,24 +286,6 @@ class GamificationNotifier extends Notifier<GamificationState> {
       actionType: XpActionType.lessonCompleted,
       accuracy: accuracy,
     );
-
-    await _maybeIncrementStreak();
-
-    state = state.copyWith(
-      totalXp: state.totalXp + xp,
-      dailyXp: state.dailyXp + xp,
-    );
-
-    await _persist();
-    await checkProgressBadges();
-  }
-
-  /// Called when a mock exam is finished.
-  Future<void> onMockExamCompleted() async {
-    await _ensureReady();
-    await _rolloverDailyXpIfNeeded();
-
-    final xp = _engine.calculateXp(actionType: XpActionType.mockExamCompleted);
 
     await _maybeIncrementStreak();
 
@@ -320,48 +317,6 @@ class GamificationNotifier extends Notifier<GamificationState> {
   Future<void> setDailyGoal(int xp) async {
     await _ensureReady();
     state = state.copyWith(dailyGoalXp: xp);
-    await _persist();
-  }
-
-  /// Called when a review session is completed.
-  Future<void> onReviewSessionCompleted(int reviewCount) async {
-    if (reviewCount <= 0) return;
-    await _ensureReady();
-    await _rolloverDailyXpIfNeeded();
-
-    final xp = _engine.calculateXp(
-      actionType: XpActionType.reviewSessionCompleted,
-      reviewCount: reviewCount,
-    );
-
-    await _maybeIncrementStreak();
-
-    state = state.copyWith(
-      totalXp: state.totalXp + xp,
-      dailyXp: state.dailyXp + xp,
-    );
-
-    await _persist();
-    await checkProgressBadges();
-  }
-
-  /// Called when a pronunciation drill is completed.
-  Future<void> onPronunciationDrill({required double accuracy}) async {
-    await _ensureReady();
-    await _rolloverDailyXpIfNeeded();
-
-    final xp = _engine.calculateXp(
-      actionType: XpActionType.pronunciationDrill,
-      accuracy: accuracy,
-    );
-
-    await _maybeIncrementStreak();
-
-    state = state.copyWith(
-      totalXp: state.totalXp + xp,
-      dailyXp: state.dailyXp + xp,
-    );
-
     await _persist();
   }
 

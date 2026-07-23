@@ -41,10 +41,7 @@ void main() {
     });
 
     test('empty phase returns 0', () {
-      expect(
-        tracker.phaseCompletion(unitScores: {}, phaseUnitIds: {}),
-        0.0,
-      );
+      expect(tracker.phaseCompletion(unitScores: {}, phaseUnitIds: {}), 0.0);
     });
   });
 
@@ -89,6 +86,30 @@ void main() {
           examsPassed: {'a1', 'a2'},
         ),
         CEFRLevel.a2,
+      );
+    });
+  });
+
+  group('CurriculumProgressTracker.phaseLessonCoverage', () {
+    final tracker = CurriculumProgressTracker();
+
+    test('counts completed lessons against every required phase lesson', () {
+      final coverage = tracker.phaseLessonCoverage(
+        completedLessonsByUnit: {1: 1, 2: 2, 99: 10},
+        totalLessonsByUnit: {1: 2, 2: 3, 99: 10},
+        phaseUnitIds: {1, 2},
+      );
+      expect(coverage, 0.6);
+    });
+
+    test('empty phase has no coverage', () {
+      expect(
+        tracker.phaseLessonCoverage(
+          completedLessonsByUnit: const {},
+          totalLessonsByUnit: const {},
+          phaseUnitIds: const {},
+        ),
+        0,
       );
     });
   });

@@ -22,7 +22,7 @@ class AppConstants {
   static const int defaultDailyGoalXp = 50;
   static const int heartRegenMinutes = 30;
 
-  // SRS (FSRS)
+  // SRS (simplified SM-2)
   static const double targetRetention = 0.9;
   static const int maxIntervalDays = 365;
 }

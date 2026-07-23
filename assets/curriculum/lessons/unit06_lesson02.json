@@ -67,8 +67,10 @@
         "type": "fill_blank",
         "sentence": "Jím ___ (chleba).",
         "blank_count": 1,
-        "accepted_answers": ["chleba"],
-        "explanation": "Chleba is masculine inanimate, so it does NOT change in the accusative: chleba → chleba. Jím chleba = I eat bread."
+        "explanation": "Chleba is masculine inanimate, so it does NOT change in the accusative: chleba → chleba. Jím chleba = I eat bread.",
+        "blank_answers": [
+          ["chleba"]
+        ]
       },
       "answer_key": ["chleba"],
       "grammar_rule_id": "GR-052",
@@ -83,8 +85,10 @@
         "type": "fill_blank",
         "sentence": "Čtu ___ (kniha).",
         "blank_count": 1,
-        "accepted_answers": ["knihu"],
-        "explanation": "Kniha (feminine, -a) → knihu in accusative. Čtu knihu = I read a book."
+        "explanation": "Kniha (feminine, -a) → knihu in accusative. Čtu knihu = I read a book.",
+        "blank_answers": [
+          ["knihu"]
+        ]
       },
       "answer_key": ["knihu"],
       "grammar_rule_id": "GR-050",
@@ -131,8 +135,10 @@
         "type": "fill_blank",
         "sentence": "Vidím ___ (student).",
         "blank_count": 1,
-        "accepted_answers": ["studenta"],
-        "explanation": "Koho vidíš? = Whom do you see? Use the accusative of a masculine animate noun. Student (masculine animate, hard consonant) → studenta. Vidím studenta = I see a student."
+        "explanation": "Koho vidíš? = Whom do you see? Use the accusative of a masculine animate noun. Student (masculine animate, hard consonant) → studenta. Vidím studenta = I see a student.",
+        "blank_answers": [
+          ["studenta"]
+        ]
       },
       "answer_key": ["studenta"],
       "grammar_rule_id": "GR-051",
@@ -179,13 +185,27 @@
         "type": "dialogue",
         "scenario": "In a café — ordering a drink",
         "lines": [
-          {"speaker": "person_a", "text": "Dobrý den! Co si dáte?"},
-          {"speaker": "person_b", "text": "Dobrý den. Prosím si kávu."},
-          {"speaker": "person_a", "text": "A chcete také pivo?"},
-          {"speaker": "person_b", "text": "Ano, prosím. Mám žízeň."}
+          {
+            "speaker": "person_a",
+            "text": "Dobrý den! Co si dáte?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "A chcete také pivo?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ano, prosím. Mám žízeň."
+          }
         ],
-        "accepted_answers": ["Prosím si kávu.|Dám si kávu.|Chci kávu."],
-        "explanation": "When ordering, use accusative forms: prosím si kávu (káva → kávu). The waiter asks 'Co si dáte?' (What will you have?) and the customer responds with the accusative object."
+        "explanation": "When ordering, use accusative forms: prosím si kávu (káva → kávu). The waiter asks 'Co si dáte?' (What will you have?) and the customer responds with the accusative object.",
+        "blank_answers": [
+          ["Prosím si kávu.", "Dám si kávu.", "Chci kávu."]
+        ]
       },
       "answer_key": ["Prosím si kávu.", "Dám si kávu.", "Chci kávu."],
       "grammar_rule_id": "GR-050",

@@ -10,6 +10,7 @@ class GrammarRules extends Table {
   TextColumn get caseAffected => text().nullable()();
   TextColumn get examples => text().withDefault(const Constant('[]'))(); // JSON
   IntColumn get unitId => integer().nullable().references(Units, #id)();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
 
   @override
   Set<Column> get primaryKey => {id};

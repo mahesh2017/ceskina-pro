@@ -56,8 +56,10 @@
         "type": "fill_blank",
         "sentence": "Včera jsem ___ do školy.",
         "blank_count": 1,
-        "accepted_answers": ["šel", "šla"],
-        "explanation": "'Včera jsem šel do školy.' (masculine) / 'Včera jsem šla do školy.' (feminine) = Yesterday I went to school. 'Šel/šla' is the past tense of 'jít' — a perfective verb (one-time, completed). 'Včera' (yesterday) signals a completed past event, so we use the perfective 'jít' → past 'šel' (masc.) / 'šla' (fem.)."
+        "explanation": "'Včera jsem šel do školy.' (masculine) / 'Včera jsem šla do školy.' (feminine) = Yesterday I went to school. 'Šel/šla' is the past tense of 'jít' — a perfective verb (one-time, completed). 'Včera' (yesterday) signals a completed past event, so we use the perfective 'jít' → past 'šel' (masc.) / 'šla' (fem.).",
+        "blank_answers": [
+          ["šel", "šla"]
+        ]
       },
       "answer_key": "šel",
       "grammar_rule_id": "GR-262",
@@ -72,8 +74,10 @@
         "type": "fill_blank",
         "sentence": "Vlak ___ na nádraží v 17 hodin.",
         "blank_count": 1,
-        "accepted_answers": ["přijel"],
-        "explanation": "'Vlak přijel na nádraží v 17 hodin.' = The train arrived at the station at 5 PM. 'Přijel' = arrived (by vehicle, perfective past, 3rd person singular). The prefix 'při-' = arrival, and 'jet' → past 'přijel' (train is a vehicle). The perfective is used because the arrival is a completed event."
+        "explanation": "'Vlak přijel na nádraží v 17 hodin.' = The train arrived at the station at 5 PM. 'Přijel' = arrived (by vehicle, perfective past, 3rd person singular). The prefix 'při-' = arrival, and 'jet' → past 'přijel' (train is a vehicle). The perfective is used because the arrival is a completed event.",
+        "blank_answers": [
+          ["přijel"]
+        ]
       },
       "answer_key": "přijel",
       "grammar_rule_id": "GR-261",
@@ -201,24 +205,26 @@
       "data": {
         "type": "dialogue",
         "prompt_en": "Complete the dialogue at a train station. Choose the correct form of 'přijet' (to arrive, by vehicle, perfective).",
-        "context_en": "A traveler asks when the train to Brno arrives. The clerk responds.",
         "lines": [
           {
             "speaker": "Cestující",
-            "text_cz": "Kdy ___ vlak do Brna?",
             "text_en": "When does the train to Brno arrive?",
-            "blank_accepted_answers": ["přijede", "přijíždí"],
-            "explanation": "Either 'přijede' (perfective future — will arrive) or 'přijíždí' (imperfective present — arrives habitually) is acceptable. 'Přijet' = to arrive by vehicle; 'přijíždět' = to be arriving by vehicle (imperfective). For a schedule, the imperfective 'přijíždí' is common (habitual per schedule); for a specific upcoming train, 'přijede' (perfective future) is used."
+            "explanation": "Either 'přijede' (perfective future — will arrive) or 'přijíždí' (imperfective present — arrives habitually) is acceptable. 'Přijet' = to arrive by vehicle; 'přijíždět' = to be arriving by vehicle (imperfective). For a schedule, the imperfective 'přijíždí' is common (habitual per schedule); for a specific upcoming train, 'přijede' (perfective future) is used.",
+            "text": "Kdy ___ vlak do Brna?"
           },
           {
             "speaker": "Pokladní",
-            "text_cz": "Vlak do Brna ___ v 14:30 na nástupišti 3.",
             "text_en": "The train to Brno arrives at 14:30 on platform 3.",
-            "blank_accepted_answers": ["přijíždí", "přijede"],
-            "explanation": "'Přijíždí' (imperfective) is natural for a scheduled, recurring arrival. 'Přijede' (perfective) works for a specific one-time arrival. Both are grammatically correct; 'přijíždí' is slightly more natural for schedules. 'Na nástupišti 3' = on platform 3."
+            "explanation": "'Přijíždí' (imperfective) is natural for a scheduled, recurring arrival. 'Přijede' (perfective) works for a specific one-time arrival. Both are grammatically correct; 'přijíždí' is slightly more natural for schedules. 'Na nástupišti 3' = on platform 3.",
+            "text": "Vlak do Brna ___ v 14:30 na nástupišti 3."
           }
         ],
-        "explanation": "This dialogue practices prefixed motion verbs in a real navigation context. 'Při-' = arrival, combined with 'jet' (by vehicle). At a train station, you often hear both aspects: imperfective for regular schedules ('přijíždí v 14:30' = arrives at 14:30 per schedule) and perfective for a specific upcoming arrival ('přijede v 14:30' = will arrive at 14:30 today)."
+        "explanation": "This dialogue practices prefixed motion verbs in a real navigation context. 'Při-' = arrival, combined with 'jet' (by vehicle). At a train station, you often hear both aspects: imperfective for regular schedules ('přijíždí v 14:30' = arrives at 14:30 per schedule) and perfective for a specific upcoming arrival ('přijede v 14:30' = will arrive at 14:30 today).",
+        "blank_answers": [
+          ["přijede", "přijíždí"],
+          ["přijíždí", "přijede"]
+        ],
+        "scenario": "A traveler asks when the train to Brno arrives. The clerk responds."
       },
       "answer_key": "Kdy přijíždí vlak do Brna? — Vlak do Brna přijíždí v 14:30 na nástupišti 3.",
       "grammar_rule_id": "GR-264",

@@ -50,8 +50,10 @@
         "type": "fill_blank",
         "sentence": "Já ___ každé ráno.",
         "blank_count": 1,
-        "accepted_answers": ["se myju", "se myji", "se umývám"],
-        "explanation": "For 'já' (I), 'mýt se' conjugates to 'myju se' or 'myji se'. The reflexive 'se' comes after the verb in the 1st person singular."
+        "explanation": "For 'já' (I), 'mýt se' conjugates to 'myju se' or 'myji se'. The reflexive 'se' comes after the verb in the 1st person singular.",
+        "blank_answers": [
+          ["se myju", "se myji", "se umývám"]
+        ]
       },
       "answer_key": "se myju",
       "grammar_rule_id": "GR-090",
@@ -66,8 +68,10 @@
         "type": "fill_blank",
         "sentence": "Ty ___ česky každý den.",
         "blank_count": 1,
-        "accepted_answers": ["se učíš"],
-        "explanation": "For 'ty' (you singular informal), 'učit se' conjugates to 'učíš se'. The reflexive particle is placed before the verb in this sentence structure."
+        "explanation": "For 'ty' (you singular informal), 'učit se' conjugates to 'učíš se'. The reflexive particle is placed before the verb in this sentence structure.",
+        "blank_answers": [
+          ["se učíš"]
+        ]
       },
       "answer_key": "se učíš",
       "grammar_rule_id": "GR-090",
@@ -82,8 +86,10 @@
         "type": "fill_blank",
         "sentence": "On ___ na televizi.",
         "blank_count": 1,
-        "accepted_answers": ["se dívá"],
-        "explanation": "For 'on' (he), 'dívat se' conjugates to 'dívá se'. 'Se' is the reflexive pronoun meaning the action reflects back on the subject."
+        "explanation": "For 'on' (he), 'dívat se' conjugates to 'dívá se'. 'Se' is the reflexive pronoun meaning the action reflects back on the subject.",
+        "blank_answers": [
+          ["se dívá"]
+        ]
       },
       "answer_key": "se dívá",
       "grammar_rule_id": "GR-090",
@@ -130,8 +136,10 @@
         "type": "fill_blank",
         "sentence": "My ___ nové auto.",
         "blank_count": 1,
-        "accepted_answers": ["si kupujeme", "kupujeme si"],
-        "explanation": "For 'my' (we), 'kupovat si' conjugates to 'kupujeme si'. 'Si' can go either before or after the verb."
+        "explanation": "For 'my' (we), 'kupovat si' conjugates to 'kupujeme si'. 'Si' can go either before or after the verb.",
+        "blank_answers": [
+          ["si kupujeme", "kupujeme si"]
+        ]
       },
       "answer_key": "si kupujeme",
       "grammar_rule_id": "GR-091",
@@ -144,8 +152,8 @@
       "prompt": "Arrange words to form the sentence: 'I wash myself every morning.'",
       "data": {
         "type": "word_order",
-        "words": ["myju", "se", "Já", "každé", "ráno", "—", "I", "wash", "myself", "every", "morning"],
-        "correct_order": [2, 0, 1, 3, 4],
+        "words": ["myju", "se", "Já", "každé", "ráno"],
+        "correct_order": [2, 1, 0, 3, 4],
         "explanation": "Czech word order: Já (I) se myju (wash myself) každé ráno (every morning). The reflexive 'se' typically occupies the second position."
       },
       "answer_key": "Já se myju každé ráno",

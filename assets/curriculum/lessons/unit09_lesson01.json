@@ -181,8 +181,8 @@
       "prompt": "Arrange the words to form the correct Czech sentence.",
       "data": {
         "type": "word_order",
-        "words": ["Mám", "tři", "—", "I", "have", "three", "knihy.", "books."],
-        "correct_order": [0, 1, 6],
+        "words": ["Mám", "tři", "knihy."],
+        "correct_order": [0, 1, 2],
         "explanation": "Mám tři knihy. = I have three books. Czech word order: subject-verb-object, with the number before the noun."
       },
       "answer_key": "Mám tři knihy.",
@@ -197,8 +197,10 @@
         "type": "fill_blank",
         "sentence": "To je ___ auto. (one car — neuter)",
         "blank_count": 1,
-        "accepted_answers": ["jedno"],
-        "explanation": "Jedno auto — 'auto' is neuter, so we use 'jedno'. Jeden=masc., jedna=fem."
+        "explanation": "Jedno auto — 'auto' is neuter, so we use 'jedno'. Jeden=masc., jedna=fem.",
+        "blank_answers": [
+          ["jedno"]
+        ]
       },
       "answer_key": "jedno",
       "grammar_rule_id": "GR-081",

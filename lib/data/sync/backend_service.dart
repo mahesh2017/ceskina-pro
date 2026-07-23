@@ -36,6 +36,7 @@ class BackendService {
   bool get isAnonymous => _clientOrNull?.auth.currentUser?.isAnonymous ?? false;
 
   User? get currentUser => _clientOrNull?.auth.currentUser;
+  Session? get currentSession => _clientOrNull?.auth.currentSession;
 
   Stream<AuthState> get authChanges => _requireClient().auth.onAuthStateChange;
 

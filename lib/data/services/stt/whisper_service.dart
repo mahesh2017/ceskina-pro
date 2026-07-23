@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:logging/logging.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../domain/repositories/speech_ports.dart';
+
 /// Word-level transcription result from Whisper.
 class WhisperWord {
   final String word;
@@ -63,7 +65,7 @@ class WhisperResult {
 /// confidence scores.
 // A public named parameter initializes an intentionally private dependency.
 // ignore_for_file: prefer_initializing_formals
-class WhisperService {
+class WhisperService implements CloudTranscriber {
   WhisperService({SupabaseClient? client, Logger? log})
       : _client = client,
         _log = log ?? Logger('WhisperService');
@@ -71,7 +73,12 @@ class WhisperService {
   final SupabaseClient? _client;
   final Logger _log;
 
-  bool get isAvailable => _client != null;
+  /// Reactive capability: cloud speech is only "available" when there is an
+  /// authenticated backend session, not merely a non-null client object.
+  /// Even when this is true, `whisper-proxy` may be undeployed and
+  /// [transcribe] may throw; callers must degrade rather than hard-fail.
+  @override
+  bool get isAvailable => _client?.auth.currentUser != null;
 
   /// Transcribe an audio file via the Whisper Edge Function.
   ///
@@ -79,6 +86,7 @@ class WhisperService {
   /// [language] — ISO language code (default: "cs" for Czech).
   /// [prompt] — optional reference text to guide recognition (improves
   ///   accuracy when the expected text is known, e.g. pronunciation exercises).
+  @override
   Future<WhisperResult> transcribe({
     required String audioPath,
     String language = 'cs',

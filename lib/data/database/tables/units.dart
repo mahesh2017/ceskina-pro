@@ -10,6 +10,7 @@ class Units extends Table {
   TextColumn get grammarTags => text().withDefault(const Constant(''))();
   BoolColumn get isExamPrep => boolean().withDefault(const Constant(false))();
   IntColumn get lessonCount => integer().nullable()();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
 
   @override
   Set<Column> get primaryKey => {id};

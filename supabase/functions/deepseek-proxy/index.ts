@@ -1,8 +1,8 @@
 import { createClient } from "npm:@supabase/supabase-js@2.110.7";
 import {
   buildUpstreamRequest,
-  parseContext,
   parseBoundedInteger,
+  parseContext,
   parseMessages,
 } from "./request_policy.ts";
 

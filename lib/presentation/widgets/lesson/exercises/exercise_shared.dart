@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/utils/text_normalizer.dart';
+import '../../../../domain/entities/exercise_outcome.dart';
+import '../../../../domain/entities/learning_evidence.dart';
 import '../../../providers/tts_providers.dart';
 
 /// Normalize a typed answer for comparison: lowercase, strip punctuation,
@@ -83,15 +85,27 @@ class CzechCharBar extends StatelessWidget {
 
 /// Result of an exercise answer submission.
 class ExerciseResult {
-  final bool isCorrect;
+  final ExerciseOutcome outcome;
   final String? explanation;
   final String? correctAnswer;
+  final Set<SupportKind> supports;
 
   const ExerciseResult({
-    required this.isCorrect,
+    required bool isCorrect,
     this.explanation,
     this.correctAnswer,
-  });
+    this.supports = const {},
+  }) : outcome =
+           isCorrect ? ExerciseOutcome.correct : ExerciseOutcome.incorrect;
+
+  const ExerciseResult.skipped({
+    this.explanation,
+    this.correctAnswer,
+    this.supports = const {},
+  }) : outcome = ExerciseOutcome.skipped;
+
+  bool get isCorrect => outcome == ExerciseOutcome.correct;
+  bool get isSkipped => outcome == ExerciseOutcome.skipped;
 }
 
 /// Callback type for when an exercise is answered.
@@ -102,13 +116,21 @@ class TtsButton extends ConsumerWidget {
   final String text;
   final double size;
   final Color? color;
+  final VoidCallback? onPlayed;
 
-  const TtsButton({super.key, required this.text, this.size = 24, this.color});
+  const TtsButton({
+    super.key,
+    required this.text,
+    this.size = 24,
+    this.color,
+    this.onPlayed,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () {
+        onPlayed?.call();
         ref.read(czechTtsProvider).speak(text);
       },
       icon: Icon(Icons.volume_up, size: size),

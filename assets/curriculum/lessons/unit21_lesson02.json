@@ -33,8 +33,10 @@
         "type": "fill_blank",
         "sentence": "Ona je ___ ze všech. (starý — the oldest of all)",
         "blank_count": 1,
-        "accepted_answers": ["nejstarší"],
-        "explanation": "'starý' → 'starší' (comparative) → 'nejstarší' (superlative = oldest). The pattern is always: add nej- to the comparative form. 'ze všech' = of all (genitive plural)."
+        "explanation": "'starý' → 'starší' (comparative) → 'nejstarší' (superlative = oldest). The pattern is always: add nej- to the comparative form. 'ze všech' = of all (genitive plural).",
+        "blank_answers": [
+          ["nejstarší"]
+        ]
       },
       "answer_key": "nejstarší",
       "grammar_rule_id": "GR-200",
@@ -88,8 +90,10 @@
         "type": "fill_blank",
         "sentence": "Ona mluví česky ___ než já. (dobře — better than me)",
         "blank_count": 1,
-        "accepted_answers": ["lépe", "líp"],
-        "explanation": "'dobře' → 'lépe' or 'líp' (better — adverb). Both are correct: 'lépe' is more formal/written, 'líp' is colloquial/spoken. The adjective form is 'lepší' (better — adjective). Don't confuse: 'lepší auto' (better car — adjective) vs 'řídí lépe' (drives better — adverb)."
+        "explanation": "'dobře' → 'lépe' or 'líp' (better — adverb). Both are correct: 'lépe' is more formal/written, 'líp' is colloquial/spoken. The adjective form is 'lepší' (better — adjective). Don't confuse: 'lepší auto' (better car — adjective) vs 'řídí lépe' (drives better — adverb).",
+        "blank_answers": [
+          ["lépe", "líp"]
+        ]
       },
       "answer_key": "lépe",
       "grammar_rule_id": "GR-203",
@@ -126,8 +130,10 @@
         "type": "fill_blank",
         "sentence": "Mám ___ auto než ty.",
         "blank_count": 1,
-        "accepted_answers": ["lepší"],
-        "explanation": "Here 'lepší' is an adjective describing 'auto' (car) — both are in accusative case because 'mám' (I have) takes accusative. The comparative adjective 'lepší' stays the same in nominative and accusative masculine/neuter. 'Mám lepší auto než ty.' = I have a better car than you."
+        "explanation": "Here 'lepší' is an adjective describing 'auto' (car) — both are in accusative case because 'mám' (I have) takes accusative. The comparative adjective 'lepší' stays the same in nominative and accusative masculine/neuter. 'Mám lepší auto než ty.' = I have a better car than you.",
+        "blank_answers": [
+          ["lepší"]
+        ]
       },
       "answer_key": "lepší",
       "grammar_rule_id": "GR-202",
@@ -213,13 +219,27 @@
         "type": "dialogue",
         "scenario": "V obchodě — In a shop",
         "lines": [
-          {"speaker": "person_a", "text": "Který telefon je lepší? Ten modrý nebo ten černý?"},
-          {"speaker": "person_b", "text": "Ten černý je lepší, ale je dražší. Ten modrý je levnější a taky dobrý."},
-          {"speaker": "person_a", "text": "A který je nejprodávanější?"},
-          {"speaker": "person_b", "text": "Ten modrý. Je nejlevnější a má nejlepší recenze."}
+          {
+            "speaker": "person_a",
+            "text": "Který telefon je lepší? Ten modrý nebo ten černý?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "___"
+          },
+          {
+            "speaker": "person_a",
+            "text": "A který je nejprodávanější?"
+          },
+          {
+            "speaker": "person_b",
+            "text": "Ten modrý. Je nejlevnější a má nejlepší recenze."
+          }
         ],
-        "accepted_answers": ["Ten černý je lepší, ale je dražší. Ten modrý je levnější a taky dobrý.|Černý je lepší, ale dražší.|Ten černý je lepší."],
-        "explanation": "'lepší' = better (comparative), 'dražší' = more expensive, 'levnější' = cheaper, 'nejprodávanější' = best-selling (superlative), 'nejlevnější' = cheapest, 'nejlepší' = best. The dialogue uses multiple comparative and superlative forms naturally in a shopping context."
+        "explanation": "'lepší' = better (comparative), 'dražší' = more expensive, 'levnější' = cheaper, 'nejprodávanější' = best-selling (superlative), 'nejlevnější' = cheapest, 'nejlepší' = best. The dialogue uses multiple comparative and superlative forms naturally in a shopping context.",
+        "blank_answers": [
+          ["Ten černý je lepší, ale je dražší. Ten modrý je levnější a taky dobrý.", "Černý je lepší, ale dražší.", "Ten černý je lepší."]
+        ]
       },
       "answer_key": "Ten černý je lepší, ale je dražší. Ten modrý je levnější a taky dobrý.",
       "grammar_rule_id": "GR-202",

@@ -88,9 +88,11 @@ Deno.serve(async (request) => {
     });
   }
 
-  if (!confirmsDeletion(
-    request.headers.get("x-confirm-account-deletion"),
-  )) {
+  if (
+    !confirmsDeletion(
+      request.headers.get("x-confirm-account-deletion"),
+    )
+  ) {
     return jsonResponse({ error: "Deletion confirmation is required." }, 400);
   }
 
