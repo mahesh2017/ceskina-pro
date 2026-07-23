@@ -7,7 +7,9 @@ import '../../providers/settings_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../widgets/common/soft_ui.dart';
 
-/// Settings screen — theme, daily goal, TTS rate, API key, cache management.
+/// Settings screen — theme, daily goal, TTS rate, cache management.
+/// The AI tutor credential lives in the `deepseek-proxy` Edge Function, never
+/// in the client, so there is no API-key entry here.
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
