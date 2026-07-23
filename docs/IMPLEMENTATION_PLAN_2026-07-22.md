@@ -260,7 +260,7 @@ Primary outcomes are 7-/30-day unscaffolded task success, cued production, new-v
 
 | Decision | Owner needed | Deadline | Default if undecided |
 |---|---|---|---|
-| Supported official exam: CCE or Czech permanent-residence A2 | Product + Czech exam specialist | Before Phase 0C content rebuild | Relabel all exams as informal practice |
+| Supported official exam: CCE or Czech permanent-residence A2 — decision brief in [EXAM_PRODUCT_DECISION_2026-07-23.md](EXAM_PRODUCT_DECISION_2026-07-23.md) (recommends permanent-residence A2; existing `exam_bank_a2.json` is that exam mislabeled as CCE). Awaiting owner sign-off. | Product + Czech exam specialist | Before Phase 0C content rebuild | Relabel all exams as informal practice |
 | Cloud audio processor/retention/consent | Product/privacy owner | Before any cloud speech deployment | Keep cloud speech disabled |
 | Mastery terminology and CEFR claim policy | Product + applied linguist | Before Phase 1C UI | Use “practice evidence,” skill-specific and dated |
 | Human-review workflow for Czech/IPA | Content owner | Before new content release | Freeze expansion; fix only verified errata |
