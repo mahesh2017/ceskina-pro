@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_tokens.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../providers/pronunciation_providers.dart';
 import '../../providers/tts_providers.dart';
 import '../../widgets/common/record_button.dart';
@@ -54,17 +56,19 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final pronState = ref.watch(pronunciationProvider);
-    final deck = _singlePhrase
-        ? const <String>[]
-        : ref.watch(pronunciationDeckProvider).value ??
-            starterPronunciationPhrases;
+    final deck =
+        _singlePhrase
+            ? const <String>[]
+            : ref.watch(pronunciationDeckProvider).value ??
+                starterPronunciationPhrases;
     if (!_singlePhrase && deck.isNotEmpty) {
       _setPhraseFromDeck(deck);
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Pronunciation Lab')),
+      appBar: AppBar(title: Text(l10n.pronunciationLab)),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -77,10 +81,10 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
                 child: Column(
                   children: [
                     Text(
-                      'Say this:',
+                      l10n.sayThis,
                       style: Theme.of(
                         context,
-                      ).textTheme.labelMedium?.copyWith(color: Colors.grey),
+                      ).textTheme.labelMedium?.copyWith(color: context.tokens.muted),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -111,11 +115,11 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
             if (pronState.isRecording)
               _RecordingIndicator()
             else if (pronState.isProcessing)
-              const Column(
+              Column(
                 children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text('Analyzing your pronunciation...'),
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 16),
+                  Text(l10n.analyzingPronunciation),
                 ],
               )
             else if (pronState.result != null)
@@ -126,19 +130,18 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
                   Text(
                     'Heard: "${pronState.transcribedText ?? ''}"',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                    style: TextStyle(fontSize: 13, color: context.tokens.muted),
                   ),
                   // Learners only see a gentle accuracy note when the cloud
                   // engine was unavailable; raw engine diagnostics (exception
                   // text, URLs, timings) are debug-build only.
                   if (!pronState.usedWhisper)
                     Text(
-                      'Using on-device recognition — results may be less '
-                      'accurate.',
+l10n.onDeviceRecognitionNote,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.orange.shade700,
+                        color: context.tokens.amber,
                       ),
                     ),
                   if (kDebugMode && pronState.diagnostic != null)
@@ -147,9 +150,10 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 12,
-                        color: pronState.usedWhisper
-                            ? Colors.green.shade700
-                            : Colors.orange.shade700,
+                        color:
+                            pronState.usedWhisper
+                                ? Colors.green.shade700
+                                : Colors.orange.shade700,
                       ),
                     ),
                 ],
@@ -157,9 +161,9 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
             else if (pronState.error != null)
               _ErrorDisplay(error: pronState.error!)
             else
-              const Text(
-                'Tap the microphone and say the phrase',
-                style: TextStyle(color: Colors.grey),
+              Text(
+                l10n.tapMicrophoneHint,
+                style: TextStyle(color: context.tokens.muted),
               ),
 
             const Spacer(),
@@ -189,7 +193,7 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
                       ref.read(pronunciationProvider.notifier).reset();
                     },
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Try Again'),
+                    label: Text(l10n.tryAgain),
                   ),
                   if (!_singlePhrase) ...[
                     const SizedBox(width: 16),
@@ -199,7 +203,7 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
                         ref.read(pronunciationProvider.notifier).reset();
                       },
                       icon: const Icon(Icons.arrow_forward),
-                      label: const Text('Next Phrase'),
+                      label: Text(l10n.nextPhrase),
                     ),
                   ],
                 ],
@@ -210,7 +214,7 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
               TextButton.icon(
                 onPressed: () => setState(() => _deckIndex++),
                 icon: const Icon(Icons.skip_next),
-                label: const Text('Skip'),
+                label: Text(l10n.skip),
               ),
           ],
         ),
@@ -287,47 +291,53 @@ class _ScoreDisplay extends StatelessWidget {
     return Column(
       children: [
         // Circular score
-        SizedBox(
-          width: 120,
-          height: 120,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Fill the 120px box — an unconstrained child of a Stack would
-              // render at the indicator's tiny intrinsic size, drawing a small
-              // ring on top of the score text instead of around it.
-              Positioned.fill(
-                child: CircularProgressIndicator(
-                  value: result.overallScore,
-                  strokeWidth: 8,
-                  backgroundColor: color.withValues(alpha: 0.15),
-                  valueColor: AlwaysStoppedAnimation<Color>(color),
-                ),
-              ),
-              // Keep the number + label inside the ring regardless of the
-              // device's system font scale: pad in from the stroke, then let
-              // FittedBox shrink the text to fit rather than overflow/overlap.
-              Padding(
-                padding: const EdgeInsets.all(18),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '$scorePercent%',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: color,
-                        ),
-                      ),
-                      Text(label, style: TextStyle(fontSize: 14, color: color)),
-                    ],
+        Semantics(
+          label: 'Score $scorePercent percent. $label',
+          child: SizedBox(
+            width: 120,
+            height: 120,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Fill the 120px box — an unconstrained child of a Stack would
+                // render at the indicator's tiny intrinsic size, drawing a small
+                // ring on top of the score text instead of around it.
+                Positioned.fill(
+                  child: CircularProgressIndicator(
+                    value: result.overallScore,
+                    strokeWidth: 8,
+                    backgroundColor: color.withValues(alpha: 0.15),
+                    valueColor: AlwaysStoppedAnimation<Color>(color),
                   ),
                 ),
-              ),
-            ],
+                // Keep the number + label inside the ring regardless of the
+                // device's system font scale: pad in from the stroke, then let
+                // FittedBox shrink the text to fit rather than overflow/overlap.
+                Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '$scorePercent%',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: color,
+                          ),
+                        ),
+                        Text(
+                          label,
+                          style: TextStyle(fontSize: 14, color: color),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 16),
@@ -337,29 +347,50 @@ class _ScoreDisplay extends StatelessWidget {
           spacing: 8,
           runSpacing: 8,
           alignment: WrapAlignment.center,
-          children: result.wordScores.map((ws) {
-            final wordColor = _scoreColor(ws.score);
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: wordColor.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: wordColor.withValues(alpha: 0.3)),
-              ),
-              child: Text(
-                ws.word,
-                style: TextStyle(
-                  color: wordColor,
-                  fontWeight: ws.isCorrect
-                      ? FontWeight.bold
-                      : FontWeight.normal,
-                  decoration: ws.isCorrect
-                      ? TextDecoration.none
-                      : TextDecoration.none,
-                ),
-              ),
-            );
-          }).toList(),
+          children:
+              result.wordScores.map((ws) {
+                final wordColor = _scoreColor(ws.score);
+                // Icon + color so correctness never relies on color alone.
+                return Semantics(
+                  label:
+                      '${ws.word}: '
+                      '${ws.isCorrect ? 'pronounced well' : 'needs practice'}',
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: wordColor.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: wordColor.withValues(alpha: 0.3),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          ws.isCorrect ? Icons.check : Icons.priority_high,
+                          size: 13,
+                          color: wordColor,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          ws.word,
+                          style: TextStyle(
+                            color: wordColor,
+                            fontWeight:
+                                ws.isCorrect
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
         ),
 
         // Problem sounds feedback

@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "appTitle": "Czechify",
+  "@appTitle": {
+    "description": "Application name shown in the task switcher"
+  },
+  "check": "Check",
+  "continueLabel": "Continue",
+  "tryAgain": "Try Again",
+  "nextPhrase": "Next Phrase",
+  "skip": "Skip",
+  "retry": "Retry",
+  "cancel": "Cancel",
+  "save": "Save",
+  "goHome": "Go Home",
+  "startExam": "Start Exam",
+  "resumeExam": "Resume Exam",
+  "discardAndStartOver": "Discard and start over",
+  "startRecording": "Start recording",
+  "stopRecording": "Stop recording",
+  "listen": "Listen",
+  "pronunciationLab": "Pronunciation Lab",
+  "sayThis": "Say this:",
+  "tapMicrophoneHint": "Tap the microphone and say the phrase",
+  "analyzingPronunciation": "Analyzing your pronunciation...",
+  "onDeviceRecognitionNote": "Using on-device recognition — results may be less accurate."
+}

@@ -10,6 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Localization (gen-l10n) — foundation for translating the UI chrome.
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
   # State Management & Routing
   flutter_riverpod: ^3.0.0
   go_router: ^14.0.0
@@ -75,6 +80,7 @@ flutter_launcher_icons:
 
 flutter:
   uses-material-design: true
+  generate: true # gen-l10n from lib/l10n/*.arb
 
   assets:
     - assets/images/

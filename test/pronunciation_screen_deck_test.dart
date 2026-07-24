@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:ceskina_pro/core/theme/app_theme.dart';
+import 'package:ceskina_pro/l10n/app_localizations.dart';
 import 'package:ceskina_pro/presentation/providers/pronunciation_providers.dart';
 import 'package:ceskina_pro/presentation/screens/pronunciation/pronunciation_screen.dart';
 
@@ -20,6 +23,14 @@ void main() {
             pronunciationDeckProvider.overrideWith((ref) async => deck),
         ],
         child: MaterialApp(
+          theme: lightTheme(),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           home: PronunciationScreen(
             exerciseId: 'practice',
             expectedText: expectedText,
