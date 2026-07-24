@@ -3,8 +3,8 @@ import '../repositories/exam_repository.dart';
 
 /// Per-section and overall scores for a graded mock exam.
 ///
-/// Stores both raw points (matching the real CCE format) and percentage
-/// scores (0-100, for backwards compatibility with the UI and DB).
+/// Stores both raw points (matching the permanent-residence A2 format) and
+/// percentage scores (0-100, for backwards compatibility with the UI and DB).
 class ExamScores {
   final int reading; // 0-100
   final int listening; // 0-100
@@ -14,8 +14,8 @@ class ExamScores {
   final bool passed;
   final bool fullyScored;
 
-  /// Raw points earned per section (CCE format: reading 25, writing 20,
-  /// listening 25, speaking 40).
+  /// Raw points earned per section (permanent-residence A2 format: reading 25,
+  /// writing 20, listening 25, speaking 40).
   final int readingPoints;
   final int listeningPoints;
   final int writingPoints;
@@ -50,17 +50,21 @@ class ExamScores {
   });
 }
 
-/// Pure grading logic for mock CCE exams — no I/O, fully testable.
+/// Pure grading logic for mock exams — no I/O, fully testable.
 ///
-/// Multiple-choice sections (reading, listening) are graded against each
-/// question's `correct_answer`. Writing and speaking scores are produced
-/// elsewhere (AI evaluation / pronunciation scoring) and passed in.
+/// Implements the permanent-residence A2 scoring rule
+/// ([ExamScoringRule.rawPointsWrittenSpeakingGate]). Multiple-choice sections
+/// (reading, listening) are graded against each question's `correct_answer`.
+/// Writing and speaking scores are produced elsewhere (AI evaluation /
+/// pronunciation scoring) and passed in.
 ///
-/// The CCE exam has a dual pass threshold: the candidate must score ≥60%
-/// in the written parts (reading + writing + listening) combined AND ≥60%
-/// in the speaking part. This matches the real exam format since April 2026.
+/// Dual pass threshold: the candidate must score ≥60% in the written parts
+/// (reading + writing + listening) combined AND ≥60% in the speaking part —
+/// the permanent-residence format effective 11 April 2026. The CCE
+/// percentage-per-part rule is a separate scoring rule and is not implemented
+/// here (no CCE bank ships).
 class ExamGrader {
-  /// Minimum percentage to pass any part (CCE threshold).
+  /// Minimum percentage to pass any part.
   static const passThreshold = 60;
 
   /// Grade an exam.

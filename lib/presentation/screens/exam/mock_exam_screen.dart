@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/engines/exam_grader.dart';
 import '../../../domain/engines/pronunciation_scorer.dart';
+import '../../../domain/engines/writing_word_gate.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/entities/exam_result.dart';
 import '../../../domain/entities/exam_speaking_task.dart';
@@ -12,7 +13,8 @@ import '../../providers/stt_providers.dart';
 import '../../providers/writing_providers.dart';
 import '../../widgets/lesson/exercise_widget.dart' show TtsButton;
 
-/// Mock exam screen — timed sections matching CCE format.
+/// Mock exam screen — timed sections matching the selected exam product's
+/// blueprint (permanent-residence A2 today).
 class MockExamScreen extends ConsumerStatefulWidget {
   final ExamLevel level;
 
@@ -260,9 +262,16 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
       ) {
         final key = (section: sectionIndex, question: questionIndex);
         if (_writingScores.containsKey(key)) continue;
+        final question = section.questions[questionIndex];
         final text = _answers[sectionIndex]?[questionIndex] as String?;
         if (text == null || text.trim().isEmpty) continue;
-        await _evaluateWritingTask(key, section.questions[questionIndex], text);
+        // Official deterministic rule: a response below the task's minimum word
+        // count scores 0 without any content evaluation.
+        if (WritingWordGate.belowMinimum(text, question['min_words'] as int?)) {
+          setState(() => _writingScores[key] = 0);
+          continue;
+        }
+        await _evaluateWritingTask(key, question, text);
       }
     }
   }
@@ -323,7 +332,8 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
               const Icon(Icons.assignment, size: 64, color: Colors.blue),
               const SizedBox(height: 24),
               Text(
-                'CCE-${widget.level.name.toUpperCase()} Mock Exam',
+                '${(_exam?.product ?? ExamProduct.permanentResidence).displayName} '
+                '${widget.level.name.toUpperCase()} Practice Exam',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 16),

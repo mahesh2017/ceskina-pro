@@ -34,8 +34,8 @@ Speaking tasks: 1 Odpovědi na otázky (8), 2 Dialogy (12), 3 Vyprávění podle
 ## What can be fixed by engineering vs what is specialist-gated
 
 **Engineering can align now (pure numbers/structure, no new Czech content):**
-- Re-weight the existing reading tasks to [5,5,4,6,5] and writing to Formulář 8 / E-mail 12 *once the tasks are restructured* (#2, #4 point maps).
-- Add the e-mail "<35 words ⇒ 0" rule to the writing scorer (#4).
+- Re-weight the existing reading tasks to [5,5,4,6,5] and writing to Formulář 8 / E-mail 12 *once the tasks are restructured* (#2, #4 point maps). Note: the grader already honours whatever per-task `points` the bank declares, so this is a data/content edit, not an engine change.
+- ~~Add the e-mail "<35 words ⇒ 0" rule to the writing scorer (#4).~~ **DONE (24 Jul):** `WritingWordGate` enforces each writing task's declared `min_words` deterministically — a below-minimum response scores 0 and never reaches the AI evaluator. The specific threshold value remains task/content data.
 - Add the speaking pronunciation 3-point allocation and a 4th speaking task slot in the schema (#1 structure).
 
 **Specialist-gated (needs authored, reviewed Czech content — the Phase 3B gate):**

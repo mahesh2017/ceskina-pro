@@ -59,6 +59,12 @@ extension ExamProductAsset on ExamProduct {
         ExamProduct.cce => 'cce',
       };
 
+  /// Learner-facing product name.
+  String get displayName => switch (this) {
+        ExamProduct.permanentResidence => 'Permanent-residence',
+        ExamProduct.cce => 'CCE',
+      };
+
   /// Persisted/serialized identifier.
   String get id => switch (this) {
         ExamProduct.permanentResidence => 'permanent_residence',

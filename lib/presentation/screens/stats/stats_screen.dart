@@ -548,7 +548,7 @@ class _ExamHistoryCard extends ConsumerWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'CCE-${r.level.name.toUpperCase()}',
+                    '${r.product.displayName} ${r.level.name.toUpperCase()}',
                     style: TextStyle(fontWeight: FontWeight.w700, color: t.ink),
                   ),
                   const SizedBox(width: 8),
