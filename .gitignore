@@ -51,3 +51,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /android/build/
+
+# Local knowledge-graph cache (embeds absolute paths; not for the repo)
+graphify-out/
