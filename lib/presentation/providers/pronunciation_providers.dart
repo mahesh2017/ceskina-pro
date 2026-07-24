@@ -11,6 +11,7 @@ class PronunciationState {
   final bool isProcessing;
   final String? error;
   final bool usedWhisper;
+  final String? diagnostic;
   final int attemptId;
 
   const PronunciationState({
@@ -21,6 +22,7 @@ class PronunciationState {
     this.isProcessing = false,
     this.error,
     this.usedWhisper = false,
+    this.diagnostic,
     this.attemptId = 0,
   });
 
@@ -32,6 +34,7 @@ class PronunciationState {
     bool? isProcessing,
     String? error,
     bool? usedWhisper,
+    String? diagnostic,
     int? attemptId,
   }) {
     return PronunciationState(
@@ -42,6 +45,7 @@ class PronunciationState {
       isProcessing: isProcessing ?? this.isProcessing,
       error: error,
       usedWhisper: usedWhisper ?? this.usedWhisper,
+      diagnostic: diagnostic ?? this.diagnostic,
       attemptId: attemptId ?? this.attemptId,
     );
   }
@@ -100,6 +104,7 @@ class PronunciationNotifier extends Notifier<PronunciationState> {
         transcribedText: assessment.transcribedText,
         result: assessment.result,
         usedWhisper: assessment.usedWhisper,
+        diagnostic: assessment.diagnostic,
       );
     } catch (e) {
       if (!ref.mounted || state.attemptId != attemptId) return;

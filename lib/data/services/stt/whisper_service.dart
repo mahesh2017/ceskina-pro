@@ -66,17 +66,23 @@ class WhisperResult {
 // A public named parameter initializes an intentionally private dependency.
 // ignore_for_file: prefer_initializing_formals
 class WhisperService implements CloudTranscriber {
-  WhisperService({SupabaseClient? client, Logger? log})
-      : _client = client,
+  /// [clientResolver] is read live on every call so capability reflects the
+  /// current session even if this service was constructed before the anonymous
+  /// sign-in completed (a cached snapshot would otherwise stay null forever and
+  /// silently force the on-device fallback).
+  WhisperService({SupabaseClient? Function()? clientResolver, Logger? log})
+      : _clientResolver = clientResolver ?? (() => null),
         _log = log ?? Logger('WhisperService');
 
-  final SupabaseClient? _client;
+  final SupabaseClient? Function() _clientResolver;
   final Logger _log;
 
+  SupabaseClient? get _client => _clientResolver();
+
   /// Reactive capability: cloud speech is only "available" when there is an
-  /// authenticated backend session, not merely a non-null client object.
-  /// Even when this is true, `whisper-proxy` may be undeployed and
-  /// [transcribe] may throw; callers must degrade rather than hard-fail.
+  /// authenticated backend session, evaluated live. Even when this is true,
+  /// `whisper-proxy` may be undeployed and [transcribe] may throw; callers must
+  /// degrade rather than hard-fail.
   @override
   bool get isAvailable => _client?.auth.currentUser != null;
 

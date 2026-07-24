@@ -22,7 +22,9 @@ final audioRecorderProvider = Provider<AudioRecorderService>((ref) {
 final whisperServiceProvider = Provider<WhisperService?>((ref) {
   final backend = ref.watch(backendServiceProvider);
   return WhisperService(
-    client: backend.client,
+    // Resolve the client live so a session established after this provider is
+    // first read is still picked up.
+    clientResolver: () => backend.client,
     log: Logger('WhisperService'),
   );
 });
@@ -53,11 +55,16 @@ class PronunciationAssessment {
   /// True when this assessment used Whisper (vs OS-native STT fallback).
   final bool usedWhisper;
 
+  /// Short human-readable note on which engine ran and why — surfaced in the UI
+  /// as a temporary diagnostic while cloud speech is being validated.
+  final String? diagnostic;
+
   const PronunciationAssessment({
     required this.transcribedText,
     required this.result,
     this.whisperWords = const [],
     this.usedWhisper = false,
+    this.diagnostic,
   });
 }
 
@@ -126,10 +133,18 @@ class PronunciationAssessor {
           st,
         );
         await _recorder.cleanup();
-        return _assessWithNativeStt(expectedText, maxDuration);
+        return _assessWithNativeStt(
+          expectedText,
+          maxDuration,
+          diagnostic: 'on-device (cloud error: $e)',
+        );
       }
     }
-    return _assessWithNativeStt(expectedText, maxDuration);
+    return _assessWithNativeStt(
+      expectedText,
+      maxDuration,
+      diagnostic: 'on-device (cloud unavailable — no session)',
+    );
   }
 
   Future<PronunciationAssessment> _assessWithWhisper(
@@ -153,6 +168,7 @@ class PronunciationAssessor {
         transcribedText: '',
         result: _scorer.score(expectedText: expectedText, actualTranscription: ''),
         usedWhisper: true,
+        diagnostic: 'cloud Whisper (no audio captured)',
       );
     }
 
@@ -183,13 +199,15 @@ class PronunciationAssessor {
       result: enriched,
       whisperWords: whisperResult.words,
       usedWhisper: true,
+      diagnostic: 'cloud Whisper (${whisperResult.duration.toStringAsFixed(1)}s)',
     );
   }
 
   Future<PronunciationAssessment> _assessWithNativeStt(
     String expectedText,
-    Duration maxDuration,
-  ) async {
+    Duration maxDuration, {
+    String? diagnostic,
+  }) async {
     _log.info('Whisper unavailable; falling back to OS-native STT.');
 
     final transcription = await _fallbackStt.listenFor(timeout: maxDuration);
@@ -203,6 +221,7 @@ class PronunciationAssessor {
       transcribedText: transcription,
       result: result,
       usedWhisper: false,
+      diagnostic: diagnostic ?? 'on-device',
     );
   }
 

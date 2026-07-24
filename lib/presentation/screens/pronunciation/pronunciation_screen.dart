@@ -93,7 +93,29 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
                 ],
               )
             else if (pronState.result != null)
-              _ScoreDisplay(result: pronState.result!)
+              Column(
+                children: [
+                  _ScoreDisplay(result: pronState.result!),
+                  const SizedBox(height: 12),
+                  // Temporary diagnostic while cloud pronunciation is validated.
+                  Text(
+                    'Heard: "${pronState.transcribedText ?? ''}"',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
+                  if (pronState.diagnostic != null)
+                    Text(
+                      pronState.diagnostic!,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: pronState.usedWhisper
+                            ? Colors.green.shade700
+                            : Colors.orange.shade700,
+                      ),
+                    ),
+                ],
+              )
             else if (pronState.error != null)
               _ErrorDisplay(error: pronState.error!)
             else
