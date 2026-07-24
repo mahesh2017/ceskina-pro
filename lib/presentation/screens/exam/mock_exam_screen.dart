@@ -7,6 +7,7 @@ import '../../../domain/engines/writing_word_gate.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/entities/exam_result.dart';
 import '../../../domain/entities/exam_speaking_task.dart';
+import '../../../data/services/exam_session_store.dart';
 import '../../../domain/repositories/exam_repository.dart';
 import '../../providers/database_providers.dart';
 import '../../providers/stt_providers.dart';
@@ -55,6 +56,11 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   bool _isRecordingSpeaking = false;
   final Map<({int section, int question}), String> _speakingTranscriptions = {};
 
+  /// Durable mid-exam checkpoint so process death (memory pressure, a phone
+  /// call) never discards a 30+ minute attempt.
+  final ExamSessionStore _sessionStore = ExamSessionStore();
+  ExamCheckpoint? _pendingCheckpoint;
+
   @override
   void initState() {
     super.initState();
@@ -74,11 +80,20 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     final exam = await ref
         .read(examRepositoryProvider)
         .getMockExam(widget.level);
-    if (mounted) setState(() => _exam = exam);
+    final checkpoint = await _sessionStore.load(widget.level.name);
+    if (mounted) {
+      setState(() {
+        _exam = exam;
+        _pendingCheckpoint = checkpoint;
+      });
+    }
   }
 
   void _startExam() {
     if (_exam == null) return;
+    // Starting fresh abandons any interrupted attempt.
+    _pendingCheckpoint = null;
+    unawaited(_sessionStore.clear(widget.level.name));
     ref.read(writingEvalProvider.notifier).reset();
     setState(() {
       _examStarted = true;
@@ -102,10 +117,88 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     _startSectionTimer();
   }
 
-  void _startSectionTimer() {
+  /// Restore an interrupted attempt from its checkpoint.
+  void _resumeExam() {
+    final checkpoint = _pendingCheckpoint;
+    if (_exam == null || checkpoint == null) return;
+    // A checkpoint from a different exam build could point out of bounds.
+    if (checkpoint.sectionIndex >= _exam!.sections.length ||
+        checkpoint.questionIndex >=
+            _exam!.sections[checkpoint.sectionIndex].questions.length) {
+      unawaited(_sessionStore.clear(widget.level.name));
+      setState(() => _pendingCheckpoint = null);
+      return;
+    }
+
+    ({int section, int question}) decodeKey(String key) {
+      final parts = key.split(':');
+      return (section: int.parse(parts[0]), question: int.parse(parts[1]));
+    }
+
+    ref.read(writingEvalProvider.notifier).reset();
+    setState(() {
+      _examStarted = true;
+      _currentSection = checkpoint.sectionIndex;
+      _currentQuestion = checkpoint.questionIndex;
+      _answers
+        ..clear()
+        ..addAll(checkpoint.answers.map(
+          (section, questions) => MapEntry(section, {...questions}),
+        ));
+      _speakingTranscriptions
+        ..clear()
+        ..addAll(checkpoint.speakingTranscriptions.map(
+          (key, value) => MapEntry(decodeKey(key), value),
+        ));
+      _speakingScores
+        ..clear()
+        ..addAll(checkpoint.speakingScores.map(
+          (key, value) => MapEntry(decodeKey(key), value),
+        ));
+      _writingScores
+        ..clear()
+        ..addAll(checkpoint.writingScores.map(
+          (key, value) => MapEntry(decodeKey(key), value),
+        ));
+      _examComplete = false;
+      _result = null;
+      _resultFullyScored = false;
+      _pendingCheckpoint = null;
+    });
+    _startSectionTimer(resumeSeconds: checkpoint.secondsLeft);
+  }
+
+  void _saveCheckpoint() {
+    if (!_examStarted || _examComplete || _finishing || _exam == null) return;
+    String encodeKey(({int section, int question}) key) =>
+        '${key.section}:${key.question}';
+    unawaited(_sessionStore.save(ExamCheckpoint(
+      level: widget.level.name,
+      sectionIndex: _currentSection,
+      questionIndex: _currentQuestion,
+      secondsLeft: _secondsLeft,
+      answers: _answers.map(
+        (section, questions) => MapEntry(section, {...questions}),
+      ),
+      speakingTranscriptions: _speakingTranscriptions.map(
+        (key, value) => MapEntry(encodeKey(key), value),
+      ),
+      speakingScores: _speakingScores.map(
+        (key, value) => MapEntry(encodeKey(key), value),
+      ),
+      writingScores: _writingScores.map(
+        (key, value) => MapEntry(encodeKey(key), value),
+      ),
+      savedAt: DateTime.now(),
+    )));
+  }
+
+  void _startSectionTimer({int? resumeSeconds}) {
     _timer?.cancel();
     final section = _exam!.sections[_currentSection];
-    setState(() => _secondsLeft = section.timeLimitMinutes * 60);
+    setState(
+      () => _secondsLeft = resumeSeconds ?? section.timeLimitMinutes * 60,
+    );
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) return;
       setState(() {
@@ -115,6 +208,9 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
           _nextSection();
         }
       });
+      // Persist the clock periodically so a killed app resumes close to
+      // where it stopped (answer edits save immediately; this is time-only).
+      if (_secondsLeft > 0 && _secondsLeft % 10 == 0) _saveCheckpoint();
     });
   }
 
@@ -125,12 +221,14 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
       _answers.putIfAbsent(_currentSection, () => {})[_currentQuestion] =
           answer;
     });
+    _saveCheckpoint();
   }
 
   void _nextQuestion() {
     final section = _exam!.sections[_currentSection];
     if (_currentQuestion < section.questions.length - 1) {
       setState(() => _currentQuestion++);
+      _saveCheckpoint();
     } else {
       _nextSection();
     }
@@ -144,6 +242,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         _currentQuestion = 0;
       });
       _startSectionTimer();
+      _saveCheckpoint();
     } else {
       _finishExam();
     }
@@ -153,6 +252,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     if (_finishing) return;
     _finishing = true;
     _timer?.cancel();
+    unawaited(_sessionStore.clear(widget.level.name));
 
     await _evaluatePendingWritingTasks();
 
@@ -217,6 +317,13 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
 
   ({int section, int question}) get _currentResponseKey =>
       (section: _currentSection, question: _currentQuestion);
+
+  String _describeCheckpointAge(DateTime savedAt) {
+    final elapsed = DateTime.now().difference(savedAt);
+    if (elapsed.inMinutes < 1) return 'a moment ago';
+    if (elapsed.inMinutes < 60) return '${elapsed.inMinutes} min ago';
+    return '${elapsed.inHours} h ago';
+  }
 
   int? _externalSectionScore(
     ExamSectionType type,
@@ -355,11 +462,33 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 24),
-                FilledButton.icon(
-                  onPressed: _startExam,
-                  icon: const Icon(Icons.play_arrow),
-                  label: const Text('Start Exam'),
-                ),
+                if (_pendingCheckpoint != null) ...[
+                  Text(
+                    'You have an unfinished attempt from '
+                    '${_describeCheckpointAge(_pendingCheckpoint!.savedAt)}.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  FilledButton.icon(
+                    onPressed: _resumeExam,
+                    icon: const Icon(Icons.restore),
+                    label: const Text('Resume Exam'),
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton(
+                    onPressed: _startExam,
+                    child: const Text('Discard and start over'),
+                  ),
+                ] else
+                  FilledButton.icon(
+                    onPressed: _startExam,
+                    icon: const Icon(Icons.play_arrow),
+                    label: const Text('Start Exam'),
+                  ),
               ] else ...[
                 const CircularProgressIndicator(),
               ],
@@ -897,9 +1026,14 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     setState(() => _isRecordingSpeaking = true);
     try {
       final stt = ref.read(sttServiceProvider) as NativeSttService;
-      final transcription = await stt.listenFor(
-        timeout: const Duration(seconds: 12),
-      );
+      // Read-aloud is a short fixed text; prompted/open responses need room
+      // for a real utterance — a 12 s cap cut CCE-style answers off mid-turn.
+      final timeout = switch (task) {
+        ExamReadAloudTask() => const Duration(seconds: 15),
+        ExamPromptedResponseTask() => const Duration(seconds: 30),
+        ExamOpenResponseTask() => const Duration(seconds: 45),
+      };
+      final transcription = await stt.listenFor(timeout: timeout);
 
       final int? score = switch (task) {
         ExamReadAloudTask(:final targetText) =>
