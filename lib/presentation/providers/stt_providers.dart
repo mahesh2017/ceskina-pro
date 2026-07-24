@@ -106,7 +106,7 @@ class PronunciationAssessor {
   /// OS-native STT for live recognition (lower quality, no confidence).
   Future<PronunciationAssessment> assess({
     required String expectedText,
-    Duration maxDuration = const Duration(seconds: 15),
+    Duration maxDuration = const Duration(seconds: 10),
     void Function()? onCaptureComplete,
   }) async {
     if (hasWhisper) {

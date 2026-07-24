@@ -1,42 +1,58 @@
-/// Pure voice-activity state machine for auto-stopping a recording.
+/// Pure, adaptive voice-activity state machine for auto-stopping a recording.
 ///
-/// Fed a stream of amplitude samples (dBFS; ~0 is loud, ~-160 is silent) with
-/// the elapsed time of each sample, it decides when to stop: once speech has
-/// been detected, it stops after [silenceTimeout] of continuous quiet. Before
-/// any speech it never stops (so a slow starter isn't cut off), and the caller
-/// still enforces a hard maximum duration independently.
+/// Absolute dBFS thresholds don't work across devices/rooms (one phone's quiet
+/// room reads -55 dBFS, another's -30). So this tracks two running references
+/// from the samples themselves:
+///   * a noise **floor** (the quietest level seen), and
+///   * a speech **peak** (the loudest level seen).
+/// Speech starts when a sample rises [speechRiseDb] above the floor; after that,
+/// the recording stops once the level stays [silenceDropDb] below the peak for
+/// [silenceTimeout]. This adapts to whatever the mic actually reports.
 ///
-/// No timers or I/O — deterministic and unit-testable.
+/// No timers or I/O — deterministic and unit-testable. The caller still
+/// enforces a hard maximum duration as a safety net.
 class SilenceDetector {
   SilenceDetector({
-    this.speechThresholdDb = -40,
     this.silenceTimeout = const Duration(seconds: 3),
+    this.speechRiseDb = 12,
+    this.silenceDropDb = 10,
   });
 
-  /// A sample at or above this dBFS level counts as speech.
-  final double speechThresholdDb;
-
-  /// How long the level must stay below [speechThresholdDb] (after speech has
-  /// started) before recording should stop.
+  /// How long the level must stay quiet (after speech) before stopping.
   final Duration silenceTimeout;
 
+  /// A sample this many dB above the running floor marks the start of speech.
+  final double speechRiseDb;
+
+  /// After speech, a sample this many dB below the running peak counts as quiet.
+  final double silenceDropDb;
+
+  double? _floor;
+  double? _peak;
   bool _speechStarted = false;
   Duration? _silenceStart;
 
-  /// Whether any speech has been observed yet.
   bool get speechStarted => _speechStarted;
 
-  /// Feed one amplitude sample. [currentDb] is the sample's dBFS level and
-  /// [elapsed] is the time since recording began. Returns true when recording
-  /// should stop.
+  /// Feed one amplitude sample ([currentDb] dBFS) at [elapsed] since recording
+  /// began. Returns true when recording should stop.
   bool accept(double currentDb, Duration elapsed) {
-    final isSpeech = currentDb >= speechThresholdDb;
-    if (isSpeech) {
-      _speechStarted = true;
-      _silenceStart = null;
+    _floor = (_floor == null || currentDb < _floor!) ? currentDb : _floor!;
+    _peak = (_peak == null || currentDb > _peak!) ? currentDb : _peak!;
+
+    if (!_speechStarted) {
+      if (currentDb >= _floor! + speechRiseDb) {
+        _speechStarted = true;
+        _silenceStart = null;
+      }
+      return false; // never stop before the user has spoken
+    }
+
+    final isQuiet = currentDb <= _peak! - silenceDropDb;
+    if (!isQuiet) {
+      _silenceStart = null; // speaking again — reset the silence timer
       return false;
     }
-    if (!_speechStarted) return false; // still waiting for the user to begin
     _silenceStart ??= elapsed;
     return elapsed - _silenceStart! >= silenceTimeout;
   }

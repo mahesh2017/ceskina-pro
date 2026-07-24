@@ -67,7 +67,7 @@ class AudioRecorderService implements AudioRecorderPort {
   @override
   Future<String> recordUntilSilence({
     Duration silenceTimeout = const Duration(seconds: 3),
-    Duration maxDuration = const Duration(seconds: 15),
+    Duration maxDuration = const Duration(seconds: 10),
     Future<void>? stopSignal,
   }) async {
     await start();
