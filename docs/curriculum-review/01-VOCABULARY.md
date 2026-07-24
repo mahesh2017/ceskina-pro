@@ -30,7 +30,7 @@
 | prosím | please / you're welcome | ˈprosiːm | — | Kávu, prosím. | A coffee, please. |
 | ano | yes | ˈano | — | Ano, jsem z Prahy. | Yes, I'm from Prague. |
 | ne | no | nɛ | — | Ne, děkuji. | No, thank you. |
-| jmenuju se | my name is | ˈjmɛnuju sɛ | — | Jmenuju se Mahesh. | My name is Mahesh. |
+| jmenuju se | my name is | ˈjmɛnuju sɛ | — | Jmenuju se Adam. | My name is Adam. |
 | jsem | I am | jsɛm | — | Jsem student. | I am a student. |
 | Těší mě | Nice to meet you | cɛʃiː mɲɛ | — | Těší mě, Jmenuju se Anna. | Nice to meet you, my name is Anna. |
 | jak se máš | how are you (informal) | jak sɛ maːʃ | — | Ahoj, jak se máš? | Hi, how are you? |
@@ -191,7 +191,7 @@
 
 | Word (CZ) | English | IPA | Gender | Example CZ | Example EN |
 |---|---|---|---|---|---|
-| já | I | jaː | — | Já jsem Mahesh. | I am Mahesh. |
+| já | I | jaː | — | Já jsem Adam. | I am Adam. |
 | ty | you (informal) | tɪ | — | Ty jsi student. | You are a student. |
 | on | he | on | — | On je učitel. | He is a teacher. |
 | ona | she | ˈona | — | Ona je studentka. | She is a student. |
@@ -205,7 +205,7 @@
 | dva | two | dva | — | Mám dvě sestry. | I have two sisters. |
 | tři | three | tʃi | — | Mám tři přátele. | I have three friends. |
 | čtyři | four | ˈtʃtɪr̝i | — | Mám čtyři knihy. | I have four books. |
-| já | I | jaː | — | Já jsem Mahesh. | I am Mahesh. |
+| já | I | jaː | — | Já jsem Adam. | I am Adam. |
 | ty | you (informal) | tɪ | — | Ty jsi student. | You are a student. |
 | on | he | on | — | On je učitel. | He is a teacher. |
 | ona | she | ˈona | — | Ona je studentka. | She is a student. |

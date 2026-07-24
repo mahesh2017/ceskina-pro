@@ -72,8 +72,8 @@
     "ipa": "ˈjmɛnuju sɛ",
     "gender": null,
     "unit_id": 2,
-    "example_cz": "Jmenuju se Mahesh.",
-    "example_en": "My name is Mahesh.",
+    "example_cz": "Jmenuju se Adam.",
+    "example_en": "My name is Adam.",
     "lesson_id": 201
   },
   {
@@ -446,8 +446,8 @@
     "ipa": "jaː",
     "gender": null,
     "unit_id": 7,
-    "example_cz": "Já jsem Mahesh.",
-    "example_en": "I am Mahesh.",
+    "example_cz": "Já jsem Adam.",
+    "example_en": "I am Adam.",
     "lesson_id": 701
   },
   {
@@ -1766,8 +1766,8 @@
     "ipa": "jaː",
     "gender": null,
     "unit_id": 7,
-    "example_cz": "Já jsem Mahesh.",
-    "example_en": "I am Mahesh.",
+    "example_cz": "Já jsem Adam.",
+    "example_en": "I am Adam.",
     "lesson_id": 701
   },
   {

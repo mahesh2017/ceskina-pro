@@ -171,8 +171,8 @@
       "case_affected": null,
       "examples": [
         {
-          "cz": "Jmenuju se Mahesh.",
-          "en": "My name is Mahesh."
+          "cz": "Jmenuju se Adam.",
+          "en": "My name is Adam."
         },
         {
           "cz": "Jsem z Prahy.",
@@ -686,8 +686,8 @@
       "case_affected": "nominative",
       "examples": [
         {
-          "cz": "Já jsem Mahesh.",
-          "en": "I am Mahesh.",
+          "cz": "Já jsem Adam.",
+          "en": "I am Adam.",
           "note": "já usually omitted"
         },
         {

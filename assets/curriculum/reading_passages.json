@@ -7,7 +7,7 @@
       "level": "A1",
       "unit_id": 2,
       "title": "Nový kamarád",
-      "text": "Ahoj! Jmenuju se Mahesh a jsem z Indie. Teď bydlím v Praze a studuju na Karlově univerzitě. Dnes je pondělí a jdu do školy. V tramvaji potkám nového kamaráda. Jmenuje se Pavel a je z Česka. Pavel je student taky. Studuje historii. My mluvíme česky a anglicky. Pavel mluví anglicky velmi dobře. Já mluvím česky trochu, ale učím se každý den.\n\nPavel říká: \"Ahoj Mahesh, jak se máš?\" Já říkám: \"Mám se dobře, děkuji. A ty?\" Pavel říká: \"Já se mám taky dobře. Co děláš dnes?\" Já říkám: \"Jdu do školy. Mám českou hodinu. A co ty?\" Pavel říká: \"Já jdu do knihovny. Potřebuji knihu o českých dějinách.\"\n\nMy jsme kamarádi. Pavel mi pomáhá s češtinou. Já mu pomáhám s angličtinou. To je dobré! Po škole jdeme do kavárny. Pijeme kávu a mluvíme. Pavel říká, že pražská káva je velmi dobrá. Já říkám, že indický čaj je taky dobrý. My se máme rádi a jsme spokojení v Praze.",
+      "text": "Ahoj! Jmenuju se Adam a jsem z Německa. Teď bydlím v Praze a studuju na Karlově univerzitě. Dnes je pondělí a jdu do školy. V tramvaji potkám nového kamaráda. Jmenuje se Pavel a je z Česka. Pavel je student taky. Studuje historii. My mluvíme česky a anglicky. Pavel mluví anglicky velmi dobře. Já mluvím česky trochu, ale učím se každý den.\n\nPavel říká: \"Ahoj Adam, jak se máš?\" Já říkám: \"Mám se dobře, děkuji. A ty?\" Pavel říká: \"Já se mám taky dobře. Co děláš dnes?\" Já říkám: \"Jdu do školy. Mám českou hodinu. A co ty?\" Pavel říká: \"Já jdu do knihovny. Potřebuji knihu o českých dějinách.\"\n\nMy jsme kamarádi. Pavel mi pomáhá s češtinou. Já mu pomáhám s angličtinou. To je dobré! Po škole jdeme do kavárny. Pijeme kávu a mluvíme. Pavel říká, že pražská káva je velmi dobrá. Já říkám, že německé pivo je taky dobrý. My se máme rádi a jsme spokojení v Praze.",
       "word_count": 168,
       "glossary": [
         {
@@ -33,16 +33,16 @@
       ],
       "comprehension_questions": [
         {
-          "question": "Odkud je Mahesh?",
-          "question_en": "Where is Mahesh from?",
+          "question": "Odkud je Adam?",
+          "question_en": "Where is Adam from?",
           "options": [
             "Z Česka",
-            "Z Indie",
+            "Z Německo",
             "Z Anglie",
             "Z Prahy"
           ],
           "correct_index": 1,
-          "explanation": "Mahesh je z Indie."
+          "explanation": "Adam je z Německa."
         },
         {
           "question": "Co studuje Pavel?",
@@ -81,7 +81,7 @@
           "explanation": "Po škole jdou do kavárny."
         }
       ],
-      "translation": "Hi! My name is Mahesh and I'm from India. Now I live in Prague and study at Charles University. Today is Monday and I'm going to school. On the tram I meet a new friend named Pavel from Czech Republic. Pavel is also a student studying history. We speak Czech and English. After school we go to a cafe. We are friends and happy in Prague."
+      "translation": "Hi! My name is Adam and I'm from Germany. Now I live in Prague and study at Charles University. Today is Monday and I'm going to school. On the tram I meet a new friend named Pavel from Czech Republic. Pavel is also a student studying history. We speak Czech and English. After school we go to a cafe. We are friends and happy in Prague."
     },
     {
       "id": "rp_a1_02",
@@ -792,7 +792,7 @@
       "level": "A1",
       "unit_id": 7,
       "title": "Představení se",
-      "text": "Dobrý den! Rád se představím. Jmenuju se Mahesh Pathak a je mi pětadvacet let. Jsem z Indie, z města Dillí. Teď bydlím v Praze.\n\nMoje rodina je v Indii. Můj otec je inženýr a moje matka je učitelka. Mám jednoho bratra. Jmenuje se Vijay a je mladší než já.\n\nJá studuji na Karlově univerzitě v Praze. Studuji mezinárodní vztahy. Mluvím anglicky, hindsky a trochu česky. Čeština je těžká, ale krásná. Učím se česky už šest měsíců.\n\nBydlím v studentském koleji na Spořilově. Můj pokoj je malý, ale pohodlný. Mám postel, stůl, židli a skříň.\n\nMám tady nové kamarády. Jsou z různých zemí — z Česka, Německa, Francie a Japonska. Mluvíme anglicky a česky.\n\nO víkendu rád chodím do pražských parků. Mám rád Riegrovy sady a Letenské sady. Praha je velmi krásné město. Jsem spokojený.",
+      "text": "Dobrý den! Rád se představím. Jmenuju se Adam Weber a je mi pětadvacet let. Jsem z Německa, z města Berlína. Teď bydlím v Praze.\n\nMoje rodina je v Německu. Můj otec je inženýr a moje matka je učitelka. Mám jednoho bratra. Jmenuje se Lukas a je mladší než já.\n\nJá studuji na Karlově univerzitě v Praze. Studuji mezinárodní vztahy. Mluvím anglicky, německy a trochu česky. Čeština je těžká, ale krásná. Učím se česky už šest měsíců.\n\nBydlím v studentském koleji na Spořilově. Můj pokoj je malý, ale pohodlný. Mám postel, stůl, židli a skříň.\n\nMám tady nové kamarády. Jsou z různých zemí — z Česka, Německa, Francie a Japonska. Mluvíme anglicky a česky.\n\nO víkendu rád chodím do pražských parků. Mám rád Riegrovy sady a Letenské sady. Praha je velmi krásné město. Jsem spokojený.",
       "word_count": 150,
       "glossary": [
         {
@@ -813,16 +813,16 @@
       ],
       "comprehension_questions": [
         {
-          "question": "Odkud je Mahesh?",
-          "question_en": "Where is Mahesh from?",
+          "question": "Odkud je Adam?",
+          "question_en": "Where is Adam from?",
           "options": [
             "Praha",
-            "Dillí",
+            "Berlín",
             "Bombaj",
             "Kalkata"
           ],
           "correct_index": 1,
-          "explanation": "Je z Dillí."
+          "explanation": "Je z Berlína."
         },
         {
           "question": "Co studuje?",
@@ -861,7 +861,7 @@
           "explanation": "Šest měsíců."
         }
       ],
-      "translation": "Hello! I'm Mahesh Pathak, 25, from Delhi, India. Now I live in Prague. My family is in India — father is an engineer, mother is a teacher, brother Vijay is younger. I study international relations at Charles University. I speak English, Hindi, and some Czech (learning for 6 months). I live in a dorm at Spořilov. I have friends from Czech Republic, Germany, France, Japan. I love Prague's parks. I'm happy here."
+      "translation": "Hello! I'm Adam Weber, 25, from Berlin, Germany. Now I live in Prague. My family is in Germany — father is an engineer, mother is a teacher, brother Lukas is younger. I study international relations at Charles University. I speak English, German, and some Czech (learning for 6 months). I live in a dorm at Spořilov. I have friends from Czech Republic, Germany, France, Japan. I love Prague's parks. I'm happy here."
     },
     {
       "id": "rp_a1_12",
@@ -949,7 +949,7 @@
       "level": "A2",
       "unit_id": 16,
       "title": "Byt v Praze",
-      "text": "Hledám nový byt v Praze. Minulý měsíc jsem se přestěhoval z Indie a potřebuji lepší bydlení. Teď bydlím v studentském koleji, ale chci svůj vlastní byt.\n\nNašel jsem hezký byt na Vinohradech. Je to malý byt — jedna místnost, kuchyně a koupelna. Ale je to hezké místo. Byt je blízko parku Riegrovy sady a stanice metra Náměstí Míru.\n\nKolik stojí nájem? Pán, který pronajímá byt, říká, že nájem je 18 000 korun za měsíc. To je hodně peněz! Ale je to normální cena pro Vinohrady. Musím také zaplatit kauci — dva měsíce nájmu předem. To je 36 000 korun. Spolu s prvním měsícem musím zaplatit 54 000 korun. To je velmi hodně!\n\nMůj kamarád Pavel říká, že je to dobrá cena. On platí 22 000 korun za větší byt v centru. Říká, že Vinohrady jsou dobrá lokalita — je tam klid, parky, restaurace a dobré spojení metrem.\n\nRozhodl jsem se, že byt si vezmu. Podepsal jsem nájemní smlouvu a zaplatil kauci. Příští týden se stěhuji. Musím koupit nábytek — postel, stůl, židli a skříň. Pavel mi slíbil, že mi pomůže se stěhováním.\n\nJsem spokojený. Budu mít svůj vlastní byt v Praze!",
+      "text": "Hledám nový byt v Praze. Minulý měsíc jsem se přestěhoval z Německa a potřebuji lepší bydlení. Teď bydlím v studentském koleji, ale chci svůj vlastní byt.\n\nNašel jsem hezký byt na Vinohradech. Je to malý byt — jedna místnost, kuchyně a koupelna. Ale je to hezké místo. Byt je blízko parku Riegrovy sady a stanice metra Náměstí Míru.\n\nKolik stojí nájem? Pán, který pronajímá byt, říká, že nájem je 18 000 korun za měsíc. To je hodně peněz! Ale je to normální cena pro Vinohrady. Musím také zaplatit kauci — dva měsíce nájmu předem. To je 36 000 korun. Spolu s prvním měsícem musím zaplatit 54 000 korun. To je velmi hodně!\n\nMůj kamarád Pavel říká, že je to dobrá cena. On platí 22 000 korun za větší byt v centru. Říká, že Vinohrady jsou dobrá lokalita — je tam klid, parky, restaurace a dobré spojení metrem.\n\nRozhodl jsem se, že byt si vezmu. Podepsal jsem nájemní smlouvu a zaplatil kauci. Příští týden se stěhuji. Musím koupit nábytek — postel, stůl, židli a skříň. Pavel mi slíbil, že mi pomůže se stěhováním.\n\nJsem spokojený. Budu mít svůj vlastní byt v Praze!",
       "word_count": 185,
       "glossary": [
         {
@@ -1293,7 +1293,7 @@
       "level": "A2",
       "unit_id": 25,
       "title": "Pohovor o práci",
-      "text": "Příští týden mám pohovor o práci. Ucházím se o pozici marketingového specialisty v mezinárodní firmě v Praze. Je to dobrá příležitost a chci se připravit.\n\nNejprve jsem napsal životopis. V životopise jsem popsal své vzdělání a pracovní zkušenosti.Také jsem napsal, jaké jazyky mluvím — anglicky, hindsky a česky. Přidal jsem foto a informace o svém věku a bydlišti.\n\nFirma mi poslala email: 'Vážený pane Pathaku, rádi Vás pozvali na pohovor. Pohovor bude v úterý 15. července v 10 hodin dopoledne v naší kanceláři v Praze 5. Pohovor bude v angličtině a češtině. Prosím, přineste si svůj životopis a referenci.'\n\nPřipravil jsem se na otázky, které mi mohou položit:\n\n'Proč chcete pracovat u nás?' — Protože vaše firma je inovativní a pracuje v mezinárodním prostředí.\n\n'Jaké jsou vaše silné stránky?' — Jsem kreativní, organizovaný a umím pracovat v týmu.\n\n'Proč byste se měl stát naším zaměstnancem?' — Protože mám zkušenosti s marketingem a motivaci pracovat tvrdě.\n\nMám trochu strach, ale také jsem nadšený. Moje přítelkyně mi řekla: 'Buď v klidu a buď sám sebe!' To je dobrá rada. Příští týden uvidím, jak to dopadne.",
+      "text": "Příští týden mám pohovor o práci. Ucházím se o pozici marketingového specialisty v mezinárodní firmě v Praze. Je to dobrá příležitost a chci se připravit.\n\nNejprve jsem napsal životopis. V životopise jsem popsal své vzdělání a pracovní zkušenosti.Také jsem napsal, jaké jazyky mluvím — anglicky, německy a česky. Přidal jsem foto a informace o svém věku a bydlišti.\n\nFirma mi poslala email: 'Vážený pane Weber, rádi Vás pozvali na pohovor. Pohovor bude v úterý 15. července v 10 hodin dopoledne v naší kanceláři v Praze 5. Pohovor bude v angličtině a češtině. Prosím, přineste si svůj životopis a referenci.'\n\nPřipravil jsem se na otázky, které mi mohou položit:\n\n'Proč chcete pracovat u nás?' — Protože vaše firma je inovativní a pracuje v mezinárodním prostředí.\n\n'Jaké jsou vaše silné stránky?' — Jsem kreativní, organizovaný a umím pracovat v týmu.\n\n'Proč byste se měl stát naším zaměstnancem?' — Protože mám zkušenosti s marketingem a motivaci pracovat tvrdě.\n\nMám trochu strach, ale také jsem nadšený. Moje přítelkyně mi řekla: 'Buď v klidu a buď sám sebe!' To je dobrá rada. Příští týden uvidím, jak to dopadne.",
       "word_count": 200,
       "glossary": [
         {
@@ -1352,12 +1352,12 @@
           "question_en": "What languages does he speak?",
           "options": [
             "Anglicky a německy",
-            "Anglicky, hindsky a česky",
+            "Anglicky, německy a česky",
             "Anglicky a česky",
             "Česky a slovensky"
           ],
           "correct_index": 1,
-          "explanation": "Mluví anglicky, hindsky a česky."
+          "explanation": "Mluví anglicky, německy a česky."
         },
         {
           "question": "Co mu řekla přítelkyně?",
@@ -1372,7 +1372,7 @@
           "explanation": "Řekla: 'Buď v klidu a buď sám sebe!'"
         }
       ],
-      "translation": "Next week I have a job interview for a marketing specialist position at an international company in Prague. I wrote my CV with education, work experience, and languages (English, Hindi, Czech). The company invited me for an interview on Tuesday July 15 at 10 AM in Prague 5, in English and Czech. I prepared answers for common questions about why I want the job, my strengths, and why they should hire me. My girlfriend said: 'Stay calm and be yourself!'"
+      "translation": "Next week I have a job interview for a marketing specialist position at an international company in Prague. I wrote my CV with education, work experience, and languages (English, German, Czech). The company invited me for an interview on Tuesday July 15 at 10 AM in Prague 5, in English and Czech. I prepared answers for common questions about why I want the job, my strengths, and why they should hire me. My girlfriend said: 'Stay calm and be yourself!'"
     },
     {
       "id": "rp_a2_06",
@@ -1905,7 +1905,7 @@
       "level": "A2",
       "unit_id": 29,
       "title": "Dopis z úřadu",
-      "text": "Vážený pane Pathaku,\n\nobracíme se na Vás s důležitým oznámením. Ministerstvo vnitra České republiky Vám tímto sděluje, že Vaše žádost o trvalý pobyt byla schválena.\n\nJak jste možná věděl, žádost o trvalý pobyt vyžaduje splnění několika podmínek. Bylo nutné prokázat:\n1. Pět let nepřetržitého pobytu v České republice\n2. Splnění požadavků na integraci (jazyková zkouška A2)\n3. Čistý trestní rejstřík\n4. Dostatečné finanční prostředky\n\nVaše jazyková zkouška A2 byla úspěšně složena 15. března 2026. Všechny ostatní podmínky byly také splněny. Gratulujeme!\n\nNyní je nutné, abyste osobně navštívil úřad pro splnění formálních kroků. Prosím, přijďte na Ministerstvo vnitra, náměstí Hradčanské náměstí 1/8, Praha 1, v následujícím termínu:\n\nDatum: 15. srpna 2026\nČas: 10:00\n\nPřineste si prosím:\n- Platný cestovní pas\n- Potvrzení o trvalém pobytu (které obdržíte v den návštěvy)\n- Dvě fotografie pasového formátu\n\nPokud byste nemohl přijít v tomto termínu, kontaktujte nás co nejdříve, abychom mohli domluvit nový termín. Pokud byste se nedostavil ani v náhradním termínu, bude rozhodnutí o trvalém pobytu zrušeno.\n\nV případě jakýchkoliv dotazů nás neváhejte kontaktovat na telefonním čísle 974 821 256 nebo emailem na adrese pobyty@mvcr.cz.\n\nS pozdravem,\n\nMinisterstvo vnitra ČR\nOdbor azylové a migrační politiky",
+      "text": "Vážený pane Weber,\n\nobracíme se na Vás s důležitým oznámením. Ministerstvo vnitra České republiky Vám tímto sděluje, že Vaše žádost o trvalý pobyt byla schválena.\n\nJak jste možná věděl, žádost o trvalý pobyt vyžaduje splnění několika podmínek. Bylo nutné prokázat:\n1. Pět let nepřetržitého pobytu v České republice\n2. Splnění požadavků na integraci (jazyková zkouška A2)\n3. Čistý trestní rejstřík\n4. Dostatečné finanční prostředky\n\nVaše jazyková zkouška A2 byla úspěšně složena 15. března 2026. Všechny ostatní podmínky byly také splněny. Gratulujeme!\n\nNyní je nutné, abyste osobně navštívil úřad pro splnění formálních kroků. Prosím, přijďte na Ministerstvo vnitra, náměstí Hradčanské náměstí 1/8, Praha 1, v následujícím termínu:\n\nDatum: 15. srpna 2026\nČas: 10:00\n\nPřineste si prosím:\n- Platný cestovní pas\n- Potvrzení o trvalém pobytu (které obdržíte v den návštěvy)\n- Dvě fotografie pasového formátu\n\nPokud byste nemohl přijít v tomto termínu, kontaktujte nás co nejdříve, abychom mohli domluvit nový termín. Pokud byste se nedostavil ani v náhradním termínu, bude rozhodnutí o trvalém pobytu zrušeno.\n\nV případě jakýchkoliv dotazů nás neváhejte kontaktovat na telefonním čísle 974 821 256 nebo emailem na adrese pobyty@mvcr.cz.\n\nS pozdravem,\n\nMinisterstvo vnitra ČR\nOdbor azylové a migrační politiky",
       "word_count": 210,
       "glossary": [
         {
@@ -1984,7 +1984,7 @@
           "explanation": "Musí přinést pas, potvrzení a dvě fotografie."
         }
       ],
-      "translation": "Dear Mr. Pathak, the Ministry of Interior informs you that your permanent residence application has been approved. You met all conditions: 5 years continuous residence, A2 language exam (passed March 15, 2026), clean criminal record, sufficient financial means. Please visit the Ministry at Hradčanské náměstí 1/8, Prague 1, on August 15, 2026 at 10:00 AM. Bring: valid passport, confirmation (issued on visit), two passport photos. If you can't come, contact us to reschedule. Failure to appear may result in cancellation. Contact: 974 821 256 or pobyty@mvcr.cz."
+      "translation": "Dear Mr. Weber, the Ministry of Interior informs you that your permanent residence application has been approved. You met all conditions: 5 years continuous residence, A2 language exam (passed March 15, 2026), clean criminal record, sufficient financial means. Please visit the Ministry at Hradčanské náměstí 1/8, Prague 1, on August 15, 2026 at 10:00 AM. Bring: valid passport, confirmation (issued on visit), two passport photos. If you can't come, contact us to reschedule. Failure to appear may result in cancellation. Contact: 974 821 256 or pobyty@mvcr.cz."
     }
   ]
 }

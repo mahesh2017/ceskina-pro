@@ -57,7 +57,7 @@
 - **Pattern:** Jmenuju se + name; Jsem z + city; Těší mě
 - **Explanation:** 'Jmenuju se [name]' (my name is), 'Jsem z [city]' (I'm from), 'Těší mě' (Nice to meet you, literally 'it pleases me'). The formal version of 'my name is' is 'Jmenuji se'.
 - **Examples:**
-  - *Jmenuju se Mahesh.* — "My name is Mahesh."
+  - *Jmenuju se Adam.* — "My name is Adam."
   - *Jsem z Prahy.* — "I'm from Prague."
 
 ### GR-012 | Politeness words
@@ -210,7 +210,7 @@
 - **Pattern:** já (I), ty (you), on (he), ona (she), ono (it), my (we), vy (you pl.), oni/ony (they)
 - **Explanation:** Subject pronouns are frequently omitted — the verb ending tells you the person. 'Oni' is used for masculine animate groups; 'ony' for feminine and neuter groups.
 - **Examples:**
-  - *Já jsem Mahesh.* — "I am Mahesh."
+  - *Já jsem Adam.* — "I am Adam."
   - *Ty jsi student.* — "You are a student."
 
 ### GR-061 | Possessive adjectives
