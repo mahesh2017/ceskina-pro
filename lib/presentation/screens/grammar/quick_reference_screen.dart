@@ -109,7 +109,7 @@ class _QuickReferenceScreenState extends State<QuickReferenceScreen> {
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
-              side: BorderSide(color: Colors.grey.shade200),
+              side: BorderSide(color: t.line),
             ),
             child: ExpansionTile(
               title: Text(
@@ -447,7 +447,7 @@ class _QuickReferenceScreenState extends State<QuickReferenceScreen> {
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: Colors.grey.shade200),
+          side: BorderSide(color: t.line),
         ),
         child: ExpansionTile(
           title: Text(

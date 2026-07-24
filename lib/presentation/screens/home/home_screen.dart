@@ -59,18 +59,24 @@ class HomeScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                PillChip(
-                  label: '${g.hearts}',
-                  bg: t.redSoft,
-                  fg: t.red,
-                  icon: Icons.favorite,
+                Semantics(
+                  label: '${g.hearts} hearts remaining',
+                  child: PillChip(
+                    label: '${g.hearts}',
+                    bg: t.redSoft,
+                    fg: t.red,
+                    icon: Icons.favorite,
+                  ),
                 ),
                 const SizedBox(width: 8),
-                PillChip(
-                  label: '${g.currentStreak}',
-                  bg: t.amberSoft,
-                  fg: t.amber,
-                  icon: Icons.local_fire_department,
+                Semantics(
+                  label: '${g.currentStreak} day streak',
+                  child: PillChip(
+                    label: '${g.currentStreak}',
+                    bg: t.amberSoft,
+                    fg: t.amber,
+                    icon: Icons.local_fire_department,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 InkWell(

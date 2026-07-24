@@ -18,21 +18,26 @@ class RecordButton extends StatefulWidget {
 class _RecordButtonState extends State<RecordButton> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => widget.onPressed(),
-      child: Container(
-        width: 64,
-        height: 64,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: widget.isRecording
-              ? Colors.red.shade400
-              : Theme.of(context).colorScheme.primary,
-        ),
-        child: Icon(
-          widget.isRecording ? Icons.stop : Icons.mic,
-          color: Colors.white,
-          size: 28,
+    return Semantics(
+      button: true,
+      label: widget.isRecording ? 'Stop recording' : 'Start recording',
+      child: GestureDetector(
+        onTapDown: (_) => widget.onPressed(),
+        child: Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color:
+                widget.isRecording
+                    ? Colors.red.shade400
+                    : Theme.of(context).colorScheme.primary,
+          ),
+          child: Icon(
+            widget.isRecording ? Icons.stop : Icons.mic,
+            color: Colors.white,
+            size: 28,
+          ),
         ),
       ),
     );

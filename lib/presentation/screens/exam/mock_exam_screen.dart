@@ -7,6 +7,7 @@ import '../../../domain/engines/writing_word_gate.dart';
 import '../../../domain/entities/enums.dart';
 import '../../../domain/entities/exam_result.dart';
 import '../../../domain/entities/exam_speaking_task.dart';
+import '../../../core/theme/app_tokens.dart';
 import '../../../data/services/exam_session_store.dart';
 import '../../../domain/repositories/exam_repository.dart';
 import '../../providers/database_providers.dart';
@@ -444,7 +445,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'This exam has 4 timed sections:\n\n'
                 '📖 Reading — comprehension questions\n'
                 '🎧 Listening — audio + questions\n'
@@ -453,7 +454,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 'This is informal practice, not an official exam result.\n\n'
                 'You can answer questions in order. The timer runs per section.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(color: context.tokens.muted),
               ),
               const SizedBox(height: 24),
               if (_exam != null) ...[
@@ -785,7 +786,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         const SizedBox(height: 8),
         Text(
           'Write ${question['min_words'] ?? 30}+ words in Czech.',
-          style: const TextStyle(color: Colors.grey, fontSize: 15),
+          style: TextStyle(color: context.tokens.muted, fontSize: 15),
         ),
         const SizedBox(height: 16),
         Expanded(
@@ -943,7 +944,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                       'coverage of the suggested phrases in the device transcript.'
                 : 'Respond freely in Czech. The transcript is saved for '
                       'review, but this task is not automatically scored.',
-            style: const TextStyle(color: Colors.grey, fontSize: 15),
+            style: TextStyle(color: context.tokens.muted, fontSize: 15),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
@@ -994,7 +995,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 child: Text(
                   'Heard: "$transcription"',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                  style: TextStyle(color: context.tokens.muted, fontSize: 14),
                 ),
               ),
           ] else if (transcription != null && transcription.isNotEmpty) ...[
@@ -1012,7 +1013,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
               child: Text(
                 'Heard: "$transcription"',
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.grey, fontSize: 14),
+                style: TextStyle(color: context.tokens.muted, fontSize: 14),
               ),
             ),
           ],
