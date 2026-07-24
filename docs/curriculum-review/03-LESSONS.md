@@ -4,7 +4,7 @@
 
 ---
 
-## Unit 1 — Czech Alphabet & Sounds
+## Unit 1 — Sounds & Pronunciation
 
 ### Lesson 1.1: Czech Alphabet & Sounds
 | Field | Value |
@@ -13,8 +13,10 @@
 | **Type** | introduction |
 | **Duration** | 10 min |
 | **Exercises** | 10 |
-| **Exercise Mix** | 5× multiple_choice, 2× dictation, 1× translation, 1× pronunciation, 1× fill_blank |
-| **New Types** | — |
+| **Exercise Mix** | 5× multiple_choice, 2× dictation, 1× fill_blank, 1× pronunciation, 1× translation |
+| **New Types** | **dictation**, **fill_blank**, **multiple_choice**, **pronunciation**, **translation** — first appearance |
+
+---
 
 ### Lesson 1.2: Problem Sounds: ř, ě, Long Vowels
 | Field | Value |
@@ -23,8 +25,8 @@
 | **Type** | practice |
 | **Duration** | 12 min |
 | **Exercises** | 10 |
-| **Exercise Mix** | 4× pronunciation, 2× dictation, 1× multiple_choice, 1× word_order, 1× translation, 1× pronunciation (bonus) |
-| **New Types** | — |
+| **Exercise Mix** | 5× pronunciation, 2× dictation, 1× multiple_choice, 1× translation, 1× word_order |
+| **New Types** | **word_order** — first appearance |
 
 ---
 
@@ -37,8 +39,10 @@
 | **Type** | introduction |
 | **Duration** | 12 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 4× translation, 1× fill_blank, 1× word_order, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 4× multiple_choice, 4× translation, 1× dictation, 1× fill_blank, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 2.2: Introducing Yourself
 | Field | Value |
@@ -47,12 +51,12 @@
 | **Type** | practice |
 | **Duration** | 12 min |
 | **Exercises** | 11 |
-| **Exercise Mix** | 4× translation, 2× multiple_choice, 1× word_order, 1× fill_blank, 1× dictation, 1× pronunciation, 1× **dialogue** |
+| **Exercise Mix** | 4× translation, 2× multiple_choice, 1× dialogue, 1× dictation, 1× fill_blank, 1× pronunciation, 1× word_order |
 | **New Types** | **dialogue** — first appearance |
 
 ---
 
-## Unit 3 — Noun Genders & Nominative Case
+## Unit 3 — Gender & Nominative Case
 
 ### Lesson 3.1: Three Genders: Masculine, Feminine, Neuter
 | Field | Value |
@@ -64,6 +68,8 @@
 | **Exercise Mix** | 6× multiple_choice, 4× translation, 1× fill_blank, 1× word_order |
 | **New Types** | — |
 
+---
+
 ### Lesson 3.2: Nominative Case & Identification
 | Field | Value |
 |-------|-------|
@@ -71,12 +77,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 14 |
-| **Exercise Mix** | 6× multiple_choice, 3× translation, 2× fill_blank, 1× word_order, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 6× multiple_choice, 3× translation, 2× fill_blank, 1× dialogue, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 4 — być & mít (Present Tense)
+## Unit 4 — Present Tense — být & mít
 
 ### Lesson 4.1: být & mít — Present Tense Essentials
 | Field | Value |
@@ -85,8 +91,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× translation, 3× fill_blank, 1× word_order, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 3× fill_blank, 3× multiple_choice, 3× translation, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 4.2: Questions & Negation with být/mít
 | Field | Value |
@@ -95,12 +103,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× multiple_choice, 3× translation, 2× fill_blank, 2× word_order, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 3× translation, 2× fill_blank, 2× multiple_choice, 2× word_order, 1× dialogue, 1× dictation, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 5 — Regular Verb Conjugation
+## Unit 5 — Present Tense — Regular Verbs
 
 ### Lesson 5.1: Regular Verb Conjugation — -át, -ít, -et/-ět Classes
 | Field | Value |
@@ -109,8 +117,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 2× translation, 1× word_order, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 2× translation, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 5.2: Using Verbs in Context
 | Field | Value |
@@ -119,7 +129,7 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× multiple_choice, 3× translation, 2× fill_blank, 2× word_order, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 3× translation, 2× fill_blank, 2× multiple_choice, 2× word_order, 1× dialogue, 1× dictation, 1× pronunciation |
 | **New Types** | — |
 
 ---
@@ -133,8 +143,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× **declension_table**, 2× fill_blank, 2× translation, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 4× declension_table, 2× fill_blank, 2× multiple_choice, 2× translation, 1× dictation, 1× pronunciation |
 | **New Types** | **declension_table** — first appearance |
+
+---
 
 ### Lesson 6.2: Accusative in Action — Transitive Verbs
 | Field | Value |
@@ -143,12 +155,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 2× translation, 3× fill_blank, 1× word_order, 1× dictation, 1× dialogue, 1× pronunciation |
+| **Exercise Mix** | 3× fill_blank, 3× multiple_choice, 2× translation, 1× dialogue, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 7 — Personal Pronouns & Possessives
+## Unit 7 — Pronouns & Possessives
 
 ### Lesson 7.1: Personal Pronouns & Possessive Adjectives
 | Field | Value |
@@ -157,8 +169,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 2× translation, 2× fill_blank, 1× word_order, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 5× multiple_choice, 2× fill_blank, 2× translation, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 7.2: Using Pronouns in Sentences
 | Field | Value |
@@ -167,12 +181,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× multiple_choice, 4× translation, 2× fill_blank, 1× word_order, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 3× translation, 2× fill_blank, 2× multiple_choice, 2× word_order, 1× dialogue, 1× dictation, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 8 — Family & Adjective Agreement
+## Unit 8 — Family & Basic Descriptions
 
 ### Lesson 8.1: Family Vocabulary & Adjective Agreement
 | Field | Value |
@@ -181,8 +195,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 4× translation, 2× fill_blank, 1× word_order, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 4× multiple_choice, 3× translation, 2× fill_blank, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 8.2: Describing People & Things
 | Field | Value |
@@ -191,12 +207,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 13 |
-| **Exercise Mix** | 5× multiple_choice, 4× translation, 1× fill_blank, 1× word_order, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 5× multiple_choice, 3× translation, 1× dialogue, 1× dictation, 1× fill_blank, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 9 — Numbers, Time, Days & Months
+## Unit 9 — Numbers, Time & Dates
 
 ### Lesson 9.1: Numbers 0-100 & Counting
 | Field | Value |
@@ -205,8 +221,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 6× multiple_choice, 2× translation, 1× dictation, 1× pronunciation, 1× word_order, 1× fill_blank |
+| **Exercise Mix** | 6× multiple_choice, 2× translation, 1× dictation, 1× fill_blank, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 9.2: Time, Days & Months
 | Field | Value |
@@ -215,12 +233,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 2× translation, 2× fill_blank, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 5× multiple_choice, 2× fill_blank, 2× translation, 1× dialogue, 1× dictation, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 10 — Reflexive Verbs
+## Unit 10 — Daily Routine & Reflexive Verbs
 
 ### Lesson 10.1: Reflexive Verbs — se & si
 | Field | Value |
@@ -229,8 +247,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 4× fill_blank, 2× translation, 1× word_order, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 4× fill_blank, 3× multiple_choice, 2× translation, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 10.2: My Daily Routine
 | Field | Value |
@@ -239,12 +259,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× multiple_choice, 3× fill_blank, 2× translation, 1× word_order, 1× dictation, 1× pronunciation, 2× dialogue |
+| **Exercise Mix** | 3× fill_blank, 2× dialogue, 2× multiple_choice, 2× translation, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 11 — Food & Drink
+## Unit 11 — Food, Drink & Restaurants
 
 ### Lesson 11.1: Food & Drink Vocabulary
 | Field | Value |
@@ -253,8 +273,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 4× translation, 3× fill_blank, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 3× translation, 1× dictation, 1× pronunciation |
 | **New Types** | — |
+
+---
 
 ### Lesson 11.2: At the Restaurant
 | Field | Value |
@@ -263,12 +285,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 2× translation, 2× fill_blank, 3× dialogue, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 3× dialogue, 3× multiple_choice, 2× fill_blank, 2× translation, 1× dictation, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 12 — Shopping (Prices, Colors, Clothes)
+## Unit 12 — Shopping, Prices & Clothes
 
 ### Lesson 12.1: Prices, Colors & Sizes
 | Field | Value |
@@ -277,8 +299,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 3× translation, 2× fill_blank, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 4× multiple_choice, 3× translation, 2× fill_blank, 1× dialogue, 1× dictation, 1× pronunciation |
 | **New Types** | — |
+
+---
 
 ### Lesson 12.2: Clothes & Shopping
 | Field | Value |
@@ -287,12 +311,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 3× translation, 2× fill_blank, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 4× multiple_choice, 3× translation, 2× fill_blank, 1× dialogue, 1× dictation, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 13 — Likes, Dislikes & Hobbies
+## Unit 13 — Hobbies & Free Time
 
 ### Lesson 13.1: Likes & Dislikes
 | Field | Value |
@@ -301,8 +325,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 2× translation, 1× dialogue, 1× word_order, 1× pronunciation |
+| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 3× translation, 1× dialogue, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 13.2: Hobbies & Free Time
 | Field | Value |
@@ -311,12 +337,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 2× translation, 2× dialogue, 1× word_order, 1× pronunciation |
+| **Exercise Mix** | 3× fill_blank, 3× multiple_choice, 3× translation, 2× dialogue, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 14 — Places & Directions
+## Unit 14 — Directions, Places & Transport
 
 ### Lesson 14.1: Places in Town & Asking Directions
 | Field | Value |
@@ -325,8 +351,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 3× translation, 2× fill_blank, 1× word_order, 1× pronunciation |
+| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 3× translation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 14.2: Transport & Getting Around
 | Field | Value |
@@ -335,12 +363,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 2× translation, 1× word_order, 1× dialogue, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 2× translation, 1× dialogue, 1× dictation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 15 — Weather & Travel (Past Tense Intro)
+## Unit 15 — Weather, Seasons & Travel
 
 ### Lesson 15.1: Weather & Seasons
 | Field | Value |
@@ -349,8 +377,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 2× fill_blank, 2× translation, 1× dialogue, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 2× translation, 1× dialogue, 1× dictation, 1× pronunciation |
 | **New Types** | — |
+
+---
 
 ### Lesson 15.2: Travel & Past Tense Intro
 | Field | Value |
@@ -359,7 +389,7 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 2× translation, 1× dictation, 1× pronunciation, 1× word_order, 1× dialogue |
+| **Exercise Mix** | 4× multiple_choice, 2× fill_blank, 2× translation, 1× dialogue, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
@@ -373,8 +403,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 2× translation, 1× word_order, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 3× fill_blank, 3× multiple_choice, 2× translation, 1× dialogue, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 16.2: Genitive — Quantities & Negation
 | Field | Value |
@@ -383,7 +415,7 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 2× translation, 1× word_order, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 3× fill_blank, 3× multiple_choice, 2× translation, 1× dialogue, 1× dictation, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
@@ -397,8 +429,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 3× translation, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 4× fill_blank, 4× multiple_choice, 3× translation, 1× pronunciation |
 | **New Types** | — |
+
+---
 
 ### Lesson 17.2: Dative — Verbs & Expressions
 | Field | Value |
@@ -407,7 +441,7 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 3× fill_blank, 3× translation, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 4× fill_blank, 4× multiple_choice, 4× translation |
 | **New Types** | — |
 
 ---
@@ -421,8 +455,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 4× fill_blank, 2× translation, 1× dialogue, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 4× fill_blank, 4× multiple_choice, 2× translation, 1× dialogue, 1× pronunciation |
 | **New Types** | — |
+
+---
 
 ### Lesson 18.2: Instrumental — Means & Accompaniment
 | Field | Value |
@@ -431,12 +467,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 2× translation, 1× word_order, 1× dictation, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 4× fill_blank, 4× multiple_choice, 2× translation, 1× dictation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 19 — Past Tense & Aspect Intro
+## Unit 19 — Past Tense — Full Conjugation
 
 ### Lesson 19.1: Past Tense — All Persons
 | Field | Value |
@@ -445,8 +481,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 3× fill_blank, 2× translation, 1× dialogue, 1× pronunciation |
+| **Exercise Mix** | 5× multiple_choice, 4× fill_blank, 2× translation, 1× dialogue |
 | **New Types** | — |
+
+---
 
 ### Lesson 19.2: Perfective Aspect Intro
 | Field | Value |
@@ -455,7 +493,7 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 6× multiple_choice, 2× fill_blank, 2× translation, 1× dialogue, 1× pronunciation |
+| **Exercise Mix** | 6× multiple_choice, 3× fill_blank, 2× translation, 1× dialogue |
 | **New Types** | — |
 
 ---
@@ -469,8 +507,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 3× fill_blank, 2× translation, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 5× multiple_choice, 4× fill_blank, 2× translation, 1× pronunciation |
 | **New Types** | — |
+
+---
 
 ### Lesson 20.2: Conditional — By, Bych, Kdyby
 | Field | Value |
@@ -479,12 +519,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 4× fill_blank, 2× translation, 1× dialogue, 1× pronunciation |
+| **Exercise Mix** | 5× multiple_choice, 4× fill_blank, 2× translation, 1× dialogue |
 | **New Types** | — |
 
 ---
 
-## Unit 21 — Comparatives & Superlatives
+## Unit 21 — Comparisons & Advanced Adjectives
 
 ### Lesson 21.1: Comparative Adjectives
 | Field | Value |
@@ -493,8 +533,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 5× multiple_choice, 3× fill_blank, 2× translation, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 5× multiple_choice, 4× fill_blank, 2× translation, 1× pronunciation |
 | **New Types** | — |
+
+---
 
 ### Lesson 21.2: Superlative & Adverbs
 | Field | Value |
@@ -503,12 +545,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 2× fill_blank, 3× translation, 1× dialogue, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 5× multiple_choice, 3× fill_blank, 2× translation, 1× dialogue, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 22 — Conjunctions (Complex Sentences)
+## Unit 22 — Complex Sentences & Conjunctions
 
 ### Lesson 22.1: Conjunctions — že, protože, když
 | Field | Value |
@@ -517,8 +559,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 4× fill_blank, 1× word_order, 2× translation, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 5× fill_blank, 4× multiple_choice, 1× pronunciation, 1× translation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 22.2: Purpose & Condition — Aby, Kdyby
 | Field | Value |
@@ -527,12 +571,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 4× fill_blank, 1× translation, 1× word_order, 1× dialogue, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 5× fill_blank, 4× multiple_choice, 1× pronunciation, 1× translation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 23 — Modal Verbs
+## Unit 23 — Modal Verbs & Permission
 
 ### Lesson 23.1: Modal Verbs — muset, moct, smět
 | Field | Value |
@@ -541,8 +585,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 2× fill_blank, 2× translation, 1× word_order, 2× **matching**, 2× **error_correction** |
-| **New Types** | **matching**, **error_correction** — first appearances |
+| **Exercise Mix** | 3× multiple_choice, 2× error_correction, 2× fill_blank, 2× matching, 2× translation, 1× word_order |
+| **New Types** | **error_correction**, **matching** — first appearance |
+
+---
 
 ### Lesson 23.2: Permission & Obligation in Context
 | Field | Value |
@@ -551,12 +597,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 3× multiple_choice, 2× fill_blank, 2× translation, 1× dialogue, 2× error_correction, 2× matching, 1× pronunciation |
+| **Exercise Mix** | 2× error_correction, 2× fill_blank, 2× matching, 2× multiple_choice, 2× translation, 1× dialogue, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 24 — Body, Health & Doctor
+## Unit 24 — Health & Body
 
 ### Lesson 24.1: Body Parts & Health Vocabulary
 | Field | Value |
@@ -565,8 +611,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× **matching**, 2× multiple_choice, 2× fill_blank, 2× translation, 1× dictation, 1× pronunciation, 1× word_order, 1× **error_correction** |
-| **New Types** | **matching**, **error_correction** — second unit with these types |
+| **Exercise Mix** | 2× fill_blank, 2× matching, 2× multiple_choice, 2× translation, 1× dictation, 1× error_correction, 1× pronunciation, 1× word_order |
+| **New Types** | — |
+
+---
 
 ### Lesson 24.2: At the Doctor — Conversations
 | Field | Value |
@@ -575,12 +623,12 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 1× dialogue, 2× multiple_choice, 2× fill_blank, 2× translation, 1× pronunciation, 1× matching, 1× error_correction, 1× word_order, 1× dictation |
+| **Exercise Mix** | 2× fill_blank, 2× multiple_choice, 2× translation, 1× dialogue, 1× dictation, 1× error_correction, 1× matching, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 25 — Professions & Education
+## Unit 25 — Work, Professions & Education
 
 ### Lesson 25.1: Professions & Workplace
 | Field | Value |
@@ -589,8 +637,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× **matching**, 2× multiple_choice, 2× fill_blank, 2× translation, 1× error_correction, 1× word_order, 1× pronunciation, 1× dialogue |
+| **Exercise Mix** | 2× fill_blank, 2× matching, 2× multiple_choice, 2× translation, 1× dialogue, 1× error_correction, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 25.2: Education & School Life
 | Field | Value |
@@ -599,12 +649,12 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× multiple_choice, 2× fill_blank, 2× translation, 1× dialogue, 2× matching, 1× error_correction, 1× dictation, 1× pronunciation |
+| **Exercise Mix** | 2× fill_blank, 2× matching, 2× multiple_choice, 2× translation, 1× dialogue, 1× dictation, 1× error_correction, 1× pronunciation |
 | **New Types** | — |
 
 ---
 
-## Unit 26 — Housing
+## Unit 26 — Housing & Home
 
 ### Lesson 26.1: Housing & Rooms
 | Field | Value |
@@ -613,8 +663,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× **matching**, 2× multiple_choice, 2× fill_blank, 2× translation, 1× error_correction, 1× word_order, 1× pronunciation, 1× dictation |
+| **Exercise Mix** | 2× fill_blank, 2× matching, 2× multiple_choice, 2× translation, 1× dictation, 1× error_correction, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 26.2: Renting & Household
 | Field | Value |
@@ -623,12 +675,12 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 1× dialogue, 2× multiple_choice, 2× fill_blank, 2× translation, 1× matching, 1× error_correction, 1× pronunciation, 1× word_order, 1× dictation |
+| **Exercise Mix** | 2× fill_blank, 2× multiple_choice, 2× translation, 1× dialogue, 1× dictation, 1× error_correction, 1× matching, 1× pronunciation, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 27 — Motion Verbs
+## Unit 27 — Verbs of Motion & Prefixed Verbs
 
 ### Lesson 27.1: Motion Verbs: jít, jet, chodit, jezdit
 | Field | Value |
@@ -637,8 +689,10 @@
 | **Type** | introduction |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 4× multiple_choice, 2× fill_blank, 2× translation, 2× matching, 1× error_correction, 1× word_order, 1× pronunciation |
+| **Exercise Mix** | 3× multiple_choice, 2× fill_blank, 2× matching, 2× translation, 1× error_correction, 1× pronunciation, 1× word_order |
 | **New Types** | — |
+
+---
 
 ### Lesson 27.2: Prefixed Verbs & Aspect Pairs
 | Field | Value |
@@ -647,60 +701,64 @@
 | **Type** | practice |
 | **Duration** | 15 min |
 | **Exercises** | 12 |
-| **Exercise Mix** | 2× multiple_choice, 2× fill_blank, 2× translation, 2× matching, 2× error_correction, 1× dialogue, 1× word_order |
+| **Exercise Mix** | 2× error_correction, 2× fill_blank, 2× matching, 2× multiple_choice, 2× translation, 1× dialogue, 1× word_order |
 | **New Types** | — |
 
 ---
 
-## Unit 28 — A1 Exam Practice
+## Unit 28 — A1 Exam Preparation
 
-### Lesson 28.1: A1 Exam Practice: Reading & Listening ⚠️
+### Lesson 28.1: A1 Exam Practice: Reading & Listening
 | Field | Value |
 |-------|-------|
 | **Title** | A1 Exam Practice: Reading & Listening |
-| **Type** | practice (review) |
+| **Type** | practice |
 | **Duration** | 30 min |
 | **Exercises** | 15 |
-| **Exercise Mix** | 5× **reading_comprehension**, 5× **listening_comprehension**, 5× multiple_choice (grammar review) |
-| **New Types** | **reading_comprehension**, **listening_comprehension** — first appearances |
+| **Exercise Mix** | 5× listening_comprehension, 5× multiple_choice, 5× reading_comprehension |
+| **New Types** | **listening_comprehension**, **reading_comprehension** — first appearance |
 
-### Lesson 28.2: A1 Exam Practice: Writing & Speaking ⚠️
+---
+
+### Lesson 28.2: A1 Exam Practice: Writing & Speaking
 | Field | Value |
 |-------|-------|
 | **Title** | A1 Exam Practice: Writing & Speaking |
-| **Type** | practice (review) |
+| **Type** | practice |
 | **Duration** | 25 min |
 | **Exercises** | 10 |
-| **Exercise Mix** | 3× **writing_task**, 3× **speaking_task**, 2× multiple_choice (vocab review), 2× translation |
-| **New Types** | **writing_task**, **speaking_task** — first appearances |
+| **Exercise Mix** | 3× speaking_task, 3× writing_task, 2× multiple_choice, 2× translation |
+| **New Types** | **speaking_task**, **writing_task** — first appearance |
 
 ---
 
-## Unit 29 — A2 Exam Practice
+## Unit 29 — A2 Exam Preparation
 
-### Lesson 29.1: A2 Exam Practice: Reading & Listening ⚠️
+### Lesson 29.1: A2 Exam Practice: Reading & Listening
 | Field | Value |
 |-------|-------|
 | **Title** | A2 Exam Practice: Reading & Listening |
-| **Type** | practice (review) |
+| **Type** | practice |
 | **Duration** | 40 min |
 | **Exercises** | 15 |
-| **Exercise Mix** | 5× **reading_comprehension**, 5× **listening_comprehension**, 5× multiple_choice (grammar review) |
-| **New Types** | — |
-
-### Lesson 29.2: A2 Exam Practice: Writing & Speaking ⚠️
-| Field | Value |
-|-------|-------|
-| **Title** | A2 Exam Practice: Writing & Speaking |
-| **Type** | practice (review) |
-| **Duration** | 35 min |
-| **Exercises** | 10 |
-| **Exercise Mix** | 3× **writing_task**, 3× **speaking_task**, 2× error_correction, 2× translation |
+| **Exercise Mix** | 5× listening_comprehension, 5× multiple_choice, 5× reading_comprehension |
 | **New Types** | — |
 
 ---
 
-## Unit 30 — A1 Review (Grammar Consolidation)
+### Lesson 29.2: A2 Exam Practice: Writing & Speaking
+| Field | Value |
+|-------|-------|
+| **Title** | A2 Exam Practice: Writing & Speaking |
+| **Type** | practice |
+| **Duration** | 35 min |
+| **Exercises** | 10 |
+| **Exercise Mix** | 3× speaking_task, 3× writing_task, 2× error_correction, 2× translation |
+| **New Types** | — |
+
+---
+
+## Unit 30 — A1 Review & Consolidation
 
 ### Lesson 30.1: A1 Review: Grammar Consolidation
 | Field | Value |
@@ -709,12 +767,12 @@
 | **Type** | review |
 | **Duration** | 20 min |
 | **Exercises** | 15 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 3× translation, 2× matching, 2× error_correction, 1× dialogue, 1× dictation |
+| **Exercise Mix** | 3× fill_blank, 3× multiple_choice, 3× translation, 2× error_correction, 2× matching, 1× dialogue, 1× dictation |
 | **New Types** | — |
 
 ---
 
-## Unit 31 — A2 Review (Grammar Consolidation)
+## Unit 31 — A2 Review & Consolidation
 
 ### Lesson 31.1: A2 Review: Grammar Consolidation
 | Field | Value |
@@ -723,7 +781,7 @@
 | **Type** | review |
 | **Duration** | 25 min |
 | **Exercises** | 15 |
-| **Exercise Mix** | 3× multiple_choice, 3× fill_blank, 3× translation, 2× matching, 2× error_correction, 1× dialogue, 1× word_order |
+| **Exercise Mix** | 3× fill_blank, 3× multiple_choice, 3× translation, 2× error_correction, 2× matching, 1× dialogue, 1× word_order |
 | **New Types** | — |
 
 ---
@@ -734,8 +792,8 @@
 | Type | Count |
 |------|-------|
 | introduction | 29 |
-| practice | 27 |
-| review | 4 |
+| practice | 29 |
+| review | 2 |
 
 ### Exercise Types Used Across the Curriculum
 | Exercise Type | First Appearance |
@@ -759,16 +817,16 @@
 | Lesson | New Types Introduced |
 |--------|---------------------|
 | Unit 2, Lesson 2 (Introducing Yourself) | dialogue |
-| Unit 6, Lesson 1 (Accusative Case Intro) | declension_table |
-| Unit 23, Lesson 1 (Modal Verbs) | matching, error_correction |
-| Unit 28, Lesson 1 (A1 Exam: Reading & Listening) | reading_comprehension, listening_comprehension |
-| Unit 28, Lesson 2 (A1 Exam: Writing & Speaking) | writing_task, speaking_task |
+| Unit 6, Lesson 1 (Accusative Case — The Object of the Sentence) | declension_table |
+| Unit 23, Lesson 1 (Modal Verbs — muset, moct, smět) | error_correction, matching |
+| Unit 28, Lesson 1 (A1 Exam Practice: Reading & Listening) | listening_comprehension, reading_comprehension |
+| Unit 28, Lesson 2 (A1 Exam Practice: Writing & Speaking) | speaking_task, writing_task |
 
 ### Duration Summary
 | Metric | Value |
 |--------|-------|
-| Total exercises | 728 |
-| Total duration | ~900 min (~15 hours) |
+| Total exercises | 726 |
+| Total duration | ~971 min (~16h 11m) |
 | Average exercises per lesson | ~12.1 |
 | Shortest lesson | 10 min (Unit 1, Lesson 1) |
 | Longest lesson | 40 min (Unit 29, Lesson 1) |
