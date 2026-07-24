@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+"""Upload the generated audio pack + manifest to the `course-audio` bucket.
+
+Uploads every MP3 referenced by assets/audio/manifest.json to the bucket root
+as its basename (the app downloads by basename), then the manifest last so the
+app never sees a manifest that points at files not yet uploaded. Idempotent:
+re-runs overwrite (upsert), so an interrupted upload can simply be re-run.
+
+Requires (never commit these):
+  export SUPABASE_URL='https://<ref>.supabase.co'
+  export SUPABASE_SERVICE_ROLE_KEY='...'   # service role, storage write
+
+Usage:
+  python3 tool/upload_audio_pack.py --dry-run
+  python3 tool/upload_audio_pack.py
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+AUDIO = ROOT / "assets" / "audio"
+MANIFEST = AUDIO / "manifest.json"
+BUCKET = "course-audio"
+
+
+def manifest_files(manifest: dict) -> list[str]:
+    """Basenames of every MP3 the manifest references, de-duplicated."""
+    names: set[str] = set()
+    for voice in manifest.get("voices", {}).values():
+        for path in voice.get("entries", {}).values():
+            names.add(Path(path).name)
+    return sorted(names)
+
+
+def put_object(url: str, data: bytes, content_type: str, token: str) -> None:
+    request = urllib.request.Request(url, data=data, method="POST")
+    request.add_header("Authorization", f"Bearer {token}")
+    request.add_header("apikey", token)
+    request.add_header("Content-Type", content_type)
+    # x-upsert lets a re-run overwrite instead of 409-ing on existing objects.
+    request.add_header("x-upsert", "true")
+    with urllib.request.urlopen(request, timeout=60) as response:
+        if response.status not in (200, 201):
+            raise RuntimeError(f"{url} -> HTTP {response.status}")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dry-run", action="store_true")
+    args = parser.parse_args()
+
+    if not MANIFEST.exists():
+        print("No manifest — run tool/generate_audio_pack.py first.", file=sys.stderr)
+        return 2
+    manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    files = manifest_files(manifest)
+
+    missing_local = [n for n in files if not (AUDIO / n).exists()]
+    if missing_local:
+        print(f"{len(missing_local)} manifest files are missing on disk, e.g. "
+              f"{missing_local[:3]} — generate them before uploading.", file=sys.stderr)
+        return 2
+
+    print(f"Manifest references {len(files)} MP3 files.")
+    if args.dry_run:
+        print("Dry run: would upload those files + manifest.json to "
+              f"bucket '{BUCKET}'.")
+        return 0
+
+    base = os.environ.get("SUPABASE_URL")
+    token = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    if not base or not token:
+        print("Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.", file=sys.stderr)
+        return 2
+    base = base.rstrip("/")
+
+    for index, name in enumerate(files, 1):
+        url = f"{base}/storage/v1/object/{BUCKET}/{name}"
+        try:
+            put_object(url, (AUDIO / name).read_bytes(), "audio/mpeg", token)
+        except (urllib.error.URLError, RuntimeError) as error:
+            print(f"Failed {name}: {error}", file=sys.stderr)
+            return 1
+        if index % 100 == 0 or index == len(files):
+            print(f"[{index}/{len(files)}] uploaded")
+
+    # Manifest last: the app must never load a manifest ahead of its files.
+    put_object(
+        f"{base}/storage/v1/object/{BUCKET}/manifest.json",
+        MANIFEST.read_bytes(),
+        "application/json",
+        token,
+    )
+    print("Uploaded manifest.json. Pack is live.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
