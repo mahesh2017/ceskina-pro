@@ -17,8 +17,22 @@
 > `stamp_sync_revision` search_path pinned (migration applied + trigger
 > verified live). Also fixed: fill-blank sentences broke into separate
 > paragraphs around the input box (word-level Wrap tokens now; blank width
-> sized to the expected answer). Remaining from Phase 1: P1.7 leaked-password
-> protection is a dashboard Auth setting — flip it manually.
+> sized to the expected answer).
+>
+> **Phase 3 done:** P1.13 accessibility labels on the record button, score
+> ring, and word chips (correctness now shown by icon + color, not color
+> alone; hearts/streak labeled), P1.14 dark-mode sweep of hardcoded greys on
+> the pronunciation/exam/reference/home screens (routed through theme
+> tokens), P1.15 i18n foundation (`gen-l10n` wired into MaterialApp + ARB
+> files; Pronunciation Lab fully localized as the working template), P1.18
+> crash-reporting decision — **honor the "no SDK" privacy promise** (rely on
+> `SafeDiagnostics` + store vitals; documented in RELEASE.md), P1.19
+> tagged-release CI lane (release.yml) + RELEASE.md with the store-submission
+> checklist and dependency-upgrade plan.
+>
+> **Remaining manual/dashboard items:** P1.7 leaked-password protection
+> (Supabase Auth toggle), store questionnaires + privacy policy URL, and the
+> P1.20 dependency-upgrade pass — all tracked in RELEASE.md.
 
 Full-codebase review (app + Supabase backend) covering functionality, UI/UX,
 security, and release operations. Scope: `lib/` (~26.8k lines, 155 files),
