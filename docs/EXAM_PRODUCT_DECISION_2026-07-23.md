@@ -55,6 +55,17 @@ If permanent-residence A2 is chosen (recommended):
 If CCE is chosen instead:
 - Expect a larger rebuild: percentage-transformation scoring, retimed sections, individual online-video speaking simulation, and a decision on how far up the A1–C1 ladder to build. The existing A2 content would be re-shaped, not reused.
 
+## Engineering status (23 July 2026)
+
+The exam layer has been made **two-product-aware** (engineering only; no specialist gate touched):
+
+- `ExamProduct { permanentResidence, cce }`, an `ExamScoringRule` enum, and a versioned `ExamBlueprint { product, version, effective_date, scoring_rule }` on every `MockExam`.
+- Banks now load from `exam_bank_<product>_<level>.json`; the existing A1/A2 banks were renamed to `exam_bank_permres_*` and relabeled from the mislabeled `"CCE"` to an explicit permanent-residence blueprint (effective 2026-04-11, `raw_points_written_speaking_gate`).
+- Exam results are persisted and filterable by product (Drift schema v18 adds `exam_results.product`, defaulting legacy rows to permanent-residence).
+- The permanent-residence grader path (dual 60% written/speaking raw-points gate) is unchanged; the CCE percentage-per-part path is a declared, not-yet-implemented seam (no CCE bank ships).
+
+Adding CCE later is now purely: author `exam_bank_cce_<level>.json` with its blueprint, implement the `percentage_per_part_gate` scoring branch, and add a product selector in the UI — no re-plumbing. Content authoring + specialist verification remain the gated work.
+
 ## Open questions for the owner
 
 - Confirm the target purpose: is the product's north star **permanent residence** (recommended) or **general certification / academic** (CCE)?

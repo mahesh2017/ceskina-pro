@@ -6,6 +6,12 @@ import 'package:ceskina_pro/domain/repositories/exam_repository.dart';
 MockExam _cceFormatExam() {
   return const MockExam(
     level: ExamLevel.a1,
+    blueprint: ExamBlueprint(
+      product: ExamProduct.permanentResidence,
+      version: '2026-04-11',
+      effectiveDate: '2026-04-11',
+      scoringRule: ExamScoringRule.rawPointsWrittenSpeakingGate,
+    ),
     totalTimeMinutes: 120,
     sections: [
       MockExamSection(

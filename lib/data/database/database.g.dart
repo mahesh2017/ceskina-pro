@@ -4845,6 +4845,18 @@ class $ExamResultsTable extends ExamResults
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _productMeta = const VerificationMeta(
+    'product',
+  );
+  @override
+  late final GeneratedColumn<String> product = GeneratedColumn<String>(
+    'product',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('permanent_residence'),
+  );
   static const VerificationMeta _takenAtMeta = const VerificationMeta(
     'takenAt',
   );
@@ -4945,6 +4957,7 @@ class $ExamResultsTable extends ExamResults
   List<GeneratedColumn> get $columns => [
     id,
     level,
+    product,
     takenAt,
     readingScore,
     listeningScore,
@@ -4976,6 +4989,12 @@ class $ExamResultsTable extends ExamResults
       );
     } else if (isInserting) {
       context.missing(_levelMeta);
+    }
+    if (data.containsKey('product')) {
+      context.handle(
+        _productMeta,
+        product.isAcceptableOrUnknown(data['product']!, _productMeta),
+      );
     }
     if (data.containsKey('taken_at')) {
       context.handle(
@@ -5054,6 +5073,10 @@ class $ExamResultsTable extends ExamResults
         DriftSqlType.string,
         data['${effectivePrefix}level'],
       )!,
+      product: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}product'],
+      )!,
       takenAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}taken_at'],
@@ -5098,6 +5121,9 @@ class $ExamResultsTable extends ExamResults
 class ExamResult extends DataClass implements Insertable<ExamResult> {
   final int id;
   final String level;
+
+  /// Official exam product: 'permanent_residence' (default) or 'cce'.
+  final String product;
   final DateTime takenAt;
   final int readingScore;
   final int listeningScore;
@@ -5109,6 +5135,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
   const ExamResult({
     required this.id,
     required this.level,
+    required this.product,
     required this.takenAt,
     required this.readingScore,
     required this.listeningScore,
@@ -5123,6 +5150,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['level'] = Variable<String>(level);
+    map['product'] = Variable<String>(product);
     map['taken_at'] = Variable<DateTime>(takenAt);
     map['reading_score'] = Variable<int>(readingScore);
     map['listening_score'] = Variable<int>(listeningScore);
@@ -5140,6 +5168,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
     return ExamResultsCompanion(
       id: Value(id),
       level: Value(level),
+      product: Value(product),
       takenAt: Value(takenAt),
       readingScore: Value(readingScore),
       listeningScore: Value(listeningScore),
@@ -5161,6 +5190,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
     return ExamResult(
       id: serializer.fromJson<int>(json['id']),
       level: serializer.fromJson<String>(json['level']),
+      product: serializer.fromJson<String>(json['product']),
       takenAt: serializer.fromJson<DateTime>(json['takenAt']),
       readingScore: serializer.fromJson<int>(json['readingScore']),
       listeningScore: serializer.fromJson<int>(json['listeningScore']),
@@ -5177,6 +5207,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'level': serializer.toJson<String>(level),
+      'product': serializer.toJson<String>(product),
       'takenAt': serializer.toJson<DateTime>(takenAt),
       'readingScore': serializer.toJson<int>(readingScore),
       'listeningScore': serializer.toJson<int>(listeningScore),
@@ -5191,6 +5222,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
   ExamResult copyWith({
     int? id,
     String? level,
+    String? product,
     DateTime? takenAt,
     int? readingScore,
     int? listeningScore,
@@ -5202,6 +5234,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
   }) => ExamResult(
     id: id ?? this.id,
     level: level ?? this.level,
+    product: product ?? this.product,
     takenAt: takenAt ?? this.takenAt,
     readingScore: readingScore ?? this.readingScore,
     listeningScore: listeningScore ?? this.listeningScore,
@@ -5215,6 +5248,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
     return ExamResult(
       id: data.id.present ? data.id.value : this.id,
       level: data.level.present ? data.level.value : this.level,
+      product: data.product.present ? data.product.value : this.product,
       takenAt: data.takenAt.present ? data.takenAt.value : this.takenAt,
       readingScore: data.readingScore.present
           ? data.readingScore.value
@@ -5241,6 +5275,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
     return (StringBuffer('ExamResult(')
           ..write('id: $id, ')
           ..write('level: $level, ')
+          ..write('product: $product, ')
           ..write('takenAt: $takenAt, ')
           ..write('readingScore: $readingScore, ')
           ..write('listeningScore: $listeningScore, ')
@@ -5257,6 +5292,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
   int get hashCode => Object.hash(
     id,
     level,
+    product,
     takenAt,
     readingScore,
     listeningScore,
@@ -5272,6 +5308,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
       (other is ExamResult &&
           other.id == this.id &&
           other.level == this.level &&
+          other.product == this.product &&
           other.takenAt == this.takenAt &&
           other.readingScore == this.readingScore &&
           other.listeningScore == this.listeningScore &&
@@ -5285,6 +5322,7 @@ class ExamResult extends DataClass implements Insertable<ExamResult> {
 class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
   final Value<int> id;
   final Value<String> level;
+  final Value<String> product;
   final Value<DateTime> takenAt;
   final Value<int> readingScore;
   final Value<int> listeningScore;
@@ -5296,6 +5334,7 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
   const ExamResultsCompanion({
     this.id = const Value.absent(),
     this.level = const Value.absent(),
+    this.product = const Value.absent(),
     this.takenAt = const Value.absent(),
     this.readingScore = const Value.absent(),
     this.listeningScore = const Value.absent(),
@@ -5308,6 +5347,7 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
   ExamResultsCompanion.insert({
     this.id = const Value.absent(),
     required String level,
+    this.product = const Value.absent(),
     this.takenAt = const Value.absent(),
     this.readingScore = const Value.absent(),
     this.listeningScore = const Value.absent(),
@@ -5320,6 +5360,7 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
   static Insertable<ExamResult> custom({
     Expression<int>? id,
     Expression<String>? level,
+    Expression<String>? product,
     Expression<DateTime>? takenAt,
     Expression<int>? readingScore,
     Expression<int>? listeningScore,
@@ -5332,6 +5373,7 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (level != null) 'level': level,
+      if (product != null) 'product': product,
       if (takenAt != null) 'taken_at': takenAt,
       if (readingScore != null) 'reading_score': readingScore,
       if (listeningScore != null) 'listening_score': listeningScore,
@@ -5346,6 +5388,7 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
   ExamResultsCompanion copyWith({
     Value<int>? id,
     Value<String>? level,
+    Value<String>? product,
     Value<DateTime>? takenAt,
     Value<int>? readingScore,
     Value<int>? listeningScore,
@@ -5358,6 +5401,7 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
     return ExamResultsCompanion(
       id: id ?? this.id,
       level: level ?? this.level,
+      product: product ?? this.product,
       takenAt: takenAt ?? this.takenAt,
       readingScore: readingScore ?? this.readingScore,
       listeningScore: listeningScore ?? this.listeningScore,
@@ -5377,6 +5421,9 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
     }
     if (level.present) {
       map['level'] = Variable<String>(level.value);
+    }
+    if (product.present) {
+      map['product'] = Variable<String>(product.value);
     }
     if (takenAt.present) {
       map['taken_at'] = Variable<DateTime>(takenAt.value);
@@ -5410,6 +5457,7 @@ class ExamResultsCompanion extends UpdateCompanion<ExamResult> {
     return (StringBuffer('ExamResultsCompanion(')
           ..write('id: $id, ')
           ..write('level: $level, ')
+          ..write('product: $product, ')
           ..write('takenAt: $takenAt, ')
           ..write('readingScore: $readingScore, ')
           ..write('listeningScore: $listeningScore, ')
@@ -16392,6 +16440,7 @@ typedef $$ExamResultsTableCreateCompanionBuilder =
     ExamResultsCompanion Function({
       Value<int> id,
       required String level,
+      Value<String> product,
       Value<DateTime> takenAt,
       Value<int> readingScore,
       Value<int> listeningScore,
@@ -16405,6 +16454,7 @@ typedef $$ExamResultsTableUpdateCompanionBuilder =
     ExamResultsCompanion Function({
       Value<int> id,
       Value<String> level,
+      Value<String> product,
       Value<DateTime> takenAt,
       Value<int> readingScore,
       Value<int> listeningScore,
@@ -16431,6 +16481,11 @@ class $$ExamResultsTableFilterComposer
 
   ColumnFilters<String> get level => $composableBuilder(
     column: $table.level,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get product => $composableBuilder(
+    column: $table.product,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -16494,6 +16549,11 @@ class $$ExamResultsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get product => $composableBuilder(
+    column: $table.product,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<DateTime> get takenAt => $composableBuilder(
     column: $table.takenAt,
     builder: (column) => ColumnOrderings(column),
@@ -16549,6 +16609,9 @@ class $$ExamResultsTableAnnotationComposer
 
   GeneratedColumn<String> get level =>
       $composableBuilder(column: $table.level, builder: (column) => column);
+
+  GeneratedColumn<String> get product =>
+      $composableBuilder(column: $table.product, builder: (column) => column);
 
   GeneratedColumn<DateTime> get takenAt =>
       $composableBuilder(column: $table.takenAt, builder: (column) => column);
@@ -16618,6 +16681,7 @@ class $$ExamResultsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> level = const Value.absent(),
+                Value<String> product = const Value.absent(),
                 Value<DateTime> takenAt = const Value.absent(),
                 Value<int> readingScore = const Value.absent(),
                 Value<int> listeningScore = const Value.absent(),
@@ -16629,6 +16693,7 @@ class $$ExamResultsTableTableManager
               }) => ExamResultsCompanion(
                 id: id,
                 level: level,
+                product: product,
                 takenAt: takenAt,
                 readingScore: readingScore,
                 listeningScore: listeningScore,
@@ -16642,6 +16707,7 @@ class $$ExamResultsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required String level,
+                Value<String> product = const Value.absent(),
                 Value<DateTime> takenAt = const Value.absent(),
                 Value<int> readingScore = const Value.absent(),
                 Value<int> listeningScore = const Value.absent(),
@@ -16653,6 +16719,7 @@ class $$ExamResultsTableTableManager
               }) => ExamResultsCompanion.insert(
                 id: id,
                 level: level,
+                product: product,
                 takenAt: takenAt,
                 readingScore: readingScore,
                 listeningScore: listeningScore,

@@ -1,7 +1,12 @@
 {
   "level": "a2",
-  "exam_type": "CCE",
-  "description": "CCE A2 Exam Bank — 3 full practice exams matching the real CCE A2 format (permanent residence, new format since April 2026).",
+  "blueprint": {
+    "product": "permanent_residence",
+    "version": "2026-04-11",
+    "effective_date": "2026-04-11",
+    "scoring_rule": "raw_points_written_speaking_gate"
+  },
+  "description": "Permanent-residence A2 exam bank (Zkouška z češtiny pro trvalý pobyt) — 3 full practice exams matching the official format effective 11 April 2026. Practice only; not an official result. Section timings/points must be kept verified against the official model test.",
   "format": {
     "total_points": 110,
     "written_points": 70,

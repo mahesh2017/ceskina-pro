@@ -8,8 +8,8 @@ void main() {
   test('every speaking task in all six exam banks has a typed variant', () {
     final tasks = <ExamSpeakingTask>[];
     for (final path in [
-      'assets/curriculum/exam_bank_a1.json',
-      'assets/curriculum/exam_bank_a2.json',
+      'assets/curriculum/exam_bank_permres_a1.json',
+      'assets/curriculum/exam_bank_permres_a2.json',
     ]) {
       final bank = jsonDecode(File(path).readAsStringSync()) as Map;
       for (final exam in bank['exams'] as List) {

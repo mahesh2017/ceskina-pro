@@ -1,5 +1,12 @@
 {
   "level": "a1",
+  "blueprint": {
+    "product": "permanent_residence",
+    "version": "2026-04-11",
+    "effective_date": "2026-04-11",
+    "scoring_rule": "raw_points_written_speaking_gate"
+  },
+  "description": "Permanent-residence A1 exam bank — practice only; not an official result. Verify timings/points against the official model test.",
   "exams": [
     {
       "id": "a1-practice-1",

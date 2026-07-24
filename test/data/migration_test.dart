@@ -6,7 +6,7 @@ import 'package:sqlite3/sqlite3.dart' as raw;
 import 'package:ceskina_pro/data/database/database.dart';
 
 void main() {
-  test('schema v1 → v17 migration preserves data and adds new schema', () async {
+  test('schema v1 → v18 migration preserves data and adds new schema', () async {
     final file = File(
       p.join(
         Directory.systemTemp.path,
@@ -48,6 +48,7 @@ void main() {
     rawDb.execute('ALTER TABLE flashcards DROP COLUMN register_label');
     rawDb.execute('ALTER TABLE flashcards DROP COLUMN pronunciation_source');
     rawDb.execute('ALTER TABLE flashcards DROP COLUMN content_uid');
+    rawDb.execute('ALTER TABLE exam_results DROP COLUMN product');
     rawDb.execute('ALTER TABLE grammar_rules DROP COLUMN is_active');
     rawDb.execute('DROP INDEX srs_cards_vocabulary_key');
     rawDb.execute('DROP INDEX srs_cards_grammar_key');
@@ -135,7 +136,7 @@ void main() {
     );
 
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.read<int>('user_version'), 17);
+    expect(version.read<int>('user_version'), 18);
 
     final queueColumns =
         await db
@@ -188,6 +189,7 @@ void main() {
     rawDb.execute('ALTER TABLE flashcards DROP COLUMN register_label');
     rawDb.execute('ALTER TABLE flashcards DROP COLUMN pronunciation_source');
     rawDb.execute('ALTER TABLE flashcards DROP COLUMN content_uid');
+    rawDb.execute('ALTER TABLE exam_results DROP COLUMN product');
     rawDb.execute('ALTER TABLE grammar_rules DROP COLUMN is_active');
     rawDb.execute('DROP INDEX srs_cards_vocabulary_key');
     rawDb.execute('DROP INDEX srs_cards_grammar_key');
@@ -204,7 +206,7 @@ void main() {
       containsAll(['next_attempt_at', 'dead_lettered_at', 'last_error']),
     );
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.read<int>('user_version'), 17);
+    expect(version.read<int>('user_version'), 18);
 
     // v6 should have created the gamification_state table.
     final gTables =

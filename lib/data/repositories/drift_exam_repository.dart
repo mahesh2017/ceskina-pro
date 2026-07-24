@@ -10,59 +10,84 @@ import '../database/database.dart' as db;
 
 /// Concrete implementation of [ExamRepository] using Drift.
 ///
-/// Exam content is loaded from bundled JSON assets (`exam_bank_a1.json`,
-/// `exam_bank_a2.json`). Each file contains multiple practice exams.
+/// Exam content is loaded from bundled JSON assets named
+/// `exam_bank_<product>_<level>.json` (e.g. `exam_bank_permres_a2.json`).
+/// Each file carries a versioned `blueprint` and multiple practice exams.
 /// Results are persisted to the `exam_results` table.
 class DriftExamRepository implements ExamRepository {
   final db.AppDatabase _db;
   final Logger _log = Logger('DriftExamRepository');
 
-  /// Cache of loaded exam banks, keyed by level.
-  final Map<ExamLevel, List<MockExam>> _cache = {};
+  /// Cache of loaded exam banks, keyed by (product, level).
+  final Map<String, List<MockExam>> _cache = {};
 
   DriftExamRepository(this._db);
 
   @override
-  Future<MockExam> getMockExam(ExamLevel level) async {
-    final exams = await _loadExams(level);
+  Future<MockExam> getMockExam(
+    ExamLevel level, {
+    ExamProduct product = ExamProduct.permanentResidence,
+  }) async {
+    final exams = await _loadExams(level, product);
     if (exams.isEmpty) {
-      _log.warning('No exams found for ${level.name}; falling back to sample.');
-      return buildSampleExam(level);
+      _log.warning(
+        'No ${product.id} exams for ${level.name}; falling back to sample.',
+      );
+      return buildSampleExam(level, product: product);
     }
     // Return a random exam from the bank for variety.
     return exams[Random().nextInt(exams.length)];
   }
 
-  /// Get all available mock exams for a level.
-  Future<List<MockExam>> getAllMockExams(ExamLevel level) async {
-    return _loadExams(level);
+  /// Get all available mock exams for a product + level.
+  Future<List<MockExam>> getAllMockExams(
+    ExamLevel level, {
+    ExamProduct product = ExamProduct.permanentResidence,
+  }) async {
+    return _loadExams(level, product);
   }
 
-  Future<List<MockExam>> _loadExams(ExamLevel level) async {
-    if (_cache.containsKey(level)) return _cache[level]!;
+  Future<List<MockExam>> _loadExams(ExamLevel level, ExamProduct product) async {
+    final key = '${product.slug}_${level.name}';
+    if (_cache.containsKey(key)) return _cache[key]!;
 
-    final assetPath = 'assets/curriculum/exam_bank_${level.name}.json';
+    final assetPath = 'assets/curriculum/exam_bank_$key.json';
     try {
       final raw = await rootBundle.loadString(assetPath);
       final json = jsonDecode(raw) as Map<String, dynamic>;
+      final blueprint = _parseBlueprint(json, product);
       final examsJson = json['exams'] as List<dynamic>? ?? [];
 
       final exams = examsJson
           .whereType<Map<String, dynamic>>()
-          .map((e) => _parseExam(e, level))
+          .map((e) => _parseExam(e, level, blueprint))
           .toList();
 
-      _cache[level] = exams;
-      _log.info('Loaded ${exams.length} mock exams for ${level.name}.');
+      _cache[key] = exams;
+      _log.info('Loaded ${exams.length} ${product.id} exams for ${level.name}.');
       return exams;
     } catch (e, st) {
       _log.warning('Failed to load exam bank from $assetPath', e, st);
-      _cache[level] = [];
+      _cache[key] = [];
       return [];
     }
   }
 
-  MockExam _parseExam(Map<String, dynamic> json, ExamLevel level) {
+  ExamBlueprint _parseBlueprint(Map<String, dynamic> json, ExamProduct product) {
+    final bp = json['blueprint'] as Map<String, dynamic>? ?? const {};
+    return ExamBlueprint(
+      product: ExamProductAsset.fromId(bp['product'] as String? ?? product.id),
+      version: bp['version'] as String? ?? 'unversioned',
+      effectiveDate: bp['effective_date'] as String? ?? 'unknown',
+      scoringRule: ExamScoringRuleId.fromId(bp['scoring_rule'] as String?),
+    );
+  }
+
+  MockExam _parseExam(
+    Map<String, dynamic> json,
+    ExamLevel level,
+    ExamBlueprint blueprint,
+  ) {
     final sectionsJson = json['sections'] as List<dynamic>? ?? [];
     final sections = sectionsJson
         .whereType<Map<String, dynamic>>()
@@ -71,6 +96,7 @@ class DriftExamRepository implements ExamRepository {
 
     return MockExam(
       level: level,
+      blueprint: blueprint,
       totalTimeMinutes: json['total_time_minutes'] as int? ?? 120,
       sections: sections,
     );
@@ -98,6 +124,7 @@ class DriftExamRepository implements ExamRepository {
     final id = await _db.into(_db.examResults).insert(
           db.ExamResultsCompanion.insert(
             level: result.level.name,
+            product: Value(result.product.id),
             takenAt: Value(result.takenAt),
             readingScore: Value(result.readingScore),
             listeningScore: Value(result.listeningScore),
@@ -113,6 +140,7 @@ class DriftExamRepository implements ExamRepository {
     return entity.ExamResult(
       id: id,
       level: result.level,
+      product: result.product,
       takenAt: result.takenAt,
       readingScore: result.readingScore,
       listeningScore: result.listeningScore,
@@ -125,9 +153,17 @@ class DriftExamRepository implements ExamRepository {
   }
 
   @override
-  Future<List<entity.ExamResult>> getResults(ExamLevel level) async {
+  Future<List<entity.ExamResult>> getResults(
+    ExamLevel level, {
+    ExamProduct? product,
+  }) async {
     final rows = await (_db.select(_db.examResults)
           ..where((r) => r.level.equals(level.name))
+          ..where(
+            (r) => product == null
+                ? const Constant(true)
+                : r.product.equals(product.id),
+          )
           ..orderBy([(r) => OrderingTerm.desc(r.takenAt)]))
         .get();
 
@@ -135,6 +171,7 @@ class DriftExamRepository implements ExamRepository {
         .map((r) => entity.ExamResult(
               id: r.id,
               level: r.level == 'a2' ? ExamLevel.a2 : ExamLevel.a1,
+              product: ExamProductAsset.fromId(r.product),
               takenAt: r.takenAt,
               readingScore: r.readingScore,
               listeningScore: r.listeningScore,
@@ -154,7 +191,10 @@ class DriftExamRepository implements ExamRepository {
 ///
 /// Listening questions carry `audio_text` (spoken via TTS, never shown);
 /// reading questions carry an optional `passage`.
-MockExam buildSampleExam(ExamLevel level) {
+MockExam buildSampleExam(
+  ExamLevel level, {
+  ExamProduct product = ExamProduct.permanentResidence,
+}) {
   final isA1 = level == ExamLevel.a1;
 
   final readingQuestions = [
@@ -229,6 +269,12 @@ MockExam buildSampleExam(ExamLevel level) {
 
   return MockExam(
     level: level,
+    blueprint: ExamBlueprint(
+      product: product,
+      version: 'sample',
+      effectiveDate: 'unknown',
+      scoringRule: ExamScoringRule.rawPointsWrittenSpeakingGate,
+    ),
     totalTimeMinutes: isA1 ? 30 : 45,
     sections: [
       MockExamSection(

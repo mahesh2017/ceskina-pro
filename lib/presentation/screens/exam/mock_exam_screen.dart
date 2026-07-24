@@ -170,6 +170,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     final result = ExamResult(
       id: 0, // assigned by the database
       level: widget.level,
+      product: _exam?.product ?? ExamProduct.permanentResidence,
       takenAt: DateTime.now(),
       readingScore: scores.reading,
       listeningScore: scores.listening,

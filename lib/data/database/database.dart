@@ -80,7 +80,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.e);
 
   @override
-  int get schemaVersion => 17;
+  int get schemaVersion => 18;
 
   /// Portable snapshot of learner-created state. Bundled curriculum rows are
   /// intentionally excluded because they are app content, not user data.
@@ -314,6 +314,11 @@ class AppDatabase extends _$AppDatabase {
           UPDATE flashcards SET content_uid = lower(hex(randomblob(16)))
           WHERE content_uid IS NULL AND id >= 900000
         ''');
+      }
+      // v18: exam results are labeled by official product. Existing rows
+      // default to permanent-residence via the column default.
+      if (from < 18) {
+        await m.addColumn(examResults, examResults.product);
       }
     },
     beforeOpen: (details) async {
