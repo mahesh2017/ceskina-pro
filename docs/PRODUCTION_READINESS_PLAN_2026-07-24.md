@@ -30,9 +30,28 @@
 > tagged-release CI lane (release.yml) + RELEASE.md with the store-submission
 > checklist and dependency-upgrade plan.
 >
-> **Remaining manual/dashboard items:** P1.7 leaked-password protection
-> (Supabase Auth toggle), store questionnaires + privacy policy URL, and the
-> P1.20 dependency-upgrade pass — all tracked in RELEASE.md.
+> **Phase 4 done (hardening):** P1.20 dependency-upgrade pass (drift/sqlite3
+> ecosystem + go_router/record/just_audio/connectivity_plus/secure_storage/
+> share_plus/flutter_lints majors — analyzer + 242 tests + device build all
+> green), P1.11 anonymous-user cleanup (pg_cron daily purge of never-linked
+> accounts idle 90+ days, self-healing), P1.12 DB hygiene (both unindexed FKs
+> now covered — verified cleared in the advisor; service-role counter tables
+> documented). Privacy policy corrected to disclose OpenAI Whisper audio, and
+> a copy-paste store data-safety answer sheet added (STORE_DATA_DISCLOSURE.md).
+>
+> **The only items left require account access I don't have — both prepared:**
+> 1. **Leaked-password protection** — a GoTrue auth-config toggle with no SQL
+>    or API surface I can reach. Flip it at Supabase Dashboard → Authentication
+>    → Policies → "Enable HaveIBeenPwned check" (or Sign In / Providers → Email
+>    → password protection). ~2 clicks.
+> 2. **Store submission** — host PRIVACY.md at a public URL, then paste the
+>    answers from STORE_DATA_DISCLOSURE.md into App Store Connect App Privacy
+>    and Play Console Data safety. Everything to enter is written out.
+>
+> **Accepted-by-design advisors (documented, not defects):** 6× anonymous-access
+> policy WARNs (the app is anonymous-first — restricting to `authenticated`
+> would break real users) and 3× RLS-enabled/no-policy INFOs on the
+> service-role counter tables (deny-all-to-clients is the intended state).
 
 Full-codebase review (app + Supabase backend) covering functionality, UI/UX,
 security, and release operations. Scope: `lib/` (~26.8k lines, 155 files),
