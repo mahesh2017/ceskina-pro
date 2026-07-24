@@ -8,7 +8,7 @@ drop extension if exists pgtap cascade;
 create extension pgtap with schema public;
 set local search_path = public;
 
-select public.plan(37);
+select public.plan(38);
 
 select public.has_table('public', 'lesson_progress', 'lesson progress exists');
 select public.has_table('public', 'earned_badges', 'earned badges exists');
@@ -157,6 +157,16 @@ select public.ok(
     'EXECUTE'
   ),
   'service quota functions are service-role only'
+);
+
+select public.ok(
+  not has_function_privilege(
+    'anon', 'public.purge_stale_anonymous_users()', 'EXECUTE'
+  )
+  and not has_function_privilege(
+    'authenticated', 'public.purge_stale_anonymous_users()', 'EXECUTE'
+  ),
+  'anonymous-user purge is not callable by client roles'
 );
 
 set local role service_role;
