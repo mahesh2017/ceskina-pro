@@ -82,7 +82,16 @@ class PronunciationNotifier extends Notifier<PronunciationState> {
 
     try {
       final assessor = ref.read(pronunciationAssessmentProvider);
-      final assessment = await assessor.assess(expectedText: expectedText);
+      final assessment = await assessor.assess(
+        expectedText: expectedText,
+        // Recording ended (silence/max/manual) — switch to "analyzing" while
+        // transcription runs.
+        onCaptureComplete: () {
+          if (ref.mounted && state.attemptId == attemptId) {
+            state = state.copyWith(isRecording: false, isProcessing: true);
+          }
+        },
+      );
       if (!ref.mounted || state.attemptId != attemptId) return;
 
       state = state.copyWith(
@@ -102,26 +111,14 @@ class PronunciationNotifier extends Notifier<PronunciationState> {
     }
   }
 
-  /// Stop recording (if in progress).
+  /// Manually stop the current recording. This does NOT abandon the attempt:
+  /// it signals the in-flight assessment to finish capturing and transcribe the
+  /// audio already recorded, so the result still arrives under the same attempt
+  /// id. The UI flips to "analyzing" immediately.
   Future<void> stopRecording() async {
-    final expectedText = state.expectedText;
-    final attemptId = ++_attemptSequence;
-    state = PronunciationState(
-      expectedText: expectedText,
-      isProcessing: true,
-      attemptId: attemptId,
-    );
-    final assessor = ref.read(pronunciationAssessmentProvider);
-    try {
-      await assessor.stop();
-    } finally {
-      if (ref.mounted && state.attemptId == attemptId) {
-        state = PronunciationState(
-          expectedText: expectedText,
-          attemptId: attemptId,
-        );
-      }
-    }
+    if (!state.isRecording) return;
+    state = state.copyWith(isRecording: false, isProcessing: true);
+    await ref.read(pronunciationAssessmentProvider).stop();
   }
 
   /// Reset for a new attempt.

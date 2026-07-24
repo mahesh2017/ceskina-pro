@@ -33,7 +33,9 @@ void main() {
     },
   );
 
-  test('manual stop invalidates a late assessment completion', () async {
+  test('manual stop transcribes the captured audio (not discarded)', () async {
+    // A manual stop must NOT abandon the attempt: it signals the assessor to
+    // finish capturing, and the transcription result still arrives.
     final assessor = _ControlledAssessor();
     final container = ProviderContainer(
       overrides: [pronunciationAssessmentProvider.overrideWithValue(assessor)],
@@ -47,9 +49,9 @@ void main() {
     await pending;
 
     final state = container.read(pronunciationProvider);
-    expect(assessor.stopCount, 1);
+    expect(assessor.stopCount, 1); // stop was signalled
     expect(state.expectedText, 'Dobrý den');
-    expect(state.result, isNull);
+    expect(state.result?.overallScore, 0.9); // result delivered, not dropped
     expect(state.isRecording, isFalse);
     expect(state.isProcessing, isFalse);
   });
@@ -99,7 +101,8 @@ class _ControlledAssessor implements PronunciationAssessor {
   @override
   Future<PronunciationAssessment> assess({
     required String expectedText,
-    Duration maxDuration = const Duration(seconds: 10),
+    Duration maxDuration = const Duration(seconds: 15),
+    void Function()? onCaptureComplete,
   }) {
     expectedTexts.add(expectedText);
     final completer = Completer<PronunciationAssessment>();

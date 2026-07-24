@@ -5,6 +5,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import '../../../domain/engines/silence_detector.dart';
 import '../../../domain/repositories/speech_ports.dart';
 
 /// Records audio to a temporary .wav file for Whisper transcription.
@@ -59,12 +60,42 @@ class AudioRecorderService implements AudioRecorderPort {
     return path;
   }
 
+  /// Record until silence (voice-activity auto-stop), the [maxDuration] cap, or
+  /// [stopSignal] fires; then stop and return the recorded WAV path. Polls the
+  /// microphone amplitude and drives a [SilenceDetector]; the recorded audio is
+  /// always returned so it can still be transcribed after a manual stop.
+  @override
+  Future<String> recordUntilSilence({
+    Duration silenceTimeout = const Duration(seconds: 3),
+    Duration maxDuration = const Duration(seconds: 15),
+    Future<void>? stopSignal,
+  }) async {
+    await start();
+    final detector = SilenceDetector(silenceTimeout: silenceTimeout);
+    final watch = Stopwatch()..start();
+    var manuallyStopped = false;
+    stopSignal?.then((_) => manuallyStopped = true);
+
+    const poll = Duration(milliseconds: 150);
+    while (_isRecording) {
+      await Future<void>.delayed(poll);
+      if (manuallyStopped || watch.elapsed >= maxDuration) break;
+      try {
+        final amp = await _recorder.getAmplitude();
+        if (detector.accept(amp.current, watch.elapsed)) break;
+      } catch (_) {
+        // Amplitude unavailable on this platform/instant — keep recording and
+        // rely on the max cap / manual stop rather than aborting.
+      }
+    }
+    return stop();
+  }
+
   /// Stop recording and return the path to the recorded WAV file.
   @override
   Future<String> stop() async {
-    if (!_isRecording) {
-      throw StateError('Not recording');
-    }
+    // Idempotent: recordUntilSilence and a manual stop can both call this.
+    if (!_isRecording) return _currentPath ?? '';
 
     final path = await _recorder.stop();
     _isRecording = false;

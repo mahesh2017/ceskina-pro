@@ -23,6 +23,17 @@ abstract class AudioRecorderPort {
   Future<String> start();
   Future<String> stop();
   Future<void> cleanup();
+
+  /// Record until the speaker falls silent (voice-activity auto-stop), the
+  /// [maxDuration] cap is reached, or [stopSignal] fires (manual stop) —
+  /// whichever comes first — then stop and return the recorded file path.
+  /// The captured audio is always returned so the caller can transcribe it,
+  /// regardless of which condition ended the recording.
+  Future<String> recordUntilSilence({
+    Duration silenceTimeout,
+    Duration maxDuration,
+    Future<void>? stopSignal,
+  });
 }
 
 /// On-device live transcriber used as the degraded fallback.

@@ -110,6 +110,16 @@ class _FakeRecorder implements AudioRecorderPort {
   Future<void> cleanup() async {
     cleanupCount++;
   }
+
+  @override
+  Future<String> recordUntilSilence({
+    Duration silenceTimeout = const Duration(seconds: 3),
+    Duration maxDuration = const Duration(seconds: 15),
+    Future<void>? stopSignal,
+  }) async {
+    await start();
+    return stop();
+  }
 }
 
 class _FakeLiveTranscriber implements LiveTranscriber {

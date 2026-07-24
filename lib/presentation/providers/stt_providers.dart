@@ -86,23 +86,36 @@ class PronunciationAssessor {
   final Logger _log;
   final _scorer = PronunciationScorer();
 
+  /// Signals the in-flight Whisper recording to stop capturing and transcribe.
+  Completer<void>? _manualStop;
+
   /// Whether Whisper is available for high-quality transcription. Reactive to
   /// authenticated backend capability, not merely a configured client object.
   bool get hasWhisper => _whisper?.isAvailable ?? false;
 
-  /// Record audio for [maxDuration] and assess pronunciation against
-  /// [expectedText].
+  /// Record audio and assess pronunciation against [expectedText].
+  ///
+  /// Recording auto-stops when the speaker falls silent (voice activity), at
+  /// the [maxDuration] cap, or on a manual [stop] — whichever comes first — and
+  /// the captured audio is always transcribed. [onCaptureComplete] fires the
+  /// moment recording ends and transcription begins, so the UI can switch from
+  /// "listening" to "analyzing".
   ///
   /// When Whisper is available, records to a WAV file and sends it to the
-  /// Whisper API for transcription with word-level confidence. When not,
-  /// uses OS-native STT for live recognition (lower quality, no confidence).
+  /// Whisper API for transcription with word-level confidence. Otherwise uses
+  /// OS-native STT for live recognition (lower quality, no confidence).
   Future<PronunciationAssessment> assess({
     required String expectedText,
-    Duration maxDuration = const Duration(seconds: 10),
+    Duration maxDuration = const Duration(seconds: 15),
+    void Function()? onCaptureComplete,
   }) async {
     if (hasWhisper) {
       try {
-        return await _assessWithWhisper(expectedText, maxDuration);
+        return await _assessWithWhisper(
+          expectedText,
+          maxDuration,
+          onCaptureComplete,
+        );
       } catch (e, st) {
         // A linked backend without the `whisper-proxy` function deployed (or a
         // transient network/function error) must never hard-fail the exercise.
@@ -122,57 +135,53 @@ class PronunciationAssessor {
   Future<PronunciationAssessment> _assessWithWhisper(
     String expectedText,
     Duration maxDuration,
+    void Function()? onCaptureComplete,
   ) async {
-    // Record audio
-    await _recorder.start();
+    final manualStop = _manualStop = Completer<void>();
 
-    // Wait for the user to speak (fixed duration or manual stop)
-    await Future.delayed(maxDuration);
+    // Record until silence, the max cap, or a manual stop — then always
+    // transcribe whatever was captured.
+    final audioPath = await _recorder.recordUntilSilence(
+      maxDuration: maxDuration,
+      stopSignal: manualStop.future,
+    );
+    onCaptureComplete?.call();
 
-    if (_recorder.isRecording) {
-      final audioPath = await _recorder.stop();
-
-      // Transcribe with Whisper, passing the expected text as a prompt
-      // to improve accuracy for known phrases.
-      final whisperResult = await _whisper!.transcribe(
-        audioPath: audioPath,
-        language: 'cs',
-        prompt: expectedText,
-      );
-
-      // Score using the existing scorer + Whisper word confidence
-      final result = _scorer.score(
-        expectedText: expectedText,
-        actualTranscription: whisperResult.text,
-      );
-
-      // Enrich word scores with Whisper confidence
-      final enriched = _enrichWithConfidence(result, whisperResult.words);
-
-      _log.info(
-        'Whisper assessment: ${result.overallScore.toStringAsFixed(2)} '
-        '(${whisperResult.words.length} words, '
-        '${whisperResult.duration.toStringAsFixed(1)}s audio)',
-      );
-
-      // Cleanup audio file
+    if (audioPath.isEmpty) {
       await _recorder.cleanup();
-
       return PronunciationAssessment(
-        transcribedText: whisperResult.text,
-        result: enriched,
-        whisperWords: whisperResult.words,
+        transcribedText: '',
+        result: _scorer.score(expectedText: expectedText, actualTranscription: ''),
         usedWhisper: true,
       );
     }
 
-    // User stopped early or recording failed
+    // Transcribe with Whisper, passing the expected text as a prompt to
+    // improve accuracy for known phrases.
+    final whisperResult = await _whisper!.transcribe(
+      audioPath: audioPath,
+      language: 'cs',
+      prompt: expectedText,
+    );
+
+    final result = _scorer.score(
+      expectedText: expectedText,
+      actualTranscription: whisperResult.text,
+    );
+    final enriched = _enrichWithConfidence(result, whisperResult.words);
+
+    _log.info(
+      'Whisper assessment: ${result.overallScore.toStringAsFixed(2)} '
+      '(${whisperResult.words.length} words, '
+      '${whisperResult.duration.toStringAsFixed(1)}s audio)',
+    );
+
+    await _recorder.cleanup();
+
     return PronunciationAssessment(
-      transcribedText: '',
-      result: _scorer.score(
-        expectedText: expectedText,
-        actualTranscription: '',
-      ),
+      transcribedText: whisperResult.text,
+      result: enriched,
+      whisperWords: whisperResult.words,
       usedWhisper: true,
     );
   }
@@ -253,10 +262,13 @@ class PronunciationAssessor {
     );
   }
 
-  /// Stop any active recording.
+  /// Manually stop an active recording. For the Whisper path this signals the
+  /// in-flight [recordUntilSilence] to finish capturing so the audio is still
+  /// transcribed (never discarded); for the native path it stops listening.
   Future<void> stop() async {
-    if (_recorder.isRecording) {
-      await _recorder.stop();
+    final manualStop = _manualStop;
+    if (manualStop != null && !manualStop.isCompleted) {
+      manualStop.complete();
     }
     await _fallbackStt.stop();
   }
