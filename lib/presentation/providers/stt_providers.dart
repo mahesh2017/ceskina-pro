@@ -417,7 +417,7 @@ class NativeSttService implements SttService, LiveTranscriber {
     return completer.future.timeout(timeout, onTimeout: () {
       _speech.stop();
       return result;
-    });
+    },);
   }
 
   /// Stop listening.

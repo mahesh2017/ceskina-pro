@@ -124,7 +124,7 @@ class _FillBlankViewState extends State<FillBlankView> {
             right: gluedToNextBlank ? 0 : 3,
           ),
           child: Text(words[w], style: wordStyle),
-        ));
+        ),);
       }
       if (i < parts.length - 1) {
         children.add(SizedBox(
@@ -147,7 +147,7 @@ class _FillBlankViewState extends State<FillBlankView> {
             ),
             onSubmitted: answered ? null : (_) => _checkAnswer(),
           ),
-        ));
+        ),);
       }
     }
 

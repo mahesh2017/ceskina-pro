@@ -80,7 +80,7 @@ void main() {
     expect(tablesBefore, isNot(contains('learning_evidence_events')));
     expect(tablesBefore, isNot(contains('placement_profiles')));
     expect(tablesBefore, isNot(contains('delayed_transfer_assignments')));
-    rawDb.dispose();
+    rawDb.close();
 
     // 2. Reopen through AppDatabase — the complete upgrade chain must add
     // every later schema object without touching existing rows.
@@ -194,7 +194,7 @@ void main() {
     rawDb.execute('DROP INDEX srs_cards_vocabulary_key');
     rawDb.execute('DROP INDEX srs_cards_grammar_key');
     rawDb.execute('PRAGMA user_version = 4');
-    rawDb.dispose();
+    rawDb.close();
 
     db = AppDatabase.forTesting(NativeDatabase(file));
     final columns =

@@ -11,7 +11,7 @@ import '../../widgets/common/soft_ui.dart';
 
 /// Icon + soft-tint colors for each conversation scenario.
 ({IconData icon, Color tint, Color fg}) _scenarioStyle(
-    BuildContext context, String title) {
+    BuildContext context, String title,) {
   final t = context.tokens;
   return switch (title) {
     'Casual Chat' => (icon: Icons.local_cafe_outlined, tint: t.amberSoft, fg: t.amber),
@@ -264,7 +264,7 @@ class _ScenarioPicker extends ConsumerWidget {
                         fg: s.fg,
                         size: 34,
                         radius: 11,
-                        iconSize: 15),
+                        iconSize: 15,),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
@@ -312,20 +312,20 @@ class _ScenarioPicker extends ConsumerWidget {
                       fg: s.fg,
                       size: 38,
                       radius: 13,
-                      iconSize: 16),
+                      iconSize: 16,),
                   const SizedBox(height: 10),
                   Text(scenario.title,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
-                          color: t.ink)),
+                          color: t.ink,),),
                   const SizedBox(height: 7),
                   Expanded(
                     child: Text(scenario.description,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontSize: 14, color: t.muted, height: 1.4)),
+                            fontSize: 14, color: t.muted, height: 1.4,),),
                   ),
                 ],
               ),
@@ -354,7 +354,7 @@ class _MessageBubble extends ConsumerWidget {
       SnackBar(
         content: Text(added
             ? 'Added "${v.cz}" to your review deck'
-            : '"${v.cz}" is already in your deck'),
+            : '"${v.cz}" is already in your deck',),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -420,7 +420,7 @@ class _MessageBubble extends ConsumerWidget {
                     style: TextStyle(
                         fontSize: 14,
                         color: t.muted,
-                        fontStyle: FontStyle.italic),
+                        fontStyle: FontStyle.italic,),
                   ),
                 ),
               ],
@@ -681,7 +681,7 @@ class _InputBar extends StatelessWidget {
                     ? Padding(
                         padding: const EdgeInsets.all(15),
                         child: CircularProgressIndicator(
-                            strokeWidth: 2, color: t.onFill),
+                            strokeWidth: 2, color: t.onFill,),
                       )
                     : Icon(Icons.send, size: 18, color: t.onFill),
               ),

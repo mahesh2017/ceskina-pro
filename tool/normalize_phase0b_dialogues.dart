@@ -32,7 +32,7 @@ void main() {
         end: end,
         text: _prettyJson(exercise, 2),
         id: id,
-      ));
+      ),);
     }
 
     replacements.sort((a, b) => b.start.compareTo(a.start));

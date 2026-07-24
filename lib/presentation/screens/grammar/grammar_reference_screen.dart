@@ -88,14 +88,14 @@ class _UnitGrammarSection extends ConsumerWidget {
             error: (_, __) => Padding(
               padding: const EdgeInsets.all(16),
               child: Text('Could not load grammar rules.',
-                  style: TextStyle(color: t.muted)),
+                  style: TextStyle(color: t.muted),),
             ),
             data: (rules) {
               if (rules.isEmpty) {
                 return Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text('No grammar rules for this unit.',
-                      style: TextStyle(color: t.muted)),
+                      style: TextStyle(color: t.muted),),
                 );
               }
               return Padding(
@@ -122,7 +122,7 @@ class _UnitGrammarSection extends ConsumerWidget {
                             children: [
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 6, vertical: 2),
+                                    horizontal: 6, vertical: 2,),
                                 decoration: BoxDecoration(
                                   color: t.priFill,
                                   borderRadius: BorderRadius.circular(4),

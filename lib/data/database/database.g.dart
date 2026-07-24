@@ -12652,7 +12652,7 @@ final class $$UnitsTableReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.lessons,
-    aliasName: $_aliasNameGenerator(db.units.id, db.lessons.unitId),
+    aliasName: 'units__id__lessons__unit_id',
   );
 
   $$LessonsTableProcessedTableManager get lessonsRefs {
@@ -12670,7 +12670,7 @@ final class $$UnitsTableReferences
   static MultiTypedResultKey<$FlashcardsTable, List<Flashcard>>
   _flashcardsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.flashcards,
-    aliasName: $_aliasNameGenerator(db.units.id, db.flashcards.unitId),
+    aliasName: 'units__id__flashcards__unit_id',
   );
 
   $$FlashcardsTableProcessedTableManager get flashcardsRefs {
@@ -12688,7 +12688,7 @@ final class $$UnitsTableReferences
   static MultiTypedResultKey<$GrammarRulesTable, List<GrammarRule>>
   _grammarRulesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.grammarRules,
-    aliasName: $_aliasNameGenerator(db.units.id, db.grammarRules.unitId),
+    aliasName: 'units__id__grammar_rules__unit_id',
   );
 
   $$GrammarRulesTableProcessedTableManager get grammarRulesRefs {
@@ -13212,9 +13212,8 @@ final class $$LessonsTableReferences
     extends BaseReferences<_$AppDatabase, $LessonsTable, Lesson> {
   $$LessonsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UnitsTable _unitIdTable(_$AppDatabase db) => db.units.createAlias(
-    $_aliasNameGenerator(db.lessons.unitId, db.units.id),
-  );
+  static $UnitsTable _unitIdTable(_$AppDatabase db) =>
+      db.units.createAlias('lessons__unit_id__units__id');
 
   $$UnitsTableProcessedTableManager get unitId {
     final $_column = $_itemColumn<int>('unit_id')!;
@@ -13233,7 +13232,7 @@ final class $$LessonsTableReferences
   static MultiTypedResultKey<$ExercisesTable, List<Exercise>>
   _exercisesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.exercises,
-    aliasName: $_aliasNameGenerator(db.lessons.id, db.exercises.lessonId),
+    aliasName: 'lessons__id__exercises__lesson_id',
   );
 
   $$ExercisesTableProcessedTableManager get exercisesRefs {
@@ -13251,7 +13250,7 @@ final class $$LessonsTableReferences
   static MultiTypedResultKey<$FlashcardsTable, List<Flashcard>>
   _flashcardsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.flashcards,
-    aliasName: $_aliasNameGenerator(db.lessons.id, db.flashcards.lessonId),
+    aliasName: 'lessons__id__flashcards__lesson_id',
   );
 
   $$FlashcardsTableProcessedTableManager get flashcardsRefs {
@@ -13803,8 +13802,8 @@ final class $$ExercisesTableReferences
     extends BaseReferences<_$AppDatabase, $ExercisesTable, Exercise> {
   $$ExercisesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $LessonsTable _lessonIdTable(_$AppDatabase db) => db.lessons
-      .createAlias($_aliasNameGenerator(db.exercises.lessonId, db.lessons.id));
+  static $LessonsTable _lessonIdTable(_$AppDatabase db) =>
+      db.lessons.createAlias('exercises__lesson_id__lessons__id');
 
   $$LessonsTableProcessedTableManager get lessonId {
     final $_column = $_itemColumn<int>('lesson_id')!;
@@ -14214,9 +14213,8 @@ final class $$FlashcardsTableReferences
     extends BaseReferences<_$AppDatabase, $FlashcardsTable, Flashcard> {
   $$FlashcardsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UnitsTable _unitIdTable(_$AppDatabase db) => db.units.createAlias(
-    $_aliasNameGenerator(db.flashcards.unitId, db.units.id),
-  );
+  static $UnitsTable _unitIdTable(_$AppDatabase db) =>
+      db.units.createAlias('flashcards__unit_id__units__id');
 
   $$UnitsTableProcessedTableManager? get unitId {
     final $_column = $_itemColumn<int>('unit_id');
@@ -14232,8 +14230,8 @@ final class $$FlashcardsTableReferences
     );
   }
 
-  static $LessonsTable _lessonIdTable(_$AppDatabase db) => db.lessons
-      .createAlias($_aliasNameGenerator(db.flashcards.lessonId, db.lessons.id));
+  static $LessonsTable _lessonIdTable(_$AppDatabase db) =>
+      db.lessons.createAlias('flashcards__lesson_id__lessons__id');
 
   $$LessonsTableProcessedTableManager? get lessonId {
     final $_column = $_itemColumn<int>('lesson_id');
@@ -14253,7 +14251,7 @@ final class $$FlashcardsTableReferences
     _$AppDatabase db,
   ) => MultiTypedResultKey.fromTable(
     db.srsCards,
-    aliasName: $_aliasNameGenerator(db.flashcards.id, db.srsCards.flashcardId),
+    aliasName: 'flashcards__id__srs_cards__flashcard_id',
   );
 
   $$SrsCardsTableProcessedTableManager get srsCardsRefs {
@@ -14986,9 +14984,7 @@ final class $$SrsCardsTableReferences
   $$SrsCardsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static $FlashcardsTable _flashcardIdTable(_$AppDatabase db) =>
-      db.flashcards.createAlias(
-        $_aliasNameGenerator(db.srsCards.flashcardId, db.flashcards.id),
-      );
+      db.flashcards.createAlias('srs_cards__flashcard_id__flashcards__id');
 
   $$FlashcardsTableProcessedTableManager? get flashcardId {
     final $_column = $_itemColumn<int>('flashcard_id');
@@ -15396,10 +15392,7 @@ final class $$ConversationsTableReferences
   static MultiTypedResultKey<$ChatMessagesTable, List<ChatMessage>>
   _chatMessagesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.chatMessages,
-    aliasName: $_aliasNameGenerator(
-      db.conversations.id,
-      db.chatMessages.conversationId,
-    ),
+    aliasName: 'conversations__id__chat_messages__conversation_id',
   );
 
   $$ChatMessagesTableProcessedTableManager get chatMessagesRefs {
@@ -15688,13 +15681,9 @@ final class $$ChatMessagesTableReferences
     extends BaseReferences<_$AppDatabase, $ChatMessagesTable, ChatMessage> {
   $$ChatMessagesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $ConversationsTable _conversationIdTable(_$AppDatabase db) =>
-      db.conversations.createAlias(
-        $_aliasNameGenerator(
-          db.chatMessages.conversationId,
-          db.conversations.id,
-        ),
-      );
+  static $ConversationsTable _conversationIdTable(_$AppDatabase db) => db
+      .conversations
+      .createAlias('chat_messages__conversation_id__conversations__id');
 
   $$ConversationsTableProcessedTableManager get conversationId {
     final $_column = $_itemColumn<String>('conversation_id')!;
@@ -16086,9 +16075,8 @@ final class $$GrammarRulesTableReferences
     extends BaseReferences<_$AppDatabase, $GrammarRulesTable, GrammarRule> {
   $$GrammarRulesTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $UnitsTable _unitIdTable(_$AppDatabase db) => db.units.createAlias(
-    $_aliasNameGenerator(db.grammarRules.unitId, db.units.id),
-  );
+  static $UnitsTable _unitIdTable(_$AppDatabase db) =>
+      db.units.createAlias('grammar_rules__unit_id__units__id');
 
   $$UnitsTableProcessedTableManager? get unitId {
     final $_column = $_itemColumn<int>('unit_id');
@@ -19144,14 +19132,13 @@ final class $$ContentReleaseInstallationsTableReferences
     $ContentReleasePacksTable,
     List<ContentReleasePack>
   >
-  _contentReleasePacksRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.contentReleasePacks,
-        aliasName: $_aliasNameGenerator(
-          db.contentReleaseInstallations.releaseId,
-          db.contentReleasePacks.releaseId,
-        ),
-      );
+  _contentReleasePacksRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.contentReleasePacks,
+    aliasName:
+        'content_release_installations__release_id__content_release_packs__release_id',
+  );
 
   $$ContentReleasePacksTableProcessedTableManager get contentReleasePacksRefs {
     final manager =
@@ -19527,13 +19514,11 @@ final class $$ContentReleasePacksTableReferences
     super.$_typedResult,
   );
 
-  static $ContentReleaseInstallationsTable _releaseIdTable(_$AppDatabase db) =>
-      db.contentReleaseInstallations.createAlias(
-        $_aliasNameGenerator(
-          db.contentReleasePacks.releaseId,
-          db.contentReleaseInstallations.releaseId,
-        ),
-      );
+  static $ContentReleaseInstallationsTable _releaseIdTable(
+    _$AppDatabase db,
+  ) => db.contentReleaseInstallations.createAlias(
+    'content_release_packs__release_id__content_release_installations__release_id',
+  );
 
   $$ContentReleaseInstallationsTableProcessedTableManager get releaseId {
     final $_column = $_itemColumn<String>('release_id')!;

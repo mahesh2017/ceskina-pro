@@ -160,7 +160,7 @@ class _AccountScreenState extends ConsumerState<AccountScreen> {
             email: credentials.email,
             password: credentials.password,
           );
-    }, 'Account recovered and synchronized.');
+    }, 'Account recovered and synchronized.',);
   }
 
   Future<void> _sendRecovery() async {

@@ -16,3 +16,9 @@ linter:
     use_key_in_widget_constructors: true
     avoid_print: true
     require_trailing_commas: true
+    # New in flutter_lints 6 — purely stylistic. Not adopted yet: the
+    # null-aware-element rewrite would touch pattern-binding collection-ifs in
+    # security-sensitive diagnostics code, and `__` placeholders are
+    # intentional in some callbacks. Revisit as a dedicated cleanup.
+    use_null_aware_elements: false
+    unnecessary_underscores: false

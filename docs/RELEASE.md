@@ -67,7 +67,17 @@ Before submission:
 
 ## Dependency currency
 
-~51 packages are behind. Schedule one upgrade pass (the test suite makes it
-cheap). Watch items:
-- `sqlite3_flutter_libs` 0.5 → 0.6 is EOL-flagged; plan the Drift bump path.
-- `go_router` 14 → 17, `flutter_lints` 4 → 6, `record`/`speech_to_text` majors.
+Upgraded 2026-07-24 (analyzer + 242 tests + device build all green):
+- Drift ecosystem: `drift`/`drift_dev` 2.20 → 2.34, `sqlite3` 2.7 → 3.5,
+  `sqlite3_flutter_libs` 0.5 → 0.6 (clears the EOL flag; codegen regenerated).
+- Runtime majors: `go_router` 14 → 17, `record` 6 → 7, `just_audio` 0.9 → 0.10,
+  `connectivity_plus` 6 → 7, `flutter_secure_storage` 9 → 10, `share_plus`
+  12 → 13 — all API-compatible with our usage, verified on a release device
+  build (audio recording + navigation exercised).
+- `flutter_lints` 4 → 6. Two brand-new stylistic rules
+  (`use_null_aware_elements`, `unnecessary_underscores`) are opted out in
+  `analysis_options.yaml` pending a dedicated cleanup; the drift `dispose` →
+  `close` deprecation was fixed.
+
+`intl` is pinned `any` to track the Flutter SDK's bundled version. Remaining
+behind-but-fine transitives (win32, xml, etc.) carry no security advisories.

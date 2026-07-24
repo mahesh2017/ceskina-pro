@@ -145,22 +145,22 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         ..clear()
         ..addAll(checkpoint.answers.map(
           (section, questions) => MapEntry(section, {...questions}),
-        ));
+        ),);
       _speakingTranscriptions
         ..clear()
         ..addAll(checkpoint.speakingTranscriptions.map(
           (key, value) => MapEntry(decodeKey(key), value),
-        ));
+        ),);
       _speakingScores
         ..clear()
         ..addAll(checkpoint.speakingScores.map(
           (key, value) => MapEntry(decodeKey(key), value),
-        ));
+        ),);
       _writingScores
         ..clear()
         ..addAll(checkpoint.writingScores.map(
           (key, value) => MapEntry(decodeKey(key), value),
-        ));
+        ),);
       _examComplete = false;
       _result = null;
       _resultFullyScored = false;
@@ -191,7 +191,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
         (key, value) => MapEntry(encodeKey(key), value),
       ),
       savedAt: DateTime.now(),
-    )));
+    ),),);
   }
 
   void _startSectionTimer({int? resumeSeconds}) {

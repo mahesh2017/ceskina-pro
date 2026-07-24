@@ -69,7 +69,7 @@ class _ReadingComprehensionViewState
         correctAnswer: _questions
             .map((q) => (q['options'] as List<dynamic>)[
                   (q['correct_index'] as num).toInt()]
-                as String)
+                as String,)
             .join(', '),
       ),
     );

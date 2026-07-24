@@ -25,7 +25,7 @@ void main() {
     expect(exam.product, ExamProduct.permanentResidence);
     expect(exam.blueprint.effectiveDate, '2026-04-11');
     expect(exam.blueprint.scoringRule,
-        ExamScoringRule.rawPointsWrittenSpeakingGate);
+        ExamScoringRule.rawPointsWrittenSpeakingGate,);
     expect(exam.sections, isNotEmpty);
   });
 
@@ -41,7 +41,7 @@ void main() {
     await repo.saveResult(_result(ExamProduct.cce));
 
     final perm = await repo.getResults(ExamLevel.a2,
-        product: ExamProduct.permanentResidence);
+        product: ExamProduct.permanentResidence,);
     final cce = await repo.getResults(ExamLevel.a2, product: ExamProduct.cce);
     final all = await repo.getResults(ExamLevel.a2);
 

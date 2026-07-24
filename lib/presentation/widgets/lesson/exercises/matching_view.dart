@@ -50,14 +50,14 @@ class _MatchingViewState extends State<MatchingView> {
     }).toList();
     _leftItems.sort((a, b) => leftShuffle.indexOf(a.pairIdx).compareTo(
       leftShuffle.indexOf(b.pairIdx),
-    ));
+    ),);
 
     _rightItems = pairs.asMap().entries.map((e) {
       return _MatchItem(text: e.value.$2, pairIdx: e.key);
     }).toList();
     _rightItems.sort((a, b) => rightShuffle.indexOf(a.pairIdx).compareTo(
       rightShuffle.indexOf(b.pairIdx),
-    ));
+    ),);
   }
 
   bool get _allMatched =>

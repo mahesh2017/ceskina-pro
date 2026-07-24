@@ -54,7 +54,7 @@ void main() {
     final store = ExamSessionStore();
     await store.save(checkpoint(
       savedAt: DateTime.now().subtract(const Duration(hours: 25)),
-    ));
+    ),);
 
     expect(await store.load('a1'), isNull);
   });
