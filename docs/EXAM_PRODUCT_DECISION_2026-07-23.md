@@ -66,6 +66,10 @@ The exam layer has been made **two-product-aware** (engineering only; no special
 
 Adding CCE later is now purely: author `exam_bank_cce_<level>.json` with its blueprint, implement the `percentage_per_part_gate` scoring branch, and add a product selector in the UI — no re-plumbing. Content authoring + specialist verification remain the gated work.
 
+## Structural verification of the shipped permanent-residence A2 bank
+
+A task-level check against the official April-2026 model test is recorded in [EXAM_PERMRES_A2_VERIFICATION_2026-07-23.md](EXAM_PERMRES_A2_VERIFICATION_2026-07-23.md). Headline structure is correct, but task-level fidelity has real gaps: speaking has 3 tasks vs the official 4 + a 3-point pronunciation allocation; reading point weights are [5,5,5,5,5] vs official [5,5,4,6,5]; listening has 5 items vs 25; and the writing split/`<35 words ⇒ 0` rule differ. These define the content rebuild and remain behind the Czech-specialist gate — the bank is **not yet a faithful simulation** and must keep the "practice, not an official result" label.
+
 ## Open questions for the owner
 
 - Confirm the target purpose: is the product's north star **permanent residence** (recommended) or **general certification / academic** (CCE)?
