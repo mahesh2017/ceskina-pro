@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** July 20, 2026
+**Last updated:** July 24, 2026
 
 Czechify ("the App") is built with privacy in mind. This policy explains what data the App handles and how.
 
@@ -45,14 +45,23 @@ in AI prompts.
 
 ## Speech & Microphone (Optional)
 
-The App offers pronunciation practice using the operating system's speech
-recognition service:
+The App offers pronunciation practice that records short audio clips and
+transcribes them to score your pronunciation:
 
 - Microphone access is requested only when you use pronunciation features.
-- Recognition may run on-device or use Apple/Google services depending on the
-  operating system, installed language support, device settings, and network.
-- The App does not intentionally retain the microphone recording after the
-  recognition operation, but the platform provider's terms govern its service.
+- **Cloud transcription (default when the backend is enabled):** the recorded
+  audio clip is sent over HTTPS to a Supabase Edge Function, which forwards it
+  to **OpenAI's Whisper** speech-to-text API and returns a transcription with
+  word-level confidence. The App uses a server-managed API credential; users do
+  not provide their own key. The audio leaves your device for this processing.
+- **On-device fallback:** when the backend or a cloud session is unavailable,
+  the App falls back to the operating system's speech recognition, which may
+  run on-device or via Apple/Google services depending on your platform,
+  installed language support, device settings, and network.
+- The App does not intentionally retain the microphone recording after
+  transcription. The recording is deleted from the device once processed;
+  OpenAI, Apple, and Google govern their services under their own terms.
+- Do not record sensitive personal information during pronunciation practice.
 
 ## Internet Access
 
