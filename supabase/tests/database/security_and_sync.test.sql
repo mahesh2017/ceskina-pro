@@ -8,7 +8,7 @@ drop extension if exists pgtap cascade;
 create extension pgtap with schema public;
 set local search_path = public;
 
-select public.plan(32);
+select public.plan(37);
 
 select public.has_table('public', 'lesson_progress', 'lesson progress exists');
 select public.has_table('public', 'earned_badges', 'earned badges exists');
@@ -111,7 +111,77 @@ select public.ok(
   'AI burst function is service-role only'
 );
 
+select public.has_table(
+  'public',
+  'ai_service_daily_usage',
+  'service-scoped daily AI usage table exists'
+);
+
+select public.ok(
+  not has_table_privilege('anon', 'public.ai_service_daily_usage', 'SELECT')
+  and not has_table_privilege(
+    'authenticated', 'public.ai_service_daily_usage', 'SELECT'
+  ),
+  'client roles cannot read service usage counters'
+);
+
+select public.ok(
+  not has_function_privilege(
+    'anon',
+    'public.consume_service_daily_quota(text,uuid,integer)',
+    'EXECUTE'
+  )
+  and not has_function_privilege(
+    'authenticated',
+    'public.consume_service_daily_quota(text,uuid,integer)',
+    'EXECUTE'
+  )
+  and has_function_privilege(
+    'service_role',
+    'public.consume_service_daily_quota(text,uuid,integer)',
+    'EXECUTE'
+  )
+  and not has_function_privilege(
+    'anon',
+    'public.consume_service_burst_quota(text,uuid,integer,integer)',
+    'EXECUTE'
+  )
+  and not has_function_privilege(
+    'authenticated',
+    'public.consume_service_burst_quota(text,uuid,integer,integer)',
+    'EXECUTE'
+  )
+  and has_function_privilege(
+    'service_role',
+    'public.consume_service_burst_quota(text,uuid,integer,integer)',
+    'EXECUTE'
+  ),
+  'service quota functions are service-role only'
+);
+
 set local role service_role;
+
+select public.is(
+  public.consume_service_burst_quota(
+    'whisper',
+    '40000000-0000-0000-0000-000000000004',
+    1,
+    100
+  ),
+  true,
+  'first speech request in a burst window is accepted'
+);
+
+select public.is(
+  public.consume_service_burst_quota(
+    'whisper',
+    '40000000-0000-0000-0000-000000000004',
+    1,
+    100
+  ),
+  false,
+  'per-user speech burst limit rejects the next request'
+);
 
 select public.is(
   public.consume_ai_burst_quota(
