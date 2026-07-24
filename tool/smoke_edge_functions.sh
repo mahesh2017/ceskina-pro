@@ -3,7 +3,7 @@ set -euo pipefail
 
 project_ref_value="${1:?usage: smoke_edge_functions.sh <project-ref>}"
 
-for edge_function_name in deepseek-proxy account-data; do
+for edge_function_name in deepseek-proxy account-data whisper-proxy; do
   http_code="$(
     curl \
       --silent \

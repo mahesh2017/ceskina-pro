@@ -1,6 +1,50 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/pronunciation_result.dart';
+import 'curriculum_providers.dart';
+import 'database_providers.dart';
 import 'stt_providers.dart';
+
+/// Curated starter phrases used when no curriculum vocabulary is available
+/// yet (fresh install, unit with no example sentences).
+const List<String> starterPronunciationPhrases = [
+  'Ahoj, jak se máš?',
+  'Dobrý den, těší mě.',
+  'Děkuji, mám se dobře.',
+  'Promiňte, nerozumím.',
+  'Mluvíte anglicky?',
+  'Na shledanou!',
+  'Kolik to stojí?',
+  'Kde je nádraží?',
+  'Jmenuji se Petr.',
+  'Dám si kávu, prosím.',
+];
+
+/// Practice deck for the Pronunciation Lab: Czech sentences (preferred) and
+/// words drawn from the learner's current unit, with a curated fallback so
+/// the lab always has material.
+final pronunciationDeckProvider = FutureProvider<List<String>>((ref) async {
+  final next = await ref.watch(nextLessonProvider.future);
+  final unitId = next?.lesson.unitId ?? 1;
+
+  final cards = await ref
+      .read(vocabularyRepositoryProvider)
+      .getCardsForUnit(unitId);
+
+  final phrases = <String>{};
+  // Example sentences first — richer practice than isolated words.
+  for (final card in cards) {
+    final example = card.exampleCz?.trim();
+    if (example != null && example.isNotEmpty) phrases.add(example);
+  }
+  for (final card in cards) {
+    final word = card.wordCz.trim();
+    if (word.isNotEmpty) phrases.add(word);
+  }
+
+  return phrases.isEmpty
+      ? starterPronunciationPhrases
+      : phrases.take(30).toList();
+});
 
 /// State of a pronunciation practice session.
 class PronunciationState {

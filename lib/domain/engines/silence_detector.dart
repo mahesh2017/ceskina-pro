@@ -13,7 +13,7 @@
 /// enforces a hard maximum duration as a safety net.
 class SilenceDetector {
   SilenceDetector({
-    this.silenceTimeout = const Duration(seconds: 3),
+    this.silenceTimeout = const Duration(seconds: 2),
     this.speechRiseDb = 12,
     this.silenceDropDb = 10,
   });

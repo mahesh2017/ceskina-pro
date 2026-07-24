@@ -66,7 +66,7 @@ class AudioRecorderService implements AudioRecorderPort {
   /// always returned so it can still be transcribed after a manual stop.
   @override
   Future<String> recordUntilSilence({
-    Duration silenceTimeout = const Duration(seconds: 3),
+    Duration silenceTimeout = const Duration(seconds: 2),
     Duration maxDuration = const Duration(seconds: 10),
     Future<void>? stopSignal,
   }) async {

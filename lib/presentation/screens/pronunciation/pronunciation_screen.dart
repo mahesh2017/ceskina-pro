@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/pronunciation_providers.dart';
@@ -23,19 +24,44 @@ class PronunciationScreen extends ConsumerStatefulWidget {
 }
 
 class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
+  /// Position in the practice deck (deck mode only).
+  int _deckIndex = 0;
+
+  /// Single-phrase mode: a caller (lesson, exam) supplied the exact text.
+  bool get _singlePhrase => widget.expectedText != null;
+
   @override
   void initState() {
     super.initState();
-    // Set default practice text if none provided
-    final text = widget.expectedText ?? 'Ahoj, jak se máš?';
-    Future.microtask(() {
-      ref.read(pronunciationProvider.notifier).setExpectedText(text);
-    });
+    if (_singlePhrase) {
+      Future.microtask(() {
+        ref
+            .read(pronunciationProvider.notifier)
+            .setExpectedText(widget.expectedText!);
+      });
+    }
+  }
+
+  void _setPhraseFromDeck(List<String> deck) {
+    final phrase = deck[_deckIndex % deck.length];
+    if (ref.read(pronunciationProvider).expectedText != phrase) {
+      Future.microtask(() {
+        if (!mounted) return;
+        ref.read(pronunciationProvider.notifier).setExpectedText(phrase);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final pronState = ref.watch(pronunciationProvider);
+    final deck = _singlePhrase
+        ? const <String>[]
+        : ref.watch(pronunciationDeckProvider).value ??
+            starterPronunciationPhrases;
+    if (!_singlePhrase && deck.isNotEmpty) {
+      _setPhraseFromDeck(deck);
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pronunciation Lab')),
@@ -97,13 +123,25 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
                 children: [
                   _ScoreDisplay(result: pronState.result!),
                   const SizedBox(height: 12),
-                  // Temporary diagnostic while cloud pronunciation is validated.
                   Text(
                     'Heard: "${pronState.transcribedText ?? ''}"',
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 13, color: Colors.grey),
                   ),
-                  if (pronState.diagnostic != null)
+                  // Learners only see a gentle accuracy note when the cloud
+                  // engine was unavailable; raw engine diagnostics (exception
+                  // text, URLs, timings) are debug-build only.
+                  if (!pronState.usedWhisper)
+                    Text(
+                      'Using on-device recognition — results may be less '
+                      'accurate.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.orange.shade700,
+                      ),
+                    ),
+                  if (kDebugMode && pronState.diagnostic != null)
                     Text(
                       pronState.diagnostic!,
                       textAlign: TextAlign.center,
@@ -141,14 +179,38 @@ class _PronunciationScreenState extends ConsumerState<PronunciationScreen> {
             ),
             const SizedBox(height: 16),
 
-            // Try again button
+            // Try again / next phrase
             if (pronState.result != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      ref.read(pronunciationProvider.notifier).reset();
+                    },
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Try Again'),
+                  ),
+                  if (!_singlePhrase) ...[
+                    const SizedBox(width: 16),
+                    TextButton.icon(
+                      onPressed: () {
+                        setState(() => _deckIndex++);
+                        ref.read(pronunciationProvider.notifier).reset();
+                      },
+                      icon: const Icon(Icons.arrow_forward),
+                      label: const Text('Next Phrase'),
+                    ),
+                  ],
+                ],
+              )
+            else if (!_singlePhrase &&
+                !pronState.isRecording &&
+                !pronState.isProcessing)
               TextButton.icon(
-                onPressed: () {
-                  ref.read(pronunciationProvider.notifier).reset();
-                },
-                icon: const Icon(Icons.refresh),
-                label: const Text('Try Again'),
+                onPressed: () => setState(() => _deckIndex++),
+                icon: const Icon(Icons.skip_next),
+                label: const Text('Skip'),
               ),
           ],
         ),
@@ -231,11 +293,16 @@ class _ScoreDisplay extends StatelessWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              CircularProgressIndicator(
-                value: result.overallScore,
-                strokeWidth: 8,
-                backgroundColor: color.withValues(alpha: 0.15),
-                valueColor: AlwaysStoppedAnimation<Color>(color),
+              // Fill the 120px box — an unconstrained child of a Stack would
+              // render at the indicator's tiny intrinsic size, drawing a small
+              // ring on top of the score text instead of around it.
+              Positioned.fill(
+                child: CircularProgressIndicator(
+                  value: result.overallScore,
+                  strokeWidth: 8,
+                  backgroundColor: color.withValues(alpha: 0.15),
+                  valueColor: AlwaysStoppedAnimation<Color>(color),
+                ),
               ),
               // Keep the number + label inside the ring regardless of the
               // device's system font scale: pad in from the stroke, then let

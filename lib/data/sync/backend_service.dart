@@ -18,6 +18,10 @@ class BackendService {
   final Logger _log;
   bool _initialized = false;
 
+  /// True once `Supabase.initialize` has succeeded this process — it must never
+  /// run twice, even if the subsequent sign-in failed and init() is retried.
+  bool _supabaseReady = false;
+
   bool get isEnabled => BackendConfig.isConfigured && _initialized;
 
   /// Supabase client, or null when the backend is disabled.
@@ -146,12 +150,20 @@ class BackendService {
       _log.info('Backend not configured; running offline-only.');
       return;
     }
+    if (_initialized) {
+      // Already up — a retry only needs to (re)establish the session.
+      await ensureAnonymousSession();
+      return;
+    }
     try {
-      await Supabase.initialize(
-        url: BackendConfig.supabaseUrl,
-        // A legacy anon JWT or a new sb_publishable_... key both work here.
-        publishableKey: BackendConfig.supabaseAnonKey,
-      );
+      if (!_supabaseReady) {
+        await Supabase.initialize(
+          url: BackendConfig.supabaseUrl,
+          // A legacy anon JWT or a new sb_publishable_... key both work here.
+          publishableKey: BackendConfig.supabaseAnonKey,
+        );
+        _supabaseReady = true;
+      }
       _initialized = true;
 
       final auth = Supabase.instance.client.auth;

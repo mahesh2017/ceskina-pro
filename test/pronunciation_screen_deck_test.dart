@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:ceskina_pro/presentation/providers/pronunciation_providers.dart';
+import 'package:ceskina_pro/presentation/screens/pronunciation/pronunciation_screen.dart';
+
+/// The Pronunciation Lab must practice real deck content, not a hardcoded
+/// phrase (previously `/pronunciation/:id` ignored its content entirely).
+void main() {
+  Future<void> pumpLab(
+    WidgetTester tester, {
+    List<String>? deck,
+    String? expectedText,
+  }) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          if (deck != null)
+            pronunciationDeckProvider.overrideWith((ref) async => deck),
+        ],
+        child: MaterialApp(
+          home: PronunciationScreen(
+            exerciseId: 'practice',
+            expectedText: expectedText,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  testWidgets('deck mode shows the first deck phrase and can skip ahead', (
+    tester,
+  ) async {
+    await pumpLab(tester, deck: ['První věta.', 'Druhá věta.']);
+
+    expect(find.text('První věta.'), findsOneWidget);
+
+    await tester.tap(find.text('Skip'));
+    await tester.pumpAndSettle();
+    expect(find.text('Druhá věta.'), findsOneWidget);
+
+    // Deck wraps around instead of running out.
+    await tester.tap(find.text('Skip'));
+    await tester.pumpAndSettle();
+    expect(find.text('První věta.'), findsOneWidget);
+  });
+
+  testWidgets('explicit expectedText pins the phrase (no skip control)', (
+    tester,
+  ) async {
+    await pumpLab(tester, expectedText: 'Zadaná věta.');
+
+    expect(find.text('Zadaná věta.'), findsOneWidget);
+    expect(find.text('Skip'), findsNothing);
+  });
+}
