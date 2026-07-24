@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../screens/home/home_screen.dart';
@@ -32,6 +33,25 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     initialLocation: onboardingDone ? '/' : '/onboarding',
+    // Unknown paths and malformed parameters land here instead of crashing.
+    errorBuilder: (context, state) => Scaffold(
+      appBar: AppBar(title: const Text('Not found')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.explore_off, size: 48, color: Colors.grey),
+            const SizedBox(height: 16),
+            const Text('That page could not be opened.'),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: () => context.go('/'),
+              child: const Text('Go Home'),
+            ),
+          ],
+        ),
+      ),
+    ),
     routes: [
       // Tab destinations live inside the adaptive shell.
       ShellRoute(
@@ -69,6 +89,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/lesson/:id',
+        // tryParse: a malformed deep link must not crash the router.
+        redirect: (context, state) =>
+            int.tryParse(state.pathParameters['id'] ?? '') == null ? '/' : null,
         builder:
             (context, state) => LessonPlayerScreen(
               lessonId: int.parse(state.pathParameters['id']!),

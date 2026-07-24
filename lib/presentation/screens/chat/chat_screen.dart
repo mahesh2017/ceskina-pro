@@ -145,17 +145,31 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                     },
                   ),
                 ),
-                // Error message
+                // Error message with a one-tap retry — the message is already
+                // in the transcript, so retry only repeats the tutor call.
                 if (chat.error != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 4,),
-                    child: Text(
-                      chat.error!,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                        fontSize: 14,
-                      ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            chat.error!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () => ref
+                              .read(chatProvider.notifier)
+                              .retryLastMessage(),
+                          icon: const Icon(Icons.refresh, size: 16),
+                          label: const Text('Retry'),
+                        ),
+                      ],
                     ),
                   ),
                 // Suggested replies — tap to prefill, learner reviews
@@ -195,6 +209,16 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
   }
 }
 
+String _describeDay(DateTime when) {
+  final now = DateTime.now();
+  final days = DateTime(now.year, now.month, now.day)
+      .difference(DateTime(when.year, when.month, when.day))
+      .inDays;
+  if (days <= 0) return 'today';
+  if (days == 1) return 'yesterday';
+  return '$days days ago';
+}
+
 /// Scenario picker — shown when no conversation is active.
 class _ScenarioPicker extends ConsumerWidget {
   const _ScenarioPicker();
@@ -202,6 +226,7 @@ class _ScenarioPicker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = context.tokens;
+    final recent = ref.watch(recentConversationsProvider).value ?? const [];
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
       children: [
@@ -211,6 +236,58 @@ class _ScenarioPicker extends ConsumerWidget {
           'Practice real-life Czech conversations. The tutor adapts to your level.',
           style: TextStyle(fontSize: 15.5, color: t.muted, height: 1.5),
         ),
+        if (recent.isNotEmpty) ...[
+          const SizedBox(height: 18),
+          Text(
+            'Continue where you left off',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: t.muted,
+            ),
+          ),
+          const SizedBox(height: 8),
+          ...recent.take(3).map((summary) {
+            final s = _scenarioStyle(context, summary.scenario);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: SoftCard(
+                padding: const EdgeInsets.all(12),
+                onTap: () => ref
+                    .read(chatProvider.notifier)
+                    .resumeConversation(summary),
+                child: Row(
+                  children: [
+                    IconTile(
+                        icon: s.icon,
+                        tint: s.tint,
+                        fg: s.fg,
+                        size: 34,
+                        radius: 11,
+                        iconSize: 15),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        summary.scenario,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: t.ink,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      _describeDay(summary.createdAt),
+                      style: TextStyle(fontSize: 13, color: t.faint),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(Icons.chevron_right, size: 16, color: t.faint),
+                  ],
+                ),
+              ),
+            );
+          }),
+        ],
         const SizedBox(height: 18),
         GridView.count(
           crossAxisCount: 2,

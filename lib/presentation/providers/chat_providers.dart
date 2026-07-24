@@ -3,6 +3,7 @@ import '../../data/repositories/llm_service_exception.dart';
 import '../../domain/engines/llm_orchestrator.dart';
 import '../../domain/entities/chat_message.dart';
 import '../../domain/entities/enums.dart';
+import '../../domain/repositories/conversation_repository.dart';
 import 'database_providers.dart';
 import 'llm_providers.dart';
 import 'settings_providers.dart';
@@ -165,6 +166,30 @@ class ChatNotifier extends Notifier<ChatState> {
     final convRepo = ref.read(conversationRepositoryProvider);
     await convRepo.saveMessage(userMsg);
 
+    await _completeTutorTurn(text, history);
+  }
+
+  /// Re-run the tutor completion for the last user message after a failure —
+  /// the message is already in the transcript, so only the LLM call repeats.
+  Future<void> retryLastMessage() async {
+    if (state.conversationId == null || state.isLoading) return;
+    final messages = state.messages;
+    final lastUserIndex =
+        messages.lastIndexWhere((m) => m.role == MessageRole.user);
+    if (lastUserIndex < 0) return;
+
+    state = state.copyWith(isLoading: true, error: null);
+    await _completeTutorTurn(
+      messages[lastUserIndex].content,
+      messages.sublist(0, lastUserIndex),
+    );
+  }
+
+  Future<void> _completeTutorTurn(
+    String text,
+    List<ChatMessage> history,
+  ) async {
+    final convRepo = ref.read(conversationRepositoryProvider);
     try {
       // Build LLM request via orchestrator
       final orchestrator = ref.read(llmOrchestratorProvider);
@@ -217,6 +242,27 @@ class ChatNotifier extends Notifier<ChatState> {
     final convRepo = ref.read(conversationRepositoryProvider);
     final messages = await convRepo.getHistory(conversationId);
     state = state.copyWith(conversationId: conversationId, messages: messages);
+  }
+
+  /// Resume a past conversation with its scenario and level restored, so the
+  /// tutor continues in the same role instead of defaulting to casual chat.
+  Future<void> resumeConversation(ConversationSummary summary) async {
+    final convRepo = ref.read(conversationRepositoryProvider);
+    final messages = await convRepo.getHistory(summary.id);
+    // The table stores the scenario title; map back to its server-side id.
+    final scenario = ChatScenario.all.firstWhere(
+      (s) => s.title == summary.scenario,
+      orElse: () => ChatScenario.all.first,
+    );
+    state = ChatState(
+      conversationId: summary.id,
+      scenarioId: scenario.id,
+      scenarioTitle: summary.scenario,
+      level: summary.cefrLevel.toLowerCase().contains('a2')
+          ? CEFRLevel.a2
+          : CEFRLevel.a1,
+      messages: messages,
+    );
   }
 
   /// Clear the current conversation.
@@ -276,3 +322,11 @@ class ChatNotifier extends Notifier<ChatState> {
 final chatProvider = NotifierProvider<ChatNotifier, ChatState>(
   ChatNotifier.new,
 );
+
+/// Recent conversations for the scenario picker's "continue" section.
+final recentConversationsProvider =
+    FutureProvider<List<ConversationSummary>>((ref) {
+  // Recompute when the active conversation changes (a new one was created).
+  ref.watch(chatProvider.select((s) => s.conversationId));
+  return ref.read(conversationRepositoryProvider).getRecentConversations();
+});

@@ -81,6 +81,18 @@ class _FillBlankViewState extends State<FillBlankView> {
         .join(', ');
   }
 
+  /// Input width sized to the longest accepted answer for that blank, so a
+  /// one-letter blank ("M_sto") renders letter-sized and a word blank fits
+  /// its word. Falls back to a word-ish width when data is missing.
+  double _blankWidth(Map<String, dynamic> data, int blankIdx) {
+    final answers = data['blank_answers'] as List<dynamic>?;
+    if (answers == null || blankIdx >= answers.length) return 100;
+    final longest = (answers[blankIdx] as List<dynamic>)
+        .map((a) => a.toString().length)
+        .fold<int>(1, (max, len) => len > max ? len : max);
+    return (longest * 14.0 + 28).clamp(44.0, 160.0);
+  }
+
   @override
   Widget build(BuildContext context) {
     final data = widget.exercise.data;
@@ -88,6 +100,56 @@ class _FillBlankViewState extends State<FillBlankView> {
 
     // Split sentence at underscore runs to show blanks visually
     final parts = sentence.split(_blankPattern);
+
+    // Word-level tokens: inside a Wrap a long Text child wraps internally as
+    // its own block, which pushed everything after a blank onto a separate
+    // "paragraph" line. One Text per word keeps the sentence flowing inline
+    // around the input boxes.
+    final children = <Widget>[];
+    final wordStyle = Theme.of(context).textTheme.bodyLarge;
+    for (var i = 0; i < parts.length; i++) {
+      final isBlankPrefix =
+          i < parts.length - 1 && !parts[i].endsWith(' ') && parts[i].isNotEmpty;
+      final isBlankSuffix = i > 0 && !parts[i].startsWith(' ');
+      final words = parts[i].trim().split(RegExp(r'\s+'))
+        ..removeWhere((w) => w.isEmpty);
+      for (var w = 0; w < words.length; w++) {
+        // A word fragment glued to the blank ("M" in "M_sto") stays glued:
+        // no trailing gap before, no leading gap after.
+        final gluedToNextBlank = isBlankPrefix && w == words.length - 1;
+        final gluedToPrevBlank = isBlankSuffix && w == 0;
+        children.add(Padding(
+          padding: EdgeInsets.only(
+            left: gluedToPrevBlank ? 0 : 3,
+            right: gluedToNextBlank ? 0 : 3,
+          ),
+          child: Text(words[w], style: wordStyle),
+        ));
+      }
+      if (i < parts.length - 1) {
+        children.add(SizedBox(
+          width: _blankWidth(data, i),
+          child: TextField(
+            controller: _controllerFor(i),
+            enabled: !answered,
+            textAlign: TextAlign.center,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              isDense: true,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 8,
+              ),
+            ),
+            style: TextStyle(
+              color: isCorrect == false ? Colors.red : null,
+              fontWeight: FontWeight.bold,
+            ),
+            onSubmitted: answered ? null : (_) => _checkAnswer(),
+          ),
+        ));
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.all(24),
@@ -104,35 +166,8 @@ class _FillBlankViewState extends State<FillBlankView> {
           // Sentence with one inline input per blank
           Wrap(
             crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              for (var i = 0; i < parts.length; i++) ...[
-                Text(parts[i], style: Theme.of(context).textTheme.bodyLarge),
-                if (i < parts.length - 1)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: SizedBox(
-                      width: 100,
-                      child: TextField(
-                        controller: _controllerFor(i),
-                        enabled: !answered,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 8,
-                          ),
-                        ),
-                        style: TextStyle(
-                          color: isCorrect == false ? Colors.red : null,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        onSubmitted: answered ? null : (_) => _checkAnswer(),
-                      ),
-                    ),
-                  ),
-              ],
-            ],
+            runSpacing: 8,
+            children: children,
           ),
           const SizedBox(height: 24),
 

@@ -364,6 +364,18 @@ class CzechTts {
   }
 }
 
+/// Whether the device has any Czech TTS voice installed. Surfaced as a
+/// one-time hint so "listen" buttons never silently do nothing on devices
+/// without a Czech voice (neural audio packs still cover curriculum audio).
+final czechTtsAvailableProvider = FutureProvider<bool>((ref) async {
+  try {
+    return await ref.read(czechTtsProvider).isCzechAvailable();
+  } catch (_) {
+    // Unknown ≠ missing — don't nag when the engine can't even be asked.
+    return true;
+  }
+});
+
 /// Provider for the CzechTts helper.
 final czechTtsProvider = Provider<CzechTts>((ref) {
   final tts = ref.read(ttsProvider);

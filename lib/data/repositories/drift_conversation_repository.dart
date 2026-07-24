@@ -64,6 +64,24 @@ class DriftConversationRepository implements ConversationRepository {
     return rows.map((c) => c.id).toList();
   }
 
+  @override
+  Future<List<ConversationSummary>> getRecentConversations({
+    int limit = 5,
+  }) async {
+    final rows = await _db.conversationDao.getAllConversations();
+    return rows
+        .take(limit)
+        .map(
+          (c) => ConversationSummary(
+            id: c.id,
+            scenario: c.scenario,
+            cefrLevel: c.cefrLevel,
+            createdAt: c.createdAt,
+          ),
+        )
+        .toList();
+  }
+
   entity.ChatMessage _toEntityChatMessage(db.ChatMessage row) {
     return entity.ChatMessage(
       id: row.id.toString(),

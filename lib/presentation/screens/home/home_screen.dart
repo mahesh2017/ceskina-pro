@@ -6,6 +6,7 @@ import '../../providers/curriculum_providers.dart';
 import '../../providers/gamification_providers.dart';
 import '../../providers/review_providers.dart';
 import '../../providers/settings_providers.dart';
+import '../../providers/tts_providers.dart';
 import '../../widgets/common/soft_ui.dart';
 import '../../widgets/common/learning_tip_card.dart';
 import '../lesson/delayed_transfer_screen.dart';
@@ -92,6 +93,13 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 20),
+
+            // One-time hint when the device lacks a Czech voice — otherwise
+            // every "listen" button silently does nothing.
+            if (ref.watch(czechTtsAvailableProvider).value == false) ...[
+              const _CzechVoiceHint(),
+              const SizedBox(height: 14),
+            ],
 
             _DailyGoalHero(
               dailyXp: g.dailyXp,
@@ -595,6 +603,41 @@ class _ShortcutRow extends StatelessWidget {
             ),
           ),
           Icon(Icons.chevron_right, size: 16, color: t.faint),
+        ],
+      ),
+    );
+  }
+}
+
+/// Shown when the device has no Czech TTS voice: pronunciation of arbitrary
+/// text will be silent until one is installed (bundled neural audio still
+/// covers curriculum content).
+class _CzechVoiceHint extends StatelessWidget {
+  const _CzechVoiceHint();
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.tokens;
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: t.amberSoft,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.record_voice_over, size: 20, color: t.amber),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              'No Czech voice is installed on this device, so some "listen" '
+              'buttons may stay silent. Add a Czech voice in your system '
+              'settings (Accessibility → Spoken Content on iOS, '
+              'Text-to-speech on Android).',
+              style: TextStyle(fontSize: 13, color: t.ink, height: 1.35),
+            ),
+          ),
         ],
       ),
     );
